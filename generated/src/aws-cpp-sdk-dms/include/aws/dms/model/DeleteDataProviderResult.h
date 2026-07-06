@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/DataProvider.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
-  class DeleteDataProviderResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult();
-    AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+class DeleteDataProviderResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API DeleteDataProviderResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The data provider that was deleted.</p>
+   */
+  inline const DataProvider& GetDataProvider() const { return m_dataProvider; }
+  template <typename DataProviderT = DataProvider>
+  void SetDataProvider(DataProviderT&& value) {
+    m_dataProviderHasBeenSet = true;
+    m_dataProvider = std::forward<DataProviderT>(value);
+  }
+  template <typename DataProviderT = DataProvider>
+  DeleteDataProviderResult& WithDataProvider(DataProviderT&& value) {
+    SetDataProvider(std::forward<DataProviderT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The data provider that was deleted.</p>
-     */
-    inline const DataProvider& GetDataProvider() const{ return m_dataProvider; }
-    inline void SetDataProvider(const DataProvider& value) { m_dataProvider = value; }
-    inline void SetDataProvider(DataProvider&& value) { m_dataProvider = std::move(value); }
-    inline DeleteDataProviderResult& WithDataProvider(const DataProvider& value) { SetDataProvider(value); return *this;}
-    inline DeleteDataProviderResult& WithDataProvider(DataProvider&& value) { SetDataProvider(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDataProviderResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDataProviderResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDataProviderResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDataProviderResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DataProvider m_dataProvider;
+ private:
+  DataProvider m_dataProvider;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataProviderHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

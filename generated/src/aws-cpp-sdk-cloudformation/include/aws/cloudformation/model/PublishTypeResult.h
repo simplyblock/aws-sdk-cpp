@@ -5,63 +5,72 @@
 
 #pragma once
 #include <aws/cloudformation/CloudFormation_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/cloudformation/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFormation
-{
-namespace Model
-{
-  class PublishTypeResult
-  {
-  public:
-    AWS_CLOUDFORMATION_API PublishTypeResult();
-    AWS_CLOUDFORMATION_API PublishTypeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFORMATION_API PublishTypeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFormation {
+namespace Model {
+class PublishTypeResult {
+ public:
+  AWS_CLOUDFORMATION_API PublishTypeResult() = default;
+  AWS_CLOUDFORMATION_API PublishTypeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFORMATION_API PublishTypeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) assigned to the public extension upon
+   * publication.</p>
+   */
+  inline const Aws::String& GetPublicTypeArn() const { return m_publicTypeArn; }
+  template <typename PublicTypeArnT = Aws::String>
+  void SetPublicTypeArn(PublicTypeArnT&& value) {
+    m_publicTypeArnHasBeenSet = true;
+    m_publicTypeArn = std::forward<PublicTypeArnT>(value);
+  }
+  template <typename PublicTypeArnT = Aws::String>
+  PublishTypeResult& WithPublicTypeArn(PublicTypeArnT&& value) {
+    SetPublicTypeArn(std::forward<PublicTypeArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) assigned to the public extension upon
-     * publication.</p>
-     */
-    inline const Aws::String& GetPublicTypeArn() const{ return m_publicTypeArn; }
-    inline void SetPublicTypeArn(const Aws::String& value) { m_publicTypeArn = value; }
-    inline void SetPublicTypeArn(Aws::String&& value) { m_publicTypeArn = std::move(value); }
-    inline void SetPublicTypeArn(const char* value) { m_publicTypeArn.assign(value); }
-    inline PublishTypeResult& WithPublicTypeArn(const Aws::String& value) { SetPublicTypeArn(value); return *this;}
-    inline PublishTypeResult& WithPublicTypeArn(Aws::String&& value) { SetPublicTypeArn(std::move(value)); return *this;}
-    inline PublishTypeResult& WithPublicTypeArn(const char* value) { SetPublicTypeArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline PublishTypeResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline PublishTypeResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  PublishTypeResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_publicTypeArn;
+ private:
+  Aws::String m_publicTypeArn;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_publicTypeArnHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFormation
+}  // namespace Aws

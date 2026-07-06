@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/omics/model/GetShareRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/omics/model/GetShareRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Omics::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetShareRequest::GetShareRequest() : 
-    m_shareIdHasBeenSet(false)
-{
-}
-
-Aws::String GetShareRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetShareRequest::SerializePayload() const { return {}; }

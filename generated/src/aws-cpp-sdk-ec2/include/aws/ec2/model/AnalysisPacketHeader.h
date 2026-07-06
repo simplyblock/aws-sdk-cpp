@@ -4,134 +4,169 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/PortRange.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a header. Reflects any changes made by a component as traffic
+ * passes through. The fields of an inbound header are null except for the first
+ * component of a path.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AnalysisPacketHeader">AWS
+ * API Reference</a></p>
+ */
+class AnalysisPacketHeader {
+ public:
+  AWS_EC2_API AnalysisPacketHeader() = default;
+  AWS_EC2_API AnalysisPacketHeader(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API AnalysisPacketHeader& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a header. Reflects any changes made by a component as traffic
-   * passes through. The fields of an inbound header are null except for the first
-   * component of a path.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AnalysisPacketHeader">AWS
-   * API Reference</a></p>
+   * <p>The destination addresses.</p>
    */
-  class AnalysisPacketHeader
-  {
-  public:
-    AWS_EC2_API AnalysisPacketHeader();
-    AWS_EC2_API AnalysisPacketHeader(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API AnalysisPacketHeader& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::Vector<Aws::String>& GetDestinationAddresses() const { return m_destinationAddresses; }
+  inline bool DestinationAddressesHasBeenSet() const { return m_destinationAddressesHasBeenSet; }
+  template <typename DestinationAddressesT = Aws::Vector<Aws::String>>
+  void SetDestinationAddresses(DestinationAddressesT&& value) {
+    m_destinationAddressesHasBeenSet = true;
+    m_destinationAddresses = std::forward<DestinationAddressesT>(value);
+  }
+  template <typename DestinationAddressesT = Aws::Vector<Aws::String>>
+  AnalysisPacketHeader& WithDestinationAddresses(DestinationAddressesT&& value) {
+    SetDestinationAddresses(std::forward<DestinationAddressesT>(value));
+    return *this;
+  }
+  template <typename DestinationAddressesT = Aws::String>
+  AnalysisPacketHeader& AddDestinationAddresses(DestinationAddressesT&& value) {
+    m_destinationAddressesHasBeenSet = true;
+    m_destinationAddresses.emplace_back(std::forward<DestinationAddressesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The destination port ranges.</p>
+   */
+  inline const Aws::Vector<PortRange>& GetDestinationPortRanges() const { return m_destinationPortRanges; }
+  inline bool DestinationPortRangesHasBeenSet() const { return m_destinationPortRangesHasBeenSet; }
+  template <typename DestinationPortRangesT = Aws::Vector<PortRange>>
+  void SetDestinationPortRanges(DestinationPortRangesT&& value) {
+    m_destinationPortRangesHasBeenSet = true;
+    m_destinationPortRanges = std::forward<DestinationPortRangesT>(value);
+  }
+  template <typename DestinationPortRangesT = Aws::Vector<PortRange>>
+  AnalysisPacketHeader& WithDestinationPortRanges(DestinationPortRangesT&& value) {
+    SetDestinationPortRanges(std::forward<DestinationPortRangesT>(value));
+    return *this;
+  }
+  template <typename DestinationPortRangesT = PortRange>
+  AnalysisPacketHeader& AddDestinationPortRanges(DestinationPortRangesT&& value) {
+    m_destinationPortRangesHasBeenSet = true;
+    m_destinationPortRanges.emplace_back(std::forward<DestinationPortRangesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The protocol.</p>
+   */
+  inline const Aws::String& GetProtocol() const { return m_protocol; }
+  inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
+  template <typename ProtocolT = Aws::String>
+  void SetProtocol(ProtocolT&& value) {
+    m_protocolHasBeenSet = true;
+    m_protocol = std::forward<ProtocolT>(value);
+  }
+  template <typename ProtocolT = Aws::String>
+  AnalysisPacketHeader& WithProtocol(ProtocolT&& value) {
+    SetProtocol(std::forward<ProtocolT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destination addresses.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDestinationAddresses() const{ return m_destinationAddresses; }
-    inline bool DestinationAddressesHasBeenSet() const { return m_destinationAddressesHasBeenSet; }
-    inline void SetDestinationAddresses(const Aws::Vector<Aws::String>& value) { m_destinationAddressesHasBeenSet = true; m_destinationAddresses = value; }
-    inline void SetDestinationAddresses(Aws::Vector<Aws::String>&& value) { m_destinationAddressesHasBeenSet = true; m_destinationAddresses = std::move(value); }
-    inline AnalysisPacketHeader& WithDestinationAddresses(const Aws::Vector<Aws::String>& value) { SetDestinationAddresses(value); return *this;}
-    inline AnalysisPacketHeader& WithDestinationAddresses(Aws::Vector<Aws::String>&& value) { SetDestinationAddresses(std::move(value)); return *this;}
-    inline AnalysisPacketHeader& AddDestinationAddresses(const Aws::String& value) { m_destinationAddressesHasBeenSet = true; m_destinationAddresses.push_back(value); return *this; }
-    inline AnalysisPacketHeader& AddDestinationAddresses(Aws::String&& value) { m_destinationAddressesHasBeenSet = true; m_destinationAddresses.push_back(std::move(value)); return *this; }
-    inline AnalysisPacketHeader& AddDestinationAddresses(const char* value) { m_destinationAddressesHasBeenSet = true; m_destinationAddresses.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The source addresses.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSourceAddresses() const { return m_sourceAddresses; }
+  inline bool SourceAddressesHasBeenSet() const { return m_sourceAddressesHasBeenSet; }
+  template <typename SourceAddressesT = Aws::Vector<Aws::String>>
+  void SetSourceAddresses(SourceAddressesT&& value) {
+    m_sourceAddressesHasBeenSet = true;
+    m_sourceAddresses = std::forward<SourceAddressesT>(value);
+  }
+  template <typename SourceAddressesT = Aws::Vector<Aws::String>>
+  AnalysisPacketHeader& WithSourceAddresses(SourceAddressesT&& value) {
+    SetSourceAddresses(std::forward<SourceAddressesT>(value));
+    return *this;
+  }
+  template <typename SourceAddressesT = Aws::String>
+  AnalysisPacketHeader& AddSourceAddresses(SourceAddressesT&& value) {
+    m_sourceAddressesHasBeenSet = true;
+    m_sourceAddresses.emplace_back(std::forward<SourceAddressesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destination port ranges.</p>
-     */
-    inline const Aws::Vector<PortRange>& GetDestinationPortRanges() const{ return m_destinationPortRanges; }
-    inline bool DestinationPortRangesHasBeenSet() const { return m_destinationPortRangesHasBeenSet; }
-    inline void SetDestinationPortRanges(const Aws::Vector<PortRange>& value) { m_destinationPortRangesHasBeenSet = true; m_destinationPortRanges = value; }
-    inline void SetDestinationPortRanges(Aws::Vector<PortRange>&& value) { m_destinationPortRangesHasBeenSet = true; m_destinationPortRanges = std::move(value); }
-    inline AnalysisPacketHeader& WithDestinationPortRanges(const Aws::Vector<PortRange>& value) { SetDestinationPortRanges(value); return *this;}
-    inline AnalysisPacketHeader& WithDestinationPortRanges(Aws::Vector<PortRange>&& value) { SetDestinationPortRanges(std::move(value)); return *this;}
-    inline AnalysisPacketHeader& AddDestinationPortRanges(const PortRange& value) { m_destinationPortRangesHasBeenSet = true; m_destinationPortRanges.push_back(value); return *this; }
-    inline AnalysisPacketHeader& AddDestinationPortRanges(PortRange&& value) { m_destinationPortRangesHasBeenSet = true; m_destinationPortRanges.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The source port ranges.</p>
+   */
+  inline const Aws::Vector<PortRange>& GetSourcePortRanges() const { return m_sourcePortRanges; }
+  inline bool SourcePortRangesHasBeenSet() const { return m_sourcePortRangesHasBeenSet; }
+  template <typename SourcePortRangesT = Aws::Vector<PortRange>>
+  void SetSourcePortRanges(SourcePortRangesT&& value) {
+    m_sourcePortRangesHasBeenSet = true;
+    m_sourcePortRanges = std::forward<SourcePortRangesT>(value);
+  }
+  template <typename SourcePortRangesT = Aws::Vector<PortRange>>
+  AnalysisPacketHeader& WithSourcePortRanges(SourcePortRangesT&& value) {
+    SetSourcePortRanges(std::forward<SourcePortRangesT>(value));
+    return *this;
+  }
+  template <typename SourcePortRangesT = PortRange>
+  AnalysisPacketHeader& AddSourcePortRanges(SourcePortRangesT&& value) {
+    m_sourcePortRangesHasBeenSet = true;
+    m_sourcePortRanges.emplace_back(std::forward<SourcePortRangesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_destinationAddresses;
 
-    ///@{
-    /**
-     * <p>The protocol.</p>
-     */
-    inline const Aws::String& GetProtocol() const{ return m_protocol; }
-    inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
-    inline void SetProtocol(const Aws::String& value) { m_protocolHasBeenSet = true; m_protocol = value; }
-    inline void SetProtocol(Aws::String&& value) { m_protocolHasBeenSet = true; m_protocol = std::move(value); }
-    inline void SetProtocol(const char* value) { m_protocolHasBeenSet = true; m_protocol.assign(value); }
-    inline AnalysisPacketHeader& WithProtocol(const Aws::String& value) { SetProtocol(value); return *this;}
-    inline AnalysisPacketHeader& WithProtocol(Aws::String&& value) { SetProtocol(std::move(value)); return *this;}
-    inline AnalysisPacketHeader& WithProtocol(const char* value) { SetProtocol(value); return *this;}
-    ///@}
+  Aws::Vector<PortRange> m_destinationPortRanges;
 
-    ///@{
-    /**
-     * <p>The source addresses.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSourceAddresses() const{ return m_sourceAddresses; }
-    inline bool SourceAddressesHasBeenSet() const { return m_sourceAddressesHasBeenSet; }
-    inline void SetSourceAddresses(const Aws::Vector<Aws::String>& value) { m_sourceAddressesHasBeenSet = true; m_sourceAddresses = value; }
-    inline void SetSourceAddresses(Aws::Vector<Aws::String>&& value) { m_sourceAddressesHasBeenSet = true; m_sourceAddresses = std::move(value); }
-    inline AnalysisPacketHeader& WithSourceAddresses(const Aws::Vector<Aws::String>& value) { SetSourceAddresses(value); return *this;}
-    inline AnalysisPacketHeader& WithSourceAddresses(Aws::Vector<Aws::String>&& value) { SetSourceAddresses(std::move(value)); return *this;}
-    inline AnalysisPacketHeader& AddSourceAddresses(const Aws::String& value) { m_sourceAddressesHasBeenSet = true; m_sourceAddresses.push_back(value); return *this; }
-    inline AnalysisPacketHeader& AddSourceAddresses(Aws::String&& value) { m_sourceAddressesHasBeenSet = true; m_sourceAddresses.push_back(std::move(value)); return *this; }
-    inline AnalysisPacketHeader& AddSourceAddresses(const char* value) { m_sourceAddressesHasBeenSet = true; m_sourceAddresses.push_back(value); return *this; }
-    ///@}
+  Aws::String m_protocol;
 
-    ///@{
-    /**
-     * <p>The source port ranges.</p>
-     */
-    inline const Aws::Vector<PortRange>& GetSourcePortRanges() const{ return m_sourcePortRanges; }
-    inline bool SourcePortRangesHasBeenSet() const { return m_sourcePortRangesHasBeenSet; }
-    inline void SetSourcePortRanges(const Aws::Vector<PortRange>& value) { m_sourcePortRangesHasBeenSet = true; m_sourcePortRanges = value; }
-    inline void SetSourcePortRanges(Aws::Vector<PortRange>&& value) { m_sourcePortRangesHasBeenSet = true; m_sourcePortRanges = std::move(value); }
-    inline AnalysisPacketHeader& WithSourcePortRanges(const Aws::Vector<PortRange>& value) { SetSourcePortRanges(value); return *this;}
-    inline AnalysisPacketHeader& WithSourcePortRanges(Aws::Vector<PortRange>&& value) { SetSourcePortRanges(std::move(value)); return *this;}
-    inline AnalysisPacketHeader& AddSourcePortRanges(const PortRange& value) { m_sourcePortRangesHasBeenSet = true; m_sourcePortRanges.push_back(value); return *this; }
-    inline AnalysisPacketHeader& AddSourcePortRanges(PortRange&& value) { m_sourcePortRangesHasBeenSet = true; m_sourcePortRanges.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_sourceAddresses;
 
-    Aws::Vector<Aws::String> m_destinationAddresses;
-    bool m_destinationAddressesHasBeenSet = false;
+  Aws::Vector<PortRange> m_sourcePortRanges;
+  bool m_destinationAddressesHasBeenSet = false;
+  bool m_destinationPortRangesHasBeenSet = false;
+  bool m_protocolHasBeenSet = false;
+  bool m_sourceAddressesHasBeenSet = false;
+  bool m_sourcePortRangesHasBeenSet = false;
+};
 
-    Aws::Vector<PortRange> m_destinationPortRanges;
-    bool m_destinationPortRangesHasBeenSet = false;
-
-    Aws::String m_protocol;
-    bool m_protocolHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_sourceAddresses;
-    bool m_sourceAddressesHasBeenSet = false;
-
-    Aws::Vector<PortRange> m_sourcePortRanges;
-    bool m_sourcePortRangesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

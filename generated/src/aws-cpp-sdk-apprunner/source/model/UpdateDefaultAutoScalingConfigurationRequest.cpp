@@ -12,32 +12,18 @@ using namespace Aws::AppRunner::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateDefaultAutoScalingConfigurationRequest::UpdateDefaultAutoScalingConfigurationRequest() : 
-    m_autoScalingConfigurationArnHasBeenSet(false)
-{
-}
-
-Aws::String UpdateDefaultAutoScalingConfigurationRequest::SerializePayload() const
-{
+Aws::String UpdateDefaultAutoScalingConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_autoScalingConfigurationArnHasBeenSet)
-  {
-   payload.WithString("AutoScalingConfigurationArn", m_autoScalingConfigurationArn);
-
+  if (m_autoScalingConfigurationArnHasBeenSet) {
+    payload.WithString("AutoScalingConfigurationArn", m_autoScalingConfigurationArn);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateDefaultAutoScalingConfigurationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateDefaultAutoScalingConfigurationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AppRunner.UpdateDefaultAutoScalingConfiguration"));
   return headers;
-
 }
-
-
-
-

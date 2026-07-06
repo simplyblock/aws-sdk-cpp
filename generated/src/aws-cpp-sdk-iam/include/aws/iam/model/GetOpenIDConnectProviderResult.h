@@ -4,142 +4,192 @@
  */
 
 #pragma once
-#include <aws/iam/IAM_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/iam/IAM_EXPORTS.h>
 #include <aws/iam/model/ResponseMetadata.h>
 #include <aws/iam/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace IAM
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace IAM {
+namespace Model {
+/**
+ * <p>Contains the response to a successful <a
+ * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_GetOpenIDConnectProvider.html">GetOpenIDConnectProvider</a>
+ * request. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetOpenIDConnectProviderResponse">AWS
+ * API Reference</a></p>
+ */
+class GetOpenIDConnectProviderResult {
+ public:
+  AWS_IAM_API GetOpenIDConnectProviderResult() = default;
+  AWS_IAM_API GetOpenIDConnectProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_IAM_API GetOpenIDConnectProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the response to a successful <a>GetOpenIDConnectProvider</a>
-   * request. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/GetOpenIDConnectProviderResponse">AWS
-   * API Reference</a></p>
+   * <p>The URL that the IAM OIDC provider resource object is associated with. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html">CreateOpenIDConnectProvider</a>.</p>
    */
-  class GetOpenIDConnectProviderResult
-  {
-  public:
-    AWS_IAM_API GetOpenIDConnectProviderResult();
-    AWS_IAM_API GetOpenIDConnectProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_IAM_API GetOpenIDConnectProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetUrl() const { return m_url; }
+  template <typename UrlT = Aws::String>
+  void SetUrl(UrlT&& value) {
+    m_urlHasBeenSet = true;
+    m_url = std::forward<UrlT>(value);
+  }
+  template <typename UrlT = Aws::String>
+  GetOpenIDConnectProviderResult& WithUrl(UrlT&& value) {
+    SetUrl(std::forward<UrlT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of client IDs (also known as audiences) that are associated with the
+   * specified IAM OIDC provider resource object. For more information, see <a
+   * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html">CreateOpenIDConnectProvider</a>.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetClientIDList() const { return m_clientIDList; }
+  template <typename ClientIDListT = Aws::Vector<Aws::String>>
+  void SetClientIDList(ClientIDListT&& value) {
+    m_clientIDListHasBeenSet = true;
+    m_clientIDList = std::forward<ClientIDListT>(value);
+  }
+  template <typename ClientIDListT = Aws::Vector<Aws::String>>
+  GetOpenIDConnectProviderResult& WithClientIDList(ClientIDListT&& value) {
+    SetClientIDList(std::forward<ClientIDListT>(value));
+    return *this;
+  }
+  template <typename ClientIDListT = Aws::String>
+  GetOpenIDConnectProviderResult& AddClientIDList(ClientIDListT&& value) {
+    m_clientIDListHasBeenSet = true;
+    m_clientIDList.emplace_back(std::forward<ClientIDListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL that the IAM OIDC provider resource object is associated with. For
-     * more information, see <a>CreateOpenIDConnectProvider</a>.</p>
-     */
-    inline const Aws::String& GetUrl() const{ return m_url; }
-    inline void SetUrl(const Aws::String& value) { m_url = value; }
-    inline void SetUrl(Aws::String&& value) { m_url = std::move(value); }
-    inline void SetUrl(const char* value) { m_url.assign(value); }
-    inline GetOpenIDConnectProviderResult& WithUrl(const Aws::String& value) { SetUrl(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithUrl(Aws::String&& value) { SetUrl(std::move(value)); return *this;}
-    inline GetOpenIDConnectProviderResult& WithUrl(const char* value) { SetUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of certificate thumbprints that are associated with the specified IAM
+   * OIDC provider resource object. For more information, see <a
+   * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateOpenIDConnectProvider.html">CreateOpenIDConnectProvider</a>.
+   * </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetThumbprintList() const { return m_thumbprintList; }
+  template <typename ThumbprintListT = Aws::Vector<Aws::String>>
+  void SetThumbprintList(ThumbprintListT&& value) {
+    m_thumbprintListHasBeenSet = true;
+    m_thumbprintList = std::forward<ThumbprintListT>(value);
+  }
+  template <typename ThumbprintListT = Aws::Vector<Aws::String>>
+  GetOpenIDConnectProviderResult& WithThumbprintList(ThumbprintListT&& value) {
+    SetThumbprintList(std::forward<ThumbprintListT>(value));
+    return *this;
+  }
+  template <typename ThumbprintListT = Aws::String>
+  GetOpenIDConnectProviderResult& AddThumbprintList(ThumbprintListT&& value) {
+    m_thumbprintListHasBeenSet = true;
+    m_thumbprintList.emplace_back(std::forward<ThumbprintListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of client IDs (also known as audiences) that are associated with the
-     * specified IAM OIDC provider resource object. For more information, see
-     * <a>CreateOpenIDConnectProvider</a>.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetClientIDList() const{ return m_clientIDList; }
-    inline void SetClientIDList(const Aws::Vector<Aws::String>& value) { m_clientIDList = value; }
-    inline void SetClientIDList(Aws::Vector<Aws::String>&& value) { m_clientIDList = std::move(value); }
-    inline GetOpenIDConnectProviderResult& WithClientIDList(const Aws::Vector<Aws::String>& value) { SetClientIDList(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithClientIDList(Aws::Vector<Aws::String>&& value) { SetClientIDList(std::move(value)); return *this;}
-    inline GetOpenIDConnectProviderResult& AddClientIDList(const Aws::String& value) { m_clientIDList.push_back(value); return *this; }
-    inline GetOpenIDConnectProviderResult& AddClientIDList(Aws::String&& value) { m_clientIDList.push_back(std::move(value)); return *this; }
-    inline GetOpenIDConnectProviderResult& AddClientIDList(const char* value) { m_clientIDList.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time when the IAM OIDC provider resource object was created in
+   * the Amazon Web Services account.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateDate() const { return m_createDate; }
+  template <typename CreateDateT = Aws::Utils::DateTime>
+  void SetCreateDate(CreateDateT&& value) {
+    m_createDateHasBeenSet = true;
+    m_createDate = std::forward<CreateDateT>(value);
+  }
+  template <typename CreateDateT = Aws::Utils::DateTime>
+  GetOpenIDConnectProviderResult& WithCreateDate(CreateDateT&& value) {
+    SetCreateDate(std::forward<CreateDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of certificate thumbprints that are associated with the specified IAM
-     * OIDC provider resource object. For more information, see
-     * <a>CreateOpenIDConnectProvider</a>. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetThumbprintList() const{ return m_thumbprintList; }
-    inline void SetThumbprintList(const Aws::Vector<Aws::String>& value) { m_thumbprintList = value; }
-    inline void SetThumbprintList(Aws::Vector<Aws::String>&& value) { m_thumbprintList = std::move(value); }
-    inline GetOpenIDConnectProviderResult& WithThumbprintList(const Aws::Vector<Aws::String>& value) { SetThumbprintList(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithThumbprintList(Aws::Vector<Aws::String>&& value) { SetThumbprintList(std::move(value)); return *this;}
-    inline GetOpenIDConnectProviderResult& AddThumbprintList(const Aws::String& value) { m_thumbprintList.push_back(value); return *this; }
-    inline GetOpenIDConnectProviderResult& AddThumbprintList(Aws::String&& value) { m_thumbprintList.push_back(std::move(value)); return *this; }
-    inline GetOpenIDConnectProviderResult& AddThumbprintList(const char* value) { m_thumbprintList.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of tags that are attached to the specified IAM OIDC provider. The
+   * returned list of tags is sorted by tag key. For more information about tagging,
+   * see <a
+   * href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html">Tagging IAM
+   * resources</a> in the <i>IAM User Guide</i>.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  GetOpenIDConnectProviderResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  GetOpenIDConnectProviderResult& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time when the IAM OIDC provider resource object was created in
-     * the Amazon Web Services account.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateDate() const{ return m_createDate; }
-    inline void SetCreateDate(const Aws::Utils::DateTime& value) { m_createDate = value; }
-    inline void SetCreateDate(Aws::Utils::DateTime&& value) { m_createDate = std::move(value); }
-    inline GetOpenIDConnectProviderResult& WithCreateDate(const Aws::Utils::DateTime& value) { SetCreateDate(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithCreateDate(Aws::Utils::DateTime&& value) { SetCreateDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of tags that are attached to the specified IAM OIDC provider. The
-     * returned list of tags is sorted by tag key. For more information about tagging,
-     * see <a
-     * href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_tags.html">Tagging IAM
-     * resources</a> in the <i>IAM User Guide</i>.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tags = std::move(value); }
-    inline GetOpenIDConnectProviderResult& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline GetOpenIDConnectProviderResult& AddTags(const Tag& value) { m_tags.push_back(value); return *this; }
-    inline GetOpenIDConnectProviderResult& AddTags(Tag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetOpenIDConnectProviderResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetOpenIDConnectProviderResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetOpenIDConnectProviderResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_url;
 
-    Aws::String m_url;
+  Aws::Vector<Aws::String> m_clientIDList;
 
-    Aws::Vector<Aws::String> m_clientIDList;
+  Aws::Vector<Aws::String> m_thumbprintList;
 
-    Aws::Vector<Aws::String> m_thumbprintList;
+  Aws::Utils::DateTime m_createDate{};
 
-    Aws::Utils::DateTime m_createDate;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::Vector<Tag> m_tags;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_urlHasBeenSet = false;
+  bool m_clientIDListHasBeenSet = false;
+  bool m_thumbprintListHasBeenSet = false;
+  bool m_createDateHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace IAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace IAM
+}  // namespace Aws

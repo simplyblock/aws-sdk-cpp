@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
 #include <aws/macie2/model/AllowListSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Macie2
-{
-namespace Model
-{
-  class ListAllowListsResult
-  {
-  public:
-    AWS_MACIE2_API ListAllowListsResult();
-    AWS_MACIE2_API ListAllowListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MACIE2_API ListAllowListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Macie2 {
+namespace Model {
+class ListAllowListsResult {
+ public:
+  AWS_MACIE2_API ListAllowListsResult() = default;
+  AWS_MACIE2_API ListAllowListsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MACIE2_API ListAllowListsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of objects, one for each allow list.</p>
+   */
+  inline const Aws::Vector<AllowListSummary>& GetAllowLists() const { return m_allowLists; }
+  template <typename AllowListsT = Aws::Vector<AllowListSummary>>
+  void SetAllowLists(AllowListsT&& value) {
+    m_allowListsHasBeenSet = true;
+    m_allowLists = std::forward<AllowListsT>(value);
+  }
+  template <typename AllowListsT = Aws::Vector<AllowListSummary>>
+  ListAllowListsResult& WithAllowLists(AllowListsT&& value) {
+    SetAllowLists(std::forward<AllowListsT>(value));
+    return *this;
+  }
+  template <typename AllowListsT = AllowListSummary>
+  ListAllowListsResult& AddAllowLists(AllowListsT&& value) {
+    m_allowListsHasBeenSet = true;
+    m_allowLists.emplace_back(std::forward<AllowListsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects, one for each allow list.</p>
-     */
-    inline const Aws::Vector<AllowListSummary>& GetAllowLists() const{ return m_allowLists; }
-    inline void SetAllowLists(const Aws::Vector<AllowListSummary>& value) { m_allowLists = value; }
-    inline void SetAllowLists(Aws::Vector<AllowListSummary>&& value) { m_allowLists = std::move(value); }
-    inline ListAllowListsResult& WithAllowLists(const Aws::Vector<AllowListSummary>& value) { SetAllowLists(value); return *this;}
-    inline ListAllowListsResult& WithAllowLists(Aws::Vector<AllowListSummary>&& value) { SetAllowLists(std::move(value)); return *this;}
-    inline ListAllowListsResult& AddAllowLists(const AllowListSummary& value) { m_allowLists.push_back(value); return *this; }
-    inline ListAllowListsResult& AddAllowLists(AllowListSummary&& value) { m_allowLists.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The string to use in a subsequent request to get the next page of results in
+   * a paginated response. This value is null if there are no additional pages.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAllowListsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The string to use in a subsequent request to get the next page of results in
-     * a paginated response. This value is null if there are no additional pages.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListAllowListsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAllowListsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAllowListsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListAllowListsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListAllowListsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListAllowListsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListAllowListsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AllowListSummary> m_allowLists;
+ private:
+  Aws::Vector<AllowListSummary> m_allowLists;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_allowListsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

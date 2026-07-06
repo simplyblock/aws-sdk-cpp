@@ -4,88 +4,106 @@
  */
 
 #pragma once
-#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
 #include <aws/devicefarm/model/Run.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DeviceFarm
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DeviceFarm {
+namespace Model {
+/**
+ * <p>Represents the result of a list runs request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/ListRunsResult">AWS
+ * API Reference</a></p>
+ */
+class ListRunsResult {
+ public:
+  AWS_DEVICEFARM_API ListRunsResult() = default;
+  AWS_DEVICEFARM_API ListRunsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEVICEFARM_API ListRunsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the result of a list runs request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/ListRunsResult">AWS
-   * API Reference</a></p>
+   * <p>Information about the runs.</p>
    */
-  class ListRunsResult
-  {
-  public:
-    AWS_DEVICEFARM_API ListRunsResult();
-    AWS_DEVICEFARM_API ListRunsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEVICEFARM_API ListRunsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<Run>& GetRuns() const { return m_runs; }
+  template <typename RunsT = Aws::Vector<Run>>
+  void SetRuns(RunsT&& value) {
+    m_runsHasBeenSet = true;
+    m_runs = std::forward<RunsT>(value);
+  }
+  template <typename RunsT = Aws::Vector<Run>>
+  ListRunsResult& WithRuns(RunsT&& value) {
+    SetRuns(std::forward<RunsT>(value));
+    return *this;
+  }
+  template <typename RunsT = Run>
+  ListRunsResult& AddRuns(RunsT&& value) {
+    m_runsHasBeenSet = true;
+    m_runs.emplace_back(std::forward<RunsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>If the number of items that are returned is significantly large, this is an
+   * identifier that is also returned. It can be used in a subsequent call to this
+   * operation to return the next set of items in the list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRunsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the runs.</p>
-     */
-    inline const Aws::Vector<Run>& GetRuns() const{ return m_runs; }
-    inline void SetRuns(const Aws::Vector<Run>& value) { m_runs = value; }
-    inline void SetRuns(Aws::Vector<Run>&& value) { m_runs = std::move(value); }
-    inline ListRunsResult& WithRuns(const Aws::Vector<Run>& value) { SetRuns(value); return *this;}
-    inline ListRunsResult& WithRuns(Aws::Vector<Run>&& value) { SetRuns(std::move(value)); return *this;}
-    inline ListRunsResult& AddRuns(const Run& value) { m_runs.push_back(value); return *this; }
-    inline ListRunsResult& AddRuns(Run&& value) { m_runs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>If the number of items that are returned is significantly large, this is an
-     * identifier that is also returned. It can be used in a subsequent call to this
-     * operation to return the next set of items in the list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListRunsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRunsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRunsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListRunsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListRunsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListRunsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListRunsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Run> m_runs;
 
-    Aws::Vector<Run> m_runs;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_runsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

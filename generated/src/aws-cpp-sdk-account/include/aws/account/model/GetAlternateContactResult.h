@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/account/Account_EXPORTS.h>
 #include <aws/account/model/AlternateContact.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Account
-{
-namespace Model
-{
-  class GetAlternateContactResult
-  {
-  public:
-    AWS_ACCOUNT_API GetAlternateContactResult();
-    AWS_ACCOUNT_API GetAlternateContactResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ACCOUNT_API GetAlternateContactResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Account {
+namespace Model {
+class GetAlternateContactResult {
+ public:
+  AWS_ACCOUNT_API GetAlternateContactResult() = default;
+  AWS_ACCOUNT_API GetAlternateContactResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ACCOUNT_API GetAlternateContactResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure that contains the details for the specified alternate
+   * contact.</p>
+   */
+  inline const AlternateContact& GetAlternateContact() const { return m_alternateContact; }
+  template <typename AlternateContactT = AlternateContact>
+  void SetAlternateContact(AlternateContactT&& value) {
+    m_alternateContactHasBeenSet = true;
+    m_alternateContact = std::forward<AlternateContactT>(value);
+  }
+  template <typename AlternateContactT = AlternateContact>
+  GetAlternateContactResult& WithAlternateContact(AlternateContactT&& value) {
+    SetAlternateContact(std::forward<AlternateContactT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains the details for the specified alternate
-     * contact.</p>
-     */
-    inline const AlternateContact& GetAlternateContact() const{ return m_alternateContact; }
-    inline void SetAlternateContact(const AlternateContact& value) { m_alternateContact = value; }
-    inline void SetAlternateContact(AlternateContact&& value) { m_alternateContact = std::move(value); }
-    inline GetAlternateContactResult& WithAlternateContact(const AlternateContact& value) { SetAlternateContact(value); return *this;}
-    inline GetAlternateContactResult& WithAlternateContact(AlternateContact&& value) { SetAlternateContact(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAlternateContactResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAlternateContactResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAlternateContactResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAlternateContactResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AlternateContact m_alternateContact;
+ private:
+  AlternateContact m_alternateContact;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_alternateContactHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Account
-} // namespace Aws
+}  // namespace Model
+}  // namespace Account
+}  // namespace Aws

@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/entityresolution/EntityResolution_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/entityresolution/EntityResolution_EXPORTS.h>
 #include <aws/entityresolution/model/JobSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EntityResolution
-{
-namespace Model
-{
-  class ListMatchingJobsResult
-  {
-  public:
-    AWS_ENTITYRESOLUTION_API ListMatchingJobsResult();
-    AWS_ENTITYRESOLUTION_API ListMatchingJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ENTITYRESOLUTION_API ListMatchingJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EntityResolution {
+namespace Model {
+class ListMatchingJobsResult {
+ public:
+  AWS_ENTITYRESOLUTION_API ListMatchingJobsResult() = default;
+  AWS_ENTITYRESOLUTION_API ListMatchingJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ENTITYRESOLUTION_API ListMatchingJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of <code>JobSummary</code> objects, each of which contain the ID,
+   * status, start time, and end time of a job.</p>
+   */
+  inline const Aws::Vector<JobSummary>& GetJobs() const { return m_jobs; }
+  template <typename JobsT = Aws::Vector<JobSummary>>
+  void SetJobs(JobsT&& value) {
+    m_jobsHasBeenSet = true;
+    m_jobs = std::forward<JobsT>(value);
+  }
+  template <typename JobsT = Aws::Vector<JobSummary>>
+  ListMatchingJobsResult& WithJobs(JobsT&& value) {
+    SetJobs(std::forward<JobsT>(value));
+    return *this;
+  }
+  template <typename JobsT = JobSummary>
+  ListMatchingJobsResult& AddJobs(JobsT&& value) {
+    m_jobsHasBeenSet = true;
+    m_jobs.emplace_back(std::forward<JobsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>JobSummary</code> objects, each of which contain the ID,
-     * status, start time, and end time of a job.</p>
-     */
-    inline const Aws::Vector<JobSummary>& GetJobs() const{ return m_jobs; }
-    inline void SetJobs(const Aws::Vector<JobSummary>& value) { m_jobs = value; }
-    inline void SetJobs(Aws::Vector<JobSummary>&& value) { m_jobs = std::move(value); }
-    inline ListMatchingJobsResult& WithJobs(const Aws::Vector<JobSummary>& value) { SetJobs(value); return *this;}
-    inline ListMatchingJobsResult& WithJobs(Aws::Vector<JobSummary>&& value) { SetJobs(std::move(value)); return *this;}
-    inline ListMatchingJobsResult& AddJobs(const JobSummary& value) { m_jobs.push_back(value); return *this; }
-    inline ListMatchingJobsResult& AddJobs(JobSummary&& value) { m_jobs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token from the previous API call.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListMatchingJobsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token from the previous API call.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListMatchingJobsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListMatchingJobsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListMatchingJobsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListMatchingJobsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListMatchingJobsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListMatchingJobsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListMatchingJobsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<JobSummary> m_jobs;
+ private:
+  Aws::Vector<JobSummary> m_jobs;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EntityResolution
-} // namespace Aws
+}  // namespace Model
+}  // namespace EntityResolution
+}  // namespace Aws

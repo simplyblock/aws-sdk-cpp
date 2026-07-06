@@ -4,66 +4,74 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
-  class DeleteComponentResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API DeleteComponentResult();
-    AWS_IMAGEBUILDER_API DeleteComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API DeleteComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+class DeleteComponentResult {
+ public:
+  AWS_IMAGEBUILDER_API DeleteComponentResult() = default;
+  AWS_IMAGEBUILDER_API DeleteComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API DeleteComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The request ID that uniquely identifies this request.</p>
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteComponentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The request ID that uniquely identifies this request.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteComponentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteComponentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteComponentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the component build version that this
+   * request deleted.</p>
+   */
+  inline const Aws::String& GetComponentBuildVersionArn() const { return m_componentBuildVersionArn; }
+  template <typename ComponentBuildVersionArnT = Aws::String>
+  void SetComponentBuildVersionArn(ComponentBuildVersionArnT&& value) {
+    m_componentBuildVersionArnHasBeenSet = true;
+    m_componentBuildVersionArn = std::forward<ComponentBuildVersionArnT>(value);
+  }
+  template <typename ComponentBuildVersionArnT = Aws::String>
+  DeleteComponentResult& WithComponentBuildVersionArn(ComponentBuildVersionArnT&& value) {
+    SetComponentBuildVersionArn(std::forward<ComponentBuildVersionArnT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The ARN of the component build version that this request deleted.</p>
-     */
-    inline const Aws::String& GetComponentBuildVersionArn() const{ return m_componentBuildVersionArn; }
-    inline void SetComponentBuildVersionArn(const Aws::String& value) { m_componentBuildVersionArn = value; }
-    inline void SetComponentBuildVersionArn(Aws::String&& value) { m_componentBuildVersionArn = std::move(value); }
-    inline void SetComponentBuildVersionArn(const char* value) { m_componentBuildVersionArn.assign(value); }
-    inline DeleteComponentResult& WithComponentBuildVersionArn(const Aws::String& value) { SetComponentBuildVersionArn(value); return *this;}
-    inline DeleteComponentResult& WithComponentBuildVersionArn(Aws::String&& value) { SetComponentBuildVersionArn(std::move(value)); return *this;}
-    inline DeleteComponentResult& WithComponentBuildVersionArn(const char* value) { SetComponentBuildVersionArn(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_requestId;
 
-    Aws::String m_requestId;
+  Aws::String m_componentBuildVersionArn;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_componentBuildVersionArnHasBeenSet = false;
+};
 
-    Aws::String m_componentBuildVersionArn;
-  };
-
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

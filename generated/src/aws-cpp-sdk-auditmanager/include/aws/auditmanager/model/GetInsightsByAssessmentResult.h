@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
 #include <aws/auditmanager/model/InsightsByAssessment.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AuditManager
-{
-namespace Model
-{
-  class GetInsightsByAssessmentResult
-  {
-  public:
-    AWS_AUDITMANAGER_API GetInsightsByAssessmentResult();
-    AWS_AUDITMANAGER_API GetInsightsByAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUDITMANAGER_API GetInsightsByAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AuditManager {
+namespace Model {
+class GetInsightsByAssessmentResult {
+ public:
+  AWS_AUDITMANAGER_API GetInsightsByAssessmentResult() = default;
+  AWS_AUDITMANAGER_API GetInsightsByAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUDITMANAGER_API GetInsightsByAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The assessment analytics data that the <code>GetInsightsByAssessment</code>
+   * API returned. </p>
+   */
+  inline const InsightsByAssessment& GetInsights() const { return m_insights; }
+  template <typename InsightsT = InsightsByAssessment>
+  void SetInsights(InsightsT&& value) {
+    m_insightsHasBeenSet = true;
+    m_insights = std::forward<InsightsT>(value);
+  }
+  template <typename InsightsT = InsightsByAssessment>
+  GetInsightsByAssessmentResult& WithInsights(InsightsT&& value) {
+    SetInsights(std::forward<InsightsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The assessment analytics data that the <code>GetInsightsByAssessment</code>
-     * API returned. </p>
-     */
-    inline const InsightsByAssessment& GetInsights() const{ return m_insights; }
-    inline void SetInsights(const InsightsByAssessment& value) { m_insights = value; }
-    inline void SetInsights(InsightsByAssessment&& value) { m_insights = std::move(value); }
-    inline GetInsightsByAssessmentResult& WithInsights(const InsightsByAssessment& value) { SetInsights(value); return *this;}
-    inline GetInsightsByAssessmentResult& WithInsights(InsightsByAssessment&& value) { SetInsights(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetInsightsByAssessmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetInsightsByAssessmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetInsightsByAssessmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetInsightsByAssessmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    InsightsByAssessment m_insights;
+ private:
+  InsightsByAssessment m_insights;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_insightsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace AuditManager
+}  // namespace Aws

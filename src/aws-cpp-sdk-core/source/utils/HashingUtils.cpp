@@ -3,24 +3,28 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/Outcome.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/base64/Base64.h>
+#include <aws/core/utils/crypto/CRC32.h>
+#include <aws/core/utils/crypto/CRC64.h>
+#include <aws/core/utils/crypto/MD5.h>
+#include <aws/core/utils/crypto/Sha1.h>
 #include <aws/core/utils/crypto/Sha256.h>
 #include <aws/core/utils/crypto/Sha256HMAC.h>
-#include <aws/core/utils/crypto/Sha1.h>
-#include <aws/core/utils/crypto/MD5.h>
-#include <aws/core/utils/crypto/CRC32.h>
-#include <aws/core/utils/Outcome.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/crypto/Sha512.h>
+#include <aws/core/utils/checksum/XXHash.h>
+#include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/memory/stl/AWSList.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <iomanip>
 
 using namespace Aws::Utils;
 using namespace Aws::Utils::Base64;
 using namespace Aws::Utils::Crypto;
+using namespace Aws::Utils::Checksum;
 
 // internal buffers are fixed-size arrays, so this is harmless memory-management wise
 static Aws::Utils::Base64::Base64 s_base64;
@@ -42,6 +46,18 @@ ByteBuffer HashingUtils::CalculateSHA256HMAC(const ByteBuffer& toSign, const Byt
 {
     Sha256HMAC hash;
     return hash.Calculate(toSign, secret).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateSHA512(const Aws::String& str)
+{
+    Sha512 hash;
+    return hash.Calculate(str).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateSHA512(Aws::IOStream& stream)
+{
+    Sha512 hash;
+    return hash.Calculate(stream).GetResult();
 }
 
 ByteBuffer HashingUtils::CalculateSHA256(const Aws::String& str)
@@ -259,6 +275,46 @@ ByteBuffer HashingUtils::CalculateCRC32C(Aws::IOStream& stream)
 {
     CRC32C hash;
     return hash.Calculate(stream).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateCRC64(const Aws::String& str) {
+  CRC64 hash;
+  return hash.Calculate(str).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateCRC64(Aws::IOStream& stream) {
+  CRC64 hash;
+  return hash.Calculate(stream).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash64(const Aws::String& str) {
+  XXHash64 hash;
+  return hash.Calculate(str).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash64(Aws::IOStream& stream) {
+  XXHash64 hash;
+  return hash.Calculate(stream).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash3(const Aws::String& str) {
+  XXHash3 hash;
+  return hash.Calculate(str).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash3(Aws::IOStream& stream) {
+  XXHash3 hash;
+  return hash.Calculate(stream).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash128(const Aws::String& str) {
+  XXHash128 hash;
+  return hash.Calculate(str).GetResult();
+}
+
+ByteBuffer HashingUtils::CalculateXXHash128(Aws::IOStream& stream) {
+  XXHash128 hash;
+  return hash.Calculate(stream).GetResult();
 }
 
 int HashingUtils::HashString(const char* strToHash)

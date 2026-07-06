@@ -11,57 +11,37 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Athena
-{
-namespace Model
-{
+namespace Aws {
+namespace Athena {
+namespace Model {
 
-CapacityAssignment::CapacityAssignment() : 
-    m_workGroupNamesHasBeenSet(false)
-{
-}
+CapacityAssignment::CapacityAssignment(JsonView jsonValue) { *this = jsonValue; }
 
-CapacityAssignment::CapacityAssignment(JsonView jsonValue)
-  : CapacityAssignment()
-{
-  *this = jsonValue;
-}
-
-CapacityAssignment& CapacityAssignment::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("WorkGroupNames"))
-  {
+CapacityAssignment& CapacityAssignment::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("WorkGroupNames")) {
     Aws::Utils::Array<JsonView> workGroupNamesJsonList = jsonValue.GetArray("WorkGroupNames");
-    for(unsigned workGroupNamesIndex = 0; workGroupNamesIndex < workGroupNamesJsonList.GetLength(); ++workGroupNamesIndex)
-    {
+    for (unsigned workGroupNamesIndex = 0; workGroupNamesIndex < workGroupNamesJsonList.GetLength(); ++workGroupNamesIndex) {
       m_workGroupNames.push_back(workGroupNamesJsonList[workGroupNamesIndex].AsString());
     }
     m_workGroupNamesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CapacityAssignment::Jsonize() const
-{
+JsonValue CapacityAssignment::Jsonize() const {
   JsonValue payload;
 
-  if(m_workGroupNamesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> workGroupNamesJsonList(m_workGroupNames.size());
-   for(unsigned workGroupNamesIndex = 0; workGroupNamesIndex < workGroupNamesJsonList.GetLength(); ++workGroupNamesIndex)
-   {
-     workGroupNamesJsonList[workGroupNamesIndex].AsString(m_workGroupNames[workGroupNamesIndex]);
-   }
-   payload.WithArray("WorkGroupNames", std::move(workGroupNamesJsonList));
-
+  if (m_workGroupNamesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> workGroupNamesJsonList(m_workGroupNames.size());
+    for (unsigned workGroupNamesIndex = 0; workGroupNamesIndex < workGroupNamesJsonList.GetLength(); ++workGroupNamesIndex) {
+      workGroupNamesJsonList[workGroupNamesIndex].AsString(m_workGroupNames[workGroupNamesIndex]);
+    }
+    payload.WithArray("WorkGroupNames", std::move(workGroupNamesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

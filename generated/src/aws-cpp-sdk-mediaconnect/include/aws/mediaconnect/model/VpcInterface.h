@@ -4,145 +4,174 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/NetworkInterfaceType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
 
+/**
+ * <p> The settings for a VPC source.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/VpcInterface">AWS
+ * API Reference</a></p>
+ */
+class VpcInterface {
+ public:
+  AWS_MEDIACONNECT_API VpcInterface() = default;
+  AWS_MEDIACONNECT_API VpcInterface(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API VpcInterface& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * The settings for a VPC Source.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/VpcInterface">AWS
-   * API Reference</a></p>
+   * <p> Immutable and has to be a unique against other VpcInterfaces in this
+   * Flow.</p>
    */
-  class VpcInterface
-  {
-  public:
-    AWS_MEDIACONNECT_API VpcInterface();
-    AWS_MEDIACONNECT_API VpcInterface(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API VpcInterface& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  VpcInterface& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> IDs of the network interfaces created in customer's account by
+   * MediaConnect.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetNetworkInterfaceIds() const { return m_networkInterfaceIds; }
+  inline bool NetworkInterfaceIdsHasBeenSet() const { return m_networkInterfaceIdsHasBeenSet; }
+  template <typename NetworkInterfaceIdsT = Aws::Vector<Aws::String>>
+  void SetNetworkInterfaceIds(NetworkInterfaceIdsT&& value) {
+    m_networkInterfaceIdsHasBeenSet = true;
+    m_networkInterfaceIds = std::forward<NetworkInterfaceIdsT>(value);
+  }
+  template <typename NetworkInterfaceIdsT = Aws::Vector<Aws::String>>
+  VpcInterface& WithNetworkInterfaceIds(NetworkInterfaceIdsT&& value) {
+    SetNetworkInterfaceIds(std::forward<NetworkInterfaceIdsT>(value));
+    return *this;
+  }
+  template <typename NetworkInterfaceIdsT = Aws::String>
+  VpcInterface& AddNetworkInterfaceIds(NetworkInterfaceIdsT&& value) {
+    m_networkInterfaceIdsHasBeenSet = true;
+    m_networkInterfaceIds.emplace_back(std::forward<NetworkInterfaceIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Immutable and has to be a unique against other VpcInterfaces in this Flow.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline VpcInterface& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline VpcInterface& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline VpcInterface& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The type of network interface.</p>
+   */
+  inline NetworkInterfaceType GetNetworkInterfaceType() const { return m_networkInterfaceType; }
+  inline bool NetworkInterfaceTypeHasBeenSet() const { return m_networkInterfaceTypeHasBeenSet; }
+  inline void SetNetworkInterfaceType(NetworkInterfaceType value) {
+    m_networkInterfaceTypeHasBeenSet = true;
+    m_networkInterfaceType = value;
+  }
+  inline VpcInterface& WithNetworkInterfaceType(NetworkInterfaceType value) {
+    SetNetworkInterfaceType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * IDs of the network interfaces created in customer's account by MediaConnect.
-     */
-    inline const Aws::Vector<Aws::String>& GetNetworkInterfaceIds() const{ return m_networkInterfaceIds; }
-    inline bool NetworkInterfaceIdsHasBeenSet() const { return m_networkInterfaceIdsHasBeenSet; }
-    inline void SetNetworkInterfaceIds(const Aws::Vector<Aws::String>& value) { m_networkInterfaceIdsHasBeenSet = true; m_networkInterfaceIds = value; }
-    inline void SetNetworkInterfaceIds(Aws::Vector<Aws::String>&& value) { m_networkInterfaceIdsHasBeenSet = true; m_networkInterfaceIds = std::move(value); }
-    inline VpcInterface& WithNetworkInterfaceIds(const Aws::Vector<Aws::String>& value) { SetNetworkInterfaceIds(value); return *this;}
-    inline VpcInterface& WithNetworkInterfaceIds(Aws::Vector<Aws::String>&& value) { SetNetworkInterfaceIds(std::move(value)); return *this;}
-    inline VpcInterface& AddNetworkInterfaceIds(const Aws::String& value) { m_networkInterfaceIdsHasBeenSet = true; m_networkInterfaceIds.push_back(value); return *this; }
-    inline VpcInterface& AddNetworkInterfaceIds(Aws::String&& value) { m_networkInterfaceIdsHasBeenSet = true; m_networkInterfaceIds.push_back(std::move(value)); return *this; }
-    inline VpcInterface& AddNetworkInterfaceIds(const char* value) { m_networkInterfaceIdsHasBeenSet = true; m_networkInterfaceIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> A role Arn MediaConnect can assume to create ENIs in your account.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  VpcInterface& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The type of network interface.
-     */
-    inline const NetworkInterfaceType& GetNetworkInterfaceType() const{ return m_networkInterfaceType; }
-    inline bool NetworkInterfaceTypeHasBeenSet() const { return m_networkInterfaceTypeHasBeenSet; }
-    inline void SetNetworkInterfaceType(const NetworkInterfaceType& value) { m_networkInterfaceTypeHasBeenSet = true; m_networkInterfaceType = value; }
-    inline void SetNetworkInterfaceType(NetworkInterfaceType&& value) { m_networkInterfaceTypeHasBeenSet = true; m_networkInterfaceType = std::move(value); }
-    inline VpcInterface& WithNetworkInterfaceType(const NetworkInterfaceType& value) { SetNetworkInterfaceType(value); return *this;}
-    inline VpcInterface& WithNetworkInterfaceType(NetworkInterfaceType&& value) { SetNetworkInterfaceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Security Group IDs to be used on ENI.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const { return m_securityGroupIds; }
+  inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds = std::forward<SecurityGroupIdsT>(value);
+  }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  VpcInterface& WithSecurityGroupIds(SecurityGroupIdsT&& value) {
+    SetSecurityGroupIds(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupIdsT = Aws::String>
+  VpcInterface& AddSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds.emplace_back(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Role Arn MediaConnect can assumes to create ENIs in customer's account
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline VpcInterface& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline VpcInterface& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline VpcInterface& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Subnet must be in the AZ of the Flow. </p>
+   */
+  inline const Aws::String& GetSubnetId() const { return m_subnetId; }
+  inline bool SubnetIdHasBeenSet() const { return m_subnetIdHasBeenSet; }
+  template <typename SubnetIdT = Aws::String>
+  void SetSubnetId(SubnetIdT&& value) {
+    m_subnetIdHasBeenSet = true;
+    m_subnetId = std::forward<SubnetIdT>(value);
+  }
+  template <typename SubnetIdT = Aws::String>
+  VpcInterface& WithSubnetId(SubnetIdT&& value) {
+    SetSubnetId(std::forward<SubnetIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * Security Group IDs to be used on ENI.
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const{ return m_securityGroupIds; }
-    inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
-    inline void SetSecurityGroupIds(const Aws::Vector<Aws::String>& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = value; }
-    inline void SetSecurityGroupIds(Aws::Vector<Aws::String>&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = std::move(value); }
-    inline VpcInterface& WithSecurityGroupIds(const Aws::Vector<Aws::String>& value) { SetSecurityGroupIds(value); return *this;}
-    inline VpcInterface& WithSecurityGroupIds(Aws::Vector<Aws::String>&& value) { SetSecurityGroupIds(std::move(value)); return *this;}
-    inline VpcInterface& AddSecurityGroupIds(const Aws::String& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    inline VpcInterface& AddSecurityGroupIds(Aws::String&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(std::move(value)); return *this; }
-    inline VpcInterface& AddSecurityGroupIds(const char* value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_networkInterfaceIds;
 
-    ///@{
-    /**
-     * Subnet must be in the AZ of the Flow
-     */
-    inline const Aws::String& GetSubnetId() const{ return m_subnetId; }
-    inline bool SubnetIdHasBeenSet() const { return m_subnetIdHasBeenSet; }
-    inline void SetSubnetId(const Aws::String& value) { m_subnetIdHasBeenSet = true; m_subnetId = value; }
-    inline void SetSubnetId(Aws::String&& value) { m_subnetIdHasBeenSet = true; m_subnetId = std::move(value); }
-    inline void SetSubnetId(const char* value) { m_subnetIdHasBeenSet = true; m_subnetId.assign(value); }
-    inline VpcInterface& WithSubnetId(const Aws::String& value) { SetSubnetId(value); return *this;}
-    inline VpcInterface& WithSubnetId(Aws::String&& value) { SetSubnetId(std::move(value)); return *this;}
-    inline VpcInterface& WithSubnetId(const char* value) { SetSubnetId(value); return *this;}
-    ///@}
-  private:
+  NetworkInterfaceType m_networkInterfaceType{NetworkInterfaceType::NOT_SET};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_roleArn;
 
-    Aws::Vector<Aws::String> m_networkInterfaceIds;
-    bool m_networkInterfaceIdsHasBeenSet = false;
+  Aws::Vector<Aws::String> m_securityGroupIds;
 
-    NetworkInterfaceType m_networkInterfaceType;
-    bool m_networkInterfaceTypeHasBeenSet = false;
+  Aws::String m_subnetId;
+  bool m_nameHasBeenSet = false;
+  bool m_networkInterfaceIdsHasBeenSet = false;
+  bool m_networkInterfaceTypeHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_securityGroupIdsHasBeenSet = false;
+  bool m_subnetIdHasBeenSet = false;
+};
 
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_securityGroupIds;
-    bool m_securityGroupIdsHasBeenSet = false;
-
-    Aws::String m_subnetId;
-    bool m_subnetIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

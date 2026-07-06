@@ -3,48 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/CreateTransitGatewayRouteTableAnnouncementRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/CreateTransitGatewayRouteTableAnnouncementRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-CreateTransitGatewayRouteTableAnnouncementRequest::CreateTransitGatewayRouteTableAnnouncementRequest() : 
-    m_transitGatewayRouteTableIdHasBeenSet(false),
-    m_peeringAttachmentIdHasBeenSet(false),
-    m_tagSpecificationsHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String CreateTransitGatewayRouteTableAnnouncementRequest::SerializePayload() const
-{
+Aws::String CreateTransitGatewayRouteTableAnnouncementRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateTransitGatewayRouteTableAnnouncement&";
-  if(m_transitGatewayRouteTableIdHasBeenSet)
-  {
+  if (m_transitGatewayRouteTableIdHasBeenSet) {
     ss << "TransitGatewayRouteTableId=" << StringUtils::URLEncode(m_transitGatewayRouteTableId.c_str()) << "&";
   }
 
-  if(m_peeringAttachmentIdHasBeenSet)
-  {
+  if (m_peeringAttachmentIdHasBeenSet) {
     ss << "PeeringAttachmentId=" << StringUtils::URLEncode(m_peeringAttachmentId.c_str()) << "&";
   }
 
-  if(m_tagSpecificationsHasBeenSet)
-  {
+  if (m_tagSpecificationsHasBeenSet) {
     unsigned tagSpecificationsCount = 1;
-    for(auto& item : m_tagSpecifications)
-    {
+    for (auto& item : m_tagSpecifications) {
       item.OutputToStream(ss, "TagSpecification.", tagSpecificationsCount, "");
       tagSpecificationsCount++;
     }
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -52,8 +37,4 @@ Aws::String CreateTransitGatewayRouteTableAnnouncementRequest::SerializePayload(
   return ss.str();
 }
 
-
-void  CreateTransitGatewayRouteTableAnnouncementRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateTransitGatewayRouteTableAnnouncementRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

@@ -17,23 +17,11 @@ using namespace Aws::Utils;
 using namespace Aws::Http;
 using namespace Aws;
 
-PostAgentProfileRequest::PostAgentProfileRequest() : 
-    m_profileToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_profileTokenHasBeenSet(true),
-    m_profilingGroupNameHasBeenSet(false)
-{
+void PostAgentProfileRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_profileTokenHasBeenSet) {
+    ss << m_profileToken;
+    uri.AddQueryStringParameter("profileToken", ss.str());
+    ss.str("");
+  }
 }
-
-
-void PostAgentProfileRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_profileTokenHasBeenSet)
-    {
-      ss << m_profileToken;
-      uri.AddQueryStringParameter("profileToken", ss.str());
-      ss.str("");
-    }
-
-}
-

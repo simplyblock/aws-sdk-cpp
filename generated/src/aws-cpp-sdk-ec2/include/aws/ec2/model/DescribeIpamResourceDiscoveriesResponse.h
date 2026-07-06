@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IpamResourceDiscovery.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeIpamResourceDiscoveriesResponse
-  {
-  public:
-    AWS_EC2_API DescribeIpamResourceDiscoveriesResponse();
-    AWS_EC2_API DescribeIpamResourceDiscoveriesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeIpamResourceDiscoveriesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeIpamResourceDiscoveriesResponse {
+ public:
+  AWS_EC2_API DescribeIpamResourceDiscoveriesResponse() = default;
+  AWS_EC2_API DescribeIpamResourceDiscoveriesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeIpamResourceDiscoveriesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The resource discoveries.</p>
+   */
+  inline const Aws::Vector<IpamResourceDiscovery>& GetIpamResourceDiscoveries() const { return m_ipamResourceDiscoveries; }
+  template <typename IpamResourceDiscoveriesT = Aws::Vector<IpamResourceDiscovery>>
+  void SetIpamResourceDiscoveries(IpamResourceDiscoveriesT&& value) {
+    m_ipamResourceDiscoveriesHasBeenSet = true;
+    m_ipamResourceDiscoveries = std::forward<IpamResourceDiscoveriesT>(value);
+  }
+  template <typename IpamResourceDiscoveriesT = Aws::Vector<IpamResourceDiscovery>>
+  DescribeIpamResourceDiscoveriesResponse& WithIpamResourceDiscoveries(IpamResourceDiscoveriesT&& value) {
+    SetIpamResourceDiscoveries(std::forward<IpamResourceDiscoveriesT>(value));
+    return *this;
+  }
+  template <typename IpamResourceDiscoveriesT = IpamResourceDiscovery>
+  DescribeIpamResourceDiscoveriesResponse& AddIpamResourceDiscoveries(IpamResourceDiscoveriesT&& value) {
+    m_ipamResourceDiscoveriesHasBeenSet = true;
+    m_ipamResourceDiscoveries.emplace_back(std::forward<IpamResourceDiscoveriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource discoveries.</p>
-     */
-    inline const Aws::Vector<IpamResourceDiscovery>& GetIpamResourceDiscoveries() const{ return m_ipamResourceDiscoveries; }
-    inline void SetIpamResourceDiscoveries(const Aws::Vector<IpamResourceDiscovery>& value) { m_ipamResourceDiscoveries = value; }
-    inline void SetIpamResourceDiscoveries(Aws::Vector<IpamResourceDiscovery>&& value) { m_ipamResourceDiscoveries = std::move(value); }
-    inline DescribeIpamResourceDiscoveriesResponse& WithIpamResourceDiscoveries(const Aws::Vector<IpamResourceDiscovery>& value) { SetIpamResourceDiscoveries(value); return *this;}
-    inline DescribeIpamResourceDiscoveriesResponse& WithIpamResourceDiscoveries(Aws::Vector<IpamResourceDiscovery>&& value) { SetIpamResourceDiscoveries(std::move(value)); return *this;}
-    inline DescribeIpamResourceDiscoveriesResponse& AddIpamResourceDiscoveries(const IpamResourceDiscovery& value) { m_ipamResourceDiscoveries.push_back(value); return *this; }
-    inline DescribeIpamResourceDiscoveriesResponse& AddIpamResourceDiscoveries(IpamResourceDiscovery&& value) { m_ipamResourceDiscoveries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeIpamResourceDiscoveriesResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specify the pagination token from a previous request to retrieve the next
-     * page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeIpamResourceDiscoveriesResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeIpamResourceDiscoveriesResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeIpamResourceDiscoveriesResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeIpamResourceDiscoveriesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeIpamResourceDiscoveriesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeIpamResourceDiscoveriesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<IpamResourceDiscovery> m_ipamResourceDiscoveries;
+ private:
+  Aws::Vector<IpamResourceDiscovery> m_ipamResourceDiscoveries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ipamResourceDiscoveriesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -4,94 +4,121 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ElasticGpus.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeElasticGpusResponse
-  {
-  public:
-    AWS_EC2_API DescribeElasticGpusResponse();
-    AWS_EC2_API DescribeElasticGpusResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeElasticGpusResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeElasticGpusResponse {
+ public:
+  AWS_EC2_API DescribeElasticGpusResponse() = default;
+  AWS_EC2_API DescribeElasticGpusResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeElasticGpusResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the Elastic Graphics accelerators.</p>
+   */
+  inline const Aws::Vector<ElasticGpus>& GetElasticGpuSet() const { return m_elasticGpuSet; }
+  template <typename ElasticGpuSetT = Aws::Vector<ElasticGpus>>
+  void SetElasticGpuSet(ElasticGpuSetT&& value) {
+    m_elasticGpuSetHasBeenSet = true;
+    m_elasticGpuSet = std::forward<ElasticGpuSetT>(value);
+  }
+  template <typename ElasticGpuSetT = Aws::Vector<ElasticGpus>>
+  DescribeElasticGpusResponse& WithElasticGpuSet(ElasticGpuSetT&& value) {
+    SetElasticGpuSet(std::forward<ElasticGpuSetT>(value));
+    return *this;
+  }
+  template <typename ElasticGpuSetT = ElasticGpus>
+  DescribeElasticGpusResponse& AddElasticGpuSet(ElasticGpuSetT&& value) {
+    m_elasticGpuSetHasBeenSet = true;
+    m_elasticGpuSet.emplace_back(std::forward<ElasticGpuSetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the Elastic Graphics accelerators.</p>
-     */
-    inline const Aws::Vector<ElasticGpus>& GetElasticGpuSet() const{ return m_elasticGpuSet; }
-    inline void SetElasticGpuSet(const Aws::Vector<ElasticGpus>& value) { m_elasticGpuSet = value; }
-    inline void SetElasticGpuSet(Aws::Vector<ElasticGpus>&& value) { m_elasticGpuSet = std::move(value); }
-    inline DescribeElasticGpusResponse& WithElasticGpuSet(const Aws::Vector<ElasticGpus>& value) { SetElasticGpuSet(value); return *this;}
-    inline DescribeElasticGpusResponse& WithElasticGpuSet(Aws::Vector<ElasticGpus>&& value) { SetElasticGpuSet(std::move(value)); return *this;}
-    inline DescribeElasticGpusResponse& AddElasticGpuSet(const ElasticGpus& value) { m_elasticGpuSet.push_back(value); return *this; }
-    inline DescribeElasticGpusResponse& AddElasticGpuSet(ElasticGpus&& value) { m_elasticGpuSet.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The total number of items to return. If the total number of items available
+   * is more than the value specified in max-items then a Next-Token will be provided
+   * in the output that you can use to resume pagination.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline DescribeElasticGpusResponse& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The total number of items to return. If the total number of items available
-     * is more than the value specified in max-items then a Next-Token will be provided
-     * in the output that you can use to resume pagination.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline void SetMaxResults(int value) { m_maxResults = value; }
-    inline DescribeElasticGpusResponse& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeElasticGpusResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeElasticGpusResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeElasticGpusResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeElasticGpusResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeElasticGpusResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeElasticGpusResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeElasticGpusResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ElasticGpus> m_elasticGpuSet;
+ private:
+  Aws::Vector<ElasticGpus> m_elasticGpuSet;
 
-    int m_maxResults;
+  int m_maxResults{0};
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_elasticGpuSetHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

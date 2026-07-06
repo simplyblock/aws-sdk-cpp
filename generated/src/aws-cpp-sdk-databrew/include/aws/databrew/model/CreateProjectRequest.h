@@ -4,143 +4,165 @@
  */
 
 #pragma once
-#include <aws/databrew/GlueDataBrew_EXPORTS.h>
-#include <aws/databrew/GlueDataBrewRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/databrew/model/Sample.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/databrew/GlueDataBrewRequest.h>
+#include <aws/databrew/GlueDataBrew_EXPORTS.h>
+#include <aws/databrew/model/Sample.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GlueDataBrew
-{
-namespace Model
-{
+namespace Aws {
+namespace GlueDataBrew {
+namespace Model {
 
+/**
+ */
+class CreateProjectRequest : public GlueDataBrewRequest {
+ public:
+  AWS_GLUEDATABREW_API CreateProjectRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateProject"; }
+
+  AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name of an existing dataset to associate this project with.</p>
    */
-  class CreateProjectRequest : public GlueDataBrewRequest
-  {
-  public:
-    AWS_GLUEDATABREW_API CreateProjectRequest();
+  inline const Aws::String& GetDatasetName() const { return m_datasetName; }
+  inline bool DatasetNameHasBeenSet() const { return m_datasetNameHasBeenSet; }
+  template <typename DatasetNameT = Aws::String>
+  void SetDatasetName(DatasetNameT&& value) {
+    m_datasetNameHasBeenSet = true;
+    m_datasetName = std::forward<DatasetNameT>(value);
+  }
+  template <typename DatasetNameT = Aws::String>
+  CreateProjectRequest& WithDatasetName(DatasetNameT&& value) {
+    SetDatasetName(std::forward<DatasetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateProject"; }
+  ///@{
+  /**
+   * <p>A unique name for the new project. Valid characters are alphanumeric (A-Z,
+   * a-z, 0-9), hyphen (-), period (.), and space.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateProjectRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of an existing recipe to associate with the project.</p>
+   */
+  inline const Aws::String& GetRecipeName() const { return m_recipeName; }
+  inline bool RecipeNameHasBeenSet() const { return m_recipeNameHasBeenSet; }
+  template <typename RecipeNameT = Aws::String>
+  void SetRecipeName(RecipeNameT&& value) {
+    m_recipeNameHasBeenSet = true;
+    m_recipeName = std::forward<RecipeNameT>(value);
+  }
+  template <typename RecipeNameT = Aws::String>
+  CreateProjectRequest& WithRecipeName(RecipeNameT&& value) {
+    SetRecipeName(std::forward<RecipeNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The name of an existing dataset to associate this project with.</p>
-     */
-    inline const Aws::String& GetDatasetName() const{ return m_datasetName; }
-    inline bool DatasetNameHasBeenSet() const { return m_datasetNameHasBeenSet; }
-    inline void SetDatasetName(const Aws::String& value) { m_datasetNameHasBeenSet = true; m_datasetName = value; }
-    inline void SetDatasetName(Aws::String&& value) { m_datasetNameHasBeenSet = true; m_datasetName = std::move(value); }
-    inline void SetDatasetName(const char* value) { m_datasetNameHasBeenSet = true; m_datasetName.assign(value); }
-    inline CreateProjectRequest& WithDatasetName(const Aws::String& value) { SetDatasetName(value); return *this;}
-    inline CreateProjectRequest& WithDatasetName(Aws::String&& value) { SetDatasetName(std::move(value)); return *this;}
-    inline CreateProjectRequest& WithDatasetName(const char* value) { SetDatasetName(value); return *this;}
-    ///@}
+  inline const Sample& GetSample() const { return m_sample; }
+  inline bool SampleHasBeenSet() const { return m_sampleHasBeenSet; }
+  template <typename SampleT = Sample>
+  void SetSample(SampleT&& value) {
+    m_sampleHasBeenSet = true;
+    m_sample = std::forward<SampleT>(value);
+  }
+  template <typename SampleT = Sample>
+  CreateProjectRequest& WithSample(SampleT&& value) {
+    SetSample(std::forward<SampleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique name for the new project. Valid characters are alphanumeric (A-Z,
-     * a-z, 0-9), hyphen (-), period (.), and space.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateProjectRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateProjectRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateProjectRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
+   * role to be assumed for this request.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  CreateProjectRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of an existing recipe to associate with the project.</p>
-     */
-    inline const Aws::String& GetRecipeName() const{ return m_recipeName; }
-    inline bool RecipeNameHasBeenSet() const { return m_recipeNameHasBeenSet; }
-    inline void SetRecipeName(const Aws::String& value) { m_recipeNameHasBeenSet = true; m_recipeName = value; }
-    inline void SetRecipeName(Aws::String&& value) { m_recipeNameHasBeenSet = true; m_recipeName = std::move(value); }
-    inline void SetRecipeName(const char* value) { m_recipeNameHasBeenSet = true; m_recipeName.assign(value); }
-    inline CreateProjectRequest& WithRecipeName(const Aws::String& value) { SetRecipeName(value); return *this;}
-    inline CreateProjectRequest& WithRecipeName(Aws::String&& value) { SetRecipeName(std::move(value)); return *this;}
-    inline CreateProjectRequest& WithRecipeName(const char* value) { SetRecipeName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Metadata tags to apply to this project.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateProjectRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateProjectRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_datasetName;
 
-    ///@{
-    
-    inline const Sample& GetSample() const{ return m_sample; }
-    inline bool SampleHasBeenSet() const { return m_sampleHasBeenSet; }
-    inline void SetSample(const Sample& value) { m_sampleHasBeenSet = true; m_sample = value; }
-    inline void SetSample(Sample&& value) { m_sampleHasBeenSet = true; m_sample = std::move(value); }
-    inline CreateProjectRequest& WithSample(const Sample& value) { SetSample(value); return *this;}
-    inline CreateProjectRequest& WithSample(Sample&& value) { SetSample(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
-     * role to be assumed for this request.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline CreateProjectRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline CreateProjectRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline CreateProjectRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  Aws::String m_recipeName;
 
-    ///@{
-    /**
-     * <p>Metadata tags to apply to this project.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateProjectRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateProjectRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateProjectRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateProjectRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateProjectRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateProjectRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateProjectRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateProjectRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateProjectRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Sample m_sample;
 
-    Aws::String m_datasetName;
-    bool m_datasetNameHasBeenSet = false;
+  Aws::String m_roleArn;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_datasetNameHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_recipeNameHasBeenSet = false;
+  bool m_sampleHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_recipeName;
-    bool m_recipeNameHasBeenSet = false;
-
-    Sample m_sample;
-    bool m_sampleHasBeenSet = false;
-
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GlueDataBrew
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlueDataBrew
+}  // namespace Aws

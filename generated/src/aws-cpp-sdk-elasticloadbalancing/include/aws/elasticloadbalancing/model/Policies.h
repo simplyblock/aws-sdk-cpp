@@ -4,100 +4,123 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/elasticloadbalancing/model/AppCookieStickinessPolicy.h>
 #include <aws/elasticloadbalancing/model/LBCookieStickinessPolicy.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
 
+/**
+ * <p>The policies for a load balancer.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/Policies">AWS
+ * API Reference</a></p>
+ */
+class Policies {
+ public:
+  AWS_ELASTICLOADBALANCING_API Policies() = default;
+  AWS_ELASTICLOADBALANCING_API Policies(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_ELASTICLOADBALANCING_API Policies& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_ELASTICLOADBALANCING_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index,
+                                                   const char* locationValue) const;
+  AWS_ELASTICLOADBALANCING_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>The policies for a load balancer.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/Policies">AWS
-   * API Reference</a></p>
+   * <p>The stickiness policies created using
+   * <a>CreateAppCookieStickinessPolicy</a>.</p>
    */
-  class Policies
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API Policies();
-    AWS_ELASTICLOADBALANCING_API Policies(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_ELASTICLOADBALANCING_API Policies& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::Vector<AppCookieStickinessPolicy>& GetAppCookieStickinessPolicies() const { return m_appCookieStickinessPolicies; }
+  inline bool AppCookieStickinessPoliciesHasBeenSet() const { return m_appCookieStickinessPoliciesHasBeenSet; }
+  template <typename AppCookieStickinessPoliciesT = Aws::Vector<AppCookieStickinessPolicy>>
+  void SetAppCookieStickinessPolicies(AppCookieStickinessPoliciesT&& value) {
+    m_appCookieStickinessPoliciesHasBeenSet = true;
+    m_appCookieStickinessPolicies = std::forward<AppCookieStickinessPoliciesT>(value);
+  }
+  template <typename AppCookieStickinessPoliciesT = Aws::Vector<AppCookieStickinessPolicy>>
+  Policies& WithAppCookieStickinessPolicies(AppCookieStickinessPoliciesT&& value) {
+    SetAppCookieStickinessPolicies(std::forward<AppCookieStickinessPoliciesT>(value));
+    return *this;
+  }
+  template <typename AppCookieStickinessPoliciesT = AppCookieStickinessPolicy>
+  Policies& AddAppCookieStickinessPolicies(AppCookieStickinessPoliciesT&& value) {
+    m_appCookieStickinessPoliciesHasBeenSet = true;
+    m_appCookieStickinessPolicies.emplace_back(std::forward<AppCookieStickinessPoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICLOADBALANCING_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_ELASTICLOADBALANCING_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The stickiness policies created using
+   * <a>CreateLBCookieStickinessPolicy</a>.</p>
+   */
+  inline const Aws::Vector<LBCookieStickinessPolicy>& GetLBCookieStickinessPolicies() const { return m_lBCookieStickinessPolicies; }
+  inline bool LBCookieStickinessPoliciesHasBeenSet() const { return m_lBCookieStickinessPoliciesHasBeenSet; }
+  template <typename LBCookieStickinessPoliciesT = Aws::Vector<LBCookieStickinessPolicy>>
+  void SetLBCookieStickinessPolicies(LBCookieStickinessPoliciesT&& value) {
+    m_lBCookieStickinessPoliciesHasBeenSet = true;
+    m_lBCookieStickinessPolicies = std::forward<LBCookieStickinessPoliciesT>(value);
+  }
+  template <typename LBCookieStickinessPoliciesT = Aws::Vector<LBCookieStickinessPolicy>>
+  Policies& WithLBCookieStickinessPolicies(LBCookieStickinessPoliciesT&& value) {
+    SetLBCookieStickinessPolicies(std::forward<LBCookieStickinessPoliciesT>(value));
+    return *this;
+  }
+  template <typename LBCookieStickinessPoliciesT = LBCookieStickinessPolicy>
+  Policies& AddLBCookieStickinessPolicies(LBCookieStickinessPoliciesT&& value) {
+    m_lBCookieStickinessPoliciesHasBeenSet = true;
+    m_lBCookieStickinessPolicies.emplace_back(std::forward<LBCookieStickinessPoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The policies other than the stickiness policies.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetOtherPolicies() const { return m_otherPolicies; }
+  inline bool OtherPoliciesHasBeenSet() const { return m_otherPoliciesHasBeenSet; }
+  template <typename OtherPoliciesT = Aws::Vector<Aws::String>>
+  void SetOtherPolicies(OtherPoliciesT&& value) {
+    m_otherPoliciesHasBeenSet = true;
+    m_otherPolicies = std::forward<OtherPoliciesT>(value);
+  }
+  template <typename OtherPoliciesT = Aws::Vector<Aws::String>>
+  Policies& WithOtherPolicies(OtherPoliciesT&& value) {
+    SetOtherPolicies(std::forward<OtherPoliciesT>(value));
+    return *this;
+  }
+  template <typename OtherPoliciesT = Aws::String>
+  Policies& AddOtherPolicies(OtherPoliciesT&& value) {
+    m_otherPoliciesHasBeenSet = true;
+    m_otherPolicies.emplace_back(std::forward<OtherPoliciesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<AppCookieStickinessPolicy> m_appCookieStickinessPolicies;
 
-    ///@{
-    /**
-     * <p>The stickiness policies created using
-     * <a>CreateAppCookieStickinessPolicy</a>.</p>
-     */
-    inline const Aws::Vector<AppCookieStickinessPolicy>& GetAppCookieStickinessPolicies() const{ return m_appCookieStickinessPolicies; }
-    inline bool AppCookieStickinessPoliciesHasBeenSet() const { return m_appCookieStickinessPoliciesHasBeenSet; }
-    inline void SetAppCookieStickinessPolicies(const Aws::Vector<AppCookieStickinessPolicy>& value) { m_appCookieStickinessPoliciesHasBeenSet = true; m_appCookieStickinessPolicies = value; }
-    inline void SetAppCookieStickinessPolicies(Aws::Vector<AppCookieStickinessPolicy>&& value) { m_appCookieStickinessPoliciesHasBeenSet = true; m_appCookieStickinessPolicies = std::move(value); }
-    inline Policies& WithAppCookieStickinessPolicies(const Aws::Vector<AppCookieStickinessPolicy>& value) { SetAppCookieStickinessPolicies(value); return *this;}
-    inline Policies& WithAppCookieStickinessPolicies(Aws::Vector<AppCookieStickinessPolicy>&& value) { SetAppCookieStickinessPolicies(std::move(value)); return *this;}
-    inline Policies& AddAppCookieStickinessPolicies(const AppCookieStickinessPolicy& value) { m_appCookieStickinessPoliciesHasBeenSet = true; m_appCookieStickinessPolicies.push_back(value); return *this; }
-    inline Policies& AddAppCookieStickinessPolicies(AppCookieStickinessPolicy&& value) { m_appCookieStickinessPoliciesHasBeenSet = true; m_appCookieStickinessPolicies.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<LBCookieStickinessPolicy> m_lBCookieStickinessPolicies;
 
-    ///@{
-    /**
-     * <p>The stickiness policies created using
-     * <a>CreateLBCookieStickinessPolicy</a>.</p>
-     */
-    inline const Aws::Vector<LBCookieStickinessPolicy>& GetLBCookieStickinessPolicies() const{ return m_lBCookieStickinessPolicies; }
-    inline bool LBCookieStickinessPoliciesHasBeenSet() const { return m_lBCookieStickinessPoliciesHasBeenSet; }
-    inline void SetLBCookieStickinessPolicies(const Aws::Vector<LBCookieStickinessPolicy>& value) { m_lBCookieStickinessPoliciesHasBeenSet = true; m_lBCookieStickinessPolicies = value; }
-    inline void SetLBCookieStickinessPolicies(Aws::Vector<LBCookieStickinessPolicy>&& value) { m_lBCookieStickinessPoliciesHasBeenSet = true; m_lBCookieStickinessPolicies = std::move(value); }
-    inline Policies& WithLBCookieStickinessPolicies(const Aws::Vector<LBCookieStickinessPolicy>& value) { SetLBCookieStickinessPolicies(value); return *this;}
-    inline Policies& WithLBCookieStickinessPolicies(Aws::Vector<LBCookieStickinessPolicy>&& value) { SetLBCookieStickinessPolicies(std::move(value)); return *this;}
-    inline Policies& AddLBCookieStickinessPolicies(const LBCookieStickinessPolicy& value) { m_lBCookieStickinessPoliciesHasBeenSet = true; m_lBCookieStickinessPolicies.push_back(value); return *this; }
-    inline Policies& AddLBCookieStickinessPolicies(LBCookieStickinessPolicy&& value) { m_lBCookieStickinessPoliciesHasBeenSet = true; m_lBCookieStickinessPolicies.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_otherPolicies;
+  bool m_appCookieStickinessPoliciesHasBeenSet = false;
+  bool m_lBCookieStickinessPoliciesHasBeenSet = false;
+  bool m_otherPoliciesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The policies other than the stickiness policies.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetOtherPolicies() const{ return m_otherPolicies; }
-    inline bool OtherPoliciesHasBeenSet() const { return m_otherPoliciesHasBeenSet; }
-    inline void SetOtherPolicies(const Aws::Vector<Aws::String>& value) { m_otherPoliciesHasBeenSet = true; m_otherPolicies = value; }
-    inline void SetOtherPolicies(Aws::Vector<Aws::String>&& value) { m_otherPoliciesHasBeenSet = true; m_otherPolicies = std::move(value); }
-    inline Policies& WithOtherPolicies(const Aws::Vector<Aws::String>& value) { SetOtherPolicies(value); return *this;}
-    inline Policies& WithOtherPolicies(Aws::Vector<Aws::String>&& value) { SetOtherPolicies(std::move(value)); return *this;}
-    inline Policies& AddOtherPolicies(const Aws::String& value) { m_otherPoliciesHasBeenSet = true; m_otherPolicies.push_back(value); return *this; }
-    inline Policies& AddOtherPolicies(Aws::String&& value) { m_otherPoliciesHasBeenSet = true; m_otherPolicies.push_back(std::move(value)); return *this; }
-    inline Policies& AddOtherPolicies(const char* value) { m_otherPoliciesHasBeenSet = true; m_otherPolicies.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<AppCookieStickinessPolicy> m_appCookieStickinessPolicies;
-    bool m_appCookieStickinessPoliciesHasBeenSet = false;
-
-    Aws::Vector<LBCookieStickinessPolicy> m_lBCookieStickinessPolicies;
-    bool m_lBCookieStickinessPoliciesHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_otherPolicies;
-    bool m_otherPoliciesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

@@ -4,80 +4,100 @@
  */
 
 #pragma once
-#include <aws/shield/Shield_EXPORTS.h>
-#include <aws/shield/model/TimeRange.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/shield/Shield_EXPORTS.h>
 #include <aws/shield/model/AttackStatisticsDataItem.h>
+#include <aws/shield/model/TimeRange.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Shield
-{
-namespace Model
-{
-  class DescribeAttackStatisticsResult
-  {
-  public:
-    AWS_SHIELD_API DescribeAttackStatisticsResult();
-    AWS_SHIELD_API DescribeAttackStatisticsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SHIELD_API DescribeAttackStatisticsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Shield {
+namespace Model {
+class DescribeAttackStatisticsResult {
+ public:
+  AWS_SHIELD_API DescribeAttackStatisticsResult() = default;
+  AWS_SHIELD_API DescribeAttackStatisticsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SHIELD_API DescribeAttackStatisticsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The time range of the attack.</p>
+   */
+  inline const TimeRange& GetTimeRange() const { return m_timeRange; }
+  template <typename TimeRangeT = TimeRange>
+  void SetTimeRange(TimeRangeT&& value) {
+    m_timeRangeHasBeenSet = true;
+    m_timeRange = std::forward<TimeRangeT>(value);
+  }
+  template <typename TimeRangeT = TimeRange>
+  DescribeAttackStatisticsResult& WithTimeRange(TimeRangeT&& value) {
+    SetTimeRange(std::forward<TimeRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time range of the attack.</p>
-     */
-    inline const TimeRange& GetTimeRange() const{ return m_timeRange; }
-    inline void SetTimeRange(const TimeRange& value) { m_timeRange = value; }
-    inline void SetTimeRange(TimeRange&& value) { m_timeRange = std::move(value); }
-    inline DescribeAttackStatisticsResult& WithTimeRange(const TimeRange& value) { SetTimeRange(value); return *this;}
-    inline DescribeAttackStatisticsResult& WithTimeRange(TimeRange&& value) { SetTimeRange(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The data that describes the attacks detected during the time period.</p>
+   */
+  inline const Aws::Vector<AttackStatisticsDataItem>& GetDataItems() const { return m_dataItems; }
+  template <typename DataItemsT = Aws::Vector<AttackStatisticsDataItem>>
+  void SetDataItems(DataItemsT&& value) {
+    m_dataItemsHasBeenSet = true;
+    m_dataItems = std::forward<DataItemsT>(value);
+  }
+  template <typename DataItemsT = Aws::Vector<AttackStatisticsDataItem>>
+  DescribeAttackStatisticsResult& WithDataItems(DataItemsT&& value) {
+    SetDataItems(std::forward<DataItemsT>(value));
+    return *this;
+  }
+  template <typename DataItemsT = AttackStatisticsDataItem>
+  DescribeAttackStatisticsResult& AddDataItems(DataItemsT&& value) {
+    m_dataItemsHasBeenSet = true;
+    m_dataItems.emplace_back(std::forward<DataItemsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The data that describes the attacks detected during the time period.</p>
-     */
-    inline const Aws::Vector<AttackStatisticsDataItem>& GetDataItems() const{ return m_dataItems; }
-    inline void SetDataItems(const Aws::Vector<AttackStatisticsDataItem>& value) { m_dataItems = value; }
-    inline void SetDataItems(Aws::Vector<AttackStatisticsDataItem>&& value) { m_dataItems = std::move(value); }
-    inline DescribeAttackStatisticsResult& WithDataItems(const Aws::Vector<AttackStatisticsDataItem>& value) { SetDataItems(value); return *this;}
-    inline DescribeAttackStatisticsResult& WithDataItems(Aws::Vector<AttackStatisticsDataItem>&& value) { SetDataItems(std::move(value)); return *this;}
-    inline DescribeAttackStatisticsResult& AddDataItems(const AttackStatisticsDataItem& value) { m_dataItems.push_back(value); return *this; }
-    inline DescribeAttackStatisticsResult& AddDataItems(AttackStatisticsDataItem&& value) { m_dataItems.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAttackStatisticsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAttackStatisticsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAttackStatisticsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAttackStatisticsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TimeRange m_timeRange;
+ private:
+  TimeRange m_timeRange;
 
-    Aws::Vector<AttackStatisticsDataItem> m_dataItems;
+  Aws::Vector<AttackStatisticsDataItem> m_dataItems;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_timeRangeHasBeenSet = false;
+  bool m_dataItemsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Shield
-} // namespace Aws
+}  // namespace Model
+}  // namespace Shield
+}  // namespace Aws

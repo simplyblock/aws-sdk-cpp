@@ -4,79 +4,86 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
 #include <aws/guardduty/model/MemberFeaturesConfigurationResult.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
 
+/**
+ * <p>Contains information on which data sources are enabled for a member
+ * account.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/MemberDataSourceConfiguration">AWS
+ * API Reference</a></p>
+ */
+class MemberDataSourceConfiguration {
+ public:
+  AWS_GUARDDUTY_API MemberDataSourceConfiguration() = default;
+  AWS_GUARDDUTY_API MemberDataSourceConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API MemberDataSourceConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains information on which data sources are enabled for a member
-   * account.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/MemberDataSourceConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The account ID for the member account.</p>
    */
-  class MemberDataSourceConfiguration
-  {
-  public:
-    AWS_GUARDDUTY_API MemberDataSourceConfiguration();
-    AWS_GUARDDUTY_API MemberDataSourceConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API MemberDataSourceConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GUARDDUTY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  MemberDataSourceConfiguration& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Contains information about the status of the features for the member
+   * account.</p>
+   */
+  inline const Aws::Vector<MemberFeaturesConfigurationResult>& GetFeatures() const { return m_features; }
+  inline bool FeaturesHasBeenSet() const { return m_featuresHasBeenSet; }
+  template <typename FeaturesT = Aws::Vector<MemberFeaturesConfigurationResult>>
+  void SetFeatures(FeaturesT&& value) {
+    m_featuresHasBeenSet = true;
+    m_features = std::forward<FeaturesT>(value);
+  }
+  template <typename FeaturesT = Aws::Vector<MemberFeaturesConfigurationResult>>
+  MemberDataSourceConfiguration& WithFeatures(FeaturesT&& value) {
+    SetFeatures(std::forward<FeaturesT>(value));
+    return *this;
+  }
+  template <typename FeaturesT = MemberFeaturesConfigurationResult>
+  MemberDataSourceConfiguration& AddFeatures(FeaturesT&& value) {
+    m_featuresHasBeenSet = true;
+    m_features.emplace_back(std::forward<FeaturesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
-    ///@{
-    /**
-     * <p>The account ID for the member account.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline MemberDataSourceConfiguration& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline MemberDataSourceConfiguration& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline MemberDataSourceConfiguration& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  Aws::Vector<MemberFeaturesConfigurationResult> m_features;
+  bool m_accountIdHasBeenSet = false;
+  bool m_featuresHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Contains information about the status of the features for the member
-     * account.</p>
-     */
-    inline const Aws::Vector<MemberFeaturesConfigurationResult>& GetFeatures() const{ return m_features; }
-    inline bool FeaturesHasBeenSet() const { return m_featuresHasBeenSet; }
-    inline void SetFeatures(const Aws::Vector<MemberFeaturesConfigurationResult>& value) { m_featuresHasBeenSet = true; m_features = value; }
-    inline void SetFeatures(Aws::Vector<MemberFeaturesConfigurationResult>&& value) { m_featuresHasBeenSet = true; m_features = std::move(value); }
-    inline MemberDataSourceConfiguration& WithFeatures(const Aws::Vector<MemberFeaturesConfigurationResult>& value) { SetFeatures(value); return *this;}
-    inline MemberDataSourceConfiguration& WithFeatures(Aws::Vector<MemberFeaturesConfigurationResult>&& value) { SetFeatures(std::move(value)); return *this;}
-    inline MemberDataSourceConfiguration& AddFeatures(const MemberFeaturesConfigurationResult& value) { m_featuresHasBeenSet = true; m_features.push_back(value); return *this; }
-    inline MemberDataSourceConfiguration& AddFeatures(MemberFeaturesConfigurationResult&& value) { m_featuresHasBeenSet = true; m_features.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    Aws::Vector<MemberFeaturesConfigurationResult> m_features;
-    bool m_featuresHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

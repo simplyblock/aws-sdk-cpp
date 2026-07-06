@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/resourcegroupstaggingapi/model/GetTagValuesResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/resourcegroupstaggingapi/model/GetTagValuesResult.h>
 
 #include <utility>
 
@@ -17,41 +17,29 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetTagValuesResult::GetTagValuesResult()
-{
-}
+GetTagValuesResult::GetTagValuesResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-GetTagValuesResult::GetTagValuesResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-GetTagValuesResult& GetTagValuesResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetTagValuesResult& GetTagValuesResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("PaginationToken"))
-  {
+  if (jsonValue.ValueExists("PaginationToken")) {
     m_paginationToken = jsonValue.GetString("PaginationToken");
-
+    m_paginationTokenHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("TagValues"))
-  {
+  if (jsonValue.ValueExists("TagValues")) {
     Aws::Utils::Array<JsonView> tagValuesJsonList = jsonValue.GetArray("TagValues");
-    for(unsigned tagValuesIndex = 0; tagValuesIndex < tagValuesJsonList.GetLength(); ++tagValuesIndex)
-    {
+    for (unsigned tagValuesIndex = 0; tagValuesIndex < tagValuesJsonList.GetLength(); ++tagValuesIndex) {
       m_tagValues.push_back(tagValuesJsonList[tagValuesIndex].AsString());
     }
+    m_tagValuesHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

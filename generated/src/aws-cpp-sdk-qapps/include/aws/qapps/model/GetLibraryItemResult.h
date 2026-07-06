@@ -4,223 +4,310 @@
  */
 
 #pragma once
-#include <aws/qapps/QApps_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/qapps/QApps_EXPORTS.h>
 #include <aws/qapps/model/Category.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QApps
-{
-namespace Model
-{
-  class GetLibraryItemResult
-  {
-  public:
-    AWS_QAPPS_API GetLibraryItemResult();
-    AWS_QAPPS_API GetLibraryItemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QAPPS_API GetLibraryItemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QApps {
+namespace Model {
+class GetLibraryItemResult {
+ public:
+  AWS_QAPPS_API GetLibraryItemResult() = default;
+  AWS_QAPPS_API GetLibraryItemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QAPPS_API GetLibraryItemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the library item.</p>
+   */
+  inline const Aws::String& GetLibraryItemId() const { return m_libraryItemId; }
+  template <typename LibraryItemIdT = Aws::String>
+  void SetLibraryItemId(LibraryItemIdT&& value) {
+    m_libraryItemIdHasBeenSet = true;
+    m_libraryItemId = std::forward<LibraryItemIdT>(value);
+  }
+  template <typename LibraryItemIdT = Aws::String>
+  GetLibraryItemResult& WithLibraryItemId(LibraryItemIdT&& value) {
+    SetLibraryItemId(std::forward<LibraryItemIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the library item.</p>
-     */
-    inline const Aws::String& GetLibraryItemId() const{ return m_libraryItemId; }
-    inline void SetLibraryItemId(const Aws::String& value) { m_libraryItemId = value; }
-    inline void SetLibraryItemId(Aws::String&& value) { m_libraryItemId = std::move(value); }
-    inline void SetLibraryItemId(const char* value) { m_libraryItemId.assign(value); }
-    inline GetLibraryItemResult& WithLibraryItemId(const Aws::String& value) { SetLibraryItemId(value); return *this;}
-    inline GetLibraryItemResult& WithLibraryItemId(Aws::String&& value) { SetLibraryItemId(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithLibraryItemId(const char* value) { SetLibraryItemId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier of the Q App associated with the library item.</p>
+   */
+  inline const Aws::String& GetAppId() const { return m_appId; }
+  template <typename AppIdT = Aws::String>
+  void SetAppId(AppIdT&& value) {
+    m_appIdHasBeenSet = true;
+    m_appId = std::forward<AppIdT>(value);
+  }
+  template <typename AppIdT = Aws::String>
+  GetLibraryItemResult& WithAppId(AppIdT&& value) {
+    SetAppId(std::forward<AppIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the Q App associated with the library item.</p>
-     */
-    inline const Aws::String& GetAppId() const{ return m_appId; }
-    inline void SetAppId(const Aws::String& value) { m_appId = value; }
-    inline void SetAppId(Aws::String&& value) { m_appId = std::move(value); }
-    inline void SetAppId(const char* value) { m_appId.assign(value); }
-    inline GetLibraryItemResult& WithAppId(const Aws::String& value) { SetAppId(value); return *this;}
-    inline GetLibraryItemResult& WithAppId(Aws::String&& value) { SetAppId(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithAppId(const char* value) { SetAppId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the Q App associated with the library item.</p>
+   */
+  inline int GetAppVersion() const { return m_appVersion; }
+  inline void SetAppVersion(int value) {
+    m_appVersionHasBeenSet = true;
+    m_appVersion = value;
+  }
+  inline GetLibraryItemResult& WithAppVersion(int value) {
+    SetAppVersion(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the Q App associated with the library item.</p>
-     */
-    inline int GetAppVersion() const{ return m_appVersion; }
-    inline void SetAppVersion(int value) { m_appVersion = value; }
-    inline GetLibraryItemResult& WithAppVersion(int value) { SetAppVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The categories associated with the library item for discovery.</p>
+   */
+  inline const Aws::Vector<Category>& GetCategories() const { return m_categories; }
+  template <typename CategoriesT = Aws::Vector<Category>>
+  void SetCategories(CategoriesT&& value) {
+    m_categoriesHasBeenSet = true;
+    m_categories = std::forward<CategoriesT>(value);
+  }
+  template <typename CategoriesT = Aws::Vector<Category>>
+  GetLibraryItemResult& WithCategories(CategoriesT&& value) {
+    SetCategories(std::forward<CategoriesT>(value));
+    return *this;
+  }
+  template <typename CategoriesT = Category>
+  GetLibraryItemResult& AddCategories(CategoriesT&& value) {
+    m_categoriesHasBeenSet = true;
+    m_categories.emplace_back(std::forward<CategoriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The categories associated with the library item for discovery.</p>
-     */
-    inline const Aws::Vector<Category>& GetCategories() const{ return m_categories; }
-    inline void SetCategories(const Aws::Vector<Category>& value) { m_categories = value; }
-    inline void SetCategories(Aws::Vector<Category>&& value) { m_categories = std::move(value); }
-    inline GetLibraryItemResult& WithCategories(const Aws::Vector<Category>& value) { SetCategories(value); return *this;}
-    inline GetLibraryItemResult& WithCategories(Aws::Vector<Category>&& value) { SetCategories(std::move(value)); return *this;}
-    inline GetLibraryItemResult& AddCategories(const Category& value) { m_categories.push_back(value); return *this; }
-    inline GetLibraryItemResult& AddCategories(Category&& value) { m_categories.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the library item, such as "Published".</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  GetLibraryItemResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the library item, such as "Published".</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Aws::String& value) { m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_status.assign(value); }
-    inline GetLibraryItemResult& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline GetLibraryItemResult& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time the library item was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetLibraryItemResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time the library item was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetLibraryItemResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetLibraryItemResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The user who created the library item.</p>
+   */
+  inline const Aws::String& GetCreatedBy() const { return m_createdBy; }
+  template <typename CreatedByT = Aws::String>
+  void SetCreatedBy(CreatedByT&& value) {
+    m_createdByHasBeenSet = true;
+    m_createdBy = std::forward<CreatedByT>(value);
+  }
+  template <typename CreatedByT = Aws::String>
+  GetLibraryItemResult& WithCreatedBy(CreatedByT&& value) {
+    SetCreatedBy(std::forward<CreatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user who created the library item.</p>
-     */
-    inline const Aws::String& GetCreatedBy() const{ return m_createdBy; }
-    inline void SetCreatedBy(const Aws::String& value) { m_createdBy = value; }
-    inline void SetCreatedBy(Aws::String&& value) { m_createdBy = std::move(value); }
-    inline void SetCreatedBy(const char* value) { m_createdBy.assign(value); }
-    inline GetLibraryItemResult& WithCreatedBy(const Aws::String& value) { SetCreatedBy(value); return *this;}
-    inline GetLibraryItemResult& WithCreatedBy(Aws::String&& value) { SetCreatedBy(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithCreatedBy(const char* value) { SetCreatedBy(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time the library item was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdatedAt() const { return m_updatedAt; }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  void SetUpdatedAt(UpdatedAtT&& value) {
+    m_updatedAtHasBeenSet = true;
+    m_updatedAt = std::forward<UpdatedAtT>(value);
+  }
+  template <typename UpdatedAtT = Aws::Utils::DateTime>
+  GetLibraryItemResult& WithUpdatedAt(UpdatedAtT&& value) {
+    SetUpdatedAt(std::forward<UpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time the library item was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdatedAt() const{ return m_updatedAt; }
-    inline void SetUpdatedAt(const Aws::Utils::DateTime& value) { m_updatedAt = value; }
-    inline void SetUpdatedAt(Aws::Utils::DateTime&& value) { m_updatedAt = std::move(value); }
-    inline GetLibraryItemResult& WithUpdatedAt(const Aws::Utils::DateTime& value) { SetUpdatedAt(value); return *this;}
-    inline GetLibraryItemResult& WithUpdatedAt(Aws::Utils::DateTime&& value) { SetUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The user who last updated the library item.</p>
+   */
+  inline const Aws::String& GetUpdatedBy() const { return m_updatedBy; }
+  template <typename UpdatedByT = Aws::String>
+  void SetUpdatedBy(UpdatedByT&& value) {
+    m_updatedByHasBeenSet = true;
+    m_updatedBy = std::forward<UpdatedByT>(value);
+  }
+  template <typename UpdatedByT = Aws::String>
+  GetLibraryItemResult& WithUpdatedBy(UpdatedByT&& value) {
+    SetUpdatedBy(std::forward<UpdatedByT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user who last updated the library item.</p>
-     */
-    inline const Aws::String& GetUpdatedBy() const{ return m_updatedBy; }
-    inline void SetUpdatedBy(const Aws::String& value) { m_updatedBy = value; }
-    inline void SetUpdatedBy(Aws::String&& value) { m_updatedBy = std::move(value); }
-    inline void SetUpdatedBy(const char* value) { m_updatedBy.assign(value); }
-    inline GetLibraryItemResult& WithUpdatedBy(const Aws::String& value) { SetUpdatedBy(value); return *this;}
-    inline GetLibraryItemResult& WithUpdatedBy(Aws::String&& value) { SetUpdatedBy(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithUpdatedBy(const char* value) { SetUpdatedBy(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of ratings the library item has received from users.</p>
+   */
+  inline int GetRatingCount() const { return m_ratingCount; }
+  inline void SetRatingCount(int value) {
+    m_ratingCountHasBeenSet = true;
+    m_ratingCount = value;
+  }
+  inline GetLibraryItemResult& WithRatingCount(int value) {
+    SetRatingCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of ratings the library item has received from users.</p>
-     */
-    inline int GetRatingCount() const{ return m_ratingCount; }
-    inline void SetRatingCount(int value) { m_ratingCount = value; }
-    inline GetLibraryItemResult& WithRatingCount(int value) { SetRatingCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether the current user has rated the library item.</p>
+   */
+  inline bool GetIsRatedByUser() const { return m_isRatedByUser; }
+  inline void SetIsRatedByUser(bool value) {
+    m_isRatedByUserHasBeenSet = true;
+    m_isRatedByUser = value;
+  }
+  inline GetLibraryItemResult& WithIsRatedByUser(bool value) {
+    SetIsRatedByUser(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether the current user has rated the library item.</p>
-     */
-    inline bool GetIsRatedByUser() const{ return m_isRatedByUser; }
-    inline void SetIsRatedByUser(bool value) { m_isRatedByUser = value; }
-    inline GetLibraryItemResult& WithIsRatedByUser(bool value) { SetIsRatedByUser(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of users who have associated the Q App with their account.</p>
+   */
+  inline int GetUserCount() const { return m_userCount; }
+  inline void SetUserCount(int value) {
+    m_userCountHasBeenSet = true;
+    m_userCount = value;
+  }
+  inline GetLibraryItemResult& WithUserCount(int value) {
+    SetUserCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of users who have associated the Q App with their account.</p>
-     */
-    inline int GetUserCount() const{ return m_userCount; }
-    inline void SetUserCount(int value) { m_userCount = value; }
-    inline GetLibraryItemResult& WithUserCount(int value) { SetUserCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the library item has been verified.</p>
+   */
+  inline bool GetIsVerified() const { return m_isVerified; }
+  inline void SetIsVerified(bool value) {
+    m_isVerifiedHasBeenSet = true;
+    m_isVerified = value;
+  }
+  inline GetLibraryItemResult& WithIsVerified(bool value) {
+    SetIsVerified(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the library item has been verified.</p>
-     */
-    inline bool GetIsVerified() const{ return m_isVerified; }
-    inline void SetIsVerified(bool value) { m_isVerified = value; }
-    inline GetLibraryItemResult& WithIsVerified(bool value) { SetIsVerified(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLibraryItemResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLibraryItemResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLibraryItemResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLibraryItemResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_libraryItemId;
+ private:
+  Aws::String m_libraryItemId;
 
-    Aws::String m_appId;
+  Aws::String m_appId;
 
-    int m_appVersion;
+  int m_appVersion{0};
 
-    Aws::Vector<Category> m_categories;
+  Aws::Vector<Category> m_categories;
 
-    Aws::String m_status;
+  Aws::String m_status;
 
-    Aws::Utils::DateTime m_createdAt;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_createdBy;
+  Aws::String m_createdBy;
 
-    Aws::Utils::DateTime m_updatedAt;
+  Aws::Utils::DateTime m_updatedAt{};
 
-    Aws::String m_updatedBy;
+  Aws::String m_updatedBy;
 
-    int m_ratingCount;
+  int m_ratingCount{0};
 
-    bool m_isRatedByUser;
+  bool m_isRatedByUser{false};
 
-    int m_userCount;
+  int m_userCount{0};
 
-    bool m_isVerified;
+  bool m_isVerified{false};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_libraryItemIdHasBeenSet = false;
+  bool m_appIdHasBeenSet = false;
+  bool m_appVersionHasBeenSet = false;
+  bool m_categoriesHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_createdByHasBeenSet = false;
+  bool m_updatedAtHasBeenSet = false;
+  bool m_updatedByHasBeenSet = false;
+  bool m_ratingCountHasBeenSet = false;
+  bool m_isRatedByUserHasBeenSet = false;
+  bool m_userCountHasBeenSet = false;
+  bool m_isVerifiedHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QApps
-} // namespace Aws
+}  // namespace Model
+}  // namespace QApps
+}  // namespace Aws

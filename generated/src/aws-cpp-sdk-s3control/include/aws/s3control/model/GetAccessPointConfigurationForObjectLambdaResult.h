@@ -4,63 +4,96 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3control/S3Control_EXPORTS.h>
 #include <aws/s3control/model/ObjectLambdaConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Control
-{
-namespace Model
-{
-  class GetAccessPointConfigurationForObjectLambdaResult
-  {
-  public:
-    AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult();
-    AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Control {
+namespace Model {
+class GetAccessPointConfigurationForObjectLambdaResult {
+ public:
+  AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult() = default;
+  AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CONTROL_API GetAccessPointConfigurationForObjectLambdaResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Object Lambda Access Point configuration document.</p>
+   */
+  inline const ObjectLambdaConfiguration& GetConfiguration() const { return m_configuration; }
+  template <typename ConfigurationT = ObjectLambdaConfiguration>
+  void SetConfiguration(ConfigurationT&& value) {
+    m_configurationHasBeenSet = true;
+    m_configuration = std::forward<ConfigurationT>(value);
+  }
+  template <typename ConfigurationT = ObjectLambdaConfiguration>
+  GetAccessPointConfigurationForObjectLambdaResult& WithConfiguration(ConfigurationT&& value) {
+    SetConfiguration(std::forward<ConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Object Lambda Access Point configuration document.</p>
-     */
-    inline const ObjectLambdaConfiguration& GetConfiguration() const{ return m_configuration; }
-    inline void SetConfiguration(const ObjectLambdaConfiguration& value) { m_configuration = value; }
-    inline void SetConfiguration(ObjectLambdaConfiguration&& value) { m_configuration = std::move(value); }
-    inline GetAccessPointConfigurationForObjectLambdaResult& WithConfiguration(const ObjectLambdaConfiguration& value) { SetConfiguration(value); return *this;}
-    inline GetAccessPointConfigurationForObjectLambdaResult& WithConfiguration(ObjectLambdaConfiguration&& value) { SetConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * AWS Request Id value
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAccessPointConfigurationForObjectLambdaResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAccessPointConfigurationForObjectLambdaResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAccessPointConfigurationForObjectLambdaResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAccessPointConfigurationForObjectLambdaResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * x-amz-id-2 header value, also known as Host Id
+   */
+  inline const Aws::String& GetHostId() const { return m_hostId; }
+  template <typename HostIdT = Aws::String>
+  void SetHostId(HostIdT&& value) {
+    m_hostIdHasBeenSet = true;
+    m_hostId = std::forward<HostIdT>(value);
+  }
+  template <typename HostIdT = Aws::String>
+  GetAccessPointConfigurationForObjectLambdaResult& WithHostId(HostIdT&& value) {
+    SetHostId(std::forward<HostIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ObjectLambdaConfiguration m_configuration;
+ private:
+  ObjectLambdaConfiguration m_configuration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+  Aws::String m_hostId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_hostIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

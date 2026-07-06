@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
 #include <aws/config/model/ConfigurationItem.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
-  class GetAggregateResourceConfigResult
-  {
-  public:
-    AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult();
-    AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
+class GetAggregateResourceConfigResult {
+ public:
+  AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult() = default;
+  AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONFIGSERVICE_API GetAggregateResourceConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns a <code>ConfigurationItem</code> object.</p>
+   */
+  inline const ConfigurationItem& GetConfigurationItem() const { return m_configurationItem; }
+  template <typename ConfigurationItemT = ConfigurationItem>
+  void SetConfigurationItem(ConfigurationItemT&& value) {
+    m_configurationItemHasBeenSet = true;
+    m_configurationItem = std::forward<ConfigurationItemT>(value);
+  }
+  template <typename ConfigurationItemT = ConfigurationItem>
+  GetAggregateResourceConfigResult& WithConfigurationItem(ConfigurationItemT&& value) {
+    SetConfigurationItem(std::forward<ConfigurationItemT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns a <code>ConfigurationItem</code> object.</p>
-     */
-    inline const ConfigurationItem& GetConfigurationItem() const{ return m_configurationItem; }
-    inline void SetConfigurationItem(const ConfigurationItem& value) { m_configurationItem = value; }
-    inline void SetConfigurationItem(ConfigurationItem&& value) { m_configurationItem = std::move(value); }
-    inline GetAggregateResourceConfigResult& WithConfigurationItem(const ConfigurationItem& value) { SetConfigurationItem(value); return *this;}
-    inline GetAggregateResourceConfigResult& WithConfigurationItem(ConfigurationItem&& value) { SetConfigurationItem(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAggregateResourceConfigResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAggregateResourceConfigResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAggregateResourceConfigResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAggregateResourceConfigResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ConfigurationItem m_configurationItem;
+ private:
+  ConfigurationItem m_configurationItem;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationItemHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

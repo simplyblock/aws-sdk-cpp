@@ -4,77 +4,99 @@
  */
 
 #pragma once
-#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AgreementService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AgreementService {
+namespace Model {
 
+/**
+ * <p>Defines the customer support available for the acceptors when they purchase
+ * the software.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/SupportTerm">AWS
+ * API Reference</a></p>
+ */
+class SupportTerm {
+ public:
+  AWS_AGREEMENTSERVICE_API SupportTerm() = default;
+  AWS_AGREEMENTSERVICE_API SupportTerm(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API SupportTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Defines the customer support available for the acceptors when they purchase
-   * the software.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/SupportTerm">AWS
-   * API Reference</a></p>
+   * <p>Category of the term being updated.</p>
    */
-  class SupportTerm
-  {
-  public:
-    AWS_AGREEMENTSERVICE_API SupportTerm();
-    AWS_AGREEMENTSERVICE_API SupportTerm(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API SupportTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  SupportTerm& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier for the term.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  SupportTerm& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Free-text field about the refund policy description that will be shown to
-     * customers as is on the website and console.</p>
-     */
-    inline const Aws::String& GetRefundPolicy() const{ return m_refundPolicy; }
-    inline bool RefundPolicyHasBeenSet() const { return m_refundPolicyHasBeenSet; }
-    inline void SetRefundPolicy(const Aws::String& value) { m_refundPolicyHasBeenSet = true; m_refundPolicy = value; }
-    inline void SetRefundPolicy(Aws::String&& value) { m_refundPolicyHasBeenSet = true; m_refundPolicy = std::move(value); }
-    inline void SetRefundPolicy(const char* value) { m_refundPolicyHasBeenSet = true; m_refundPolicy.assign(value); }
-    inline SupportTerm& WithRefundPolicy(const Aws::String& value) { SetRefundPolicy(value); return *this;}
-    inline SupportTerm& WithRefundPolicy(Aws::String&& value) { SetRefundPolicy(std::move(value)); return *this;}
-    inline SupportTerm& WithRefundPolicy(const char* value) { SetRefundPolicy(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Free-text field about the refund policy description that will be shown to
+   * customers as is on the website and console.</p>
+   */
+  inline const Aws::String& GetRefundPolicy() const { return m_refundPolicy; }
+  inline bool RefundPolicyHasBeenSet() const { return m_refundPolicyHasBeenSet; }
+  template <typename RefundPolicyT = Aws::String>
+  void SetRefundPolicy(RefundPolicyT&& value) {
+    m_refundPolicyHasBeenSet = true;
+    m_refundPolicy = std::forward<RefundPolicyT>(value);
+  }
+  template <typename RefundPolicyT = Aws::String>
+  SupportTerm& WithRefundPolicy(RefundPolicyT&& value) {
+    SetRefundPolicy(std::forward<RefundPolicyT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_type;
 
-    ///@{
-    /**
-     * <p>Category of the term being updated.</p>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline SupportTerm& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline SupportTerm& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline SupportTerm& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_id;
 
-    Aws::String m_refundPolicy;
-    bool m_refundPolicyHasBeenSet = false;
+  Aws::String m_refundPolicy;
+  bool m_typeHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_refundPolicyHasBeenSet = false;
+};
 
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AgreementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AgreementService
+}  // namespace Aws

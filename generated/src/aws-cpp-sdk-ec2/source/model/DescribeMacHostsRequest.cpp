@@ -3,54 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeMacHostsRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DescribeMacHostsRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DescribeMacHostsRequest::DescribeMacHostsRequest() : 
-    m_filtersHasBeenSet(false),
-    m_hostIdsHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String DescribeMacHostsRequest::SerializePayload() const
-{
+Aws::String DescribeMacHostsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeMacHosts&";
-  if(m_filtersHasBeenSet)
-  {
+  if (m_filtersHasBeenSet) {
     unsigned filtersCount = 1;
-    for(auto& item : m_filters)
-    {
+    for (auto& item : m_filters) {
       item.OutputToStream(ss, "Filter.", filtersCount, "");
       filtersCount++;
     }
   }
 
-  if(m_hostIdsHasBeenSet)
-  {
+  if (m_hostIdsHasBeenSet) {
     unsigned hostIdsCount = 1;
-    for(auto& item : m_hostIds)
-    {
-      ss << "HostId." << hostIdsCount << "="
-          << StringUtils::URLEncode(item.c_str()) << "&";
+    for (auto& item : m_hostIds) {
+      ss << "HostId." << hostIdsCount << "=" << StringUtils::URLEncode(item.c_str()) << "&";
       hostIdsCount++;
     }
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
+  if (m_maxResultsHasBeenSet) {
     ss << "MaxResults=" << m_maxResults << "&";
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
@@ -58,8 +41,4 @@ Aws::String DescribeMacHostsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeMacHostsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeMacHostsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

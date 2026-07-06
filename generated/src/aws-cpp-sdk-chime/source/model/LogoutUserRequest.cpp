@@ -12,17 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-LogoutUserRequest::LogoutUserRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_userIdHasBeenSet(false)
-{
-}
-
-Aws::String LogoutUserRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String LogoutUserRequest::SerializePayload() const { return {}; }

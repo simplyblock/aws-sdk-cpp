@@ -4,61 +4,64 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/ModelMetadataFilter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>One or more filters that searches for the specified resource or resources in
+ * a search. All resource objects that satisfy the expression's condition are
+ * included in the search results</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelMetadataSearchExpression">AWS
+ * API Reference</a></p>
+ */
+class ModelMetadataSearchExpression {
+ public:
+  AWS_SAGEMAKER_API ModelMetadataSearchExpression() = default;
+  AWS_SAGEMAKER_API ModelMetadataSearchExpression(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API ModelMetadataSearchExpression& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>One or more filters that searches for the specified resource or resources in
-   * a search. All resource objects that satisfy the expression's condition are
-   * included in the search results</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelMetadataSearchExpression">AWS
-   * API Reference</a></p>
+   * <p>A list of filter objects.</p>
    */
-  class ModelMetadataSearchExpression
-  {
-  public:
-    AWS_SAGEMAKER_API ModelMetadataSearchExpression();
-    AWS_SAGEMAKER_API ModelMetadataSearchExpression(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API ModelMetadataSearchExpression& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<ModelMetadataFilter>& GetFilters() const { return m_filters; }
+  inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
+  template <typename FiltersT = Aws::Vector<ModelMetadataFilter>>
+  void SetFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters = std::forward<FiltersT>(value);
+  }
+  template <typename FiltersT = Aws::Vector<ModelMetadataFilter>>
+  ModelMetadataSearchExpression& WithFilters(FiltersT&& value) {
+    SetFilters(std::forward<FiltersT>(value));
+    return *this;
+  }
+  template <typename FiltersT = ModelMetadataFilter>
+  ModelMetadataSearchExpression& AddFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters.emplace_back(std::forward<FiltersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<ModelMetadataFilter> m_filters;
+  bool m_filtersHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>A list of filter objects.</p>
-     */
-    inline const Aws::Vector<ModelMetadataFilter>& GetFilters() const{ return m_filters; }
-    inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
-    inline void SetFilters(const Aws::Vector<ModelMetadataFilter>& value) { m_filtersHasBeenSet = true; m_filters = value; }
-    inline void SetFilters(Aws::Vector<ModelMetadataFilter>&& value) { m_filtersHasBeenSet = true; m_filters = std::move(value); }
-    inline ModelMetadataSearchExpression& WithFilters(const Aws::Vector<ModelMetadataFilter>& value) { SetFilters(value); return *this;}
-    inline ModelMetadataSearchExpression& WithFilters(Aws::Vector<ModelMetadataFilter>&& value) { SetFilters(std::move(value)); return *this;}
-    inline ModelMetadataSearchExpression& AddFilters(const ModelMetadataFilter& value) { m_filtersHasBeenSet = true; m_filters.push_back(value); return *this; }
-    inline ModelMetadataSearchExpression& AddFilters(ModelMetadataFilter&& value) { m_filtersHasBeenSet = true; m_filters.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<ModelMetadataFilter> m_filters;
-    bool m_filtersHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

@@ -5,82 +5,100 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/clouddirectory/model/SchemaFacet.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class GetObjectInformationResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API GetObjectInformationResult();
-    AWS_CLOUDDIRECTORY_API GetObjectInformationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API GetObjectInformationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class GetObjectInformationResult {
+ public:
+  AWS_CLOUDDIRECTORY_API GetObjectInformationResult() = default;
+  AWS_CLOUDDIRECTORY_API GetObjectInformationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API GetObjectInformationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The facets attached to the specified object. Although the response does not
+   * include minor version information, the most recently applied minor version of
+   * each Facet is in effect. See <a>GetAppliedSchemaVersion</a> for details.</p>
+   */
+  inline const Aws::Vector<SchemaFacet>& GetSchemaFacets() const { return m_schemaFacets; }
+  template <typename SchemaFacetsT = Aws::Vector<SchemaFacet>>
+  void SetSchemaFacets(SchemaFacetsT&& value) {
+    m_schemaFacetsHasBeenSet = true;
+    m_schemaFacets = std::forward<SchemaFacetsT>(value);
+  }
+  template <typename SchemaFacetsT = Aws::Vector<SchemaFacet>>
+  GetObjectInformationResult& WithSchemaFacets(SchemaFacetsT&& value) {
+    SetSchemaFacets(std::forward<SchemaFacetsT>(value));
+    return *this;
+  }
+  template <typename SchemaFacetsT = SchemaFacet>
+  GetObjectInformationResult& AddSchemaFacets(SchemaFacetsT&& value) {
+    m_schemaFacetsHasBeenSet = true;
+    m_schemaFacets.emplace_back(std::forward<SchemaFacetsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The facets attached to the specified object. Although the response does not
-     * include minor version information, the most recently applied minor version of
-     * each Facet is in effect. See <a>GetAppliedSchemaVersion</a> for details.</p>
-     */
-    inline const Aws::Vector<SchemaFacet>& GetSchemaFacets() const{ return m_schemaFacets; }
-    inline void SetSchemaFacets(const Aws::Vector<SchemaFacet>& value) { m_schemaFacets = value; }
-    inline void SetSchemaFacets(Aws::Vector<SchemaFacet>&& value) { m_schemaFacets = std::move(value); }
-    inline GetObjectInformationResult& WithSchemaFacets(const Aws::Vector<SchemaFacet>& value) { SetSchemaFacets(value); return *this;}
-    inline GetObjectInformationResult& WithSchemaFacets(Aws::Vector<SchemaFacet>&& value) { SetSchemaFacets(std::move(value)); return *this;}
-    inline GetObjectInformationResult& AddSchemaFacets(const SchemaFacet& value) { m_schemaFacets.push_back(value); return *this; }
-    inline GetObjectInformationResult& AddSchemaFacets(SchemaFacet&& value) { m_schemaFacets.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>ObjectIdentifier</code> of the specified object.</p>
+   */
+  inline const Aws::String& GetObjectIdentifier() const { return m_objectIdentifier; }
+  template <typename ObjectIdentifierT = Aws::String>
+  void SetObjectIdentifier(ObjectIdentifierT&& value) {
+    m_objectIdentifierHasBeenSet = true;
+    m_objectIdentifier = std::forward<ObjectIdentifierT>(value);
+  }
+  template <typename ObjectIdentifierT = Aws::String>
+  GetObjectInformationResult& WithObjectIdentifier(ObjectIdentifierT&& value) {
+    SetObjectIdentifier(std::forward<ObjectIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>ObjectIdentifier</code> of the specified object.</p>
-     */
-    inline const Aws::String& GetObjectIdentifier() const{ return m_objectIdentifier; }
-    inline void SetObjectIdentifier(const Aws::String& value) { m_objectIdentifier = value; }
-    inline void SetObjectIdentifier(Aws::String&& value) { m_objectIdentifier = std::move(value); }
-    inline void SetObjectIdentifier(const char* value) { m_objectIdentifier.assign(value); }
-    inline GetObjectInformationResult& WithObjectIdentifier(const Aws::String& value) { SetObjectIdentifier(value); return *this;}
-    inline GetObjectInformationResult& WithObjectIdentifier(Aws::String&& value) { SetObjectIdentifier(std::move(value)); return *this;}
-    inline GetObjectInformationResult& WithObjectIdentifier(const char* value) { SetObjectIdentifier(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetObjectInformationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetObjectInformationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetObjectInformationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetObjectInformationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SchemaFacet> m_schemaFacets;
+ private:
+  Aws::Vector<SchemaFacet> m_schemaFacets;
 
-    Aws::String m_objectIdentifier;
+  Aws::String m_objectIdentifier;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_schemaFacetsHasBeenSet = false;
+  bool m_objectIdentifierHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

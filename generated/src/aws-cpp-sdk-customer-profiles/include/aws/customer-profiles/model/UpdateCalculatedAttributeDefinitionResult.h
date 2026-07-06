@@ -4,187 +4,306 @@
  */
 
 #pragma once
-#include <aws/customer-profiles/CustomerProfiles_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/customer-profiles/model/Statistic.h>
-#include <aws/customer-profiles/model/Conditions.h>
-#include <aws/customer-profiles/model/AttributeDetails.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/customer-profiles/CustomerProfiles_EXPORTS.h>
+#include <aws/customer-profiles/model/AttributeDetails.h>
+#include <aws/customer-profiles/model/Conditions.h>
+#include <aws/customer-profiles/model/Readiness.h>
+#include <aws/customer-profiles/model/ReadinessStatus.h>
+#include <aws/customer-profiles/model/Statistic.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CustomerProfiles
-{
-namespace Model
-{
-  class UpdateCalculatedAttributeDefinitionResult
-  {
-  public:
-    AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult();
-    AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CustomerProfiles {
+namespace Model {
+class UpdateCalculatedAttributeDefinitionResult {
+ public:
+  AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult() = default;
+  AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CUSTOMERPROFILES_API UpdateCalculatedAttributeDefinitionResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique name of the calculated attribute.</p>
+   */
+  inline const Aws::String& GetCalculatedAttributeName() const { return m_calculatedAttributeName; }
+  template <typename CalculatedAttributeNameT = Aws::String>
+  void SetCalculatedAttributeName(CalculatedAttributeNameT&& value) {
+    m_calculatedAttributeNameHasBeenSet = true;
+    m_calculatedAttributeName = std::forward<CalculatedAttributeNameT>(value);
+  }
+  template <typename CalculatedAttributeNameT = Aws::String>
+  UpdateCalculatedAttributeDefinitionResult& WithCalculatedAttributeName(CalculatedAttributeNameT&& value) {
+    SetCalculatedAttributeName(std::forward<CalculatedAttributeNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique name of the calculated attribute.</p>
-     */
-    inline const Aws::String& GetCalculatedAttributeName() const{ return m_calculatedAttributeName; }
-    inline void SetCalculatedAttributeName(const Aws::String& value) { m_calculatedAttributeName = value; }
-    inline void SetCalculatedAttributeName(Aws::String&& value) { m_calculatedAttributeName = std::move(value); }
-    inline void SetCalculatedAttributeName(const char* value) { m_calculatedAttributeName.assign(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithCalculatedAttributeName(const Aws::String& value) { SetCalculatedAttributeName(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithCalculatedAttributeName(Aws::String&& value) { SetCalculatedAttributeName(std::move(value)); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithCalculatedAttributeName(const char* value) { SetCalculatedAttributeName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The display name of the calculated attribute.</p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  UpdateCalculatedAttributeDefinitionResult& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The display name of the calculated attribute.</p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayName.assign(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the calculated attribute.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateCalculatedAttributeDefinitionResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the calculated attribute.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the calculated attribute definition was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  UpdateCalculatedAttributeDefinitionResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the calculated attribute definition was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the calculated attribute definition was most recently
+   * edited.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedAt() const { return m_lastUpdatedAt; }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  void SetLastUpdatedAt(LastUpdatedAtT&& value) {
+    m_lastUpdatedAtHasBeenSet = true;
+    m_lastUpdatedAt = std::forward<LastUpdatedAtT>(value);
+  }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  UpdateCalculatedAttributeDefinitionResult& WithLastUpdatedAt(LastUpdatedAtT&& value) {
+    SetLastUpdatedAt(std::forward<LastUpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the calculated attribute definition was most recently
-     * edited.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedAt() const{ return m_lastUpdatedAt; }
-    inline void SetLastUpdatedAt(const Aws::Utils::DateTime& value) { m_lastUpdatedAt = value; }
-    inline void SetLastUpdatedAt(Aws::Utils::DateTime&& value) { m_lastUpdatedAt = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithLastUpdatedAt(const Aws::Utils::DateTime& value) { SetLastUpdatedAt(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithLastUpdatedAt(Aws::Utils::DateTime&& value) { SetLastUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The aggregation operation to perform for the calculated attribute.</p>
+   */
+  inline Statistic GetStatistic() const { return m_statistic; }
+  inline void SetStatistic(Statistic value) {
+    m_statisticHasBeenSet = true;
+    m_statistic = value;
+  }
+  inline UpdateCalculatedAttributeDefinitionResult& WithStatistic(Statistic value) {
+    SetStatistic(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The aggregation operation to perform for the calculated attribute.</p>
-     */
-    inline const Statistic& GetStatistic() const{ return m_statistic; }
-    inline void SetStatistic(const Statistic& value) { m_statistic = value; }
-    inline void SetStatistic(Statistic&& value) { m_statistic = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithStatistic(const Statistic& value) { SetStatistic(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithStatistic(Statistic&& value) { SetStatistic(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The conditions including range, object count, and threshold for the
+   * calculated attribute.</p>
+   */
+  inline const Conditions& GetConditions() const { return m_conditions; }
+  template <typename ConditionsT = Conditions>
+  void SetConditions(ConditionsT&& value) {
+    m_conditionsHasBeenSet = true;
+    m_conditions = std::forward<ConditionsT>(value);
+  }
+  template <typename ConditionsT = Conditions>
+  UpdateCalculatedAttributeDefinitionResult& WithConditions(ConditionsT&& value) {
+    SetConditions(std::forward<ConditionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The conditions including range, object count, and threshold for the
-     * calculated attribute.</p>
-     */
-    inline const Conditions& GetConditions() const{ return m_conditions; }
-    inline void SetConditions(const Conditions& value) { m_conditions = value; }
-    inline void SetConditions(Conditions&& value) { m_conditions = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithConditions(const Conditions& value) { SetConditions(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithConditions(Conditions&& value) { SetConditions(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The mathematical expression and a list of attribute items specified in that
+   * expression.</p>
+   */
+  inline const AttributeDetails& GetAttributeDetails() const { return m_attributeDetails; }
+  template <typename AttributeDetailsT = AttributeDetails>
+  void SetAttributeDetails(AttributeDetailsT&& value) {
+    m_attributeDetailsHasBeenSet = true;
+    m_attributeDetails = std::forward<AttributeDetailsT>(value);
+  }
+  template <typename AttributeDetailsT = AttributeDetails>
+  UpdateCalculatedAttributeDefinitionResult& WithAttributeDetails(AttributeDetailsT&& value) {
+    SetAttributeDetails(std::forward<AttributeDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The mathematical expression and a list of attribute items specified in that
-     * expression.</p>
-     */
-    inline const AttributeDetails& GetAttributeDetails() const{ return m_attributeDetails; }
-    inline void SetAttributeDetails(const AttributeDetails& value) { m_attributeDetails = value; }
-    inline void SetAttributeDetails(AttributeDetails&& value) { m_attributeDetails = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithAttributeDetails(const AttributeDetails& value) { SetAttributeDetails(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithAttributeDetails(AttributeDetails&& value) { SetAttributeDetails(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether historical data ingested before the Calculated Attribute was created
+   * should be included in calculations.</p>
+   */
+  inline bool GetUseHistoricalData() const { return m_useHistoricalData; }
+  inline void SetUseHistoricalData(bool value) {
+    m_useHistoricalDataHasBeenSet = true;
+    m_useHistoricalData = value;
+  }
+  inline UpdateCalculatedAttributeDefinitionResult& WithUseHistoricalData(bool value) {
+    SetUseHistoricalData(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateCalculatedAttributeDefinitionResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Status of the Calculated Attribute creation (whether all historical data has
+   * been indexed.)</p>
+   */
+  inline ReadinessStatus GetStatus() const { return m_status; }
+  inline void SetStatus(ReadinessStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateCalculatedAttributeDefinitionResult& WithStatus(ReadinessStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateCalculatedAttributeDefinitionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateCalculatedAttributeDefinitionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Information indicating if the Calculated Attribute is ready for use by
+   * confirming all historical data has been processed and reflected.</p>
+   */
+  inline const Readiness& GetReadiness() const { return m_readiness; }
+  template <typename ReadinessT = Readiness>
+  void SetReadiness(ReadinessT&& value) {
+    m_readinessHasBeenSet = true;
+    m_readiness = std::forward<ReadinessT>(value);
+  }
+  template <typename ReadinessT = Readiness>
+  UpdateCalculatedAttributeDefinitionResult& WithReadiness(ReadinessT&& value) {
+    SetReadiness(std::forward<ReadinessT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_calculatedAttributeName;
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  UpdateCalculatedAttributeDefinitionResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  UpdateCalculatedAttributeDefinitionResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_displayName;
+  ///@{
 
-    Aws::String m_description;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateCalculatedAttributeDefinitionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Utils::DateTime m_createdAt;
+ private:
+  Aws::String m_calculatedAttributeName;
 
-    Aws::Utils::DateTime m_lastUpdatedAt;
+  Aws::String m_displayName;
 
-    Statistic m_statistic;
+  Aws::String m_description;
 
-    Conditions m_conditions;
+  Aws::Utils::DateTime m_createdAt{};
 
-    AttributeDetails m_attributeDetails;
+  Aws::Utils::DateTime m_lastUpdatedAt{};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Statistic m_statistic{Statistic::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Conditions m_conditions;
 
-} // namespace Model
-} // namespace CustomerProfiles
-} // namespace Aws
+  AttributeDetails m_attributeDetails;
+
+  bool m_useHistoricalData{false};
+
+  ReadinessStatus m_status{ReadinessStatus::NOT_SET};
+
+  Readiness m_readiness;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_calculatedAttributeNameHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_lastUpdatedAtHasBeenSet = false;
+  bool m_statisticHasBeenSet = false;
+  bool m_conditionsHasBeenSet = false;
+  bool m_attributeDetailsHasBeenSet = false;
+  bool m_useHistoricalDataHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_readinessHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CustomerProfiles
+}  // namespace Aws

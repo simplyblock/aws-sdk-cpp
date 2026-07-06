@@ -4,85 +4,94 @@
  */
 
 #pragma once
-#include <aws/detective/Detective_EXPORTS.h>
-#include <aws/detective/DetectiveRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/detective/DetectiveRequest.h>
+#include <aws/detective/Detective_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Detective
-{
-namespace Model
-{
+namespace Aws {
+namespace Detective {
+namespace Model {
 
+/**
+ */
+class ListDatasourcePackagesRequest : public DetectiveRequest {
+ public:
+  AWS_DETECTIVE_API ListDatasourcePackagesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListDatasourcePackages"; }
+
+  AWS_DETECTIVE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the behavior graph.</p>
    */
-  class ListDatasourcePackagesRequest : public DetectiveRequest
-  {
-  public:
-    AWS_DETECTIVE_API ListDatasourcePackagesRequest();
+  inline const Aws::String& GetGraphArn() const { return m_graphArn; }
+  inline bool GraphArnHasBeenSet() const { return m_graphArnHasBeenSet; }
+  template <typename GraphArnT = Aws::String>
+  void SetGraphArn(GraphArnT&& value) {
+    m_graphArnHasBeenSet = true;
+    m_graphArn = std::forward<GraphArnT>(value);
+  }
+  template <typename GraphArnT = Aws::String>
+  ListDatasourcePackagesRequest& WithGraphArn(GraphArnT&& value) {
+    SetGraphArn(std::forward<GraphArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListDatasourcePackages"; }
+  ///@{
+  /**
+   * <p>For requests to get the next page of results, the pagination token that was
+   * returned with the previous set of results. The initial request does not include
+   * a pagination token.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDatasourcePackagesRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DETECTIVE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of results to return.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListDatasourcePackagesRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_graphArn;
 
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The ARN of the behavior graph.</p>
-     */
-    inline const Aws::String& GetGraphArn() const{ return m_graphArn; }
-    inline bool GraphArnHasBeenSet() const { return m_graphArnHasBeenSet; }
-    inline void SetGraphArn(const Aws::String& value) { m_graphArnHasBeenSet = true; m_graphArn = value; }
-    inline void SetGraphArn(Aws::String&& value) { m_graphArnHasBeenSet = true; m_graphArn = std::move(value); }
-    inline void SetGraphArn(const char* value) { m_graphArnHasBeenSet = true; m_graphArn.assign(value); }
-    inline ListDatasourcePackagesRequest& WithGraphArn(const Aws::String& value) { SetGraphArn(value); return *this;}
-    inline ListDatasourcePackagesRequest& WithGraphArn(Aws::String&& value) { SetGraphArn(std::move(value)); return *this;}
-    inline ListDatasourcePackagesRequest& WithGraphArn(const char* value) { SetGraphArn(value); return *this;}
-    ///@}
+  int m_maxResults{0};
+  bool m_graphArnHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>For requests to get the next page of results, the pagination token that was
-     * returned with the previous set of results. The initial request does not include
-     * a pagination token.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListDatasourcePackagesRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDatasourcePackagesRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDatasourcePackagesRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of results to return.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListDatasourcePackagesRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_graphArn;
-    bool m_graphArnHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Detective
-} // namespace Aws
+}  // namespace Model
+}  // namespace Detective
+}  // namespace Aws

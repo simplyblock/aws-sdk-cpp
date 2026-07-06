@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/ssm-contacts/SSMContacts_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ssm-contacts/SSMContacts_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSMContacts
-{
-namespace Model
-{
-  class CreateContactChannelResult
-  {
-  public:
-    AWS_SSMCONTACTS_API CreateContactChannelResult();
-    AWS_SSMCONTACTS_API CreateContactChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMCONTACTS_API CreateContactChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSMContacts {
+namespace Model {
+class CreateContactChannelResult {
+ public:
+  AWS_SSMCONTACTS_API CreateContactChannelResult() = default;
+  AWS_SSMCONTACTS_API CreateContactChannelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMCONTACTS_API CreateContactChannelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the contact channel.</p>
+   */
+  inline const Aws::String& GetContactChannelArn() const { return m_contactChannelArn; }
+  template <typename ContactChannelArnT = Aws::String>
+  void SetContactChannelArn(ContactChannelArnT&& value) {
+    m_contactChannelArnHasBeenSet = true;
+    m_contactChannelArn = std::forward<ContactChannelArnT>(value);
+  }
+  template <typename ContactChannelArnT = Aws::String>
+  CreateContactChannelResult& WithContactChannelArn(ContactChannelArnT&& value) {
+    SetContactChannelArn(std::forward<ContactChannelArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the contact channel.</p>
-     */
-    inline const Aws::String& GetContactChannelArn() const{ return m_contactChannelArn; }
-    inline void SetContactChannelArn(const Aws::String& value) { m_contactChannelArn = value; }
-    inline void SetContactChannelArn(Aws::String&& value) { m_contactChannelArn = std::move(value); }
-    inline void SetContactChannelArn(const char* value) { m_contactChannelArn.assign(value); }
-    inline CreateContactChannelResult& WithContactChannelArn(const Aws::String& value) { SetContactChannelArn(value); return *this;}
-    inline CreateContactChannelResult& WithContactChannelArn(Aws::String&& value) { SetContactChannelArn(std::move(value)); return *this;}
-    inline CreateContactChannelResult& WithContactChannelArn(const char* value) { SetContactChannelArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateContactChannelResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateContactChannelResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateContactChannelResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateContactChannelResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_contactChannelArn;
+ private:
+  Aws::String m_contactChannelArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contactChannelArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSMContacts
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSMContacts
+}  // namespace Aws

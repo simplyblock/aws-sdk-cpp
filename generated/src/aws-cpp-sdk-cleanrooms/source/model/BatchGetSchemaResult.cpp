@@ -4,10 +4,10 @@
  */
 
 #include <aws/cleanrooms/model/BatchGetSchemaResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
 
 #include <utility>
@@ -17,44 +17,32 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-BatchGetSchemaResult::BatchGetSchemaResult()
-{
-}
+BatchGetSchemaResult::BatchGetSchemaResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-BatchGetSchemaResult::BatchGetSchemaResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-BatchGetSchemaResult& BatchGetSchemaResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+BatchGetSchemaResult& BatchGetSchemaResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("schemas"))
-  {
+  if (jsonValue.ValueExists("schemas")) {
     Aws::Utils::Array<JsonView> schemasJsonList = jsonValue.GetArray("schemas");
-    for(unsigned schemasIndex = 0; schemasIndex < schemasJsonList.GetLength(); ++schemasIndex)
-    {
+    for (unsigned schemasIndex = 0; schemasIndex < schemasJsonList.GetLength(); ++schemasIndex) {
       m_schemas.push_back(schemasJsonList[schemasIndex].AsObject());
     }
+    m_schemasHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("errors"))
-  {
+  if (jsonValue.ValueExists("errors")) {
     Aws::Utils::Array<JsonView> errorsJsonList = jsonValue.GetArray("errors");
-    for(unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex)
-    {
+    for (unsigned errorsIndex = 0; errorsIndex < errorsJsonList.GetLength(); ++errorsIndex) {
       m_errors.push_back(errorsJsonList[errorsIndex].AsObject());
     }
+    m_errorsHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

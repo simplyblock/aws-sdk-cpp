@@ -4,130 +4,170 @@
  */
 
 #pragma once
-#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/marketplace-agreement/model/GrantItem.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AgreementService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AgreementService {
+namespace Model {
 
+/**
+ * <p>Defines a prepaid pricing model where the customers are charged a fixed
+ * upfront amount.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/FixedUpfrontPricingTerm">AWS
+ * API Reference</a></p>
+ */
+class FixedUpfrontPricingTerm {
+ public:
+  AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm() = default;
+  AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Defines a prepaid pricing model where the customers are charged a fixed
-   * upfront amount.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/FixedUpfrontPricingTerm">AWS
-   * API Reference</a></p>
+   * <p>Category of the term being updated.</p>
    */
-  class FixedUpfrontPricingTerm
-  {
-  public:
-    AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm();
-    AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API FixedUpfrontPricingTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  FixedUpfrontPricingTerm& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier for the term.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  FixedUpfrontPricingTerm& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines the currency for the prices mentioned in this term. </p>
-     */
-    inline const Aws::String& GetCurrencyCode() const{ return m_currencyCode; }
-    inline bool CurrencyCodeHasBeenSet() const { return m_currencyCodeHasBeenSet; }
-    inline void SetCurrencyCode(const Aws::String& value) { m_currencyCodeHasBeenSet = true; m_currencyCode = value; }
-    inline void SetCurrencyCode(Aws::String&& value) { m_currencyCodeHasBeenSet = true; m_currencyCode = std::move(value); }
-    inline void SetCurrencyCode(const char* value) { m_currencyCodeHasBeenSet = true; m_currencyCode.assign(value); }
-    inline FixedUpfrontPricingTerm& WithCurrencyCode(const Aws::String& value) { SetCurrencyCode(value); return *this;}
-    inline FixedUpfrontPricingTerm& WithCurrencyCode(Aws::String&& value) { SetCurrencyCode(std::move(value)); return *this;}
-    inline FixedUpfrontPricingTerm& WithCurrencyCode(const char* value) { SetCurrencyCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines the currency for the prices mentioned in this term. </p>
+   */
+  inline const Aws::String& GetCurrencyCode() const { return m_currencyCode; }
+  inline bool CurrencyCodeHasBeenSet() const { return m_currencyCodeHasBeenSet; }
+  template <typename CurrencyCodeT = Aws::String>
+  void SetCurrencyCode(CurrencyCodeT&& value) {
+    m_currencyCodeHasBeenSet = true;
+    m_currencyCode = std::forward<CurrencyCodeT>(value);
+  }
+  template <typename CurrencyCodeT = Aws::String>
+  FixedUpfrontPricingTerm& WithCurrencyCode(CurrencyCodeT&& value) {
+    SetCurrencyCode(std::forward<CurrencyCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contract duration for the terms.</p>
-     */
-    inline const Aws::String& GetDuration() const{ return m_duration; }
-    inline bool DurationHasBeenSet() const { return m_durationHasBeenSet; }
-    inline void SetDuration(const Aws::String& value) { m_durationHasBeenSet = true; m_duration = value; }
-    inline void SetDuration(Aws::String&& value) { m_durationHasBeenSet = true; m_duration = std::move(value); }
-    inline void SetDuration(const char* value) { m_durationHasBeenSet = true; m_duration.assign(value); }
-    inline FixedUpfrontPricingTerm& WithDuration(const Aws::String& value) { SetDuration(value); return *this;}
-    inline FixedUpfrontPricingTerm& WithDuration(Aws::String&& value) { SetDuration(std::move(value)); return *this;}
-    inline FixedUpfrontPricingTerm& WithDuration(const char* value) { SetDuration(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contract duration for the terms.</p>
+   */
+  inline const Aws::String& GetDuration() const { return m_duration; }
+  inline bool DurationHasBeenSet() const { return m_durationHasBeenSet; }
+  template <typename DurationT = Aws::String>
+  void SetDuration(DurationT&& value) {
+    m_durationHasBeenSet = true;
+    m_duration = std::forward<DurationT>(value);
+  }
+  template <typename DurationT = Aws::String>
+  FixedUpfrontPricingTerm& WithDuration(DurationT&& value) {
+    SetDuration(std::forward<DurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Entitlements granted to the acceptor of fixed upfront as part of agreement
-     * execution.</p>
-     */
-    inline const Aws::Vector<GrantItem>& GetGrants() const{ return m_grants; }
-    inline bool GrantsHasBeenSet() const { return m_grantsHasBeenSet; }
-    inline void SetGrants(const Aws::Vector<GrantItem>& value) { m_grantsHasBeenSet = true; m_grants = value; }
-    inline void SetGrants(Aws::Vector<GrantItem>&& value) { m_grantsHasBeenSet = true; m_grants = std::move(value); }
-    inline FixedUpfrontPricingTerm& WithGrants(const Aws::Vector<GrantItem>& value) { SetGrants(value); return *this;}
-    inline FixedUpfrontPricingTerm& WithGrants(Aws::Vector<GrantItem>&& value) { SetGrants(std::move(value)); return *this;}
-    inline FixedUpfrontPricingTerm& AddGrants(const GrantItem& value) { m_grantsHasBeenSet = true; m_grants.push_back(value); return *this; }
-    inline FixedUpfrontPricingTerm& AddGrants(GrantItem&& value) { m_grantsHasBeenSet = true; m_grants.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Fixed amount to be charged to the customer when this term is accepted.</p>
+   */
+  inline const Aws::String& GetPrice() const { return m_price; }
+  inline bool PriceHasBeenSet() const { return m_priceHasBeenSet; }
+  template <typename PriceT = Aws::String>
+  void SetPrice(PriceT&& value) {
+    m_priceHasBeenSet = true;
+    m_price = std::forward<PriceT>(value);
+  }
+  template <typename PriceT = Aws::String>
+  FixedUpfrontPricingTerm& WithPrice(PriceT&& value) {
+    SetPrice(std::forward<PriceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Fixed amount to be charged to the customer when this term is accepted.</p>
-     */
-    inline const Aws::String& GetPrice() const{ return m_price; }
-    inline bool PriceHasBeenSet() const { return m_priceHasBeenSet; }
-    inline void SetPrice(const Aws::String& value) { m_priceHasBeenSet = true; m_price = value; }
-    inline void SetPrice(Aws::String&& value) { m_priceHasBeenSet = true; m_price = std::move(value); }
-    inline void SetPrice(const char* value) { m_priceHasBeenSet = true; m_price.assign(value); }
-    inline FixedUpfrontPricingTerm& WithPrice(const Aws::String& value) { SetPrice(value); return *this;}
-    inline FixedUpfrontPricingTerm& WithPrice(Aws::String&& value) { SetPrice(std::move(value)); return *this;}
-    inline FixedUpfrontPricingTerm& WithPrice(const char* value) { SetPrice(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Entitlements granted to the acceptor of fixed upfront as part of agreement
+   * execution.</p>
+   */
+  inline const Aws::Vector<GrantItem>& GetGrants() const { return m_grants; }
+  inline bool GrantsHasBeenSet() const { return m_grantsHasBeenSet; }
+  template <typename GrantsT = Aws::Vector<GrantItem>>
+  void SetGrants(GrantsT&& value) {
+    m_grantsHasBeenSet = true;
+    m_grants = std::forward<GrantsT>(value);
+  }
+  template <typename GrantsT = Aws::Vector<GrantItem>>
+  FixedUpfrontPricingTerm& WithGrants(GrantsT&& value) {
+    SetGrants(std::forward<GrantsT>(value));
+    return *this;
+  }
+  template <typename GrantsT = GrantItem>
+  FixedUpfrontPricingTerm& AddGrants(GrantsT&& value) {
+    m_grantsHasBeenSet = true;
+    m_grants.emplace_back(std::forward<GrantsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_type;
 
-    ///@{
-    /**
-     * <p>Category of the term being updated.</p>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline FixedUpfrontPricingTerm& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline FixedUpfrontPricingTerm& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline FixedUpfrontPricingTerm& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_id;
 
-    Aws::String m_currencyCode;
-    bool m_currencyCodeHasBeenSet = false;
+  Aws::String m_currencyCode;
 
-    Aws::String m_duration;
-    bool m_durationHasBeenSet = false;
+  Aws::String m_duration;
 
-    Aws::Vector<GrantItem> m_grants;
-    bool m_grantsHasBeenSet = false;
+  Aws::String m_price;
 
-    Aws::String m_price;
-    bool m_priceHasBeenSet = false;
+  Aws::Vector<GrantItem> m_grants;
+  bool m_typeHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_currencyCodeHasBeenSet = false;
+  bool m_durationHasBeenSet = false;
+  bool m_priceHasBeenSet = false;
+  bool m_grantsHasBeenSet = false;
+};
 
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AgreementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AgreementService
+}  // namespace Aws

@@ -3,30 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/RemoveFromGlobalClusterRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/RemoveFromGlobalClusterRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-RemoveFromGlobalClusterRequest::RemoveFromGlobalClusterRequest() : 
-    m_globalClusterIdentifierHasBeenSet(false),
-    m_dbClusterIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String RemoveFromGlobalClusterRequest::SerializePayload() const
-{
+Aws::String RemoveFromGlobalClusterRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=RemoveFromGlobalCluster&";
-  if(m_globalClusterIdentifierHasBeenSet)
-  {
+  if (m_globalClusterIdentifierHasBeenSet) {
     ss << "GlobalClusterIdentifier=" << StringUtils::URLEncode(m_globalClusterIdentifier.c_str()) << "&";
   }
 
-  if(m_dbClusterIdentifierHasBeenSet)
-  {
+  if (m_dbClusterIdentifierHasBeenSet) {
     ss << "DbClusterIdentifier=" << StringUtils::URLEncode(m_dbClusterIdentifier.c_str()) << "&";
   }
 
@@ -34,8 +25,4 @@ Aws::String RemoveFromGlobalClusterRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  RemoveFromGlobalClusterRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void RemoveFromGlobalClusterRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

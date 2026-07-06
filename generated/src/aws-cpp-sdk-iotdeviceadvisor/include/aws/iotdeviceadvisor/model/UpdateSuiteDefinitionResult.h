@@ -4,136 +4,172 @@
  */
 
 #pragma once
-#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTDeviceAdvisor
-{
-namespace Model
-{
-  class UpdateSuiteDefinitionResult
-  {
-  public:
-    AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult();
-    AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTDeviceAdvisor {
+namespace Model {
+class UpdateSuiteDefinitionResult {
+ public:
+  AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult() = default;
+  AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTDEVICEADVISOR_API UpdateSuiteDefinitionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Suite definition ID of the updated test suite.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionId() const { return m_suiteDefinitionId; }
+  template <typename SuiteDefinitionIdT = Aws::String>
+  void SetSuiteDefinitionId(SuiteDefinitionIdT&& value) {
+    m_suiteDefinitionIdHasBeenSet = true;
+    m_suiteDefinitionId = std::forward<SuiteDefinitionIdT>(value);
+  }
+  template <typename SuiteDefinitionIdT = Aws::String>
+  UpdateSuiteDefinitionResult& WithSuiteDefinitionId(SuiteDefinitionIdT&& value) {
+    SetSuiteDefinitionId(std::forward<SuiteDefinitionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite definition ID of the updated test suite.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionId() const{ return m_suiteDefinitionId; }
-    inline void SetSuiteDefinitionId(const Aws::String& value) { m_suiteDefinitionId = value; }
-    inline void SetSuiteDefinitionId(Aws::String&& value) { m_suiteDefinitionId = std::move(value); }
-    inline void SetSuiteDefinitionId(const char* value) { m_suiteDefinitionId.assign(value); }
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionId(const Aws::String& value) { SetSuiteDefinitionId(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionId(Aws::String&& value) { SetSuiteDefinitionId(std::move(value)); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionId(const char* value) { SetSuiteDefinitionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the updated test suite.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionArn() const { return m_suiteDefinitionArn; }
+  template <typename SuiteDefinitionArnT = Aws::String>
+  void SetSuiteDefinitionArn(SuiteDefinitionArnT&& value) {
+    m_suiteDefinitionArnHasBeenSet = true;
+    m_suiteDefinitionArn = std::forward<SuiteDefinitionArnT>(value);
+  }
+  template <typename SuiteDefinitionArnT = Aws::String>
+  UpdateSuiteDefinitionResult& WithSuiteDefinitionArn(SuiteDefinitionArnT&& value) {
+    SetSuiteDefinitionArn(std::forward<SuiteDefinitionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the updated test suite.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionArn() const{ return m_suiteDefinitionArn; }
-    inline void SetSuiteDefinitionArn(const Aws::String& value) { m_suiteDefinitionArn = value; }
-    inline void SetSuiteDefinitionArn(Aws::String&& value) { m_suiteDefinitionArn = std::move(value); }
-    inline void SetSuiteDefinitionArn(const char* value) { m_suiteDefinitionArn.assign(value); }
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionArn(const Aws::String& value) { SetSuiteDefinitionArn(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionArn(Aws::String&& value) { SetSuiteDefinitionArn(std::move(value)); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionArn(const char* value) { SetSuiteDefinitionArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updates the suite definition name. This is a required parameter.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionName() const { return m_suiteDefinitionName; }
+  template <typename SuiteDefinitionNameT = Aws::String>
+  void SetSuiteDefinitionName(SuiteDefinitionNameT&& value) {
+    m_suiteDefinitionNameHasBeenSet = true;
+    m_suiteDefinitionName = std::forward<SuiteDefinitionNameT>(value);
+  }
+  template <typename SuiteDefinitionNameT = Aws::String>
+  UpdateSuiteDefinitionResult& WithSuiteDefinitionName(SuiteDefinitionNameT&& value) {
+    SetSuiteDefinitionName(std::forward<SuiteDefinitionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Updates the suite definition name. This is a required parameter.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionName() const{ return m_suiteDefinitionName; }
-    inline void SetSuiteDefinitionName(const Aws::String& value) { m_suiteDefinitionName = value; }
-    inline void SetSuiteDefinitionName(Aws::String&& value) { m_suiteDefinitionName = std::move(value); }
-    inline void SetSuiteDefinitionName(const char* value) { m_suiteDefinitionName.assign(value); }
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionName(const Aws::String& value) { SetSuiteDefinitionName(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionName(Aws::String&& value) { SetSuiteDefinitionName(std::move(value)); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionName(const char* value) { SetSuiteDefinitionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Suite definition version of the updated test suite.</p>
+   */
+  inline const Aws::String& GetSuiteDefinitionVersion() const { return m_suiteDefinitionVersion; }
+  template <typename SuiteDefinitionVersionT = Aws::String>
+  void SetSuiteDefinitionVersion(SuiteDefinitionVersionT&& value) {
+    m_suiteDefinitionVersionHasBeenSet = true;
+    m_suiteDefinitionVersion = std::forward<SuiteDefinitionVersionT>(value);
+  }
+  template <typename SuiteDefinitionVersionT = Aws::String>
+  UpdateSuiteDefinitionResult& WithSuiteDefinitionVersion(SuiteDefinitionVersionT&& value) {
+    SetSuiteDefinitionVersion(std::forward<SuiteDefinitionVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Suite definition version of the updated test suite.</p>
-     */
-    inline const Aws::String& GetSuiteDefinitionVersion() const{ return m_suiteDefinitionVersion; }
-    inline void SetSuiteDefinitionVersion(const Aws::String& value) { m_suiteDefinitionVersion = value; }
-    inline void SetSuiteDefinitionVersion(Aws::String&& value) { m_suiteDefinitionVersion = std::move(value); }
-    inline void SetSuiteDefinitionVersion(const char* value) { m_suiteDefinitionVersion.assign(value); }
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionVersion(const Aws::String& value) { SetSuiteDefinitionVersion(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionVersion(Aws::String&& value) { SetSuiteDefinitionVersion(std::move(value)); return *this;}
-    inline UpdateSuiteDefinitionResult& WithSuiteDefinitionVersion(const char* value) { SetSuiteDefinitionVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Timestamp of when the test suite was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  UpdateSuiteDefinitionResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Timestamp of when the test suite was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline UpdateSuiteDefinitionResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Timestamp of when the test suite was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedAt() const { return m_lastUpdatedAt; }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  void SetLastUpdatedAt(LastUpdatedAtT&& value) {
+    m_lastUpdatedAtHasBeenSet = true;
+    m_lastUpdatedAt = std::forward<LastUpdatedAtT>(value);
+  }
+  template <typename LastUpdatedAtT = Aws::Utils::DateTime>
+  UpdateSuiteDefinitionResult& WithLastUpdatedAt(LastUpdatedAtT&& value) {
+    SetLastUpdatedAt(std::forward<LastUpdatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Timestamp of when the test suite was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedAt() const{ return m_lastUpdatedAt; }
-    inline void SetLastUpdatedAt(const Aws::Utils::DateTime& value) { m_lastUpdatedAt = value; }
-    inline void SetLastUpdatedAt(Aws::Utils::DateTime&& value) { m_lastUpdatedAt = std::move(value); }
-    inline UpdateSuiteDefinitionResult& WithLastUpdatedAt(const Aws::Utils::DateTime& value) { SetLastUpdatedAt(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithLastUpdatedAt(Aws::Utils::DateTime&& value) { SetLastUpdatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSuiteDefinitionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSuiteDefinitionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSuiteDefinitionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSuiteDefinitionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_suiteDefinitionId;
+ private:
+  Aws::String m_suiteDefinitionId;
 
-    Aws::String m_suiteDefinitionArn;
+  Aws::String m_suiteDefinitionArn;
 
-    Aws::String m_suiteDefinitionName;
+  Aws::String m_suiteDefinitionName;
 
-    Aws::String m_suiteDefinitionVersion;
+  Aws::String m_suiteDefinitionVersion;
 
-    Aws::Utils::DateTime m_createdAt;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::Utils::DateTime m_lastUpdatedAt;
+  Aws::Utils::DateTime m_lastUpdatedAt{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_suiteDefinitionIdHasBeenSet = false;
+  bool m_suiteDefinitionArnHasBeenSet = false;
+  bool m_suiteDefinitionNameHasBeenSet = false;
+  bool m_suiteDefinitionVersionHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_lastUpdatedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTDeviceAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTDeviceAdvisor
+}  // namespace Aws

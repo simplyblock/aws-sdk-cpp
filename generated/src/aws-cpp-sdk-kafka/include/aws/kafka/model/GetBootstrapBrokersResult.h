@@ -4,229 +4,375 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
-  class GetBootstrapBrokersResult
-  {
-  public:
-    AWS_KAFKA_API GetBootstrapBrokersResult();
-    AWS_KAFKA_API GetBootstrapBrokersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KAFKA_API GetBootstrapBrokersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
+class GetBootstrapBrokersResult {
+ public:
+  AWS_KAFKA_API GetBootstrapBrokersResult() = default;
+  AWS_KAFKA_API GetBootstrapBrokersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KAFKA_API GetBootstrapBrokersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   *
+          <p>A string containing one or more hostname:port pairs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more hostname:port pairs.</p>
-       
-     *  
-     */
-    inline const Aws::String& GetBootstrapBrokerString() const{ return m_bootstrapBrokerString; }
-    inline void SetBootstrapBrokerString(const Aws::String& value) { m_bootstrapBrokerString = value; }
-    inline void SetBootstrapBrokerString(Aws::String&& value) { m_bootstrapBrokerString = std::move(value); }
-    inline void SetBootstrapBrokerString(const char* value) { m_bootstrapBrokerString.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerString(const Aws::String& value) { SetBootstrapBrokerString(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerString(Aws::String&& value) { SetBootstrapBrokerString(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerString(const char* value) { SetBootstrapBrokerString(value); return *this;}
-    ///@}
+   *
+   */
+  inline const Aws::String& GetBootstrapBrokerString() const { return m_bootstrapBrokerString; }
+  template <typename BootstrapBrokerStringT = Aws::String>
+  void SetBootstrapBrokerString(BootstrapBrokerStringT&& value) {
+    m_bootstrapBrokerStringHasBeenSet = true;
+    m_bootstrapBrokerString = std::forward<BootstrapBrokerStringT>(value);
+  }
+  template <typename BootstrapBrokerStringT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerString(BootstrapBrokerStringT&& value) {
+    SetBootstrapBrokerString(std::forward<BootstrapBrokerStringT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and TLS port
-     * pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringTls() const{ return m_bootstrapBrokerStringTls; }
-    inline void SetBootstrapBrokerStringTls(const Aws::String& value) { m_bootstrapBrokerStringTls = value; }
-    inline void SetBootstrapBrokerStringTls(Aws::String&& value) { m_bootstrapBrokerStringTls = std::move(value); }
-    inline void SetBootstrapBrokerStringTls(const char* value) { m_bootstrapBrokerStringTls.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringTls(const Aws::String& value) { SetBootstrapBrokerStringTls(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringTls(Aws::String&& value) { SetBootstrapBrokerStringTls(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringTls(const char* value) { SetBootstrapBrokerStringTls(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and TLS port
+   * pairs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and Sasl Scram
-     * port pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringSaslScram() const{ return m_bootstrapBrokerStringSaslScram; }
-    inline void SetBootstrapBrokerStringSaslScram(const Aws::String& value) { m_bootstrapBrokerStringSaslScram = value; }
-    inline void SetBootstrapBrokerStringSaslScram(Aws::String&& value) { m_bootstrapBrokerStringSaslScram = std::move(value); }
-    inline void SetBootstrapBrokerStringSaslScram(const char* value) { m_bootstrapBrokerStringSaslScram.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslScram(const Aws::String& value) { SetBootstrapBrokerStringSaslScram(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslScram(Aws::String&& value) { SetBootstrapBrokerStringSaslScram(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslScram(const char* value) { SetBootstrapBrokerStringSaslScram(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetBootstrapBrokerStringTls() const { return m_bootstrapBrokerStringTls; }
+  template <typename BootstrapBrokerStringTlsT = Aws::String>
+  void SetBootstrapBrokerStringTls(BootstrapBrokerStringTlsT&& value) {
+    m_bootstrapBrokerStringTlsHasBeenSet = true;
+    m_bootstrapBrokerStringTls = std::forward<BootstrapBrokerStringTlsT>(value);
+  }
+  template <typename BootstrapBrokerStringTlsT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringTls(BootstrapBrokerStringTlsT&& value) {
+    SetBootstrapBrokerStringTls(std::forward<BootstrapBrokerStringTlsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>A string that contains one or more DNS names (or IP addresses)
-     * and SASL IAM port pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringSaslIam() const{ return m_bootstrapBrokerStringSaslIam; }
-    inline void SetBootstrapBrokerStringSaslIam(const Aws::String& value) { m_bootstrapBrokerStringSaslIam = value; }
-    inline void SetBootstrapBrokerStringSaslIam(Aws::String&& value) { m_bootstrapBrokerStringSaslIam = std::move(value); }
-    inline void SetBootstrapBrokerStringSaslIam(const char* value) { m_bootstrapBrokerStringSaslIam.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslIam(const Aws::String& value) { SetBootstrapBrokerStringSaslIam(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslIam(Aws::String&& value) { SetBootstrapBrokerStringSaslIam(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslIam(const char* value) { SetBootstrapBrokerStringSaslIam(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and Sasl Scram
+   * port pairs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and TLS port
-     * pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringPublicTls() const{ return m_bootstrapBrokerStringPublicTls; }
-    inline void SetBootstrapBrokerStringPublicTls(const Aws::String& value) { m_bootstrapBrokerStringPublicTls = value; }
-    inline void SetBootstrapBrokerStringPublicTls(Aws::String&& value) { m_bootstrapBrokerStringPublicTls = std::move(value); }
-    inline void SetBootstrapBrokerStringPublicTls(const char* value) { m_bootstrapBrokerStringPublicTls.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicTls(const Aws::String& value) { SetBootstrapBrokerStringPublicTls(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicTls(Aws::String&& value) { SetBootstrapBrokerStringPublicTls(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicTls(const char* value) { SetBootstrapBrokerStringPublicTls(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetBootstrapBrokerStringSaslScram() const { return m_bootstrapBrokerStringSaslScram; }
+  template <typename BootstrapBrokerStringSaslScramT = Aws::String>
+  void SetBootstrapBrokerStringSaslScram(BootstrapBrokerStringSaslScramT&& value) {
+    m_bootstrapBrokerStringSaslScramHasBeenSet = true;
+    m_bootstrapBrokerStringSaslScram = std::forward<BootstrapBrokerStringSaslScramT>(value);
+  }
+  template <typename BootstrapBrokerStringSaslScramT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslScram(BootstrapBrokerStringSaslScramT&& value) {
+    SetBootstrapBrokerStringSaslScram(std::forward<BootstrapBrokerStringSaslScramT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and Sasl Scram
-     * port pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringPublicSaslScram() const{ return m_bootstrapBrokerStringPublicSaslScram; }
-    inline void SetBootstrapBrokerStringPublicSaslScram(const Aws::String& value) { m_bootstrapBrokerStringPublicSaslScram = value; }
-    inline void SetBootstrapBrokerStringPublicSaslScram(Aws::String&& value) { m_bootstrapBrokerStringPublicSaslScram = std::move(value); }
-    inline void SetBootstrapBrokerStringPublicSaslScram(const char* value) { m_bootstrapBrokerStringPublicSaslScram.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslScram(const Aws::String& value) { SetBootstrapBrokerStringPublicSaslScram(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslScram(Aws::String&& value) { SetBootstrapBrokerStringPublicSaslScram(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslScram(const char* value) { SetBootstrapBrokerStringPublicSaslScram(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP addresses)
+   * and SASL IAM port pairs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A string that contains one or more DNS names (or IP addresses)
-     * and SASL IAM port pairs.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringPublicSaslIam() const{ return m_bootstrapBrokerStringPublicSaslIam; }
-    inline void SetBootstrapBrokerStringPublicSaslIam(const Aws::String& value) { m_bootstrapBrokerStringPublicSaslIam = value; }
-    inline void SetBootstrapBrokerStringPublicSaslIam(Aws::String&& value) { m_bootstrapBrokerStringPublicSaslIam = std::move(value); }
-    inline void SetBootstrapBrokerStringPublicSaslIam(const char* value) { m_bootstrapBrokerStringPublicSaslIam.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslIam(const Aws::String& value) { SetBootstrapBrokerStringPublicSaslIam(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslIam(Aws::String&& value) { SetBootstrapBrokerStringPublicSaslIam(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslIam(const char* value) { SetBootstrapBrokerStringPublicSaslIam(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetBootstrapBrokerStringSaslIam() const { return m_bootstrapBrokerStringSaslIam; }
+  template <typename BootstrapBrokerStringSaslIamT = Aws::String>
+  void SetBootstrapBrokerStringSaslIam(BootstrapBrokerStringSaslIamT&& value) {
+    m_bootstrapBrokerStringSaslIamHasBeenSet = true;
+    m_bootstrapBrokerStringSaslIam = std::forward<BootstrapBrokerStringSaslIamT>(value);
+  }
+  template <typename BootstrapBrokerStringSaslIamT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslIam(BootstrapBrokerStringSaslIamT&& value) {
+    SetBootstrapBrokerStringSaslIam(std::forward<BootstrapBrokerStringSaslIamT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and TLS port
-     * pairs for VPC connectivity.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringVpcConnectivityTls() const{ return m_bootstrapBrokerStringVpcConnectivityTls; }
-    inline void SetBootstrapBrokerStringVpcConnectivityTls(const Aws::String& value) { m_bootstrapBrokerStringVpcConnectivityTls = value; }
-    inline void SetBootstrapBrokerStringVpcConnectivityTls(Aws::String&& value) { m_bootstrapBrokerStringVpcConnectivityTls = std::move(value); }
-    inline void SetBootstrapBrokerStringVpcConnectivityTls(const char* value) { m_bootstrapBrokerStringVpcConnectivityTls.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivityTls(const Aws::String& value) { SetBootstrapBrokerStringVpcConnectivityTls(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivityTls(Aws::String&& value) { SetBootstrapBrokerStringVpcConnectivityTls(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivityTls(const char* value) { SetBootstrapBrokerStringVpcConnectivityTls(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and TLS port
+   * pairs.</p>
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and SASL/SCRAM
-     * port pairs for VPC connectivity.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringVpcConnectivitySaslScram() const{ return m_bootstrapBrokerStringVpcConnectivitySaslScram; }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslScram(const Aws::String& value) { m_bootstrapBrokerStringVpcConnectivitySaslScram = value; }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslScram(Aws::String&& value) { m_bootstrapBrokerStringVpcConnectivitySaslScram = std::move(value); }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslScram(const char* value) { m_bootstrapBrokerStringVpcConnectivitySaslScram.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslScram(const Aws::String& value) { SetBootstrapBrokerStringVpcConnectivitySaslScram(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslScram(Aws::String&& value) { SetBootstrapBrokerStringVpcConnectivitySaslScram(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslScram(const char* value) { SetBootstrapBrokerStringVpcConnectivitySaslScram(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetBootstrapBrokerStringPublicTls() const { return m_bootstrapBrokerStringPublicTls; }
+  template <typename BootstrapBrokerStringPublicTlsT = Aws::String>
+  void SetBootstrapBrokerStringPublicTls(BootstrapBrokerStringPublicTlsT&& value) {
+    m_bootstrapBrokerStringPublicTlsHasBeenSet = true;
+    m_bootstrapBrokerStringPublicTls = std::forward<BootstrapBrokerStringPublicTlsT>(value);
+  }
+  template <typename BootstrapBrokerStringPublicTlsT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicTls(BootstrapBrokerStringPublicTlsT&& value) {
+    SetBootstrapBrokerStringPublicTls(std::forward<BootstrapBrokerStringPublicTlsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>A string containing one or more DNS names (or IP) and SASL/IAM
-     * port pairs for VPC connectivity.</p>
-         
-     */
-    inline const Aws::String& GetBootstrapBrokerStringVpcConnectivitySaslIam() const{ return m_bootstrapBrokerStringVpcConnectivitySaslIam; }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslIam(const Aws::String& value) { m_bootstrapBrokerStringVpcConnectivitySaslIam = value; }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslIam(Aws::String&& value) { m_bootstrapBrokerStringVpcConnectivitySaslIam = std::move(value); }
-    inline void SetBootstrapBrokerStringVpcConnectivitySaslIam(const char* value) { m_bootstrapBrokerStringVpcConnectivitySaslIam.assign(value); }
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslIam(const Aws::String& value) { SetBootstrapBrokerStringVpcConnectivitySaslIam(value); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslIam(Aws::String&& value) { SetBootstrapBrokerStringVpcConnectivitySaslIam(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslIam(const char* value) { SetBootstrapBrokerStringVpcConnectivitySaslIam(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and Sasl Scram
+   * port pairs.</p>
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBootstrapBrokersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBootstrapBrokersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBootstrapBrokersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+   */
+  inline const Aws::String& GetBootstrapBrokerStringPublicSaslScram() const { return m_bootstrapBrokerStringPublicSaslScram; }
+  template <typename BootstrapBrokerStringPublicSaslScramT = Aws::String>
+  void SetBootstrapBrokerStringPublicSaslScram(BootstrapBrokerStringPublicSaslScramT&& value) {
+    m_bootstrapBrokerStringPublicSaslScramHasBeenSet = true;
+    m_bootstrapBrokerStringPublicSaslScram = std::forward<BootstrapBrokerStringPublicSaslScramT>(value);
+  }
+  template <typename BootstrapBrokerStringPublicSaslScramT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslScram(BootstrapBrokerStringPublicSaslScramT&& value) {
+    SetBootstrapBrokerStringPublicSaslScram(std::forward<BootstrapBrokerStringPublicSaslScramT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_bootstrapBrokerString;
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP addresses)
+   * and SASL IAM port pairs.</p>
 
-    Aws::String m_bootstrapBrokerStringTls;
+   */
+  inline const Aws::String& GetBootstrapBrokerStringPublicSaslIam() const { return m_bootstrapBrokerStringPublicSaslIam; }
+  template <typename BootstrapBrokerStringPublicSaslIamT = Aws::String>
+  void SetBootstrapBrokerStringPublicSaslIam(BootstrapBrokerStringPublicSaslIamT&& value) {
+    m_bootstrapBrokerStringPublicSaslIamHasBeenSet = true;
+    m_bootstrapBrokerStringPublicSaslIam = std::forward<BootstrapBrokerStringPublicSaslIamT>(value);
+  }
+  template <typename BootstrapBrokerStringPublicSaslIamT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringPublicSaslIam(BootstrapBrokerStringPublicSaslIamT&& value) {
+    SetBootstrapBrokerStringPublicSaslIam(std::forward<BootstrapBrokerStringPublicSaslIamT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_bootstrapBrokerStringSaslScram;
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and TLS port
+   * pairs for VPC connectivity.</p>
 
-    Aws::String m_bootstrapBrokerStringSaslIam;
+   */
+  inline const Aws::String& GetBootstrapBrokerStringVpcConnectivityTls() const { return m_bootstrapBrokerStringVpcConnectivityTls; }
+  template <typename BootstrapBrokerStringVpcConnectivityTlsT = Aws::String>
+  void SetBootstrapBrokerStringVpcConnectivityTls(BootstrapBrokerStringVpcConnectivityTlsT&& value) {
+    m_bootstrapBrokerStringVpcConnectivityTlsHasBeenSet = true;
+    m_bootstrapBrokerStringVpcConnectivityTls = std::forward<BootstrapBrokerStringVpcConnectivityTlsT>(value);
+  }
+  template <typename BootstrapBrokerStringVpcConnectivityTlsT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivityTls(BootstrapBrokerStringVpcConnectivityTlsT&& value) {
+    SetBootstrapBrokerStringVpcConnectivityTls(std::forward<BootstrapBrokerStringVpcConnectivityTlsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_bootstrapBrokerStringPublicTls;
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and SASL/SCRAM
+   * port pairs for VPC connectivity.</p>
 
-    Aws::String m_bootstrapBrokerStringPublicSaslScram;
+   */
+  inline const Aws::String& GetBootstrapBrokerStringVpcConnectivitySaslScram() const {
+    return m_bootstrapBrokerStringVpcConnectivitySaslScram;
+  }
+  template <typename BootstrapBrokerStringVpcConnectivitySaslScramT = Aws::String>
+  void SetBootstrapBrokerStringVpcConnectivitySaslScram(BootstrapBrokerStringVpcConnectivitySaslScramT&& value) {
+    m_bootstrapBrokerStringVpcConnectivitySaslScramHasBeenSet = true;
+    m_bootstrapBrokerStringVpcConnectivitySaslScram = std::forward<BootstrapBrokerStringVpcConnectivitySaslScramT>(value);
+  }
+  template <typename BootstrapBrokerStringVpcConnectivitySaslScramT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslScram(BootstrapBrokerStringVpcConnectivitySaslScramT&& value) {
+    SetBootstrapBrokerStringVpcConnectivitySaslScram(std::forward<BootstrapBrokerStringVpcConnectivitySaslScramT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_bootstrapBrokerStringPublicSaslIam;
+  ///@{
+  /**
+   *
+          <p>A string containing one or more DNS names (or IP) and SASL/IAM
+   * port pairs for VPC connectivity.</p>
 
-    Aws::String m_bootstrapBrokerStringVpcConnectivityTls;
+   */
+  inline const Aws::String& GetBootstrapBrokerStringVpcConnectivitySaslIam() const { return m_bootstrapBrokerStringVpcConnectivitySaslIam; }
+  template <typename BootstrapBrokerStringVpcConnectivitySaslIamT = Aws::String>
+  void SetBootstrapBrokerStringVpcConnectivitySaslIam(BootstrapBrokerStringVpcConnectivitySaslIamT&& value) {
+    m_bootstrapBrokerStringVpcConnectivitySaslIamHasBeenSet = true;
+    m_bootstrapBrokerStringVpcConnectivitySaslIam = std::forward<BootstrapBrokerStringVpcConnectivitySaslIamT>(value);
+  }
+  template <typename BootstrapBrokerStringVpcConnectivitySaslIamT = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringVpcConnectivitySaslIam(BootstrapBrokerStringVpcConnectivitySaslIamT&& value) {
+    SetBootstrapBrokerStringVpcConnectivitySaslIam(std::forward<BootstrapBrokerStringVpcConnectivitySaslIamT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_bootstrapBrokerStringVpcConnectivitySaslScram;
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP) and port
+   * pairs for IPv6 connectivity.</p>
 
-    Aws::String m_bootstrapBrokerStringVpcConnectivitySaslIam;
+   */
+  inline const Aws::String& GetBootstrapBrokerStringIpv6() const { return m_bootstrapBrokerStringIpv6; }
+  template <typename BootstrapBrokerStringIpv6T = Aws::String>
+  void SetBootstrapBrokerStringIpv6(BootstrapBrokerStringIpv6T&& value) {
+    m_bootstrapBrokerStringIpv6HasBeenSet = true;
+    m_bootstrapBrokerStringIpv6 = std::forward<BootstrapBrokerStringIpv6T>(value);
+  }
+  template <typename BootstrapBrokerStringIpv6T = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringIpv6(BootstrapBrokerStringIpv6T&& value) {
+    SetBootstrapBrokerStringIpv6(std::forward<BootstrapBrokerStringIpv6T>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_requestId;
-  };
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP) and TLS
+   * port pairs for IPv6 connectivity.</p>
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+   */
+  inline const Aws::String& GetBootstrapBrokerStringTlsIpv6() const { return m_bootstrapBrokerStringTlsIpv6; }
+  template <typename BootstrapBrokerStringTlsIpv6T = Aws::String>
+  void SetBootstrapBrokerStringTlsIpv6(BootstrapBrokerStringTlsIpv6T&& value) {
+    m_bootstrapBrokerStringTlsIpv6HasBeenSet = true;
+    m_bootstrapBrokerStringTlsIpv6 = std::forward<BootstrapBrokerStringTlsIpv6T>(value);
+  }
+  template <typename BootstrapBrokerStringTlsIpv6T = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringTlsIpv6(BootstrapBrokerStringTlsIpv6T&& value) {
+    SetBootstrapBrokerStringTlsIpv6(std::forward<BootstrapBrokerStringTlsIpv6T>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP) and SASL
+   * SCRAM port pairs for IPv6 connectivity.</p>
+
+   */
+  inline const Aws::String& GetBootstrapBrokerStringSaslScramIpv6() const { return m_bootstrapBrokerStringSaslScramIpv6; }
+  template <typename BootstrapBrokerStringSaslScramIpv6T = Aws::String>
+  void SetBootstrapBrokerStringSaslScramIpv6(BootstrapBrokerStringSaslScramIpv6T&& value) {
+    m_bootstrapBrokerStringSaslScramIpv6HasBeenSet = true;
+    m_bootstrapBrokerStringSaslScramIpv6 = std::forward<BootstrapBrokerStringSaslScramIpv6T>(value);
+  }
+  template <typename BootstrapBrokerStringSaslScramIpv6T = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslScramIpv6(BootstrapBrokerStringSaslScramIpv6T&& value) {
+    SetBootstrapBrokerStringSaslScramIpv6(std::forward<BootstrapBrokerStringSaslScramIpv6T>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   *
+          <p>A string that contains one or more DNS names (or IP) and SASL
+   * IAM port pairs for IPv6 connectivity.</p>
+
+   */
+  inline const Aws::String& GetBootstrapBrokerStringSaslIamIpv6() const { return m_bootstrapBrokerStringSaslIamIpv6; }
+  template <typename BootstrapBrokerStringSaslIamIpv6T = Aws::String>
+  void SetBootstrapBrokerStringSaslIamIpv6(BootstrapBrokerStringSaslIamIpv6T&& value) {
+    m_bootstrapBrokerStringSaslIamIpv6HasBeenSet = true;
+    m_bootstrapBrokerStringSaslIamIpv6 = std::forward<BootstrapBrokerStringSaslIamIpv6T>(value);
+  }
+  template <typename BootstrapBrokerStringSaslIamIpv6T = Aws::String>
+  GetBootstrapBrokersResult& WithBootstrapBrokerStringSaslIamIpv6(BootstrapBrokerStringSaslIamIpv6T&& value) {
+    SetBootstrapBrokerStringSaslIamIpv6(std::forward<BootstrapBrokerStringSaslIamIpv6T>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBootstrapBrokersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
+
+ private:
+  Aws::String m_bootstrapBrokerString;
+
+  Aws::String m_bootstrapBrokerStringTls;
+
+  Aws::String m_bootstrapBrokerStringSaslScram;
+
+  Aws::String m_bootstrapBrokerStringSaslIam;
+
+  Aws::String m_bootstrapBrokerStringPublicTls;
+
+  Aws::String m_bootstrapBrokerStringPublicSaslScram;
+
+  Aws::String m_bootstrapBrokerStringPublicSaslIam;
+
+  Aws::String m_bootstrapBrokerStringVpcConnectivityTls;
+
+  Aws::String m_bootstrapBrokerStringVpcConnectivitySaslScram;
+
+  Aws::String m_bootstrapBrokerStringVpcConnectivitySaslIam;
+
+  Aws::String m_bootstrapBrokerStringIpv6;
+
+  Aws::String m_bootstrapBrokerStringTlsIpv6;
+
+  Aws::String m_bootstrapBrokerStringSaslScramIpv6;
+
+  Aws::String m_bootstrapBrokerStringSaslIamIpv6;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bootstrapBrokerStringHasBeenSet = false;
+  bool m_bootstrapBrokerStringTlsHasBeenSet = false;
+  bool m_bootstrapBrokerStringSaslScramHasBeenSet = false;
+  bool m_bootstrapBrokerStringSaslIamHasBeenSet = false;
+  bool m_bootstrapBrokerStringPublicTlsHasBeenSet = false;
+  bool m_bootstrapBrokerStringPublicSaslScramHasBeenSet = false;
+  bool m_bootstrapBrokerStringPublicSaslIamHasBeenSet = false;
+  bool m_bootstrapBrokerStringVpcConnectivityTlsHasBeenSet = false;
+  bool m_bootstrapBrokerStringVpcConnectivitySaslScramHasBeenSet = false;
+  bool m_bootstrapBrokerStringVpcConnectivitySaslIamHasBeenSet = false;
+  bool m_bootstrapBrokerStringIpv6HasBeenSet = false;
+  bool m_bootstrapBrokerStringTlsIpv6HasBeenSet = false;
+  bool m_bootstrapBrokerStringSaslScramIpv6HasBeenSet = false;
+  bool m_bootstrapBrokerStringSaslIamIpv6HasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

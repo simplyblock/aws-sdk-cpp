@@ -4,63 +4,80 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/deadline/Deadline_EXPORTS.h>
 #include <aws/deadline/model/AwsCredentials.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace deadline
-{
-namespace Model
-{
-  class AssumeQueueRoleForUserResult
-  {
-  public:
-    AWS_DEADLINE_API AssumeQueueRoleForUserResult();
-    AWS_DEADLINE_API AssumeQueueRoleForUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEADLINE_API AssumeQueueRoleForUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace deadline {
+namespace Model {
+/**
+ * <p>Shared response body for AssumeRole operations where credentials are
+ * required. AssumeQueueRoleForWorkerResponse is excluded because credentials is
+ * optional there because Queue.roleArn is optional, so the mixin's @required trait
+ * would be incorrect.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/AssumeQueueRoleForUserResponse">AWS
+ * API Reference</a></p>
+ */
+class AssumeQueueRoleForUserResult {
+ public:
+  AWS_DEADLINE_API AssumeQueueRoleForUserResult() = default;
+  AWS_DEADLINE_API AssumeQueueRoleForUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEADLINE_API AssumeQueueRoleForUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The credentials for the queue role that a user has access to.</p>
+   */
+  inline const AwsCredentials& GetCredentials() const { return m_credentials; }
+  template <typename CredentialsT = AwsCredentials>
+  void SetCredentials(CredentialsT&& value) {
+    m_credentialsHasBeenSet = true;
+    m_credentials = std::forward<CredentialsT>(value);
+  }
+  template <typename CredentialsT = AwsCredentials>
+  AssumeQueueRoleForUserResult& WithCredentials(CredentialsT&& value) {
+    SetCredentials(std::forward<CredentialsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The credentials for the queue role that a user has access to.</p>
-     */
-    inline const AwsCredentials& GetCredentials() const{ return m_credentials; }
-    inline void SetCredentials(const AwsCredentials& value) { m_credentials = value; }
-    inline void SetCredentials(AwsCredentials&& value) { m_credentials = std::move(value); }
-    inline AssumeQueueRoleForUserResult& WithCredentials(const AwsCredentials& value) { SetCredentials(value); return *this;}
-    inline AssumeQueueRoleForUserResult& WithCredentials(AwsCredentials&& value) { SetCredentials(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssumeQueueRoleForUserResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssumeQueueRoleForUserResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssumeQueueRoleForUserResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssumeQueueRoleForUserResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AwsCredentials m_credentials;
+ private:
+  AwsCredentials m_credentials;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_credentialsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

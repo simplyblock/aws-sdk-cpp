@@ -10,17 +10,10 @@
 using namespace Aws::CloudSearch::Model;
 using namespace Aws::Utils;
 
-BuildSuggestersRequest::BuildSuggestersRequest() : 
-    m_domainNameHasBeenSet(false)
-{
-}
-
-Aws::String BuildSuggestersRequest::SerializePayload() const
-{
+Aws::String BuildSuggestersRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=BuildSuggesters&";
-  if(m_domainNameHasBeenSet)
-  {
+  if (m_domainNameHasBeenSet) {
     ss << "DomainName=" << StringUtils::URLEncode(m_domainName.c_str()) << "&";
   }
 
@@ -28,8 +21,4 @@ Aws::String BuildSuggestersRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  BuildSuggestersRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void BuildSuggestersRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

@@ -10,58 +10,34 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-ListTypesRequest::ListTypesRequest() : 
-    m_visibility(Visibility::NOT_SET),
-    m_visibilityHasBeenSet(false),
-    m_provisioningType(ProvisioningType::NOT_SET),
-    m_provisioningTypeHasBeenSet(false),
-    m_deprecatedStatus(DeprecatedStatus::NOT_SET),
-    m_deprecatedStatusHasBeenSet(false),
-    m_type(RegistryType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListTypesRequest::SerializePayload() const
-{
+Aws::String ListTypesRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ListTypes&";
-  if(m_visibilityHasBeenSet)
-  {
-    ss << "Visibility=" << VisibilityMapper::GetNameForVisibility(m_visibility) << "&";
+  if (m_visibilityHasBeenSet) {
+    ss << "Visibility=" << StringUtils::URLEncode(VisibilityMapper::GetNameForVisibility(m_visibility)) << "&";
   }
 
-  if(m_provisioningTypeHasBeenSet)
-  {
-    ss << "ProvisioningType=" << ProvisioningTypeMapper::GetNameForProvisioningType(m_provisioningType) << "&";
+  if (m_provisioningTypeHasBeenSet) {
+    ss << "ProvisioningType=" << StringUtils::URLEncode(ProvisioningTypeMapper::GetNameForProvisioningType(m_provisioningType)) << "&";
   }
 
-  if(m_deprecatedStatusHasBeenSet)
-  {
-    ss << "DeprecatedStatus=" << DeprecatedStatusMapper::GetNameForDeprecatedStatus(m_deprecatedStatus) << "&";
+  if (m_deprecatedStatusHasBeenSet) {
+    ss << "DeprecatedStatus=" << StringUtils::URLEncode(DeprecatedStatusMapper::GetNameForDeprecatedStatus(m_deprecatedStatus)) << "&";
   }
 
-  if(m_typeHasBeenSet)
-  {
-    ss << "Type=" << RegistryTypeMapper::GetNameForRegistryType(m_type) << "&";
+  if (m_typeHasBeenSet) {
+    ss << "Type=" << StringUtils::URLEncode(RegistryTypeMapper::GetNameForRegistryType(m_type)) << "&";
   }
 
-  if(m_filtersHasBeenSet)
-  {
+  if (m_filtersHasBeenSet) {
     m_filters.OutputToStream(ss, "Filters");
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
+  if (m_maxResultsHasBeenSet) {
     ss << "MaxResults=" << m_maxResults << "&";
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
+  if (m_nextTokenHasBeenSet) {
     ss << "NextToken=" << StringUtils::URLEncode(m_nextToken.c_str()) << "&";
   }
 
@@ -69,8 +45,4 @@ Aws::String ListTypesRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ListTypesRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ListTypesRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

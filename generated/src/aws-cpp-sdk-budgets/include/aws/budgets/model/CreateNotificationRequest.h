@@ -4,113 +4,132 @@
  */
 
 #pragma once
-#include <aws/budgets/Budgets_EXPORTS.h>
 #include <aws/budgets/BudgetsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/budgets/Budgets_EXPORTS.h>
 #include <aws/budgets/model/Notification.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/budgets/model/Subscriber.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Budgets
-{
-namespace Model
-{
+namespace Aws {
+namespace Budgets {
+namespace Model {
 
+/**
+ * <p> Request of CreateNotification </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/budgets-2016-10-20/CreateNotificationRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateNotificationRequest : public BudgetsRequest {
+ public:
+  AWS_BUDGETS_API CreateNotificationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateNotification"; }
+
+  AWS_BUDGETS_API Aws::String SerializePayload() const override;
+
+  AWS_BUDGETS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p> Request of CreateNotification </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/budgets-2016-10-20/CreateNotificationRequest">AWS
-   * API Reference</a></p>
+   * <p>The <code>accountId</code> that is associated with the budget that you want
+   * to create a notification for.</p>
    */
-  class CreateNotificationRequest : public BudgetsRequest
-  {
-  public:
-    AWS_BUDGETS_API CreateNotificationRequest();
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  CreateNotificationRequest& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateNotification"; }
+  ///@{
+  /**
+   * <p>The name of the budget that you want Amazon Web Services to notify you about.
+   * Budget names must be unique within an account.</p>
+   */
+  inline const Aws::String& GetBudgetName() const { return m_budgetName; }
+  inline bool BudgetNameHasBeenSet() const { return m_budgetNameHasBeenSet; }
+  template <typename BudgetNameT = Aws::String>
+  void SetBudgetName(BudgetNameT&& value) {
+    m_budgetNameHasBeenSet = true;
+    m_budgetName = std::forward<BudgetNameT>(value);
+  }
+  template <typename BudgetNameT = Aws::String>
+  CreateNotificationRequest& WithBudgetName(BudgetNameT&& value) {
+    SetBudgetName(std::forward<BudgetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BUDGETS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The notification that you want to create.</p>
+   */
+  inline const Notification& GetNotification() const { return m_notification; }
+  inline bool NotificationHasBeenSet() const { return m_notificationHasBeenSet; }
+  template <typename NotificationT = Notification>
+  void SetNotification(NotificationT&& value) {
+    m_notificationHasBeenSet = true;
+    m_notification = std::forward<NotificationT>(value);
+  }
+  template <typename NotificationT = Notification>
+  CreateNotificationRequest& WithNotification(NotificationT&& value) {
+    SetNotification(std::forward<NotificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BUDGETS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A list of subscribers that you want to associate with the notification. Each
+   * notification can have one SNS subscriber and up to 10 email subscribers.</p>
+   */
+  inline const Aws::Vector<Subscriber>& GetSubscribers() const { return m_subscribers; }
+  inline bool SubscribersHasBeenSet() const { return m_subscribersHasBeenSet; }
+  template <typename SubscribersT = Aws::Vector<Subscriber>>
+  void SetSubscribers(SubscribersT&& value) {
+    m_subscribersHasBeenSet = true;
+    m_subscribers = std::forward<SubscribersT>(value);
+  }
+  template <typename SubscribersT = Aws::Vector<Subscriber>>
+  CreateNotificationRequest& WithSubscribers(SubscribersT&& value) {
+    SetSubscribers(std::forward<SubscribersT>(value));
+    return *this;
+  }
+  template <typename SubscribersT = Subscriber>
+  CreateNotificationRequest& AddSubscribers(SubscribersT&& value) {
+    m_subscribersHasBeenSet = true;
+    m_subscribers.emplace_back(std::forward<SubscribersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
+  Aws::String m_budgetName;
 
-    ///@{
-    /**
-     * <p>The <code>accountId</code> that is associated with the budget that you want
-     * to create a notification for.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline CreateNotificationRequest& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline CreateNotificationRequest& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline CreateNotificationRequest& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  Notification m_notification;
 
-    ///@{
-    /**
-     * <p>The name of the budget that you want Amazon Web Services to notify you about.
-     * Budget names must be unique within an account.</p>
-     */
-    inline const Aws::String& GetBudgetName() const{ return m_budgetName; }
-    inline bool BudgetNameHasBeenSet() const { return m_budgetNameHasBeenSet; }
-    inline void SetBudgetName(const Aws::String& value) { m_budgetNameHasBeenSet = true; m_budgetName = value; }
-    inline void SetBudgetName(Aws::String&& value) { m_budgetNameHasBeenSet = true; m_budgetName = std::move(value); }
-    inline void SetBudgetName(const char* value) { m_budgetNameHasBeenSet = true; m_budgetName.assign(value); }
-    inline CreateNotificationRequest& WithBudgetName(const Aws::String& value) { SetBudgetName(value); return *this;}
-    inline CreateNotificationRequest& WithBudgetName(Aws::String&& value) { SetBudgetName(std::move(value)); return *this;}
-    inline CreateNotificationRequest& WithBudgetName(const char* value) { SetBudgetName(value); return *this;}
-    ///@}
+  Aws::Vector<Subscriber> m_subscribers;
+  bool m_accountIdHasBeenSet = false;
+  bool m_budgetNameHasBeenSet = false;
+  bool m_notificationHasBeenSet = false;
+  bool m_subscribersHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The notification that you want to create.</p>
-     */
-    inline const Notification& GetNotification() const{ return m_notification; }
-    inline bool NotificationHasBeenSet() const { return m_notificationHasBeenSet; }
-    inline void SetNotification(const Notification& value) { m_notificationHasBeenSet = true; m_notification = value; }
-    inline void SetNotification(Notification&& value) { m_notificationHasBeenSet = true; m_notification = std::move(value); }
-    inline CreateNotificationRequest& WithNotification(const Notification& value) { SetNotification(value); return *this;}
-    inline CreateNotificationRequest& WithNotification(Notification&& value) { SetNotification(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of subscribers that you want to associate with the notification. Each
-     * notification can have one SNS subscriber and up to 10 email subscribers.</p>
-     */
-    inline const Aws::Vector<Subscriber>& GetSubscribers() const{ return m_subscribers; }
-    inline bool SubscribersHasBeenSet() const { return m_subscribersHasBeenSet; }
-    inline void SetSubscribers(const Aws::Vector<Subscriber>& value) { m_subscribersHasBeenSet = true; m_subscribers = value; }
-    inline void SetSubscribers(Aws::Vector<Subscriber>&& value) { m_subscribersHasBeenSet = true; m_subscribers = std::move(value); }
-    inline CreateNotificationRequest& WithSubscribers(const Aws::Vector<Subscriber>& value) { SetSubscribers(value); return *this;}
-    inline CreateNotificationRequest& WithSubscribers(Aws::Vector<Subscriber>&& value) { SetSubscribers(std::move(value)); return *this;}
-    inline CreateNotificationRequest& AddSubscribers(const Subscriber& value) { m_subscribersHasBeenSet = true; m_subscribers.push_back(value); return *this; }
-    inline CreateNotificationRequest& AddSubscribers(Subscriber&& value) { m_subscribersHasBeenSet = true; m_subscribers.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    Aws::String m_budgetName;
-    bool m_budgetNameHasBeenSet = false;
-
-    Notification m_notification;
-    bool m_notificationHasBeenSet = false;
-
-    Aws::Vector<Subscriber> m_subscribers;
-    bool m_subscribersHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Budgets
-} // namespace Aws
+}  // namespace Model
+}  // namespace Budgets
+}  // namespace Aws

@@ -4,104 +4,130 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DeleteAnalysisResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DeleteAnalysisResult();
-    AWS_QUICKSIGHT_API DeleteAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DeleteAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DeleteAnalysisResult {
+ public:
+  AWS_QUICKSIGHT_API DeleteAnalysisResult() = default;
+  AWS_QUICKSIGHT_API DeleteAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DeleteAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DeleteAnalysisResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DeleteAnalysisResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the deleted analysis.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  DeleteAnalysisResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the deleted analysis.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline DeleteAnalysisResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline DeleteAnalysisResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline DeleteAnalysisResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the deleted analysis.</p>
+   */
+  inline const Aws::String& GetAnalysisId() const { return m_analysisId; }
+  template <typename AnalysisIdT = Aws::String>
+  void SetAnalysisId(AnalysisIdT&& value) {
+    m_analysisIdHasBeenSet = true;
+    m_analysisId = std::forward<AnalysisIdT>(value);
+  }
+  template <typename AnalysisIdT = Aws::String>
+  DeleteAnalysisResult& WithAnalysisId(AnalysisIdT&& value) {
+    SetAnalysisId(std::forward<AnalysisIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the deleted analysis.</p>
-     */
-    inline const Aws::String& GetAnalysisId() const{ return m_analysisId; }
-    inline void SetAnalysisId(const Aws::String& value) { m_analysisId = value; }
-    inline void SetAnalysisId(Aws::String&& value) { m_analysisId = std::move(value); }
-    inline void SetAnalysisId(const char* value) { m_analysisId.assign(value); }
-    inline DeleteAnalysisResult& WithAnalysisId(const Aws::String& value) { SetAnalysisId(value); return *this;}
-    inline DeleteAnalysisResult& WithAnalysisId(Aws::String&& value) { SetAnalysisId(std::move(value)); return *this;}
-    inline DeleteAnalysisResult& WithAnalysisId(const char* value) { SetAnalysisId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the analysis is scheduled to be deleted.</p>
+   */
+  inline const Aws::Utils::DateTime& GetDeletionTime() const { return m_deletionTime; }
+  template <typename DeletionTimeT = Aws::Utils::DateTime>
+  void SetDeletionTime(DeletionTimeT&& value) {
+    m_deletionTimeHasBeenSet = true;
+    m_deletionTime = std::forward<DeletionTimeT>(value);
+  }
+  template <typename DeletionTimeT = Aws::Utils::DateTime>
+  DeleteAnalysisResult& WithDeletionTime(DeletionTimeT&& value) {
+    SetDeletionTime(std::forward<DeletionTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the analysis is scheduled to be deleted.</p>
-     */
-    inline const Aws::Utils::DateTime& GetDeletionTime() const{ return m_deletionTime; }
-    inline void SetDeletionTime(const Aws::Utils::DateTime& value) { m_deletionTime = value; }
-    inline void SetDeletionTime(Aws::Utils::DateTime&& value) { m_deletionTime = std::move(value); }
-    inline DeleteAnalysisResult& WithDeletionTime(const Aws::Utils::DateTime& value) { SetDeletionTime(value); return *this;}
-    inline DeleteAnalysisResult& WithDeletionTime(Aws::Utils::DateTime&& value) { SetDeletionTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteAnalysisResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteAnalysisResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteAnalysisResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteAnalysisResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    int m_status;
+ private:
+  int m_status{0};
 
-    Aws::String m_arn;
+  Aws::String m_arn;
 
-    Aws::String m_analysisId;
+  Aws::String m_analysisId;
 
-    Aws::Utils::DateTime m_deletionTime;
+  Aws::Utils::DateTime m_deletionTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_analysisIdHasBeenSet = false;
+  bool m_deletionTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

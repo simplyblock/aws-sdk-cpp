@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class UpdateTrainingJobResult
-  {
-  public:
-    AWS_SAGEMAKER_API UpdateTrainingJobResult();
-    AWS_SAGEMAKER_API UpdateTrainingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API UpdateTrainingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class UpdateTrainingJobResult {
+ public:
+  AWS_SAGEMAKER_API UpdateTrainingJobResult() = default;
+  AWS_SAGEMAKER_API UpdateTrainingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API UpdateTrainingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the training job.</p>
+   */
+  inline const Aws::String& GetTrainingJobArn() const { return m_trainingJobArn; }
+  template <typename TrainingJobArnT = Aws::String>
+  void SetTrainingJobArn(TrainingJobArnT&& value) {
+    m_trainingJobArnHasBeenSet = true;
+    m_trainingJobArn = std::forward<TrainingJobArnT>(value);
+  }
+  template <typename TrainingJobArnT = Aws::String>
+  UpdateTrainingJobResult& WithTrainingJobArn(TrainingJobArnT&& value) {
+    SetTrainingJobArn(std::forward<TrainingJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the training job.</p>
-     */
-    inline const Aws::String& GetTrainingJobArn() const{ return m_trainingJobArn; }
-    inline void SetTrainingJobArn(const Aws::String& value) { m_trainingJobArn = value; }
-    inline void SetTrainingJobArn(Aws::String&& value) { m_trainingJobArn = std::move(value); }
-    inline void SetTrainingJobArn(const char* value) { m_trainingJobArn.assign(value); }
-    inline UpdateTrainingJobResult& WithTrainingJobArn(const Aws::String& value) { SetTrainingJobArn(value); return *this;}
-    inline UpdateTrainingJobResult& WithTrainingJobArn(Aws::String&& value) { SetTrainingJobArn(std::move(value)); return *this;}
-    inline UpdateTrainingJobResult& WithTrainingJobArn(const char* value) { SetTrainingJobArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateTrainingJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateTrainingJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateTrainingJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateTrainingJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_trainingJobArn;
+ private:
+  Aws::String m_trainingJobArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trainingJobArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

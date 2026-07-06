@@ -4,113 +4,135 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/ElastiCacheRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCacheRequest.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace ElastiCache {
+namespace Model {
 
+/**
+ */
+class CreateUserGroupRequest : public ElastiCacheRequest {
+ public:
+  AWS_ELASTICACHE_API CreateUserGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateUserGroup"; }
+
+  AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The ID of the user group. This value is stored as a lowercase string.</p>
    */
-  class CreateUserGroupRequest : public ElastiCacheRequest
-  {
-  public:
-    AWS_ELASTICACHE_API CreateUserGroupRequest();
+  inline const Aws::String& GetUserGroupId() const { return m_userGroupId; }
+  inline bool UserGroupIdHasBeenSet() const { return m_userGroupIdHasBeenSet; }
+  template <typename UserGroupIdT = Aws::String>
+  void SetUserGroupId(UserGroupIdT&& value) {
+    m_userGroupIdHasBeenSet = true;
+    m_userGroupId = std::forward<UserGroupIdT>(value);
+  }
+  template <typename UserGroupIdT = Aws::String>
+  CreateUserGroupRequest& WithUserGroupId(UserGroupIdT&& value) {
+    SetUserGroupId(std::forward<UserGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateUserGroup"; }
+  ///@{
+  /**
+   * <p>Sets the engine listed in a user group. The options are valkey or redis.</p>
+   */
+  inline const Aws::String& GetEngine() const { return m_engine; }
+  inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
+  template <typename EngineT = Aws::String>
+  void SetEngine(EngineT&& value) {
+    m_engineHasBeenSet = true;
+    m_engine = std::forward<EngineT>(value);
+  }
+  template <typename EngineT = Aws::String>
+  CreateUserGroupRequest& WithEngine(EngineT&& value) {
+    SetEngine(std::forward<EngineT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The list of user IDs that belong to the user group.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetUserIds() const { return m_userIds; }
+  inline bool UserIdsHasBeenSet() const { return m_userIdsHasBeenSet; }
+  template <typename UserIdsT = Aws::Vector<Aws::String>>
+  void SetUserIds(UserIdsT&& value) {
+    m_userIdsHasBeenSet = true;
+    m_userIds = std::forward<UserIdsT>(value);
+  }
+  template <typename UserIdsT = Aws::Vector<Aws::String>>
+  CreateUserGroupRequest& WithUserIds(UserIdsT&& value) {
+    SetUserIds(std::forward<UserIdsT>(value));
+    return *this;
+  }
+  template <typename UserIdsT = Aws::String>
+  CreateUserGroupRequest& AddUserIds(UserIdsT&& value) {
+    m_userIdsHasBeenSet = true;
+    m_userIds.emplace_back(std::forward<UserIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>A list of tags to be added to this resource. A tag is a key-value pair. A tag
+   * key must be accompanied by a tag value, although null is accepted. Available for
+   * Valkey and Redis OSS only.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateUserGroupRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateUserGroupRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_userGroupId;
 
-  public:
+  Aws::String m_engine;
 
-    ///@{
-    /**
-     * <p>The ID of the user group.</p>
-     */
-    inline const Aws::String& GetUserGroupId() const{ return m_userGroupId; }
-    inline bool UserGroupIdHasBeenSet() const { return m_userGroupIdHasBeenSet; }
-    inline void SetUserGroupId(const Aws::String& value) { m_userGroupIdHasBeenSet = true; m_userGroupId = value; }
-    inline void SetUserGroupId(Aws::String&& value) { m_userGroupIdHasBeenSet = true; m_userGroupId = std::move(value); }
-    inline void SetUserGroupId(const char* value) { m_userGroupIdHasBeenSet = true; m_userGroupId.assign(value); }
-    inline CreateUserGroupRequest& WithUserGroupId(const Aws::String& value) { SetUserGroupId(value); return *this;}
-    inline CreateUserGroupRequest& WithUserGroupId(Aws::String&& value) { SetUserGroupId(std::move(value)); return *this;}
-    inline CreateUserGroupRequest& WithUserGroupId(const char* value) { SetUserGroupId(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_userIds;
 
-    ///@{
-    /**
-     * <p>The current supported value is Redis user. </p>
-     */
-    inline const Aws::String& GetEngine() const{ return m_engine; }
-    inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
-    inline void SetEngine(const Aws::String& value) { m_engineHasBeenSet = true; m_engine = value; }
-    inline void SetEngine(Aws::String&& value) { m_engineHasBeenSet = true; m_engine = std::move(value); }
-    inline void SetEngine(const char* value) { m_engineHasBeenSet = true; m_engine.assign(value); }
-    inline CreateUserGroupRequest& WithEngine(const Aws::String& value) { SetEngine(value); return *this;}
-    inline CreateUserGroupRequest& WithEngine(Aws::String&& value) { SetEngine(std::move(value)); return *this;}
-    inline CreateUserGroupRequest& WithEngine(const char* value) { SetEngine(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_userGroupIdHasBeenSet = false;
+  bool m_engineHasBeenSet = false;
+  bool m_userIdsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The list of user IDs that belong to the user group.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetUserIds() const{ return m_userIds; }
-    inline bool UserIdsHasBeenSet() const { return m_userIdsHasBeenSet; }
-    inline void SetUserIds(const Aws::Vector<Aws::String>& value) { m_userIdsHasBeenSet = true; m_userIds = value; }
-    inline void SetUserIds(Aws::Vector<Aws::String>&& value) { m_userIdsHasBeenSet = true; m_userIds = std::move(value); }
-    inline CreateUserGroupRequest& WithUserIds(const Aws::Vector<Aws::String>& value) { SetUserIds(value); return *this;}
-    inline CreateUserGroupRequest& WithUserIds(Aws::Vector<Aws::String>&& value) { SetUserIds(std::move(value)); return *this;}
-    inline CreateUserGroupRequest& AddUserIds(const Aws::String& value) { m_userIdsHasBeenSet = true; m_userIds.push_back(value); return *this; }
-    inline CreateUserGroupRequest& AddUserIds(Aws::String&& value) { m_userIdsHasBeenSet = true; m_userIds.push_back(std::move(value)); return *this; }
-    inline CreateUserGroupRequest& AddUserIds(const char* value) { m_userIdsHasBeenSet = true; m_userIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of tags to be added to this resource. A tag is a key-value pair. A tag
-     * key must be accompanied by a tag value, although null is accepted. Available for
-     * Valkey and Redis OSS only.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateUserGroupRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateUserGroupRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateUserGroupRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateUserGroupRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_userGroupId;
-    bool m_userGroupIdHasBeenSet = false;
-
-    Aws::String m_engine;
-    bool m_engineHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_userIds;
-    bool m_userIdsHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

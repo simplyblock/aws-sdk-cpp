@@ -10,7 +10,10 @@
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/client/CoreErrors.h>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <aws/core/auth/signer/AWSAuthV4Signer.h>
 #include <aws/core/http/HttpTypes.h>
+#include <aws/core/http/HttpClient.h>
+#include <aws/core/http/HttpClientFactory.h>
 #include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/memory/AWSMemory.h>
 #include <aws/core/utils/UnreferencedParam.h>
@@ -31,10 +34,12 @@
 #include <aws/dynamodb/model/ScanRequest.h>
 #include <aws/dynamodb/model/UpdateItemRequest.h>
 #include <aws/dynamodb/model/DeleteItemRequest.h>
+#include <aws/dynamodb/model/BatchGetItemRequest.h>
 #include <aws/testing/TestingEnvironment.h>
 #include <aws/core/utils/UUID.h>
 
 #include <algorithm>
+#include <utility>
 
 using namespace Aws::Auth;
 using namespace Aws::Http;
@@ -241,24 +246,12 @@ protected:
     {
         DescribeTableRequest describeTableRequest;
         describeTableRequest.SetTableName(tableName);
-        bool shouldContinue = true;
-        DescribeTableOutcome outcome = m_client->DescribeTable(describeTableRequest);
 
-        while (shouldContinue)
-        {
-            if (outcome.IsSuccess() && outcome.GetResult().GetTable().GetTableStatus() == TableStatus::ACTIVE)
-            {
-                break;
-            }
-            else
-            {
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-            }
+        auto waiterOutcome = m_client->WaitUntilTableExists(describeTableRequest);
+        EXPECT_TRUE(waiterOutcome.IsSuccess()) << "WaitUntilTableExists failed for table: " << tableName;
+        EXPECT_TRUE(waiterOutcome.GetResult().IsSuccess());
 
-            outcome = m_client->DescribeTable(describeTableRequest);
-        }
-
-        return outcome.GetResult();
+        return waiterOutcome.GetResult().GetResult();
     }
 };
 
@@ -906,7 +899,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
     const Aws::Utils::ByteBuffer byteBuffer1(buffer1, 6);
     unsigned char buffer2[6] = { 21, 35, 55, 68, 11, 6 };
     const Aws::Utils::ByteBuffer byteBuffer2(buffer2, 6);
-
+    const Aws::Utils::ByteBuffer emptyBuf;
     // create the Hash Key value
     AttributeValue hashKey("TestValue");
 
@@ -928,6 +921,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -945,6 +939,9 @@ TEST_F(TableOperationTest, TestAttributeValues)
         //ReturnedItemCollection returnedItemCollection = result.GetItems();
         EXPECT_EQ("TestValue", returnedItemCollection[HASH_KEY_NAME].GetS());
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
+
+        EXPECT_EQ(emptyBuf, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(emptyBuf, returnedItemCollection["ByteBuffer"].AccessB());
     }
 
     // Number Value
@@ -969,6 +966,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1004,6 +1002,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1040,6 +1039,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1053,6 +1053,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB()); // on the 3rd day of xmas...
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
     }
 
     // StringSet
@@ -1078,6 +1079,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1091,6 +1093,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
         auto ss = returnedItemCollection["String Set"].GetSS();
         EXPECT_EQ(2u, ss.size());
         EXPECT_NE(ss.end(), std::find(ss.begin(), ss.end(), "test1"));
@@ -1120,6 +1123,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1133,6 +1137,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
         auto ss = returnedItemCollection["String Set"].GetSS();
         EXPECT_EQ(2u, ss.size());
         EXPECT_NE(ss.end(), std::find(ss.begin(), ss.end(), "test1"));
@@ -1166,6 +1171,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1179,6 +1185,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
         auto ss = returnedItemCollection["String Set"].GetSS();
         EXPECT_EQ(2u, ss.size());
         EXPECT_NE(ss.end(), std::find(ss.begin(), ss.end(), "test1"));
@@ -1218,6 +1225,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1231,6 +1239,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
         auto ss = returnedItemCollection["String Set"].GetSS();
         EXPECT_EQ(2u, ss.size());
         EXPECT_NE(ss.end(), std::find(ss.begin(), ss.end(), "test1"));
@@ -1275,6 +1284,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         GetItemOutcome getOutcome = m_client->GetItem(getItemRequest);
         AWS_ASSERT_SUCCESS(getOutcome);
@@ -1310,6 +1320,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1323,6 +1334,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         EXPECT_EQ("String Value", returnedItemCollection["String"].GetS());
         EXPECT_EQ("1001", returnedItemCollection["Number"].GetN());
         EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].GetB());
+        EXPECT_EQ(byteBuffer1, returnedItemCollection["ByteBuffer"].AccessB());
         auto ss = returnedItemCollection["String Set"].GetSS();
         EXPECT_EQ(2u, ss.size());
         EXPECT_NE(ss.end(), std::find(ss.begin(), ss.end(), "test1"));
@@ -1372,6 +1384,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         GetItemOutcome getOutcome = m_client->GetItem(getItemRequest);
         AWS_ASSERT_SUCCESS(getOutcome);
@@ -1406,6 +1419,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1440,6 +1454,7 @@ TEST_F(TableOperationTest, TestAttributeValues)
         GetItemRequest getItemRequest;
         getItemRequest.AddKey(HASH_KEY_NAME, hashKey);
         getItemRequest.SetTableName(attributeValueTestTableName);
+        getItemRequest.SetConsistentRead(true);
 
         Aws::Vector<Aws::String> attributesToGet;
         attributesToGet.push_back(HASH_KEY_NAME);
@@ -1509,6 +1524,122 @@ TEST_F(TableOperationTest, TestEndpointOverride)
         AWS_ASSERT_SUCCESS(outcome);
     }
 }
+
+TEST_F(TableOperationTest, TestBatchGetItem) {
+  Aws::String table_name = BuildTableName(BASE_SIMPLE_TABLE);
+  CreateTable(table_name, 10, 10);
+
+  AttributeValue value{"wheres everyone going, bingo?"};
+  const auto put_item_result = m_client->PutItem(PutItemRequest().WithTableName(table_name).WithItem({{HASH_KEY_NAME, value}}));
+  AWS_ASSERT_SUCCESS(put_item_result);
+
+  const auto batch_get_item_result = m_client->BatchGetItem(BatchGetItemRequest()
+    .WithRequestItems({
+      {
+        table_name, KeysAndAttributes().WithKeys({{{HASH_KEY_NAME, value}}})
+      }
+    }));
+  AWS_ASSERT_SUCCESS(batch_get_item_result);
+  EXPECT_EQ(1ul, batch_get_item_result.GetResult().GetResponses().size());
+}
+
+#if AWS_SDK_USE_CRT_HTTP
+const char BASE_HTTP_WRITE_TEST_TABLE[] = "HTTP_WRITE";
+TEST_F(TableOperationTest, TestWriteDataApi) {
+    Aws::String tableName = BuildTableName(BASE_HTTP_WRITE_TEST_TABLE);
+    CreateTable(tableName, 10, 10);
+
+    // Build a raw PutItem HTTP request
+    ClientConfiguration config;
+    config.scheme = Scheme::HTTPS;
+    auto httpClient = Aws::Http::CreateHttpClient(config);
+
+    Aws::String uri = "https://dynamodb." + config.region + ".amazonaws.com";
+    auto request = CreateHttpRequest(Aws::Http::URI(uri),
+                                     Aws::Http::HttpMethod::HTTP_POST,
+                                     Aws::Utils::Stream::DefaultResponseStreamFactoryMethod);
+    request->SetHeaderValue("content-type", "application/x-amz-json-1.0");
+    request->SetHeaderValue("x-amz-target", "DynamoDB_20120810.PutItem");
+
+    Aws::String payload = "{\"TableName\":\"" + tableName +
+        "\",\"Item\":{\"" + HASH_KEY_NAME + "\":{\"S\":\"write-data-test\"}}}";
+
+    auto body = Aws::MakeShared<Aws::StringStream>(ALLOCATION_TAG);
+    *body << payload;
+    request->AddContentBody(body);
+    request->SetContentLength(std::to_string(payload.size()));
+
+    // Sign the request
+    auto credProvider = Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG);
+    Aws::Client::AWSAuthV4Signer signer(credProvider, "dynamodb", Aws::Region::US_EAST_1);
+    ASSERT_TRUE(signer.SignRequest(*request));
+
+    // Acquire connection and create stream
+    std::mutex connectionMtx;
+    std::condition_variable connectionCv;
+    bool connectionAquiredDone = false;
+
+    std::shared_ptr<Aws::Http::Connection> connection{nullptr};
+    auto connOutcome = httpClient->AcquireConnection(request,
+      [&](std::shared_ptr<Aws::Http::Connection> acquiredConnection, int errorCoder) -> void {
+          {
+            const std::unique_lock<std::mutex> lock{connectionMtx};
+            ASSERT_EQ(0, errorCoder);
+            connection = std::move(acquiredConnection);
+            connectionAquiredDone = true;
+          }
+          connectionCv.notify_one();
+        });
+    ASSERT_FALSE(connOutcome.has_value());
+
+    std::unique_lock<std::mutex> connectionLock{connectionMtx};
+    connectionCv.wait(connectionLock, [&] { return connectionAquiredDone; });
+    ASSERT_NE(nullptr, connection);
+
+    std::mutex mtx;
+    std::condition_variable cv;
+    bool streamDone = false;
+
+    auto stream = connection->NewClientStream(request, [&](int errorCode) {
+        AWS_UNREFERENCED_PARAM(errorCode);
+        std::lock_guard<std::mutex> lk(mtx);
+        streamDone = true;
+        cv.notify_one();
+    });
+    ASSERT_NE(nullptr, stream);
+    ASSERT_TRUE(stream->Activate());
+
+    // Write the body
+    body->seekg(0, std::ios::beg);
+    bool writeDone = false;
+    int writeError = 0;
+    auto writeResult = stream->WriteData(body,
+      [&](int errorCode) {
+        std::lock_guard<std::mutex> lk(mtx);
+        writeError = errorCode;
+        writeDone = true;
+        cv.notify_one();
+      },
+      true);
+    ASSERT_EQ(0, writeResult);
+
+    {
+        std::unique_lock<std::mutex> lk(mtx);
+        cv.wait(lk, [&]() { return writeDone; });
+    }
+    ASSERT_EQ(0, writeError);
+
+    // Wait for stream completion
+    {
+        std::unique_lock<std::mutex> lk(mtx);
+        cv.wait(lk, [&]() { return streamDone; });
+    }
+
+    auto response = stream->GetResponse();
+    ASSERT_NE(nullptr, response);
+    ASSERT_EQ(Aws::Http::HttpResponseCode::OK, response->GetResponseCode());
+}
+#endif // AWS_SDK_USE_CRT_HTTP
 
 } // anonymous namespace
 

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pinpoint-email/model/PutEmailIdentityFeedbackAttributesRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pinpoint-email/model/PutEmailIdentityFeedbackAttributesRequest.h>
 
 #include <utility>
 
@@ -12,26 +12,12 @@ using namespace Aws::PinpointEmail::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutEmailIdentityFeedbackAttributesRequest::PutEmailIdentityFeedbackAttributesRequest() : 
-    m_emailIdentityHasBeenSet(false),
-    m_emailForwardingEnabled(false),
-    m_emailForwardingEnabledHasBeenSet(false)
-{
-}
-
-Aws::String PutEmailIdentityFeedbackAttributesRequest::SerializePayload() const
-{
+Aws::String PutEmailIdentityFeedbackAttributesRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_emailForwardingEnabledHasBeenSet)
-  {
-   payload.WithBool("EmailForwardingEnabled", m_emailForwardingEnabled);
-
+  if (m_emailForwardingEnabledHasBeenSet) {
+    payload.WithBool("EmailForwardingEnabled", m_emailForwardingEnabled);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

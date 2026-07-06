@@ -12,16 +12,4 @@ using namespace Aws::Braket::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CancelJobRequest::CancelJobRequest() : 
-    m_jobArnHasBeenSet(false)
-{
-}
-
-Aws::String CancelJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String CancelJobRequest::SerializePayload() const { return {}; }

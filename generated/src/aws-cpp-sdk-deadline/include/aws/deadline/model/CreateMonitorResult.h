@@ -4,80 +4,98 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace deadline
-{
-namespace Model
-{
-  class CreateMonitorResult
-  {
-  public:
-    AWS_DEADLINE_API CreateMonitorResult();
-    AWS_DEADLINE_API CreateMonitorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEADLINE_API CreateMonitorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace deadline {
+namespace Model {
+/**
+ * <p>Mixin that adds an optional ARN field to response structures. Apply to
+ * SummaryMixins (flows into Get, Summary, and BatchGet) and Create
+ * outputs.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/CreateMonitorResponse">AWS
+ * API Reference</a></p>
+ */
+class CreateMonitorResult {
+ public:
+  AWS_DEADLINE_API CreateMonitorResult() = default;
+  AWS_DEADLINE_API CreateMonitorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEADLINE_API CreateMonitorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique identifier of the monitor.</p>
+   */
+  inline const Aws::String& GetMonitorId() const { return m_monitorId; }
+  template <typename MonitorIdT = Aws::String>
+  void SetMonitorId(MonitorIdT&& value) {
+    m_monitorIdHasBeenSet = true;
+    m_monitorId = std::forward<MonitorIdT>(value);
+  }
+  template <typename MonitorIdT = Aws::String>
+  CreateMonitorResult& WithMonitorId(MonitorIdT&& value) {
+    SetMonitorId(std::forward<MonitorIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the monitor.</p>
-     */
-    inline const Aws::String& GetMonitorId() const{ return m_monitorId; }
-    inline void SetMonitorId(const Aws::String& value) { m_monitorId = value; }
-    inline void SetMonitorId(Aws::String&& value) { m_monitorId = std::move(value); }
-    inline void SetMonitorId(const char* value) { m_monitorId.assign(value); }
-    inline CreateMonitorResult& WithMonitorId(const Aws::String& value) { SetMonitorId(value); return *this;}
-    inline CreateMonitorResult& WithMonitorId(Aws::String&& value) { SetMonitorId(std::move(value)); return *this;}
-    inline CreateMonitorResult& WithMonitorId(const char* value) { SetMonitorId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name that IAM Identity Center assigns to the monitor.</p>
+   */
+  inline const Aws::String& GetIdentityCenterApplicationArn() const { return m_identityCenterApplicationArn; }
+  template <typename IdentityCenterApplicationArnT = Aws::String>
+  void SetIdentityCenterApplicationArn(IdentityCenterApplicationArnT&& value) {
+    m_identityCenterApplicationArnHasBeenSet = true;
+    m_identityCenterApplicationArn = std::forward<IdentityCenterApplicationArnT>(value);
+  }
+  template <typename IdentityCenterApplicationArnT = Aws::String>
+  CreateMonitorResult& WithIdentityCenterApplicationArn(IdentityCenterApplicationArnT&& value) {
+    SetIdentityCenterApplicationArn(std::forward<IdentityCenterApplicationArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) that IAM Identity Center assigns to the
-     * monitor.</p>
-     */
-    inline const Aws::String& GetIdentityCenterApplicationArn() const{ return m_identityCenterApplicationArn; }
-    inline void SetIdentityCenterApplicationArn(const Aws::String& value) { m_identityCenterApplicationArn = value; }
-    inline void SetIdentityCenterApplicationArn(Aws::String&& value) { m_identityCenterApplicationArn = std::move(value); }
-    inline void SetIdentityCenterApplicationArn(const char* value) { m_identityCenterApplicationArn.assign(value); }
-    inline CreateMonitorResult& WithIdentityCenterApplicationArn(const Aws::String& value) { SetIdentityCenterApplicationArn(value); return *this;}
-    inline CreateMonitorResult& WithIdentityCenterApplicationArn(Aws::String&& value) { SetIdentityCenterApplicationArn(std::move(value)); return *this;}
-    inline CreateMonitorResult& WithIdentityCenterApplicationArn(const char* value) { SetIdentityCenterApplicationArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateMonitorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateMonitorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateMonitorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateMonitorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_monitorId;
+ private:
+  Aws::String m_monitorId;
 
-    Aws::String m_identityCenterApplicationArn;
+  Aws::String m_identityCenterApplicationArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_monitorIdHasBeenSet = false;
+  bool m_identityCenterApplicationArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

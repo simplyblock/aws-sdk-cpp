@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/voice-id/model/Speaker.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
-  class OptOutSpeakerResult
-  {
-  public:
-    AWS_VOICEID_API OptOutSpeakerResult();
-    AWS_VOICEID_API OptOutSpeakerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_VOICEID_API OptOutSpeakerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
+class OptOutSpeakerResult {
+ public:
+  AWS_VOICEID_API OptOutSpeakerResult() = default;
+  AWS_VOICEID_API OptOutSpeakerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_VOICEID_API OptOutSpeakerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Details about the opted-out speaker.</p>
+   */
+  inline const Speaker& GetSpeaker() const { return m_speaker; }
+  template <typename SpeakerT = Speaker>
+  void SetSpeaker(SpeakerT&& value) {
+    m_speakerHasBeenSet = true;
+    m_speaker = std::forward<SpeakerT>(value);
+  }
+  template <typename SpeakerT = Speaker>
+  OptOutSpeakerResult& WithSpeaker(SpeakerT&& value) {
+    SetSpeaker(std::forward<SpeakerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about the opted-out speaker.</p>
-     */
-    inline const Speaker& GetSpeaker() const{ return m_speaker; }
-    inline void SetSpeaker(const Speaker& value) { m_speaker = value; }
-    inline void SetSpeaker(Speaker&& value) { m_speaker = std::move(value); }
-    inline OptOutSpeakerResult& WithSpeaker(const Speaker& value) { SetSpeaker(value); return *this;}
-    inline OptOutSpeakerResult& WithSpeaker(Speaker&& value) { SetSpeaker(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline OptOutSpeakerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline OptOutSpeakerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline OptOutSpeakerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  OptOutSpeakerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Speaker m_speaker;
+ private:
+  Speaker m_speaker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_speakerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

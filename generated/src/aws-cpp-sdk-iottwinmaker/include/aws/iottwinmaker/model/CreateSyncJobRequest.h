@@ -4,112 +4,124 @@
  */
 
 #pragma once
-#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
-#include <aws/iottwinmaker/IoTTwinMakerRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iottwinmaker/IoTTwinMakerRequest.h>
+#include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace IoTTwinMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace IoTTwinMaker {
+namespace Model {
 
+/**
+ */
+class CreateSyncJobRequest : public IoTTwinMakerRequest {
+ public:
+  AWS_IOTTWINMAKER_API CreateSyncJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateSyncJob"; }
+
+  AWS_IOTTWINMAKER_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The workspace ID.</p>
    */
-  class CreateSyncJobRequest : public IoTTwinMakerRequest
-  {
-  public:
-    AWS_IOTTWINMAKER_API CreateSyncJobRequest();
+  inline const Aws::String& GetWorkspaceId() const { return m_workspaceId; }
+  inline bool WorkspaceIdHasBeenSet() const { return m_workspaceIdHasBeenSet; }
+  template <typename WorkspaceIdT = Aws::String>
+  void SetWorkspaceId(WorkspaceIdT&& value) {
+    m_workspaceIdHasBeenSet = true;
+    m_workspaceId = std::forward<WorkspaceIdT>(value);
+  }
+  template <typename WorkspaceIdT = Aws::String>
+  CreateSyncJobRequest& WithWorkspaceId(WorkspaceIdT&& value) {
+    SetWorkspaceId(std::forward<WorkspaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateSyncJob"; }
+  ///@{
+  /**
+   * <p>The sync source.</p>  <p>Currently the only supported syncSoource is
+   * <code>SITEWISE </code>.</p>
+   */
+  inline const Aws::String& GetSyncSource() const { return m_syncSource; }
+  inline bool SyncSourceHasBeenSet() const { return m_syncSourceHasBeenSet; }
+  template <typename SyncSourceT = Aws::String>
+  void SetSyncSource(SyncSourceT&& value) {
+    m_syncSourceHasBeenSet = true;
+    m_syncSource = std::forward<SyncSourceT>(value);
+  }
+  template <typename SyncSourceT = Aws::String>
+  CreateSyncJobRequest& WithSyncSource(SyncSourceT&& value) {
+    SetSyncSource(std::forward<SyncSourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IOTTWINMAKER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The SyncJob IAM role. This IAM role is used by the SyncJob to read from the
+   * syncSource, and create, update, or delete the corresponding resources.</p>
+   */
+  inline const Aws::String& GetSyncRole() const { return m_syncRole; }
+  inline bool SyncRoleHasBeenSet() const { return m_syncRoleHasBeenSet; }
+  template <typename SyncRoleT = Aws::String>
+  void SetSyncRole(SyncRoleT&& value) {
+    m_syncRoleHasBeenSet = true;
+    m_syncRole = std::forward<SyncRoleT>(value);
+  }
+  template <typename SyncRoleT = Aws::String>
+  CreateSyncJobRequest& WithSyncRole(SyncRoleT&& value) {
+    SetSyncRole(std::forward<SyncRoleT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The SyncJob tags.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateSyncJobRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateSyncJobRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_workspaceId;
 
-    ///@{
-    /**
-     * <p>The workspace ID.</p>
-     */
-    inline const Aws::String& GetWorkspaceId() const{ return m_workspaceId; }
-    inline bool WorkspaceIdHasBeenSet() const { return m_workspaceIdHasBeenSet; }
-    inline void SetWorkspaceId(const Aws::String& value) { m_workspaceIdHasBeenSet = true; m_workspaceId = value; }
-    inline void SetWorkspaceId(Aws::String&& value) { m_workspaceIdHasBeenSet = true; m_workspaceId = std::move(value); }
-    inline void SetWorkspaceId(const char* value) { m_workspaceIdHasBeenSet = true; m_workspaceId.assign(value); }
-    inline CreateSyncJobRequest& WithWorkspaceId(const Aws::String& value) { SetWorkspaceId(value); return *this;}
-    inline CreateSyncJobRequest& WithWorkspaceId(Aws::String&& value) { SetWorkspaceId(std::move(value)); return *this;}
-    inline CreateSyncJobRequest& WithWorkspaceId(const char* value) { SetWorkspaceId(value); return *this;}
-    ///@}
+  Aws::String m_syncSource;
 
-    ///@{
-    /**
-     * <p>The sync source.</p>  <p>Currently the only supported syncSoource is
-     * <code>SITEWISE </code>.</p> 
-     */
-    inline const Aws::String& GetSyncSource() const{ return m_syncSource; }
-    inline bool SyncSourceHasBeenSet() const { return m_syncSourceHasBeenSet; }
-    inline void SetSyncSource(const Aws::String& value) { m_syncSourceHasBeenSet = true; m_syncSource = value; }
-    inline void SetSyncSource(Aws::String&& value) { m_syncSourceHasBeenSet = true; m_syncSource = std::move(value); }
-    inline void SetSyncSource(const char* value) { m_syncSourceHasBeenSet = true; m_syncSource.assign(value); }
-    inline CreateSyncJobRequest& WithSyncSource(const Aws::String& value) { SetSyncSource(value); return *this;}
-    inline CreateSyncJobRequest& WithSyncSource(Aws::String&& value) { SetSyncSource(std::move(value)); return *this;}
-    inline CreateSyncJobRequest& WithSyncSource(const char* value) { SetSyncSource(value); return *this;}
-    ///@}
+  Aws::String m_syncRole;
 
-    ///@{
-    /**
-     * <p>The SyncJob IAM role. This IAM role is used by the SyncJob to read from the
-     * syncSource, and create, update, or delete the corresponding resources.</p>
-     */
-    inline const Aws::String& GetSyncRole() const{ return m_syncRole; }
-    inline bool SyncRoleHasBeenSet() const { return m_syncRoleHasBeenSet; }
-    inline void SetSyncRole(const Aws::String& value) { m_syncRoleHasBeenSet = true; m_syncRole = value; }
-    inline void SetSyncRole(Aws::String&& value) { m_syncRoleHasBeenSet = true; m_syncRole = std::move(value); }
-    inline void SetSyncRole(const char* value) { m_syncRoleHasBeenSet = true; m_syncRole.assign(value); }
-    inline CreateSyncJobRequest& WithSyncRole(const Aws::String& value) { SetSyncRole(value); return *this;}
-    inline CreateSyncJobRequest& WithSyncRole(Aws::String&& value) { SetSyncRole(std::move(value)); return *this;}
-    inline CreateSyncJobRequest& WithSyncRole(const char* value) { SetSyncRole(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_workspaceIdHasBeenSet = false;
+  bool m_syncSourceHasBeenSet = false;
+  bool m_syncRoleHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The SyncJob tags.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateSyncJobRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateSyncJobRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateSyncJobRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateSyncJobRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSyncJobRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSyncJobRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateSyncJobRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSyncJobRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSyncJobRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_workspaceId;
-    bool m_workspaceIdHasBeenSet = false;
-
-    Aws::String m_syncSource;
-    bool m_syncSourceHasBeenSet = false;
-
-    Aws::String m_syncRole;
-    bool m_syncRoleHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoTTwinMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTTwinMaker
+}  // namespace Aws

@@ -4,79 +4,86 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IdFormat.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>PrincipalIdFormat description</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PrincipalIdFormat">AWS
+ * API Reference</a></p>
+ */
+class PrincipalIdFormat {
+ public:
+  AWS_EC2_API PrincipalIdFormat() = default;
+  AWS_EC2_API PrincipalIdFormat(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API PrincipalIdFormat& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>PrincipalIdFormat description</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PrincipalIdFormat">AWS
-   * API Reference</a></p>
+   * <p>PrincipalIdFormatARN description</p>
    */
-  class PrincipalIdFormat
-  {
-  public:
-    AWS_EC2_API PrincipalIdFormat();
-    AWS_EC2_API PrincipalIdFormat(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API PrincipalIdFormat& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  PrincipalIdFormat& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>PrincipalIdFormatStatuses description</p>
+   */
+  inline const Aws::Vector<IdFormat>& GetStatuses() const { return m_statuses; }
+  inline bool StatusesHasBeenSet() const { return m_statusesHasBeenSet; }
+  template <typename StatusesT = Aws::Vector<IdFormat>>
+  void SetStatuses(StatusesT&& value) {
+    m_statusesHasBeenSet = true;
+    m_statuses = std::forward<StatusesT>(value);
+  }
+  template <typename StatusesT = Aws::Vector<IdFormat>>
+  PrincipalIdFormat& WithStatuses(StatusesT&& value) {
+    SetStatuses(std::forward<StatusesT>(value));
+    return *this;
+  }
+  template <typename StatusesT = IdFormat>
+  PrincipalIdFormat& AddStatuses(StatusesT&& value) {
+    m_statusesHasBeenSet = true;
+    m_statuses.emplace_back(std::forward<StatusesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
+  Aws::Vector<IdFormat> m_statuses;
+  bool m_arnHasBeenSet = false;
+  bool m_statusesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>PrincipalIdFormatARN description</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline PrincipalIdFormat& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline PrincipalIdFormat& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline PrincipalIdFormat& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>PrincipalIdFormatStatuses description</p>
-     */
-    inline const Aws::Vector<IdFormat>& GetStatuses() const{ return m_statuses; }
-    inline bool StatusesHasBeenSet() const { return m_statusesHasBeenSet; }
-    inline void SetStatuses(const Aws::Vector<IdFormat>& value) { m_statusesHasBeenSet = true; m_statuses = value; }
-    inline void SetStatuses(Aws::Vector<IdFormat>&& value) { m_statusesHasBeenSet = true; m_statuses = std::move(value); }
-    inline PrincipalIdFormat& WithStatuses(const Aws::Vector<IdFormat>& value) { SetStatuses(value); return *this;}
-    inline PrincipalIdFormat& WithStatuses(Aws::Vector<IdFormat>&& value) { SetStatuses(std::move(value)); return *this;}
-    inline PrincipalIdFormat& AddStatuses(const IdFormat& value) { m_statusesHasBeenSet = true; m_statuses.push_back(value); return *this; }
-    inline PrincipalIdFormat& AddStatuses(IdFormat&& value) { m_statusesHasBeenSet = true; m_statuses.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
-
-    Aws::Vector<IdFormat> m_statuses;
-    bool m_statusesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -4,98 +4,103 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/glue/Glue_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Specifies an XML classifier for <code>CreateClassifier</code> to
+ * create.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateXMLClassifierRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateXMLClassifierRequest {
+ public:
+  AWS_GLUE_API CreateXMLClassifierRequest() = default;
+  AWS_GLUE_API CreateXMLClassifierRequest(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API CreateXMLClassifierRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies an XML classifier for <code>CreateClassifier</code> to
-   * create.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateXMLClassifierRequest">AWS
-   * API Reference</a></p>
+   * <p>An identifier of the data format that the classifier matches.</p>
    */
-  class CreateXMLClassifierRequest
-  {
-  public:
-    AWS_GLUE_API CreateXMLClassifierRequest();
-    AWS_GLUE_API CreateXMLClassifierRequest(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API CreateXMLClassifierRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetClassification() const { return m_classification; }
+  inline bool ClassificationHasBeenSet() const { return m_classificationHasBeenSet; }
+  template <typename ClassificationT = Aws::String>
+  void SetClassification(ClassificationT&& value) {
+    m_classificationHasBeenSet = true;
+    m_classification = std::forward<ClassificationT>(value);
+  }
+  template <typename ClassificationT = Aws::String>
+  CreateXMLClassifierRequest& WithClassification(ClassificationT&& value) {
+    SetClassification(std::forward<ClassificationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the classifier.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateXMLClassifierRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An identifier of the data format that the classifier matches.</p>
-     */
-    inline const Aws::String& GetClassification() const{ return m_classification; }
-    inline bool ClassificationHasBeenSet() const { return m_classificationHasBeenSet; }
-    inline void SetClassification(const Aws::String& value) { m_classificationHasBeenSet = true; m_classification = value; }
-    inline void SetClassification(Aws::String&& value) { m_classificationHasBeenSet = true; m_classification = std::move(value); }
-    inline void SetClassification(const char* value) { m_classificationHasBeenSet = true; m_classification.assign(value); }
-    inline CreateXMLClassifierRequest& WithClassification(const Aws::String& value) { SetClassification(value); return *this;}
-    inline CreateXMLClassifierRequest& WithClassification(Aws::String&& value) { SetClassification(std::move(value)); return *this;}
-    inline CreateXMLClassifierRequest& WithClassification(const char* value) { SetClassification(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The XML tag designating the element that contains each record in an XML
+   * document being parsed. This can't identify a self-closing element (closed by
+   * <code>/&gt;</code>). An empty row element that contains only attributes can be
+   * parsed as long as it ends with a closing tag (for example, <code>&lt;row
+   * item_a="A" item_b="B"&gt;&lt;/row&gt;</code> is okay, but <code>&lt;row
+   * item_a="A" item_b="B" /&gt;</code> is not).</p>
+   */
+  inline const Aws::String& GetRowTag() const { return m_rowTag; }
+  inline bool RowTagHasBeenSet() const { return m_rowTagHasBeenSet; }
+  template <typename RowTagT = Aws::String>
+  void SetRowTag(RowTagT&& value) {
+    m_rowTagHasBeenSet = true;
+    m_rowTag = std::forward<RowTagT>(value);
+  }
+  template <typename RowTagT = Aws::String>
+  CreateXMLClassifierRequest& WithRowTag(RowTagT&& value) {
+    SetRowTag(std::forward<RowTagT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_classification;
 
-    ///@{
-    /**
-     * <p>The name of the classifier.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateXMLClassifierRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateXMLClassifierRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateXMLClassifierRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The XML tag designating the element that contains each record in an XML
-     * document being parsed. This can't identify a self-closing element (closed by
-     * <code>/&gt;</code>). An empty row element that contains only attributes can be
-     * parsed as long as it ends with a closing tag (for example, <code>&lt;row
-     * item_a="A" item_b="B"&gt;&lt;/row&gt;</code> is okay, but <code>&lt;row
-     * item_a="A" item_b="B" /&gt;</code> is not).</p>
-     */
-    inline const Aws::String& GetRowTag() const{ return m_rowTag; }
-    inline bool RowTagHasBeenSet() const { return m_rowTagHasBeenSet; }
-    inline void SetRowTag(const Aws::String& value) { m_rowTagHasBeenSet = true; m_rowTag = value; }
-    inline void SetRowTag(Aws::String&& value) { m_rowTagHasBeenSet = true; m_rowTag = std::move(value); }
-    inline void SetRowTag(const char* value) { m_rowTagHasBeenSet = true; m_rowTag.assign(value); }
-    inline CreateXMLClassifierRequest& WithRowTag(const Aws::String& value) { SetRowTag(value); return *this;}
-    inline CreateXMLClassifierRequest& WithRowTag(Aws::String&& value) { SetRowTag(std::move(value)); return *this;}
-    inline CreateXMLClassifierRequest& WithRowTag(const char* value) { SetRowTag(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_rowTag;
+  bool m_classificationHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_rowTagHasBeenSet = false;
+};
 
-    Aws::String m_classification;
-    bool m_classificationHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_rowTag;
-    bool m_rowTagHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

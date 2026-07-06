@@ -4,64 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/grafana/ManagedGrafana_EXPORTS.h>
 #include <aws/grafana/model/AuthenticationDescription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ManagedGrafana
-{
-namespace Model
-{
-  class DescribeWorkspaceAuthenticationResult
-  {
-  public:
-    AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult();
-    AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ManagedGrafana {
+namespace Model {
+class DescribeWorkspaceAuthenticationResult {
+ public:
+  AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult() = default;
+  AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MANAGEDGRAFANA_API DescribeWorkspaceAuthenticationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure containing information about the authentication methods used in
+   * the workspace.</p>
+   */
+  inline const AuthenticationDescription& GetAuthentication() const { return m_authentication; }
+  template <typename AuthenticationT = AuthenticationDescription>
+  void SetAuthentication(AuthenticationT&& value) {
+    m_authenticationHasBeenSet = true;
+    m_authentication = std::forward<AuthenticationT>(value);
+  }
+  template <typename AuthenticationT = AuthenticationDescription>
+  DescribeWorkspaceAuthenticationResult& WithAuthentication(AuthenticationT&& value) {
+    SetAuthentication(std::forward<AuthenticationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure containing information about the authentication methods used in
-     * the workspace.</p>
-     */
-    inline const AuthenticationDescription& GetAuthentication() const{ return m_authentication; }
-    inline void SetAuthentication(const AuthenticationDescription& value) { m_authentication = value; }
-    inline void SetAuthentication(AuthenticationDescription&& value) { m_authentication = std::move(value); }
-    inline DescribeWorkspaceAuthenticationResult& WithAuthentication(const AuthenticationDescription& value) { SetAuthentication(value); return *this;}
-    inline DescribeWorkspaceAuthenticationResult& WithAuthentication(AuthenticationDescription&& value) { SetAuthentication(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeWorkspaceAuthenticationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeWorkspaceAuthenticationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeWorkspaceAuthenticationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeWorkspaceAuthenticationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AuthenticationDescription m_authentication;
+ private:
+  AuthenticationDescription m_authentication;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_authenticationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ManagedGrafana
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedGrafana
+}  // namespace Aws

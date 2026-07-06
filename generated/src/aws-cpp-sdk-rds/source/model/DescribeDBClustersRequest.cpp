@@ -3,62 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DescribeDBClustersRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/DescribeDBClustersRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-DescribeDBClustersRequest::DescribeDBClustersRequest() : 
-    m_dBClusterIdentifierHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_maxRecords(0),
-    m_maxRecordsHasBeenSet(false),
-    m_markerHasBeenSet(false),
-    m_includeShared(false),
-    m_includeSharedHasBeenSet(false)
-{
-}
-
-Aws::String DescribeDBClustersRequest::SerializePayload() const
-{
+Aws::String DescribeDBClustersRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeDBClusters&";
-  if(m_dBClusterIdentifierHasBeenSet)
-  {
+  if (m_dBClusterIdentifierHasBeenSet) {
     ss << "DBClusterIdentifier=" << StringUtils::URLEncode(m_dBClusterIdentifier.c_str()) << "&";
   }
 
-  if(m_filtersHasBeenSet)
-  {
-    if (m_filters.empty())
-    {
+  if (m_filtersHasBeenSet) {
+    if (m_filters.empty()) {
       ss << "Filters=&";
-    }
-    else
-    {
+    } else {
       unsigned filtersCount = 1;
-      for(auto& item : m_filters)
-      {
-        item.OutputToStream(ss, "Filters.member.", filtersCount, "");
+      for (auto& item : m_filters) {
+        item.OutputToStream(ss, "Filters.Filter.", filtersCount, "");
         filtersCount++;
       }
     }
   }
 
-  if(m_maxRecordsHasBeenSet)
-  {
+  if (m_maxRecordsHasBeenSet) {
     ss << "MaxRecords=" << m_maxRecords << "&";
   }
 
-  if(m_markerHasBeenSet)
-  {
+  if (m_markerHasBeenSet) {
     ss << "Marker=" << StringUtils::URLEncode(m_marker.c_str()) << "&";
   }
 
-  if(m_includeSharedHasBeenSet)
-  {
+  if (m_includeSharedHasBeenSet) {
     ss << "IncludeShared=" << std::boolalpha << m_includeShared << "&";
   }
 
@@ -66,8 +45,4 @@ Aws::String DescribeDBClustersRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeDBClustersRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeDBClustersRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

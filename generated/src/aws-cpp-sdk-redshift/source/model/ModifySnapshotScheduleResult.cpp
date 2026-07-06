@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/ModifySnapshotScheduleResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/redshift/model/ModifySnapshotScheduleResult.h>
 
 #include <utility>
 
@@ -17,94 +17,86 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ModifySnapshotScheduleResult::ModifySnapshotScheduleResult() : 
-    m_associatedClusterCount(0)
-{
-}
+ModifySnapshotScheduleResult::ModifySnapshotScheduleResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ModifySnapshotScheduleResult::ModifySnapshotScheduleResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-  : ModifySnapshotScheduleResult()
-{
-  *this = result;
-}
-
-ModifySnapshotScheduleResult& ModifySnapshotScheduleResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifySnapshotScheduleResult& ModifySnapshotScheduleResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifySnapshotScheduleResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifySnapshotScheduleResult")) {
     resultNode = rootNode.FirstChild("ModifySnapshotScheduleResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode scheduleDefinitionsNode = resultNode.FirstChild("ScheduleDefinitions");
-    if(!scheduleDefinitionsNode.IsNull())
-    {
+    if (!scheduleDefinitionsNode.IsNull()) {
       XmlNode scheduleDefinitionsMember = scheduleDefinitionsNode.FirstChild("ScheduleDefinition");
-      while(!scheduleDefinitionsMember.IsNull())
-      {
+      m_scheduleDefinitionsHasBeenSet = !scheduleDefinitionsMember.IsNull();
+      while (!scheduleDefinitionsMember.IsNull()) {
         m_scheduleDefinitions.push_back(scheduleDefinitionsMember.GetText());
         scheduleDefinitionsMember = scheduleDefinitionsMember.NextNode("ScheduleDefinition");
       }
 
+      m_scheduleDefinitionsHasBeenSet = true;
     }
     XmlNode scheduleIdentifierNode = resultNode.FirstChild("ScheduleIdentifier");
-    if(!scheduleIdentifierNode.IsNull())
-    {
+    if (!scheduleIdentifierNode.IsNull()) {
       m_scheduleIdentifier = Aws::Utils::Xml::DecodeEscapedXmlText(scheduleIdentifierNode.GetText());
+      m_scheduleIdentifierHasBeenSet = true;
     }
     XmlNode scheduleDescriptionNode = resultNode.FirstChild("ScheduleDescription");
-    if(!scheduleDescriptionNode.IsNull())
-    {
+    if (!scheduleDescriptionNode.IsNull()) {
       m_scheduleDescription = Aws::Utils::Xml::DecodeEscapedXmlText(scheduleDescriptionNode.GetText());
+      m_scheduleDescriptionHasBeenSet = true;
     }
     XmlNode tagsNode = resultNode.FirstChild("Tags");
-    if(!tagsNode.IsNull())
-    {
+    if (!tagsNode.IsNull()) {
       XmlNode tagsMember = tagsNode.FirstChild("Tag");
-      while(!tagsMember.IsNull())
-      {
+      m_tagsHasBeenSet = !tagsMember.IsNull();
+      while (!tagsMember.IsNull()) {
         m_tags.push_back(tagsMember);
         tagsMember = tagsMember.NextNode("Tag");
       }
 
+      m_tagsHasBeenSet = true;
     }
     XmlNode nextInvocationsNode = resultNode.FirstChild("NextInvocations");
-    if(!nextInvocationsNode.IsNull())
-    {
+    if (!nextInvocationsNode.IsNull()) {
       XmlNode nextInvocationsMember = nextInvocationsNode.FirstChild("SnapshotTime");
-      while(!nextInvocationsMember.IsNull())
-      {
-        m_nextInvocations.push_back(DateTime(StringUtils::Trim(nextInvocationsMember.GetText().c_str()).c_str(), Aws::Utils::DateFormat::ISO_8601));
+      m_nextInvocationsHasBeenSet = !nextInvocationsMember.IsNull();
+      while (!nextInvocationsMember.IsNull()) {
+        m_nextInvocations.push_back(
+            DateTime(StringUtils::Trim(nextInvocationsMember.GetText().c_str()).c_str(), Aws::Utils::DateFormat::ISO_8601));
         nextInvocationsMember = nextInvocationsMember.NextNode("SnapshotTime");
       }
 
+      m_nextInvocationsHasBeenSet = true;
     }
     XmlNode associatedClusterCountNode = resultNode.FirstChild("AssociatedClusterCount");
-    if(!associatedClusterCountNode.IsNull())
-    {
-      m_associatedClusterCount = StringUtils::ConvertToInt32(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(associatedClusterCountNode.GetText()).c_str()).c_str());
+    if (!associatedClusterCountNode.IsNull()) {
+      m_associatedClusterCount = StringUtils::ConvertToInt32(
+          StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(associatedClusterCountNode.GetText()).c_str()).c_str());
+      m_associatedClusterCountHasBeenSet = true;
     }
     XmlNode associatedClustersNode = resultNode.FirstChild("AssociatedClusters");
-    if(!associatedClustersNode.IsNull())
-    {
+    if (!associatedClustersNode.IsNull()) {
       XmlNode associatedClustersMember = associatedClustersNode.FirstChild("ClusterAssociatedToSchedule");
-      while(!associatedClustersMember.IsNull())
-      {
+      m_associatedClustersHasBeenSet = !associatedClustersMember.IsNull();
+      while (!associatedClustersMember.IsNull()) {
         m_associatedClusters.push_back(associatedClustersMember);
         associatedClustersMember = associatedClustersMember.NextNode("ClusterAssociatedToSchedule");
       }
 
+      m_associatedClustersHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::ModifySnapshotScheduleResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::ModifySnapshotScheduleResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

@@ -11,57 +11,37 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-ApiRequestBody::ApiRequestBody() : 
-    m_contentHasBeenSet(false)
-{
-}
+ApiRequestBody::ApiRequestBody(JsonView jsonValue) { *this = jsonValue; }
 
-ApiRequestBody::ApiRequestBody(JsonView jsonValue)
-  : ApiRequestBody()
-{
-  *this = jsonValue;
-}
-
-ApiRequestBody& ApiRequestBody::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("content"))
-  {
+ApiRequestBody& ApiRequestBody::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("content")) {
     Aws::Map<Aws::String, JsonView> contentJsonMap = jsonValue.GetObject("content").GetAllObjects();
-    for(auto& contentItem : contentJsonMap)
-    {
+    for (auto& contentItem : contentJsonMap) {
       m_content[contentItem.first] = contentItem.second.AsObject();
     }
     m_contentHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ApiRequestBody::Jsonize() const
-{
+JsonValue ApiRequestBody::Jsonize() const {
   JsonValue payload;
 
-  if(m_contentHasBeenSet)
-  {
-   JsonValue contentJsonMap;
-   for(auto& contentItem : m_content)
-   {
-     contentJsonMap.WithObject(contentItem.first, contentItem.second.Jsonize());
-   }
-   payload.WithObject("content", std::move(contentJsonMap));
-
+  if (m_contentHasBeenSet) {
+    JsonValue contentJsonMap;
+    for (auto& contentItem : m_content) {
+      contentJsonMap.WithObject(contentItem.first, contentItem.second.Jsonize());
+    }
+    payload.WithObject("content", std::move(contentJsonMap));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

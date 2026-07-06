@@ -3,71 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sagemaker/model/ClusterLifeCycleConfig.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/sagemaker/model/ClusterLifeCycleConfig.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
-ClusterLifeCycleConfig::ClusterLifeCycleConfig() : 
-    m_sourceS3UriHasBeenSet(false),
-    m_onCreateHasBeenSet(false)
-{
-}
+ClusterLifeCycleConfig::ClusterLifeCycleConfig(JsonView jsonValue) { *this = jsonValue; }
 
-ClusterLifeCycleConfig::ClusterLifeCycleConfig(JsonView jsonValue)
-  : ClusterLifeCycleConfig()
-{
-  *this = jsonValue;
-}
-
-ClusterLifeCycleConfig& ClusterLifeCycleConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("SourceS3Uri"))
-  {
+ClusterLifeCycleConfig& ClusterLifeCycleConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("SourceS3Uri")) {
     m_sourceS3Uri = jsonValue.GetString("SourceS3Uri");
-
     m_sourceS3UriHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("OnCreate"))
-  {
+  if (jsonValue.ValueExists("OnCreate")) {
     m_onCreate = jsonValue.GetString("OnCreate");
-
     m_onCreateHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("OnInitComplete")) {
+    m_onInitComplete = jsonValue.GetString("OnInitComplete");
+    m_onInitCompleteHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ClusterLifeCycleConfig::Jsonize() const
-{
+JsonValue ClusterLifeCycleConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_sourceS3UriHasBeenSet)
-  {
-   payload.WithString("SourceS3Uri", m_sourceS3Uri);
-
+  if (m_sourceS3UriHasBeenSet) {
+    payload.WithString("SourceS3Uri", m_sourceS3Uri);
   }
 
-  if(m_onCreateHasBeenSet)
-  {
-   payload.WithString("OnCreate", m_onCreate);
+  if (m_onCreateHasBeenSet) {
+    payload.WithString("OnCreate", m_onCreate);
+  }
 
+  if (m_onInitCompleteHasBeenSet) {
+    payload.WithString("OnInitComplete", m_onInitComplete);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

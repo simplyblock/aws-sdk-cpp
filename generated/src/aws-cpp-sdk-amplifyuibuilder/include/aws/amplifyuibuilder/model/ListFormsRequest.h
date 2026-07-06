@@ -4,106 +4,118 @@
  */
 
 #pragma once
-#include <aws/amplifyuibuilder/AmplifyUIBuilder_EXPORTS.h>
 #include <aws/amplifyuibuilder/AmplifyUIBuilderRequest.h>
+#include <aws/amplifyuibuilder/AmplifyUIBuilder_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace AmplifyUIBuilder
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace AmplifyUIBuilder {
+namespace Model {
 
+/**
+ */
+class ListFormsRequest : public AmplifyUIBuilderRequest {
+ public:
+  AWS_AMPLIFYUIBUILDER_API ListFormsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListForms"; }
+
+  AWS_AMPLIFYUIBUILDER_API Aws::String SerializePayload() const override;
+
+  AWS_AMPLIFYUIBUILDER_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The unique ID for the Amplify app.</p>
    */
-  class ListFormsRequest : public AmplifyUIBuilderRequest
-  {
-  public:
-    AWS_AMPLIFYUIBUILDER_API ListFormsRequest();
+  inline const Aws::String& GetAppId() const { return m_appId; }
+  inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
+  template <typename AppIdT = Aws::String>
+  void SetAppId(AppIdT&& value) {
+    m_appIdHasBeenSet = true;
+    m_appId = std::forward<AppIdT>(value);
+  }
+  template <typename AppIdT = Aws::String>
+  ListFormsRequest& WithAppId(AppIdT&& value) {
+    SetAppId(std::forward<AppIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListForms"; }
+  ///@{
+  /**
+   * <p>The name of the backend environment that is a part of the Amplify app.</p>
+   */
+  inline const Aws::String& GetEnvironmentName() const { return m_environmentName; }
+  inline bool EnvironmentNameHasBeenSet() const { return m_environmentNameHasBeenSet; }
+  template <typename EnvironmentNameT = Aws::String>
+  void SetEnvironmentName(EnvironmentNameT&& value) {
+    m_environmentNameHasBeenSet = true;
+    m_environmentName = std::forward<EnvironmentNameT>(value);
+  }
+  template <typename EnvironmentNameT = Aws::String>
+  ListFormsRequest& WithEnvironmentName(EnvironmentNameT&& value) {
+    SetEnvironmentName(std::forward<EnvironmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_AMPLIFYUIBUILDER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The token to request the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFormsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_AMPLIFYUIBUILDER_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The maximum number of forms to retrieve.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListFormsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_appId;
 
+  Aws::String m_environmentName;
 
-    ///@{
-    /**
-     * <p>The unique ID for the Amplify app.</p>
-     */
-    inline const Aws::String& GetAppId() const{ return m_appId; }
-    inline bool AppIdHasBeenSet() const { return m_appIdHasBeenSet; }
-    inline void SetAppId(const Aws::String& value) { m_appIdHasBeenSet = true; m_appId = value; }
-    inline void SetAppId(Aws::String&& value) { m_appIdHasBeenSet = true; m_appId = std::move(value); }
-    inline void SetAppId(const char* value) { m_appIdHasBeenSet = true; m_appId.assign(value); }
-    inline ListFormsRequest& WithAppId(const Aws::String& value) { SetAppId(value); return *this;}
-    inline ListFormsRequest& WithAppId(Aws::String&& value) { SetAppId(std::move(value)); return *this;}
-    inline ListFormsRequest& WithAppId(const char* value) { SetAppId(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The name of the backend environment that is a part of the Amplify app.</p>
-     */
-    inline const Aws::String& GetEnvironmentName() const{ return m_environmentName; }
-    inline bool EnvironmentNameHasBeenSet() const { return m_environmentNameHasBeenSet; }
-    inline void SetEnvironmentName(const Aws::String& value) { m_environmentNameHasBeenSet = true; m_environmentName = value; }
-    inline void SetEnvironmentName(Aws::String&& value) { m_environmentNameHasBeenSet = true; m_environmentName = std::move(value); }
-    inline void SetEnvironmentName(const char* value) { m_environmentNameHasBeenSet = true; m_environmentName.assign(value); }
-    inline ListFormsRequest& WithEnvironmentName(const Aws::String& value) { SetEnvironmentName(value); return *this;}
-    inline ListFormsRequest& WithEnvironmentName(Aws::String&& value) { SetEnvironmentName(std::move(value)); return *this;}
-    inline ListFormsRequest& WithEnvironmentName(const char* value) { SetEnvironmentName(value); return *this;}
-    ///@}
+  int m_maxResults{0};
+  bool m_appIdHasBeenSet = false;
+  bool m_environmentNameHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The token to request the next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListFormsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFormsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFormsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of forms to retrieve.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListFormsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_appId;
-    bool m_appIdHasBeenSet = false;
-
-    Aws::String m_environmentName;
-    bool m_environmentNameHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AmplifyUIBuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyUIBuilder
+}  // namespace Aws

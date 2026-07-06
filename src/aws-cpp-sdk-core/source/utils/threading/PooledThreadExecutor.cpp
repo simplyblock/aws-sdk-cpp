@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/utils/threading/PooledThreadExecutor.h>
 #include <aws/core/utils/threading/ThreadTask.h>
 #include <thread>
@@ -49,9 +50,16 @@ void PooledThreadExecutor::WaitUntilStopped()
 
     m_sync.ReleaseAll();
 
+    const auto thisThreadId = std::this_thread::get_id();
     for (auto threadTask : m_threadTaskHandles)
     {
-        Aws::Delete(threadTask);
+        if (threadTask->GetThreadId() != thisThreadId) {
+          Aws::Delete(threadTask);
+        } else {
+          AWS_LOGSTREAM_WARN(POOLED_CLASS_TAG, "PooledThreadExecutor is getting destructed from one of it's worker threads!");
+          AWS_LOGSTREAM_FLUSH(); // we are in UB zone and may crash soon.
+          threadTask->DetachFromExecutor();
+        }
     }
     m_threadTaskHandles.clear();
 

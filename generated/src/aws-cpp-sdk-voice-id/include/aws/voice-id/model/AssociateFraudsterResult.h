@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/voice-id/model/Fraudster.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
-  class AssociateFraudsterResult
-  {
-  public:
-    AWS_VOICEID_API AssociateFraudsterResult();
-    AWS_VOICEID_API AssociateFraudsterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_VOICEID_API AssociateFraudsterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
+class AssociateFraudsterResult {
+ public:
+  AWS_VOICEID_API AssociateFraudsterResult() = default;
+  AWS_VOICEID_API AssociateFraudsterResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_VOICEID_API AssociateFraudsterResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Fraudster& GetFraudster() const{ return m_fraudster; }
-    inline void SetFraudster(const Fraudster& value) { m_fraudster = value; }
-    inline void SetFraudster(Fraudster&& value) { m_fraudster = std::move(value); }
-    inline AssociateFraudsterResult& WithFraudster(const Fraudster& value) { SetFraudster(value); return *this;}
-    inline AssociateFraudsterResult& WithFraudster(Fraudster&& value) { SetFraudster(std::move(value)); return *this;}
-    ///@}
+  inline const Fraudster& GetFraudster() const { return m_fraudster; }
+  template <typename FraudsterT = Fraudster>
+  void SetFraudster(FraudsterT&& value) {
+    m_fraudsterHasBeenSet = true;
+    m_fraudster = std::forward<FraudsterT>(value);
+  }
+  template <typename FraudsterT = Fraudster>
+  AssociateFraudsterResult& WithFraudster(FraudsterT&& value) {
+    SetFraudster(std::forward<FraudsterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateFraudsterResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateFraudsterResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateFraudsterResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Fraudster m_fraudster;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateFraudsterResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Fraudster m_fraudster;
 
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fraudsterHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

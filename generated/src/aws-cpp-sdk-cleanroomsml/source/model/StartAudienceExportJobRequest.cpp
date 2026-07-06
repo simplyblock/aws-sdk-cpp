@@ -12,45 +12,24 @@ using namespace Aws::CleanRoomsML::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartAudienceExportJobRequest::StartAudienceExportJobRequest() : 
-    m_nameHasBeenSet(false),
-    m_audienceGenerationJobArnHasBeenSet(false),
-    m_audienceSizeHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String StartAudienceExportJobRequest::SerializePayload() const
-{
+Aws::String StartAudienceExportJobRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_audienceGenerationJobArnHasBeenSet)
-  {
-   payload.WithString("audienceGenerationJobArn", m_audienceGenerationJobArn);
-
+  if (m_audienceGenerationJobArnHasBeenSet) {
+    payload.WithString("audienceGenerationJobArn", m_audienceGenerationJobArn);
   }
 
-  if(m_audienceSizeHasBeenSet)
-  {
-   payload.WithObject("audienceSize", m_audienceSize.Jsonize());
-
+  if (m_audienceSizeHasBeenSet) {
+    payload.WithObject("audienceSize", m_audienceSize.Jsonize());
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

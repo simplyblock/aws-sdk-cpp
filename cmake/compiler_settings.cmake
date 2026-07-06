@@ -11,6 +11,9 @@ else()
         set(COMPILER_CLANG 1)
     else()
         set(COMPILER_GCC 1)
+        if(MINGW)
+            set(COMPILER_MINGW 1)
+        endif()
     endif()
     set(USE_GCC_FLAGS 1)
 endif()
@@ -33,7 +36,15 @@ endfunction()
 
 
 macro(set_gcc_flags)
-    list(APPEND AWS_COMPILER_FLAGS "-fno-exceptions" "-std=c++${CPP_STANDARD}")
+    list(APPEND AWS_COMPILER_FLAGS "-fno-exceptions")
+
+    if(NOT NO_CPPSTD_IN_PKG_CONFIG)
+        list(APPEND AWS_COMPILER_FLAGS "-std=c++${CPP_STANDARD}")
+    endif()
+
+    if(COMPILER_IS_MINGW)
+        list(APPEND AWS_COMPILER_FLAGS -D__USE_MINGW_ANSI_STDIO=1)
+    endif()
 
     if(NOT BUILD_SHARED_LIBS)
         list(APPEND AWS_COMPILER_FLAGS "-fPIC")

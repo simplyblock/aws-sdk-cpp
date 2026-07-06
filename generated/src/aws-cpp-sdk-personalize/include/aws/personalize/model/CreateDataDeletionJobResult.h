@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Personalize
-{
-namespace Model
-{
-  class CreateDataDeletionJobResult
-  {
-  public:
-    AWS_PERSONALIZE_API CreateDataDeletionJobResult();
-    AWS_PERSONALIZE_API CreateDataDeletionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PERSONALIZE_API CreateDataDeletionJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Personalize {
+namespace Model {
+class CreateDataDeletionJobResult {
+ public:
+  AWS_PERSONALIZE_API CreateDataDeletionJobResult() = default;
+  AWS_PERSONALIZE_API CreateDataDeletionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PERSONALIZE_API CreateDataDeletionJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the data deletion job.</p>
+   */
+  inline const Aws::String& GetDataDeletionJobArn() const { return m_dataDeletionJobArn; }
+  template <typename DataDeletionJobArnT = Aws::String>
+  void SetDataDeletionJobArn(DataDeletionJobArnT&& value) {
+    m_dataDeletionJobArnHasBeenSet = true;
+    m_dataDeletionJobArn = std::forward<DataDeletionJobArnT>(value);
+  }
+  template <typename DataDeletionJobArnT = Aws::String>
+  CreateDataDeletionJobResult& WithDataDeletionJobArn(DataDeletionJobArnT&& value) {
+    SetDataDeletionJobArn(std::forward<DataDeletionJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the data deletion job.</p>
-     */
-    inline const Aws::String& GetDataDeletionJobArn() const{ return m_dataDeletionJobArn; }
-    inline void SetDataDeletionJobArn(const Aws::String& value) { m_dataDeletionJobArn = value; }
-    inline void SetDataDeletionJobArn(Aws::String&& value) { m_dataDeletionJobArn = std::move(value); }
-    inline void SetDataDeletionJobArn(const char* value) { m_dataDeletionJobArn.assign(value); }
-    inline CreateDataDeletionJobResult& WithDataDeletionJobArn(const Aws::String& value) { SetDataDeletionJobArn(value); return *this;}
-    inline CreateDataDeletionJobResult& WithDataDeletionJobArn(Aws::String&& value) { SetDataDeletionJobArn(std::move(value)); return *this;}
-    inline CreateDataDeletionJobResult& WithDataDeletionJobArn(const char* value) { SetDataDeletionJobArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDataDeletionJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDataDeletionJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDataDeletionJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDataDeletionJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_dataDeletionJobArn;
+ private:
+  Aws::String m_dataDeletionJobArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataDeletionJobArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

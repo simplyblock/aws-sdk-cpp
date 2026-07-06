@@ -4,72 +4,77 @@
  */
 
 #pragma once
-#include <aws/devops-guru/DevOpsGuru_EXPORTS.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/devops-guru/DevOpsGuru_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DevOpsGuru
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DevOpsGuru {
+namespace Model {
 
+/**
+ * <p> A time range used to specify when the behavior of an insight or anomaly
+ * started. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/devops-guru-2020-12-01/StartTimeRange">AWS
+ * API Reference</a></p>
+ */
+class StartTimeRange {
+ public:
+  AWS_DEVOPSGURU_API StartTimeRange() = default;
+  AWS_DEVOPSGURU_API StartTimeRange(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DEVOPSGURU_API StartTimeRange& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DEVOPSGURU_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> A time range used to specify when the behavior of an insight or anomaly
-   * started. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/devops-guru-2020-12-01/StartTimeRange">AWS
-   * API Reference</a></p>
+   * <p> The start time of the time range. </p>
    */
-  class StartTimeRange
-  {
-  public:
-    AWS_DEVOPSGURU_API StartTimeRange();
-    AWS_DEVOPSGURU_API StartTimeRange(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DEVOPSGURU_API StartTimeRange& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DEVOPSGURU_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Utils::DateTime& GetFromTime() const { return m_fromTime; }
+  inline bool FromTimeHasBeenSet() const { return m_fromTimeHasBeenSet; }
+  template <typename FromTimeT = Aws::Utils::DateTime>
+  void SetFromTime(FromTimeT&& value) {
+    m_fromTimeHasBeenSet = true;
+    m_fromTime = std::forward<FromTimeT>(value);
+  }
+  template <typename FromTimeT = Aws::Utils::DateTime>
+  StartTimeRange& WithFromTime(FromTimeT&& value) {
+    SetFromTime(std::forward<FromTimeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The end time of the time range. </p>
+   */
+  inline const Aws::Utils::DateTime& GetToTime() const { return m_toTime; }
+  inline bool ToTimeHasBeenSet() const { return m_toTimeHasBeenSet; }
+  template <typename ToTimeT = Aws::Utils::DateTime>
+  void SetToTime(ToTimeT&& value) {
+    m_toTimeHasBeenSet = true;
+    m_toTime = std::forward<ToTimeT>(value);
+  }
+  template <typename ToTimeT = Aws::Utils::DateTime>
+  StartTimeRange& WithToTime(ToTimeT&& value) {
+    SetToTime(std::forward<ToTimeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Utils::DateTime m_fromTime{};
 
-    ///@{
-    /**
-     * <p> The start time of the time range. </p>
-     */
-    inline const Aws::Utils::DateTime& GetFromTime() const{ return m_fromTime; }
-    inline bool FromTimeHasBeenSet() const { return m_fromTimeHasBeenSet; }
-    inline void SetFromTime(const Aws::Utils::DateTime& value) { m_fromTimeHasBeenSet = true; m_fromTime = value; }
-    inline void SetFromTime(Aws::Utils::DateTime&& value) { m_fromTimeHasBeenSet = true; m_fromTime = std::move(value); }
-    inline StartTimeRange& WithFromTime(const Aws::Utils::DateTime& value) { SetFromTime(value); return *this;}
-    inline StartTimeRange& WithFromTime(Aws::Utils::DateTime&& value) { SetFromTime(std::move(value)); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_toTime{};
+  bool m_fromTimeHasBeenSet = false;
+  bool m_toTimeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The end time of the time range. </p>
-     */
-    inline const Aws::Utils::DateTime& GetToTime() const{ return m_toTime; }
-    inline bool ToTimeHasBeenSet() const { return m_toTimeHasBeenSet; }
-    inline void SetToTime(const Aws::Utils::DateTime& value) { m_toTimeHasBeenSet = true; m_toTime = value; }
-    inline void SetToTime(Aws::Utils::DateTime&& value) { m_toTimeHasBeenSet = true; m_toTime = std::move(value); }
-    inline StartTimeRange& WithToTime(const Aws::Utils::DateTime& value) { SetToTime(value); return *this;}
-    inline StartTimeRange& WithToTime(Aws::Utils::DateTime&& value) { SetToTime(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::Utils::DateTime m_fromTime;
-    bool m_fromTimeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_toTime;
-    bool m_toTimeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DevOpsGuru
-} // namespace Aws
+}  // namespace Model
+}  // namespace DevOpsGuru
+}  // namespace Aws

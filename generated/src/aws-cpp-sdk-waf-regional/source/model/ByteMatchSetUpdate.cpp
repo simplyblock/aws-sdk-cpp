@@ -3,71 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/waf-regional/model/ByteMatchSetUpdate.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/waf-regional/model/ByteMatchSetUpdate.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace WAFRegional
-{
-namespace Model
-{
+namespace Aws {
+namespace WAFRegional {
+namespace Model {
 
-ByteMatchSetUpdate::ByteMatchSetUpdate() : 
-    m_action(ChangeAction::NOT_SET),
-    m_actionHasBeenSet(false),
-    m_byteMatchTupleHasBeenSet(false)
-{
-}
+ByteMatchSetUpdate::ByteMatchSetUpdate(JsonView jsonValue) { *this = jsonValue; }
 
-ByteMatchSetUpdate::ByteMatchSetUpdate(JsonView jsonValue)
-  : ByteMatchSetUpdate()
-{
-  *this = jsonValue;
-}
-
-ByteMatchSetUpdate& ByteMatchSetUpdate::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Action"))
-  {
+ByteMatchSetUpdate& ByteMatchSetUpdate::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Action")) {
     m_action = ChangeActionMapper::GetChangeActionForName(jsonValue.GetString("Action"));
-
     m_actionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ByteMatchTuple"))
-  {
+  if (jsonValue.ValueExists("ByteMatchTuple")) {
     m_byteMatchTuple = jsonValue.GetObject("ByteMatchTuple");
-
     m_byteMatchTupleHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ByteMatchSetUpdate::Jsonize() const
-{
+JsonValue ByteMatchSetUpdate::Jsonize() const {
   JsonValue payload;
 
-  if(m_actionHasBeenSet)
-  {
-   payload.WithString("Action", ChangeActionMapper::GetNameForChangeAction(m_action));
+  if (m_actionHasBeenSet) {
+    payload.WithString("Action", ChangeActionMapper::GetNameForChangeAction(m_action));
   }
 
-  if(m_byteMatchTupleHasBeenSet)
-  {
-   payload.WithObject("ByteMatchTuple", m_byteMatchTuple.Jsonize());
-
+  if (m_byteMatchTupleHasBeenSet) {
+    payload.WithObject("ByteMatchTuple", m_byteMatchTuple.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace WAFRegional
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAFRegional
+}  // namespace Aws

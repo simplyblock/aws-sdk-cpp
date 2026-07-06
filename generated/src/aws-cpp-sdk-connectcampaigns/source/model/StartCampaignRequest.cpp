@@ -12,16 +12,4 @@ using namespace Aws::ConnectCampaigns::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartCampaignRequest::StartCampaignRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String StartCampaignRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StartCampaignRequest::SerializePayload() const { return {}; }

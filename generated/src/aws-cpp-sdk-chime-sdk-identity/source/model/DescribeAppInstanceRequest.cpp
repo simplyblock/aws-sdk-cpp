@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKIdentity::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeAppInstanceRequest::DescribeAppInstanceRequest() : 
-    m_appInstanceArnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeAppInstanceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeAppInstanceRequest::SerializePayload() const { return {}; }

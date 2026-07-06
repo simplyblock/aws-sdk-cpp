@@ -12,57 +12,32 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateLegalHoldRequest::CreateLegalHoldRequest() : 
-    m_titleHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_idempotencyTokenHasBeenSet(false),
-    m_recoveryPointSelectionHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateLegalHoldRequest::SerializePayload() const
-{
+Aws::String CreateLegalHoldRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_titleHasBeenSet)
-  {
-   payload.WithString("Title", m_title);
-
+  if (m_titleHasBeenSet) {
+    payload.WithString("Title", m_title);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_idempotencyTokenHasBeenSet)
-  {
-   payload.WithString("IdempotencyToken", m_idempotencyToken);
-
+  if (m_idempotencyTokenHasBeenSet) {
+    payload.WithString("IdempotencyToken", m_idempotencyToken);
   }
 
-  if(m_recoveryPointSelectionHasBeenSet)
-  {
-   payload.WithObject("RecoveryPointSelection", m_recoveryPointSelection.Jsonize());
-
+  if (m_recoveryPointSelectionHasBeenSet) {
+    payload.WithObject("RecoveryPointSelection", m_recoveryPointSelection.Jsonize());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("Tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/athena/Athena_EXPORTS.h>
 #include <aws/athena/model/CapacityReservation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Athena
-{
-namespace Model
-{
-  class GetCapacityReservationResult
-  {
-  public:
-    AWS_ATHENA_API GetCapacityReservationResult();
-    AWS_ATHENA_API GetCapacityReservationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ATHENA_API GetCapacityReservationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Athena {
+namespace Model {
+class GetCapacityReservationResult {
+ public:
+  AWS_ATHENA_API GetCapacityReservationResult() = default;
+  AWS_ATHENA_API GetCapacityReservationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ATHENA_API GetCapacityReservationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The requested capacity reservation structure.</p>
+   */
+  inline const CapacityReservation& GetCapacityReservation() const { return m_capacityReservation; }
+  template <typename CapacityReservationT = CapacityReservation>
+  void SetCapacityReservation(CapacityReservationT&& value) {
+    m_capacityReservationHasBeenSet = true;
+    m_capacityReservation = std::forward<CapacityReservationT>(value);
+  }
+  template <typename CapacityReservationT = CapacityReservation>
+  GetCapacityReservationResult& WithCapacityReservation(CapacityReservationT&& value) {
+    SetCapacityReservation(std::forward<CapacityReservationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The requested capacity reservation structure.</p>
-     */
-    inline const CapacityReservation& GetCapacityReservation() const{ return m_capacityReservation; }
-    inline void SetCapacityReservation(const CapacityReservation& value) { m_capacityReservation = value; }
-    inline void SetCapacityReservation(CapacityReservation&& value) { m_capacityReservation = std::move(value); }
-    inline GetCapacityReservationResult& WithCapacityReservation(const CapacityReservation& value) { SetCapacityReservation(value); return *this;}
-    inline GetCapacityReservationResult& WithCapacityReservation(CapacityReservation&& value) { SetCapacityReservation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCapacityReservationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCapacityReservationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCapacityReservationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCapacityReservationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CapacityReservation m_capacityReservation;
+ private:
+  CapacityReservation m_capacityReservation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_capacityReservationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

@@ -4,100 +4,131 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/FilteredLogEvent.h>
 #include <aws/logs/model/SearchedLogStream.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class FilterLogEventsResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API FilterLogEventsResult();
-    AWS_CLOUDWATCHLOGS_API FilterLogEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API FilterLogEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class FilterLogEventsResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API FilterLogEventsResult() = default;
+  AWS_CLOUDWATCHLOGS_API FilterLogEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API FilterLogEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The matched events.</p>
+   */
+  inline const Aws::Vector<FilteredLogEvent>& GetEvents() const { return m_events; }
+  template <typename EventsT = Aws::Vector<FilteredLogEvent>>
+  void SetEvents(EventsT&& value) {
+    m_eventsHasBeenSet = true;
+    m_events = std::forward<EventsT>(value);
+  }
+  template <typename EventsT = Aws::Vector<FilteredLogEvent>>
+  FilterLogEventsResult& WithEvents(EventsT&& value) {
+    SetEvents(std::forward<EventsT>(value));
+    return *this;
+  }
+  template <typename EventsT = FilteredLogEvent>
+  FilterLogEventsResult& AddEvents(EventsT&& value) {
+    m_eventsHasBeenSet = true;
+    m_events.emplace_back(std::forward<EventsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The matched events.</p>
-     */
-    inline const Aws::Vector<FilteredLogEvent>& GetEvents() const{ return m_events; }
-    inline void SetEvents(const Aws::Vector<FilteredLogEvent>& value) { m_events = value; }
-    inline void SetEvents(Aws::Vector<FilteredLogEvent>&& value) { m_events = std::move(value); }
-    inline FilterLogEventsResult& WithEvents(const Aws::Vector<FilteredLogEvent>& value) { SetEvents(value); return *this;}
-    inline FilterLogEventsResult& WithEvents(Aws::Vector<FilteredLogEvent>&& value) { SetEvents(std::move(value)); return *this;}
-    inline FilterLogEventsResult& AddEvents(const FilteredLogEvent& value) { m_events.push_back(value); return *this; }
-    inline FilterLogEventsResult& AddEvents(FilteredLogEvent&& value) { m_events.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> <b>Important</b> As of May 15, 2020, this parameter is no longer supported.
+   * This parameter returns an empty list.</p> <p>Indicates which log streams have
+   * been searched and whether each has been searched completely.</p>
+   */
+  inline const Aws::Vector<SearchedLogStream>& GetSearchedLogStreams() const { return m_searchedLogStreams; }
+  template <typename SearchedLogStreamsT = Aws::Vector<SearchedLogStream>>
+  void SetSearchedLogStreams(SearchedLogStreamsT&& value) {
+    m_searchedLogStreamsHasBeenSet = true;
+    m_searchedLogStreams = std::forward<SearchedLogStreamsT>(value);
+  }
+  template <typename SearchedLogStreamsT = Aws::Vector<SearchedLogStream>>
+  FilterLogEventsResult& WithSearchedLogStreams(SearchedLogStreamsT&& value) {
+    SetSearchedLogStreams(std::forward<SearchedLogStreamsT>(value));
+    return *this;
+  }
+  template <typename SearchedLogStreamsT = SearchedLogStream>
+  FilterLogEventsResult& AddSearchedLogStreams(SearchedLogStreamsT&& value) {
+    m_searchedLogStreamsHasBeenSet = true;
+    m_searchedLogStreams.emplace_back(std::forward<SearchedLogStreamsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> <b>Important</b> As of May 15, 2020, this parameter is no longer supported.
-     * This parameter returns an empty list.</p> <p>Indicates which log streams have
-     * been searched and whether each has been searched completely.</p>
-     */
-    inline const Aws::Vector<SearchedLogStream>& GetSearchedLogStreams() const{ return m_searchedLogStreams; }
-    inline void SetSearchedLogStreams(const Aws::Vector<SearchedLogStream>& value) { m_searchedLogStreams = value; }
-    inline void SetSearchedLogStreams(Aws::Vector<SearchedLogStream>&& value) { m_searchedLogStreams = std::move(value); }
-    inline FilterLogEventsResult& WithSearchedLogStreams(const Aws::Vector<SearchedLogStream>& value) { SetSearchedLogStreams(value); return *this;}
-    inline FilterLogEventsResult& WithSearchedLogStreams(Aws::Vector<SearchedLogStream>&& value) { SetSearchedLogStreams(std::move(value)); return *this;}
-    inline FilterLogEventsResult& AddSearchedLogStreams(const SearchedLogStream& value) { m_searchedLogStreams.push_back(value); return *this; }
-    inline FilterLogEventsResult& AddSearchedLogStreams(SearchedLogStream&& value) { m_searchedLogStreams.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token for the next set of items in the sorting direction specified by the
+   * <code>startFromHead</code> parameter in the first request. The token expires
+   * after 24 hours.</p> <p>If the results don't include a <code>nextToken</code>,
+   * then pagination is finished. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  FilterLogEventsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use when requesting the next set of items. The token expires
-     * after 24 hours.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline FilterLogEventsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline FilterLogEventsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline FilterLogEventsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline FilterLogEventsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline FilterLogEventsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline FilterLogEventsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  FilterLogEventsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FilteredLogEvent> m_events;
+ private:
+  Aws::Vector<FilteredLogEvent> m_events;
 
-    Aws::Vector<SearchedLogStream> m_searchedLogStreams;
+  Aws::Vector<SearchedLogStream> m_searchedLogStreams;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventsHasBeenSet = false;
+  bool m_searchedLogStreamsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

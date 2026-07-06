@@ -4,72 +4,83 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
 
+/**
+ * <p>A destination for events that failed processing. For more information, see <a
+ * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html#invocation-async-destinations">Adding
+ * a destination</a>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/OnFailure">AWS
+ * API Reference</a></p>
+ */
+class OnFailure {
+ public:
+  AWS_LAMBDA_API OnFailure() = default;
+  AWS_LAMBDA_API OnFailure(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API OnFailure& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A destination for events that failed processing.</p><p><h3>See Also:</h3>  
-   * <a href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/OnFailure">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of the destination resource.</p> <p>To retain
+   * records of failed invocations from <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html">Kinesis</a>,
+   * <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html">DynamoDB</a>,
+   * <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/kafka-on-failure.html">self-managed
+   * Apache Kafka</a>, or <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/kafka-on-failure.html">Amazon
+   * MSK</a>, you can configure an Amazon SNS topic, Amazon SQS queue, Amazon S3
+   * bucket, or Kafka topic as the destination.</p>  <p>Amazon SNS destinations
+   * have a message size limit of 256 KB. If the combined size of the function
+   * request and response payload exceeds the limit, Lambda will drop the payload
+   * when sending <code>OnFailure</code> event to the destination. For details on
+   * this behavior, refer to <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-async-retain-records.html">Retaining
+   * records of asynchronous invocations</a>.</p>  <p>To retain records of
+   * failed invocations from <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html">Kinesis</a>,
+   * <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html">DynamoDB</a>,
+   * <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-smaa-onfailure-destination">self-managed
+   * Kafka</a> or <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-onfailure-destination">Amazon
+   * MSK</a>, you can configure an Amazon SNS topic, Amazon SQS queue, or Amazon S3
+   * bucket as the destination.</p>
    */
-  class OnFailure
-  {
-  public:
-    AWS_LAMBDA_API OnFailure();
-    AWS_LAMBDA_API OnFailure(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAMBDA_API OnFailure& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAMBDA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDestination() const { return m_destination; }
+  inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
+  template <typename DestinationT = Aws::String>
+  void SetDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination = std::forward<DestinationT>(value);
+  }
+  template <typename DestinationT = Aws::String>
+  OnFailure& WithDestination(DestinationT&& value) {
+    SetDestination(std::forward<DestinationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_destination;
+  bool m_destinationHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the destination resource.</p> <p>To retain
-     * records of <a
-     * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations">asynchronous
-     * invocations</a>, you can configure an Amazon SNS topic, Amazon SQS queue, Lambda
-     * function, or Amazon EventBridge event bus as the destination.</p> <p>To retain
-     * records of failed invocations from <a
-     * href="https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#event-source-mapping-destinations">Kinesis
-     * and DynamoDB event sources</a>, you can configure an Amazon SNS topic or Amazon
-     * SQS queue as the destination.</p> <p>To retain records of failed invocations
-     * from <a
-     * href="https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-smaa-onfailure-destination">self-managed
-     * Kafka</a> or <a
-     * href="https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-onfailure-destination">Amazon
-     * MSK</a>, you can configure an Amazon SNS topic, Amazon SQS queue, or Amazon S3
-     * bucket as the destination.</p>
-     */
-    inline const Aws::String& GetDestination() const{ return m_destination; }
-    inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
-    inline void SetDestination(const Aws::String& value) { m_destinationHasBeenSet = true; m_destination = value; }
-    inline void SetDestination(Aws::String&& value) { m_destinationHasBeenSet = true; m_destination = std::move(value); }
-    inline void SetDestination(const char* value) { m_destinationHasBeenSet = true; m_destination.assign(value); }
-    inline OnFailure& WithDestination(const Aws::String& value) { SetDestination(value); return *this;}
-    inline OnFailure& WithDestination(Aws::String&& value) { SetDestination(std::move(value)); return *this;}
-    inline OnFailure& WithDestination(const char* value) { SetDestination(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_destination;
-    bool m_destinationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

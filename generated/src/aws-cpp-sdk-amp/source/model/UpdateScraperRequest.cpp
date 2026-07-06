@@ -12,47 +12,28 @@ using namespace Aws::PrometheusService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateScraperRequest::UpdateScraperRequest() : 
-    m_aliasHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_destinationHasBeenSet(false),
-    m_scrapeConfigurationHasBeenSet(false),
-    m_scraperIdHasBeenSet(false)
-{
-}
-
-Aws::String UpdateScraperRequest::SerializePayload() const
-{
+Aws::String UpdateScraperRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_aliasHasBeenSet)
-  {
-   payload.WithString("alias", m_alias);
-
+  if (m_aliasHasBeenSet) {
+    payload.WithString("alias", m_alias);
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_scrapeConfigurationHasBeenSet) {
+    payload.WithObject("scrapeConfiguration", m_scrapeConfiguration.Jsonize());
   }
 
-  if(m_destinationHasBeenSet)
-  {
-   payload.WithObject("destination", m_destination.Jsonize());
-
+  if (m_destinationHasBeenSet) {
+    payload.WithObject("destination", m_destination.Jsonize());
   }
 
-  if(m_scrapeConfigurationHasBeenSet)
-  {
-   payload.WithObject("scrapeConfiguration", m_scrapeConfiguration.Jsonize());
+  if (m_roleConfigurationHasBeenSet) {
+    payload.WithObject("roleConfiguration", m_roleConfiguration.Jsonize());
+  }
 
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

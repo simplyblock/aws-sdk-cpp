@@ -3,33 +3,40 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/core/utils/Outcome.h>
-#include <aws/core/auth/AWSAuthSigner.h>
-#include <aws/core/client/CoreErrors.h>
-#include <aws/core/client/RetryStrategy.h>
-#include <aws/core/http/HttpClient.h>
-#include <aws/core/http/HttpResponse.h>
-#include <aws/core/http/HttpClientFactory.h>
-#include <aws/core/auth/AWSCredentialsProviderChain.h>
-#include <aws/core/utils/json/JsonSerializer.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
-#include <aws/core/utils/threading/Executor.h>
-#include <aws/core/utils/DNS.h>
-#include <aws/core/utils/logging/LogMacros.h>
-#include <aws/core/utils/logging/ErrorMacros.h>
-#include <aws/core/utils/event/EventStream.h>
-
+#include <aws/bedrock-runtime/BedrockRuntimeAwsBearerTokenIdentityResolver.h>
 #include <aws/bedrock-runtime/BedrockRuntimeClient.h>
-#include <aws/bedrock-runtime/BedrockRuntimeErrorMarshaller.h>
 #include <aws/bedrock-runtime/BedrockRuntimeEndpointProvider.h>
+#include <aws/bedrock-runtime/BedrockRuntimeErrorMarshaller.h>
 #include <aws/bedrock-runtime/model/ApplyGuardrailRequest.h>
 #include <aws/bedrock-runtime/model/ConverseRequest.h>
 #include <aws/bedrock-runtime/model/ConverseStreamRequest.h>
+#include <aws/bedrock-runtime/model/CountTokensRequest.h>
+#include <aws/bedrock-runtime/model/GetAsyncInvokeRequest.h>
+#include <aws/bedrock-runtime/model/InvokeGuardrailChecksRequest.h>
 #include <aws/bedrock-runtime/model/InvokeModelRequest.h>
+#include <aws/bedrock-runtime/model/InvokeModelWithBidirectionalStreamRequest.h>
 #include <aws/bedrock-runtime/model/InvokeModelWithResponseStreamRequest.h>
-
+#include <aws/bedrock-runtime/model/ListAsyncInvokesRequest.h>
+#include <aws/bedrock-runtime/model/StartAsyncInvokeRequest.h>
+#include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <aws/core/auth/signer-provider/BearerTokenAuthSignerProvider.h>
+#include <aws/core/client/CoreErrors.h>
+#include <aws/core/client/RetryStrategy.h>
+#include <aws/core/http/HttpClient.h>
+#include <aws/core/http/HttpClientFactory.h>
+#include <aws/core/utils/DNS.h>
+#include <aws/core/utils/Outcome.h>
+#include <aws/core/utils/event/EventStream.h>
+#include <aws/core/utils/logging/ErrorMacros.h>
+#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/threading/Executor.h>
+#include <smithy/client/SmithyBidirectionalStreamingWriteDataTask.h>
+#include <smithy/client/SmithyEventStreamingAsyncTask.h>
+#include <smithy/identity/resolver/built-in/AwsCredentialsProviderIdentityResolver.h>
+#include <smithy/identity/resolver/built-in/DefaultAwsCredentialIdentityResolver.h>
+#include <smithy/identity/resolver/built-in/SimpleAwsCredentialIdentityResolver.h>
 #include <smithy/tracing/TracingUtils.h>
-
 
 using namespace Aws;
 using namespace Aws::Auth;
@@ -41,315 +48,456 @@ using namespace Aws::Utils::Json;
 using namespace smithy::components::tracing;
 using ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-namespace Aws
-{
-  namespace BedrockRuntime
-  {
-    const char SERVICE_NAME[] = "bedrock";
-    const char ALLOCATION_TAG[] = "BedrockRuntimeClient";
-  }
-}
-const char* BedrockRuntimeClient::GetServiceName() {return SERVICE_NAME;}
-const char* BedrockRuntimeClient::GetAllocationTag() {return ALLOCATION_TAG;}
+namespace Aws {
+namespace BedrockRuntime {
+const char ALLOCATION_TAG[] = "BedrockRuntimeClient";
+const char SERVICE_NAME[] = "bedrock";
+}  // namespace BedrockRuntime
+}  // namespace Aws
+const char* BedrockRuntimeClient::GetServiceName() { return SERVICE_NAME; }
+const char* BedrockRuntimeClient::GetAllocationTag() { return ALLOCATION_TAG; }
+
+BedrockRuntimeClient::BedrockRuntimeClient(
+    const Aws::UnorderedMap<Aws::String, Aws::Crt::Variant<smithy::SigV4AuthScheme, smithy::BearerTokenAuthScheme>> authSchemeMap,
+    std::shared_ptr<BedrockRuntimeEndpointProviderBase> endpointProvider,
+    const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          authSchemeMap) {}
 
 BedrockRuntimeClient::BedrockRuntimeClient(const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration,
-                                           std::shared_ptr<BedrockRuntimeEndpointProviderBase> endpointProvider) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG),
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-  m_clientConfiguration(clientConfiguration),
-  m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                                           std::shared_ptr<BedrockRuntimeEndpointProviderBase> endpointProvider)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{GetServiceName(), clientConfiguration.region,
+                                       clientConfiguration.ResolveCredentialProviderConfig()}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockRuntimeAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
+          }) {}
 
 BedrockRuntimeClient::BedrockRuntimeClient(const AWSCredentials& credentials,
                                            std::shared_ptr<BedrockRuntimeEndpointProviderBase> endpointProvider,
-                                           const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                                           const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {{smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+            smithy::SigV4AuthScheme{Aws::MakeShared<smithy::SimpleAwsCredentialIdentityResolver>(ALLOCATION_TAG, credentials),
+                                    GetServiceName(), clientConfiguration.region}},
+           {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+            smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockRuntimeAwsBearerTokenIdentityResolver>(
+                                              "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                          GetServiceName(), clientConfiguration.region}}}) {}
 
 BedrockRuntimeClient::BedrockRuntimeClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
                                            std::shared_ptr<BedrockRuntimeEndpointProviderBase> endpointProvider,
-                                           const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  credentialsProvider,
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                                           const BedrockRuntime::BedrockRuntimeClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{Aws::MakeShared<smithy::AwsCredentialsProviderIdentityResolver>(ALLOCATION_TAG, credentialsProvider),
+                                       GetServiceName(), clientConfiguration.region}},
+          }) {}
 
-    /* Legacy constructors due deprecation */
-  BedrockRuntimeClient::BedrockRuntimeClient(const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG),
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-  m_clientConfiguration(clientConfiguration),
-  m_endpointProvider(Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+/* Legacy constructors due deprecation */
+BedrockRuntimeClient::BedrockRuntimeClient(const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{GetServiceName(), clientConfiguration.region,
+                                       clientConfiguration.ResolveCredentialProviderConfig()}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockRuntimeAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
+          }) {}
 
-BedrockRuntimeClient::BedrockRuntimeClient(const AWSCredentials& credentials,
-                                           const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+BedrockRuntimeClient::BedrockRuntimeClient(const AWSCredentials& credentials, const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{Aws::MakeShared<smithy::SimpleAwsCredentialIdentityResolver>(ALLOCATION_TAG, credentials),
+                                       GetServiceName(), clientConfiguration.region}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockRuntimeAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
+
+          }) {}
 
 BedrockRuntimeClient::BedrockRuntimeClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
-                                           const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<Aws::Auth::DefaultAuthSignerProvider>(ALLOCATION_TAG,
-                                                                  credentialsProvider,
-                                                                  SERVICE_NAME,
-                                                                  Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                                           const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock Runtime", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockRuntimeErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockRuntimeEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {{smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+            smithy::SigV4AuthScheme{Aws::MakeShared<smithy::AwsCredentialsProviderIdentityResolver>(ALLOCATION_TAG, credentialsProvider),
+                                    GetServiceName(), clientConfiguration.region}},
+           {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+            smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockRuntimeAwsBearerTokenIdentityResolver>(
+                                              "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                          GetServiceName(), clientConfiguration.region}}}) {}
+/* End of legacy constructors due deprecation */
 
-    /* End of legacy constructors due deprecation */
-BedrockRuntimeClient::~BedrockRuntimeClient()
-{
-  ShutdownSdkClient(this, -1);
-}
+BedrockRuntimeClient::~BedrockRuntimeClient() { ShutdownSdkClient(this, -1); }
 
-std::shared_ptr<BedrockRuntimeEndpointProviderBase>& BedrockRuntimeClient::accessEndpointProvider()
-{
-  return m_endpointProvider;
-}
+std::shared_ptr<BedrockRuntimeEndpointProviderBase>& BedrockRuntimeClient::accessEndpointProvider() { return m_endpointProvider; }
 
-void BedrockRuntimeClient::init(const BedrockRuntime::BedrockRuntimeClientConfiguration& config)
-{
-  AWSClient::SetServiceClientName("Bedrock Runtime");
-  if (!m_clientConfiguration.executor) {
-    if (!m_clientConfiguration.configFactories.executorCreateFn()) {
-      AWS_LOGSTREAM_FATAL(ALLOCATION_TAG, "Failed to initialize client: config is missing Executor or executorCreateFn");
-      m_isInitialized = false;
-      return;
-    }
-    m_clientConfiguration.executor = m_clientConfiguration.configFactories.executorCreateFn();
-  }
+void BedrockRuntimeClient::OverrideEndpoint(const Aws::String& endpoint) {
   AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
-  m_endpointProvider->InitBuiltInParameters(config);
-}
-
-void BedrockRuntimeClient::OverrideEndpoint(const Aws::String& endpoint)
-{
-  AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
+  m_clientConfiguration.endpointOverride = endpoint;
   m_endpointProvider->OverrideEndpoint(endpoint);
 }
+BedrockRuntimeClient::InvokeOperationOutcome BedrockRuntimeClient::InvokeServiceOperation(
+    const AmazonWebServiceRequest& request, const std::function<void(Aws::Endpoint::AWSEndpoint&)>& resolveUri,
+    Aws::Http::HttpMethod httpMethod) const {
+  auto operationName = request.GetServiceRequestName();
+  auto serviceName = GetServiceClientName();
 
-ApplyGuardrailOutcome BedrockRuntimeClient::ApplyGuardrail(const ApplyGuardrailRequest& request) const
-{
-  AWS_OPERATION_GUARD(ApplyGuardrail);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ApplyGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.GuardrailIdentifierHasBeenSet())
-  {
+  AWS_OPERATION_GUARD_DYNAMIC(operationName);
+
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(m_clientConfiguration.telemetryProvider, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto tracer = m_clientConfiguration.telemetryProvider->getTracer(serviceName, {});
+  auto meter = m_clientConfiguration.telemetryProvider->getMeter(serviceName, {});
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(meter, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto span = tracer->CreateSpan(Aws::String(serviceName) + "." + operationName,
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
+
+  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+      [&]() -> InvokeOperationOutcome {
+        auto result = MakeRequestDeserialize(&request, operationName, httpMethod,
+                                             [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void { resolveUri(resolvedEndpoint); });
+        return result.IsSuccess() ? InvokeOperationOutcome(result.GetResultWithOwnership())
+                                  : InvokeOperationOutcome(std::move(result.GetError()));
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
+}
+ApplyGuardrailOutcome BedrockRuntimeClient::ApplyGuardrail(const ApplyGuardrailRequest& request) const {
+  if (!request.GuardrailIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ApplyGuardrail", "Required field: GuardrailIdentifier, is not set");
-    return ApplyGuardrailOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailIdentifier]", false));
+    return ApplyGuardrailOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [GuardrailIdentifier]", false));
   }
-  if (!request.GuardrailVersionHasBeenSet())
-  {
+  if (!request.GuardrailVersionHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ApplyGuardrail", "Required field: GuardrailVersion, is not set");
-    return ApplyGuardrailOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailVersion]", false));
+    return ApplyGuardrailOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [GuardrailVersion]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ApplyGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ApplyGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ApplyGuardrail",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ApplyGuardrailOutcome>(
-    [&]()-> ApplyGuardrailOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ApplyGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrail/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailIdentifier());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/version/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailVersion());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/apply");
-      return ApplyGuardrailOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-ConverseOutcome BedrockRuntimeClient::Converse(const ConverseRequest& request) const
-{
-  AWS_OPERATION_GUARD(Converse);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, Converse, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/guardrail/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailIdentifier());
+        resolvedEndpoint.AddPathSegments("/version/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailVersion());
+        resolvedEndpoint.AddPathSegments("/apply");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ApplyGuardrailOutcome(result.GetResultWithOwnership()) : ApplyGuardrailOutcome(std::move(result.GetError()));
+}
+ConverseOutcome BedrockRuntimeClient::Converse(const ConverseRequest& request) const {
+  if (!request.ModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("Converse", "Required field: ModelId, is not set");
-    return ConverseOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
+    return ConverseOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                       "Missing required field [ModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, Converse, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, Converse, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".Converse",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ConverseOutcome>(
-    [&]()-> ConverseOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, Converse, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelId());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/converse");
-      return ConverseOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-ConverseStreamOutcome BedrockRuntimeClient::ConverseStream(ConverseStreamRequest& request) const
-{
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model/");
+        resolvedEndpoint.AddPathSegment(request.GetModelId());
+        resolvedEndpoint.AddPathSegments("/converse");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ConverseOutcome(result.GetResultWithOwnership()) : ConverseOutcome(std::move(result.GetError()));
+}
+ConverseStreamOutcome BedrockRuntimeClient::ConverseStream(ConverseStreamRequest& request) const {
   AWS_OPERATION_GUARD(ConverseStream);
   AWS_OPERATION_CHECK_PTR(m_endpointProvider, ConverseStream, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdHasBeenSet())
-  {
+  if (!request.ModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("ConverseStream", "Required field: ModelId, is not set");
-    return ConverseStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
+    return ConverseStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [ModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ConverseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
+  AWS_OPERATION_CHECK_PTR(m_clientConfiguration.telemetryProvider, ConverseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
+  auto tracer = m_clientConfiguration.telemetryProvider->getTracer(this->GetServiceClientName(), {});
+  auto meter = m_clientConfiguration.telemetryProvider->getMeter(this->GetServiceClientName(), {});
   AWS_OPERATION_CHECK_PTR(meter, ConverseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
   auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ConverseStream",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
   return TracingUtils::MakeCallWithTiming<ConverseStreamOutcome>(
-    [&]()-> ConverseStreamOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ConverseStream, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelId());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/converse-stream");
-      request.SetResponseStreamFactory(
-          [&] { request.GetEventStreamDecoder().Reset(); return Aws::New<Aws::Utils::Event::EventDecoderStream>(ALLOCATION_TAG, request.GetEventStreamDecoder()); }
-      );
-      return ConverseStreamOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+      [&]() -> ConverseStreamOutcome {
+        request.SetResponseStreamFactory([&] {
+          request.GetEventStreamDecoder().Reset();
+          return Aws::New<Aws::Utils::Event::EventDecoderStream>(ALLOCATION_TAG, request.GetEventStreamDecoder());
+        });
+        if (!request.GetHeadersReceivedEventHandler()) {
+          request.SetHeadersReceivedEventHandler([&request](const Http::HttpRequest*, Http::HttpResponse* response) {
+            AWS_CHECK_PTR("ConverseStream", response);
+            if (const auto initialResponseHandler = request.GetEventStreamHandler().GetInitialResponseCallbackEx()) {
+              initialResponseHandler({response->GetHeaders()}, Utils::Event::InitialResponseType::ON_RESPONSE);
+            }
+          });
+        }
+        auto result = MakeRequestDeserialize(&request, request.GetServiceRequestName(), Aws::Http::HttpMethod::HTTP_POST,
+                                             [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void {
+                                               resolvedEndpoint.AddPathSegments("/model/");
+                                               resolvedEndpoint.AddPathSegment(request.GetModelId());
+                                               resolvedEndpoint.AddPathSegments("/converse-stream");
+                                             });
+        return result.IsSuccess() ? ConverseStreamOutcome(result.GetResultWithOwnership())
+                                  : ConverseStreamOutcome(std::move(result.GetError()));
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+       {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
+CountTokensOutcome BedrockRuntimeClient::CountTokens(const CountTokensRequest& request) const {
+  if (!request.ModelIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CountTokens", "Required field: ModelId, is not set");
+    return CountTokensOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [ModelId]", false));
+  }
 
-InvokeModelOutcome BedrockRuntimeClient::InvokeModel(const InvokeModelRequest& request) const
-{
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model/");
+        resolvedEndpoint.AddPathSegment(request.GetModelId());
+        resolvedEndpoint.AddPathSegments("/count-tokens");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CountTokensOutcome(result.GetResultWithOwnership()) : CountTokensOutcome(std::move(result.GetError()));
+}
+GetAsyncInvokeOutcome BedrockRuntimeClient::GetAsyncInvoke(const GetAsyncInvokeRequest& request) const {
+  if (!request.InvocationArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAsyncInvoke", "Required field: InvocationArn, is not set");
+    return GetAsyncInvokeOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [InvocationArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/async-invoke/");
+        resolvedEndpoint.AddPathSegment(request.GetInvocationArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAsyncInvokeOutcome(result.GetResultWithOwnership()) : GetAsyncInvokeOutcome(std::move(result.GetError()));
+}
+InvokeGuardrailChecksOutcome BedrockRuntimeClient::InvokeGuardrailChecks(const InvokeGuardrailChecksRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/guardrail-checks/invoke"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? InvokeGuardrailChecksOutcome(result.GetResultWithOwnership())
+                            : InvokeGuardrailChecksOutcome(std::move(result.GetError()));
+}
+InvokeModelOutcome BedrockRuntimeClient::InvokeModel(const InvokeModelRequest& request) const {
   AWS_OPERATION_GUARD(InvokeModel);
   AWS_OPERATION_CHECK_PTR(m_endpointProvider, InvokeModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdHasBeenSet())
-  {
+  if (!request.ModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("InvokeModel", "Required field: ModelId, is not set");
-    return InvokeModelOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
+    return InvokeModelOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [ModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, InvokeModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
+  AWS_OPERATION_CHECK_PTR(m_clientConfiguration.telemetryProvider, InvokeModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
+  auto tracer = m_clientConfiguration.telemetryProvider->getTracer(this->GetServiceClientName(), {});
+  auto meter = m_clientConfiguration.telemetryProvider->getMeter(this->GetServiceClientName(), {});
   AWS_OPERATION_CHECK_PTR(meter, InvokeModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
   auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".InvokeModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
   return TracingUtils::MakeCallWithTiming<InvokeModelOutcome>(
-    [&]()-> InvokeModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, InvokeModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelId());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/invoke");
-      return InvokeModelOutcome(MakeRequestWithUnparsedResponse(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+      [&]() -> InvokeModelOutcome {
+        auto result = MakeRequestWithUnparsedResponse(&request, request.GetServiceRequestName(), Aws::Http::HttpMethod::HTTP_POST,
+                                                      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void {
+                                                        resolvedEndpoint.AddPathSegments("/model/");
+                                                        resolvedEndpoint.AddPathSegment(request.GetModelId());
+                                                        resolvedEndpoint.AddPathSegments("/invoke");
+                                                      });
+        return result.IsSuccess() ? InvokeModelOutcome(result.GetResultWithOwnership()) : InvokeModelOutcome(std::move(result.GetError()));
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+       {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
+void BedrockRuntimeClient::InvokeModelWithBidirectionalStreamAsync(
+    Model::InvokeModelWithBidirectionalStreamRequest& request,
+    const InvokeModelWithBidirectionalStreamStreamReadyHandler& streamReadyHandler,
+    const InvokeModelWithBidirectionalStreamResponseReceivedHandler& handler,
+    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& handlerContext) const {
+  AWS_ASYNC_OPERATION_GUARD(InvokeModelWithBidirectionalStream);
+  if (!m_endpointProvider) {
+    handler(this, request,
+            InvokeModelWithBidirectionalStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(
+                BedrockRuntimeErrors::INTERNAL_FAILURE, "INTERNAL_FAILURE", "Endpoint provider is not initialized", false)),
+            handlerContext);
+    return;
+  }
+  if (!request.ModelIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("InvokeModelWithBidirectionalStream", "Required field: ModelId, is not set");
+    handler(this, request,
+            InvokeModelWithBidirectionalStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(
+                BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false)),
+            handlerContext);
+    return;
+  }
+  auto endpointCallback = [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void {
+    resolvedEndpoint.AddPathSegments("/model/");
+    resolvedEndpoint.AddPathSegment(request.GetModelId());
+    resolvedEndpoint.AddPathSegments("/invoke-with-bidirectional-stream");
+  };
 
-InvokeModelWithResponseStreamOutcome BedrockRuntimeClient::InvokeModelWithResponseStream(InvokeModelWithResponseStreamRequest& request) const
-{
+#if AWS_SDK_USE_CRT_HTTP
+  // Push-based WriteData path (CRT HTTP client only)
+  auto writeDataStreamBuf =
+      Aws::MakeShared<Aws::Utils::Stream::HttpWriteDataStreamBuf>(ALLOCATION_TAG, m_httpClient, 8 * 1024, m_clientConfig->requestTimeoutMs);
+  auto eventEncoderStream = Aws::MakeShared<Model::InvokeModelWithBidirectionalStreamInput>(ALLOCATION_TAG, writeDataStreamBuf);
+  request.SetBody(eventEncoderStream);
+
+  auto requestCopy = Aws::MakeShared<InvokeModelWithBidirectionalStreamRequest>(ALLOCATION_TAG, request);
+
+  auto authCallback = [&](std::shared_ptr<smithy::client::AwsSmithyClientAsyncRequestContext> ctx) -> void {
+    eventEncoderStream->SetSigningCallback([this, ctx, eventEncoderStream](Aws::Utils::Event::Message& message, Aws::String& seed) -> bool {
+      auto outcome = SignEventMessage(message, seed, ctx);
+      return outcome.IsSuccess();
+    });
+  };
+
+  auto asyncTask = smithy::client::CreateSmithyBidirectionalWriteDataTask<InvokeModelWithBidirectionalStreamOutcome>(
+      this, requestCopy, handler, handlerContext, eventEncoderStream, writeDataStreamBuf, std::move(endpointCallback),
+      std::move(authCallback));
+  auto sem = asyncTask.GetSemaphore();
+  m_clientConfiguration.executor->Submit(std::move(asyncTask));
+  sem->WaitOne();
+  streamReadyHandler(*eventEncoderStream);
+#else
+  // Pull-based path
+  auto eventEncoderStream = Aws::MakeShared<Model::InvokeModelWithBidirectionalStreamInput>(ALLOCATION_TAG);
+  auto authCallback = [&](std::shared_ptr<smithy::client::AwsSmithyClientAsyncRequestContext> ctx) -> void {
+    eventEncoderStream->SetSigningCallback([this, ctx, eventEncoderStream](Aws::Utils::Event::Message& message, Aws::String& seed) -> bool {
+      auto outcome = SignEventMessage(message, seed, ctx);
+      return outcome.IsSuccess();
+    });
+  };
+  auto requestCopy = Aws::MakeShared<InvokeModelWithBidirectionalStreamRequest>("InvokeModelWithBidirectionalStream", request);
+  requestCopy->SetBody(eventEncoderStream);
+  request.SetBody(eventEncoderStream);
+
+  auto asyncTask = smithy::client::CreateSmithyBidirectionalEventStreamTask<InvokeModelWithBidirectionalStreamOutcome>(
+      this, requestCopy, handler, handlerContext, eventEncoderStream, endpointCallback, authCallback);
+  auto sem = asyncTask.GetSemaphore();
+  m_clientConfiguration.executor->Submit(std::move(asyncTask));
+  sem->WaitOne();
+  streamReadyHandler(*eventEncoderStream);
+#endif
+}
+InvokeModelWithResponseStreamOutcome BedrockRuntimeClient::InvokeModelWithResponseStream(
+    InvokeModelWithResponseStreamRequest& request) const {
   AWS_OPERATION_GUARD(InvokeModelWithResponseStream);
   AWS_OPERATION_CHECK_PTR(m_endpointProvider, InvokeModelWithResponseStream, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdHasBeenSet())
-  {
+  if (!request.ModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("InvokeModelWithResponseStream", "Required field: ModelId, is not set");
-    return InvokeModelWithResponseStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
+    return InvokeModelWithResponseStreamOutcome(Aws::Client::AWSError<BedrockRuntimeErrors>(
+        BedrockRuntimeErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, InvokeModelWithResponseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
+  AWS_OPERATION_CHECK_PTR(m_clientConfiguration.telemetryProvider, InvokeModelWithResponseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
+  auto tracer = m_clientConfiguration.telemetryProvider->getTracer(this->GetServiceClientName(), {});
+  auto meter = m_clientConfiguration.telemetryProvider->getMeter(this->GetServiceClientName(), {});
   AWS_OPERATION_CHECK_PTR(meter, InvokeModelWithResponseStream, CoreErrors, CoreErrors::NOT_INITIALIZED);
   auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".InvokeModelWithResponseStream",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
   return TracingUtils::MakeCallWithTiming<InvokeModelWithResponseStreamOutcome>(
-    [&]()-> InvokeModelWithResponseStreamOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, InvokeModelWithResponseStream, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelId());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/invoke-with-response-stream");
-      request.SetResponseStreamFactory(
-          [&] { request.GetEventStreamDecoder().Reset(); return Aws::New<Aws::Utils::Event::EventDecoderStream>(ALLOCATION_TAG, request.GetEventStreamDecoder()); }
-      );
-      return InvokeModelWithResponseStreamOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+      [&]() -> InvokeModelWithResponseStreamOutcome {
+        request.SetResponseStreamFactory([&] {
+          request.GetEventStreamDecoder().Reset();
+          return Aws::New<Aws::Utils::Event::EventDecoderStream>(ALLOCATION_TAG, request.GetEventStreamDecoder());
+        });
+        if (!request.GetHeadersReceivedEventHandler()) {
+          request.SetHeadersReceivedEventHandler([&request](const Http::HttpRequest*, Http::HttpResponse* response) {
+            AWS_CHECK_PTR("InvokeModelWithResponseStream", response);
+            if (const auto initialResponseHandler = request.GetEventStreamHandler().GetInitialResponseCallbackEx()) {
+              initialResponseHandler({response->GetHeaders()}, Utils::Event::InitialResponseType::ON_RESPONSE);
+            }
+          });
+        }
+        auto result = MakeRequestDeserialize(&request, request.GetServiceRequestName(), Aws::Http::HttpMethod::HTTP_POST,
+                                             [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void {
+                                               resolvedEndpoint.AddPathSegments("/model/");
+                                               resolvedEndpoint.AddPathSegment(request.GetModelId());
+                                               resolvedEndpoint.AddPathSegments("/invoke-with-response-stream");
+                                             });
+        return result.IsSuccess() ? InvokeModelWithResponseStreamOutcome(result.GetResultWithOwnership())
+                                  : InvokeModelWithResponseStreamOutcome(std::move(result.GetError()));
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()},
+       {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
 }
-
+ListAsyncInvokesOutcome BedrockRuntimeClient::ListAsyncInvokes(const ListAsyncInvokesRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/async-invoke"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAsyncInvokesOutcome(result.GetResultWithOwnership())
+                            : ListAsyncInvokesOutcome(std::move(result.GetError()));
+}
+StartAsyncInvokeOutcome BedrockRuntimeClient::StartAsyncInvoke(const StartAsyncInvokeRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/async-invoke"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartAsyncInvokeOutcome(result.GetResultWithOwnership())
+                            : StartAsyncInvokeOutcome(std::move(result.GetError()));
+}

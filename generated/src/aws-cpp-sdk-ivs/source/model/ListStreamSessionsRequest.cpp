@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ivs/model/ListStreamSessionsRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/ivs/model/ListStreamSessionsRequest.h>
 
 #include <utility>
 
@@ -12,39 +12,20 @@ using namespace Aws::IVS::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListStreamSessionsRequest::ListStreamSessionsRequest() : 
-    m_channelArnHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListStreamSessionsRequest::SerializePayload() const
-{
+Aws::String ListStreamSessionsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_channelArnHasBeenSet)
-  {
-   payload.WithString("channelArn", m_channelArn);
-
+  if (m_channelArnHasBeenSet) {
+    payload.WithString("channelArn", m_channelArn);
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("maxResults", m_maxResults);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("maxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

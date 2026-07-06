@@ -66,7 +66,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p> The <code>CreateType</code> operation creates a new user-defined type in the specified keyspace. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html\">User-defined types (UDTs)</a> in the <i>Amazon Keyspaces Developer Guide</i>. </p>"
+      "documentation":"<p> The <code>CreateType</code> operation creates a new user-defined type in the specified keyspace. </p> <p>To configure the required permissions, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create\">Permissions to create a UDT</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html\">User-defined types (UDTs)</a> in the <i>Amazon Keyspaces Developer Guide</i>. </p>"
     },
     "DeleteKeyspace":{
       "name":"DeleteKeyspace",
@@ -120,7 +120,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p> The <code>DeleteType</code> operation deletes a user-defined type (UDT). You can only delete a type that is not used in a table or another UDT. </p>"
+      "documentation":"<p> The <code>DeleteType</code> operation deletes a user-defined type (UDT). You can only delete a type that is not used in a table or another UDT. </p> <p>To configure the required permissions, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop\">Permissions to delete a UDT</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
     },
     "GetKeyspace":{
       "name":"GetKeyspace",
@@ -137,7 +137,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p>Returns the name and the Amazon Resource Name (ARN) of the specified table.</p>"
+      "documentation":"<p>Returns the name of the specified keyspace, the Amazon Resource Name (ARN), the replication strategy, the Amazon Web Services Regions of a multi-Region keyspace, and the status of newly added Regions after an <code>UpdateKeyspace</code> operation.</p>"
     },
     "GetTable":{
       "name":"GetTable",
@@ -188,7 +188,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p> The <code>GetType</code> operation returns information about the type, for example the field definitions, the timestamp when the type was last modified, the level of nesting, the status, and details about if the type is used in other types and tables. </p> <p>To read keyspace metadata using <code>GetType</code>, the IAM principal needs <code>Select</code> action permissions for the system keyspace.</p>"
+      "documentation":"<p> The <code>GetType</code> operation returns information about the type, for example the field definitions, the timestamp when the type was last modified, the level of nesting, the status, and details about if the type is used in other types and tables. </p> <p>To read keyspace metadata using <code>GetType</code>, the IAM principal needs <code>Select</code> action permissions for the system keyspace. To configure the required permissions, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view\">Permissions to view a UDT</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
     },
     "ListKeyspaces":{
       "name":"ListKeyspaces",
@@ -256,7 +256,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ],
-      "documentation":"<p> The <code>ListTypes</code> operation returns a list of types for a specified keyspace. </p> <p>To read keyspace metadata using <code>ListTypes</code>, the IAM principal needs <code>Select</code> action permissions for the system keyspace.</p>"
+      "documentation":"<p> The <code>ListTypes</code> operation returns a list of types for a specified keyspace. </p> <p>To read keyspace metadata using <code>ListTypes</code>, the IAM principal needs <code>Select</code> action permissions for the system keyspace. To configure the required permissions, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view\">Permissions to view a UDT</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
     },
     "RestoreTable":{
       "name":"RestoreTable",
@@ -312,6 +312,24 @@
       ],
       "documentation":"<p>Removes the association of tags from a Amazon Keyspaces resource.</p>"
     },
+    "UpdateKeyspace":{
+      "name":"UpdateKeyspace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateKeyspaceRequest"},
+      "output":{"shape":"UpdateKeyspaceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "documentation":"<p> Adds a new Amazon Web Services Region to the keyspace. You can add a new Region to a keyspace that is either a single or a multi-Region keyspace. Amazon Keyspaces is going to replicate all tables in the keyspace to the new Region. To successfully replicate all tables to the new Region, they must use client-side timestamps for conflict resolution. To enable client-side timestamps, specify <code>clientSideTimestamps.status = enabled</code> when invoking the API. For more information about client-side timestamps, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/client-side-timestamps.html\">Client-side timestamps in Amazon Keyspaces</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p> <p>To add a Region to a keyspace using the <code>UpdateKeyspace</code> API, the IAM principal needs permissions for the following IAM actions:</p> <ul> <li> <p> <code>cassandra:Alter</code> </p> </li> <li> <p> <code>cassandra:AlterMultiRegionResource</code> </p> </li> <li> <p> <code>cassandra:Create</code> </p> </li> <li> <p> <code>cassandra:CreateMultiRegionResource</code> </p> </li> <li> <p> <code>cassandra:Select</code> </p> </li> <li> <p> <code>cassandra:SelectMultiRegionResource</code> </p> </li> <li> <p> <code>cassandra:Modify</code> </p> </li> <li> <p> <code>cassandra:ModifyMultiRegionResource</code> </p> </li> </ul> <p>If the keyspace contains a table that is configured in provisioned mode with auto scaling enabled, the following additional IAM actions need to be allowed.</p> <ul> <li> <p> <code>application-autoscaling:RegisterScalableTarget</code> </p> </li> <li> <p> <code>application-autoscaling:DeregisterScalableTarget</code> </p> </li> <li> <p> <code>application-autoscaling:DescribeScalableTargets</code> </p> </li> <li> <p> <code>application-autoscaling:PutScalingPolicy</code> </p> </li> <li> <p> <code>application-autoscaling:DescribeScalingPolicies</code> </p> </li> </ul> <p>To use the <code>UpdateKeyspace</code> API, the IAM principal also needs permissions to create a service-linked role with the following elements:</p> <ul> <li> <p> <code>iam:CreateServiceLinkedRole</code> - The <b>action</b> the principal can perform.</p> </li> <li> <p> <code>arn:aws:iam::*:role/aws-service-role/replication.cassandra.amazonaws.com/AWSServiceRoleForKeyspacesReplication</code> - The <b>resource</b> that the action can be performed on. </p> </li> <li> <p> <code>iam:AWSServiceName: replication.cassandra.amazonaws.com</code> - The only Amazon Web Services service that this role can be attached to is Amazon Keyspaces.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/howitworks_replication_permissions_addReplica.html\">Configure the IAM permissions required to add an Amazon Web Services Region to a keyspace</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
+    },
     "UpdateTable":{
       "name":"UpdateTable",
       "http":{
@@ -343,10 +361,15 @@
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>You don't have the required permissions to perform this operation. Verify your IAM permissions and try again.</p>"
         }
       },
       "documentation":"<p>You don't have sufficient access permissions to perform this action. </p>",
+      "error":{
+        "code":"AccessDeniedException",
+        "httpStatusCode":403,
+        "senderFault":true
+      },
       "exception":true
     },
     "AutoScalingPolicy":{
@@ -443,6 +466,60 @@
       "box":true,
       "min":1
     },
+    "CdcPropagateTags":{
+      "type":"string",
+      "enum":[
+        "TABLE",
+        "NONE"
+      ]
+    },
+    "CdcSpecification":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{
+          "shape":"CdcStatus",
+          "documentation":"<p>The status of the CDC stream. You can enable or disable a stream for a table.</p>"
+        },
+        "viewType":{
+          "shape":"ViewType",
+          "documentation":"<p>The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. After you create the stream, you can't make changes to this selection. </p> <p>The options are:</p> <ul> <li> <p> <code>NEW_AND_OLD_IMAGES</code> - both versions of the row, before and after the change. This is the default.</p> </li> <li> <p> <code>NEW_IMAGE</code> - the version of the row after the change.</p> </li> <li> <p> <code>OLD_IMAGE</code> - the version of the row before the change.</p> </li> <li> <p> <code>KEYS_ONLY</code> - the partition and clustering keys of the row that was changed.</p> </li> </ul>"
+        },
+        "tags":{
+          "shape":"TagList",
+          "documentation":"<p>The tags (key-value pairs) that you want to apply to the stream.</p>"
+        },
+        "propagateTags":{
+          "shape":"CdcPropagateTags",
+          "documentation":"<p>Specifies that the stream inherits the tags from the table.</p>"
+        }
+      },
+      "documentation":"<p>The settings for the CDC stream of a table. For more information about CDC streams, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html\">Working with change data capture (CDC) streams in Amazon Keyspaces</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
+    },
+    "CdcSpecificationSummary":{
+      "type":"structure",
+      "required":["status"],
+      "members":{
+        "status":{
+          "shape":"CdcStatus",
+          "documentation":"<p>The status of the CDC stream. Specifies if the table has a CDC stream.</p>"
+        },
+        "viewType":{
+          "shape":"ViewType",
+          "documentation":"<p>The view type specifies the changes Amazon Keyspaces records for each changed row in the stream. This setting can't be changed, after the stream has been created. </p> <p>The options are:</p> <ul> <li> <p> <code>NEW_AND_OLD_IMAGES</code> - both versions of the row, before and after the change. This is the default.</p> </li> <li> <p> <code>NEW_IMAGE</code> - the version of the row after the change.</p> </li> <li> <p> <code>OLD_IMAGE</code> - the version of the row before the change.</p> </li> <li> <p> <code>KEYS_ONLY</code> - the partition and clustering keys of the row that was changed.</p> </li> </ul>"
+        }
+      },
+      "documentation":"<p>The settings of the CDC stream of the table. For more information about CDC streams, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/cdc.html\">Working with change data capture (CDC) streams in Amazon Keyspaces</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
+    },
+    "CdcStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "ENABLING",
+        "DISABLED",
+        "DISABLING"
+      ]
+    },
     "ClientSideTimestamps":{
       "type":"structure",
       "required":["status"],
@@ -519,10 +596,15 @@
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>The requested operation conflicts with the current state of the resource or another concurrent operation.</p>"
         }
       },
       "documentation":"<p>Amazon Keyspaces couldn't complete the requested action. This error may occur if you try to perform an action and the same or a different action is already in progress, or if you try to create a resource that already exists. </p>",
+      "error":{
+        "code":"ConflictException",
+        "httpStatusCode":409,
+        "senderFault":true
+      },
       "exception":true
     },
     "CreateKeyspaceRequest":{
@@ -539,7 +621,7 @@
         },
         "replicationSpecification":{
           "shape":"ReplicationSpecification",
-          "documentation":"<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> <li> <p> <code>regionList</code> - if the <code>replicationStrategy</code> is <code>MULTI_REGION</code>, the <code>regionList</code> requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in. The maximum number of supported replication Regions including the current Region is six.</p> </li> </ul>"
+          "documentation":"<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> <li> <p> <code>regionList</code> - if the <code>replicationStrategy</code> is <code>MULTI_REGION</code>, the <code>regionList</code> requires the current Region and at least one additional Amazon Web Services Region where the keyspace is going to be replicated in.</p> </li> </ul>"
         }
       }
     },
@@ -612,6 +694,14 @@
         "replicaSpecifications":{
           "shape":"ReplicaSpecificationList",
           "documentation":"<p>The optional Amazon Web Services Region specific settings of a multi-Region table. These settings overwrite the general settings of the table for the specified Region. </p> <p>For a multi-Region table in provisioned capacity mode, you can configure the table's read capacity differently for each Region's replica. The write capacity, however, remains synchronized between all replicas to ensure that there's enough capacity to replicate writes across all Regions. To define the read capacity for a table replica in a specific Region, you can do so by configuring the following parameters.</p> <ul> <li> <p> <code>region</code>: The Region where these settings are applied. (Required)</p> </li> <li> <p> <code>readCapacityUnits</code>: The provisioned read capacity units. (Optional)</p> </li> <li> <p> <code>readCapacityAutoScaling</code>: The read capacity auto scaling settings for the table. (Optional) </p> </li> </ul>"
+        },
+        "cdcSpecification":{
+          "shape":"CdcSpecification",
+          "documentation":"<p>The CDC stream settings of the table.</p>"
+        },
+        "warmThroughputSpecification":{
+          "shape":"WarmThroughputSpecification",
+          "documentation":"<p>Specifies the warm throughput settings for the table. Pre-warming a table helps you avoid capacity exceeded exceptions by pre-provisioning read and write capacity units to reduce cold start latency when your table receives traffic.</p> <p>For more information about pre-warming in Amazon Keyspaces, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/warm-throughput.html\">Pre-warm a table in Amazon Keyspaces</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
         }
       }
     },
@@ -682,8 +772,7 @@
     },
     "DeleteKeyspaceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTableRequest":{
       "type":"structure",
@@ -704,8 +793,7 @@
     },
     "DeleteTableResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "DeleteTypeRequest":{
       "type":"structure",
@@ -827,6 +915,10 @@
         "replicationRegions":{
           "shape":"RegionList",
           "documentation":"<p> If the <code>replicationStrategy</code> of the keyspace is <code>MULTI_REGION</code>, a list of replication Regions is returned. </p>"
+        },
+        "replicationGroupStatuses":{
+          "shape":"ReplicationGroupStatusList",
+          "documentation":"<p> A list of all Regions the keyspace is replicated in after the update keyspace operation and their status. </p>"
         }
       }
     },
@@ -957,6 +1049,18 @@
         "replicaSpecifications":{
           "shape":"ReplicaSpecificationSummaryList",
           "documentation":"<p>Returns the Amazon Web Services Region specific settings of all Regions a multi-Region table is replicated in.</p>"
+        },
+        "latestStreamArn":{
+          "shape":"StreamArn",
+          "documentation":"<p>The Amazon Resource Name (ARN) of the stream.</p>"
+        },
+        "cdcSpecification":{
+          "shape":"CdcSpecificationSummary",
+          "documentation":"<p>The CDC stream settings of the table.</p>"
+        },
+        "warmThroughputSpecification":{
+          "shape":"WarmThroughputSpecificationSummary",
+          "documentation":"<p>The warm throughput settings for the table, including the current status and configured read and write capacity units.</p>"
         }
       }
     },
@@ -1029,10 +1133,14 @@
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>An internal service error occurred. Retry your request. If the problem persists, contact Amazon Web Services Support.</p>"
         }
       },
       "documentation":"<p>Amazon Keyspaces was unable to fully process this request because of an internal server error.</p>",
+      "error":{
+        "code":"InternalServerException",
+        "httpStatusCode":500
+      },
       "exception":true,
       "fault":true
     },
@@ -1041,6 +1149,15 @@
       "max":48,
       "min":1,
       "pattern":"[a-zA-Z0-9][a-zA-Z0-9_]{0,47}"
+    },
+    "KeyspaceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "CREATING",
+        "UPDATING",
+        "DELETING"
+      ]
     },
     "KeyspaceSummary":{
       "type":"structure",
@@ -1194,6 +1311,10 @@
         }
       }
     },
+    "Long":{
+      "type":"long",
+      "box":true
+    },
     "MaxResults":{
       "type":"integer",
       "box":true,
@@ -1257,7 +1378,6 @@
     "RegionList":{
       "type":"list",
       "member":{"shape":"region"},
-      "max":6,
       "min":2
     },
     "ReplicaAutoScalingSpecification":{
@@ -1314,7 +1434,11 @@
           "shape":"TableStatus",
           "documentation":"<p>The status of the multi-Region table in the specified Amazon Web Services Region.</p>"
         },
-        "capacitySpecification":{"shape":"CapacitySpecificationSummary"}
+        "capacitySpecification":{"shape":"CapacitySpecificationSummary"},
+        "warmThroughputSpecification":{
+          "shape":"WarmThroughputSpecificationSummary",
+          "documentation":"<p>The warm throughput settings for this replica, including the current status and configured read and write capacity units.</p>"
+        }
       },
       "documentation":"<p>The Region-specific settings of a multi-Region table in the specified Amazon Web Services Region.</p> <p>If the multi-Region table is using provisioned capacity and has optional auto scaling policies configured, note that the Region specific summary returns both read and write capacity settings. But only Region specific read capacity settings can be configured for a multi-Region table. In a multi-Region table, your write capacity units will be synced across all Amazon Web Services Regions to ensure that there is enough capacity to replicate write events across Regions.</p>"
     },
@@ -1322,6 +1446,33 @@
       "type":"list",
       "member":{"shape":"ReplicaSpecificationSummary"},
       "min":0
+    },
+    "ReplicationGroupStatus":{
+      "type":"structure",
+      "required":[
+        "region",
+        "keyspaceStatus"
+      ],
+      "members":{
+        "region":{
+          "shape":"region",
+          "documentation":"<p> The name of the Region that was added to the keyspace. </p>"
+        },
+        "keyspaceStatus":{
+          "shape":"KeyspaceStatus",
+          "documentation":"<p> The status of the keyspace. </p>"
+        },
+        "tablesReplicationProgress":{
+          "shape":"TablesReplicationProgress",
+          "documentation":"<p> This shows the replication progress of tables in the keyspace. The value is expressed as a percentage of the newly replicated tables with status <code>Active</code> compared to the total number of tables in the keyspace. </p>"
+        }
+      },
+      "documentation":"<p> This shows the summary status of the keyspace after a new Amazon Web Services Region was added. </p>"
+    },
+    "ReplicationGroupStatusList":{
+      "type":"list",
+      "member":{"shape":"ReplicationGroupStatus"},
+      "min":2
     },
     "ReplicationSpecification":{
       "type":"structure",
@@ -1333,24 +1484,29 @@
         },
         "regionList":{
           "shape":"RegionList",
-          "documentation":"<p> The <code>regionList</code> can contain up to six Amazon Web Services Regions where the keyspace is replicated in. </p>"
+          "documentation":"<p> The <code>regionList</code> contains the Amazon Web Services Regions where the keyspace is replicated in. </p>"
         }
       },
-      "documentation":"<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>regionList</code> - up to six Amazon Web Services Regions where the keyspace is replicated in.</p> </li> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> </ul>"
+      "documentation":"<p> The replication specification of the keyspace includes:</p> <ul> <li> <p> <code>regionList</code> - the Amazon Web Services Regions where the keyspace is replicated in.</p> </li> <li> <p> <code>replicationStrategy</code> - the required value is <code>SINGLE_REGION</code> or <code>MULTI_REGION</code>.</p> </li> </ul>"
     },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>The specified resource was not found. Verify the resource identifier and ensure the resource exists and is in an ACTIVE state.</p>"
         },
         "resourceArn":{
           "shape":"ARN",
-          "documentation":"<p>The unique identifier in the format of Amazon Resource Name (ARN) for the resource could't be found.</p>"
+          "documentation":"<p>The unique identifier in the format of Amazon Resource Name (ARN) for the resource couldn't be found.</p>"
         }
       },
       "documentation":"<p>The operation tried to access a keyspace, table, or type that doesn't exist. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>",
+      "error":{
+        "code":"ResourceNotFoundException",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
       "exception":true
     },
     "RestoreTableRequest":{
@@ -1449,10 +1605,15 @@
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>The requested operation would exceed the service quota for this resource. Review the service quotas and adjust your request accordingly.</p>"
         }
       },
       "documentation":"<p>The operation exceeded the service quota for this resource. For more information on service quotas, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/quotas.html\">Quotas</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>",
+      "error":{
+        "code":"ServiceQuotaExceededException",
+        "httpStatusCode":402,
+        "senderFault":true
+      },
       "exception":true
     },
     "SortOrder":{
@@ -1476,6 +1637,12 @@
     "StaticColumnList":{
       "type":"list",
       "member":{"shape":"StaticColumn"}
+    },
+    "StreamArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z0-9-]*):cassandra:.+.*"
     },
     "String":{"type":"string"},
     "TableName":{
@@ -1527,6 +1694,12 @@
       "type":"list",
       "member":{"shape":"TableSummary"}
     },
+    "TablesReplicationProgress":{
+      "type":"string",
+      "max":7,
+      "min":2,
+      "pattern":"[0-9]{1,3}(?:[.][0-9]{1,2})?%"
+    },
     "Tag":{
       "type":"structure",
       "required":[
@@ -1575,8 +1748,7 @@
     },
     "TagResourceResponse":{
       "type":"structure",
-      "members":{
-      }
+      "members":{}
     },
     "TagValue":{
       "type":"string",
@@ -1666,7 +1838,31 @@
     },
     "UntagResourceResponse":{
       "type":"structure",
+      "members":{}
+    },
+    "UpdateKeyspaceRequest":{
+      "type":"structure",
+      "required":[
+        "keyspaceName",
+        "replicationSpecification"
+      ],
       "members":{
+        "keyspaceName":{
+          "shape":"KeyspaceName",
+          "documentation":"<p> The name of the keyspace. </p>"
+        },
+        "replicationSpecification":{"shape":"ReplicationSpecification"},
+        "clientSideTimestamps":{"shape":"ClientSideTimestamps"}
+      }
+    },
+    "UpdateKeyspaceResponse":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ARN",
+          "documentation":"<p> The unique identifier of the keyspace in the format of an Amazon Resource Name (ARN). </p>"
+        }
       }
     },
     "UpdateTableRequest":{
@@ -1719,6 +1915,14 @@
         "replicaSpecifications":{
           "shape":"ReplicaSpecificationList",
           "documentation":"<p>The Region specific settings of a multi-Regional table.</p>"
+        },
+        "cdcSpecification":{
+          "shape":"CdcSpecification",
+          "documentation":"<p>The CDC stream settings of the table.</p>"
+        },
+        "warmThroughputSpecification":{
+          "shape":"WarmThroughputSpecification",
+          "documentation":"<p>Modifies the warm throughput settings for the table. You can update the read and write capacity units to adjust the pre-provisioned throughput.</p>"
         }
       }
     },
@@ -1737,11 +1941,79 @@
       "members":{
         "message":{
           "shape":"String",
-          "documentation":"<p>Description of the error.</p>"
+          "documentation":"<p>The request parameters are invalid or malformed. Review the API documentation and correct the request format.</p>"
         }
       },
       "documentation":"<p>The operation failed due to an invalid or malformed request.</p>",
+      "error":{
+        "code":"ValidationException",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
       "exception":true
+    },
+    "ViewType":{
+      "type":"string",
+      "enum":[
+        "NEW_IMAGE",
+        "OLD_IMAGE",
+        "KEYS_ONLY",
+        "NEW_AND_OLD_IMAGES"
+      ]
+    },
+    "WarmThroughputSpecification":{
+      "type":"structure",
+      "members":{
+        "readUnitsPerSecond":{
+          "shape":"WarmThroughputSpecificationReadUnitsPerSecondLong",
+          "documentation":"<p>The number of read capacity units per second to pre-warm the table for read capacity throughput. The minimum value is 1.</p>"
+        },
+        "writeUnitsPerSecond":{
+          "shape":"WarmThroughputSpecificationWriteUnitsPerSecondLong",
+          "documentation":"<p>The number of write capacity units per second to pre-warm the table for write capacity throughput. The minimum value is 1.</p>"
+        }
+      },
+      "documentation":"<p>Specifies the warm throughput settings for a table. Pre-warming a table by specifying warm throughput pre-provisions read and write capacity units to help avoid capacity exceeded exceptions and reduce latency when your table starts receiving traffic.</p> <p>For more information about pre-warming in Amazon Keyspaces, see <a href=\"https://docs.aws.amazon.com/keyspaces/latest/devguide/warm-throughput.html\">Pre-warm a table in Amazon Keyspaces</a> in the <i>Amazon Keyspaces Developer Guide</i>.</p>"
+    },
+    "WarmThroughputSpecificationReadUnitsPerSecondLong":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "WarmThroughputSpecificationSummary":{
+      "type":"structure",
+      "required":[
+        "readUnitsPerSecond",
+        "writeUnitsPerSecond",
+        "status"
+      ],
+      "members":{
+        "readUnitsPerSecond":{
+          "shape":"Long",
+          "documentation":"<p>The number of read capacity units per second currently configured for warm throughput.</p>"
+        },
+        "writeUnitsPerSecond":{
+          "shape":"Long",
+          "documentation":"<p>The number of write capacity units per second currently configured for warm throughput.</p>"
+        },
+        "status":{
+          "shape":"WarmThroughputStatus",
+          "documentation":"<p>The current status of the warm throughput configuration. Valid values are <code>AVAILABLE</code> when the configuration is active, and <code>UPDATING</code> when changes are being applied.</p>"
+        }
+      },
+      "documentation":"<p>Contains the current warm throughput settings for a table, including the configured capacity units and the current status of the warm throughput configuration.</p>"
+    },
+    "WarmThroughputSpecificationWriteUnitsPerSecondLong":{
+      "type":"long",
+      "box":true,
+      "min":1
+    },
+    "WarmThroughputStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UPDATING"
+      ]
     },
     "kmsKeyARN":{
       "type":"string",

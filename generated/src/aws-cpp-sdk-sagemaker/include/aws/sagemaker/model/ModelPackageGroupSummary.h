@@ -4,124 +4,161 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/ManagedConfiguration.h>
 #include <aws/sagemaker/model/ModelPackageGroupStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Summary information about a model group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelPackageGroupSummary">AWS
+ * API Reference</a></p>
+ */
+class ModelPackageGroupSummary {
+ public:
+  AWS_SAGEMAKER_API ModelPackageGroupSummary() = default;
+  AWS_SAGEMAKER_API ModelPackageGroupSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API ModelPackageGroupSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Summary information about a model group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelPackageGroupSummary">AWS
-   * API Reference</a></p>
+   * <p>The name of the model group.</p>
    */
-  class ModelPackageGroupSummary
-  {
-  public:
-    AWS_SAGEMAKER_API ModelPackageGroupSummary();
-    AWS_SAGEMAKER_API ModelPackageGroupSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API ModelPackageGroupSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetModelPackageGroupName() const { return m_modelPackageGroupName; }
+  inline bool ModelPackageGroupNameHasBeenSet() const { return m_modelPackageGroupNameHasBeenSet; }
+  template <typename ModelPackageGroupNameT = Aws::String>
+  void SetModelPackageGroupName(ModelPackageGroupNameT&& value) {
+    m_modelPackageGroupNameHasBeenSet = true;
+    m_modelPackageGroupName = std::forward<ModelPackageGroupNameT>(value);
+  }
+  template <typename ModelPackageGroupNameT = Aws::String>
+  ModelPackageGroupSummary& WithModelPackageGroupName(ModelPackageGroupNameT&& value) {
+    SetModelPackageGroupName(std::forward<ModelPackageGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the model group.</p>
+   */
+  inline const Aws::String& GetModelPackageGroupArn() const { return m_modelPackageGroupArn; }
+  inline bool ModelPackageGroupArnHasBeenSet() const { return m_modelPackageGroupArnHasBeenSet; }
+  template <typename ModelPackageGroupArnT = Aws::String>
+  void SetModelPackageGroupArn(ModelPackageGroupArnT&& value) {
+    m_modelPackageGroupArnHasBeenSet = true;
+    m_modelPackageGroupArn = std::forward<ModelPackageGroupArnT>(value);
+  }
+  template <typename ModelPackageGroupArnT = Aws::String>
+  ModelPackageGroupSummary& WithModelPackageGroupArn(ModelPackageGroupArnT&& value) {
+    SetModelPackageGroupArn(std::forward<ModelPackageGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the model group.</p>
-     */
-    inline const Aws::String& GetModelPackageGroupName() const{ return m_modelPackageGroupName; }
-    inline bool ModelPackageGroupNameHasBeenSet() const { return m_modelPackageGroupNameHasBeenSet; }
-    inline void SetModelPackageGroupName(const Aws::String& value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName = value; }
-    inline void SetModelPackageGroupName(Aws::String&& value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName = std::move(value); }
-    inline void SetModelPackageGroupName(const char* value) { m_modelPackageGroupNameHasBeenSet = true; m_modelPackageGroupName.assign(value); }
-    inline ModelPackageGroupSummary& WithModelPackageGroupName(const Aws::String& value) { SetModelPackageGroupName(value); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupName(Aws::String&& value) { SetModelPackageGroupName(std::move(value)); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupName(const char* value) { SetModelPackageGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A description of the model group.</p>
+   */
+  inline const Aws::String& GetModelPackageGroupDescription() const { return m_modelPackageGroupDescription; }
+  inline bool ModelPackageGroupDescriptionHasBeenSet() const { return m_modelPackageGroupDescriptionHasBeenSet; }
+  template <typename ModelPackageGroupDescriptionT = Aws::String>
+  void SetModelPackageGroupDescription(ModelPackageGroupDescriptionT&& value) {
+    m_modelPackageGroupDescriptionHasBeenSet = true;
+    m_modelPackageGroupDescription = std::forward<ModelPackageGroupDescriptionT>(value);
+  }
+  template <typename ModelPackageGroupDescriptionT = Aws::String>
+  ModelPackageGroupSummary& WithModelPackageGroupDescription(ModelPackageGroupDescriptionT&& value) {
+    SetModelPackageGroupDescription(std::forward<ModelPackageGroupDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the model group.</p>
-     */
-    inline const Aws::String& GetModelPackageGroupArn() const{ return m_modelPackageGroupArn; }
-    inline bool ModelPackageGroupArnHasBeenSet() const { return m_modelPackageGroupArnHasBeenSet; }
-    inline void SetModelPackageGroupArn(const Aws::String& value) { m_modelPackageGroupArnHasBeenSet = true; m_modelPackageGroupArn = value; }
-    inline void SetModelPackageGroupArn(Aws::String&& value) { m_modelPackageGroupArnHasBeenSet = true; m_modelPackageGroupArn = std::move(value); }
-    inline void SetModelPackageGroupArn(const char* value) { m_modelPackageGroupArnHasBeenSet = true; m_modelPackageGroupArn.assign(value); }
-    inline ModelPackageGroupSummary& WithModelPackageGroupArn(const Aws::String& value) { SetModelPackageGroupArn(value); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupArn(Aws::String&& value) { SetModelPackageGroupArn(std::move(value)); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupArn(const char* value) { SetModelPackageGroupArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that the model group was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  ModelPackageGroupSummary& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description of the model group.</p>
-     */
-    inline const Aws::String& GetModelPackageGroupDescription() const{ return m_modelPackageGroupDescription; }
-    inline bool ModelPackageGroupDescriptionHasBeenSet() const { return m_modelPackageGroupDescriptionHasBeenSet; }
-    inline void SetModelPackageGroupDescription(const Aws::String& value) { m_modelPackageGroupDescriptionHasBeenSet = true; m_modelPackageGroupDescription = value; }
-    inline void SetModelPackageGroupDescription(Aws::String&& value) { m_modelPackageGroupDescriptionHasBeenSet = true; m_modelPackageGroupDescription = std::move(value); }
-    inline void SetModelPackageGroupDescription(const char* value) { m_modelPackageGroupDescriptionHasBeenSet = true; m_modelPackageGroupDescription.assign(value); }
-    inline ModelPackageGroupSummary& WithModelPackageGroupDescription(const Aws::String& value) { SetModelPackageGroupDescription(value); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupDescription(Aws::String&& value) { SetModelPackageGroupDescription(std::move(value)); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupDescription(const char* value) { SetModelPackageGroupDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the model group.</p>
+   */
+  inline ModelPackageGroupStatus GetModelPackageGroupStatus() const { return m_modelPackageGroupStatus; }
+  inline bool ModelPackageGroupStatusHasBeenSet() const { return m_modelPackageGroupStatusHasBeenSet; }
+  inline void SetModelPackageGroupStatus(ModelPackageGroupStatus value) {
+    m_modelPackageGroupStatusHasBeenSet = true;
+    m_modelPackageGroupStatus = value;
+  }
+  inline ModelPackageGroupSummary& WithModelPackageGroupStatus(ModelPackageGroupStatus value) {
+    SetModelPackageGroupStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that the model group was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline ModelPackageGroupSummary& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline ModelPackageGroupSummary& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The managed configuration of the model package group.</p>
+   */
+  inline const ManagedConfiguration& GetManagedConfiguration() const { return m_managedConfiguration; }
+  inline bool ManagedConfigurationHasBeenSet() const { return m_managedConfigurationHasBeenSet; }
+  template <typename ManagedConfigurationT = ManagedConfiguration>
+  void SetManagedConfiguration(ManagedConfigurationT&& value) {
+    m_managedConfigurationHasBeenSet = true;
+    m_managedConfiguration = std::forward<ManagedConfigurationT>(value);
+  }
+  template <typename ManagedConfigurationT = ManagedConfiguration>
+  ModelPackageGroupSummary& WithManagedConfiguration(ManagedConfigurationT&& value) {
+    SetManagedConfiguration(std::forward<ManagedConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_modelPackageGroupName;
 
-    ///@{
-    /**
-     * <p>The status of the model group.</p>
-     */
-    inline const ModelPackageGroupStatus& GetModelPackageGroupStatus() const{ return m_modelPackageGroupStatus; }
-    inline bool ModelPackageGroupStatusHasBeenSet() const { return m_modelPackageGroupStatusHasBeenSet; }
-    inline void SetModelPackageGroupStatus(const ModelPackageGroupStatus& value) { m_modelPackageGroupStatusHasBeenSet = true; m_modelPackageGroupStatus = value; }
-    inline void SetModelPackageGroupStatus(ModelPackageGroupStatus&& value) { m_modelPackageGroupStatusHasBeenSet = true; m_modelPackageGroupStatus = std::move(value); }
-    inline ModelPackageGroupSummary& WithModelPackageGroupStatus(const ModelPackageGroupStatus& value) { SetModelPackageGroupStatus(value); return *this;}
-    inline ModelPackageGroupSummary& WithModelPackageGroupStatus(ModelPackageGroupStatus&& value) { SetModelPackageGroupStatus(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_modelPackageGroupArn;
 
-    Aws::String m_modelPackageGroupName;
-    bool m_modelPackageGroupNameHasBeenSet = false;
+  Aws::String m_modelPackageGroupDescription;
 
-    Aws::String m_modelPackageGroupArn;
-    bool m_modelPackageGroupArnHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::String m_modelPackageGroupDescription;
-    bool m_modelPackageGroupDescriptionHasBeenSet = false;
+  ModelPackageGroupStatus m_modelPackageGroupStatus{ModelPackageGroupStatus::NOT_SET};
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  ManagedConfiguration m_managedConfiguration;
+  bool m_modelPackageGroupNameHasBeenSet = false;
+  bool m_modelPackageGroupArnHasBeenSet = false;
+  bool m_modelPackageGroupDescriptionHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_modelPackageGroupStatusHasBeenSet = false;
+  bool m_managedConfigurationHasBeenSet = false;
+};
 
-    ModelPackageGroupStatus m_modelPackageGroupStatus;
-    bool m_modelPackageGroupStatusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

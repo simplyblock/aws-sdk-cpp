@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/iot/model/ViolationEvent.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListViolationEventsResult
-  {
-  public:
-    AWS_IOT_API ListViolationEventsResult();
-    AWS_IOT_API ListViolationEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListViolationEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListViolationEventsResult {
+ public:
+  AWS_IOT_API ListViolationEventsResult() = default;
+  AWS_IOT_API ListViolationEventsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListViolationEventsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The security profile violation alerts issued for this account during the
+   * given time period, potentially filtered by security profile, behavior violated,
+   * or thing (device) violating.</p>
+   */
+  inline const Aws::Vector<ViolationEvent>& GetViolationEvents() const { return m_violationEvents; }
+  template <typename ViolationEventsT = Aws::Vector<ViolationEvent>>
+  void SetViolationEvents(ViolationEventsT&& value) {
+    m_violationEventsHasBeenSet = true;
+    m_violationEvents = std::forward<ViolationEventsT>(value);
+  }
+  template <typename ViolationEventsT = Aws::Vector<ViolationEvent>>
+  ListViolationEventsResult& WithViolationEvents(ViolationEventsT&& value) {
+    SetViolationEvents(std::forward<ViolationEventsT>(value));
+    return *this;
+  }
+  template <typename ViolationEventsT = ViolationEvent>
+  ListViolationEventsResult& AddViolationEvents(ViolationEventsT&& value) {
+    m_violationEventsHasBeenSet = true;
+    m_violationEvents.emplace_back(std::forward<ViolationEventsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The security profile violation alerts issued for this account during the
-     * given time period, potentially filtered by security profile, behavior violated,
-     * or thing (device) violating.</p>
-     */
-    inline const Aws::Vector<ViolationEvent>& GetViolationEvents() const{ return m_violationEvents; }
-    inline void SetViolationEvents(const Aws::Vector<ViolationEvent>& value) { m_violationEvents = value; }
-    inline void SetViolationEvents(Aws::Vector<ViolationEvent>&& value) { m_violationEvents = std::move(value); }
-    inline ListViolationEventsResult& WithViolationEvents(const Aws::Vector<ViolationEvent>& value) { SetViolationEvents(value); return *this;}
-    inline ListViolationEventsResult& WithViolationEvents(Aws::Vector<ViolationEvent>&& value) { SetViolationEvents(std::move(value)); return *this;}
-    inline ListViolationEventsResult& AddViolationEvents(const ViolationEvent& value) { m_violationEvents.push_back(value); return *this; }
-    inline ListViolationEventsResult& AddViolationEvents(ViolationEvent&& value) { m_violationEvents.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that can be used to retrieve the next set of results, or
+   * <code>null</code> if there are no additional results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListViolationEventsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that can be used to retrieve the next set of results, or
-     * <code>null</code> if there are no additional results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListViolationEventsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListViolationEventsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListViolationEventsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListViolationEventsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListViolationEventsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListViolationEventsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListViolationEventsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ViolationEvent> m_violationEvents;
+ private:
+  Aws::Vector<ViolationEvent> m_violationEvents;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_violationEventsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

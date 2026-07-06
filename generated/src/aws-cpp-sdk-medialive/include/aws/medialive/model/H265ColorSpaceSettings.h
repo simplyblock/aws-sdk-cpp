@@ -8,106 +8,149 @@
 #include <aws/medialive/model/ColorSpacePassthroughSettings.h>
 #include <aws/medialive/model/DolbyVision81Settings.h>
 #include <aws/medialive/model/Hdr10Settings.h>
+#include <aws/medialive/model/Hlg2020Settings.h>
 #include <aws/medialive/model/Rec601Settings.h>
 #include <aws/medialive/model/Rec709Settings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
 
-  /**
-   * H265 Color Space Settings<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/H265ColorSpaceSettings">AWS
-   * API Reference</a></p>
-   */
-  class H265ColorSpaceSettings
-  {
-  public:
-    AWS_MEDIALIVE_API H265ColorSpaceSettings();
-    AWS_MEDIALIVE_API H265ColorSpaceSettings(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API H265ColorSpaceSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+/**
+ * H265 Color Space Settings<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/H265ColorSpaceSettings">AWS
+ * API Reference</a></p>
+ */
+class H265ColorSpaceSettings {
+ public:
+  AWS_MEDIALIVE_API H265ColorSpaceSettings() = default;
+  AWS_MEDIALIVE_API H265ColorSpaceSettings(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API H265ColorSpaceSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
+  ///@{
 
-    ///@{
-    
-    inline const ColorSpacePassthroughSettings& GetColorSpacePassthroughSettings() const{ return m_colorSpacePassthroughSettings; }
-    inline bool ColorSpacePassthroughSettingsHasBeenSet() const { return m_colorSpacePassthroughSettingsHasBeenSet; }
-    inline void SetColorSpacePassthroughSettings(const ColorSpacePassthroughSettings& value) { m_colorSpacePassthroughSettingsHasBeenSet = true; m_colorSpacePassthroughSettings = value; }
-    inline void SetColorSpacePassthroughSettings(ColorSpacePassthroughSettings&& value) { m_colorSpacePassthroughSettingsHasBeenSet = true; m_colorSpacePassthroughSettings = std::move(value); }
-    inline H265ColorSpaceSettings& WithColorSpacePassthroughSettings(const ColorSpacePassthroughSettings& value) { SetColorSpacePassthroughSettings(value); return *this;}
-    inline H265ColorSpaceSettings& WithColorSpacePassthroughSettings(ColorSpacePassthroughSettings&& value) { SetColorSpacePassthroughSettings(std::move(value)); return *this;}
-    ///@}
+  inline const ColorSpacePassthroughSettings& GetColorSpacePassthroughSettings() const { return m_colorSpacePassthroughSettings; }
+  inline bool ColorSpacePassthroughSettingsHasBeenSet() const { return m_colorSpacePassthroughSettingsHasBeenSet; }
+  template <typename ColorSpacePassthroughSettingsT = ColorSpacePassthroughSettings>
+  void SetColorSpacePassthroughSettings(ColorSpacePassthroughSettingsT&& value) {
+    m_colorSpacePassthroughSettingsHasBeenSet = true;
+    m_colorSpacePassthroughSettings = std::forward<ColorSpacePassthroughSettingsT>(value);
+  }
+  template <typename ColorSpacePassthroughSettingsT = ColorSpacePassthroughSettings>
+  H265ColorSpaceSettings& WithColorSpacePassthroughSettings(ColorSpacePassthroughSettingsT&& value) {
+    SetColorSpacePassthroughSettings(std::forward<ColorSpacePassthroughSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const DolbyVision81Settings& GetDolbyVision81Settings() const{ return m_dolbyVision81Settings; }
-    inline bool DolbyVision81SettingsHasBeenSet() const { return m_dolbyVision81SettingsHasBeenSet; }
-    inline void SetDolbyVision81Settings(const DolbyVision81Settings& value) { m_dolbyVision81SettingsHasBeenSet = true; m_dolbyVision81Settings = value; }
-    inline void SetDolbyVision81Settings(DolbyVision81Settings&& value) { m_dolbyVision81SettingsHasBeenSet = true; m_dolbyVision81Settings = std::move(value); }
-    inline H265ColorSpaceSettings& WithDolbyVision81Settings(const DolbyVision81Settings& value) { SetDolbyVision81Settings(value); return *this;}
-    inline H265ColorSpaceSettings& WithDolbyVision81Settings(DolbyVision81Settings&& value) { SetDolbyVision81Settings(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Hdr10Settings& GetHdr10Settings() const{ return m_hdr10Settings; }
-    inline bool Hdr10SettingsHasBeenSet() const { return m_hdr10SettingsHasBeenSet; }
-    inline void SetHdr10Settings(const Hdr10Settings& value) { m_hdr10SettingsHasBeenSet = true; m_hdr10Settings = value; }
-    inline void SetHdr10Settings(Hdr10Settings&& value) { m_hdr10SettingsHasBeenSet = true; m_hdr10Settings = std::move(value); }
-    inline H265ColorSpaceSettings& WithHdr10Settings(const Hdr10Settings& value) { SetHdr10Settings(value); return *this;}
-    inline H265ColorSpaceSettings& WithHdr10Settings(Hdr10Settings&& value) { SetHdr10Settings(std::move(value)); return *this;}
-    ///@}
+  inline const DolbyVision81Settings& GetDolbyVision81Settings() const { return m_dolbyVision81Settings; }
+  inline bool DolbyVision81SettingsHasBeenSet() const { return m_dolbyVision81SettingsHasBeenSet; }
+  template <typename DolbyVision81SettingsT = DolbyVision81Settings>
+  void SetDolbyVision81Settings(DolbyVision81SettingsT&& value) {
+    m_dolbyVision81SettingsHasBeenSet = true;
+    m_dolbyVision81Settings = std::forward<DolbyVision81SettingsT>(value);
+  }
+  template <typename DolbyVision81SettingsT = DolbyVision81Settings>
+  H265ColorSpaceSettings& WithDolbyVision81Settings(DolbyVision81SettingsT&& value) {
+    SetDolbyVision81Settings(std::forward<DolbyVision81SettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Rec601Settings& GetRec601Settings() const{ return m_rec601Settings; }
-    inline bool Rec601SettingsHasBeenSet() const { return m_rec601SettingsHasBeenSet; }
-    inline void SetRec601Settings(const Rec601Settings& value) { m_rec601SettingsHasBeenSet = true; m_rec601Settings = value; }
-    inline void SetRec601Settings(Rec601Settings&& value) { m_rec601SettingsHasBeenSet = true; m_rec601Settings = std::move(value); }
-    inline H265ColorSpaceSettings& WithRec601Settings(const Rec601Settings& value) { SetRec601Settings(value); return *this;}
-    inline H265ColorSpaceSettings& WithRec601Settings(Rec601Settings&& value) { SetRec601Settings(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Rec709Settings& GetRec709Settings() const{ return m_rec709Settings; }
-    inline bool Rec709SettingsHasBeenSet() const { return m_rec709SettingsHasBeenSet; }
-    inline void SetRec709Settings(const Rec709Settings& value) { m_rec709SettingsHasBeenSet = true; m_rec709Settings = value; }
-    inline void SetRec709Settings(Rec709Settings&& value) { m_rec709SettingsHasBeenSet = true; m_rec709Settings = std::move(value); }
-    inline H265ColorSpaceSettings& WithRec709Settings(const Rec709Settings& value) { SetRec709Settings(value); return *this;}
-    inline H265ColorSpaceSettings& WithRec709Settings(Rec709Settings&& value) { SetRec709Settings(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const Hdr10Settings& GetHdr10Settings() const { return m_hdr10Settings; }
+  inline bool Hdr10SettingsHasBeenSet() const { return m_hdr10SettingsHasBeenSet; }
+  template <typename Hdr10SettingsT = Hdr10Settings>
+  void SetHdr10Settings(Hdr10SettingsT&& value) {
+    m_hdr10SettingsHasBeenSet = true;
+    m_hdr10Settings = std::forward<Hdr10SettingsT>(value);
+  }
+  template <typename Hdr10SettingsT = Hdr10Settings>
+  H265ColorSpaceSettings& WithHdr10Settings(Hdr10SettingsT&& value) {
+    SetHdr10Settings(std::forward<Hdr10SettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ColorSpacePassthroughSettings m_colorSpacePassthroughSettings;
-    bool m_colorSpacePassthroughSettingsHasBeenSet = false;
+  ///@{
 
-    DolbyVision81Settings m_dolbyVision81Settings;
-    bool m_dolbyVision81SettingsHasBeenSet = false;
+  inline const Rec601Settings& GetRec601Settings() const { return m_rec601Settings; }
+  inline bool Rec601SettingsHasBeenSet() const { return m_rec601SettingsHasBeenSet; }
+  template <typename Rec601SettingsT = Rec601Settings>
+  void SetRec601Settings(Rec601SettingsT&& value) {
+    m_rec601SettingsHasBeenSet = true;
+    m_rec601Settings = std::forward<Rec601SettingsT>(value);
+  }
+  template <typename Rec601SettingsT = Rec601Settings>
+  H265ColorSpaceSettings& WithRec601Settings(Rec601SettingsT&& value) {
+    SetRec601Settings(std::forward<Rec601SettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Hdr10Settings m_hdr10Settings;
-    bool m_hdr10SettingsHasBeenSet = false;
+  ///@{
 
-    Rec601Settings m_rec601Settings;
-    bool m_rec601SettingsHasBeenSet = false;
+  inline const Rec709Settings& GetRec709Settings() const { return m_rec709Settings; }
+  inline bool Rec709SettingsHasBeenSet() const { return m_rec709SettingsHasBeenSet; }
+  template <typename Rec709SettingsT = Rec709Settings>
+  void SetRec709Settings(Rec709SettingsT&& value) {
+    m_rec709SettingsHasBeenSet = true;
+    m_rec709Settings = std::forward<Rec709SettingsT>(value);
+  }
+  template <typename Rec709SettingsT = Rec709Settings>
+  H265ColorSpaceSettings& WithRec709Settings(Rec709SettingsT&& value) {
+    SetRec709Settings(std::forward<Rec709SettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Rec709Settings m_rec709Settings;
-    bool m_rec709SettingsHasBeenSet = false;
-  };
+  ///@{
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+  inline const Hlg2020Settings& GetHlg2020Settings() const { return m_hlg2020Settings; }
+  inline bool Hlg2020SettingsHasBeenSet() const { return m_hlg2020SettingsHasBeenSet; }
+  template <typename Hlg2020SettingsT = Hlg2020Settings>
+  void SetHlg2020Settings(Hlg2020SettingsT&& value) {
+    m_hlg2020SettingsHasBeenSet = true;
+    m_hlg2020Settings = std::forward<Hlg2020SettingsT>(value);
+  }
+  template <typename Hlg2020SettingsT = Hlg2020Settings>
+  H265ColorSpaceSettings& WithHlg2020Settings(Hlg2020SettingsT&& value) {
+    SetHlg2020Settings(std::forward<Hlg2020SettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ColorSpacePassthroughSettings m_colorSpacePassthroughSettings;
+
+  DolbyVision81Settings m_dolbyVision81Settings;
+
+  Hdr10Settings m_hdr10Settings;
+
+  Rec601Settings m_rec601Settings;
+
+  Rec709Settings m_rec709Settings;
+
+  Hlg2020Settings m_hlg2020Settings;
+  bool m_colorSpacePassthroughSettingsHasBeenSet = false;
+  bool m_dolbyVision81SettingsHasBeenSet = false;
+  bool m_hdr10SettingsHasBeenSet = false;
+  bool m_rec601SettingsHasBeenSet = false;
+  bool m_rec709SettingsHasBeenSet = false;
+  bool m_hlg2020SettingsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

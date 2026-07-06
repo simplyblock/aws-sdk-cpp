@@ -5,13 +5,20 @@
 
 #pragma once
 #include <aws/taxsettings/TaxSettings_EXPORTS.h>
+#include <aws/taxsettings/model/BelgiumAdditionalInfo.h>
 #include <aws/taxsettings/model/CanadaAdditionalInfo.h>
+#include <aws/taxsettings/model/ChileAdditionalInfo.h>
+#include <aws/taxsettings/model/EgyptAdditionalInfo.h>
 #include <aws/taxsettings/model/EstoniaAdditionalInfo.h>
+#include <aws/taxsettings/model/FranceAdditionalInfo.h>
 #include <aws/taxsettings/model/GeorgiaAdditionalInfo.h>
+#include <aws/taxsettings/model/GreeceAdditionalInfo.h>
+#include <aws/taxsettings/model/IndonesiaAdditionalInfo.h>
 #include <aws/taxsettings/model/IsraelAdditionalInfo.h>
 #include <aws/taxsettings/model/ItalyAdditionalInfo.h>
 #include <aws/taxsettings/model/KenyaAdditionalInfo.h>
 #include <aws/taxsettings/model/MalaysiaAdditionalInfo.h>
+#include <aws/taxsettings/model/PhilippinesAdditionalInfo.h>
 #include <aws/taxsettings/model/PolandAdditionalInfo.h>
 #include <aws/taxsettings/model/RomaniaAdditionalInfo.h>
 #include <aws/taxsettings/model/SaudiArabiaAdditionalInfo.h>
@@ -19,256 +26,524 @@
 #include <aws/taxsettings/model/SpainAdditionalInfo.h>
 #include <aws/taxsettings/model/TurkeyAdditionalInfo.h>
 #include <aws/taxsettings/model/UkraineAdditionalInfo.h>
+#include <aws/taxsettings/model/UzbekistanAdditionalInfo.h>
+#include <aws/taxsettings/model/VietnamAdditionalInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
 
+/**
+ * <p>Additional tax information associated with your tax registration number
+ * (TRN). Depending on the TRN for a specific country, you might need to specify
+ * this information when you set your TRN. </p> <p>You can only specify one of the
+ * following parameters and the value can't be empty. </p>  <p>The parameter
+ * that you specify must match the country for the TRN, if available. For example,
+ * if you set a TRN in Canada for specific provinces, you must also specify the
+ * <code>canadaAdditionalInfo</code> parameter.</p> <p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AdditionalInfoRequest">AWS
+ * API Reference</a></p>
+ */
+class AdditionalInfoRequest {
+ public:
+  AWS_TAXSETTINGS_API AdditionalInfoRequest() = default;
+  AWS_TAXSETTINGS_API AdditionalInfoRequest(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TAXSETTINGS_API AdditionalInfoRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TAXSETTINGS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Additional tax information associated with your tax registration number
-   * (TRN). Depending on the TRN for a specific country, you might need to specify
-   * this information when you set your TRN. </p> <p>You can only specify one of the
-   * following parameters and the value can't be empty. </p>  <p>The parameter
-   * that you specify must match the country for the TRN, if available. For example,
-   * if you set a TRN in Canada for specific provinces, you must also specify the
-   * <code>canadaAdditionalInfo</code> parameter.</p> <p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AdditionalInfoRequest">AWS
-   * API Reference</a></p>
+   * <p> Additional tax information to specify for a TRN in Malaysia.</p>
    */
-  class AdditionalInfoRequest
-  {
-  public:
-    AWS_TAXSETTINGS_API AdditionalInfoRequest();
-    AWS_TAXSETTINGS_API AdditionalInfoRequest(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TAXSETTINGS_API AdditionalInfoRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TAXSETTINGS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const MalaysiaAdditionalInfo& GetMalaysiaAdditionalInfo() const { return m_malaysiaAdditionalInfo; }
+  inline bool MalaysiaAdditionalInfoHasBeenSet() const { return m_malaysiaAdditionalInfoHasBeenSet; }
+  template <typename MalaysiaAdditionalInfoT = MalaysiaAdditionalInfo>
+  void SetMalaysiaAdditionalInfo(MalaysiaAdditionalInfoT&& value) {
+    m_malaysiaAdditionalInfoHasBeenSet = true;
+    m_malaysiaAdditionalInfo = std::forward<MalaysiaAdditionalInfoT>(value);
+  }
+  template <typename MalaysiaAdditionalInfoT = MalaysiaAdditionalInfo>
+  AdditionalInfoRequest& WithMalaysiaAdditionalInfo(MalaysiaAdditionalInfoT&& value) {
+    SetMalaysiaAdditionalInfo(std::forward<MalaysiaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Israel.</p>
+   */
+  inline const IsraelAdditionalInfo& GetIsraelAdditionalInfo() const { return m_israelAdditionalInfo; }
+  inline bool IsraelAdditionalInfoHasBeenSet() const { return m_israelAdditionalInfoHasBeenSet; }
+  template <typename IsraelAdditionalInfoT = IsraelAdditionalInfo>
+  void SetIsraelAdditionalInfo(IsraelAdditionalInfoT&& value) {
+    m_israelAdditionalInfoHasBeenSet = true;
+    m_israelAdditionalInfo = std::forward<IsraelAdditionalInfoT>(value);
+  }
+  template <typename IsraelAdditionalInfoT = IsraelAdditionalInfo>
+  AdditionalInfoRequest& WithIsraelAdditionalInfo(IsraelAdditionalInfoT&& value) {
+    SetIsraelAdditionalInfo(std::forward<IsraelAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information associated with your TRN in Canada.</p>
-     */
-    inline const CanadaAdditionalInfo& GetCanadaAdditionalInfo() const{ return m_canadaAdditionalInfo; }
-    inline bool CanadaAdditionalInfoHasBeenSet() const { return m_canadaAdditionalInfoHasBeenSet; }
-    inline void SetCanadaAdditionalInfo(const CanadaAdditionalInfo& value) { m_canadaAdditionalInfoHasBeenSet = true; m_canadaAdditionalInfo = value; }
-    inline void SetCanadaAdditionalInfo(CanadaAdditionalInfo&& value) { m_canadaAdditionalInfoHasBeenSet = true; m_canadaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithCanadaAdditionalInfo(const CanadaAdditionalInfo& value) { SetCanadaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithCanadaAdditionalInfo(CanadaAdditionalInfo&& value) { SetCanadaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Estonia.</p>
+   */
+  inline const EstoniaAdditionalInfo& GetEstoniaAdditionalInfo() const { return m_estoniaAdditionalInfo; }
+  inline bool EstoniaAdditionalInfoHasBeenSet() const { return m_estoniaAdditionalInfoHasBeenSet; }
+  template <typename EstoniaAdditionalInfoT = EstoniaAdditionalInfo>
+  void SetEstoniaAdditionalInfo(EstoniaAdditionalInfoT&& value) {
+    m_estoniaAdditionalInfoHasBeenSet = true;
+    m_estoniaAdditionalInfo = std::forward<EstoniaAdditionalInfoT>(value);
+  }
+  template <typename EstoniaAdditionalInfoT = EstoniaAdditionalInfo>
+  AdditionalInfoRequest& WithEstoniaAdditionalInfo(EstoniaAdditionalInfoT&& value) {
+    SetEstoniaAdditionalInfo(std::forward<EstoniaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information to specify for a TRN in Estonia.</p>
-     */
-    inline const EstoniaAdditionalInfo& GetEstoniaAdditionalInfo() const{ return m_estoniaAdditionalInfo; }
-    inline bool EstoniaAdditionalInfoHasBeenSet() const { return m_estoniaAdditionalInfoHasBeenSet; }
-    inline void SetEstoniaAdditionalInfo(const EstoniaAdditionalInfo& value) { m_estoniaAdditionalInfoHasBeenSet = true; m_estoniaAdditionalInfo = value; }
-    inline void SetEstoniaAdditionalInfo(EstoniaAdditionalInfo&& value) { m_estoniaAdditionalInfoHasBeenSet = true; m_estoniaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithEstoniaAdditionalInfo(const EstoniaAdditionalInfo& value) { SetEstoniaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithEstoniaAdditionalInfo(EstoniaAdditionalInfo&& value) { SetEstoniaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information associated with your TRN in Canada.</p>
+   */
+  inline const CanadaAdditionalInfo& GetCanadaAdditionalInfo() const { return m_canadaAdditionalInfo; }
+  inline bool CanadaAdditionalInfoHasBeenSet() const { return m_canadaAdditionalInfoHasBeenSet; }
+  template <typename CanadaAdditionalInfoT = CanadaAdditionalInfo>
+  void SetCanadaAdditionalInfo(CanadaAdditionalInfoT&& value) {
+    m_canadaAdditionalInfoHasBeenSet = true;
+    m_canadaAdditionalInfo = std::forward<CanadaAdditionalInfoT>(value);
+  }
+  template <typename CanadaAdditionalInfoT = CanadaAdditionalInfo>
+  AdditionalInfoRequest& WithCanadaAdditionalInfo(CanadaAdditionalInfoT&& value) {
+    SetCanadaAdditionalInfo(std::forward<CanadaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information to specify for a TRN in Georgia. </p>
-     */
-    inline const GeorgiaAdditionalInfo& GetGeorgiaAdditionalInfo() const{ return m_georgiaAdditionalInfo; }
-    inline bool GeorgiaAdditionalInfoHasBeenSet() const { return m_georgiaAdditionalInfoHasBeenSet; }
-    inline void SetGeorgiaAdditionalInfo(const GeorgiaAdditionalInfo& value) { m_georgiaAdditionalInfoHasBeenSet = true; m_georgiaAdditionalInfo = value; }
-    inline void SetGeorgiaAdditionalInfo(GeorgiaAdditionalInfo&& value) { m_georgiaAdditionalInfoHasBeenSet = true; m_georgiaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithGeorgiaAdditionalInfo(const GeorgiaAdditionalInfo& value) { SetGeorgiaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithGeorgiaAdditionalInfo(GeorgiaAdditionalInfo&& value) { SetGeorgiaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Spain.</p>
+   */
+  inline const SpainAdditionalInfo& GetSpainAdditionalInfo() const { return m_spainAdditionalInfo; }
+  inline bool SpainAdditionalInfoHasBeenSet() const { return m_spainAdditionalInfoHasBeenSet; }
+  template <typename SpainAdditionalInfoT = SpainAdditionalInfo>
+  void SetSpainAdditionalInfo(SpainAdditionalInfoT&& value) {
+    m_spainAdditionalInfoHasBeenSet = true;
+    m_spainAdditionalInfo = std::forward<SpainAdditionalInfoT>(value);
+  }
+  template <typename SpainAdditionalInfoT = SpainAdditionalInfo>
+  AdditionalInfoRequest& WithSpainAdditionalInfo(SpainAdditionalInfoT&& value) {
+    SetSpainAdditionalInfo(std::forward<SpainAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information to specify for a TRN in Israel.</p>
-     */
-    inline const IsraelAdditionalInfo& GetIsraelAdditionalInfo() const{ return m_israelAdditionalInfo; }
-    inline bool IsraelAdditionalInfoHasBeenSet() const { return m_israelAdditionalInfoHasBeenSet; }
-    inline void SetIsraelAdditionalInfo(const IsraelAdditionalInfo& value) { m_israelAdditionalInfoHasBeenSet = true; m_israelAdditionalInfo = value; }
-    inline void SetIsraelAdditionalInfo(IsraelAdditionalInfo&& value) { m_israelAdditionalInfoHasBeenSet = true; m_israelAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithIsraelAdditionalInfo(const IsraelAdditionalInfo& value) { SetIsraelAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithIsraelAdditionalInfo(IsraelAdditionalInfo&& value) { SetIsraelAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Kenya.</p>
+   */
+  inline const KenyaAdditionalInfo& GetKenyaAdditionalInfo() const { return m_kenyaAdditionalInfo; }
+  inline bool KenyaAdditionalInfoHasBeenSet() const { return m_kenyaAdditionalInfoHasBeenSet; }
+  template <typename KenyaAdditionalInfoT = KenyaAdditionalInfo>
+  void SetKenyaAdditionalInfo(KenyaAdditionalInfoT&& value) {
+    m_kenyaAdditionalInfoHasBeenSet = true;
+    m_kenyaAdditionalInfo = std::forward<KenyaAdditionalInfoT>(value);
+  }
+  template <typename KenyaAdditionalInfoT = KenyaAdditionalInfo>
+  AdditionalInfoRequest& WithKenyaAdditionalInfo(KenyaAdditionalInfoT&& value) {
+    SetKenyaAdditionalInfo(std::forward<KenyaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information to specify for a TRN in Italy. </p>
-     */
-    inline const ItalyAdditionalInfo& GetItalyAdditionalInfo() const{ return m_italyAdditionalInfo; }
-    inline bool ItalyAdditionalInfoHasBeenSet() const { return m_italyAdditionalInfoHasBeenSet; }
-    inline void SetItalyAdditionalInfo(const ItalyAdditionalInfo& value) { m_italyAdditionalInfoHasBeenSet = true; m_italyAdditionalInfo = value; }
-    inline void SetItalyAdditionalInfo(ItalyAdditionalInfo&& value) { m_italyAdditionalInfoHasBeenSet = true; m_italyAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithItalyAdditionalInfo(const ItalyAdditionalInfo& value) { SetItalyAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithItalyAdditionalInfo(ItalyAdditionalInfo&& value) { SetItalyAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in South Korea.</p>
+   */
+  inline const SouthKoreaAdditionalInfo& GetSouthKoreaAdditionalInfo() const { return m_southKoreaAdditionalInfo; }
+  inline bool SouthKoreaAdditionalInfoHasBeenSet() const { return m_southKoreaAdditionalInfoHasBeenSet; }
+  template <typename SouthKoreaAdditionalInfoT = SouthKoreaAdditionalInfo>
+  void SetSouthKoreaAdditionalInfo(SouthKoreaAdditionalInfoT&& value) {
+    m_southKoreaAdditionalInfoHasBeenSet = true;
+    m_southKoreaAdditionalInfo = std::forward<SouthKoreaAdditionalInfoT>(value);
+  }
+  template <typename SouthKoreaAdditionalInfoT = SouthKoreaAdditionalInfo>
+  AdditionalInfoRequest& WithSouthKoreaAdditionalInfo(SouthKoreaAdditionalInfoT&& value) {
+    SetSouthKoreaAdditionalInfo(std::forward<SouthKoreaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Additional tax information to specify for a TRN in Kenya.</p>
-     */
-    inline const KenyaAdditionalInfo& GetKenyaAdditionalInfo() const{ return m_kenyaAdditionalInfo; }
-    inline bool KenyaAdditionalInfoHasBeenSet() const { return m_kenyaAdditionalInfoHasBeenSet; }
-    inline void SetKenyaAdditionalInfo(const KenyaAdditionalInfo& value) { m_kenyaAdditionalInfoHasBeenSet = true; m_kenyaAdditionalInfo = value; }
-    inline void SetKenyaAdditionalInfo(KenyaAdditionalInfo&& value) { m_kenyaAdditionalInfoHasBeenSet = true; m_kenyaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithKenyaAdditionalInfo(const KenyaAdditionalInfo& value) { SetKenyaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithKenyaAdditionalInfo(KenyaAdditionalInfo&& value) { SetKenyaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Turkey.</p>
+   */
+  inline const TurkeyAdditionalInfo& GetTurkeyAdditionalInfo() const { return m_turkeyAdditionalInfo; }
+  inline bool TurkeyAdditionalInfoHasBeenSet() const { return m_turkeyAdditionalInfoHasBeenSet; }
+  template <typename TurkeyAdditionalInfoT = TurkeyAdditionalInfo>
+  void SetTurkeyAdditionalInfo(TurkeyAdditionalInfoT&& value) {
+    m_turkeyAdditionalInfoHasBeenSet = true;
+    m_turkeyAdditionalInfo = std::forward<TurkeyAdditionalInfoT>(value);
+  }
+  template <typename TurkeyAdditionalInfoT = TurkeyAdditionalInfo>
+  AdditionalInfoRequest& WithTurkeyAdditionalInfo(TurkeyAdditionalInfoT&& value) {
+    SetTurkeyAdditionalInfo(std::forward<TurkeyAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information to specify for a TRN in Malaysia.</p>
-     */
-    inline const MalaysiaAdditionalInfo& GetMalaysiaAdditionalInfo() const{ return m_malaysiaAdditionalInfo; }
-    inline bool MalaysiaAdditionalInfoHasBeenSet() const { return m_malaysiaAdditionalInfoHasBeenSet; }
-    inline void SetMalaysiaAdditionalInfo(const MalaysiaAdditionalInfo& value) { m_malaysiaAdditionalInfoHasBeenSet = true; m_malaysiaAdditionalInfo = value; }
-    inline void SetMalaysiaAdditionalInfo(MalaysiaAdditionalInfo&& value) { m_malaysiaAdditionalInfoHasBeenSet = true; m_malaysiaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithMalaysiaAdditionalInfo(const MalaysiaAdditionalInfo& value) { SetMalaysiaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithMalaysiaAdditionalInfo(MalaysiaAdditionalInfo&& value) { SetMalaysiaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Georgia. </p>
+   */
+  inline const GeorgiaAdditionalInfo& GetGeorgiaAdditionalInfo() const { return m_georgiaAdditionalInfo; }
+  inline bool GeorgiaAdditionalInfoHasBeenSet() const { return m_georgiaAdditionalInfoHasBeenSet; }
+  template <typename GeorgiaAdditionalInfoT = GeorgiaAdditionalInfo>
+  void SetGeorgiaAdditionalInfo(GeorgiaAdditionalInfoT&& value) {
+    m_georgiaAdditionalInfoHasBeenSet = true;
+    m_georgiaAdditionalInfo = std::forward<GeorgiaAdditionalInfoT>(value);
+  }
+  template <typename GeorgiaAdditionalInfoT = GeorgiaAdditionalInfo>
+  AdditionalInfoRequest& WithGeorgiaAdditionalInfo(GeorgiaAdditionalInfoT&& value) {
+    SetGeorgiaAdditionalInfo(std::forward<GeorgiaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information associated with your TRN in Poland. </p>
-     */
-    inline const PolandAdditionalInfo& GetPolandAdditionalInfo() const{ return m_polandAdditionalInfo; }
-    inline bool PolandAdditionalInfoHasBeenSet() const { return m_polandAdditionalInfoHasBeenSet; }
-    inline void SetPolandAdditionalInfo(const PolandAdditionalInfo& value) { m_polandAdditionalInfoHasBeenSet = true; m_polandAdditionalInfo = value; }
-    inline void SetPolandAdditionalInfo(PolandAdditionalInfo&& value) { m_polandAdditionalInfoHasBeenSet = true; m_polandAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithPolandAdditionalInfo(const PolandAdditionalInfo& value) { SetPolandAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithPolandAdditionalInfo(PolandAdditionalInfo&& value) { SetPolandAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Italy. </p>
+   */
+  inline const ItalyAdditionalInfo& GetItalyAdditionalInfo() const { return m_italyAdditionalInfo; }
+  inline bool ItalyAdditionalInfoHasBeenSet() const { return m_italyAdditionalInfoHasBeenSet; }
+  template <typename ItalyAdditionalInfoT = ItalyAdditionalInfo>
+  void SetItalyAdditionalInfo(ItalyAdditionalInfoT&& value) {
+    m_italyAdditionalInfoHasBeenSet = true;
+    m_italyAdditionalInfo = std::forward<ItalyAdditionalInfoT>(value);
+  }
+  template <typename ItalyAdditionalInfoT = ItalyAdditionalInfo>
+  AdditionalInfoRequest& WithItalyAdditionalInfo(ItalyAdditionalInfoT&& value) {
+    SetItalyAdditionalInfo(std::forward<ItalyAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Additional tax information to specify for a TRN in Romania.</p>
-     */
-    inline const RomaniaAdditionalInfo& GetRomaniaAdditionalInfo() const{ return m_romaniaAdditionalInfo; }
-    inline bool RomaniaAdditionalInfoHasBeenSet() const { return m_romaniaAdditionalInfoHasBeenSet; }
-    inline void SetRomaniaAdditionalInfo(const RomaniaAdditionalInfo& value) { m_romaniaAdditionalInfoHasBeenSet = true; m_romaniaAdditionalInfo = value; }
-    inline void SetRomaniaAdditionalInfo(RomaniaAdditionalInfo&& value) { m_romaniaAdditionalInfoHasBeenSet = true; m_romaniaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithRomaniaAdditionalInfo(const RomaniaAdditionalInfo& value) { SetRomaniaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithRomaniaAdditionalInfo(RomaniaAdditionalInfo&& value) { SetRomaniaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Romania.</p>
+   */
+  inline const RomaniaAdditionalInfo& GetRomaniaAdditionalInfo() const { return m_romaniaAdditionalInfo; }
+  inline bool RomaniaAdditionalInfoHasBeenSet() const { return m_romaniaAdditionalInfoHasBeenSet; }
+  template <typename RomaniaAdditionalInfoT = RomaniaAdditionalInfo>
+  void SetRomaniaAdditionalInfo(RomaniaAdditionalInfoT&& value) {
+    m_romaniaAdditionalInfoHasBeenSet = true;
+    m_romaniaAdditionalInfo = std::forward<RomaniaAdditionalInfoT>(value);
+  }
+  template <typename RomaniaAdditionalInfoT = RomaniaAdditionalInfo>
+  AdditionalInfoRequest& WithRomaniaAdditionalInfo(RomaniaAdditionalInfoT&& value) {
+    SetRomaniaAdditionalInfo(std::forward<RomaniaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information associated with your TRN in Saudi Arabia. </p>
-     */
-    inline const SaudiArabiaAdditionalInfo& GetSaudiArabiaAdditionalInfo() const{ return m_saudiArabiaAdditionalInfo; }
-    inline bool SaudiArabiaAdditionalInfoHasBeenSet() const { return m_saudiArabiaAdditionalInfoHasBeenSet; }
-    inline void SetSaudiArabiaAdditionalInfo(const SaudiArabiaAdditionalInfo& value) { m_saudiArabiaAdditionalInfoHasBeenSet = true; m_saudiArabiaAdditionalInfo = value; }
-    inline void SetSaudiArabiaAdditionalInfo(SaudiArabiaAdditionalInfo&& value) { m_saudiArabiaAdditionalInfoHasBeenSet = true; m_saudiArabiaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithSaudiArabiaAdditionalInfo(const SaudiArabiaAdditionalInfo& value) { SetSaudiArabiaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithSaudiArabiaAdditionalInfo(SaudiArabiaAdditionalInfo&& value) { SetSaudiArabiaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information associated with your TRN in Ukraine. </p>
+   */
+  inline const UkraineAdditionalInfo& GetUkraineAdditionalInfo() const { return m_ukraineAdditionalInfo; }
+  inline bool UkraineAdditionalInfoHasBeenSet() const { return m_ukraineAdditionalInfoHasBeenSet; }
+  template <typename UkraineAdditionalInfoT = UkraineAdditionalInfo>
+  void SetUkraineAdditionalInfo(UkraineAdditionalInfoT&& value) {
+    m_ukraineAdditionalInfoHasBeenSet = true;
+    m_ukraineAdditionalInfo = std::forward<UkraineAdditionalInfoT>(value);
+  }
+  template <typename UkraineAdditionalInfoT = UkraineAdditionalInfo>
+  AdditionalInfoRequest& WithUkraineAdditionalInfo(UkraineAdditionalInfoT&& value) {
+    SetUkraineAdditionalInfo(std::forward<UkraineAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Additional tax information to specify for a TRN in South Korea.</p>
-     */
-    inline const SouthKoreaAdditionalInfo& GetSouthKoreaAdditionalInfo() const{ return m_southKoreaAdditionalInfo; }
-    inline bool SouthKoreaAdditionalInfoHasBeenSet() const { return m_southKoreaAdditionalInfoHasBeenSet; }
-    inline void SetSouthKoreaAdditionalInfo(const SouthKoreaAdditionalInfo& value) { m_southKoreaAdditionalInfoHasBeenSet = true; m_southKoreaAdditionalInfo = value; }
-    inline void SetSouthKoreaAdditionalInfo(SouthKoreaAdditionalInfo&& value) { m_southKoreaAdditionalInfoHasBeenSet = true; m_southKoreaAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithSouthKoreaAdditionalInfo(const SouthKoreaAdditionalInfo& value) { SetSouthKoreaAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithSouthKoreaAdditionalInfo(SouthKoreaAdditionalInfo&& value) { SetSouthKoreaAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information associated with your TRN in Poland. </p>
+   */
+  inline const PolandAdditionalInfo& GetPolandAdditionalInfo() const { return m_polandAdditionalInfo; }
+  inline bool PolandAdditionalInfoHasBeenSet() const { return m_polandAdditionalInfoHasBeenSet; }
+  template <typename PolandAdditionalInfoT = PolandAdditionalInfo>
+  void SetPolandAdditionalInfo(PolandAdditionalInfoT&& value) {
+    m_polandAdditionalInfoHasBeenSet = true;
+    m_polandAdditionalInfo = std::forward<PolandAdditionalInfoT>(value);
+  }
+  template <typename PolandAdditionalInfoT = PolandAdditionalInfo>
+  AdditionalInfoRequest& WithPolandAdditionalInfo(PolandAdditionalInfoT&& value) {
+    SetPolandAdditionalInfo(std::forward<PolandAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Additional tax information to specify for a TRN in Spain.</p>
-     */
-    inline const SpainAdditionalInfo& GetSpainAdditionalInfo() const{ return m_spainAdditionalInfo; }
-    inline bool SpainAdditionalInfoHasBeenSet() const { return m_spainAdditionalInfoHasBeenSet; }
-    inline void SetSpainAdditionalInfo(const SpainAdditionalInfo& value) { m_spainAdditionalInfoHasBeenSet = true; m_spainAdditionalInfo = value; }
-    inline void SetSpainAdditionalInfo(SpainAdditionalInfo&& value) { m_spainAdditionalInfoHasBeenSet = true; m_spainAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithSpainAdditionalInfo(const SpainAdditionalInfo& value) { SetSpainAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithSpainAdditionalInfo(SpainAdditionalInfo&& value) { SetSpainAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Additional tax information associated with your TRN in Saudi Arabia. </p>
+   */
+  inline const SaudiArabiaAdditionalInfo& GetSaudiArabiaAdditionalInfo() const { return m_saudiArabiaAdditionalInfo; }
+  inline bool SaudiArabiaAdditionalInfoHasBeenSet() const { return m_saudiArabiaAdditionalInfoHasBeenSet; }
+  template <typename SaudiArabiaAdditionalInfoT = SaudiArabiaAdditionalInfo>
+  void SetSaudiArabiaAdditionalInfo(SaudiArabiaAdditionalInfoT&& value) {
+    m_saudiArabiaAdditionalInfoHasBeenSet = true;
+    m_saudiArabiaAdditionalInfo = std::forward<SaudiArabiaAdditionalInfoT>(value);
+  }
+  template <typename SaudiArabiaAdditionalInfoT = SaudiArabiaAdditionalInfo>
+  AdditionalInfoRequest& WithSaudiArabiaAdditionalInfo(SaudiArabiaAdditionalInfoT&& value) {
+    SetSaudiArabiaAdditionalInfo(std::forward<SaudiArabiaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Additional tax information to specify for a TRN in Turkey.</p>
-     */
-    inline const TurkeyAdditionalInfo& GetTurkeyAdditionalInfo() const{ return m_turkeyAdditionalInfo; }
-    inline bool TurkeyAdditionalInfoHasBeenSet() const { return m_turkeyAdditionalInfoHasBeenSet; }
-    inline void SetTurkeyAdditionalInfo(const TurkeyAdditionalInfo& value) { m_turkeyAdditionalInfoHasBeenSet = true; m_turkeyAdditionalInfo = value; }
-    inline void SetTurkeyAdditionalInfo(TurkeyAdditionalInfo&& value) { m_turkeyAdditionalInfoHasBeenSet = true; m_turkeyAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithTurkeyAdditionalInfo(const TurkeyAdditionalInfo& value) { SetTurkeyAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithTurkeyAdditionalInfo(TurkeyAdditionalInfo&& value) { SetTurkeyAdditionalInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> </p>
+   */
+  inline const IndonesiaAdditionalInfo& GetIndonesiaAdditionalInfo() const { return m_indonesiaAdditionalInfo; }
+  inline bool IndonesiaAdditionalInfoHasBeenSet() const { return m_indonesiaAdditionalInfoHasBeenSet; }
+  template <typename IndonesiaAdditionalInfoT = IndonesiaAdditionalInfo>
+  void SetIndonesiaAdditionalInfo(IndonesiaAdditionalInfoT&& value) {
+    m_indonesiaAdditionalInfoHasBeenSet = true;
+    m_indonesiaAdditionalInfo = std::forward<IndonesiaAdditionalInfoT>(value);
+  }
+  template <typename IndonesiaAdditionalInfoT = IndonesiaAdditionalInfo>
+  AdditionalInfoRequest& WithIndonesiaAdditionalInfo(IndonesiaAdditionalInfoT&& value) {
+    SetIndonesiaAdditionalInfo(std::forward<IndonesiaAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Additional tax information associated with your TRN in Ukraine. </p>
-     */
-    inline const UkraineAdditionalInfo& GetUkraineAdditionalInfo() const{ return m_ukraineAdditionalInfo; }
-    inline bool UkraineAdditionalInfoHasBeenSet() const { return m_ukraineAdditionalInfoHasBeenSet; }
-    inline void SetUkraineAdditionalInfo(const UkraineAdditionalInfo& value) { m_ukraineAdditionalInfoHasBeenSet = true; m_ukraineAdditionalInfo = value; }
-    inline void SetUkraineAdditionalInfo(UkraineAdditionalInfo&& value) { m_ukraineAdditionalInfoHasBeenSet = true; m_ukraineAdditionalInfo = std::move(value); }
-    inline AdditionalInfoRequest& WithUkraineAdditionalInfo(const UkraineAdditionalInfo& value) { SetUkraineAdditionalInfo(value); return *this;}
-    inline AdditionalInfoRequest& WithUkraineAdditionalInfo(UkraineAdditionalInfo&& value) { SetUkraineAdditionalInfo(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Vietnam. </p>
+   */
+  inline const VietnamAdditionalInfo& GetVietnamAdditionalInfo() const { return m_vietnamAdditionalInfo; }
+  inline bool VietnamAdditionalInfoHasBeenSet() const { return m_vietnamAdditionalInfoHasBeenSet; }
+  template <typename VietnamAdditionalInfoT = VietnamAdditionalInfo>
+  void SetVietnamAdditionalInfo(VietnamAdditionalInfoT&& value) {
+    m_vietnamAdditionalInfoHasBeenSet = true;
+    m_vietnamAdditionalInfo = std::forward<VietnamAdditionalInfoT>(value);
+  }
+  template <typename VietnamAdditionalInfoT = VietnamAdditionalInfo>
+  AdditionalInfoRequest& WithVietnamAdditionalInfo(VietnamAdditionalInfoT&& value) {
+    SetVietnamAdditionalInfo(std::forward<VietnamAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    CanadaAdditionalInfo m_canadaAdditionalInfo;
-    bool m_canadaAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Egypt. </p>
+   */
+  inline const EgyptAdditionalInfo& GetEgyptAdditionalInfo() const { return m_egyptAdditionalInfo; }
+  inline bool EgyptAdditionalInfoHasBeenSet() const { return m_egyptAdditionalInfoHasBeenSet; }
+  template <typename EgyptAdditionalInfoT = EgyptAdditionalInfo>
+  void SetEgyptAdditionalInfo(EgyptAdditionalInfoT&& value) {
+    m_egyptAdditionalInfoHasBeenSet = true;
+    m_egyptAdditionalInfo = std::forward<EgyptAdditionalInfoT>(value);
+  }
+  template <typename EgyptAdditionalInfoT = EgyptAdditionalInfo>
+  AdditionalInfoRequest& WithEgyptAdditionalInfo(EgyptAdditionalInfoT&& value) {
+    SetEgyptAdditionalInfo(std::forward<EgyptAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    EstoniaAdditionalInfo m_estoniaAdditionalInfo;
-    bool m_estoniaAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Greece.</p>
+   */
+  inline const GreeceAdditionalInfo& GetGreeceAdditionalInfo() const { return m_greeceAdditionalInfo; }
+  inline bool GreeceAdditionalInfoHasBeenSet() const { return m_greeceAdditionalInfoHasBeenSet; }
+  template <typename GreeceAdditionalInfoT = GreeceAdditionalInfo>
+  void SetGreeceAdditionalInfo(GreeceAdditionalInfoT&& value) {
+    m_greeceAdditionalInfoHasBeenSet = true;
+    m_greeceAdditionalInfo = std::forward<GreeceAdditionalInfoT>(value);
+  }
+  template <typename GreeceAdditionalInfoT = GreeceAdditionalInfo>
+  AdditionalInfoRequest& WithGreeceAdditionalInfo(GreeceAdditionalInfoT&& value) {
+    SetGreeceAdditionalInfo(std::forward<GreeceAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    GeorgiaAdditionalInfo m_georgiaAdditionalInfo;
-    bool m_georgiaAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Uzbekistan. </p>
+   */
+  inline const UzbekistanAdditionalInfo& GetUzbekistanAdditionalInfo() const { return m_uzbekistanAdditionalInfo; }
+  inline bool UzbekistanAdditionalInfoHasBeenSet() const { return m_uzbekistanAdditionalInfoHasBeenSet; }
+  template <typename UzbekistanAdditionalInfoT = UzbekistanAdditionalInfo>
+  void SetUzbekistanAdditionalInfo(UzbekistanAdditionalInfoT&& value) {
+    m_uzbekistanAdditionalInfoHasBeenSet = true;
+    m_uzbekistanAdditionalInfo = std::forward<UzbekistanAdditionalInfoT>(value);
+  }
+  template <typename UzbekistanAdditionalInfoT = UzbekistanAdditionalInfo>
+  AdditionalInfoRequest& WithUzbekistanAdditionalInfo(UzbekistanAdditionalInfoT&& value) {
+    SetUzbekistanAdditionalInfo(std::forward<UzbekistanAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    IsraelAdditionalInfo m_israelAdditionalInfo;
-    bool m_israelAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in the Philippines.</p>
+   */
+  inline const PhilippinesAdditionalInfo& GetPhilippinesAdditionalInfo() const { return m_philippinesAdditionalInfo; }
+  inline bool PhilippinesAdditionalInfoHasBeenSet() const { return m_philippinesAdditionalInfoHasBeenSet; }
+  template <typename PhilippinesAdditionalInfoT = PhilippinesAdditionalInfo>
+  void SetPhilippinesAdditionalInfo(PhilippinesAdditionalInfoT&& value) {
+    m_philippinesAdditionalInfoHasBeenSet = true;
+    m_philippinesAdditionalInfo = std::forward<PhilippinesAdditionalInfoT>(value);
+  }
+  template <typename PhilippinesAdditionalInfoT = PhilippinesAdditionalInfo>
+  AdditionalInfoRequest& WithPhilippinesAdditionalInfo(PhilippinesAdditionalInfoT&& value) {
+    SetPhilippinesAdditionalInfo(std::forward<PhilippinesAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ItalyAdditionalInfo m_italyAdditionalInfo;
-    bool m_italyAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in Belgium.</p>
+   */
+  inline const BelgiumAdditionalInfo& GetBelgiumAdditionalInfo() const { return m_belgiumAdditionalInfo; }
+  inline bool BelgiumAdditionalInfoHasBeenSet() const { return m_belgiumAdditionalInfoHasBeenSet; }
+  template <typename BelgiumAdditionalInfoT = BelgiumAdditionalInfo>
+  void SetBelgiumAdditionalInfo(BelgiumAdditionalInfoT&& value) {
+    m_belgiumAdditionalInfoHasBeenSet = true;
+    m_belgiumAdditionalInfo = std::forward<BelgiumAdditionalInfoT>(value);
+  }
+  template <typename BelgiumAdditionalInfoT = BelgiumAdditionalInfo>
+  AdditionalInfoRequest& WithBelgiumAdditionalInfo(BelgiumAdditionalInfoT&& value) {
+    SetBelgiumAdditionalInfo(std::forward<BelgiumAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    KenyaAdditionalInfo m_kenyaAdditionalInfo;
-    bool m_kenyaAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p> Additional tax information to specify for a TRN in Chile.</p>
+   */
+  inline const ChileAdditionalInfo& GetChileAdditionalInfo() const { return m_chileAdditionalInfo; }
+  inline bool ChileAdditionalInfoHasBeenSet() const { return m_chileAdditionalInfoHasBeenSet; }
+  template <typename ChileAdditionalInfoT = ChileAdditionalInfo>
+  void SetChileAdditionalInfo(ChileAdditionalInfoT&& value) {
+    m_chileAdditionalInfoHasBeenSet = true;
+    m_chileAdditionalInfo = std::forward<ChileAdditionalInfoT>(value);
+  }
+  template <typename ChileAdditionalInfoT = ChileAdditionalInfo>
+  AdditionalInfoRequest& WithChileAdditionalInfo(ChileAdditionalInfoT&& value) {
+    SetChileAdditionalInfo(std::forward<ChileAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    MalaysiaAdditionalInfo m_malaysiaAdditionalInfo;
-    bool m_malaysiaAdditionalInfoHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Additional tax information to specify for a TRN in France.</p>
+   */
+  inline const FranceAdditionalInfo& GetFranceAdditionalInfo() const { return m_franceAdditionalInfo; }
+  inline bool FranceAdditionalInfoHasBeenSet() const { return m_franceAdditionalInfoHasBeenSet; }
+  template <typename FranceAdditionalInfoT = FranceAdditionalInfo>
+  void SetFranceAdditionalInfo(FranceAdditionalInfoT&& value) {
+    m_franceAdditionalInfoHasBeenSet = true;
+    m_franceAdditionalInfo = std::forward<FranceAdditionalInfoT>(value);
+  }
+  template <typename FranceAdditionalInfoT = FranceAdditionalInfo>
+  AdditionalInfoRequest& WithFranceAdditionalInfo(FranceAdditionalInfoT&& value) {
+    SetFranceAdditionalInfo(std::forward<FranceAdditionalInfoT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  MalaysiaAdditionalInfo m_malaysiaAdditionalInfo;
 
-    PolandAdditionalInfo m_polandAdditionalInfo;
-    bool m_polandAdditionalInfoHasBeenSet = false;
+  IsraelAdditionalInfo m_israelAdditionalInfo;
 
-    RomaniaAdditionalInfo m_romaniaAdditionalInfo;
-    bool m_romaniaAdditionalInfoHasBeenSet = false;
+  EstoniaAdditionalInfo m_estoniaAdditionalInfo;
 
-    SaudiArabiaAdditionalInfo m_saudiArabiaAdditionalInfo;
-    bool m_saudiArabiaAdditionalInfoHasBeenSet = false;
+  CanadaAdditionalInfo m_canadaAdditionalInfo;
 
-    SouthKoreaAdditionalInfo m_southKoreaAdditionalInfo;
-    bool m_southKoreaAdditionalInfoHasBeenSet = false;
+  SpainAdditionalInfo m_spainAdditionalInfo;
 
-    SpainAdditionalInfo m_spainAdditionalInfo;
-    bool m_spainAdditionalInfoHasBeenSet = false;
+  KenyaAdditionalInfo m_kenyaAdditionalInfo;
 
-    TurkeyAdditionalInfo m_turkeyAdditionalInfo;
-    bool m_turkeyAdditionalInfoHasBeenSet = false;
+  SouthKoreaAdditionalInfo m_southKoreaAdditionalInfo;
 
-    UkraineAdditionalInfo m_ukraineAdditionalInfo;
-    bool m_ukraineAdditionalInfoHasBeenSet = false;
-  };
+  TurkeyAdditionalInfo m_turkeyAdditionalInfo;
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+  GeorgiaAdditionalInfo m_georgiaAdditionalInfo;
+
+  ItalyAdditionalInfo m_italyAdditionalInfo;
+
+  RomaniaAdditionalInfo m_romaniaAdditionalInfo;
+
+  UkraineAdditionalInfo m_ukraineAdditionalInfo;
+
+  PolandAdditionalInfo m_polandAdditionalInfo;
+
+  SaudiArabiaAdditionalInfo m_saudiArabiaAdditionalInfo;
+
+  IndonesiaAdditionalInfo m_indonesiaAdditionalInfo;
+
+  VietnamAdditionalInfo m_vietnamAdditionalInfo;
+
+  EgyptAdditionalInfo m_egyptAdditionalInfo;
+
+  GreeceAdditionalInfo m_greeceAdditionalInfo;
+
+  UzbekistanAdditionalInfo m_uzbekistanAdditionalInfo;
+
+  PhilippinesAdditionalInfo m_philippinesAdditionalInfo;
+
+  BelgiumAdditionalInfo m_belgiumAdditionalInfo;
+
+  ChileAdditionalInfo m_chileAdditionalInfo;
+
+  FranceAdditionalInfo m_franceAdditionalInfo;
+  bool m_malaysiaAdditionalInfoHasBeenSet = false;
+  bool m_israelAdditionalInfoHasBeenSet = false;
+  bool m_estoniaAdditionalInfoHasBeenSet = false;
+  bool m_canadaAdditionalInfoHasBeenSet = false;
+  bool m_spainAdditionalInfoHasBeenSet = false;
+  bool m_kenyaAdditionalInfoHasBeenSet = false;
+  bool m_southKoreaAdditionalInfoHasBeenSet = false;
+  bool m_turkeyAdditionalInfoHasBeenSet = false;
+  bool m_georgiaAdditionalInfoHasBeenSet = false;
+  bool m_italyAdditionalInfoHasBeenSet = false;
+  bool m_romaniaAdditionalInfoHasBeenSet = false;
+  bool m_ukraineAdditionalInfoHasBeenSet = false;
+  bool m_polandAdditionalInfoHasBeenSet = false;
+  bool m_saudiArabiaAdditionalInfoHasBeenSet = false;
+  bool m_indonesiaAdditionalInfoHasBeenSet = false;
+  bool m_vietnamAdditionalInfoHasBeenSet = false;
+  bool m_egyptAdditionalInfoHasBeenSet = false;
+  bool m_greeceAdditionalInfoHasBeenSet = false;
+  bool m_uzbekistanAdditionalInfoHasBeenSet = false;
+  bool m_philippinesAdditionalInfoHasBeenSet = false;
+  bool m_belgiumAdditionalInfoHasBeenSet = false;
+  bool m_chileAdditionalInfoHasBeenSet = false;
+  bool m_franceAdditionalInfoHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

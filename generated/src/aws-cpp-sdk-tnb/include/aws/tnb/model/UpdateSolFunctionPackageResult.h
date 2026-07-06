@@ -4,63 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/tnb/Tnb_EXPORTS.h>
 #include <aws/tnb/model/OperationalState.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace tnb
-{
-namespace Model
-{
-  class UpdateSolFunctionPackageResult
-  {
-  public:
-    AWS_TNB_API UpdateSolFunctionPackageResult();
-    AWS_TNB_API UpdateSolFunctionPackageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TNB_API UpdateSolFunctionPackageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace tnb {
+namespace Model {
+class UpdateSolFunctionPackageResult {
+ public:
+  AWS_TNB_API UpdateSolFunctionPackageResult() = default;
+  AWS_TNB_API UpdateSolFunctionPackageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TNB_API UpdateSolFunctionPackageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Operational state of the function package.</p>
+   */
+  inline OperationalState GetOperationalState() const { return m_operationalState; }
+  inline void SetOperationalState(OperationalState value) {
+    m_operationalStateHasBeenSet = true;
+    m_operationalState = value;
+  }
+  inline UpdateSolFunctionPackageResult& WithOperationalState(OperationalState value) {
+    SetOperationalState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Operational state of the function package.</p>
-     */
-    inline const OperationalState& GetOperationalState() const{ return m_operationalState; }
-    inline void SetOperationalState(const OperationalState& value) { m_operationalState = value; }
-    inline void SetOperationalState(OperationalState&& value) { m_operationalState = std::move(value); }
-    inline UpdateSolFunctionPackageResult& WithOperationalState(const OperationalState& value) { SetOperationalState(value); return *this;}
-    inline UpdateSolFunctionPackageResult& WithOperationalState(OperationalState&& value) { SetOperationalState(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSolFunctionPackageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSolFunctionPackageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSolFunctionPackageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSolFunctionPackageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    OperationalState m_operationalState;
+ private:
+  OperationalState m_operationalState{OperationalState::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_operationalStateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace tnb
-} // namespace Aws
+}  // namespace Model
+}  // namespace tnb
+}  // namespace Aws

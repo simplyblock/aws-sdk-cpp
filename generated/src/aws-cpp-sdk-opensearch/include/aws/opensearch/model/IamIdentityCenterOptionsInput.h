@@ -4,86 +4,95 @@
  */
 
 #pragma once
-#include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/opensearch/OpenSearchService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
 
+/**
+ * <p>Configuration settings for enabling and managing IAM Identity
+ * Center.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IamIdentityCenterOptionsInput">AWS
+ * API Reference</a></p>
+ */
+class IamIdentityCenterOptionsInput {
+ public:
+  AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput() = default;
+  AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Settings for IAM Identity Center.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/IamIdentityCenterOptionsInput">AWS
-   * API Reference</a></p>
+   * <p>Specifies whether IAM Identity Center is enabled or disabled.</p>
    */
-  class IamIdentityCenterOptionsInput
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput();
-    AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API IamIdentityCenterOptionsInput& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline bool GetEnabled() const { return m_enabled; }
+  inline bool EnabledHasBeenSet() const { return m_enabledHasBeenSet; }
+  inline void SetEnabled(bool value) {
+    m_enabledHasBeenSet = true;
+    m_enabled = value;
+  }
+  inline IamIdentityCenterOptionsInput& WithEnabled(bool value) {
+    SetEnabled(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Enable/disable settings for IAM Identity Center.</p>
-     */
-    inline bool GetEnabled() const{ return m_enabled; }
-    inline bool EnabledHasBeenSet() const { return m_enabledHasBeenSet; }
-    inline void SetEnabled(bool value) { m_enabledHasBeenSet = true; m_enabled = value; }
-    inline IamIdentityCenterOptionsInput& WithEnabled(bool value) { SetEnabled(value); return *this;}
-    ///@}
+  inline const Aws::String& GetIamIdentityCenterInstanceArn() const { return m_iamIdentityCenterInstanceArn; }
+  inline bool IamIdentityCenterInstanceArnHasBeenSet() const { return m_iamIdentityCenterInstanceArnHasBeenSet; }
+  template <typename IamIdentityCenterInstanceArnT = Aws::String>
+  void SetIamIdentityCenterInstanceArn(IamIdentityCenterInstanceArnT&& value) {
+    m_iamIdentityCenterInstanceArnHasBeenSet = true;
+    m_iamIdentityCenterInstanceArn = std::forward<IamIdentityCenterInstanceArnT>(value);
+  }
+  template <typename IamIdentityCenterInstanceArnT = Aws::String>
+  IamIdentityCenterOptionsInput& WithIamIdentityCenterInstanceArn(IamIdentityCenterInstanceArnT&& value) {
+    SetIamIdentityCenterInstanceArn(std::forward<IamIdentityCenterInstanceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetIamIdentityCenterInstanceArn() const{ return m_iamIdentityCenterInstanceArn; }
-    inline bool IamIdentityCenterInstanceArnHasBeenSet() const { return m_iamIdentityCenterInstanceArnHasBeenSet; }
-    inline void SetIamIdentityCenterInstanceArn(const Aws::String& value) { m_iamIdentityCenterInstanceArnHasBeenSet = true; m_iamIdentityCenterInstanceArn = value; }
-    inline void SetIamIdentityCenterInstanceArn(Aws::String&& value) { m_iamIdentityCenterInstanceArnHasBeenSet = true; m_iamIdentityCenterInstanceArn = std::move(value); }
-    inline void SetIamIdentityCenterInstanceArn(const char* value) { m_iamIdentityCenterInstanceArnHasBeenSet = true; m_iamIdentityCenterInstanceArn.assign(value); }
-    inline IamIdentityCenterOptionsInput& WithIamIdentityCenterInstanceArn(const Aws::String& value) { SetIamIdentityCenterInstanceArn(value); return *this;}
-    inline IamIdentityCenterOptionsInput& WithIamIdentityCenterInstanceArn(Aws::String&& value) { SetIamIdentityCenterInstanceArn(std::move(value)); return *this;}
-    inline IamIdentityCenterOptionsInput& WithIamIdentityCenterInstanceArn(const char* value) { SetIamIdentityCenterInstanceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the IAM role associated with the IAM Identity Center
+   * application.</p>
+   */
+  inline const Aws::String& GetIamRoleForIdentityCenterApplicationArn() const { return m_iamRoleForIdentityCenterApplicationArn; }
+  inline bool IamRoleForIdentityCenterApplicationArnHasBeenSet() const { return m_iamRoleForIdentityCenterApplicationArnHasBeenSet; }
+  template <typename IamRoleForIdentityCenterApplicationArnT = Aws::String>
+  void SetIamRoleForIdentityCenterApplicationArn(IamRoleForIdentityCenterApplicationArnT&& value) {
+    m_iamRoleForIdentityCenterApplicationArnHasBeenSet = true;
+    m_iamRoleForIdentityCenterApplicationArn = std::forward<IamRoleForIdentityCenterApplicationArnT>(value);
+  }
+  template <typename IamRoleForIdentityCenterApplicationArnT = Aws::String>
+  IamIdentityCenterOptionsInput& WithIamRoleForIdentityCenterApplicationArn(IamRoleForIdentityCenterApplicationArnT&& value) {
+    SetIamRoleForIdentityCenterApplicationArn(std::forward<IamRoleForIdentityCenterApplicationArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  bool m_enabled{false};
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name of IAM Identity Center's application.</p>
-     */
-    inline const Aws::String& GetIamRoleForIdentityCenterApplicationArn() const{ return m_iamRoleForIdentityCenterApplicationArn; }
-    inline bool IamRoleForIdentityCenterApplicationArnHasBeenSet() const { return m_iamRoleForIdentityCenterApplicationArnHasBeenSet; }
-    inline void SetIamRoleForIdentityCenterApplicationArn(const Aws::String& value) { m_iamRoleForIdentityCenterApplicationArnHasBeenSet = true; m_iamRoleForIdentityCenterApplicationArn = value; }
-    inline void SetIamRoleForIdentityCenterApplicationArn(Aws::String&& value) { m_iamRoleForIdentityCenterApplicationArnHasBeenSet = true; m_iamRoleForIdentityCenterApplicationArn = std::move(value); }
-    inline void SetIamRoleForIdentityCenterApplicationArn(const char* value) { m_iamRoleForIdentityCenterApplicationArnHasBeenSet = true; m_iamRoleForIdentityCenterApplicationArn.assign(value); }
-    inline IamIdentityCenterOptionsInput& WithIamRoleForIdentityCenterApplicationArn(const Aws::String& value) { SetIamRoleForIdentityCenterApplicationArn(value); return *this;}
-    inline IamIdentityCenterOptionsInput& WithIamRoleForIdentityCenterApplicationArn(Aws::String&& value) { SetIamRoleForIdentityCenterApplicationArn(std::move(value)); return *this;}
-    inline IamIdentityCenterOptionsInput& WithIamRoleForIdentityCenterApplicationArn(const char* value) { SetIamRoleForIdentityCenterApplicationArn(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_iamIdentityCenterInstanceArn;
 
-    bool m_enabled;
-    bool m_enabledHasBeenSet = false;
+  Aws::String m_iamRoleForIdentityCenterApplicationArn;
+  bool m_enabledHasBeenSet = false;
+  bool m_iamIdentityCenterInstanceArnHasBeenSet = false;
+  bool m_iamRoleForIdentityCenterApplicationArnHasBeenSet = false;
+};
 
-    Aws::String m_iamIdentityCenterInstanceArn;
-    bool m_iamIdentityCenterInstanceArnHasBeenSet = false;
-
-    Aws::String m_iamRoleForIdentityCenterApplicationArn;
-    bool m_iamRoleForIdentityCenterApplicationArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mgn/model/ChangeServerLifeCycleStateRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mgn/model/ChangeServerLifeCycleStateRequest.h>
 
 #include <utility>
 
@@ -12,38 +12,20 @@ using namespace Aws::mgn::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ChangeServerLifeCycleStateRequest::ChangeServerLifeCycleStateRequest() : 
-    m_accountIDHasBeenSet(false),
-    m_lifeCycleHasBeenSet(false),
-    m_sourceServerIDHasBeenSet(false)
-{
-}
-
-Aws::String ChangeServerLifeCycleStateRequest::SerializePayload() const
-{
+Aws::String ChangeServerLifeCycleStateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountIDHasBeenSet)
-  {
-   payload.WithString("accountID", m_accountID);
-
+  if (m_sourceServerIDHasBeenSet) {
+    payload.WithString("sourceServerID", m_sourceServerID);
   }
 
-  if(m_lifeCycleHasBeenSet)
-  {
-   payload.WithObject("lifeCycle", m_lifeCycle.Jsonize());
-
+  if (m_lifeCycleHasBeenSet) {
+    payload.WithObject("lifeCycle", m_lifeCycle.Jsonize());
   }
 
-  if(m_sourceServerIDHasBeenSet)
-  {
-   payload.WithString("sourceServerID", m_sourceServerID);
-
+  if (m_accountIDHasBeenSet) {
+    payload.WithString("accountID", m_accountID);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

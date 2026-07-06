@@ -3,45 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/GetInstanceTpmEkPubRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/GetInstanceTpmEkPubRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-GetInstanceTpmEkPubRequest::GetInstanceTpmEkPubRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_keyType(EkPubKeyType::NOT_SET),
-    m_keyTypeHasBeenSet(false),
-    m_keyFormat(EkPubKeyFormat::NOT_SET),
-    m_keyFormatHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String GetInstanceTpmEkPubRequest::SerializePayload() const
-{
+Aws::String GetInstanceTpmEkPubRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=GetInstanceTpmEkPub&";
-  if(m_instanceIdHasBeenSet)
-  {
+  if (m_instanceIdHasBeenSet) {
     ss << "InstanceId=" << StringUtils::URLEncode(m_instanceId.c_str()) << "&";
   }
 
-  if(m_keyTypeHasBeenSet)
-  {
-    ss << "KeyType=" << EkPubKeyTypeMapper::GetNameForEkPubKeyType(m_keyType) << "&";
+  if (m_keyTypeHasBeenSet) {
+    ss << "KeyType=" << StringUtils::URLEncode(EkPubKeyTypeMapper::GetNameForEkPubKeyType(m_keyType)) << "&";
   }
 
-  if(m_keyFormatHasBeenSet)
-  {
-    ss << "KeyFormat=" << EkPubKeyFormatMapper::GetNameForEkPubKeyFormat(m_keyFormat) << "&";
+  if (m_keyFormatHasBeenSet) {
+    ss << "KeyFormat=" << StringUtils::URLEncode(EkPubKeyFormatMapper::GetNameForEkPubKeyFormat(m_keyFormat)) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -49,8 +33,4 @@ Aws::String GetInstanceTpmEkPubRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  GetInstanceTpmEkPubRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void GetInstanceTpmEkPubRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

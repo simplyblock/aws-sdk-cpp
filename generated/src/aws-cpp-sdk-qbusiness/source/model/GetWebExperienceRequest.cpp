@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qbusiness/model/GetWebExperienceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qbusiness/model/GetWebExperienceRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::QBusiness::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetWebExperienceRequest::GetWebExperienceRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_webExperienceIdHasBeenSet(false)
-{
-}
-
-Aws::String GetWebExperienceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetWebExperienceRequest::SerializePayload() const { return {}; }

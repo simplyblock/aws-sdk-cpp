@@ -11,49 +11,40 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ConfigService
-{
-namespace Model
-{
+namespace Aws {
+namespace ConfigService {
+namespace Model {
 
-DescribeConfigRulesFilters::DescribeConfigRulesFilters() : 
-    m_evaluationMode(EvaluationMode::NOT_SET),
-    m_evaluationModeHasBeenSet(false)
-{
-}
+DescribeConfigRulesFilters::DescribeConfigRulesFilters(JsonView jsonValue) { *this = jsonValue; }
 
-DescribeConfigRulesFilters::DescribeConfigRulesFilters(JsonView jsonValue)
-  : DescribeConfigRulesFilters()
-{
-  *this = jsonValue;
-}
-
-DescribeConfigRulesFilters& DescribeConfigRulesFilters::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("EvaluationMode"))
-  {
+DescribeConfigRulesFilters& DescribeConfigRulesFilters::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("EvaluationMode")) {
     m_evaluationMode = EvaluationModeMapper::GetEvaluationModeForName(jsonValue.GetString("EvaluationMode"));
-
     m_evaluationModeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("RuleEvaluationVisibility")) {
+    m_ruleEvaluationVisibility =
+        RuleEvaluationVisibilityMapper::GetRuleEvaluationVisibilityForName(jsonValue.GetString("RuleEvaluationVisibility"));
+    m_ruleEvaluationVisibilityHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue DescribeConfigRulesFilters::Jsonize() const
-{
+JsonValue DescribeConfigRulesFilters::Jsonize() const {
   JsonValue payload;
 
-  if(m_evaluationModeHasBeenSet)
-  {
-   payload.WithString("EvaluationMode", EvaluationModeMapper::GetNameForEvaluationMode(m_evaluationMode));
+  if (m_evaluationModeHasBeenSet) {
+    payload.WithString("EvaluationMode", EvaluationModeMapper::GetNameForEvaluationMode(m_evaluationMode));
+  }
+
+  if (m_ruleEvaluationVisibilityHasBeenSet) {
+    payload.WithString("RuleEvaluationVisibility",
+                       RuleEvaluationVisibilityMapper::GetNameForRuleEvaluationVisibility(m_ruleEvaluationVisibility));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

@@ -4,92 +4,103 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/taxsettings/TaxSettings_EXPORTS.h>
 #include <aws/taxsettings/model/ValidationExceptionErrorCode.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/taxsettings/model/ValidationExceptionField.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
 
+/**
+ * <p>The exception when the input doesn't pass validation for at least one of the
+ * input parameters. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ValidationException">AWS
+ * API Reference</a></p>
+ */
+class ValidationException {
+ public:
+  AWS_TAXSETTINGS_API ValidationException() = default;
+  AWS_TAXSETTINGS_API ValidationException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TAXSETTINGS_API ValidationException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_TAXSETTINGS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ValidationException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>The exception when the input doesn't pass validation for at least one of the
-   * input parameters. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ValidationException">AWS
-   * API Reference</a></p>
+   * <p>400</p>
    */
-  class ValidationException
-  {
-  public:
-    AWS_TAXSETTINGS_API ValidationException();
-    AWS_TAXSETTINGS_API ValidationException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TAXSETTINGS_API ValidationException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_TAXSETTINGS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ValidationExceptionErrorCode GetErrorCode() const { return m_errorCode; }
+  inline bool ErrorCodeHasBeenSet() const { return m_errorCodeHasBeenSet; }
+  inline void SetErrorCode(ValidationExceptionErrorCode value) {
+    m_errorCodeHasBeenSet = true;
+    m_errorCode = value;
+  }
+  inline ValidationException& WithErrorCode(ValidationExceptionErrorCode value) {
+    SetErrorCode(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>400</p>
+   */
+  inline const Aws::Vector<ValidationExceptionField>& GetFieldList() const { return m_fieldList; }
+  inline bool FieldListHasBeenSet() const { return m_fieldListHasBeenSet; }
+  template <typename FieldListT = Aws::Vector<ValidationExceptionField>>
+  void SetFieldList(FieldListT&& value) {
+    m_fieldListHasBeenSet = true;
+    m_fieldList = std::forward<FieldListT>(value);
+  }
+  template <typename FieldListT = Aws::Vector<ValidationExceptionField>>
+  ValidationException& WithFieldList(FieldListT&& value) {
+    SetFieldList(std::forward<FieldListT>(value));
+    return *this;
+  }
+  template <typename FieldListT = ValidationExceptionField>
+  ValidationException& AddFieldList(FieldListT&& value) {
+    m_fieldListHasBeenSet = true;
+    m_fieldList.emplace_back(std::forward<FieldListT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_message;
 
-    ///@{
-    /**
-     * <p>400</p>
-     */
-    inline const ValidationExceptionErrorCode& GetErrorCode() const{ return m_errorCode; }
-    inline bool ErrorCodeHasBeenSet() const { return m_errorCodeHasBeenSet; }
-    inline void SetErrorCode(const ValidationExceptionErrorCode& value) { m_errorCodeHasBeenSet = true; m_errorCode = value; }
-    inline void SetErrorCode(ValidationExceptionErrorCode&& value) { m_errorCodeHasBeenSet = true; m_errorCode = std::move(value); }
-    inline ValidationException& WithErrorCode(const ValidationExceptionErrorCode& value) { SetErrorCode(value); return *this;}
-    inline ValidationException& WithErrorCode(ValidationExceptionErrorCode&& value) { SetErrorCode(std::move(value)); return *this;}
-    ///@}
+  ValidationExceptionErrorCode m_errorCode{ValidationExceptionErrorCode::NOT_SET};
 
-    ///@{
-    /**
-     * <p>400</p>
-     */
-    inline const Aws::Vector<ValidationExceptionField>& GetFieldList() const{ return m_fieldList; }
-    inline bool FieldListHasBeenSet() const { return m_fieldListHasBeenSet; }
-    inline void SetFieldList(const Aws::Vector<ValidationExceptionField>& value) { m_fieldListHasBeenSet = true; m_fieldList = value; }
-    inline void SetFieldList(Aws::Vector<ValidationExceptionField>&& value) { m_fieldListHasBeenSet = true; m_fieldList = std::move(value); }
-    inline ValidationException& WithFieldList(const Aws::Vector<ValidationExceptionField>& value) { SetFieldList(value); return *this;}
-    inline ValidationException& WithFieldList(Aws::Vector<ValidationExceptionField>&& value) { SetFieldList(std::move(value)); return *this;}
-    inline ValidationException& AddFieldList(const ValidationExceptionField& value) { m_fieldListHasBeenSet = true; m_fieldList.push_back(value); return *this; }
-    inline ValidationException& AddFieldList(ValidationExceptionField&& value) { m_fieldListHasBeenSet = true; m_fieldList.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<ValidationExceptionField> m_fieldList;
+  bool m_messageHasBeenSet = false;
+  bool m_errorCodeHasBeenSet = false;
+  bool m_fieldListHasBeenSet = false;
+};
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ValidationException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ValidationException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ValidationException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
-  private:
-
-    ValidationExceptionErrorCode m_errorCode;
-    bool m_errorCodeHasBeenSet = false;
-
-    Aws::Vector<ValidationExceptionField> m_fieldList;
-    bool m_fieldListHasBeenSet = false;
-
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

@@ -4,98 +4,116 @@
  */
 
 #pragma once
-#include <aws/groundstation/GroundStation_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/groundstation/GroundStation_EXPORTS.h>
 #include <aws/groundstation/model/ConfigCapabilityType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GroundStation
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GroundStation {
+namespace Model {
+/**
+ * <p>Response containing the ARN, ID, and type of a <code>Config</code>.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ConfigIdResponse">AWS
+ * API Reference</a></p>
+ */
+class CreateConfigResult {
+ public:
+  AWS_GROUNDSTATION_API CreateConfigResult() = default;
+  AWS_GROUNDSTATION_API CreateConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GROUNDSTATION_API CreateConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ConfigIdResponse">AWS
-   * API Reference</a></p>
+   * <p>UUID of a <code>Config</code>.</p>
    */
-  class CreateConfigResult
-  {
-  public:
-    AWS_GROUNDSTATION_API CreateConfigResult();
-    AWS_GROUNDSTATION_API CreateConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GROUNDSTATION_API CreateConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetConfigId() const { return m_configId; }
+  template <typename ConfigIdT = Aws::String>
+  void SetConfigId(ConfigIdT&& value) {
+    m_configIdHasBeenSet = true;
+    m_configId = std::forward<ConfigIdT>(value);
+  }
+  template <typename ConfigIdT = Aws::String>
+  CreateConfigResult& WithConfigId(ConfigIdT&& value) {
+    SetConfigId(std::forward<ConfigIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Type of a <code>Config</code>.</p>
+   */
+  inline ConfigCapabilityType GetConfigType() const { return m_configType; }
+  inline void SetConfigType(ConfigCapabilityType value) {
+    m_configTypeHasBeenSet = true;
+    m_configType = value;
+  }
+  inline CreateConfigResult& WithConfigType(ConfigCapabilityType value) {
+    SetConfigType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>ARN of a <code>Config</code>.</p>
-     */
-    inline const Aws::String& GetConfigArn() const{ return m_configArn; }
-    inline void SetConfigArn(const Aws::String& value) { m_configArn = value; }
-    inline void SetConfigArn(Aws::String&& value) { m_configArn = std::move(value); }
-    inline void SetConfigArn(const char* value) { m_configArn.assign(value); }
-    inline CreateConfigResult& WithConfigArn(const Aws::String& value) { SetConfigArn(value); return *this;}
-    inline CreateConfigResult& WithConfigArn(Aws::String&& value) { SetConfigArn(std::move(value)); return *this;}
-    inline CreateConfigResult& WithConfigArn(const char* value) { SetConfigArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>ARN of a <code>Config</code>.</p>
+   */
+  inline const Aws::String& GetConfigArn() const { return m_configArn; }
+  template <typename ConfigArnT = Aws::String>
+  void SetConfigArn(ConfigArnT&& value) {
+    m_configArnHasBeenSet = true;
+    m_configArn = std::forward<ConfigArnT>(value);
+  }
+  template <typename ConfigArnT = Aws::String>
+  CreateConfigResult& WithConfigArn(ConfigArnT&& value) {
+    SetConfigArn(std::forward<ConfigArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>UUID of a <code>Config</code>.</p>
-     */
-    inline const Aws::String& GetConfigId() const{ return m_configId; }
-    inline void SetConfigId(const Aws::String& value) { m_configId = value; }
-    inline void SetConfigId(Aws::String&& value) { m_configId = std::move(value); }
-    inline void SetConfigId(const char* value) { m_configId.assign(value); }
-    inline CreateConfigResult& WithConfigId(const Aws::String& value) { SetConfigId(value); return *this;}
-    inline CreateConfigResult& WithConfigId(Aws::String&& value) { SetConfigId(std::move(value)); return *this;}
-    inline CreateConfigResult& WithConfigId(const char* value) { SetConfigId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Type of a <code>Config</code>.</p>
-     */
-    inline const ConfigCapabilityType& GetConfigType() const{ return m_configType; }
-    inline void SetConfigType(const ConfigCapabilityType& value) { m_configType = value; }
-    inline void SetConfigType(ConfigCapabilityType&& value) { m_configType = std::move(value); }
-    inline CreateConfigResult& WithConfigType(const ConfigCapabilityType& value) { SetConfigType(value); return *this;}
-    inline CreateConfigResult& WithConfigType(ConfigCapabilityType&& value) { SetConfigType(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateConfigResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateConfigResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateConfigResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateConfigResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_configId;
 
-    Aws::String m_configArn;
+  ConfigCapabilityType m_configType{ConfigCapabilityType::NOT_SET};
 
-    Aws::String m_configId;
+  Aws::String m_configArn;
 
-    ConfigCapabilityType m_configType;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configIdHasBeenSet = false;
+  bool m_configTypeHasBeenSet = false;
+  bool m_configArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

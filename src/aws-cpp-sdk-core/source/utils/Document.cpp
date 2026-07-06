@@ -393,6 +393,10 @@ DocumentView Document::View() const
     return *this;
 }
 
+Json::JsonValue Document::Jsonize() const {
+  return Json::JsonValue(View());
+}
+
 DocumentView::DocumentView() : m_json(nullptr)
 {
 }
@@ -445,7 +449,7 @@ bool DocumentView::GetBool(const Aws::String& key) const
     assert(m_json);
     auto item = cJSON_AS4CPP_GetObjectItemCaseSensitive(m_json, key.c_str());
     assert(item);
-    return item->valueint != 0;
+    return item->type == cJSON_AS4CPP_True;
 }
 
 bool DocumentView::AsBool() const

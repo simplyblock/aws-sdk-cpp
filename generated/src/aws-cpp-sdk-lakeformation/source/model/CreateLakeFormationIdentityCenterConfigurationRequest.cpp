@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lakeformation/model/CreateLakeFormationIdentityCenterConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lakeformation/model/CreateLakeFormationIdentityCenterConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,50 +12,37 @@ using namespace Aws::LakeFormation::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateLakeFormationIdentityCenterConfigurationRequest::CreateLakeFormationIdentityCenterConfigurationRequest() : 
-    m_catalogIdHasBeenSet(false),
-    m_instanceArnHasBeenSet(false),
-    m_externalFilteringHasBeenSet(false),
-    m_shareRecipientsHasBeenSet(false)
-{
-}
-
-Aws::String CreateLakeFormationIdentityCenterConfigurationRequest::SerializePayload() const
-{
+Aws::String CreateLakeFormationIdentityCenterConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_catalogIdHasBeenSet)
-  {
-   payload.WithString("CatalogId", m_catalogId);
-
+  if (m_catalogIdHasBeenSet) {
+    payload.WithString("CatalogId", m_catalogId);
   }
 
-  if(m_instanceArnHasBeenSet)
-  {
-   payload.WithString("InstanceArn", m_instanceArn);
-
+  if (m_instanceArnHasBeenSet) {
+    payload.WithString("InstanceArn", m_instanceArn);
   }
 
-  if(m_externalFilteringHasBeenSet)
-  {
-   payload.WithObject("ExternalFiltering", m_externalFiltering.Jsonize());
-
+  if (m_externalFilteringHasBeenSet) {
+    payload.WithObject("ExternalFiltering", m_externalFiltering.Jsonize());
   }
 
-  if(m_shareRecipientsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> shareRecipientsJsonList(m_shareRecipients.size());
-   for(unsigned shareRecipientsIndex = 0; shareRecipientsIndex < shareRecipientsJsonList.GetLength(); ++shareRecipientsIndex)
-   {
-     shareRecipientsJsonList[shareRecipientsIndex].AsObject(m_shareRecipients[shareRecipientsIndex].Jsonize());
-   }
-   payload.WithArray("ShareRecipients", std::move(shareRecipientsJsonList));
+  if (m_shareRecipientsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> shareRecipientsJsonList(m_shareRecipients.size());
+    for (unsigned shareRecipientsIndex = 0; shareRecipientsIndex < shareRecipientsJsonList.GetLength(); ++shareRecipientsIndex) {
+      shareRecipientsJsonList[shareRecipientsIndex].AsObject(m_shareRecipients[shareRecipientsIndex].Jsonize());
+    }
+    payload.WithArray("ShareRecipients", std::move(shareRecipientsJsonList));
+  }
 
+  if (m_serviceIntegrationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> serviceIntegrationsJsonList(m_serviceIntegrations.size());
+    for (unsigned serviceIntegrationsIndex = 0; serviceIntegrationsIndex < serviceIntegrationsJsonList.GetLength();
+         ++serviceIntegrationsIndex) {
+      serviceIntegrationsJsonList[serviceIntegrationsIndex].AsObject(m_serviceIntegrations[serviceIntegrationsIndex].Jsonize());
+    }
+    payload.WithArray("ServiceIntegrations", std::move(serviceIntegrationsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -11,64 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
-WorkerComputeConfiguration::WorkerComputeConfiguration() : 
-    m_type(WorkerComputeType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_number(0),
-    m_numberHasBeenSet(false)
-{
-}
+WorkerComputeConfiguration::WorkerComputeConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-WorkerComputeConfiguration::WorkerComputeConfiguration(JsonView jsonValue)
-  : WorkerComputeConfiguration()
-{
-  *this = jsonValue;
-}
-
-WorkerComputeConfiguration& WorkerComputeConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("type"))
-  {
+WorkerComputeConfiguration& WorkerComputeConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("type")) {
     m_type = WorkerComputeTypeMapper::GetWorkerComputeTypeForName(jsonValue.GetString("type"));
-
     m_typeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("number"))
-  {
+  if (jsonValue.ValueExists("number")) {
     m_number = jsonValue.GetInteger("number");
-
     m_numberHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("properties")) {
+    m_properties = jsonValue.GetObject("properties");
+    m_propertiesHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue WorkerComputeConfiguration::Jsonize() const
-{
+JsonValue WorkerComputeConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", WorkerComputeTypeMapper::GetNameForWorkerComputeType(m_type));
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", WorkerComputeTypeMapper::GetNameForWorkerComputeType(m_type));
   }
 
-  if(m_numberHasBeenSet)
-  {
-   payload.WithInteger("number", m_number);
+  if (m_numberHasBeenSet) {
+    payload.WithInteger("number", m_number);
+  }
 
+  if (m_propertiesHasBeenSet) {
+    payload.WithObject("properties", m_properties.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

@@ -383,3 +383,64 @@ TEST_F(URITest, TestGetRFC3986URLEncodedPathCompliant)
 
     Aws::Http::SetCompliantRfc3986Encoding(false);
 }
+
+TEST_F(URITest, TestHostParsesCorrectly) {
+    URI uri = "https://test.com";
+    EXPECT_STREQ("test.com", uri.GetHost().c_str());
+
+    uri = "https://test.com:9000";
+    EXPECT_STREQ("test.com", uri.GetHost().c_str());
+
+    uri = "https://[::]";
+    EXPECT_STREQ("::", uri.GetHost().c_str());
+
+    uri = "https://[::]:9000";
+    EXPECT_STREQ("::", uri.GetHost().c_str());
+
+    uri = "https://[2001:0db8:85a3:0000:0000:8a2e:0370:7334]";
+    EXPECT_STREQ("2001:0db8:85a3:0000:0000:8a2e:0370:7334", uri.GetHost().c_str());
+
+    uri = "https://[2001:0db8:85a3:0000:0000:8a2e:0370:7334]:9000";
+    EXPECT_STREQ("2001:0db8:85a3:0000:0000:8a2e:0370:7334", uri.GetHost().c_str());
+
+    uri = "https://[]";
+    EXPECT_STREQ("", uri.GetHost().c_str());
+
+    uri = "https://[]:9000";
+    EXPECT_STREQ("", uri.GetHost().c_str());
+
+    uri = "https://127.0.0.1";
+    EXPECT_STREQ("127.0.0.1", uri.GetHost().c_str());
+
+    uri = "https://127.0.0.1:9000";
+    EXPECT_STREQ("127.0.0.1", uri.GetHost().c_str());
+}
+
+TEST_F(URITest, TestCanonicalizeValuelessQueryParameters)
+{
+    // S3 Annotations case: ?annotation + annotationName=classification
+    URI annotationUri("https://bucket.s3.us-east-2.amazonaws.com/key");
+    annotationUri.SetQueryString("?annotation");
+    annotationUri.AddQueryStringParameter("annotationName", "classification");
+    annotationUri.CanonicalizeQueryString();
+    EXPECT_EQ("?annotation=&annotationName=classification", annotationUri.GetQueryString());
+
+    // S3 Analytics case: ?analytics + id=my-config
+    URI analyticsUri("https://bucket.s3.us-east-1.amazonaws.com");
+    analyticsUri.SetQueryString("?analytics");
+    analyticsUri.AddQueryStringParameter("id", "my-config");
+    analyticsUri.CanonicalizeQueryString();
+    EXPECT_EQ("?analytics=&id=my-config", analyticsUri.GetQueryString());
+
+    // Value-less marker alone (no extra params) should remain unchanged
+    URI markerOnlyUri("https://bucket.s3.us-east-1.amazonaws.com?tagging");
+    markerOnlyUri.CanonicalizeQueryString();
+    EXPECT_EQ("?tagging", markerOnlyUri.GetQueryString());
+
+    // Value-less marker with explicit empty value should preserve =
+    URI emptyValueUri("https://bucket.s3.us-east-1.amazonaws.com");
+    emptyValueUri.SetQueryString("?annotation=");
+    emptyValueUri.AddQueryStringParameter("annotationName", "classification");
+    emptyValueUri.CanonicalizeQueryString();
+    EXPECT_EQ("?annotation=&annotationName=classification", emptyValueUri.GetQueryString());
+}

@@ -4,96 +4,172 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/monitoring/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/CompositeAlarm.h>
+#include <aws/monitoring/model/LogAlarm.h>
 #include <aws/monitoring/model/MetricAlarm.h>
-#include <utility>
+#include <aws/monitoring/model/ResponseMetadata.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
-  class DescribeAlarmsResult
-  {
-  public:
-    AWS_CLOUDWATCH_API DescribeAlarmsResult();
-    AWS_CLOUDWATCH_API DescribeAlarmsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDWATCH_API DescribeAlarmsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
+class DescribeAlarmsResult {
+ public:
+  AWS_CLOUDWATCH_API DescribeAlarmsResult() = default;
+  AWS_CLOUDWATCH_API DescribeAlarmsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_CLOUDWATCH_API DescribeAlarmsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The information about any composite alarms returned by the operation.</p>
+   */
+  inline const Aws::Vector<CompositeAlarm>& GetCompositeAlarms() const { return m_compositeAlarms; }
+  template <typename CompositeAlarmsT = Aws::Vector<CompositeAlarm>>
+  void SetCompositeAlarms(CompositeAlarmsT&& value) {
+    m_compositeAlarmsHasBeenSet = true;
+    m_compositeAlarms = std::forward<CompositeAlarmsT>(value);
+  }
+  template <typename CompositeAlarmsT = Aws::Vector<CompositeAlarm>>
+  DescribeAlarmsResult& WithCompositeAlarms(CompositeAlarmsT&& value) {
+    SetCompositeAlarms(std::forward<CompositeAlarmsT>(value));
+    return *this;
+  }
+  template <typename CompositeAlarmsT = CompositeAlarm>
+  DescribeAlarmsResult& AddCompositeAlarms(CompositeAlarmsT&& value) {
+    m_compositeAlarmsHasBeenSet = true;
+    m_compositeAlarms.emplace_back(std::forward<CompositeAlarmsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information about any composite alarms returned by the operation.</p>
-     */
-    inline const Aws::Vector<CompositeAlarm>& GetCompositeAlarms() const{ return m_compositeAlarms; }
-    inline void SetCompositeAlarms(const Aws::Vector<CompositeAlarm>& value) { m_compositeAlarms = value; }
-    inline void SetCompositeAlarms(Aws::Vector<CompositeAlarm>&& value) { m_compositeAlarms = std::move(value); }
-    inline DescribeAlarmsResult& WithCompositeAlarms(const Aws::Vector<CompositeAlarm>& value) { SetCompositeAlarms(value); return *this;}
-    inline DescribeAlarmsResult& WithCompositeAlarms(Aws::Vector<CompositeAlarm>&& value) { SetCompositeAlarms(std::move(value)); return *this;}
-    inline DescribeAlarmsResult& AddCompositeAlarms(const CompositeAlarm& value) { m_compositeAlarms.push_back(value); return *this; }
-    inline DescribeAlarmsResult& AddCompositeAlarms(CompositeAlarm&& value) { m_compositeAlarms.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The information about any metric alarms returned by the operation.</p>
+   */
+  inline const Aws::Vector<MetricAlarm>& GetMetricAlarms() const { return m_metricAlarms; }
+  template <typename MetricAlarmsT = Aws::Vector<MetricAlarm>>
+  void SetMetricAlarms(MetricAlarmsT&& value) {
+    m_metricAlarmsHasBeenSet = true;
+    m_metricAlarms = std::forward<MetricAlarmsT>(value);
+  }
+  template <typename MetricAlarmsT = Aws::Vector<MetricAlarm>>
+  DescribeAlarmsResult& WithMetricAlarms(MetricAlarmsT&& value) {
+    SetMetricAlarms(std::forward<MetricAlarmsT>(value));
+    return *this;
+  }
+  template <typename MetricAlarmsT = MetricAlarm>
+  DescribeAlarmsResult& AddMetricAlarms(MetricAlarmsT&& value) {
+    m_metricAlarmsHasBeenSet = true;
+    m_metricAlarms.emplace_back(std::forward<MetricAlarmsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information about any metric alarms returned by the operation.</p>
-     */
-    inline const Aws::Vector<MetricAlarm>& GetMetricAlarms() const{ return m_metricAlarms; }
-    inline void SetMetricAlarms(const Aws::Vector<MetricAlarm>& value) { m_metricAlarms = value; }
-    inline void SetMetricAlarms(Aws::Vector<MetricAlarm>&& value) { m_metricAlarms = std::move(value); }
-    inline DescribeAlarmsResult& WithMetricAlarms(const Aws::Vector<MetricAlarm>& value) { SetMetricAlarms(value); return *this;}
-    inline DescribeAlarmsResult& WithMetricAlarms(Aws::Vector<MetricAlarm>&& value) { SetMetricAlarms(std::move(value)); return *this;}
-    inline DescribeAlarmsResult& AddMetricAlarms(const MetricAlarm& value) { m_metricAlarms.push_back(value); return *this; }
-    inline DescribeAlarmsResult& AddMetricAlarms(MetricAlarm&& value) { m_metricAlarms.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The information about any log alarms returned by the operation.</p>
+   */
+  inline const Aws::Vector<LogAlarm>& GetLogAlarms() const { return m_logAlarms; }
+  template <typename LogAlarmsT = Aws::Vector<LogAlarm>>
+  void SetLogAlarms(LogAlarmsT&& value) {
+    m_logAlarmsHasBeenSet = true;
+    m_logAlarms = std::forward<LogAlarmsT>(value);
+  }
+  template <typename LogAlarmsT = Aws::Vector<LogAlarm>>
+  DescribeAlarmsResult& WithLogAlarms(LogAlarmsT&& value) {
+    SetLogAlarms(std::forward<LogAlarmsT>(value));
+    return *this;
+  }
+  template <typename LogAlarmsT = LogAlarm>
+  DescribeAlarmsResult& AddLogAlarms(LogAlarmsT&& value) {
+    m_logAlarmsHasBeenSet = true;
+    m_logAlarms.emplace_back(std::forward<LogAlarmsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token that marks the start of the next batch of returned results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeAlarmsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeAlarmsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeAlarmsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The token that marks the start of the next batch of returned results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeAlarmsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeAlarmsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeAlarmsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<CompositeAlarm> m_compositeAlarms;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAlarmsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<MetricAlarm> m_metricAlarms;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeAlarmsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  Aws::Vector<CompositeAlarm> m_compositeAlarms;
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+  Aws::Vector<MetricAlarm> m_metricAlarms;
+
+  Aws::Vector<LogAlarm> m_logAlarms;
+
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_compositeAlarmsHasBeenSet = false;
+  bool m_metricAlarmsHasBeenSet = false;
+  bool m_logAlarmsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

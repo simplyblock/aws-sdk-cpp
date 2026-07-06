@@ -4,76 +4,79 @@
  */
 
 #pragma once
-#include <aws/ds/DirectoryService_EXPORTS.h>
-#include <aws/ds/DirectoryServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ds/DirectoryServiceRequest.h>
+#include <aws/ds/DirectoryService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DirectoryService
-{
-namespace Model
-{
+namespace Aws {
+namespace DirectoryService {
+namespace Model {
 
+/**
+ * <p>Contains the inputs for the <a>CreateSnapshot</a> operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/CreateSnapshotRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateSnapshotRequest : public DirectoryServiceRequest {
+ public:
+  AWS_DIRECTORYSERVICE_API CreateSnapshotRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateSnapshot"; }
+
+  AWS_DIRECTORYSERVICE_API Aws::String SerializePayload() const override;
+
+  AWS_DIRECTORYSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>Contains the inputs for the <a>CreateSnapshot</a> operation.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/CreateSnapshotRequest">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the directory of which to take a snapshot.</p>
    */
-  class CreateSnapshotRequest : public DirectoryServiceRequest
-  {
-  public:
-    AWS_DIRECTORYSERVICE_API CreateSnapshotRequest();
+  inline const Aws::String& GetDirectoryId() const { return m_directoryId; }
+  inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
+  template <typename DirectoryIdT = Aws::String>
+  void SetDirectoryId(DirectoryIdT&& value) {
+    m_directoryIdHasBeenSet = true;
+    m_directoryId = std::forward<DirectoryIdT>(value);
+  }
+  template <typename DirectoryIdT = Aws::String>
+  CreateSnapshotRequest& WithDirectoryId(DirectoryIdT&& value) {
+    SetDirectoryId(std::forward<DirectoryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateSnapshot"; }
+  ///@{
+  /**
+   * <p>The descriptive name to apply to the snapshot.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateSnapshotRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_directoryId;
 
-    AWS_DIRECTORYSERVICE_API Aws::String SerializePayload() const override;
+  Aws::String m_name;
+  bool m_directoryIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    AWS_DIRECTORYSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The identifier of the directory of which to take a snapshot.</p>
-     */
-    inline const Aws::String& GetDirectoryId() const{ return m_directoryId; }
-    inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
-    inline void SetDirectoryId(const Aws::String& value) { m_directoryIdHasBeenSet = true; m_directoryId = value; }
-    inline void SetDirectoryId(Aws::String&& value) { m_directoryIdHasBeenSet = true; m_directoryId = std::move(value); }
-    inline void SetDirectoryId(const char* value) { m_directoryIdHasBeenSet = true; m_directoryId.assign(value); }
-    inline CreateSnapshotRequest& WithDirectoryId(const Aws::String& value) { SetDirectoryId(value); return *this;}
-    inline CreateSnapshotRequest& WithDirectoryId(Aws::String&& value) { SetDirectoryId(std::move(value)); return *this;}
-    inline CreateSnapshotRequest& WithDirectoryId(const char* value) { SetDirectoryId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The descriptive name to apply to the snapshot.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateSnapshotRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateSnapshotRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateSnapshotRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_directoryId;
-    bool m_directoryIdHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

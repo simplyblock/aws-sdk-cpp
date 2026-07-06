@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKMeetings::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteMeetingRequest::DeleteMeetingRequest() : 
-    m_meetingIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteMeetingRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteMeetingRequest::SerializePayload() const { return {}; }

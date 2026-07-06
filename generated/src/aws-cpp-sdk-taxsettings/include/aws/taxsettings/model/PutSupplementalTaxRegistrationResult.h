@@ -4,82 +4,95 @@
  */
 
 #pragma once
-#include <aws/taxsettings/TaxSettings_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/taxsettings/TaxSettings_EXPORTS.h>
 #include <aws/taxsettings/model/TaxRegistrationStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
-  class PutSupplementalTaxRegistrationResult
-  {
-  public:
-    AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult();
-    AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
+class PutSupplementalTaxRegistrationResult {
+ public:
+  AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult() = default;
+  AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TAXSETTINGS_API PutSupplementalTaxRegistrationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> Unique authority ID for the supplemental TRN information that was stored.
+   * </p>
+   */
+  inline const Aws::String& GetAuthorityId() const { return m_authorityId; }
+  template <typename AuthorityIdT = Aws::String>
+  void SetAuthorityId(AuthorityIdT&& value) {
+    m_authorityIdHasBeenSet = true;
+    m_authorityId = std::forward<AuthorityIdT>(value);
+  }
+  template <typename AuthorityIdT = Aws::String>
+  PutSupplementalTaxRegistrationResult& WithAuthorityId(AuthorityIdT&& value) {
+    SetAuthorityId(std::forward<AuthorityIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Unique authority ID for the supplemental TRN information that was stored.
-     * </p>
-     */
-    inline const Aws::String& GetAuthorityId() const{ return m_authorityId; }
-    inline void SetAuthorityId(const Aws::String& value) { m_authorityId = value; }
-    inline void SetAuthorityId(Aws::String&& value) { m_authorityId = std::move(value); }
-    inline void SetAuthorityId(const char* value) { m_authorityId.assign(value); }
-    inline PutSupplementalTaxRegistrationResult& WithAuthorityId(const Aws::String& value) { SetAuthorityId(value); return *this;}
-    inline PutSupplementalTaxRegistrationResult& WithAuthorityId(Aws::String&& value) { SetAuthorityId(std::move(value)); return *this;}
-    inline PutSupplementalTaxRegistrationResult& WithAuthorityId(const char* value) { SetAuthorityId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The status of the supplemental TRN stored in the system after processing.
+   * Based on the validation occurring on the TRN, the status can be
+   * <code>Verified</code>, <code>Pending</code>, <code>Rejected</code>, or
+   * <code>Deleted</code>. </p>
+   */
+  inline TaxRegistrationStatus GetStatus() const { return m_status; }
+  inline void SetStatus(TaxRegistrationStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline PutSupplementalTaxRegistrationResult& WithStatus(TaxRegistrationStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The status of the supplemental TRN stored in the system after processing.
-     * Based on the validation occurring on the TRN, the status can be
-     * <code>Verified</code>, <code>Pending</code>, <code>Rejected</code>, or
-     * <code>Deleted</code>. </p>
-     */
-    inline const TaxRegistrationStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const TaxRegistrationStatus& value) { m_status = value; }
-    inline void SetStatus(TaxRegistrationStatus&& value) { m_status = std::move(value); }
-    inline PutSupplementalTaxRegistrationResult& WithStatus(const TaxRegistrationStatus& value) { SetStatus(value); return *this;}
-    inline PutSupplementalTaxRegistrationResult& WithStatus(TaxRegistrationStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutSupplementalTaxRegistrationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutSupplementalTaxRegistrationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutSupplementalTaxRegistrationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutSupplementalTaxRegistrationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_authorityId;
+ private:
+  Aws::String m_authorityId;
 
-    TaxRegistrationStatus m_status;
+  TaxRegistrationStatus m_status{TaxRegistrationStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_authorityIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

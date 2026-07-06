@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateRoutingProfileAgentAvailabilityTimerRequest::UpdateRoutingProfileAgentAvailabilityTimerRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_routingProfileIdHasBeenSet(false),
-    m_agentAvailabilityTimer(AgentAvailabilityTimer::NOT_SET),
-    m_agentAvailabilityTimerHasBeenSet(false)
-{
-}
-
-Aws::String UpdateRoutingProfileAgentAvailabilityTimerRequest::SerializePayload() const
-{
+Aws::String UpdateRoutingProfileAgentAvailabilityTimerRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_agentAvailabilityTimerHasBeenSet)
-  {
-   payload.WithString("AgentAvailabilityTimer", AgentAvailabilityTimerMapper::GetNameForAgentAvailabilityTimer(m_agentAvailabilityTimer));
+  if (m_agentAvailabilityTimerHasBeenSet) {
+    payload.WithString("AgentAvailabilityTimer", AgentAvailabilityTimerMapper::GetNameForAgentAvailabilityTimer(m_agentAvailabilityTimer));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,64 +4,73 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
-  class StartExtensionPackAssociationResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult();
-    AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+class StartExtensionPackAssociationResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API StartExtensionPackAssociationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier for the request operation.</p>
+   */
+  inline const Aws::String& GetRequestIdentifier() const { return m_requestIdentifier; }
+  template <typename RequestIdentifierT = Aws::String>
+  void SetRequestIdentifier(RequestIdentifierT&& value) {
+    m_requestIdentifierHasBeenSet = true;
+    m_requestIdentifier = std::forward<RequestIdentifierT>(value);
+  }
+  template <typename RequestIdentifierT = Aws::String>
+  StartExtensionPackAssociationResult& WithRequestIdentifier(RequestIdentifierT&& value) {
+    SetRequestIdentifier(std::forward<RequestIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier for the request operation.</p>
-     */
-    inline const Aws::String& GetRequestIdentifier() const{ return m_requestIdentifier; }
-    inline void SetRequestIdentifier(const Aws::String& value) { m_requestIdentifier = value; }
-    inline void SetRequestIdentifier(Aws::String&& value) { m_requestIdentifier = std::move(value); }
-    inline void SetRequestIdentifier(const char* value) { m_requestIdentifier.assign(value); }
-    inline StartExtensionPackAssociationResult& WithRequestIdentifier(const Aws::String& value) { SetRequestIdentifier(value); return *this;}
-    inline StartExtensionPackAssociationResult& WithRequestIdentifier(Aws::String&& value) { SetRequestIdentifier(std::move(value)); return *this;}
-    inline StartExtensionPackAssociationResult& WithRequestIdentifier(const char* value) { SetRequestIdentifier(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartExtensionPackAssociationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartExtensionPackAssociationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartExtensionPackAssociationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartExtensionPackAssociationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestIdentifier;
+ private:
+  Aws::String m_requestIdentifier;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdentifierHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

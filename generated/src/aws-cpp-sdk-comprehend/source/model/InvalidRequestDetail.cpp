@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-InvalidRequestDetail::InvalidRequestDetail() : 
-    m_reason(InvalidRequestDetailReason::NOT_SET),
-    m_reasonHasBeenSet(false)
-{
-}
+InvalidRequestDetail::InvalidRequestDetail(JsonView jsonValue) { *this = jsonValue; }
 
-InvalidRequestDetail::InvalidRequestDetail(JsonView jsonValue)
-  : InvalidRequestDetail()
-{
-  *this = jsonValue;
-}
-
-InvalidRequestDetail& InvalidRequestDetail::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Reason"))
-  {
+InvalidRequestDetail& InvalidRequestDetail::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Reason")) {
     m_reason = InvalidRequestDetailReasonMapper::GetInvalidRequestDetailReasonForName(jsonValue.GetString("Reason"));
-
     m_reasonHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue InvalidRequestDetail::Jsonize() const
-{
+JsonValue InvalidRequestDetail::Jsonize() const {
   JsonValue payload;
 
-  if(m_reasonHasBeenSet)
-  {
-   payload.WithString("Reason", InvalidRequestDetailReasonMapper::GetNameForInvalidRequestDetailReason(m_reason));
+  if (m_reasonHasBeenSet) {
+    payload.WithString("Reason", InvalidRequestDetailReasonMapper::GetNameForInvalidRequestDetailReason(m_reason));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

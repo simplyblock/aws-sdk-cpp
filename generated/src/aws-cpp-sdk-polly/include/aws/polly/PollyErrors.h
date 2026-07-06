@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/polly/Polly_EXPORTS.h>
 
-namespace Aws
-{
-namespace Polly
-{
-enum class PollyErrors
-{
-  //From Core//
+namespace Aws {
+namespace Polly {
+enum class PollyErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class PollyErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,7 @@ enum class PollyErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  ENGINE_NOT_SUPPORTED= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ENGINE_NOT_SUPPORTED = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   INVALID_LEXICON,
   INVALID_NEXT_TOKEN,
   INVALID_S3_BUCKET,
@@ -63,6 +60,7 @@ enum class PollyErrors
   MAX_LEXEME_LENGTH_EXCEEDED,
   MAX_LEXICONS_NUMBER_EXCEEDED,
   SERVICE_FAILURE,
+  SERVICE_QUOTA_EXCEEDED,
   SSML_MARKS_NOT_SUPPORTED_FOR_TEXT_TYPE,
   SYNTHESIS_TASK_NOT_FOUND,
   TEXT_LENGTH_EXCEEDED,
@@ -70,9 +68,8 @@ enum class PollyErrors
   UNSUPPORTED_PLS_LANGUAGE
 };
 
-class AWS_POLLY_API PollyError : public Aws::Client::AWSError<PollyErrors>
-{
-public:
+class AWS_POLLY_API PollyError : public Aws::Client::AWSError<PollyErrors> {
+ public:
   PollyError() {}
   PollyError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<PollyErrors>(rhs) {}
   PollyError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<PollyErrors>(rhs) {}
@@ -83,10 +80,9 @@ public:
   T GetModeledError();
 };
 
-namespace PollyErrorMapper
-{
-  AWS_POLLY_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace PollyErrorMapper {
+AWS_POLLY_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace Polly
-} // namespace Aws
+}  // namespace Polly
+}  // namespace Aws

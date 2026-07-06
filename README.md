@@ -58,6 +58,22 @@ Debian based Linux distributions example:
 RPM based Linux distributions example:
    `sudo [yum|dnf|zypper] install libcurl-devel`
 
+### **Zlib (Optional — for Request Compression Support)**
+
+Zlib is **optional** and only required if you enable **request compression** for specific AWS services that support gzip/deflate encoding.
+* `-DENABLE_ZLIB_REQUEST_COMPRESSION=ON` — enables gzip/deflate request compression (disabled by default).
+
+If you do not enable this option, **zlib is not required** at build time.
+If you do enable it, install zlib as follows:
+
+* **Debian/Ubuntu:** `sudo apt-get install zlib1g-dev`
+* **RPM-based systems:** `sudo yum install zlib-devel` or `sudo dnf install zlib-devel`
+
+**Reference:**
+
+* [CMakeLists.txt (lines 179–192)](https://github.com/aws/aws-sdk-cpp/blob/main/CMakeLists.txt#L179-L192)
+* [CMake Parameters Documentation](https://github.com/aws/aws-sdk-cpp/blob/main/docs/CMake_Parameters.md#enable_zlib_request_compression)
+
 ### Building for MacOS
 
 Building for macOS is largely the same as building on a *nix system except for how the system consumes the curl dependency and compilers.
@@ -101,6 +117,15 @@ You can download and install aws-sdk-cpp using the [vcpkg](https://github.com/Mi
     ./vcpkg install aws-sdk-cpp
 
 The aws-sdk-cpp port in vcpkg is kept up to date by Microsoft team members and community contributors. If the version is out of date, please [create an issue or pull request](https://github.com/Microsoft/vcpkg) on the vcpkg repository.
+
+### Building aws-sdk-cpp - Using Conan
+
+You can download and install aws-sdk-cpp using [Conan](https://conan.io/). Use the following command:
+
+    conan install --requires="aws-sdk-cpp/[*]" --build="aws-*"
+
+The aws-sdk-cpp Conan recipe is kept up to date by JFrog's Conan team members and community contributors.
+If the version is out of date, please [create an issue or pull request](https://github.com/conan-io/conan-center-index) on the ConanCenterIndex repository.
 
 # Maintenance and support for SDK major versions
 

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/personalize/model/UpdateSolutionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/personalize/model/UpdateSolutionRequest.h>
 
 #include <utility>
 
@@ -12,47 +12,30 @@ using namespace Aws::Personalize::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateSolutionRequest::UpdateSolutionRequest() : 
-    m_solutionArnHasBeenSet(false),
-    m_performAutoTraining(false),
-    m_performAutoTrainingHasBeenSet(false),
-    m_solutionUpdateConfigHasBeenSet(false)
-{
-}
-
-Aws::String UpdateSolutionRequest::SerializePayload() const
-{
+Aws::String UpdateSolutionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_solutionArnHasBeenSet)
-  {
-   payload.WithString("solutionArn", m_solutionArn);
-
+  if (m_solutionArnHasBeenSet) {
+    payload.WithString("solutionArn", m_solutionArn);
   }
 
-  if(m_performAutoTrainingHasBeenSet)
-  {
-   payload.WithBool("performAutoTraining", m_performAutoTraining);
-
+  if (m_performAutoTrainingHasBeenSet) {
+    payload.WithBool("performAutoTraining", m_performAutoTraining);
   }
 
-  if(m_solutionUpdateConfigHasBeenSet)
-  {
-   payload.WithObject("solutionUpdateConfig", m_solutionUpdateConfig.Jsonize());
+  if (m_performIncrementalUpdateHasBeenSet) {
+    payload.WithBool("performIncrementalUpdate", m_performIncrementalUpdate);
+  }
 
+  if (m_solutionUpdateConfigHasBeenSet) {
+    payload.WithObject("solutionUpdateConfig", m_solutionUpdateConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateSolutionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateSolutionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonPersonalize.UpdateSolution"));
   return headers;
-
 }
-
-
-
-

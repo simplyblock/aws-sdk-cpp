@@ -4,70 +4,86 @@
  */
 
 #pragma once
-#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticbeanstalk/model/ResponseMetadata.h>
+#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
 #include <aws/elasticbeanstalk/model/ConfigurationSettingsDescription.h>
+#include <aws/elasticbeanstalk/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticBeanstalk
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticBeanstalk {
+namespace Model {
+/**
+ * <p>The results from a request to change the configuration settings of an
+ * environment.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/ConfigurationSettingsDescriptions">AWS
+ * API Reference</a></p>
+ */
+class DescribeConfigurationSettingsResult {
+ public:
+  AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult() = default;
+  AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>The results from a request to change the configuration settings of an
-   * environment.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/ConfigurationSettingsDescriptions">AWS
-   * API Reference</a></p>
+   * <p> A list of <a>ConfigurationSettingsDescription</a>. </p>
    */
-  class DescribeConfigurationSettingsResult
-  {
-  public:
-    AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult();
-    AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICBEANSTALK_API DescribeConfigurationSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<ConfigurationSettingsDescription>& GetConfigurationSettings() const { return m_configurationSettings; }
+  template <typename ConfigurationSettingsT = Aws::Vector<ConfigurationSettingsDescription>>
+  void SetConfigurationSettings(ConfigurationSettingsT&& value) {
+    m_configurationSettingsHasBeenSet = true;
+    m_configurationSettings = std::forward<ConfigurationSettingsT>(value);
+  }
+  template <typename ConfigurationSettingsT = Aws::Vector<ConfigurationSettingsDescription>>
+  DescribeConfigurationSettingsResult& WithConfigurationSettings(ConfigurationSettingsT&& value) {
+    SetConfigurationSettings(std::forward<ConfigurationSettingsT>(value));
+    return *this;
+  }
+  template <typename ConfigurationSettingsT = ConfigurationSettingsDescription>
+  DescribeConfigurationSettingsResult& AddConfigurationSettings(ConfigurationSettingsT&& value) {
+    m_configurationSettingsHasBeenSet = true;
+    m_configurationSettings.emplace_back(std::forward<ConfigurationSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p> A list of <a>ConfigurationSettingsDescription</a>. </p>
-     */
-    inline const Aws::Vector<ConfigurationSettingsDescription>& GetConfigurationSettings() const{ return m_configurationSettings; }
-    inline void SetConfigurationSettings(const Aws::Vector<ConfigurationSettingsDescription>& value) { m_configurationSettings = value; }
-    inline void SetConfigurationSettings(Aws::Vector<ConfigurationSettingsDescription>&& value) { m_configurationSettings = std::move(value); }
-    inline DescribeConfigurationSettingsResult& WithConfigurationSettings(const Aws::Vector<ConfigurationSettingsDescription>& value) { SetConfigurationSettings(value); return *this;}
-    inline DescribeConfigurationSettingsResult& WithConfigurationSettings(Aws::Vector<ConfigurationSettingsDescription>&& value) { SetConfigurationSettings(std::move(value)); return *this;}
-    inline DescribeConfigurationSettingsResult& AddConfigurationSettings(const ConfigurationSettingsDescription& value) { m_configurationSettings.push_back(value); return *this; }
-    inline DescribeConfigurationSettingsResult& AddConfigurationSettings(ConfigurationSettingsDescription&& value) { m_configurationSettings.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeConfigurationSettingsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeConfigurationSettingsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeConfigurationSettingsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<ConfigurationSettingsDescription> m_configurationSettings;
 
-    Aws::Vector<ConfigurationSettingsDescription> m_configurationSettings;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationSettingsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticBeanstalk
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticBeanstalk
+}  // namespace Aws

@@ -12,19 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetHostedConfigurationVersionRequest::GetHostedConfigurationVersionRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_configurationProfileIdHasBeenSet(false),
-    m_versionNumber(0),
-    m_versionNumberHasBeenSet(false)
-{
-}
-
-Aws::String GetHostedConfigurationVersionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetHostedConfigurationVersionRequest::SerializePayload() const { return {}; }

@@ -4,141 +4,223 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/glue/GlueRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/GlueRequest.h>
+#include <aws/glue/Glue_EXPORTS.h>
+#include <aws/glue/model/AuditContext.h>
+#include <aws/glue/model/TableAttributes.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Glue {
+namespace Model {
 
+/**
+ */
+class GetTableRequest : public GlueRequest {
+ public:
+  AWS_GLUE_API GetTableRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetTable"; }
+
+  AWS_GLUE_API Aws::String SerializePayload() const override;
+
+  AWS_GLUE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the Data Catalog where the table resides. If none is provided, the
+   * Amazon Web Services account ID is used by default.</p>
    */
-  class GetTableRequest : public GlueRequest
-  {
-  public:
-    AWS_GLUE_API GetTableRequest();
+  inline const Aws::String& GetCatalogId() const { return m_catalogId; }
+  inline bool CatalogIdHasBeenSet() const { return m_catalogIdHasBeenSet; }
+  template <typename CatalogIdT = Aws::String>
+  void SetCatalogId(CatalogIdT&& value) {
+    m_catalogIdHasBeenSet = true;
+    m_catalogId = std::forward<CatalogIdT>(value);
+  }
+  template <typename CatalogIdT = Aws::String>
+  GetTableRequest& WithCatalogId(CatalogIdT&& value) {
+    SetCatalogId(std::forward<CatalogIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetTable"; }
+  ///@{
+  /**
+   * <p>The name of the database in the catalog in which the table resides. For Hive
+   * compatibility, this name is entirely lowercase.</p>
+   */
+  inline const Aws::String& GetDatabaseName() const { return m_databaseName; }
+  inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
+  template <typename DatabaseNameT = Aws::String>
+  void SetDatabaseName(DatabaseNameT&& value) {
+    m_databaseNameHasBeenSet = true;
+    m_databaseName = std::forward<DatabaseNameT>(value);
+  }
+  template <typename DatabaseNameT = Aws::String>
+  GetTableRequest& WithDatabaseName(DatabaseNameT&& value) {
+    SetDatabaseName(std::forward<DatabaseNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GLUE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the table for which to retrieve the definition. For Hive
+   * compatibility, this name is entirely lowercase.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetTableRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GLUE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The transaction ID at which to read the table contents. </p>
+   */
+  inline const Aws::String& GetTransactionId() const { return m_transactionId; }
+  inline bool TransactionIdHasBeenSet() const { return m_transactionIdHasBeenSet; }
+  template <typename TransactionIdT = Aws::String>
+  void SetTransactionId(TransactionIdT&& value) {
+    m_transactionIdHasBeenSet = true;
+    m_transactionId = std::forward<TransactionIdT>(value);
+  }
+  template <typename TransactionIdT = Aws::String>
+  GetTableRequest& WithTransactionId(TransactionIdT&& value) {
+    SetTransactionId(std::forward<TransactionIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The time as of when to read the table contents. If not set, the most recent
+   * transaction commit time will be used. Cannot be specified along with
+   * <code>TransactionId</code>.</p>
+   */
+  inline const Aws::Utils::DateTime& GetQueryAsOfTime() const { return m_queryAsOfTime; }
+  inline bool QueryAsOfTimeHasBeenSet() const { return m_queryAsOfTimeHasBeenSet; }
+  template <typename QueryAsOfTimeT = Aws::Utils::DateTime>
+  void SetQueryAsOfTime(QueryAsOfTimeT&& value) {
+    m_queryAsOfTimeHasBeenSet = true;
+    m_queryAsOfTime = std::forward<QueryAsOfTimeT>(value);
+  }
+  template <typename QueryAsOfTimeT = Aws::Utils::DateTime>
+  GetTableRequest& WithQueryAsOfTime(QueryAsOfTimeT&& value) {
+    SetQueryAsOfTime(std::forward<QueryAsOfTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Data Catalog where the table resides. If none is provided, the
-     * Amazon Web Services account ID is used by default.</p>
-     */
-    inline const Aws::String& GetCatalogId() const{ return m_catalogId; }
-    inline bool CatalogIdHasBeenSet() const { return m_catalogIdHasBeenSet; }
-    inline void SetCatalogId(const Aws::String& value) { m_catalogIdHasBeenSet = true; m_catalogId = value; }
-    inline void SetCatalogId(Aws::String&& value) { m_catalogIdHasBeenSet = true; m_catalogId = std::move(value); }
-    inline void SetCatalogId(const char* value) { m_catalogIdHasBeenSet = true; m_catalogId.assign(value); }
-    inline GetTableRequest& WithCatalogId(const Aws::String& value) { SetCatalogId(value); return *this;}
-    inline GetTableRequest& WithCatalogId(Aws::String&& value) { SetCatalogId(std::move(value)); return *this;}
-    inline GetTableRequest& WithCatalogId(const char* value) { SetCatalogId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A structure containing the Lake Formation <a
+   * href="https://docs.aws.amazon.com/glue/latest/webapi/API_AuditContext.html">audit
+   * context</a>.</p>
+   */
+  inline const AuditContext& GetAuditContext() const { return m_auditContext; }
+  inline bool AuditContextHasBeenSet() const { return m_auditContextHasBeenSet; }
+  template <typename AuditContextT = AuditContext>
+  void SetAuditContext(AuditContextT&& value) {
+    m_auditContextHasBeenSet = true;
+    m_auditContext = std::forward<AuditContextT>(value);
+  }
+  template <typename AuditContextT = AuditContext>
+  GetTableRequest& WithAuditContext(AuditContextT&& value) {
+    SetAuditContext(std::forward<AuditContextT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the database in the catalog in which the table resides. For Hive
-     * compatibility, this name is entirely lowercase.</p>
-     */
-    inline const Aws::String& GetDatabaseName() const{ return m_databaseName; }
-    inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
-    inline void SetDatabaseName(const Aws::String& value) { m_databaseNameHasBeenSet = true; m_databaseName = value; }
-    inline void SetDatabaseName(Aws::String&& value) { m_databaseNameHasBeenSet = true; m_databaseName = std::move(value); }
-    inline void SetDatabaseName(const char* value) { m_databaseNameHasBeenSet = true; m_databaseName.assign(value); }
-    inline GetTableRequest& WithDatabaseName(const Aws::String& value) { SetDatabaseName(value); return *this;}
-    inline GetTableRequest& WithDatabaseName(Aws::String&& value) { SetDatabaseName(std::move(value)); return *this;}
-    inline GetTableRequest& WithDatabaseName(const char* value) { SetDatabaseName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether to include status details related to a request to create or
+   * update an Glue Data Catalog view.</p>
+   */
+  inline bool GetIncludeStatusDetails() const { return m_includeStatusDetails; }
+  inline bool IncludeStatusDetailsHasBeenSet() const { return m_includeStatusDetailsHasBeenSet; }
+  inline void SetIncludeStatusDetails(bool value) {
+    m_includeStatusDetailsHasBeenSet = true;
+    m_includeStatusDetails = value;
+  }
+  inline GetTableRequest& WithIncludeStatusDetails(bool value) {
+    SetIncludeStatusDetails(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the table for which to retrieve the definition. For Hive
-     * compatibility, this name is entirely lowercase.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline GetTableRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetTableRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetTableRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the table fields returned by the <code>GetTable</code> call. This
+   * parameter doesn't accept an empty list.</p> <p>The following are the valid
+   * combinations of values:</p> <ul> <li> <p> <code>DEFAULT</code> - Returns the
+   * Hive-style table definition only.</p> </li> <li> <p>
+   * <code>LATEST_ICEBERG_METADATA</code> - Returns only the latest Apache Iceberg
+   * table metadata.</p> </li> <li> <p> <code>DEFAULT</code>,
+   * <code>LATEST_ICEBERG_METADATA</code> - Returns both the Hive-style table
+   * definition and the latest Apache Iceberg table metadata.</p> </li> </ul>
+   */
+  inline const Aws::Vector<TableAttributes>& GetAttributesToGet() const { return m_attributesToGet; }
+  inline bool AttributesToGetHasBeenSet() const { return m_attributesToGetHasBeenSet; }
+  template <typename AttributesToGetT = Aws::Vector<TableAttributes>>
+  void SetAttributesToGet(AttributesToGetT&& value) {
+    m_attributesToGetHasBeenSet = true;
+    m_attributesToGet = std::forward<AttributesToGetT>(value);
+  }
+  template <typename AttributesToGetT = Aws::Vector<TableAttributes>>
+  GetTableRequest& WithAttributesToGet(AttributesToGetT&& value) {
+    SetAttributesToGet(std::forward<AttributesToGetT>(value));
+    return *this;
+  }
+  inline GetTableRequest& AddAttributesToGet(TableAttributes value) {
+    m_attributesToGetHasBeenSet = true;
+    m_attributesToGet.push_back(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_catalogId;
 
-    ///@{
-    /**
-     * <p>The transaction ID at which to read the table contents. </p>
-     */
-    inline const Aws::String& GetTransactionId() const{ return m_transactionId; }
-    inline bool TransactionIdHasBeenSet() const { return m_transactionIdHasBeenSet; }
-    inline void SetTransactionId(const Aws::String& value) { m_transactionIdHasBeenSet = true; m_transactionId = value; }
-    inline void SetTransactionId(Aws::String&& value) { m_transactionIdHasBeenSet = true; m_transactionId = std::move(value); }
-    inline void SetTransactionId(const char* value) { m_transactionIdHasBeenSet = true; m_transactionId.assign(value); }
-    inline GetTableRequest& WithTransactionId(const Aws::String& value) { SetTransactionId(value); return *this;}
-    inline GetTableRequest& WithTransactionId(Aws::String&& value) { SetTransactionId(std::move(value)); return *this;}
-    inline GetTableRequest& WithTransactionId(const char* value) { SetTransactionId(value); return *this;}
-    ///@}
+  Aws::String m_databaseName;
 
-    ///@{
-    /**
-     * <p>The time as of when to read the table contents. If not set, the most recent
-     * transaction commit time will be used. Cannot be specified along with
-     * <code>TransactionId</code>.</p>
-     */
-    inline const Aws::Utils::DateTime& GetQueryAsOfTime() const{ return m_queryAsOfTime; }
-    inline bool QueryAsOfTimeHasBeenSet() const { return m_queryAsOfTimeHasBeenSet; }
-    inline void SetQueryAsOfTime(const Aws::Utils::DateTime& value) { m_queryAsOfTimeHasBeenSet = true; m_queryAsOfTime = value; }
-    inline void SetQueryAsOfTime(Aws::Utils::DateTime&& value) { m_queryAsOfTimeHasBeenSet = true; m_queryAsOfTime = std::move(value); }
-    inline GetTableRequest& WithQueryAsOfTime(const Aws::Utils::DateTime& value) { SetQueryAsOfTime(value); return *this;}
-    inline GetTableRequest& WithQueryAsOfTime(Aws::Utils::DateTime&& value) { SetQueryAsOfTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>Specifies whether to include status details related to a request to create or
-     * update an Glue Data Catalog view.</p>
-     */
-    inline bool GetIncludeStatusDetails() const{ return m_includeStatusDetails; }
-    inline bool IncludeStatusDetailsHasBeenSet() const { return m_includeStatusDetailsHasBeenSet; }
-    inline void SetIncludeStatusDetails(bool value) { m_includeStatusDetailsHasBeenSet = true; m_includeStatusDetails = value; }
-    inline GetTableRequest& WithIncludeStatusDetails(bool value) { SetIncludeStatusDetails(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_transactionId;
 
-    Aws::String m_catalogId;
-    bool m_catalogIdHasBeenSet = false;
+  Aws::Utils::DateTime m_queryAsOfTime{};
 
-    Aws::String m_databaseName;
-    bool m_databaseNameHasBeenSet = false;
+  AuditContext m_auditContext;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  bool m_includeStatusDetails{false};
 
-    Aws::String m_transactionId;
-    bool m_transactionIdHasBeenSet = false;
+  Aws::Vector<TableAttributes> m_attributesToGet;
+  bool m_catalogIdHasBeenSet = false;
+  bool m_databaseNameHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_transactionIdHasBeenSet = false;
+  bool m_queryAsOfTimeHasBeenSet = false;
+  bool m_auditContextHasBeenSet = false;
+  bool m_includeStatusDetailsHasBeenSet = false;
+  bool m_attributesToGetHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_queryAsOfTime;
-    bool m_queryAsOfTimeHasBeenSet = false;
-
-    bool m_includeStatusDetails;
-    bool m_includeStatusDetailsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

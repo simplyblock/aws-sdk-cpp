@@ -4,10 +4,10 @@
  */
 
 #include <aws/autoscaling/model/DescribeTrafficSourcesResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
@@ -17,49 +17,42 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeTrafficSourcesResult::DescribeTrafficSourcesResult()
-{
-}
+DescribeTrafficSourcesResult::DescribeTrafficSourcesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeTrafficSourcesResult::DescribeTrafficSourcesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeTrafficSourcesResult& DescribeTrafficSourcesResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeTrafficSourcesResult& DescribeTrafficSourcesResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTrafficSourcesResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTrafficSourcesResult")) {
     resultNode = rootNode.FirstChild("DescribeTrafficSourcesResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode trafficSourcesNode = resultNode.FirstChild("TrafficSources");
-    if(!trafficSourcesNode.IsNull())
-    {
+    if (!trafficSourcesNode.IsNull()) {
       XmlNode trafficSourcesMember = trafficSourcesNode.FirstChild("member");
-      while(!trafficSourcesMember.IsNull())
-      {
+      m_trafficSourcesHasBeenSet = !trafficSourcesMember.IsNull();
+      while (!trafficSourcesMember.IsNull()) {
         m_trafficSources.push_back(trafficSourcesMember);
         trafficSourcesMember = trafficSourcesMember.NextNode("member");
       }
 
+      m_trafficSourcesHasBeenSet = true;
     }
     XmlNode nextTokenNode = resultNode.FirstChild("NextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::AutoScaling::Model::DescribeTrafficSourcesResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::AutoScaling::Model::DescribeTrafficSourcesResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

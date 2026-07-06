@@ -4,75 +4,89 @@
  */
 
 #pragma once
-#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/socialmessaging/SocialMessaging_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SocialMessaging
-{
-namespace Model
-{
-  class GetWhatsAppMessageMediaResult
-  {
-  public:
-    AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult();
-    AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SocialMessaging {
+namespace Model {
+class GetWhatsAppMessageMediaResult {
+ public:
+  AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult() = default;
+  AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SOCIALMESSAGING_API GetWhatsAppMessageMediaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The MIME type of the media.</p>
+   */
+  inline const Aws::String& GetMimeType() const { return m_mimeType; }
+  template <typename MimeTypeT = Aws::String>
+  void SetMimeType(MimeTypeT&& value) {
+    m_mimeTypeHasBeenSet = true;
+    m_mimeType = std::forward<MimeTypeT>(value);
+  }
+  template <typename MimeTypeT = Aws::String>
+  GetWhatsAppMessageMediaResult& WithMimeType(MimeTypeT&& value) {
+    SetMimeType(std::forward<MimeTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The MIME type of the media.</p>
-     */
-    inline const Aws::String& GetMimeType() const{ return m_mimeType; }
-    inline void SetMimeType(const Aws::String& value) { m_mimeType = value; }
-    inline void SetMimeType(Aws::String&& value) { m_mimeType = std::move(value); }
-    inline void SetMimeType(const char* value) { m_mimeType.assign(value); }
-    inline GetWhatsAppMessageMediaResult& WithMimeType(const Aws::String& value) { SetMimeType(value); return *this;}
-    inline GetWhatsAppMessageMediaResult& WithMimeType(Aws::String&& value) { SetMimeType(std::move(value)); return *this;}
-    inline GetWhatsAppMessageMediaResult& WithMimeType(const char* value) { SetMimeType(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The size of the media file, in KB.</p>
+   */
+  inline long long GetFileSize() const { return m_fileSize; }
+  inline void SetFileSize(long long value) {
+    m_fileSizeHasBeenSet = true;
+    m_fileSize = value;
+  }
+  inline GetWhatsAppMessageMediaResult& WithFileSize(long long value) {
+    SetFileSize(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The file size of the media, in KB.</p>
-     */
-    inline long long GetFileSize() const{ return m_fileSize; }
-    inline void SetFileSize(long long value) { m_fileSize = value; }
-    inline GetWhatsAppMessageMediaResult& WithFileSize(long long value) { SetFileSize(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetWhatsAppMessageMediaResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetWhatsAppMessageMediaResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetWhatsAppMessageMediaResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetWhatsAppMessageMediaResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_mimeType;
+ private:
+  Aws::String m_mimeType;
 
-    long long m_fileSize;
+  long long m_fileSize{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_mimeTypeHasBeenSet = false;
+  bool m_fileSizeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SocialMessaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace SocialMessaging
+}  // namespace Aws

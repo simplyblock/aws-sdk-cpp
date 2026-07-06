@@ -4,239 +4,345 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/monitoring/model/MetricStreamOutputFormat.h>
-#include <aws/monitoring/model/ResponseMetadata.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/MetricStreamFilter.h>
+#include <aws/monitoring/model/MetricStreamOutputFormat.h>
 #include <aws/monitoring/model/MetricStreamStatisticsConfiguration.h>
-#include <utility>
+#include <aws/monitoring/model/ResponseMetadata.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
-  class GetMetricStreamResult
-  {
-  public:
-    AWS_CLOUDWATCH_API GetMetricStreamResult();
-    AWS_CLOUDWATCH_API GetMetricStreamResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDWATCH_API GetMetricStreamResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
+class GetMetricStreamResult {
+ public:
+  AWS_CLOUDWATCH_API GetMetricStreamResult() = default;
+  AWS_CLOUDWATCH_API GetMetricStreamResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_CLOUDWATCH_API GetMetricStreamResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the metric stream.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  GetMetricStreamResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the metric stream.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline GetMetricStreamResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline GetMetricStreamResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline GetMetricStreamResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the metric stream.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetMetricStreamResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the metric stream.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline GetMetricStreamResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetMetricStreamResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetMetricStreamResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If this array of metric namespaces is present, then these namespaces are the
+   * only metric namespaces that are streamed by this metric stream.</p>
+   */
+  inline const Aws::Vector<MetricStreamFilter>& GetIncludeFilters() const { return m_includeFilters; }
+  template <typename IncludeFiltersT = Aws::Vector<MetricStreamFilter>>
+  void SetIncludeFilters(IncludeFiltersT&& value) {
+    m_includeFiltersHasBeenSet = true;
+    m_includeFilters = std::forward<IncludeFiltersT>(value);
+  }
+  template <typename IncludeFiltersT = Aws::Vector<MetricStreamFilter>>
+  GetMetricStreamResult& WithIncludeFilters(IncludeFiltersT&& value) {
+    SetIncludeFilters(std::forward<IncludeFiltersT>(value));
+    return *this;
+  }
+  template <typename IncludeFiltersT = MetricStreamFilter>
+  GetMetricStreamResult& AddIncludeFilters(IncludeFiltersT&& value) {
+    m_includeFiltersHasBeenSet = true;
+    m_includeFilters.emplace_back(std::forward<IncludeFiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If this array of metric namespaces is present, then these namespaces are the
-     * only metric namespaces that are streamed by this metric stream.</p>
-     */
-    inline const Aws::Vector<MetricStreamFilter>& GetIncludeFilters() const{ return m_includeFilters; }
-    inline void SetIncludeFilters(const Aws::Vector<MetricStreamFilter>& value) { m_includeFilters = value; }
-    inline void SetIncludeFilters(Aws::Vector<MetricStreamFilter>&& value) { m_includeFilters = std::move(value); }
-    inline GetMetricStreamResult& WithIncludeFilters(const Aws::Vector<MetricStreamFilter>& value) { SetIncludeFilters(value); return *this;}
-    inline GetMetricStreamResult& WithIncludeFilters(Aws::Vector<MetricStreamFilter>&& value) { SetIncludeFilters(std::move(value)); return *this;}
-    inline GetMetricStreamResult& AddIncludeFilters(const MetricStreamFilter& value) { m_includeFilters.push_back(value); return *this; }
-    inline GetMetricStreamResult& AddIncludeFilters(MetricStreamFilter&& value) { m_includeFilters.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If this array of metric namespaces is present, then these namespaces are the
+   * only metric namespaces that are not streamed by this metric stream. In this
+   * case, all other metric namespaces in the account are streamed by this metric
+   * stream.</p>
+   */
+  inline const Aws::Vector<MetricStreamFilter>& GetExcludeFilters() const { return m_excludeFilters; }
+  template <typename ExcludeFiltersT = Aws::Vector<MetricStreamFilter>>
+  void SetExcludeFilters(ExcludeFiltersT&& value) {
+    m_excludeFiltersHasBeenSet = true;
+    m_excludeFilters = std::forward<ExcludeFiltersT>(value);
+  }
+  template <typename ExcludeFiltersT = Aws::Vector<MetricStreamFilter>>
+  GetMetricStreamResult& WithExcludeFilters(ExcludeFiltersT&& value) {
+    SetExcludeFilters(std::forward<ExcludeFiltersT>(value));
+    return *this;
+  }
+  template <typename ExcludeFiltersT = MetricStreamFilter>
+  GetMetricStreamResult& AddExcludeFilters(ExcludeFiltersT&& value) {
+    m_excludeFiltersHasBeenSet = true;
+    m_excludeFilters.emplace_back(std::forward<ExcludeFiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If this array of metric namespaces is present, then these namespaces are the
-     * only metric namespaces that are not streamed by this metric stream. In this
-     * case, all other metric namespaces in the account are streamed by this metric
-     * stream.</p>
-     */
-    inline const Aws::Vector<MetricStreamFilter>& GetExcludeFilters() const{ return m_excludeFilters; }
-    inline void SetExcludeFilters(const Aws::Vector<MetricStreamFilter>& value) { m_excludeFilters = value; }
-    inline void SetExcludeFilters(Aws::Vector<MetricStreamFilter>&& value) { m_excludeFilters = std::move(value); }
-    inline GetMetricStreamResult& WithExcludeFilters(const Aws::Vector<MetricStreamFilter>& value) { SetExcludeFilters(value); return *this;}
-    inline GetMetricStreamResult& WithExcludeFilters(Aws::Vector<MetricStreamFilter>&& value) { SetExcludeFilters(std::move(value)); return *this;}
-    inline GetMetricStreamResult& AddExcludeFilters(const MetricStreamFilter& value) { m_excludeFilters.push_back(value); return *this; }
-    inline GetMetricStreamResult& AddExcludeFilters(MetricStreamFilter&& value) { m_excludeFilters.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the Amazon Kinesis Data Firehose delivery stream that is used by
+   * this metric stream.</p>
+   */
+  inline const Aws::String& GetFirehoseArn() const { return m_firehoseArn; }
+  template <typename FirehoseArnT = Aws::String>
+  void SetFirehoseArn(FirehoseArnT&& value) {
+    m_firehoseArnHasBeenSet = true;
+    m_firehoseArn = std::forward<FirehoseArnT>(value);
+  }
+  template <typename FirehoseArnT = Aws::String>
+  GetMetricStreamResult& WithFirehoseArn(FirehoseArnT&& value) {
+    SetFirehoseArn(std::forward<FirehoseArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the Amazon Kinesis Data Firehose delivery stream that is used by
-     * this metric stream.</p>
-     */
-    inline const Aws::String& GetFirehoseArn() const{ return m_firehoseArn; }
-    inline void SetFirehoseArn(const Aws::String& value) { m_firehoseArn = value; }
-    inline void SetFirehoseArn(Aws::String&& value) { m_firehoseArn = std::move(value); }
-    inline void SetFirehoseArn(const char* value) { m_firehoseArn.assign(value); }
-    inline GetMetricStreamResult& WithFirehoseArn(const Aws::String& value) { SetFirehoseArn(value); return *this;}
-    inline GetMetricStreamResult& WithFirehoseArn(Aws::String&& value) { SetFirehoseArn(std::move(value)); return *this;}
-    inline GetMetricStreamResult& WithFirehoseArn(const char* value) { SetFirehoseArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the IAM role that is used by this metric stream.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  GetMetricStreamResult& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the IAM role that is used by this metric stream.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArn.assign(value); }
-    inline GetMetricStreamResult& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline GetMetricStreamResult& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline GetMetricStreamResult& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the metric stream. The possible values are <code>running</code>
+   * and <code>stopped</code>.</p>
+   */
+  inline const Aws::String& GetState() const { return m_state; }
+  template <typename StateT = Aws::String>
+  void SetState(StateT&& value) {
+    m_stateHasBeenSet = true;
+    m_state = std::forward<StateT>(value);
+  }
+  template <typename StateT = Aws::String>
+  GetMetricStreamResult& WithState(StateT&& value) {
+    SetState(std::forward<StateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the metric stream. The possible values are <code>running</code>
-     * and <code>stopped</code>.</p>
-     */
-    inline const Aws::String& GetState() const{ return m_state; }
-    inline void SetState(const Aws::String& value) { m_state = value; }
-    inline void SetState(Aws::String&& value) { m_state = std::move(value); }
-    inline void SetState(const char* value) { m_state.assign(value); }
-    inline GetMetricStreamResult& WithState(const Aws::String& value) { SetState(value); return *this;}
-    inline GetMetricStreamResult& WithState(Aws::String&& value) { SetState(std::move(value)); return *this;}
-    inline GetMetricStreamResult& WithState(const char* value) { SetState(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date that the metric stream was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDate() const { return m_creationDate; }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  GetMetricStreamResult& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date that the metric stream was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDate() const{ return m_creationDate; }
-    inline void SetCreationDate(const Aws::Utils::DateTime& value) { m_creationDate = value; }
-    inline void SetCreationDate(Aws::Utils::DateTime&& value) { m_creationDate = std::move(value); }
-    inline GetMetricStreamResult& WithCreationDate(const Aws::Utils::DateTime& value) { SetCreationDate(value); return *this;}
-    inline GetMetricStreamResult& WithCreationDate(Aws::Utils::DateTime&& value) { SetCreationDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date of the most recent update to the metric stream's configuration.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdateDate() const { return m_lastUpdateDate; }
+  template <typename LastUpdateDateT = Aws::Utils::DateTime>
+  void SetLastUpdateDate(LastUpdateDateT&& value) {
+    m_lastUpdateDateHasBeenSet = true;
+    m_lastUpdateDate = std::forward<LastUpdateDateT>(value);
+  }
+  template <typename LastUpdateDateT = Aws::Utils::DateTime>
+  GetMetricStreamResult& WithLastUpdateDate(LastUpdateDateT&& value) {
+    SetLastUpdateDate(std::forward<LastUpdateDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date of the most recent update to the metric stream's configuration.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdateDate() const{ return m_lastUpdateDate; }
-    inline void SetLastUpdateDate(const Aws::Utils::DateTime& value) { m_lastUpdateDate = value; }
-    inline void SetLastUpdateDate(Aws::Utils::DateTime&& value) { m_lastUpdateDate = std::move(value); }
-    inline GetMetricStreamResult& WithLastUpdateDate(const Aws::Utils::DateTime& value) { SetLastUpdateDate(value); return *this;}
-    inline GetMetricStreamResult& WithLastUpdateDate(Aws::Utils::DateTime&& value) { SetLastUpdateDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The output format for the stream. Valid values are <code>json</code>,
+   * <code>opentelemetry1.0</code>, and <code>opentelemetry0.7</code>. For more
+   * information about metric stream output formats, see <a
+   * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html">Metric
+   * streams output formats</a>.</p>
+   */
+  inline MetricStreamOutputFormat GetOutputFormat() const { return m_outputFormat; }
+  inline void SetOutputFormat(MetricStreamOutputFormat value) {
+    m_outputFormatHasBeenSet = true;
+    m_outputFormat = value;
+  }
+  inline GetMetricStreamResult& WithOutputFormat(MetricStreamOutputFormat value) {
+    SetOutputFormat(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The output format for the stream. Valid values are <code>json</code>,
-     * <code>opentelemetry1.0</code>, and <code>opentelemetry0.7</code>. For more
-     * information about metric stream output formats, see <a
-     * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html">Metric
-     * streams output formats</a>.</p>
-     */
-    inline const MetricStreamOutputFormat& GetOutputFormat() const{ return m_outputFormat; }
-    inline void SetOutputFormat(const MetricStreamOutputFormat& value) { m_outputFormat = value; }
-    inline void SetOutputFormat(MetricStreamOutputFormat&& value) { m_outputFormat = std::move(value); }
-    inline GetMetricStreamResult& WithOutputFormat(const MetricStreamOutputFormat& value) { SetOutputFormat(value); return *this;}
-    inline GetMetricStreamResult& WithOutputFormat(MetricStreamOutputFormat&& value) { SetOutputFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Each entry in this array displays information about one or more metrics that
+   * include additional statistics in the metric stream. For more information about
+   * the additional statistics, see <a
+   * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html">
+   * CloudWatch statistics definitions</a>. </p>
+   */
+  inline const Aws::Vector<MetricStreamStatisticsConfiguration>& GetStatisticsConfigurations() const { return m_statisticsConfigurations; }
+  template <typename StatisticsConfigurationsT = Aws::Vector<MetricStreamStatisticsConfiguration>>
+  void SetStatisticsConfigurations(StatisticsConfigurationsT&& value) {
+    m_statisticsConfigurationsHasBeenSet = true;
+    m_statisticsConfigurations = std::forward<StatisticsConfigurationsT>(value);
+  }
+  template <typename StatisticsConfigurationsT = Aws::Vector<MetricStreamStatisticsConfiguration>>
+  GetMetricStreamResult& WithStatisticsConfigurations(StatisticsConfigurationsT&& value) {
+    SetStatisticsConfigurations(std::forward<StatisticsConfigurationsT>(value));
+    return *this;
+  }
+  template <typename StatisticsConfigurationsT = MetricStreamStatisticsConfiguration>
+  GetMetricStreamResult& AddStatisticsConfigurations(StatisticsConfigurationsT&& value) {
+    m_statisticsConfigurationsHasBeenSet = true;
+    m_statisticsConfigurations.emplace_back(std::forward<StatisticsConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Each entry in this array displays information about one or more metrics that
-     * include additional statistics in the metric stream. For more information about
-     * the additional statistics, see <a
-     * href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html">
-     * CloudWatch statistics definitions</a>. </p>
-     */
-    inline const Aws::Vector<MetricStreamStatisticsConfiguration>& GetStatisticsConfigurations() const{ return m_statisticsConfigurations; }
-    inline void SetStatisticsConfigurations(const Aws::Vector<MetricStreamStatisticsConfiguration>& value) { m_statisticsConfigurations = value; }
-    inline void SetStatisticsConfigurations(Aws::Vector<MetricStreamStatisticsConfiguration>&& value) { m_statisticsConfigurations = std::move(value); }
-    inline GetMetricStreamResult& WithStatisticsConfigurations(const Aws::Vector<MetricStreamStatisticsConfiguration>& value) { SetStatisticsConfigurations(value); return *this;}
-    inline GetMetricStreamResult& WithStatisticsConfigurations(Aws::Vector<MetricStreamStatisticsConfiguration>&& value) { SetStatisticsConfigurations(std::move(value)); return *this;}
-    inline GetMetricStreamResult& AddStatisticsConfigurations(const MetricStreamStatisticsConfiguration& value) { m_statisticsConfigurations.push_back(value); return *this; }
-    inline GetMetricStreamResult& AddStatisticsConfigurations(MetricStreamStatisticsConfiguration&& value) { m_statisticsConfigurations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If this is <code>true</code> and this metric stream is in a monitoring
+   * account, then the stream includes metrics from source accounts that the
+   * monitoring account is linked to.</p>
+   */
+  inline bool GetIncludeLinkedAccountsMetrics() const { return m_includeLinkedAccountsMetrics; }
+  inline void SetIncludeLinkedAccountsMetrics(bool value) {
+    m_includeLinkedAccountsMetricsHasBeenSet = true;
+    m_includeLinkedAccountsMetrics = value;
+  }
+  inline GetMetricStreamResult& WithIncludeLinkedAccountsMetrics(bool value) {
+    SetIncludeLinkedAccountsMetrics(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If this is <code>true</code> and this metric stream is in a monitoring
-     * account, then the stream includes metrics from source accounts that the
-     * monitoring account is linked to.</p>
-     */
-    inline bool GetIncludeLinkedAccountsMetrics() const{ return m_includeLinkedAccountsMetrics; }
-    inline void SetIncludeLinkedAccountsMetrics(bool value) { m_includeLinkedAccountsMetrics = value; }
-    inline GetMetricStreamResult& WithIncludeLinkedAccountsMetrics(bool value) { SetIncludeLinkedAccountsMetrics(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetMetricStreamResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetMetricStreamResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMetricStreamResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
+  ///@{
 
-    Aws::String m_name;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetMetricStreamResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MetricStreamFilter> m_includeFilters;
+ private:
+  Aws::String m_arn;
 
-    Aws::Vector<MetricStreamFilter> m_excludeFilters;
+  Aws::String m_name;
 
-    Aws::String m_firehoseArn;
+  Aws::Vector<MetricStreamFilter> m_includeFilters;
 
-    Aws::String m_roleArn;
+  Aws::Vector<MetricStreamFilter> m_excludeFilters;
 
-    Aws::String m_state;
+  Aws::String m_firehoseArn;
 
-    Aws::Utils::DateTime m_creationDate;
+  Aws::String m_roleArn;
 
-    Aws::Utils::DateTime m_lastUpdateDate;
+  Aws::String m_state;
 
-    MetricStreamOutputFormat m_outputFormat;
+  Aws::Utils::DateTime m_creationDate{};
 
-    Aws::Vector<MetricStreamStatisticsConfiguration> m_statisticsConfigurations;
+  Aws::Utils::DateTime m_lastUpdateDate{};
 
-    bool m_includeLinkedAccountsMetrics;
+  MetricStreamOutputFormat m_outputFormat{MetricStreamOutputFormat::NOT_SET};
 
-    ResponseMetadata m_responseMetadata;
-  };
+  Aws::Vector<MetricStreamStatisticsConfiguration> m_statisticsConfigurations;
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+  bool m_includeLinkedAccountsMetrics{false};
+
+  Aws::String m_requestId;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_includeFiltersHasBeenSet = false;
+  bool m_excludeFiltersHasBeenSet = false;
+  bool m_firehoseArnHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_lastUpdateDateHasBeenSet = false;
+  bool m_outputFormatHasBeenSet = false;
+  bool m_statisticsConfigurationsHasBeenSet = false;
+  bool m_includeLinkedAccountsMetricsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

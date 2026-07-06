@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/macie2/model/DeleteMemberRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/macie2/model/DeleteMemberRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Macie2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteMemberRequest::DeleteMemberRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteMemberRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteMemberRequest::SerializePayload() const { return {}; }

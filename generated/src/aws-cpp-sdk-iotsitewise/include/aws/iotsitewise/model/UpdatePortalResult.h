@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/iotsitewise/model/PortalStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTSiteWise
-{
-namespace Model
-{
-  class UpdatePortalResult
-  {
-  public:
-    AWS_IOTSITEWISE_API UpdatePortalResult();
-    AWS_IOTSITEWISE_API UpdatePortalResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTSITEWISE_API UpdatePortalResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTSiteWise {
+namespace Model {
+class UpdatePortalResult {
+ public:
+  AWS_IOTSITEWISE_API UpdatePortalResult() = default;
+  AWS_IOTSITEWISE_API UpdatePortalResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTSITEWISE_API UpdatePortalResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status of the portal, which contains a state (<code>UPDATING</code> after
+   * successfully calling this operation) and any error message.</p>
+   */
+  inline const PortalStatus& GetPortalStatus() const { return m_portalStatus; }
+  template <typename PortalStatusT = PortalStatus>
+  void SetPortalStatus(PortalStatusT&& value) {
+    m_portalStatusHasBeenSet = true;
+    m_portalStatus = std::forward<PortalStatusT>(value);
+  }
+  template <typename PortalStatusT = PortalStatus>
+  UpdatePortalResult& WithPortalStatus(PortalStatusT&& value) {
+    SetPortalStatus(std::forward<PortalStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the portal, which contains a state (<code>UPDATING</code> after
-     * successfully calling this operation) and any error message.</p>
-     */
-    inline const PortalStatus& GetPortalStatus() const{ return m_portalStatus; }
-    inline void SetPortalStatus(const PortalStatus& value) { m_portalStatus = value; }
-    inline void SetPortalStatus(PortalStatus&& value) { m_portalStatus = std::move(value); }
-    inline UpdatePortalResult& WithPortalStatus(const PortalStatus& value) { SetPortalStatus(value); return *this;}
-    inline UpdatePortalResult& WithPortalStatus(PortalStatus&& value) { SetPortalStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdatePortalResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdatePortalResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdatePortalResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdatePortalResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PortalStatus m_portalStatus;
+ private:
+  PortalStatus m_portalStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_portalStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

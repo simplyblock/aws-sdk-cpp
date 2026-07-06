@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/eks/EKS_EXPORTS.h>
 #include <aws/eks/model/EksAnywhereSubscription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EKS
-{
-namespace Model
-{
-  class DescribeEksAnywhereSubscriptionResult
-  {
-  public:
-    AWS_EKS_API DescribeEksAnywhereSubscriptionResult();
-    AWS_EKS_API DescribeEksAnywhereSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EKS_API DescribeEksAnywhereSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EKS {
+namespace Model {
+class DescribeEksAnywhereSubscriptionResult {
+ public:
+  AWS_EKS_API DescribeEksAnywhereSubscriptionResult() = default;
+  AWS_EKS_API DescribeEksAnywhereSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EKS_API DescribeEksAnywhereSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The full description of the subscription.</p>
+   */
+  inline const EksAnywhereSubscription& GetSubscription() const { return m_subscription; }
+  template <typename SubscriptionT = EksAnywhereSubscription>
+  void SetSubscription(SubscriptionT&& value) {
+    m_subscriptionHasBeenSet = true;
+    m_subscription = std::forward<SubscriptionT>(value);
+  }
+  template <typename SubscriptionT = EksAnywhereSubscription>
+  DescribeEksAnywhereSubscriptionResult& WithSubscription(SubscriptionT&& value) {
+    SetSubscription(std::forward<SubscriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The full description of the subscription.</p>
-     */
-    inline const EksAnywhereSubscription& GetSubscription() const{ return m_subscription; }
-    inline void SetSubscription(const EksAnywhereSubscription& value) { m_subscription = value; }
-    inline void SetSubscription(EksAnywhereSubscription&& value) { m_subscription = std::move(value); }
-    inline DescribeEksAnywhereSubscriptionResult& WithSubscription(const EksAnywhereSubscription& value) { SetSubscription(value); return *this;}
-    inline DescribeEksAnywhereSubscriptionResult& WithSubscription(EksAnywhereSubscription&& value) { SetSubscription(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeEksAnywhereSubscriptionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeEksAnywhereSubscriptionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeEksAnywhereSubscriptionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeEksAnywhereSubscriptionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    EksAnywhereSubscription m_subscription;
+ private:
+  EksAnywhereSubscription m_subscription;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_subscriptionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

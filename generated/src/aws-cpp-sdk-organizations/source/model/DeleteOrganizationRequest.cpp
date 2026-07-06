@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/organizations/model/DeleteOrganizationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/organizations/model/DeleteOrganizationRequest.h>
 
 #include <utility>
 
@@ -12,23 +12,10 @@ using namespace Aws::Organizations::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteOrganizationRequest::DeleteOrganizationRequest()
-{
-}
+Aws::String DeleteOrganizationRequest::SerializePayload() const { return "{}"; }
 
-Aws::String DeleteOrganizationRequest::SerializePayload() const
-{
-  return "{}";
-}
-
-Aws::Http::HeaderValueCollection DeleteOrganizationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteOrganizationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSOrganizationsV20161128.DeleteOrganization"));
   return headers;
-
 }
-
-
-
-

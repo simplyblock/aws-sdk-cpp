@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iotwireless/IoTWireless_EXPORTS.h>
 #include <aws/iotwireless/model/LoRaWANMulticastSession.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTWireless
-{
-namespace Model
-{
-  class GetMulticastGroupSessionResult
-  {
-  public:
-    AWS_IOTWIRELESS_API GetMulticastGroupSessionResult();
-    AWS_IOTWIRELESS_API GetMulticastGroupSessionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTWIRELESS_API GetMulticastGroupSessionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTWireless {
+namespace Model {
+class GetMulticastGroupSessionResult {
+ public:
+  AWS_IOTWIRELESS_API GetMulticastGroupSessionResult() = default;
+  AWS_IOTWIRELESS_API GetMulticastGroupSessionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTWIRELESS_API GetMulticastGroupSessionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const LoRaWANMulticastSession& GetLoRaWAN() const{ return m_loRaWAN; }
-    inline void SetLoRaWAN(const LoRaWANMulticastSession& value) { m_loRaWAN = value; }
-    inline void SetLoRaWAN(LoRaWANMulticastSession&& value) { m_loRaWAN = std::move(value); }
-    inline GetMulticastGroupSessionResult& WithLoRaWAN(const LoRaWANMulticastSession& value) { SetLoRaWAN(value); return *this;}
-    inline GetMulticastGroupSessionResult& WithLoRaWAN(LoRaWANMulticastSession&& value) { SetLoRaWAN(std::move(value)); return *this;}
-    ///@}
+  inline const LoRaWANMulticastSession& GetLoRaWAN() const { return m_loRaWAN; }
+  template <typename LoRaWANT = LoRaWANMulticastSession>
+  void SetLoRaWAN(LoRaWANT&& value) {
+    m_loRaWANHasBeenSet = true;
+    m_loRaWAN = std::forward<LoRaWANT>(value);
+  }
+  template <typename LoRaWANT = LoRaWANMulticastSession>
+  GetMulticastGroupSessionResult& WithLoRaWAN(LoRaWANT&& value) {
+    SetLoRaWAN(std::forward<LoRaWANT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMulticastGroupSessionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMulticastGroupSessionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMulticastGroupSessionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    LoRaWANMulticastSession m_loRaWAN;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMulticastGroupSessionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  LoRaWANMulticastSession m_loRaWAN;
 
-} // namespace Model
-} // namespace IoTWireless
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_loRaWANHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace IoTWireless
+}  // namespace Aws

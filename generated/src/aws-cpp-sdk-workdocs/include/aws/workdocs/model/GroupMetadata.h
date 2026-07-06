@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WorkDocs
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkDocs {
+namespace Model {
 
+/**
+ * <p>Describes the metadata of a user group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/GroupMetadata">AWS
+ * API Reference</a></p>
+ */
+class GroupMetadata {
+ public:
+  AWS_WORKDOCS_API GroupMetadata() = default;
+  AWS_WORKDOCS_API GroupMetadata(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKDOCS_API GroupMetadata& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKDOCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes the metadata of a user group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/GroupMetadata">AWS
-   * API Reference</a></p>
+   * <p>The ID of the user group.</p>
    */
-  class GroupMetadata
-  {
-  public:
-    AWS_WORKDOCS_API GroupMetadata();
-    AWS_WORKDOCS_API GroupMetadata(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKDOCS_API GroupMetadata& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKDOCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GroupMetadata& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the group.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GroupMetadata& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>The ID of the user group.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline GroupMetadata& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GroupMetadata& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GroupMetadata& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  Aws::String m_name;
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the group.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline GroupMetadata& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GroupMetadata& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GroupMetadata& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

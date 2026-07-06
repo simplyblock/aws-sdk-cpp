@@ -4,94 +4,107 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
-#include <aws/personalize/PersonalizeRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/personalize/PersonalizeRequest.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
 #include <aws/personalize/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Personalize
-{
-namespace Model
-{
+namespace Aws {
+namespace Personalize {
+namespace Model {
 
+/**
+ */
+class CreateEventTrackerRequest : public PersonalizeRequest {
+ public:
+  AWS_PERSONALIZE_API CreateEventTrackerRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateEventTracker"; }
+
+  AWS_PERSONALIZE_API Aws::String SerializePayload() const override;
+
+  AWS_PERSONALIZE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name for the event tracker.</p>
    */
-  class CreateEventTrackerRequest : public PersonalizeRequest
-  {
-  public:
-    AWS_PERSONALIZE_API CreateEventTrackerRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateEventTrackerRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateEventTracker"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the dataset group that receives the event
+   * data.</p>
+   */
+  inline const Aws::String& GetDatasetGroupArn() const { return m_datasetGroupArn; }
+  inline bool DatasetGroupArnHasBeenSet() const { return m_datasetGroupArnHasBeenSet; }
+  template <typename DatasetGroupArnT = Aws::String>
+  void SetDatasetGroupArn(DatasetGroupArnT&& value) {
+    m_datasetGroupArnHasBeenSet = true;
+    m_datasetGroupArn = std::forward<DatasetGroupArnT>(value);
+  }
+  template <typename DatasetGroupArnT = Aws::String>
+  CreateEventTrackerRequest& WithDatasetGroupArn(DatasetGroupArnT&& value) {
+    SetDatasetGroupArn(std::forward<DatasetGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PERSONALIZE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A list of <a
+   * href="https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html">tags</a>
+   * to apply to the event tracker.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateEventTrackerRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateEventTrackerRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    AWS_PERSONALIZE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_datasetGroupArn;
 
+  Aws::Vector<Tag> m_tags;
+  bool m_nameHasBeenSet = false;
+  bool m_datasetGroupArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name for the event tracker.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateEventTrackerRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateEventTrackerRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateEventTrackerRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the dataset group that receives the event
-     * data.</p>
-     */
-    inline const Aws::String& GetDatasetGroupArn() const{ return m_datasetGroupArn; }
-    inline bool DatasetGroupArnHasBeenSet() const { return m_datasetGroupArnHasBeenSet; }
-    inline void SetDatasetGroupArn(const Aws::String& value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn = value; }
-    inline void SetDatasetGroupArn(Aws::String&& value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn = std::move(value); }
-    inline void SetDatasetGroupArn(const char* value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn.assign(value); }
-    inline CreateEventTrackerRequest& WithDatasetGroupArn(const Aws::String& value) { SetDatasetGroupArn(value); return *this;}
-    inline CreateEventTrackerRequest& WithDatasetGroupArn(Aws::String&& value) { SetDatasetGroupArn(std::move(value)); return *this;}
-    inline CreateEventTrackerRequest& WithDatasetGroupArn(const char* value) { SetDatasetGroupArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of <a
-     * href="https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html">tags</a>
-     * to apply to the event tracker.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateEventTrackerRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateEventTrackerRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateEventTrackerRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateEventTrackerRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_datasetGroupArn;
-    bool m_datasetGroupArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

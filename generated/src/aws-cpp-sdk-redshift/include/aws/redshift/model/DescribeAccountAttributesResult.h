@@ -4,64 +4,79 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/redshift/model/ResponseMetadata.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/AccountAttribute.h>
+#include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
-  class DescribeAccountAttributesResult
-  {
-  public:
-    AWS_REDSHIFT_API DescribeAccountAttributesResult();
-    AWS_REDSHIFT_API DescribeAccountAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API DescribeAccountAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+class DescribeAccountAttributesResult {
+ public:
+  AWS_REDSHIFT_API DescribeAccountAttributesResult() = default;
+  AWS_REDSHIFT_API DescribeAccountAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API DescribeAccountAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A list of attributes assigned to an account.</p>
+   */
+  inline const Aws::Vector<AccountAttribute>& GetAccountAttributes() const { return m_accountAttributes; }
+  template <typename AccountAttributesT = Aws::Vector<AccountAttribute>>
+  void SetAccountAttributes(AccountAttributesT&& value) {
+    m_accountAttributesHasBeenSet = true;
+    m_accountAttributes = std::forward<AccountAttributesT>(value);
+  }
+  template <typename AccountAttributesT = Aws::Vector<AccountAttribute>>
+  DescribeAccountAttributesResult& WithAccountAttributes(AccountAttributesT&& value) {
+    SetAccountAttributes(std::forward<AccountAttributesT>(value));
+    return *this;
+  }
+  template <typename AccountAttributesT = AccountAttribute>
+  DescribeAccountAttributesResult& AddAccountAttributes(AccountAttributesT&& value) {
+    m_accountAttributesHasBeenSet = true;
+    m_accountAttributes.emplace_back(std::forward<AccountAttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of attributes assigned to an account.</p>
-     */
-    inline const Aws::Vector<AccountAttribute>& GetAccountAttributes() const{ return m_accountAttributes; }
-    inline void SetAccountAttributes(const Aws::Vector<AccountAttribute>& value) { m_accountAttributes = value; }
-    inline void SetAccountAttributes(Aws::Vector<AccountAttribute>&& value) { m_accountAttributes = std::move(value); }
-    inline DescribeAccountAttributesResult& WithAccountAttributes(const Aws::Vector<AccountAttribute>& value) { SetAccountAttributes(value); return *this;}
-    inline DescribeAccountAttributesResult& WithAccountAttributes(Aws::Vector<AccountAttribute>&& value) { SetAccountAttributes(std::move(value)); return *this;}
-    inline DescribeAccountAttributesResult& AddAccountAttributes(const AccountAttribute& value) { m_accountAttributes.push_back(value); return *this; }
-    inline DescribeAccountAttributesResult& AddAccountAttributes(AccountAttribute&& value) { m_accountAttributes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeAccountAttributesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeAccountAttributesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeAccountAttributesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AccountAttribute> m_accountAttributes;
+ private:
+  Aws::Vector<AccountAttribute> m_accountAttributes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountAttributesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

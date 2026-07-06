@@ -4,97 +4,106 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/elasticache/ElastiCacheRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticache/ElastiCacheRequest.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace ElastiCache {
+namespace Model {
 
+/**
+ * <p>Represents the input of a <code>DescribeCacheSecurityGroups</code>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/DescribeCacheSecurityGroupsMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeCacheSecurityGroupsRequest : public ElastiCacheRequest {
+ public:
+  AWS_ELASTICACHE_API DescribeCacheSecurityGroupsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeCacheSecurityGroups"; }
+
+  AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p>Represents the input of a <code>DescribeCacheSecurityGroups</code>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/DescribeCacheSecurityGroupsMessage">AWS
-   * API Reference</a></p>
+   * <p>The name of the cache security group to return details for.</p>
    */
-  class DescribeCacheSecurityGroupsRequest : public ElastiCacheRequest
-  {
-  public:
-    AWS_ELASTICACHE_API DescribeCacheSecurityGroupsRequest();
+  inline const Aws::String& GetCacheSecurityGroupName() const { return m_cacheSecurityGroupName; }
+  inline bool CacheSecurityGroupNameHasBeenSet() const { return m_cacheSecurityGroupNameHasBeenSet; }
+  template <typename CacheSecurityGroupNameT = Aws::String>
+  void SetCacheSecurityGroupName(CacheSecurityGroupNameT&& value) {
+    m_cacheSecurityGroupNameHasBeenSet = true;
+    m_cacheSecurityGroupName = std::forward<CacheSecurityGroupNameT>(value);
+  }
+  template <typename CacheSecurityGroupNameT = Aws::String>
+  DescribeCacheSecurityGroupsRequest& WithCacheSecurityGroupName(CacheSecurityGroupNameT&& value) {
+    SetCacheSecurityGroupName(std::forward<CacheSecurityGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeCacheSecurityGroups"; }
+  ///@{
+  /**
+   * <p>The maximum number of records to include in the response. If more records
+   * exist than the specified <code>MaxRecords</code> value, a marker is included in
+   * the response so that the remaining results can be retrieved.</p> <p>Default:
+   * 100</p> <p>Constraints: minimum 20; maximum 100.</p>
+   */
+  inline int GetMaxRecords() const { return m_maxRecords; }
+  inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
+  inline void SetMaxRecords(int value) {
+    m_maxRecordsHasBeenSet = true;
+    m_maxRecords = value;
+  }
+  inline DescribeCacheSecurityGroupsRequest& WithMaxRecords(int value) {
+    SetMaxRecords(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An optional marker returned from a prior request. Use this marker for
+   * pagination of results from this operation. If this parameter is specified, the
+   * response includes only records beyond the marker, up to the value specified by
+   * <code>MaxRecords</code>.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeCacheSecurityGroupsRequest& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_cacheSecurityGroupName;
 
-  protected:
-    AWS_ELASTICACHE_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  int m_maxRecords{0};
 
-  public:
+  Aws::String m_marker;
+  bool m_cacheSecurityGroupNameHasBeenSet = false;
+  bool m_maxRecordsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the cache security group to return details for.</p>
-     */
-    inline const Aws::String& GetCacheSecurityGroupName() const{ return m_cacheSecurityGroupName; }
-    inline bool CacheSecurityGroupNameHasBeenSet() const { return m_cacheSecurityGroupNameHasBeenSet; }
-    inline void SetCacheSecurityGroupName(const Aws::String& value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName = value; }
-    inline void SetCacheSecurityGroupName(Aws::String&& value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName = std::move(value); }
-    inline void SetCacheSecurityGroupName(const char* value) { m_cacheSecurityGroupNameHasBeenSet = true; m_cacheSecurityGroupName.assign(value); }
-    inline DescribeCacheSecurityGroupsRequest& WithCacheSecurityGroupName(const Aws::String& value) { SetCacheSecurityGroupName(value); return *this;}
-    inline DescribeCacheSecurityGroupsRequest& WithCacheSecurityGroupName(Aws::String&& value) { SetCacheSecurityGroupName(std::move(value)); return *this;}
-    inline DescribeCacheSecurityGroupsRequest& WithCacheSecurityGroupName(const char* value) { SetCacheSecurityGroupName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of records to include in the response. If more records
-     * exist than the specified <code>MaxRecords</code> value, a marker is included in
-     * the response so that the remaining results can be retrieved.</p> <p>Default:
-     * 100</p> <p>Constraints: minimum 20; maximum 100.</p>
-     */
-    inline int GetMaxRecords() const{ return m_maxRecords; }
-    inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
-    inline void SetMaxRecords(int value) { m_maxRecordsHasBeenSet = true; m_maxRecords = value; }
-    inline DescribeCacheSecurityGroupsRequest& WithMaxRecords(int value) { SetMaxRecords(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>An optional marker returned from a prior request. Use this marker for
-     * pagination of results from this operation. If this parameter is specified, the
-     * response includes only records beyond the marker, up to the value specified by
-     * <code>MaxRecords</code>.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
-    inline void SetMarker(const Aws::String& value) { m_markerHasBeenSet = true; m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_markerHasBeenSet = true; m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_markerHasBeenSet = true; m_marker.assign(value); }
-    inline DescribeCacheSecurityGroupsRequest& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeCacheSecurityGroupsRequest& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeCacheSecurityGroupsRequest& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_cacheSecurityGroupName;
-    bool m_cacheSecurityGroupNameHasBeenSet = false;
-
-    int m_maxRecords;
-    bool m_maxRecordsHasBeenSet = false;
-
-    Aws::String m_marker;
-    bool m_markerHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

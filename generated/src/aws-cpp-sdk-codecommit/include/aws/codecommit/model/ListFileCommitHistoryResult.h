@@ -5,82 +5,100 @@
 
 #pragma once
 #include <aws/codecommit/CodeCommit_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/codecommit/model/FileVersion.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeCommit
-{
-namespace Model
-{
-  class ListFileCommitHistoryResult
-  {
-  public:
-    AWS_CODECOMMIT_API ListFileCommitHistoryResult();
-    AWS_CODECOMMIT_API ListFileCommitHistoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECOMMIT_API ListFileCommitHistoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeCommit {
+namespace Model {
+class ListFileCommitHistoryResult {
+ public:
+  AWS_CODECOMMIT_API ListFileCommitHistoryResult() = default;
+  AWS_CODECOMMIT_API ListFileCommitHistoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECOMMIT_API ListFileCommitHistoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of FileVersion objects that form a directed acyclic graph (DAG) of
+   * the changes to the file made by the commits that changed the file.</p>
+   */
+  inline const Aws::Vector<FileVersion>& GetRevisionDag() const { return m_revisionDag; }
+  template <typename RevisionDagT = Aws::Vector<FileVersion>>
+  void SetRevisionDag(RevisionDagT&& value) {
+    m_revisionDagHasBeenSet = true;
+    m_revisionDag = std::forward<RevisionDagT>(value);
+  }
+  template <typename RevisionDagT = Aws::Vector<FileVersion>>
+  ListFileCommitHistoryResult& WithRevisionDag(RevisionDagT&& value) {
+    SetRevisionDag(std::forward<RevisionDagT>(value));
+    return *this;
+  }
+  template <typename RevisionDagT = FileVersion>
+  ListFileCommitHistoryResult& AddRevisionDag(RevisionDagT&& value) {
+    m_revisionDagHasBeenSet = true;
+    m_revisionDag.emplace_back(std::forward<RevisionDagT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of FileVersion objects that form a directed acyclic graph (DAG) of
-     * the changes to the file made by the commits that changed the file.</p>
-     */
-    inline const Aws::Vector<FileVersion>& GetRevisionDag() const{ return m_revisionDag; }
-    inline void SetRevisionDag(const Aws::Vector<FileVersion>& value) { m_revisionDag = value; }
-    inline void SetRevisionDag(Aws::Vector<FileVersion>&& value) { m_revisionDag = std::move(value); }
-    inline ListFileCommitHistoryResult& WithRevisionDag(const Aws::Vector<FileVersion>& value) { SetRevisionDag(value); return *this;}
-    inline ListFileCommitHistoryResult& WithRevisionDag(Aws::Vector<FileVersion>&& value) { SetRevisionDag(std::move(value)); return *this;}
-    inline ListFileCommitHistoryResult& AddRevisionDag(const FileVersion& value) { m_revisionDag.push_back(value); return *this; }
-    inline ListFileCommitHistoryResult& AddRevisionDag(FileVersion&& value) { m_revisionDag.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An enumeration token that can be used to return the next batch of
+   * results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFileCommitHistoryResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An enumeration token that can be used to return the next batch of
-     * results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFileCommitHistoryResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFileCommitHistoryResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFileCommitHistoryResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFileCommitHistoryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFileCommitHistoryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFileCommitHistoryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFileCommitHistoryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FileVersion> m_revisionDag;
+ private:
+  Aws::Vector<FileVersion> m_revisionDag;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_revisionDagHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

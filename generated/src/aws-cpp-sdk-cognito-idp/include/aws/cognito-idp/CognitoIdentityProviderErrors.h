@@ -5,17 +5,14 @@
 
 #pragma once
 
+#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/core/client/AWSError.h>
 #include <aws/core/client/CoreErrors.h>
-#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-enum class CognitoIdentityProviderErrors
-{
-  //From Core//
+namespace Aws {
+namespace CognitoIdentityProvider {
+enum class CognitoIdentityProviderErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class CognitoIdentityProviderErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,16 +44,19 @@ enum class CognitoIdentityProviderErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  ALIAS_EXISTS= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ALIAS_EXISTS = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   CODE_DELIVERY_FAILURE,
   CODE_MISMATCH,
   CONCURRENT_MODIFICATION,
+  DEVICE_KEY_EXISTS,
   DUPLICATE_PROVIDER,
   ENABLE_SOFTWARE_TOKEN_M_F_A,
   EXPIRED_CODE,
+  FEATURE_UNAVAILABLE_IN_TIER,
   FORBIDDEN,
   GROUP_EXISTS,
   INTERNAL_ERROR,
+  INTERNAL_SERVER,
   INVALID_EMAIL_ROLE_ACCESS_POLICY,
   INVALID_LAMBDA_RESPONSE,
   INVALID_O_AUTH_FLOW,
@@ -66,13 +66,19 @@ enum class CognitoIdentityProviderErrors
   INVALID_SMS_ROLE_TRUST_RELATIONSHIP,
   INVALID_USER_POOL_CONFIGURATION,
   LIMIT_EXCEEDED,
+  MANAGED_LOGIN_BRANDING_EXISTS,
   M_F_A_METHOD_NOT_FOUND,
   NOT_AUTHORIZED,
+  OPERATION_NOT_ENABLED,
   PASSWORD_HISTORY_POLICY_VIOLATION,
   PASSWORD_RESET_REQUIRED,
   PRECONDITION_NOT_MET,
+  REFRESH_TOKEN_REUSE,
   SCOPE_DOES_NOT_EXIST,
+  SERVICE_QUOTA_EXCEEDED,
   SOFTWARE_TOKEN_M_F_A_NOT_FOUND,
+  TERMS_EXISTS,
+  TIER_CHANGE_NOT_ALLOWED,
   TOO_MANY_FAILED_ATTEMPTS,
   TOO_MANY_REQUESTS,
   UNAUTHORIZED,
@@ -87,26 +93,35 @@ enum class CognitoIdentityProviderErrors
   USER_NOT_CONFIRMED,
   USER_NOT_FOUND,
   USER_POOL_ADD_ON_NOT_ENABLED,
-  USER_POOL_TAGGING
+  USER_POOL_TAGGING,
+  WEB_AUTHN_CHALLENGE_NOT_FOUND,
+  WEB_AUTHN_CLIENT_MISMATCH,
+  WEB_AUTHN_CONFIGURATION_MISSING,
+  WEB_AUTHN_CREDENTIAL_NOT_SUPPORTED,
+  WEB_AUTHN_NOT_ENABLED,
+  WEB_AUTHN_ORIGIN_NOT_ALLOWED,
+  WEB_AUTHN_RELYING_PARTY_MISMATCH
 };
 
-class AWS_COGNITOIDENTITYPROVIDER_API CognitoIdentityProviderError : public Aws::Client::AWSError<CognitoIdentityProviderErrors>
-{
-public:
+class AWS_COGNITOIDENTITYPROVIDER_API CognitoIdentityProviderError : public Aws::Client::AWSError<CognitoIdentityProviderErrors> {
+ public:
   CognitoIdentityProviderError() {}
-  CognitoIdentityProviderError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
-  CognitoIdentityProviderError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
-  CognitoIdentityProviderError(const Aws::Client::AWSError<CognitoIdentityProviderErrors>& rhs) : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
-  CognitoIdentityProviderError(Aws::Client::AWSError<CognitoIdentityProviderErrors>&& rhs) : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
+  CognitoIdentityProviderError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs)
+      : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
+  CognitoIdentityProviderError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs)
+      : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
+  CognitoIdentityProviderError(const Aws::Client::AWSError<CognitoIdentityProviderErrors>& rhs)
+      : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
+  CognitoIdentityProviderError(Aws::Client::AWSError<CognitoIdentityProviderErrors>&& rhs)
+      : Aws::Client::AWSError<CognitoIdentityProviderErrors>(rhs) {}
 
   template <typename T>
   T GetModeledError();
 };
 
-namespace CognitoIdentityProviderErrorMapper
-{
-  AWS_COGNITOIDENTITYPROVIDER_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace CognitoIdentityProviderErrorMapper {
+AWS_COGNITOIDENTITYPROVIDER_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

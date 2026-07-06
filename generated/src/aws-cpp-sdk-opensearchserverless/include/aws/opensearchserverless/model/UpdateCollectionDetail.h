@@ -4,168 +4,240 @@
  */
 
 #pragma once
-#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
 #include <aws/opensearchserverless/model/CollectionStatus.h>
 #include <aws/opensearchserverless/model/CollectionType.h>
+#include <aws/opensearchserverless/model/DeletionProtection.h>
+#include <aws/opensearchserverless/model/VectorOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchServerless {
+namespace Model {
 
+/**
+ * <p>Details about an updated OpenSearch Serverless collection.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearchserverless-2021-11-01/UpdateCollectionDetail">AWS
+ * API Reference</a></p>
+ */
+class UpdateCollectionDetail {
+ public:
+  AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail() = default;
+  AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVERLESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details about an updated OpenSearch Serverless collection.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearchserverless-2021-11-01/UpdateCollectionDetail">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier of the collection.</p>
    */
-  class UpdateCollectionDetail
-  {
-  public:
-    AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail();
-    AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVERLESS_API UpdateCollectionDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVERLESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateCollectionDetail& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the collection.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateCollectionDetail& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the collection.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline UpdateCollectionDetail& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateCollectionDetail& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateCollectionDetail& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the collection.</p>
+   */
+  inline CollectionStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(CollectionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateCollectionDetail& WithStatus(CollectionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time when the collection was created.</p>
-     */
-    inline long long GetCreatedDate() const{ return m_createdDate; }
-    inline bool CreatedDateHasBeenSet() const { return m_createdDateHasBeenSet; }
-    inline void SetCreatedDate(long long value) { m_createdDateHasBeenSet = true; m_createdDate = value; }
-    inline UpdateCollectionDetail& WithCreatedDate(long long value) { SetCreatedDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The collection type.</p>
+   */
+  inline CollectionType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(CollectionType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline UpdateCollectionDetail& WithType(CollectionType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the collection.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateCollectionDetail& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateCollectionDetail& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateCollectionDetail& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the collection.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateCollectionDetail& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the collection.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline UpdateCollectionDetail& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateCollectionDetail& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateCollectionDetail& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration options for vector search capabilities in the collection.</p>
+   */
+  inline const VectorOptions& GetVectorOptions() const { return m_vectorOptions; }
+  inline bool VectorOptionsHasBeenSet() const { return m_vectorOptionsHasBeenSet; }
+  template <typename VectorOptionsT = VectorOptions>
+  void SetVectorOptions(VectorOptionsT&& value) {
+    m_vectorOptionsHasBeenSet = true;
+    m_vectorOptions = std::forward<VectorOptionsT>(value);
+  }
+  template <typename VectorOptionsT = VectorOptions>
+  UpdateCollectionDetail& WithVectorOptions(VectorOptionsT&& value) {
+    SetVectorOptions(std::forward<VectorOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time when the collection was last modified.</p>
-     */
-    inline long long GetLastModifiedDate() const{ return m_lastModifiedDate; }
-    inline bool LastModifiedDateHasBeenSet() const { return m_lastModifiedDateHasBeenSet; }
-    inline void SetLastModifiedDate(long long value) { m_lastModifiedDateHasBeenSet = true; m_lastModifiedDate = value; }
-    inline UpdateCollectionDetail& WithLastModifiedDate(long long value) { SetLastModifiedDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the collection.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateCollectionDetail& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the collection.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateCollectionDetail& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateCollectionDetail& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateCollectionDetail& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time when the collection was created.</p>
+   */
+  inline long long GetCreatedDate() const { return m_createdDate; }
+  inline bool CreatedDateHasBeenSet() const { return m_createdDateHasBeenSet; }
+  inline void SetCreatedDate(long long value) {
+    m_createdDateHasBeenSet = true;
+    m_createdDate = value;
+  }
+  inline UpdateCollectionDetail& WithCreatedDate(long long value) {
+    SetCreatedDate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the collection.</p>
-     */
-    inline const CollectionStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const CollectionStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(CollectionStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline UpdateCollectionDetail& WithStatus(const CollectionStatus& value) { SetStatus(value); return *this;}
-    inline UpdateCollectionDetail& WithStatus(CollectionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time when the collection was last modified.</p>
+   */
+  inline long long GetLastModifiedDate() const { return m_lastModifiedDate; }
+  inline bool LastModifiedDateHasBeenSet() const { return m_lastModifiedDateHasBeenSet; }
+  inline void SetLastModifiedDate(long long value) {
+    m_lastModifiedDateHasBeenSet = true;
+    m_lastModifiedDate = value;
+  }
+  inline UpdateCollectionDetail& WithLastModifiedDate(long long value) {
+    SetLastModifiedDate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The collection type.</p>
-     */
-    inline const CollectionType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const CollectionType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(CollectionType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline UpdateCollectionDetail& WithType(const CollectionType& value) { SetType(value); return *this;}
-    inline UpdateCollectionDetail& WithType(CollectionType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Indicates whether deletion protection is <code>ENABLED</code> or
+   * <code>DISABLED</code> for the collection.</p>
+   */
+  inline DeletionProtection GetDeletionProtection() const { return m_deletionProtection; }
+  inline bool DeletionProtectionHasBeenSet() const { return m_deletionProtectionHasBeenSet; }
+  inline void SetDeletionProtection(DeletionProtection value) {
+    m_deletionProtectionHasBeenSet = true;
+    m_deletionProtection = value;
+  }
+  inline UpdateCollectionDetail& WithDeletionProtection(DeletionProtection value) {
+    SetDeletionProtection(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::String m_name;
 
-    long long m_createdDate;
-    bool m_createdDateHasBeenSet = false;
+  CollectionStatus m_status{CollectionStatus::NOT_SET};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  CollectionType m_type{CollectionType::NOT_SET};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  Aws::String m_description;
 
-    long long m_lastModifiedDate;
-    bool m_lastModifiedDateHasBeenSet = false;
+  VectorOptions m_vectorOptions;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_arn;
 
-    CollectionStatus m_status;
-    bool m_statusHasBeenSet = false;
+  long long m_createdDate{0};
 
-    CollectionType m_type;
-    bool m_typeHasBeenSet = false;
-  };
+  long long m_lastModifiedDate{0};
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+  DeletionProtection m_deletionProtection{DeletionProtection::NOT_SET};
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_vectorOptionsHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_createdDateHasBeenSet = false;
+  bool m_lastModifiedDateHasBeenSet = false;
+  bool m_deletionProtectionHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

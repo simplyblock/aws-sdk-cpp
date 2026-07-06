@@ -3,72 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/groundstation/model/Eirp.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/groundstation/model/Eirp.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace GroundStation
-{
-namespace Model
-{
+namespace Aws {
+namespace GroundStation {
+namespace Model {
 
-Eirp::Eirp() : 
-    m_units(EirpUnits::NOT_SET),
-    m_unitsHasBeenSet(false),
-    m_value(0.0),
-    m_valueHasBeenSet(false)
-{
-}
+Eirp::Eirp(JsonView jsonValue) { *this = jsonValue; }
 
-Eirp::Eirp(JsonView jsonValue)
-  : Eirp()
-{
-  *this = jsonValue;
-}
-
-Eirp& Eirp::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("units"))
-  {
-    m_units = EirpUnitsMapper::GetEirpUnitsForName(jsonValue.GetString("units"));
-
-    m_unitsHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("value"))
-  {
+Eirp& Eirp::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("value")) {
     m_value = jsonValue.GetDouble("value");
-
     m_valueHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("units")) {
+    m_units = EirpUnitsMapper::GetEirpUnitsForName(jsonValue.GetString("units"));
+    m_unitsHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue Eirp::Jsonize() const
-{
+JsonValue Eirp::Jsonize() const {
   JsonValue payload;
 
-  if(m_unitsHasBeenSet)
-  {
-   payload.WithString("units", EirpUnitsMapper::GetNameForEirpUnits(m_units));
+  if (m_valueHasBeenSet) {
+    payload.WithDouble("value", m_value);
   }
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithDouble("value", m_value);
-
+  if (m_unitsHasBeenSet) {
+    payload.WithString("units", EirpUnitsMapper::GetNameForEirpUnits(m_units));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

@@ -4,143 +4,158 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
 
+/**
+ * <p>Describes a domain recordset entry.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/DomainEntry">AWS
+ * API Reference</a></p>
+ */
+class DomainEntry {
+ public:
+  AWS_LIGHTSAIL_API DomainEntry() = default;
+  AWS_LIGHTSAIL_API DomainEntry(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LIGHTSAIL_API DomainEntry& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LIGHTSAIL_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes a domain recordset entry.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/lightsail-2016-11-28/DomainEntry">AWS
-   * API Reference</a></p>
+   * <p>The ID of the domain recordset entry.</p>
    */
-  class DomainEntry
-  {
-  public:
-    AWS_LIGHTSAIL_API DomainEntry();
-    AWS_LIGHTSAIL_API DomainEntry(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LIGHTSAIL_API DomainEntry& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LIGHTSAIL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  DomainEntry& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the domain.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DomainEntry& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the domain recordset entry.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline DomainEntry& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline DomainEntry& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline DomainEntry& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The target IP address (<code>192.0.2.0</code>), or AWS name server
+   * (<code>ns-111.awsdns-22.com.</code>).</p> <p>For Lightsail load balancers, the
+   * value looks like
+   * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>.
+   * For Lightsail distributions, the value looks like
+   * <code>exampled1182ne.cloudfront.net</code>. For Lightsail container services,
+   * the value looks like
+   * <code>container-service-1.example23scljs.us-west-2.cs.amazonlightsail.com</code>.
+   * Be sure to also set <code>isAlias</code> to <code>true</code> when setting up an
+   * A record for a Lightsail load balancer, distribution, or container service.</p>
+   */
+  inline const Aws::String& GetTarget() const { return m_target; }
+  inline bool TargetHasBeenSet() const { return m_targetHasBeenSet; }
+  template <typename TargetT = Aws::String>
+  void SetTarget(TargetT&& value) {
+    m_targetHasBeenSet = true;
+    m_target = std::forward<TargetT>(value);
+  }
+  template <typename TargetT = Aws::String>
+  DomainEntry& WithTarget(TargetT&& value) {
+    SetTarget(std::forward<TargetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the domain.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline DomainEntry& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DomainEntry& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DomainEntry& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>When <code>true</code>, specifies whether the domain entry is an alias used
+   * by the Lightsail load balancer, Lightsail container service, Lightsail content
+   * delivery network (CDN) distribution, or another Amazon Web Services resource.
+   * You can include an alias (A type) record in your request, which points to the
+   * DNS name of a load balancer, container service, CDN distribution, or other
+   * Amazon Web Services resource and routes traffic to that resource.</p>
+   */
+  inline bool GetIsAlias() const { return m_isAlias; }
+  inline bool IsAliasHasBeenSet() const { return m_isAliasHasBeenSet; }
+  inline void SetIsAlias(bool value) {
+    m_isAliasHasBeenSet = true;
+    m_isAlias = value;
+  }
+  inline DomainEntry& WithIsAlias(bool value) {
+    SetIsAlias(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The target IP address (<code>192.0.2.0</code>), or AWS name server
-     * (<code>ns-111.awsdns-22.com.</code>).</p> <p>For Lightsail load balancers, the
-     * value looks like
-     * <code>ab1234c56789c6b86aba6fb203d443bc-123456789.us-east-2.elb.amazonaws.com</code>.
-     * For Lightsail distributions, the value looks like
-     * <code>exampled1182ne.cloudfront.net</code>. For Lightsail container services,
-     * the value looks like
-     * <code>container-service-1.example23scljs.us-west-2.cs.amazonlightsail.com</code>.
-     * Be sure to also set <code>isAlias</code> to <code>true</code> when setting up an
-     * A record for a Lightsail load balancer, distribution, or container service.</p>
-     */
-    inline const Aws::String& GetTarget() const{ return m_target; }
-    inline bool TargetHasBeenSet() const { return m_targetHasBeenSet; }
-    inline void SetTarget(const Aws::String& value) { m_targetHasBeenSet = true; m_target = value; }
-    inline void SetTarget(Aws::String&& value) { m_targetHasBeenSet = true; m_target = std::move(value); }
-    inline void SetTarget(const char* value) { m_targetHasBeenSet = true; m_target.assign(value); }
-    inline DomainEntry& WithTarget(const Aws::String& value) { SetTarget(value); return *this;}
-    inline DomainEntry& WithTarget(Aws::String&& value) { SetTarget(std::move(value)); return *this;}
-    inline DomainEntry& WithTarget(const char* value) { SetTarget(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of domain entry, such as address for IPv4 (A), address for IPv6
+   * (AAAA), canonical name (CNAME), mail exchanger (MX), name server (NS), start of
+   * authority (SOA), service locator (SRV), or text (TXT).</p> <p>The following
+   * domain entry types can be used:</p> <ul> <li> <p> <code>A</code> </p> </li> <li>
+   * <p> <code>AAAA</code> </p> </li> <li> <p> <code>CNAME</code> </p> </li> <li> <p>
+   * <code>MX</code> </p> </li> <li> <p> <code>NS</code> </p> </li> <li> <p>
+   * <code>SOA</code> </p> </li> <li> <p> <code>SRV</code> </p> </li> <li> <p>
+   * <code>TXT</code> </p> </li> </ul>
+   */
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  DomainEntry& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>When <code>true</code>, specifies whether the domain entry is an alias used
-     * by the Lightsail load balancer, Lightsail container service, Lightsail content
-     * delivery network (CDN) distribution, or another Amazon Web Services resource.
-     * You can include an alias (A type) record in your request, which points to the
-     * DNS name of a load balancer, container service, CDN distribution, or other
-     * Amazon Web Services resource and routes traffic to that resource.</p>
-     */
-    inline bool GetIsAlias() const{ return m_isAlias; }
-    inline bool IsAliasHasBeenSet() const { return m_isAliasHasBeenSet; }
-    inline void SetIsAlias(bool value) { m_isAliasHasBeenSet = true; m_isAlias = value; }
-    inline DomainEntry& WithIsAlias(bool value) { SetIsAlias(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The type of domain entry, such as address for IPv4 (A), address for IPv6
-     * (AAAA), canonical name (CNAME), mail exchanger (MX), name server (NS), start of
-     * authority (SOA), service locator (SRV), or text (TXT).</p> <p>The following
-     * domain entry types can be used:</p> <ul> <li> <p> <code>A</code> </p> </li> <li>
-     * <p> <code>AAAA</code> </p> </li> <li> <p> <code>CNAME</code> </p> </li> <li> <p>
-     * <code>MX</code> </p> </li> <li> <p> <code>NS</code> </p> </li> <li> <p>
-     * <code>SOA</code> </p> </li> <li> <p> <code>SRV</code> </p> </li> <li> <p>
-     * <code>TXT</code> </p> </li> </ul>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline DomainEntry& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline DomainEntry& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline DomainEntry& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_target;
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  bool m_isAlias{false};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_type;
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_targetHasBeenSet = false;
+  bool m_isAliasHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    Aws::String m_target;
-    bool m_targetHasBeenSet = false;
-
-    bool m_isAlias;
-    bool m_isAliasHasBeenSet = false;
-
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

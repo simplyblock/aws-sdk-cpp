@@ -1,13 +1,22 @@
-#include <gtest/gtest.h>
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/core/client/RetryStrategy.h>
+#include <aws/core/utils/HashingUtils.h>
+#include <aws/core/utils/base64/Base64.h>
+#include <aws/core/utils/crypto/CRC64.h>
 #include <aws/s3/S3Client.h>
-#include <aws/s3/model/PutObjectRequest.h>
+#include <aws/s3/S3ErrorMarshaller.h>
 #include <aws/s3/model/CopyObjectRequest.h>
-#include <aws/testing/mocks/http/MockHttpClient.h>
+#include <aws/s3/model/DeleteObjectsRequest.h>
+#include <aws/s3/model/GetObjectRequest.h>
+#include <aws/s3/model/HeadBucketRequest.h>
+#include <aws/s3/model/ListObjectsV2Request.h>
+#include <aws/s3/model/PutObjectRequest.h>
 #include <aws/testing/AwsTestHelpers.h>
 #include <aws/testing/MemoryTesting.h>
+#include <aws/testing/mocks/http/MockHttpClient.h>
+#include <gtest/gtest.h>
+
 #include <memory>
 
 using namespace Aws;
@@ -18,6 +27,7 @@ using namespace Aws::S3;
 using namespace Aws::S3::Model;
 
 const char* ALLOCATION_TAG = "S3UnitTest";
+const char* MD5_HEADER = "content-md5";
 
 class S3UnitTest_S3EmbeddedErrorTestNonOKResponse_Test;
 
@@ -27,11 +37,34 @@ class S3TestClient : public S3Client
     template <typename ...Args>
     S3TestClient(Args&& ...args): S3Client(std::forward<Args>(args)...){
     }
+    XmlOutcome MakeRequest(const Aws::Http::URI& uri,
+      const Aws::AmazonWebServiceRequest& request,
+      Aws::Http::HttpMethod method = Aws::Http::HttpMethod::HTTP_POST,
+      const char* signerName = Aws::Auth::SIGV4_SIGNER,
+      const char* signerRegionOverride = nullptr,
+      const char* signerServiceNameOverride = nullptr) const
+    {
+        return S3Client::MakeRequest(uri, request, method, signerName, signerRegionOverride, signerServiceNameOverride);
+    }
+
+
+    XmlOutcome MakeRequest(const Aws::Http::URI& uri,
+      Http::HttpMethod method = Http::HttpMethod::HTTP_POST,
+      const char* signerName = Aws::Auth::SIGV4_SIGNER,
+      const char* requestName = "",
+      const char* signerRegionOverride = nullptr,
+      const char* signerServiceNameOverride = nullptr) const
+    {
+        return S3Client::MakeRequest(uri, method, signerName, requestName, signerRegionOverride, signerServiceNameOverride);
+    }
+
 
     private:
     S3TestClient() = default;
 
     friend class S3UnitTest_S3EmbeddedErrorTestNonOKResponse_Test;
+
+   
 };
 
 class NoRetry: public RetryStrategy
@@ -49,6 +82,10 @@ public:
     AWS_UNREFERENCED_PARAM(error);
     AWS_UNREFERENCED_PARAM(attemptedRetries);
     return 0;
+  };
+
+  const char* GetStrategyName() const override {
+    return "standard";
   };
 };
 
@@ -192,30 +229,53 @@ TEST_F(S3UnitTest, S3UriPathPreservationOn) {
   //Turn on path preservation
   Aws::Http::SetPreservePathSeparators(true);
 
-  auto putObjectRequest = PutObjectRequest()
-      .WithBucket("velvetunderground")
-      .WithKey("////stephanie////says////////////that////////she//wants///////to/know.txt");
+  struct TestCase {
+    const char* bucket;
+    const char* key;
+    const char* expectedUri;
+  };
 
-  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG,
-    "What country shall I say is calling From across the world?",
-    std::ios_base::in | std::ios_base::binary);
+  TestCase testCases[] = {
+    {
+      "velvetunderground",
+      "////stephanie////says////////////that////////she//wants///////to/know.txt",
+      "https://velvetunderground.s3.us-east-1.amazonaws.com/////stephanie////says////////////that////////she//wants///////to/know.txt"
+    },
+    {
+      "velvetunderground",
+      "////stephanie////says////////////that////////she//wants///////to/know.txt/",
+      "https://velvetunderground.s3.us-east-1.amazonaws.com/////stephanie////says////////////that////////she//wants///////to/know.txt/"
+    },
+    {
+      "velvetunderground",
+      "////stephanie////says////////////that////////she//wants///////to/know.txt//",
+      "https://velvetunderground.s3.us-east-1.amazonaws.com/////stephanie////says////////////that////////she//wants///////to/know.txt//"
+    }
+  };
 
-  putObjectRequest.SetBody(body);
+  for (const auto& testCase : testCases) {
+    auto putObjectRequest = PutObjectRequest()
+        .WithBucket(testCase.bucket)
+        .WithKey(testCase.key);
 
-  //We have to mock requset because it is used to create the return body, it actually isnt used.
-  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_GET);
-  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
-    return Aws::New<StringStream>(ALLOCATION_TAG, "response-string", std::ios_base::in | std::ios_base::binary);
-  });
-  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
-  mockResponse->SetResponseCode(HttpResponseCode::OK);
-  _mockHttpClient->AddResponseToReturn(mockResponse);
+    std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG,
+      "test content", std::ios_base::in | std::ios_base::binary);
+    putObjectRequest.SetBody(body);
 
-  const auto response = _s3Client->PutObject(putObjectRequest);
-  AWS_EXPECT_SUCCESS(response);
+    auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_GET);
+    mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+      return Aws::New<StringStream>(ALLOCATION_TAG, "response-string", std::ios_base::in | std::ios_base::binary);
+    });
+    auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+    mockResponse->SetResponseCode(HttpResponseCode::OK);
+    _mockHttpClient->AddResponseToReturn(mockResponse);
 
-  const auto seenRequest = _mockHttpClient->GetMostRecentHttpRequest();
-  EXPECT_EQ("https://velvetunderground.s3.us-east-1.amazonaws.com/////stephanie////says////////////that////////she//wants///////to/know.txt", seenRequest.GetUri().GetURIString());
+    const auto response = _s3Client->PutObject(putObjectRequest);
+    AWS_EXPECT_SUCCESS(response);
+
+    const auto seenRequest = _mockHttpClient->GetMostRecentHttpRequest();
+    EXPECT_EQ(testCase.expectedUri, seenRequest.GetUri().GetURIString());
+  }
 }
 
 TEST_F(S3UnitTest, S3EmbeddedErrorTest) {
@@ -223,7 +283,7 @@ TEST_F(S3UnitTest, S3EmbeddedErrorTest) {
     .WithBucket("testBucket")
     .WithKey("testKey")
     .WithCopySource("testSource");
-  
+
   auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_GET);
   mockRequest->SetResponseStreamFactory([]() -> IOStream* {
     const Aws::String mockResponseString {"\n         <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n         <Error>\n          <Code>InternalError</Code>\n          <Message>We encountered an internal error. Please try again.</Message>\n          <RequestId>656c76696e6727732072657175657374</RequestId>\n          <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>\n         </Error>\n    "};
@@ -250,14 +310,26 @@ TEST_F(S3UnitTest, S3EmbeddedErrorTest) {
   EXPECT_EQ("656c76696e6727732072657175657374", response.GetError().GetRequestId());
 }
 
+class MockRequest : public Aws::AmazonWebServiceRequest
+{
+public:
+  std::shared_ptr<Aws::IOStream> GetBody() const override{
+    return nullptr;
+  }
+
+  Aws::Http::HeaderValueCollection GetHeaders() const override{
+    return Aws::Http::HeaderValueCollection();
+  }
+
+  const char* GetServiceRequestName() const override{
+    return "MockRequest";
+  }
+
+};
 
 //Set http error and error in body in a way to hit generic xml error marshaller, which sets the exception name
 TEST_F(S3UnitTest, S3EmbeddedErrorTestNonOKResponse) {
-  const auto request = CopyObjectRequest()
-    .WithBucket("testBucket")
-    .WithKey("testKey")
-    .WithCopySource("testSource");
-  
+
   auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_GET);
   mockRequest->SetResponseStreamFactory([]() -> IOStream* {
     const Aws::String mockResponseString {"\n         <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n         <Error>\n          <Code>InvalidAction</Code>\n          <Message>We encountered an internal error. Please try again.</Message>\n          <RequestId>656c76696e6727732072657175657374</RequestId>\n          <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>\n         </Error>\n    "};
@@ -272,15 +344,385 @@ TEST_F(S3UnitTest, S3EmbeddedErrorTestNonOKResponse) {
   mockResponse->AddHeader("Date", "Mon, 1 Nov 2010 20:34:56 GMT");
   mockResponse->AddHeader("x-amz-request-id", "656c76696e6727732072657175657374");
   mockResponse->AddHeader("x-amz-id-2", "Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==");
-
-  _mockHttpClient->AddResponseToReturn(mockResponse);
- 
-  auto endpointResolutionOutcome =    _s3Client->accessEndpointProvider()->ResolveEndpoint(request.GetEndpointContextParams()); 
-  
-  const auto response =  std::static_pointer_cast<S3TestClient>(_s3Client)->Aws::Client::AWSXMLClient::MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_PUT, "dummy");
-
-  EXPECT_TRUE(response.GetError().GetExceptionName() == "InvalidAction");
-
-  EXPECT_FALSE(response.IsSuccess());
+  MockRequest request;
+  auto errorMarshaller = S3ErrorMarshaller();
+  auto error = errorMarshaller.Marshall(*mockResponse);
+  auto outcome = HttpResponseOutcome(std::move(error) );
+  ASSERT_FALSE(outcome.IsSuccess());
+  EXPECT_TRUE(outcome.GetError().GetExceptionName() == "InvalidAction");
 }
 
+TEST_F(S3UnitTest, PutObjectShouldHaveCorrectUserAgent) {
+  auto request = PutObjectRequest()
+    .WithBucket("o-worthy-heart")
+    .WithKey("who-tempers-anxiety-into-strength");
+
+  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG, "time marches on, and the age of a new king draws nearer");
+
+  request.SetBody(body);
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "alonzo.com/faker", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const auto response =_s3Client->PutObject(request);
+  EXPECT_TRUE(response.IsSuccess());
+
+  const auto requestSeen = _mockHttpClient->GetMostRecentHttpRequest();
+  EXPECT_TRUE(requestSeen.HasUserAgent());
+  const auto& userAgent = requestSeen.GetUserAgent();
+  EXPECT_TRUE(!userAgent.empty());
+  const auto userAgentParsed = Utils::StringUtils::Split(userAgent, ' ');
+  auto sdkMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("aws-sdk-cpp/") != Aws::String::npos; });
+  EXPECT_TRUE(sdkMetadata != userAgentParsed.end());
+  auto uaMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("ua/") != Aws::String::npos; });
+  EXPECT_TRUE(uaMetadata != userAgentParsed.end());
+  auto apiMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("api/S3") != Aws::String::npos; });
+  EXPECT_TRUE(apiMetadata != userAgentParsed.end());
+  auto osMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("os/") != Aws::String::npos; });
+  EXPECT_TRUE(osMetadata != userAgentParsed.end());
+  auto langMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("lang/c++") != Aws::String::npos; });
+  EXPECT_TRUE(langMetadata != userAgentParsed.end());
+  auto crtMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("md/aws-crt") != Aws::String::npos; });
+  EXPECT_TRUE(crtMetadata != userAgentParsed.end());
+  auto archMetadata = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("md/arch") != Aws::String::npos; });
+  EXPECT_TRUE(archMetadata != userAgentParsed.end());
+  // RETRY_MODE_STANDARD -> E, FLEXIBLE_CHECKSUMS_REQ_CRC64 -> W,FLEXIBLE_CHECKSUMS_REQ_WHEN_SUPPORTED -> Z, FLEXIBLE_CHECKSUMS_RES_WHEN_SUPPORTED -> b
+  auto businessMetrics = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), [](const Aws::String & value) { return value.find("m/E,W,Z,b") != Aws::String::npos; });
+  EXPECT_TRUE(businessMetrics != userAgentParsed.end());
+
+  // assert the order of the UA header
+  EXPECT_TRUE(sdkMetadata < uaMetadata);
+  EXPECT_TRUE(uaMetadata < apiMetadata);
+  EXPECT_TRUE(apiMetadata < osMetadata);
+  EXPECT_TRUE(osMetadata < langMetadata);
+  EXPECT_TRUE(langMetadata < crtMetadata);
+  EXPECT_TRUE(crtMetadata <  archMetadata);
+  EXPECT_TRUE(archMetadata < businessMetrics);
+}
+
+TEST_F(S3UnitTest, PutObjectShouldOverrideUserAgent) {
+  auto request = PutObjectRequest()
+    .WithBucket("ocelot")
+    .WithKey("revolver");
+
+  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG, "lalilulelo");
+  request.SetBody(body);
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "major.com/zero", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const AWSCredentials credentials{"mock", "credentials"};
+  const auto epProvider = Aws::MakeShared<S3EndpointProvider>(ALLOCATION_TAG);
+  ClientConfigurationInitValues initValues;
+  initValues.shouldDisableIMDS = true;
+  S3ClientConfiguration configuration{initValues};
+  configuration.region = "us-east-1";
+  configuration.retryStrategy = Aws::MakeShared<NoRetry>(ALLOCATION_TAG);
+  configuration.userAgent = "youre-pretty-good";
+  const S3Client customUaClient{configuration};
+
+  const auto response = customUaClient.PutObject(request);
+  const auto requestSeen = _mockHttpClient->GetMostRecentHttpRequest();
+  EXPECT_TRUE(requestSeen.HasUserAgent());
+  const auto& userAgent = requestSeen.GetUserAgent();
+  EXPECT_TRUE(!userAgent.empty());
+  EXPECT_EQ("youre-pretty-good", userAgent);
+}
+
+TEST_F(S3UnitTest, PutObjectS3ExpressShouldHaveJMetric) {
+  auto request = PutObjectRequest()
+    .WithBucket("o-worthy-heart--usw2-az1--x-s3")  // S3Express bucket pattern
+    .WithKey("who-tempers-anxiety-into-strength");
+
+  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG, "time marches on, and the age of a new king draws nearer");
+  request.SetBody(body);
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "alonzo.com/faker", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const auto response = _s3Client->PutObject(request);
+  
+  const auto requestSeen = _mockHttpClient->GetMostRecentHttpRequest();
+  EXPECT_TRUE(requestSeen.HasUserAgent());
+  const auto& userAgent = requestSeen.GetUserAgent();
+  EXPECT_TRUE(!userAgent.empty());
+  const auto userAgentParsed = Utils::StringUtils::Split(userAgent, ' ');
+  
+  // Check for S3Express business metric (J) in user agent
+  auto businessMetrics = std::find_if(userAgentParsed.begin(), userAgentParsed.end(), 
+    [](const Aws::String & value) { return value.find("m/") != Aws::String::npos && value.find("J") != Aws::String::npos; });
+  EXPECT_TRUE(businessMetrics != userAgentParsed.end());
+}
+
+TEST_F(S3UnitTest, RequestShouldNotIncludeAChecksumIfNotRequired) {
+  S3ClientConfiguration configuration{};
+  configuration.checksumConfig.requestChecksumCalculation = RequestChecksumCalculation::WHEN_REQUIRED;
+  S3TestClient client{configuration};
+
+  auto request = PutObjectRequest()
+    .WithBucket("Crono")
+    .WithKey("Trigger");
+
+  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG,
+    "All life begins with Nu and ends with Nu… This is the truth! This is my belief! …at least for now.");
+
+  request.SetBody(body);
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "end-of-time.com/", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const auto response = client.PutObject(request);
+  EXPECT_TRUE(response.IsSuccess());
+
+  const auto requestReceived = _mockHttpClient->GetMostRecentHttpRequest();
+  const auto headers = requestReceived.GetHeaders();
+  EXPECT_FALSE(std::any_of(headers.begin(), headers.end(),
+    [](const std::pair<Aws::String, Aws::String>& keyValue) { return keyValue.first.find("x-amz-checksum") != Aws::String::npos; }));
+}
+
+TEST_F(S3UnitTest, RequestShouldNotIncludeAChecksumIfNotRequiredWithMD5Header) {
+  S3ClientConfiguration configuration{};
+  configuration.checksumConfig.requestChecksumCalculation = RequestChecksumCalculation::WHEN_REQUIRED;
+  S3TestClient client{configuration};
+
+  auto request = PutObjectRequest()
+    .WithBucket("Crono")
+    .WithKey("Trigger");
+
+  std::shared_ptr<IOStream> body = Aws::MakeShared<StringStream>(ALLOCATION_TAG,
+    "All life begins with Nu and ends with Nu… This is the truth! This is my belief! …at least for now.");
+
+  request.SetBody(body);
+  request.SetAdditionalCustomHeaderValue(MD5_HEADER,
+    Utils::HashingUtils::Base64Encode(Utils::HashingUtils::CalculateMD5(*body)));
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "end-of-time.com/", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const auto response = client.PutObject(request);
+  EXPECT_TRUE(response.IsSuccess());
+
+  const auto requestReceived = _mockHttpClient->GetMostRecentHttpRequest();
+  const auto headers = requestReceived.GetHeaders();
+  EXPECT_FALSE(std::any_of(headers.begin(), headers.end(),
+    [](const std::pair<Aws::String, Aws::String>& keyValue) { return keyValue.first.find("x-amz-checksum") != Aws::String::npos; }));
+  EXPECT_TRUE(std::any_of(headers.begin(), headers.end(),
+    [](const std::pair<Aws::String, Aws::String>& keyValue) { return keyValue.first.find("content-md5") != Aws::String::npos; }));
+}
+
+TEST_F(S3UnitTest, RequestShouldNotIncludeAChecksumIfRequiredWithMD5Header) {
+  struct ChecksumOptOutDeleteObjects : public Aws::S3::Model::DeleteObjectsRequest {
+    inline bool RequestChecksumRequired() const override {
+      return false;
+    };
+  };
+
+  S3ClientConfiguration configuration{};
+  configuration.checksumConfig.requestChecksumCalculation = RequestChecksumCalculation::WHEN_REQUIRED;
+  S3TestClient client{configuration};
+
+  auto request = ChecksumOptOutDeleteObjects();
+  request.SetBucket("Chrono");
+  request.SetDelete(S3::Model::Delete().WithObjects({ObjectIdentifier()
+    .WithKey("Trigger")}));
+  auto payload = request.SerializePayload();
+  request.SetAdditionalCustomHeaderValue(MD5_HEADER,
+    Aws::Utils::HashingUtils::Base64Encode(Aws::Utils::HashingUtils::CalculateMD5(payload)));
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "end-of-time.com/", HttpMethod::HTTP_PUT);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  const auto response = client.DeleteObjects(request);
+  EXPECT_TRUE(response.IsSuccess());
+
+  const auto requestReceived = _mockHttpClient->GetMostRecentHttpRequest();
+  const auto headers = requestReceived.GetHeaders();
+  EXPECT_FALSE(std::any_of(headers.begin(), headers.end(),
+    [](const std::pair<Aws::String, Aws::String>& keyValue) { return keyValue.first.find("x-amz-checksum") != Aws::String::npos; }));
+  EXPECT_TRUE(std::any_of(headers.begin(), headers.end(),
+    [](const std::pair<Aws::String, Aws::String>& keyValue) { return keyValue.first.find("content-md5") != Aws::String::npos; }));
+}
+
+TEST_F(S3UnitTest, testLegacyApi)
+{
+    HeadBucketRequest headBucketRequest;
+    headBucketRequest.SetBucket("dummy");
+
+    auto uri = _s3Client->GeneratePresignedUrl("dummy",
+      /*key=*/"", Aws::Http::HttpMethod::HTTP_HEAD);
+
+    //We have to mock requset because it is used to create the return body, it actually isnt used.
+    auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_GET);
+    mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+      return Aws::New<StringStream>(ALLOCATION_TAG, "response-string", std::ios_base::in | std::ios_base::binary);
+    });
+
+    {
+      auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+        mockResponse->SetResponseCode(HttpResponseCode::OK);
+        _mockHttpClient->AddResponseToReturn(mockResponse);
+    }
+
+    auto outcome = _s3Client->MakeRequest(uri, headBucketRequest, Aws::Http::HttpMethod::HTTP_HEAD,
+      "SignatureV4");
+
+    EXPECT_TRUE(outcome.IsSuccess());
+
+    {
+        auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+        mockResponse->SetResponseCode(HttpResponseCode::OK);
+        _mockHttpClient->AddResponseToReturn(mockResponse);
+    }
+
+    auto outcome2 = _s3Client->MakeRequest(uri, Aws::Http::HttpMethod::HTTP_HEAD,
+      "SignatureV4");
+    
+    EXPECT_TRUE(outcome2.IsSuccess());
+}
+
+TEST_F(S3UnitTest, PartiallyConsumedStreamChecksumReuse) {
+  auto request = PutObjectRequest().WithBucket("(iamthou").WithKey("thouarti");
+  // the body has to be over 8K as the checksum is read as we read in chunks, in this case
+  // we set the chunk size to 8K and we need the body to be larger than that.
+  const Aws::String bodyString(9216, 'a');
+  request.SetBody(Aws::MakeShared<StringStream>(ALLOCATION_TAG, bodyString));
+
+  const auto errorResponseStream = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_POST);
+  errorResponseStream->SetResponseStreamFactory(Aws::Utils::Stream::DefaultResponseStreamFactoryMethod);
+  auto errorResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, errorResponseStream);
+  errorResponse->SetResponseCode(HttpResponseCode::REQUEST_TIMEOUT);
+  _mockHttpClient->AddResponseToReturn(
+      errorResponse, [](IOStream&) -> void {},
+      [](const std::shared_ptr<Aws::Http::HttpRequest>& request) -> void {
+        // Partially read the buffer, such that the request checksum ends up in a bad state.
+        ASSERT_TRUE(request->GetContentBody());
+        Aws::Array<char, 12> tempBuffer;
+        request->GetContentBody()->read(tempBuffer.data(), 12);
+      });
+
+  const auto successResponseStream = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "mockuri", HttpMethod::HTTP_POST);
+  successResponseStream->SetResponseStreamFactory(Aws::Utils::Stream::DefaultResponseStreamFactoryMethod);
+  auto successResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, successResponseStream);
+  successResponse->SetResponseCode(HttpResponseCode::OK);
+  _mockHttpClient->AddResponseToReturn(
+      successResponse, [](IOStream&) -> void {},
+      [](const std::shared_ptr<Aws::Http::HttpRequest>& request) -> void {
+        ASSERT_TRUE(request->GetContentBody());
+        Aws::Array<char, 9216> tempBuffer;
+        request->GetContentBody()->read(tempBuffer.data(), 9216);
+      });
+
+  // The top level test has a no retry policy so we have to create one that retries
+  _mockHttpClient->Reset();
+  const AWSCredentials credentials{"mock", "credentials"};
+  ClientConfigurationInitValues initValues;
+  initValues.shouldDisableIMDS = true;
+  S3ClientConfiguration configuration{initValues};
+  configuration.httpClientChunkedMode = HttpClientChunkedMode::DEFAULT;
+  // Smallest chunk size allowed
+  configuration.awsChunkedBufferSize = 8192UL;
+  const S3Client clientWithRetries{credentials, nullptr, configuration};
+
+  const auto response = clientWithRetries.PutObject(request);
+  AWS_EXPECT_SUCCESS(response);
+  EXPECT_EQ(_mockHttpClient->GetAllRequestsMade().size(), 2ULL);
+
+  Aws::Utils::Crypto::CRC64 crc64Hash{};
+  const auto expectedChecksum = crc64Hash.Calculate(bodyString);
+  EXPECT_TRUE(expectedChecksum.IsSuccess());
+  const Aws::Utils::Base64::Base64 base64{};
+  const auto expectedChecksumBase64 = base64.Encode(expectedChecksum.GetResult());
+
+  const auto retriedRequest = _mockHttpClient->GetMostRecentHttpRequest();
+  const auto seenChecksum = retriedRequest.GetRequestHash().second->GetHash();
+  EXPECT_TRUE(seenChecksum.IsSuccess());
+  const auto seenChecksumBase64 = base64.Encode(seenChecksum.GetResult());
+  EXPECT_EQ(seenChecksumBase64, expectedChecksumBase64);
+}
+
+TEST_F(S3UnitTest, ListObjectsV2PaginatorShouldHaveCMetric) {
+  auto request = ListObjectsV2Request().WithBucket("test-bucket");
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "test-bucket.s3.amazonaws.com/", HttpMethod::HTTP_GET);
+  mockRequest->SetResponseStreamFactory([]() -> IOStream* {
+    return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary);
+  });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::OK);
+  mockResponse->GetResponseBody() <<
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    "<ListBucketResult xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">"
+    "<Name>test-bucket</Name><KeyCount>0</KeyCount><MaxKeys>1000</MaxKeys><IsTruncated>false</IsTruncated>"
+    "</ListBucketResult>";
+  _mockHttpClient->AddResponseToReturn(mockResponse);
+
+  auto paginator = _s3Client->ListObjectsV2Paginator(request);
+  for (const auto& outcome : paginator) {
+    AWS_ASSERT_SUCCESS(outcome);
+  }
+
+  const auto requestSeen = _mockHttpClient->GetMostRecentHttpRequest();
+  EXPECT_TRUE(requestSeen.HasUserAgent());
+  const auto& userAgent = requestSeen.GetUserAgent();
+  EXPECT_FALSE(userAgent.empty());
+  const auto userAgentParsed = Utils::StringUtils::Split(userAgent, ' ');
+
+  auto businessMetrics = std::find_if(userAgentParsed.begin(), userAgentParsed.end(),
+    [](const Aws::String& value) { return value.find("m/") != Aws::String::npos && value.find("C") != Aws::String::npos; });
+  EXPECT_TRUE(businessMetrics != userAgentParsed.end());
+}
+
+TEST_F(S3UnitTest, TestGetObjectTimeoutShouldReturnTimeoutError) {
+  auto request = GetObjectRequest().WithBucket("test-bucket").WithKey("test-key");
+
+  auto mockRequest = Aws::MakeShared<Standard::StandardHttpRequest>(ALLOCATION_TAG, "test-bucket.s3.amazonaws.com/", HttpMethod::HTTP_GET);
+  mockRequest->SetResponseStreamFactory(
+      []() -> IOStream* { return Aws::New<StringStream>(ALLOCATION_TAG, "", std::ios_base::in | std::ios_base::binary); });
+  auto mockResponse = Aws::MakeShared<Standard::StandardHttpResponse>(ALLOCATION_TAG, mockRequest);
+  mockResponse->SetResponseCode(HttpResponseCode::NETWORK_CONNECT_TIMEOUT);
+  mockResponse->AddHeader("x-amz-checksum-crc32", "1f2e4daa");
+  _mockHttpClient->AddResponseToReturn(mockResponse,
+                                       [](Aws::IOStream& response) -> void { response << "The distance between what is said"; });
+
+  const auto response = _s3Client->GetObject(request);
+  EXPECT_FALSE(response.IsSuccess());
+  const auto& error = response.GetError();
+  EXPECT_EQ(error.GetResponseCode(), HttpResponseCode::NETWORK_CONNECT_TIMEOUT);
+  EXPECT_TRUE(error.ShouldRetry());
+}

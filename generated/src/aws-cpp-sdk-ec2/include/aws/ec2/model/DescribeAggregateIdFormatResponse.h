@@ -4,77 +4,99 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IdFormat.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeAggregateIdFormatResponse
-  {
-  public:
-    AWS_EC2_API DescribeAggregateIdFormatResponse();
-    AWS_EC2_API DescribeAggregateIdFormatResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeAggregateIdFormatResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeAggregateIdFormatResponse {
+ public:
+  AWS_EC2_API DescribeAggregateIdFormatResponse() = default;
+  AWS_EC2_API DescribeAggregateIdFormatResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeAggregateIdFormatResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Indicates whether all resource types in the Region are configured to use
+   * longer IDs. This value is only <code>true</code> if all users are configured to
+   * use longer IDs for all resources types in the Region.</p>
+   */
+  inline bool GetUseLongIdsAggregated() const { return m_useLongIdsAggregated; }
+  inline void SetUseLongIdsAggregated(bool value) {
+    m_useLongIdsAggregatedHasBeenSet = true;
+    m_useLongIdsAggregated = value;
+  }
+  inline DescribeAggregateIdFormatResponse& WithUseLongIdsAggregated(bool value) {
+    SetUseLongIdsAggregated(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether all resource types in the Region are configured to use
-     * longer IDs. This value is only <code>true</code> if all users are configured to
-     * use longer IDs for all resources types in the Region.</p>
-     */
-    inline bool GetUseLongIdsAggregated() const{ return m_useLongIdsAggregated; }
-    inline void SetUseLongIdsAggregated(bool value) { m_useLongIdsAggregated = value; }
-    inline DescribeAggregateIdFormatResponse& WithUseLongIdsAggregated(bool value) { SetUseLongIdsAggregated(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about each resource's ID format.</p>
+   */
+  inline const Aws::Vector<IdFormat>& GetStatuses() const { return m_statuses; }
+  template <typename StatusesT = Aws::Vector<IdFormat>>
+  void SetStatuses(StatusesT&& value) {
+    m_statusesHasBeenSet = true;
+    m_statuses = std::forward<StatusesT>(value);
+  }
+  template <typename StatusesT = Aws::Vector<IdFormat>>
+  DescribeAggregateIdFormatResponse& WithStatuses(StatusesT&& value) {
+    SetStatuses(std::forward<StatusesT>(value));
+    return *this;
+  }
+  template <typename StatusesT = IdFormat>
+  DescribeAggregateIdFormatResponse& AddStatuses(StatusesT&& value) {
+    m_statusesHasBeenSet = true;
+    m_statuses.emplace_back(std::forward<StatusesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about each resource's ID format.</p>
-     */
-    inline const Aws::Vector<IdFormat>& GetStatuses() const{ return m_statuses; }
-    inline void SetStatuses(const Aws::Vector<IdFormat>& value) { m_statuses = value; }
-    inline void SetStatuses(Aws::Vector<IdFormat>&& value) { m_statuses = std::move(value); }
-    inline DescribeAggregateIdFormatResponse& WithStatuses(const Aws::Vector<IdFormat>& value) { SetStatuses(value); return *this;}
-    inline DescribeAggregateIdFormatResponse& WithStatuses(Aws::Vector<IdFormat>&& value) { SetStatuses(std::move(value)); return *this;}
-    inline DescribeAggregateIdFormatResponse& AddStatuses(const IdFormat& value) { m_statuses.push_back(value); return *this; }
-    inline DescribeAggregateIdFormatResponse& AddStatuses(IdFormat&& value) { m_statuses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeAggregateIdFormatResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeAggregateIdFormatResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeAggregateIdFormatResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    bool m_useLongIdsAggregated;
+ private:
+  bool m_useLongIdsAggregated{false};
 
-    Aws::Vector<IdFormat> m_statuses;
+  Aws::Vector<IdFormat> m_statuses;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_useLongIdsAggregatedHasBeenSet = false;
+  bool m_statusesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

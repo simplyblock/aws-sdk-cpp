@@ -11,49 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockRuntime {
+namespace Model {
 
-GuardrailContentBlock::GuardrailContentBlock() : 
-    m_textHasBeenSet(false)
-{
-}
+GuardrailContentBlock::GuardrailContentBlock(JsonView jsonValue) { *this = jsonValue; }
 
-GuardrailContentBlock::GuardrailContentBlock(JsonView jsonValue)
-  : GuardrailContentBlock()
-{
-  *this = jsonValue;
-}
-
-GuardrailContentBlock& GuardrailContentBlock::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("text"))
-  {
+GuardrailContentBlock& GuardrailContentBlock::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("text")) {
     m_text = jsonValue.GetObject("text");
-
     m_textHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("image")) {
+    m_image = jsonValue.GetObject("image");
+    m_imageHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue GuardrailContentBlock::Jsonize() const
-{
+JsonValue GuardrailContentBlock::Jsonize() const {
   JsonValue payload;
 
-  if(m_textHasBeenSet)
-  {
-   payload.WithObject("text", m_text.Jsonize());
+  if (m_textHasBeenSet) {
+    payload.WithObject("text", m_text.Jsonize());
+  }
 
+  if (m_imageHasBeenSet) {
+    payload.WithObject("image", m_image.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockRuntime
+}  // namespace Aws

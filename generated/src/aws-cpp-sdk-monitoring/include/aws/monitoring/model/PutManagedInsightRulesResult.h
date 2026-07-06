@@ -4,64 +4,98 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/monitoring/model/ResponseMetadata.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/PartialFailure.h>
-#include <utility>
+#include <aws/monitoring/model/ResponseMetadata.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
-  class PutManagedInsightRulesResult
-  {
-  public:
-    AWS_CLOUDWATCH_API PutManagedInsightRulesResult();
-    AWS_CLOUDWATCH_API PutManagedInsightRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDWATCH_API PutManagedInsightRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
+class PutManagedInsightRulesResult {
+ public:
+  AWS_CLOUDWATCH_API PutManagedInsightRulesResult() = default;
+  AWS_CLOUDWATCH_API PutManagedInsightRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_CLOUDWATCH_API PutManagedInsightRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p> An array that lists the rules that could not be enabled. </p>
+   */
+  inline const Aws::Vector<PartialFailure>& GetFailures() const { return m_failures; }
+  template <typename FailuresT = Aws::Vector<PartialFailure>>
+  void SetFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures = std::forward<FailuresT>(value);
+  }
+  template <typename FailuresT = Aws::Vector<PartialFailure>>
+  PutManagedInsightRulesResult& WithFailures(FailuresT&& value) {
+    SetFailures(std::forward<FailuresT>(value));
+    return *this;
+  }
+  template <typename FailuresT = PartialFailure>
+  PutManagedInsightRulesResult& AddFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures.emplace_back(std::forward<FailuresT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An array that lists the rules that could not be enabled. </p>
-     */
-    inline const Aws::Vector<PartialFailure>& GetFailures() const{ return m_failures; }
-    inline void SetFailures(const Aws::Vector<PartialFailure>& value) { m_failures = value; }
-    inline void SetFailures(Aws::Vector<PartialFailure>&& value) { m_failures = std::move(value); }
-    inline PutManagedInsightRulesResult& WithFailures(const Aws::Vector<PartialFailure>& value) { SetFailures(value); return *this;}
-    inline PutManagedInsightRulesResult& WithFailures(Aws::Vector<PartialFailure>&& value) { SetFailures(std::move(value)); return *this;}
-    inline PutManagedInsightRulesResult& AddFailures(const PartialFailure& value) { m_failures.push_back(value); return *this; }
-    inline PutManagedInsightRulesResult& AddFailures(PartialFailure&& value) { m_failures.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline PutManagedInsightRulesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline PutManagedInsightRulesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutManagedInsightRulesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<PartialFailure> m_failures;
+  ///@{
 
-    ResponseMetadata m_responseMetadata;
-  };
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  PutManagedInsightRulesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+ private:
+  Aws::Vector<PartialFailure> m_failures;
+
+  Aws::String m_requestId;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_failuresHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

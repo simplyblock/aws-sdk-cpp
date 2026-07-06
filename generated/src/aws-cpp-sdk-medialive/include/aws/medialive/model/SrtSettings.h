@@ -4,57 +4,81 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/SrtCallerSource.h>
+#include <aws/medialive/model/SrtListenerSettings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
 
-  /**
-   * The configured sources for this SRT input.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SrtSettings">AWS
-   * API Reference</a></p>
-   */
-  class SrtSettings
-  {
-  public:
-    AWS_MEDIALIVE_API SrtSettings();
-    AWS_MEDIALIVE_API SrtSettings(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API SrtSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+/**
+ * The configured settings for SRT inputs (caller and listener).<p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/SrtSettings">AWS
+ * API Reference</a></p>
+ */
+class SrtSettings {
+ public:
+  AWS_MEDIALIVE_API SrtSettings() = default;
+  AWS_MEDIALIVE_API SrtSettings(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API SrtSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Vector<SrtCallerSource>& GetSrtCallerSources() const{ return m_srtCallerSources; }
-    inline bool SrtCallerSourcesHasBeenSet() const { return m_srtCallerSourcesHasBeenSet; }
-    inline void SetSrtCallerSources(const Aws::Vector<SrtCallerSource>& value) { m_srtCallerSourcesHasBeenSet = true; m_srtCallerSources = value; }
-    inline void SetSrtCallerSources(Aws::Vector<SrtCallerSource>&& value) { m_srtCallerSourcesHasBeenSet = true; m_srtCallerSources = std::move(value); }
-    inline SrtSettings& WithSrtCallerSources(const Aws::Vector<SrtCallerSource>& value) { SetSrtCallerSources(value); return *this;}
-    inline SrtSettings& WithSrtCallerSources(Aws::Vector<SrtCallerSource>&& value) { SetSrtCallerSources(std::move(value)); return *this;}
-    inline SrtSettings& AddSrtCallerSources(const SrtCallerSource& value) { m_srtCallerSourcesHasBeenSet = true; m_srtCallerSources.push_back(value); return *this; }
-    inline SrtSettings& AddSrtCallerSources(SrtCallerSource&& value) { m_srtCallerSourcesHasBeenSet = true; m_srtCallerSources.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  inline const Aws::Vector<SrtCallerSource>& GetSrtCallerSources() const { return m_srtCallerSources; }
+  inline bool SrtCallerSourcesHasBeenSet() const { return m_srtCallerSourcesHasBeenSet; }
+  template <typename SrtCallerSourcesT = Aws::Vector<SrtCallerSource>>
+  void SetSrtCallerSources(SrtCallerSourcesT&& value) {
+    m_srtCallerSourcesHasBeenSet = true;
+    m_srtCallerSources = std::forward<SrtCallerSourcesT>(value);
+  }
+  template <typename SrtCallerSourcesT = Aws::Vector<SrtCallerSource>>
+  SrtSettings& WithSrtCallerSources(SrtCallerSourcesT&& value) {
+    SetSrtCallerSources(std::forward<SrtCallerSourcesT>(value));
+    return *this;
+  }
+  template <typename SrtCallerSourcesT = SrtCallerSource>
+  SrtSettings& AddSrtCallerSources(SrtCallerSourcesT&& value) {
+    m_srtCallerSourcesHasBeenSet = true;
+    m_srtCallerSources.emplace_back(std::forward<SrtCallerSourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<SrtCallerSource> m_srtCallerSources;
-    bool m_srtCallerSourcesHasBeenSet = false;
-  };
+  ///@{
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+  inline const SrtListenerSettings& GetSrtListenerSettings() const { return m_srtListenerSettings; }
+  inline bool SrtListenerSettingsHasBeenSet() const { return m_srtListenerSettingsHasBeenSet; }
+  template <typename SrtListenerSettingsT = SrtListenerSettings>
+  void SetSrtListenerSettings(SrtListenerSettingsT&& value) {
+    m_srtListenerSettingsHasBeenSet = true;
+    m_srtListenerSettings = std::forward<SrtListenerSettingsT>(value);
+  }
+  template <typename SrtListenerSettingsT = SrtListenerSettings>
+  SrtSettings& WithSrtListenerSettings(SrtListenerSettingsT&& value) {
+    SetSrtListenerSettings(std::forward<SrtListenerSettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<SrtCallerSource> m_srtCallerSources;
+
+  SrtListenerSettings m_srtListenerSettings;
+  bool m_srtCallerSourcesHasBeenSet = false;
+  bool m_srtListenerSettingsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

@@ -4,67 +4,80 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/SchemaVersionErrorItem.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class DeleteSchemaVersionsResult
-  {
-  public:
-    AWS_GLUE_API DeleteSchemaVersionsResult();
-    AWS_GLUE_API DeleteSchemaVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API DeleteSchemaVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class DeleteSchemaVersionsResult {
+ public:
+  AWS_GLUE_API DeleteSchemaVersionsResult() = default;
+  AWS_GLUE_API DeleteSchemaVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API DeleteSchemaVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of <code>SchemaVersionErrorItem</code> objects, each containing an
+   * error and schema version.</p>
+   */
+  inline const Aws::Vector<SchemaVersionErrorItem>& GetSchemaVersionErrors() const { return m_schemaVersionErrors; }
+  template <typename SchemaVersionErrorsT = Aws::Vector<SchemaVersionErrorItem>>
+  void SetSchemaVersionErrors(SchemaVersionErrorsT&& value) {
+    m_schemaVersionErrorsHasBeenSet = true;
+    m_schemaVersionErrors = std::forward<SchemaVersionErrorsT>(value);
+  }
+  template <typename SchemaVersionErrorsT = Aws::Vector<SchemaVersionErrorItem>>
+  DeleteSchemaVersionsResult& WithSchemaVersionErrors(SchemaVersionErrorsT&& value) {
+    SetSchemaVersionErrors(std::forward<SchemaVersionErrorsT>(value));
+    return *this;
+  }
+  template <typename SchemaVersionErrorsT = SchemaVersionErrorItem>
+  DeleteSchemaVersionsResult& AddSchemaVersionErrors(SchemaVersionErrorsT&& value) {
+    m_schemaVersionErrorsHasBeenSet = true;
+    m_schemaVersionErrors.emplace_back(std::forward<SchemaVersionErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>SchemaVersionErrorItem</code> objects, each containing an
-     * error and schema version.</p>
-     */
-    inline const Aws::Vector<SchemaVersionErrorItem>& GetSchemaVersionErrors() const{ return m_schemaVersionErrors; }
-    inline void SetSchemaVersionErrors(const Aws::Vector<SchemaVersionErrorItem>& value) { m_schemaVersionErrors = value; }
-    inline void SetSchemaVersionErrors(Aws::Vector<SchemaVersionErrorItem>&& value) { m_schemaVersionErrors = std::move(value); }
-    inline DeleteSchemaVersionsResult& WithSchemaVersionErrors(const Aws::Vector<SchemaVersionErrorItem>& value) { SetSchemaVersionErrors(value); return *this;}
-    inline DeleteSchemaVersionsResult& WithSchemaVersionErrors(Aws::Vector<SchemaVersionErrorItem>&& value) { SetSchemaVersionErrors(std::move(value)); return *this;}
-    inline DeleteSchemaVersionsResult& AddSchemaVersionErrors(const SchemaVersionErrorItem& value) { m_schemaVersionErrors.push_back(value); return *this; }
-    inline DeleteSchemaVersionsResult& AddSchemaVersionErrors(SchemaVersionErrorItem&& value) { m_schemaVersionErrors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteSchemaVersionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteSchemaVersionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteSchemaVersionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteSchemaVersionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SchemaVersionErrorItem> m_schemaVersionErrors;
+ private:
+  Aws::Vector<SchemaVersionErrorItem> m_schemaVersionErrors;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_schemaVersionErrorsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

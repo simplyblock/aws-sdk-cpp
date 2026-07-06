@@ -4,123 +4,160 @@
  */
 
 #pragma once
-#include <aws/networkmanager/NetworkManager_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/networkmanager/model/CoreNetworkSegmentEdgeIdentifier.h>
-#include <aws/networkmanager/model/RouteTableType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/networkmanager/NetworkManager_EXPORTS.h>
+#include <aws/networkmanager/model/CoreNetworkSegmentEdgeIdentifier.h>
 #include <aws/networkmanager/model/NetworkRoute.h>
+#include <aws/networkmanager/model/RouteTableType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class GetNetworkRoutesResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API GetNetworkRoutesResult();
-    AWS_NETWORKMANAGER_API GetNetworkRoutesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API GetNetworkRoutesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class GetNetworkRoutesResult {
+ public:
+  AWS_NETWORKMANAGER_API GetNetworkRoutesResult() = default;
+  AWS_NETWORKMANAGER_API GetNetworkRoutesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API GetNetworkRoutesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the route table.</p>
+   */
+  inline const Aws::String& GetRouteTableArn() const { return m_routeTableArn; }
+  template <typename RouteTableArnT = Aws::String>
+  void SetRouteTableArn(RouteTableArnT&& value) {
+    m_routeTableArnHasBeenSet = true;
+    m_routeTableArn = std::forward<RouteTableArnT>(value);
+  }
+  template <typename RouteTableArnT = Aws::String>
+  GetNetworkRoutesResult& WithRouteTableArn(RouteTableArnT&& value) {
+    SetRouteTableArn(std::forward<RouteTableArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the route table.</p>
-     */
-    inline const Aws::String& GetRouteTableArn() const{ return m_routeTableArn; }
-    inline void SetRouteTableArn(const Aws::String& value) { m_routeTableArn = value; }
-    inline void SetRouteTableArn(Aws::String&& value) { m_routeTableArn = std::move(value); }
-    inline void SetRouteTableArn(const char* value) { m_routeTableArn.assign(value); }
-    inline GetNetworkRoutesResult& WithRouteTableArn(const Aws::String& value) { SetRouteTableArn(value); return *this;}
-    inline GetNetworkRoutesResult& WithRouteTableArn(Aws::String&& value) { SetRouteTableArn(std::move(value)); return *this;}
-    inline GetNetworkRoutesResult& WithRouteTableArn(const char* value) { SetRouteTableArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes a core network segment edge.</p>
+   */
+  inline const CoreNetworkSegmentEdgeIdentifier& GetCoreNetworkSegmentEdge() const { return m_coreNetworkSegmentEdge; }
+  template <typename CoreNetworkSegmentEdgeT = CoreNetworkSegmentEdgeIdentifier>
+  void SetCoreNetworkSegmentEdge(CoreNetworkSegmentEdgeT&& value) {
+    m_coreNetworkSegmentEdgeHasBeenSet = true;
+    m_coreNetworkSegmentEdge = std::forward<CoreNetworkSegmentEdgeT>(value);
+  }
+  template <typename CoreNetworkSegmentEdgeT = CoreNetworkSegmentEdgeIdentifier>
+  GetNetworkRoutesResult& WithCoreNetworkSegmentEdge(CoreNetworkSegmentEdgeT&& value) {
+    SetCoreNetworkSegmentEdge(std::forward<CoreNetworkSegmentEdgeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes a core network segment edge.</p>
-     */
-    inline const CoreNetworkSegmentEdgeIdentifier& GetCoreNetworkSegmentEdge() const{ return m_coreNetworkSegmentEdge; }
-    inline void SetCoreNetworkSegmentEdge(const CoreNetworkSegmentEdgeIdentifier& value) { m_coreNetworkSegmentEdge = value; }
-    inline void SetCoreNetworkSegmentEdge(CoreNetworkSegmentEdgeIdentifier&& value) { m_coreNetworkSegmentEdge = std::move(value); }
-    inline GetNetworkRoutesResult& WithCoreNetworkSegmentEdge(const CoreNetworkSegmentEdgeIdentifier& value) { SetCoreNetworkSegmentEdge(value); return *this;}
-    inline GetNetworkRoutesResult& WithCoreNetworkSegmentEdge(CoreNetworkSegmentEdgeIdentifier&& value) { SetCoreNetworkSegmentEdge(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The route table type.</p>
+   */
+  inline RouteTableType GetRouteTableType() const { return m_routeTableType; }
+  inline void SetRouteTableType(RouteTableType value) {
+    m_routeTableTypeHasBeenSet = true;
+    m_routeTableType = value;
+  }
+  inline GetNetworkRoutesResult& WithRouteTableType(RouteTableType value) {
+    SetRouteTableType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The route table type.</p>
-     */
-    inline const RouteTableType& GetRouteTableType() const{ return m_routeTableType; }
-    inline void SetRouteTableType(const RouteTableType& value) { m_routeTableType = value; }
-    inline void SetRouteTableType(RouteTableType&& value) { m_routeTableType = std::move(value); }
-    inline GetNetworkRoutesResult& WithRouteTableType(const RouteTableType& value) { SetRouteTableType(value); return *this;}
-    inline GetNetworkRoutesResult& WithRouteTableType(RouteTableType&& value) { SetRouteTableType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The route table creation time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetRouteTableTimestamp() const { return m_routeTableTimestamp; }
+  template <typename RouteTableTimestampT = Aws::Utils::DateTime>
+  void SetRouteTableTimestamp(RouteTableTimestampT&& value) {
+    m_routeTableTimestampHasBeenSet = true;
+    m_routeTableTimestamp = std::forward<RouteTableTimestampT>(value);
+  }
+  template <typename RouteTableTimestampT = Aws::Utils::DateTime>
+  GetNetworkRoutesResult& WithRouteTableTimestamp(RouteTableTimestampT&& value) {
+    SetRouteTableTimestamp(std::forward<RouteTableTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The route table creation time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetRouteTableTimestamp() const{ return m_routeTableTimestamp; }
-    inline void SetRouteTableTimestamp(const Aws::Utils::DateTime& value) { m_routeTableTimestamp = value; }
-    inline void SetRouteTableTimestamp(Aws::Utils::DateTime&& value) { m_routeTableTimestamp = std::move(value); }
-    inline GetNetworkRoutesResult& WithRouteTableTimestamp(const Aws::Utils::DateTime& value) { SetRouteTableTimestamp(value); return *this;}
-    inline GetNetworkRoutesResult& WithRouteTableTimestamp(Aws::Utils::DateTime&& value) { SetRouteTableTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The network routes.</p>
+   */
+  inline const Aws::Vector<NetworkRoute>& GetNetworkRoutes() const { return m_networkRoutes; }
+  template <typename NetworkRoutesT = Aws::Vector<NetworkRoute>>
+  void SetNetworkRoutes(NetworkRoutesT&& value) {
+    m_networkRoutesHasBeenSet = true;
+    m_networkRoutes = std::forward<NetworkRoutesT>(value);
+  }
+  template <typename NetworkRoutesT = Aws::Vector<NetworkRoute>>
+  GetNetworkRoutesResult& WithNetworkRoutes(NetworkRoutesT&& value) {
+    SetNetworkRoutes(std::forward<NetworkRoutesT>(value));
+    return *this;
+  }
+  template <typename NetworkRoutesT = NetworkRoute>
+  GetNetworkRoutesResult& AddNetworkRoutes(NetworkRoutesT&& value) {
+    m_networkRoutesHasBeenSet = true;
+    m_networkRoutes.emplace_back(std::forward<NetworkRoutesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The network routes.</p>
-     */
-    inline const Aws::Vector<NetworkRoute>& GetNetworkRoutes() const{ return m_networkRoutes; }
-    inline void SetNetworkRoutes(const Aws::Vector<NetworkRoute>& value) { m_networkRoutes = value; }
-    inline void SetNetworkRoutes(Aws::Vector<NetworkRoute>&& value) { m_networkRoutes = std::move(value); }
-    inline GetNetworkRoutesResult& WithNetworkRoutes(const Aws::Vector<NetworkRoute>& value) { SetNetworkRoutes(value); return *this;}
-    inline GetNetworkRoutesResult& WithNetworkRoutes(Aws::Vector<NetworkRoute>&& value) { SetNetworkRoutes(std::move(value)); return *this;}
-    inline GetNetworkRoutesResult& AddNetworkRoutes(const NetworkRoute& value) { m_networkRoutes.push_back(value); return *this; }
-    inline GetNetworkRoutesResult& AddNetworkRoutes(NetworkRoute&& value) { m_networkRoutes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetNetworkRoutesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetNetworkRoutesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetNetworkRoutesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetNetworkRoutesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_routeTableArn;
+ private:
+  Aws::String m_routeTableArn;
 
-    CoreNetworkSegmentEdgeIdentifier m_coreNetworkSegmentEdge;
+  CoreNetworkSegmentEdgeIdentifier m_coreNetworkSegmentEdge;
 
-    RouteTableType m_routeTableType;
+  RouteTableType m_routeTableType{RouteTableType::NOT_SET};
 
-    Aws::Utils::DateTime m_routeTableTimestamp;
+  Aws::Utils::DateTime m_routeTableTimestamp{};
 
-    Aws::Vector<NetworkRoute> m_networkRoutes;
+  Aws::Vector<NetworkRoute> m_networkRoutes;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_routeTableArnHasBeenSet = false;
+  bool m_coreNetworkSegmentEdgeHasBeenSet = false;
+  bool m_routeTableTypeHasBeenSet = false;
+  bool m_routeTableTimestampHasBeenSet = false;
+  bool m_networkRoutesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

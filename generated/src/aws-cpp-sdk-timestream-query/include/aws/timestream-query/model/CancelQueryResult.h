@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/timestream-query/TimestreamQuery_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/timestream-query/TimestreamQuery_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamQuery
-{
-namespace Model
-{
-  class CancelQueryResult
-  {
-  public:
-    AWS_TIMESTREAMQUERY_API CancelQueryResult();
-    AWS_TIMESTREAMQUERY_API CancelQueryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TIMESTREAMQUERY_API CancelQueryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamQuery {
+namespace Model {
+class CancelQueryResult {
+ public:
+  AWS_TIMESTREAMQUERY_API CancelQueryResult() = default;
+  AWS_TIMESTREAMQUERY_API CancelQueryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TIMESTREAMQUERY_API CancelQueryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> A <code>CancellationMessage</code> is returned when a
+   * <code>CancelQuery</code> request for the query specified by <code>QueryId</code>
+   * has already been issued. </p>
+   */
+  inline const Aws::String& GetCancellationMessage() const { return m_cancellationMessage; }
+  template <typename CancellationMessageT = Aws::String>
+  void SetCancellationMessage(CancellationMessageT&& value) {
+    m_cancellationMessageHasBeenSet = true;
+    m_cancellationMessage = std::forward<CancellationMessageT>(value);
+  }
+  template <typename CancellationMessageT = Aws::String>
+  CancelQueryResult& WithCancellationMessage(CancellationMessageT&& value) {
+    SetCancellationMessage(std::forward<CancellationMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A <code>CancellationMessage</code> is returned when a
-     * <code>CancelQuery</code> request for the query specified by <code>QueryId</code>
-     * has already been issued. </p>
-     */
-    inline const Aws::String& GetCancellationMessage() const{ return m_cancellationMessage; }
-    inline void SetCancellationMessage(const Aws::String& value) { m_cancellationMessage = value; }
-    inline void SetCancellationMessage(Aws::String&& value) { m_cancellationMessage = std::move(value); }
-    inline void SetCancellationMessage(const char* value) { m_cancellationMessage.assign(value); }
-    inline CancelQueryResult& WithCancellationMessage(const Aws::String& value) { SetCancellationMessage(value); return *this;}
-    inline CancelQueryResult& WithCancellationMessage(Aws::String&& value) { SetCancellationMessage(std::move(value)); return *this;}
-    inline CancelQueryResult& WithCancellationMessage(const char* value) { SetCancellationMessage(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CancelQueryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CancelQueryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CancelQueryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CancelQueryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_cancellationMessage;
+ private:
+  Aws::String m_cancellationMessage;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_cancellationMessageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TimestreamQuery
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamQuery
+}  // namespace Aws

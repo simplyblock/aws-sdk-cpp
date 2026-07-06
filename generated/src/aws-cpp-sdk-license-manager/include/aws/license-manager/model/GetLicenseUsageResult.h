@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/license-manager/LicenseManager_EXPORTS.h>
 #include <aws/license-manager/model/LicenseUsage.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManager
-{
-namespace Model
-{
-  class GetLicenseUsageResult
-  {
-  public:
-    AWS_LICENSEMANAGER_API GetLicenseUsageResult();
-    AWS_LICENSEMANAGER_API GetLicenseUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGER_API GetLicenseUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManager {
+namespace Model {
+class GetLicenseUsageResult {
+ public:
+  AWS_LICENSEMANAGER_API GetLicenseUsageResult() = default;
+  AWS_LICENSEMANAGER_API GetLicenseUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGER_API GetLicenseUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>License usage details.</p>
+   */
+  inline const LicenseUsage& GetLicenseUsage() const { return m_licenseUsage; }
+  template <typename LicenseUsageT = LicenseUsage>
+  void SetLicenseUsage(LicenseUsageT&& value) {
+    m_licenseUsageHasBeenSet = true;
+    m_licenseUsage = std::forward<LicenseUsageT>(value);
+  }
+  template <typename LicenseUsageT = LicenseUsage>
+  GetLicenseUsageResult& WithLicenseUsage(LicenseUsageT&& value) {
+    SetLicenseUsage(std::forward<LicenseUsageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>License usage details.</p>
-     */
-    inline const LicenseUsage& GetLicenseUsage() const{ return m_licenseUsage; }
-    inline void SetLicenseUsage(const LicenseUsage& value) { m_licenseUsage = value; }
-    inline void SetLicenseUsage(LicenseUsage&& value) { m_licenseUsage = std::move(value); }
-    inline GetLicenseUsageResult& WithLicenseUsage(const LicenseUsage& value) { SetLicenseUsage(value); return *this;}
-    inline GetLicenseUsageResult& WithLicenseUsage(LicenseUsage&& value) { SetLicenseUsage(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLicenseUsageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLicenseUsageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLicenseUsageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLicenseUsageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    LicenseUsage m_licenseUsage;
+ private:
+  LicenseUsage m_licenseUsage;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_licenseUsageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManager
+}  // namespace Aws

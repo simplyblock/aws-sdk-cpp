@@ -5,58 +5,61 @@
 
 #pragma once
 #include <aws/athena/Athena_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/athena/model/Datum.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Athena
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Athena {
+namespace Model {
 
+/**
+ * <p>The rows that make up a query result table.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/athena-2017-05-18/Row">AWS API
+ * Reference</a></p>
+ */
+class Row {
+ public:
+  AWS_ATHENA_API Row() = default;
+  AWS_ATHENA_API Row(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ATHENA_API Row& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ATHENA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The rows that make up a query result table.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/athena-2017-05-18/Row">AWS API
-   * Reference</a></p>
+   * <p>The data that populates a row in a query result table.</p>
    */
-  class Row
-  {
-  public:
-    AWS_ATHENA_API Row();
-    AWS_ATHENA_API Row(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ATHENA_API Row& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ATHENA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Datum>& GetData() const { return m_data; }
+  inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
+  template <typename DataT = Aws::Vector<Datum>>
+  void SetData(DataT&& value) {
+    m_dataHasBeenSet = true;
+    m_data = std::forward<DataT>(value);
+  }
+  template <typename DataT = Aws::Vector<Datum>>
+  Row& WithData(DataT&& value) {
+    SetData(std::forward<DataT>(value));
+    return *this;
+  }
+  template <typename DataT = Datum>
+  Row& AddData(DataT&& value) {
+    m_dataHasBeenSet = true;
+    m_data.emplace_back(std::forward<DataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Datum> m_data;
+  bool m_dataHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The data that populates a row in a query result table.</p>
-     */
-    inline const Aws::Vector<Datum>& GetData() const{ return m_data; }
-    inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
-    inline void SetData(const Aws::Vector<Datum>& value) { m_dataHasBeenSet = true; m_data = value; }
-    inline void SetData(Aws::Vector<Datum>&& value) { m_dataHasBeenSet = true; m_data = std::move(value); }
-    inline Row& WithData(const Aws::Vector<Datum>& value) { SetData(value); return *this;}
-    inline Row& WithData(Aws::Vector<Datum>&& value) { SetData(std::move(value)); return *this;}
-    inline Row& AddData(const Datum& value) { m_dataHasBeenSet = true; m_data.push_back(value); return *this; }
-    inline Row& AddData(Datum&& value) { m_dataHasBeenSet = true; m_data.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<Datum> m_data;
-    bool m_dataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

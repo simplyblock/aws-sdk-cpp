@@ -7,6 +7,7 @@
 #include <aws/core/auth/AWSCredentialsProvider.h>
 
 #include <aws/core/config/AWSProfileConfigLoader.h>
+#include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/platform/Environment.h>
 #include <aws/core/platform/FileSystem.h>
 #include <aws/core/platform/OSVersionInfo.h>
@@ -17,6 +18,7 @@
 #include <aws/core/client/AWSError.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/core/client/UserAgent.h>
 #include <cstdlib>
 #include <fstream>
 #include <string.h>
@@ -36,6 +38,7 @@ using Aws::Utils::Threading::WriterLockGuard;
 static const char ACCESS_KEY_ENV_VAR[] = "AWS_ACCESS_KEY_ID";
 static const char SECRET_KEY_ENV_VAR[] = "AWS_SECRET_ACCESS_KEY";
 static const char SESSION_TOKEN_ENV_VAR[] = "AWS_SESSION_TOKEN";
+static const char ACCOUNT_ID_ENV_VAR[] = "AWS_ACCOUNT_ID";
 static const char DEFAULT_PROFILE[] = "default";
 static const char AWS_PROFILE_ENV_VAR[] = "AWS_PROFILE";
 static const char AWS_PROFILE_DEFAULT_ENV_VAR[] = "AWS_DEFAULT_PROFILE";
@@ -91,6 +94,18 @@ AWSCredentials EnvironmentAWSCredentialsProvider::GetAWSCredentials()
             credentials.SetSessionToken(sessionToken);
             AWS_LOGSTREAM_DEBUG(ENVIRONMENT_LOG_TAG, "Found sessionToken");
         }
+
+        const auto accountId = Aws::Environment::GetEnv(ACCOUNT_ID_ENV_VAR);
+
+        if (!accountId.empty())
+        {
+            credentials.SetAccountId(accountId);
+            AWS_LOGSTREAM_DEBUG(ENVIRONMENT_LOG_TAG, "Found accountId");
+        }
+    }
+
+    if (!credentials.IsEmpty()) {
+      credentials.AddUserAgentFeature(UserAgentFeature::CREDENTIALS_ENV_VARS);
     }
 
     return credentials;
@@ -186,7 +201,11 @@ AWSCredentials ProfileConfigFileAWSCredentialsProvider::GetAWSCredentials()
 
     if(credsFileProfileIter != profiles.end())
     {
-        return credsFileProfileIter->second.GetCredentials();
+        AWSCredentials credentials = credsFileProfileIter->second.GetCredentials();
+        if (!credentials.IsEmpty()) {
+            credentials.AddUserAgentFeature(UserAgentFeature::CREDENTIALS_PROFILE);
+        }
+        return credentials;
     }
 
     return AWSCredentials();
@@ -233,6 +252,12 @@ InstanceProfileCredentialsProvider::InstanceProfileCredentialsProvider(const std
     AWS_LOGSTREAM_INFO(INSTANCE_LOG_TAG, "Creating Instance with injected EC2MetadataClient and refresh rate " << refreshRateMs);
 }
 
+InstanceProfileCredentialsProvider::InstanceProfileCredentialsProvider(const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& credentialConfig, long refreshRateMs) :
+    m_ec2MetadataConfigLoader(Aws::MakeShared<Aws::Config::EC2InstanceProfileConfigLoader>(INSTANCE_LOG_TAG, credentialConfig)),
+    m_loadFrequencyMs(refreshRateMs)
+{
+    AWS_LOGSTREAM_INFO(INSTANCE_LOG_TAG, "Creating Instance with IMDS timeout: " << credentialConfig.imdsConfig.metadataServiceTimeout << "s, attempts: " << credentialConfig.imdsConfig.metadataServiceNumAttempts);
+}
 
 AWSCredentials InstanceProfileCredentialsProvider::GetAWSCredentials()
 {
@@ -244,7 +269,11 @@ AWSCredentials InstanceProfileCredentialsProvider::GetAWSCredentials()
         auto profileIter = profiles.find(Aws::Config::INSTANCE_PROFILE_KEY);
 
         if (profileIter != profiles.end()) {
-            return profileIter->second.GetCredentials();
+            AWSCredentials credentials = profileIter->second.GetCredentials();
+            if (!credentials.IsEmpty()) {
+                credentials.AddUserAgentFeature(UserAgentFeature::CREDENTIALS_IMDS);
+            }
+            return credentials;
         }
     }
     else
@@ -265,7 +294,7 @@ bool InstanceProfileCredentialsProvider::ExpiresSoon() const
         credentials = profileIter->second.GetCredentials();
     }
 
-    return ((credentials.GetExpiration() - Aws::Utils::DateTime::Now()).count() < AWS_CREDENTIAL_PROVIDER_EXPIRATION_GRACE_PERIOD);
+    return credentials.ExpiresSoon(AWS_CREDENTIAL_PROVIDER_EXPIRATION_GRACE_PERIOD);
 }
 
 void InstanceProfileCredentialsProvider::Reload()
@@ -336,6 +365,9 @@ void ProcessCredentialsProvider::Reload()
         return;
     }
     m_credentials = GetCredentialsFromProcess(command);
+    if (!m_credentials.IsEmpty()) {
+        m_credentials.AddUserAgentFeature(UserAgentFeature::CREDENTIALS_PROFILE_PROCESS);
+    }
 }
 
 void ProcessCredentialsProvider::RefreshIfExpired()
@@ -407,6 +439,11 @@ AWSCredentials Aws::Auth::GetCredentialsFromProcess(const Aws::String& process)
     else
     {
         credentials.SetExpiration((std::chrono::time_point<std::chrono::system_clock>::max)());
+    }
+
+    if (credentialsView.KeyExists("AccountId"))
+    {
+      credentials.SetAccountId(credentialsView.GetString("AccountId"));
     }
 
     AWS_LOGSTREAM_DEBUG(PROFILE_LOG_TAG, "Successfully pulled credentials from process credential with AccessKey: " << accessKey << ", Expiration:" << credentialsView.GetString("Expiration"));

@@ -12,16 +12,4 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAssessmentFrameworkRequest::GetAssessmentFrameworkRequest() : 
-    m_frameworkIdHasBeenSet(false)
-{
-}
-
-Aws::String GetAssessmentFrameworkRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAssessmentFrameworkRequest::SerializePayload() const { return {}; }

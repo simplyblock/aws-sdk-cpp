@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/savingsplans/SavingsPlans_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/savingsplans/SavingsPlans_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SavingsPlans
-{
-namespace Model
-{
-  class ReturnSavingsPlanResult
-  {
-  public:
-    AWS_SAVINGSPLANS_API ReturnSavingsPlanResult();
-    AWS_SAVINGSPLANS_API ReturnSavingsPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAVINGSPLANS_API ReturnSavingsPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SavingsPlans {
+namespace Model {
+class ReturnSavingsPlanResult {
+ public:
+  AWS_SAVINGSPLANS_API ReturnSavingsPlanResult() = default;
+  AWS_SAVINGSPLANS_API ReturnSavingsPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAVINGSPLANS_API ReturnSavingsPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the Savings Plan.</p>
+   */
+  inline const Aws::String& GetSavingsPlanId() const { return m_savingsPlanId; }
+  template <typename SavingsPlanIdT = Aws::String>
+  void SetSavingsPlanId(SavingsPlanIdT&& value) {
+    m_savingsPlanIdHasBeenSet = true;
+    m_savingsPlanId = std::forward<SavingsPlanIdT>(value);
+  }
+  template <typename SavingsPlanIdT = Aws::String>
+  ReturnSavingsPlanResult& WithSavingsPlanId(SavingsPlanIdT&& value) {
+    SetSavingsPlanId(std::forward<SavingsPlanIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Savings Plan.</p>
-     */
-    inline const Aws::String& GetSavingsPlanId() const{ return m_savingsPlanId; }
-    inline void SetSavingsPlanId(const Aws::String& value) { m_savingsPlanId = value; }
-    inline void SetSavingsPlanId(Aws::String&& value) { m_savingsPlanId = std::move(value); }
-    inline void SetSavingsPlanId(const char* value) { m_savingsPlanId.assign(value); }
-    inline ReturnSavingsPlanResult& WithSavingsPlanId(const Aws::String& value) { SetSavingsPlanId(value); return *this;}
-    inline ReturnSavingsPlanResult& WithSavingsPlanId(Aws::String&& value) { SetSavingsPlanId(std::move(value)); return *this;}
-    inline ReturnSavingsPlanResult& WithSavingsPlanId(const char* value) { SetSavingsPlanId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ReturnSavingsPlanResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ReturnSavingsPlanResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ReturnSavingsPlanResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ReturnSavingsPlanResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_savingsPlanId;
+ private:
+  Aws::String m_savingsPlanId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_savingsPlanIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SavingsPlans
-} // namespace Aws
+}  // namespace Model
+}  // namespace SavingsPlans
+}  // namespace Aws

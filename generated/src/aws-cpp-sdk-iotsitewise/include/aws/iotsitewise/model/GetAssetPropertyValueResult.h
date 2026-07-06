@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iotsitewise/IoTSiteWise_EXPORTS.h>
 #include <aws/iotsitewise/model/AssetPropertyValue.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTSiteWise
-{
-namespace Model
-{
-  class GetAssetPropertyValueResult
-  {
-  public:
-    AWS_IOTSITEWISE_API GetAssetPropertyValueResult();
-    AWS_IOTSITEWISE_API GetAssetPropertyValueResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTSITEWISE_API GetAssetPropertyValueResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTSiteWise {
+namespace Model {
+class GetAssetPropertyValueResult {
+ public:
+  AWS_IOTSITEWISE_API GetAssetPropertyValueResult() = default;
+  AWS_IOTSITEWISE_API GetAssetPropertyValueResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTSITEWISE_API GetAssetPropertyValueResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The current asset property value.</p>
+   */
+  inline const AssetPropertyValue& GetPropertyValue() const { return m_propertyValue; }
+  template <typename PropertyValueT = AssetPropertyValue>
+  void SetPropertyValue(PropertyValueT&& value) {
+    m_propertyValueHasBeenSet = true;
+    m_propertyValue = std::forward<PropertyValueT>(value);
+  }
+  template <typename PropertyValueT = AssetPropertyValue>
+  GetAssetPropertyValueResult& WithPropertyValue(PropertyValueT&& value) {
+    SetPropertyValue(std::forward<PropertyValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current asset property value.</p>
-     */
-    inline const AssetPropertyValue& GetPropertyValue() const{ return m_propertyValue; }
-    inline void SetPropertyValue(const AssetPropertyValue& value) { m_propertyValue = value; }
-    inline void SetPropertyValue(AssetPropertyValue&& value) { m_propertyValue = std::move(value); }
-    inline GetAssetPropertyValueResult& WithPropertyValue(const AssetPropertyValue& value) { SetPropertyValue(value); return *this;}
-    inline GetAssetPropertyValueResult& WithPropertyValue(AssetPropertyValue&& value) { SetPropertyValue(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAssetPropertyValueResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAssetPropertyValueResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAssetPropertyValueResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAssetPropertyValueResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AssetPropertyValue m_propertyValue;
+ private:
+  AssetPropertyValue m_propertyValue;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_propertyValueHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTSiteWise
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTSiteWise
+}  // namespace Aws

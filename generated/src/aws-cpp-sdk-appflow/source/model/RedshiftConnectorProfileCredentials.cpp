@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Appflow {
+namespace Model {
 
-RedshiftConnectorProfileCredentials::RedshiftConnectorProfileCredentials() : 
-    m_usernameHasBeenSet(false),
-    m_passwordHasBeenSet(false)
-{
-}
+RedshiftConnectorProfileCredentials::RedshiftConnectorProfileCredentials(JsonView jsonValue) { *this = jsonValue; }
 
-RedshiftConnectorProfileCredentials::RedshiftConnectorProfileCredentials(JsonView jsonValue)
-  : RedshiftConnectorProfileCredentials()
-{
-  *this = jsonValue;
-}
-
-RedshiftConnectorProfileCredentials& RedshiftConnectorProfileCredentials::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("username"))
-  {
+RedshiftConnectorProfileCredentials& RedshiftConnectorProfileCredentials::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("username")) {
     m_username = jsonValue.GetString("username");
-
     m_usernameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("password"))
-  {
+  if (jsonValue.ValueExists("password")) {
     m_password = jsonValue.GetString("password");
-
     m_passwordHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue RedshiftConnectorProfileCredentials::Jsonize() const
-{
+JsonValue RedshiftConnectorProfileCredentials::Jsonize() const {
   JsonValue payload;
 
-  if(m_usernameHasBeenSet)
-  {
-   payload.WithString("username", m_username);
-
+  if (m_usernameHasBeenSet) {
+    payload.WithString("username", m_username);
   }
 
-  if(m_passwordHasBeenSet)
-  {
-   payload.WithString("password", m_password);
-
+  if (m_passwordHasBeenSet) {
+    payload.WithString("password", m_password);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

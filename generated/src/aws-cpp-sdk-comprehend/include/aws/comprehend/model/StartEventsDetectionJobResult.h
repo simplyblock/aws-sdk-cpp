@@ -5,100 +5,117 @@
 
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehend/model/JobStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class StartEventsDetectionJobResult
-  {
-  public:
-    AWS_COMPREHEND_API StartEventsDetectionJobResult();
-    AWS_COMPREHEND_API StartEventsDetectionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API StartEventsDetectionJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class StartEventsDetectionJobResult {
+ public:
+  AWS_COMPREHEND_API StartEventsDetectionJobResult() = default;
+  AWS_COMPREHEND_API StartEventsDetectionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API StartEventsDetectionJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An unique identifier for the request. If you don't set the client request
+   * token, Amazon Comprehend generates one.</p>
+   */
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  StartEventsDetectionJobResult& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An unique identifier for the request. If you don't set the client request
-     * token, Amazon Comprehend generates one.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline void SetJobId(const Aws::String& value) { m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobId.assign(value); }
-    inline StartEventsDetectionJobResult& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline StartEventsDetectionJobResult& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline StartEventsDetectionJobResult& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the events detection job. It is a unique,
+   * fully qualified identifier for the job. It includes the Amazon Web Services
+   * account, Amazon Web Services Region, and the job ID. The format of the ARN is as
+   * follows:</p> <p>
+   * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:events-detection-job/&lt;job-id&gt;</code>
+   * </p> <p>The following is an example job ARN:</p> <p>
+   * <code>arn:aws:comprehend:us-west-2:111122223333:events-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+   * </p>
+   */
+  inline const Aws::String& GetJobArn() const { return m_jobArn; }
+  template <typename JobArnT = Aws::String>
+  void SetJobArn(JobArnT&& value) {
+    m_jobArnHasBeenSet = true;
+    m_jobArn = std::forward<JobArnT>(value);
+  }
+  template <typename JobArnT = Aws::String>
+  StartEventsDetectionJobResult& WithJobArn(JobArnT&& value) {
+    SetJobArn(std::forward<JobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the events detection job. It is a unique,
-     * fully qualified identifier for the job. It includes the Amazon Web Services
-     * account, Amazon Web Services Region, and the job ID. The format of the ARN is as
-     * follows:</p> <p>
-     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:events-detection-job/&lt;job-id&gt;</code>
-     * </p> <p>The following is an example job ARN:</p> <p>
-     * <code>arn:aws:comprehend:us-west-2:111122223333:events-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
-     * </p>
-     */
-    inline const Aws::String& GetJobArn() const{ return m_jobArn; }
-    inline void SetJobArn(const Aws::String& value) { m_jobArn = value; }
-    inline void SetJobArn(Aws::String&& value) { m_jobArn = std::move(value); }
-    inline void SetJobArn(const char* value) { m_jobArn.assign(value); }
-    inline StartEventsDetectionJobResult& WithJobArn(const Aws::String& value) { SetJobArn(value); return *this;}
-    inline StartEventsDetectionJobResult& WithJobArn(Aws::String&& value) { SetJobArn(std::move(value)); return *this;}
-    inline StartEventsDetectionJobResult& WithJobArn(const char* value) { SetJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the events detection job.</p>
+   */
+  inline JobStatus GetJobStatus() const { return m_jobStatus; }
+  inline void SetJobStatus(JobStatus value) {
+    m_jobStatusHasBeenSet = true;
+    m_jobStatus = value;
+  }
+  inline StartEventsDetectionJobResult& WithJobStatus(JobStatus value) {
+    SetJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the events detection job.</p>
-     */
-    inline const JobStatus& GetJobStatus() const{ return m_jobStatus; }
-    inline void SetJobStatus(const JobStatus& value) { m_jobStatus = value; }
-    inline void SetJobStatus(JobStatus&& value) { m_jobStatus = std::move(value); }
-    inline StartEventsDetectionJobResult& WithJobStatus(const JobStatus& value) { SetJobStatus(value); return *this;}
-    inline StartEventsDetectionJobResult& WithJobStatus(JobStatus&& value) { SetJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartEventsDetectionJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartEventsDetectionJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartEventsDetectionJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartEventsDetectionJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_jobId;
+ private:
+  Aws::String m_jobId;
 
-    Aws::String m_jobArn;
+  Aws::String m_jobArn;
 
-    JobStatus m_jobStatus;
+  JobStatus m_jobStatus{JobStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobIdHasBeenSet = false;
+  bool m_jobArnHasBeenSet = false;
+  bool m_jobStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

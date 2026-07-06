@@ -4,70 +4,73 @@
  */
 
 #pragma once
-#include <aws/omics/Omics_EXPORTS.h>
-#include <aws/omics/OmicsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/omics/OmicsRequest.h>
+#include <aws/omics/Omics_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Omics
-{
-namespace Model
-{
+namespace Aws {
+namespace Omics {
+namespace Model {
 
+/**
+ */
+class AbortMultipartReadSetUploadRequest : public OmicsRequest {
+ public:
+  AWS_OMICS_API AbortMultipartReadSetUploadRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AbortMultipartReadSetUpload"; }
+
+  AWS_OMICS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The sequence store ID for the store involved in the multipart upload.</p>
    */
-  class AbortMultipartReadSetUploadRequest : public OmicsRequest
-  {
-  public:
-    AWS_OMICS_API AbortMultipartReadSetUploadRequest();
+  inline const Aws::String& GetSequenceStoreId() const { return m_sequenceStoreId; }
+  inline bool SequenceStoreIdHasBeenSet() const { return m_sequenceStoreIdHasBeenSet; }
+  template <typename SequenceStoreIdT = Aws::String>
+  void SetSequenceStoreId(SequenceStoreIdT&& value) {
+    m_sequenceStoreIdHasBeenSet = true;
+    m_sequenceStoreId = std::forward<SequenceStoreIdT>(value);
+  }
+  template <typename SequenceStoreIdT = Aws::String>
+  AbortMultipartReadSetUploadRequest& WithSequenceStoreId(SequenceStoreIdT&& value) {
+    SetSequenceStoreId(std::forward<SequenceStoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AbortMultipartReadSetUpload"; }
+  ///@{
+  /**
+   * <p>The ID for the multipart upload.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  AbortMultipartReadSetUploadRequest& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_sequenceStoreId;
 
-    AWS_OMICS_API Aws::String SerializePayload() const override;
+  Aws::String m_uploadId;
+  bool m_sequenceStoreIdHasBeenSet = false;
+  bool m_uploadIdHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The sequence store ID for the store involved in the multipart upload.</p>
-     */
-    inline const Aws::String& GetSequenceStoreId() const{ return m_sequenceStoreId; }
-    inline bool SequenceStoreIdHasBeenSet() const { return m_sequenceStoreIdHasBeenSet; }
-    inline void SetSequenceStoreId(const Aws::String& value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId = value; }
-    inline void SetSequenceStoreId(Aws::String&& value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId = std::move(value); }
-    inline void SetSequenceStoreId(const char* value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId.assign(value); }
-    inline AbortMultipartReadSetUploadRequest& WithSequenceStoreId(const Aws::String& value) { SetSequenceStoreId(value); return *this;}
-    inline AbortMultipartReadSetUploadRequest& WithSequenceStoreId(Aws::String&& value) { SetSequenceStoreId(std::move(value)); return *this;}
-    inline AbortMultipartReadSetUploadRequest& WithSequenceStoreId(const char* value) { SetSequenceStoreId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The ID for the multipart upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadIdHasBeenSet = true; m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadIdHasBeenSet = true; m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadIdHasBeenSet = true; m_uploadId.assign(value); }
-    inline AbortMultipartReadSetUploadRequest& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline AbortMultipartReadSetUploadRequest& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline AbortMultipartReadSetUploadRequest& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_sequenceStoreId;
-    bool m_sequenceStoreIdHasBeenSet = false;
-
-    Aws::String m_uploadId;
-    bool m_uploadIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Omics
-} // namespace Aws
+}  // namespace Model
+}  // namespace Omics
+}  // namespace Aws

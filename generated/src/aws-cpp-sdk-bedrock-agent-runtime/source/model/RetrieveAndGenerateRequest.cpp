@@ -12,45 +12,28 @@ using namespace Aws::BedrockAgentRuntime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RetrieveAndGenerateRequest::RetrieveAndGenerateRequest() : 
-    m_inputHasBeenSet(false),
-    m_retrieveAndGenerateConfigurationHasBeenSet(false),
-    m_sessionConfigurationHasBeenSet(false),
-    m_sessionIdHasBeenSet(false)
-{
-}
-
-Aws::String RetrieveAndGenerateRequest::SerializePayload() const
-{
+Aws::String RetrieveAndGenerateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_inputHasBeenSet)
-  {
-   payload.WithObject("input", m_input.Jsonize());
-
+  if (m_inputHasBeenSet) {
+    payload.WithObject("input", m_input.Jsonize());
   }
 
-  if(m_retrieveAndGenerateConfigurationHasBeenSet)
-  {
-   payload.WithObject("retrieveAndGenerateConfiguration", m_retrieveAndGenerateConfiguration.Jsonize());
-
+  if (m_retrieveAndGenerateConfigurationHasBeenSet) {
+    payload.WithObject("retrieveAndGenerateConfiguration", m_retrieveAndGenerateConfiguration.Jsonize());
   }
 
-  if(m_sessionConfigurationHasBeenSet)
-  {
-   payload.WithObject("sessionConfiguration", m_sessionConfiguration.Jsonize());
-
+  if (m_sessionConfigurationHasBeenSet) {
+    payload.WithObject("sessionConfiguration", m_sessionConfiguration.Jsonize());
   }
 
-  if(m_sessionIdHasBeenSet)
-  {
-   payload.WithString("sessionId", m_sessionId);
+  if (m_sessionIdHasBeenSet) {
+    payload.WithString("sessionId", m_sessionId);
+  }
 
+  if (m_userContextHasBeenSet) {
+    payload.WithObject("userContext", m_userContext.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

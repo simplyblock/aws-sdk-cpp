@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/codecommit/CodeCommit_EXPORTS.h>
 #include <aws/codecommit/model/Comment.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeCommit
-{
-namespace Model
-{
-  class PostCommentReplyResult
-  {
-  public:
-    AWS_CODECOMMIT_API PostCommentReplyResult();
-    AWS_CODECOMMIT_API PostCommentReplyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECOMMIT_API PostCommentReplyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeCommit {
+namespace Model {
+class PostCommentReplyResult {
+ public:
+  AWS_CODECOMMIT_API PostCommentReplyResult() = default;
+  AWS_CODECOMMIT_API PostCommentReplyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECOMMIT_API PostCommentReplyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the reply to a comment.</p>
+   */
+  inline const Comment& GetComment() const { return m_comment; }
+  template <typename CommentT = Comment>
+  void SetComment(CommentT&& value) {
+    m_commentHasBeenSet = true;
+    m_comment = std::forward<CommentT>(value);
+  }
+  template <typename CommentT = Comment>
+  PostCommentReplyResult& WithComment(CommentT&& value) {
+    SetComment(std::forward<CommentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the reply to a comment.</p>
-     */
-    inline const Comment& GetComment() const{ return m_comment; }
-    inline void SetComment(const Comment& value) { m_comment = value; }
-    inline void SetComment(Comment&& value) { m_comment = std::move(value); }
-    inline PostCommentReplyResult& WithComment(const Comment& value) { SetComment(value); return *this;}
-    inline PostCommentReplyResult& WithComment(Comment&& value) { SetComment(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PostCommentReplyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PostCommentReplyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PostCommentReplyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PostCommentReplyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Comment m_comment;
+ private:
+  Comment m_comment;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_commentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeCommit
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeCommit
+}  // namespace Aws

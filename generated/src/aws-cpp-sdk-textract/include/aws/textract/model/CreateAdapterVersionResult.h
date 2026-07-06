@@ -4,80 +4,92 @@
  */
 
 #pragma once
-#include <aws/textract/Textract_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/textract/Textract_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Textract
-{
-namespace Model
-{
-  class CreateAdapterVersionResult
-  {
-  public:
-    AWS_TEXTRACT_API CreateAdapterVersionResult();
-    AWS_TEXTRACT_API CreateAdapterVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TEXTRACT_API CreateAdapterVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Textract {
+namespace Model {
+class CreateAdapterVersionResult {
+ public:
+  AWS_TEXTRACT_API CreateAdapterVersionResult() = default;
+  AWS_TEXTRACT_API CreateAdapterVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TEXTRACT_API CreateAdapterVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A string containing the unique ID for the adapter that has received a new
+   * version.</p>
+   */
+  inline const Aws::String& GetAdapterId() const { return m_adapterId; }
+  template <typename AdapterIdT = Aws::String>
+  void SetAdapterId(AdapterIdT&& value) {
+    m_adapterIdHasBeenSet = true;
+    m_adapterId = std::forward<AdapterIdT>(value);
+  }
+  template <typename AdapterIdT = Aws::String>
+  CreateAdapterVersionResult& WithAdapterId(AdapterIdT&& value) {
+    SetAdapterId(std::forward<AdapterIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string containing the unique ID for the adapter that has received a new
-     * version.</p>
-     */
-    inline const Aws::String& GetAdapterId() const{ return m_adapterId; }
-    inline void SetAdapterId(const Aws::String& value) { m_adapterId = value; }
-    inline void SetAdapterId(Aws::String&& value) { m_adapterId = std::move(value); }
-    inline void SetAdapterId(const char* value) { m_adapterId.assign(value); }
-    inline CreateAdapterVersionResult& WithAdapterId(const Aws::String& value) { SetAdapterId(value); return *this;}
-    inline CreateAdapterVersionResult& WithAdapterId(Aws::String&& value) { SetAdapterId(std::move(value)); return *this;}
-    inline CreateAdapterVersionResult& WithAdapterId(const char* value) { SetAdapterId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A string describing the new version of the adapter.</p>
+   */
+  inline const Aws::String& GetAdapterVersion() const { return m_adapterVersion; }
+  template <typename AdapterVersionT = Aws::String>
+  void SetAdapterVersion(AdapterVersionT&& value) {
+    m_adapterVersionHasBeenSet = true;
+    m_adapterVersion = std::forward<AdapterVersionT>(value);
+  }
+  template <typename AdapterVersionT = Aws::String>
+  CreateAdapterVersionResult& WithAdapterVersion(AdapterVersionT&& value) {
+    SetAdapterVersion(std::forward<AdapterVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string describing the new version of the adapter.</p>
-     */
-    inline const Aws::String& GetAdapterVersion() const{ return m_adapterVersion; }
-    inline void SetAdapterVersion(const Aws::String& value) { m_adapterVersion = value; }
-    inline void SetAdapterVersion(Aws::String&& value) { m_adapterVersion = std::move(value); }
-    inline void SetAdapterVersion(const char* value) { m_adapterVersion.assign(value); }
-    inline CreateAdapterVersionResult& WithAdapterVersion(const Aws::String& value) { SetAdapterVersion(value); return *this;}
-    inline CreateAdapterVersionResult& WithAdapterVersion(Aws::String&& value) { SetAdapterVersion(std::move(value)); return *this;}
-    inline CreateAdapterVersionResult& WithAdapterVersion(const char* value) { SetAdapterVersion(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAdapterVersionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAdapterVersionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAdapterVersionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAdapterVersionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_adapterId;
+ private:
+  Aws::String m_adapterId;
 
-    Aws::String m_adapterVersion;
+  Aws::String m_adapterVersion;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_adapterIdHasBeenSet = false;
+  bool m_adapterVersionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Textract
-} // namespace Aws
+}  // namespace Model
+}  // namespace Textract
+}  // namespace Aws

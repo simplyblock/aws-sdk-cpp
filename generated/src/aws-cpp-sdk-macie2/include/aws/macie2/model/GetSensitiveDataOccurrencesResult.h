@@ -4,110 +4,133 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/macie2/model/RevealRequestStatus.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
 #include <aws/macie2/model/DetectedDataDetails.h>
+#include <aws/macie2/model/RevealRequestStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Macie2
-{
-namespace Model
-{
-  class GetSensitiveDataOccurrencesResult
-  {
-  public:
-    AWS_MACIE2_API GetSensitiveDataOccurrencesResult();
-    AWS_MACIE2_API GetSensitiveDataOccurrencesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MACIE2_API GetSensitiveDataOccurrencesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Macie2 {
+namespace Model {
+class GetSensitiveDataOccurrencesResult {
+ public:
+  AWS_MACIE2_API GetSensitiveDataOccurrencesResult() = default;
+  AWS_MACIE2_API GetSensitiveDataOccurrencesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MACIE2_API GetSensitiveDataOccurrencesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>If an error occurred when Amazon Macie attempted to retrieve occurrences of
+   * sensitive data reported by the finding, a description of the error that
+   * occurred. This value is null if the status (status) of the request is PROCESSING
+   * or SUCCESS.</p>
+   */
+  inline const Aws::String& GetError() const { return m_error; }
+  template <typename ErrorT = Aws::String>
+  void SetError(ErrorT&& value) {
+    m_errorHasBeenSet = true;
+    m_error = std::forward<ErrorT>(value);
+  }
+  template <typename ErrorT = Aws::String>
+  GetSensitiveDataOccurrencesResult& WithError(ErrorT&& value) {
+    SetError(std::forward<ErrorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If an error occurred when Amazon Macie attempted to retrieve occurrences of
-     * sensitive data reported by the finding, a description of the error that
-     * occurred. This value is null if the status (status) of the request is PROCESSING
-     * or SUCCESS.</p>
-     */
-    inline const Aws::String& GetError() const{ return m_error; }
-    inline void SetError(const Aws::String& value) { m_error = value; }
-    inline void SetError(Aws::String&& value) { m_error = std::move(value); }
-    inline void SetError(const char* value) { m_error.assign(value); }
-    inline GetSensitiveDataOccurrencesResult& WithError(const Aws::String& value) { SetError(value); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithError(Aws::String&& value) { SetError(std::move(value)); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithError(const char* value) { SetError(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A map that specifies 1-100 types of sensitive data reported by the finding
+   * and, for each type, 1-10 occurrences of sensitive data.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>& GetSensitiveDataOccurrences() const {
+    return m_sensitiveDataOccurrences;
+  }
+  template <typename SensitiveDataOccurrencesT = Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>>
+  void SetSensitiveDataOccurrences(SensitiveDataOccurrencesT&& value) {
+    m_sensitiveDataOccurrencesHasBeenSet = true;
+    m_sensitiveDataOccurrences = std::forward<SensitiveDataOccurrencesT>(value);
+  }
+  template <typename SensitiveDataOccurrencesT = Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>>
+  GetSensitiveDataOccurrencesResult& WithSensitiveDataOccurrences(SensitiveDataOccurrencesT&& value) {
+    SetSensitiveDataOccurrences(std::forward<SensitiveDataOccurrencesT>(value));
+    return *this;
+  }
+  template <typename SensitiveDataOccurrencesKeyT = Aws::String, typename SensitiveDataOccurrencesValueT = Aws::Vector<DetectedDataDetails>>
+  GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(SensitiveDataOccurrencesKeyT&& key,
+                                                                 SensitiveDataOccurrencesValueT&& value) {
+    m_sensitiveDataOccurrencesHasBeenSet = true;
+    m_sensitiveDataOccurrences.emplace(std::forward<SensitiveDataOccurrencesKeyT>(key),
+                                       std::forward<SensitiveDataOccurrencesValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A map that specifies 1-100 types of sensitive data reported by the finding
-     * and, for each type, 1-10 occurrences of sensitive data.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>& GetSensitiveDataOccurrences() const{ return m_sensitiveDataOccurrences; }
-    inline void SetSensitiveDataOccurrences(const Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>& value) { m_sensitiveDataOccurrences = value; }
-    inline void SetSensitiveDataOccurrences(Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>&& value) { m_sensitiveDataOccurrences = std::move(value); }
-    inline GetSensitiveDataOccurrencesResult& WithSensitiveDataOccurrences(const Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>& value) { SetSensitiveDataOccurrences(value); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithSensitiveDataOccurrences(Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>>&& value) { SetSensitiveDataOccurrences(std::move(value)); return *this;}
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(const Aws::String& key, const Aws::Vector<DetectedDataDetails>& value) { m_sensitiveDataOccurrences.emplace(key, value); return *this; }
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(Aws::String&& key, const Aws::Vector<DetectedDataDetails>& value) { m_sensitiveDataOccurrences.emplace(std::move(key), value); return *this; }
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(const Aws::String& key, Aws::Vector<DetectedDataDetails>&& value) { m_sensitiveDataOccurrences.emplace(key, std::move(value)); return *this; }
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(Aws::String&& key, Aws::Vector<DetectedDataDetails>&& value) { m_sensitiveDataOccurrences.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(const char* key, Aws::Vector<DetectedDataDetails>&& value) { m_sensitiveDataOccurrences.emplace(key, std::move(value)); return *this; }
-    inline GetSensitiveDataOccurrencesResult& AddSensitiveDataOccurrences(const char* key, const Aws::Vector<DetectedDataDetails>& value) { m_sensitiveDataOccurrences.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the request to retrieve occurrences of sensitive data reported
+   * by the finding. Possible values are:</p> <ul><li><p>ERROR - An error occurred
+   * when Amazon Macie attempted to locate, retrieve, or encrypt the sensitive data.
+   * The error value indicates the nature of the error that occurred.</p></li>
+   * <li><p>PROCESSING - Macie is processing the request.</p></li> <li><p>SUCCESS -
+   * Macie successfully located, retrieved, and encrypted the sensitive
+   * data.</p></li></ul>
+   */
+  inline RevealRequestStatus GetStatus() const { return m_status; }
+  inline void SetStatus(RevealRequestStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetSensitiveDataOccurrencesResult& WithStatus(RevealRequestStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the request to retrieve occurrences of sensitive data reported
-     * by the finding. Possible values are:</p> <ul><li><p>ERROR - An error occurred
-     * when Amazon Macie attempted to locate, retrieve, or encrypt the sensitive data.
-     * The error value indicates the nature of the error that occurred.</p></li>
-     * <li><p>PROCESSING - Macie is processing the request.</p></li> <li><p>SUCCESS -
-     * Macie successfully located, retrieved, and encrypted the sensitive
-     * data.</p></li></ul>
-     */
-    inline const RevealRequestStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const RevealRequestStatus& value) { m_status = value; }
-    inline void SetStatus(RevealRequestStatus&& value) { m_status = std::move(value); }
-    inline GetSensitiveDataOccurrencesResult& WithStatus(const RevealRequestStatus& value) { SetStatus(value); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithStatus(RevealRequestStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSensitiveDataOccurrencesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSensitiveDataOccurrencesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSensitiveDataOccurrencesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_error;
+ private:
+  Aws::String m_error;
 
-    Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>> m_sensitiveDataOccurrences;
+  Aws::Map<Aws::String, Aws::Vector<DetectedDataDetails>> m_sensitiveDataOccurrences;
 
-    RevealRequestStatus m_status;
+  RevealRequestStatus m_status{RevealRequestStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_errorHasBeenSet = false;
+  bool m_sensitiveDataOccurrencesHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

@@ -5,83 +5,101 @@
 
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
+#include <aws/backup/model/RestoreTestingPlanForList.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/backup/model/RestoreTestingPlanForList.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
-  class ListRestoreTestingPlansResult
-  {
-  public:
-    AWS_BACKUP_API ListRestoreTestingPlansResult();
-    AWS_BACKUP_API ListRestoreTestingPlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUP_API ListRestoreTestingPlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
+class ListRestoreTestingPlansResult {
+ public:
+  AWS_BACKUP_API ListRestoreTestingPlansResult() = default;
+  AWS_BACKUP_API ListRestoreTestingPlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUP_API ListRestoreTestingPlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The next item following a partial list of returned items. For example, if a
+   * request is made to return <code>MaxResults</code> number of items,
+   * <code>NextToken</code> allows you to return more items in your list starting at
+   * the location pointed to by the nexttoken.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListRestoreTestingPlansResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The next item following a partial list of returned items. For example, if a
-     * request is made to return <code>MaxResults</code> number of items,
-     * <code>NextToken</code> allows you to return more items in your list starting at
-     * the location pointed to by the nexttoken.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListRestoreTestingPlansResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListRestoreTestingPlansResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListRestoreTestingPlansResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>This is a returned list of restore testing plans.</p>
+   */
+  inline const Aws::Vector<RestoreTestingPlanForList>& GetRestoreTestingPlans() const { return m_restoreTestingPlans; }
+  template <typename RestoreTestingPlansT = Aws::Vector<RestoreTestingPlanForList>>
+  void SetRestoreTestingPlans(RestoreTestingPlansT&& value) {
+    m_restoreTestingPlansHasBeenSet = true;
+    m_restoreTestingPlans = std::forward<RestoreTestingPlansT>(value);
+  }
+  template <typename RestoreTestingPlansT = Aws::Vector<RestoreTestingPlanForList>>
+  ListRestoreTestingPlansResult& WithRestoreTestingPlans(RestoreTestingPlansT&& value) {
+    SetRestoreTestingPlans(std::forward<RestoreTestingPlansT>(value));
+    return *this;
+  }
+  template <typename RestoreTestingPlansT = RestoreTestingPlanForList>
+  ListRestoreTestingPlansResult& AddRestoreTestingPlans(RestoreTestingPlansT&& value) {
+    m_restoreTestingPlansHasBeenSet = true;
+    m_restoreTestingPlans.emplace_back(std::forward<RestoreTestingPlansT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This is a returned list of restore testing plans.</p>
-     */
-    inline const Aws::Vector<RestoreTestingPlanForList>& GetRestoreTestingPlans() const{ return m_restoreTestingPlans; }
-    inline void SetRestoreTestingPlans(const Aws::Vector<RestoreTestingPlanForList>& value) { m_restoreTestingPlans = value; }
-    inline void SetRestoreTestingPlans(Aws::Vector<RestoreTestingPlanForList>&& value) { m_restoreTestingPlans = std::move(value); }
-    inline ListRestoreTestingPlansResult& WithRestoreTestingPlans(const Aws::Vector<RestoreTestingPlanForList>& value) { SetRestoreTestingPlans(value); return *this;}
-    inline ListRestoreTestingPlansResult& WithRestoreTestingPlans(Aws::Vector<RestoreTestingPlanForList>&& value) { SetRestoreTestingPlans(std::move(value)); return *this;}
-    inline ListRestoreTestingPlansResult& AddRestoreTestingPlans(const RestoreTestingPlanForList& value) { m_restoreTestingPlans.push_back(value); return *this; }
-    inline ListRestoreTestingPlansResult& AddRestoreTestingPlans(RestoreTestingPlanForList&& value) { m_restoreTestingPlans.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListRestoreTestingPlansResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListRestoreTestingPlansResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListRestoreTestingPlansResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListRestoreTestingPlansResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<RestoreTestingPlanForList> m_restoreTestingPlans;
+  Aws::Vector<RestoreTestingPlanForList> m_restoreTestingPlans;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_restoreTestingPlansHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

@@ -4,229 +4,274 @@
  */
 
 #pragma once
-#include <aws/servicediscovery/ServiceDiscovery_EXPORTS.h>
-#include <aws/servicediscovery/ServiceDiscoveryRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/servicediscovery/ServiceDiscoveryRequest.h>
+#include <aws/servicediscovery/ServiceDiscovery_EXPORTS.h>
 #include <aws/servicediscovery/model/DnsConfig.h>
 #include <aws/servicediscovery/model/HealthCheckConfig.h>
 #include <aws/servicediscovery/model/HealthCheckCustomConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/servicediscovery/model/ServiceTypeOption.h>
 #include <aws/servicediscovery/model/Tag.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace ServiceDiscovery
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceDiscovery {
+namespace Model {
 
+/**
+ */
+class CreateServiceRequest : public ServiceDiscoveryRequest {
+ public:
+  AWS_SERVICEDISCOVERY_API CreateServiceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateService"; }
+
+  AWS_SERVICEDISCOVERY_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICEDISCOVERY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name that you want to assign to the service.</p>  <p>Do not include
+   * sensitive information in the name if the namespace is discoverable by public DNS
+   * queries.</p>  <p>If you want Cloud Map to create an <code>SRV</code>
+   * record when you register an instance and you're using a system that requires a
+   * specific <code>SRV</code> format, such as <a
+   * href="http://www.haproxy.org/">HAProxy</a>, specify the following for
+   * <code>Name</code>:</p> <ul> <li> <p>Start the name with an underscore (_), such
+   * as <code>_exampleservice</code>.</p> </li> <li> <p>End the name with
+   * <i>._protocol</i>, such as <code>._tcp</code>.</p> </li> </ul> <p>When you
+   * register an instance, Cloud Map creates an <code>SRV</code> record and assigns a
+   * name to the record by concatenating the service name and the namespace name (for
+   * example,</p> <p> <code>_exampleservice._tcp.example.com</code>).</p>
+   * <p>For services that are accessible by DNS queries, you can't create multiple
+   * services with names that differ only by case (such as EXAMPLE and example).
+   * Otherwise, these services have the same DNS name and can't be distinguished.
+   * However, if you use a namespace that's only accessible by API calls, then you
+   * can create services that with names that differ only by case.</p>
    */
-  class CreateServiceRequest : public ServiceDiscoveryRequest
-  {
-  public:
-    AWS_SERVICEDISCOVERY_API CreateServiceRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateServiceRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateService"; }
+  ///@{
+  /**
+   * <p>The ID or Amazon Resource Name (ARN) of the namespace that you want to use to
+   * create the service. For namespaces shared with your Amazon Web Services account,
+   * specify the namespace ARN. For more information about shared namespaces, see <a
+   * href="https://docs.aws.amazon.com/cloud-map/latest/dg/sharing-namespaces.html">Cross-account
+   * Cloud Map namespace sharing</a> in the <i>Cloud Map Developer Guide</i>.</p>
+   */
+  inline const Aws::String& GetNamespaceId() const { return m_namespaceId; }
+  inline bool NamespaceIdHasBeenSet() const { return m_namespaceIdHasBeenSet; }
+  template <typename NamespaceIdT = Aws::String>
+  void SetNamespaceId(NamespaceIdT&& value) {
+    m_namespaceIdHasBeenSet = true;
+    m_namespaceId = std::forward<NamespaceIdT>(value);
+  }
+  template <typename NamespaceIdT = Aws::String>
+  CreateServiceRequest& WithNamespaceId(NamespaceIdT&& value) {
+    SetNamespaceId(std::forward<NamespaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICEDISCOVERY_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A unique string that identifies the request and that allows failed
+   * <code>CreateService</code> requests to be retried without the risk of running
+   * the operation twice. <code>CreatorRequestId</code> can be any unique string (for
+   * example, a date/timestamp).</p>
+   */
+  inline const Aws::String& GetCreatorRequestId() const { return m_creatorRequestId; }
+  inline bool CreatorRequestIdHasBeenSet() const { return m_creatorRequestIdHasBeenSet; }
+  template <typename CreatorRequestIdT = Aws::String>
+  void SetCreatorRequestId(CreatorRequestIdT&& value) {
+    m_creatorRequestIdHasBeenSet = true;
+    m_creatorRequestId = std::forward<CreatorRequestIdT>(value);
+  }
+  template <typename CreatorRequestIdT = Aws::String>
+  CreateServiceRequest& WithCreatorRequestId(CreatorRequestIdT&& value) {
+    SetCreatorRequestId(std::forward<CreatorRequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICEDISCOVERY_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A description for the service.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateServiceRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A complex type that contains information about the Amazon Route 53 records
+   * that you want Cloud Map to create when you register an instance. </p>
+   */
+  inline const DnsConfig& GetDnsConfig() const { return m_dnsConfig; }
+  inline bool DnsConfigHasBeenSet() const { return m_dnsConfigHasBeenSet; }
+  template <typename DnsConfigT = DnsConfig>
+  void SetDnsConfig(DnsConfigT&& value) {
+    m_dnsConfigHasBeenSet = true;
+    m_dnsConfig = std::forward<DnsConfigT>(value);
+  }
+  template <typename DnsConfigT = DnsConfig>
+  CreateServiceRequest& WithDnsConfig(DnsConfigT&& value) {
+    SetDnsConfig(std::forward<DnsConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name that you want to assign to the service.</p>  <p>Do not include
-     * sensitive information in the name if the namespace is discoverable by public DNS
-     * queries.</p>  <p>If you want Cloud Map to create an <code>SRV</code>
-     * record when you register an instance and you're using a system that requires a
-     * specific <code>SRV</code> format, such as <a
-     * href="http://www.haproxy.org/">HAProxy</a>, specify the following for
-     * <code>Name</code>:</p> <ul> <li> <p>Start the name with an underscore (_), such
-     * as <code>_exampleservice</code>.</p> </li> <li> <p>End the name with
-     * <i>._protocol</i>, such as <code>._tcp</code>.</p> </li> </ul> <p>When you
-     * register an instance, Cloud Map creates an <code>SRV</code> record and assigns a
-     * name to the record by concatenating the service name and the namespace name (for
-     * example,</p> <p> <code>_exampleservice._tcp.example.com</code>).</p> 
-     * <p>For services that are accessible by DNS queries, you can't create multiple
-     * services with names that differ only by case (such as EXAMPLE and example).
-     * Otherwise, these services have the same DNS name and can't be distinguished.
-     * However, if you use a namespace that's only accessible by API calls, then you
-     * can create services that with names that differ only by case.</p> 
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateServiceRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateServiceRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateServiceRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> <i>Public DNS and HTTP namespaces only.</i> A complex type that contains
+   * settings for an optional Route 53 health check. If you specify settings for a
+   * health check, Cloud Map associates the health check with all the Route 53 DNS
+   * records that you specify in <code>DnsConfig</code>.</p>  <p>If you
+   * specify a health check configuration, you can specify either
+   * <code>HealthCheckCustomConfig</code> or <code>HealthCheckConfig</code> but not
+   * both.</p>  <p>For information about the charges for health checks,
+   * see <a href="http://aws.amazon.com/cloud-map/pricing/">Cloud Map
+   * Pricing</a>.</p>
+   */
+  inline const HealthCheckConfig& GetHealthCheckConfig() const { return m_healthCheckConfig; }
+  inline bool HealthCheckConfigHasBeenSet() const { return m_healthCheckConfigHasBeenSet; }
+  template <typename HealthCheckConfigT = HealthCheckConfig>
+  void SetHealthCheckConfig(HealthCheckConfigT&& value) {
+    m_healthCheckConfigHasBeenSet = true;
+    m_healthCheckConfig = std::forward<HealthCheckConfigT>(value);
+  }
+  template <typename HealthCheckConfigT = HealthCheckConfig>
+  CreateServiceRequest& WithHealthCheckConfig(HealthCheckConfigT&& value) {
+    SetHealthCheckConfig(std::forward<HealthCheckConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the namespace that you want to use to create the service. The
-     * namespace ID must be specified, but it can be specified either here or in the
-     * <code>DnsConfig</code> object.</p>
-     */
-    inline const Aws::String& GetNamespaceId() const{ return m_namespaceId; }
-    inline bool NamespaceIdHasBeenSet() const { return m_namespaceIdHasBeenSet; }
-    inline void SetNamespaceId(const Aws::String& value) { m_namespaceIdHasBeenSet = true; m_namespaceId = value; }
-    inline void SetNamespaceId(Aws::String&& value) { m_namespaceIdHasBeenSet = true; m_namespaceId = std::move(value); }
-    inline void SetNamespaceId(const char* value) { m_namespaceIdHasBeenSet = true; m_namespaceId.assign(value); }
-    inline CreateServiceRequest& WithNamespaceId(const Aws::String& value) { SetNamespaceId(value); return *this;}
-    inline CreateServiceRequest& WithNamespaceId(Aws::String&& value) { SetNamespaceId(std::move(value)); return *this;}
-    inline CreateServiceRequest& WithNamespaceId(const char* value) { SetNamespaceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A complex type that contains information about an optional custom health
+   * check.</p>  <p>If you specify a health check configuration, you can
+   * specify either <code>HealthCheckCustomConfig</code> or
+   * <code>HealthCheckConfig</code> but not both.</p>  <p>You can't add,
+   * update, or delete a <code>HealthCheckCustomConfig</code> configuration from an
+   * existing service.</p>
+   */
+  inline const HealthCheckCustomConfig& GetHealthCheckCustomConfig() const { return m_healthCheckCustomConfig; }
+  inline bool HealthCheckCustomConfigHasBeenSet() const { return m_healthCheckCustomConfigHasBeenSet; }
+  template <typename HealthCheckCustomConfigT = HealthCheckCustomConfig>
+  void SetHealthCheckCustomConfig(HealthCheckCustomConfigT&& value) {
+    m_healthCheckCustomConfigHasBeenSet = true;
+    m_healthCheckCustomConfig = std::forward<HealthCheckCustomConfigT>(value);
+  }
+  template <typename HealthCheckCustomConfigT = HealthCheckCustomConfig>
+  CreateServiceRequest& WithHealthCheckCustomConfig(HealthCheckCustomConfigT&& value) {
+    SetHealthCheckCustomConfig(std::forward<HealthCheckCustomConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique string that identifies the request and that allows failed
-     * <code>CreateService</code> requests to be retried without the risk of running
-     * the operation twice. <code>CreatorRequestId</code> can be any unique string (for
-     * example, a date/timestamp).</p>
-     */
-    inline const Aws::String& GetCreatorRequestId() const{ return m_creatorRequestId; }
-    inline bool CreatorRequestIdHasBeenSet() const { return m_creatorRequestIdHasBeenSet; }
-    inline void SetCreatorRequestId(const Aws::String& value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId = value; }
-    inline void SetCreatorRequestId(Aws::String&& value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId = std::move(value); }
-    inline void SetCreatorRequestId(const char* value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId.assign(value); }
-    inline CreateServiceRequest& WithCreatorRequestId(const Aws::String& value) { SetCreatorRequestId(value); return *this;}
-    inline CreateServiceRequest& WithCreatorRequestId(Aws::String&& value) { SetCreatorRequestId(std::move(value)); return *this;}
-    inline CreateServiceRequest& WithCreatorRequestId(const char* value) { SetCreatorRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags to add to the service. Each tag consists of a key and an optional
+   * value that you define. Tags keys can be up to 128 characters in length, and tag
+   * values can be up to 256 characters in length.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateServiceRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateServiceRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description for the service.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateServiceRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateServiceRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateServiceRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If present, specifies that the service instances are only discoverable using
+   * the <code>DiscoverInstances</code> API operation. No DNS records is registered
+   * for the service instances. The only valid value is <code>HTTP</code>.</p>
+   */
+  inline ServiceTypeOption GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(ServiceTypeOption value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline CreateServiceRequest& WithType(ServiceTypeOption value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A complex type that contains information about the Amazon Route 53 records
-     * that you want Cloud Map to create when you register an instance. </p>
-     */
-    inline const DnsConfig& GetDnsConfig() const{ return m_dnsConfig; }
-    inline bool DnsConfigHasBeenSet() const { return m_dnsConfigHasBeenSet; }
-    inline void SetDnsConfig(const DnsConfig& value) { m_dnsConfigHasBeenSet = true; m_dnsConfig = value; }
-    inline void SetDnsConfig(DnsConfig&& value) { m_dnsConfigHasBeenSet = true; m_dnsConfig = std::move(value); }
-    inline CreateServiceRequest& WithDnsConfig(const DnsConfig& value) { SetDnsConfig(value); return *this;}
-    inline CreateServiceRequest& WithDnsConfig(DnsConfig&& value) { SetDnsConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_namespaceId;
 
-    ///@{
-    /**
-     * <p> <i>Public DNS and HTTP namespaces only.</i> A complex type that contains
-     * settings for an optional Route 53 health check. If you specify settings for a
-     * health check, Cloud Map associates the health check with all the Route 53 DNS
-     * records that you specify in <code>DnsConfig</code>.</p>  <p>If you
-     * specify a health check configuration, you can specify either
-     * <code>HealthCheckCustomConfig</code> or <code>HealthCheckConfig</code> but not
-     * both.</p>  <p>For information about the charges for health checks,
-     * see <a href="http://aws.amazon.com/cloud-map/pricing/">Cloud Map
-     * Pricing</a>.</p>
-     */
-    inline const HealthCheckConfig& GetHealthCheckConfig() const{ return m_healthCheckConfig; }
-    inline bool HealthCheckConfigHasBeenSet() const { return m_healthCheckConfigHasBeenSet; }
-    inline void SetHealthCheckConfig(const HealthCheckConfig& value) { m_healthCheckConfigHasBeenSet = true; m_healthCheckConfig = value; }
-    inline void SetHealthCheckConfig(HealthCheckConfig&& value) { m_healthCheckConfigHasBeenSet = true; m_healthCheckConfig = std::move(value); }
-    inline CreateServiceRequest& WithHealthCheckConfig(const HealthCheckConfig& value) { SetHealthCheckConfig(value); return *this;}
-    inline CreateServiceRequest& WithHealthCheckConfig(HealthCheckConfig&& value) { SetHealthCheckConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_creatorRequestId{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>A complex type that contains information about an optional custom health
-     * check.</p>  <p>If you specify a health check configuration, you can
-     * specify either <code>HealthCheckCustomConfig</code> or
-     * <code>HealthCheckConfig</code> but not both.</p>  <p>You can't add,
-     * update, or delete a <code>HealthCheckCustomConfig</code> configuration from an
-     * existing service.</p>
-     */
-    inline const HealthCheckCustomConfig& GetHealthCheckCustomConfig() const{ return m_healthCheckCustomConfig; }
-    inline bool HealthCheckCustomConfigHasBeenSet() const { return m_healthCheckCustomConfigHasBeenSet; }
-    inline void SetHealthCheckCustomConfig(const HealthCheckCustomConfig& value) { m_healthCheckCustomConfigHasBeenSet = true; m_healthCheckCustomConfig = value; }
-    inline void SetHealthCheckCustomConfig(HealthCheckCustomConfig&& value) { m_healthCheckCustomConfigHasBeenSet = true; m_healthCheckCustomConfig = std::move(value); }
-    inline CreateServiceRequest& WithHealthCheckCustomConfig(const HealthCheckCustomConfig& value) { SetHealthCheckCustomConfig(value); return *this;}
-    inline CreateServiceRequest& WithHealthCheckCustomConfig(HealthCheckCustomConfig&& value) { SetHealthCheckCustomConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The tags to add to the service. Each tag consists of a key and an optional
-     * value that you define. Tags keys can be up to 128 characters in length, and tag
-     * values can be up to 256 characters in length.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateServiceRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateServiceRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateServiceRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateServiceRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  DnsConfig m_dnsConfig;
 
-    ///@{
-    /**
-     * <p>If present, specifies that the service instances are only discoverable using
-     * the <code>DiscoverInstances</code> API operation. No DNS records is registered
-     * for the service instances. The only valid value is <code>HTTP</code>.</p>
-     */
-    inline const ServiceTypeOption& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const ServiceTypeOption& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(ServiceTypeOption&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline CreateServiceRequest& WithType(const ServiceTypeOption& value) { SetType(value); return *this;}
-    inline CreateServiceRequest& WithType(ServiceTypeOption&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  HealthCheckConfig m_healthCheckConfig;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  HealthCheckCustomConfig m_healthCheckCustomConfig;
 
-    Aws::String m_namespaceId;
-    bool m_namespaceIdHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::String m_creatorRequestId;
-    bool m_creatorRequestIdHasBeenSet = false;
+  ServiceTypeOption m_type{ServiceTypeOption::NOT_SET};
+  bool m_nameHasBeenSet = false;
+  bool m_namespaceIdHasBeenSet = false;
+  bool m_creatorRequestIdHasBeenSet = true;
+  bool m_descriptionHasBeenSet = false;
+  bool m_dnsConfigHasBeenSet = false;
+  bool m_healthCheckConfigHasBeenSet = false;
+  bool m_healthCheckCustomConfigHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    DnsConfig m_dnsConfig;
-    bool m_dnsConfigHasBeenSet = false;
-
-    HealthCheckConfig m_healthCheckConfig;
-    bool m_healthCheckConfigHasBeenSet = false;
-
-    HealthCheckCustomConfig m_healthCheckCustomConfig;
-    bool m_healthCheckCustomConfigHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    ServiceTypeOption m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceDiscovery
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceDiscovery
+}  // namespace Aws

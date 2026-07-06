@@ -4,87 +4,167 @@
  */
 
 #pragma once
-#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/CleanRoomsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/cleanrooms/model/MembershipQueryLogStatus.h>
+#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
+#include <aws/cleanrooms/model/MembershipJobLogStatus.h>
+#include <aws/cleanrooms/model/MembershipProtectedJobResultConfiguration.h>
 #include <aws/cleanrooms/model/MembershipProtectedQueryResultConfiguration.h>
+#include <aws/cleanrooms/model/MembershipQueryLogStatus.h>
+#include <aws/cleanrooms/model/UpdateMembershipPaymentConfiguration.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
+/**
+ */
+class UpdateMembershipRequest : public CleanRoomsRequest {
+ public:
+  AWS_CLEANROOMS_API UpdateMembershipRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateMembership"; }
+
+  AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the membership.</p>
    */
-  class UpdateMembershipRequest : public CleanRoomsRequest
-  {
-  public:
-    AWS_CLEANROOMS_API UpdateMembershipRequest();
+  inline const Aws::String& GetMembershipIdentifier() const { return m_membershipIdentifier; }
+  inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
+  template <typename MembershipIdentifierT = Aws::String>
+  void SetMembershipIdentifier(MembershipIdentifierT&& value) {
+    m_membershipIdentifierHasBeenSet = true;
+    m_membershipIdentifier = std::forward<MembershipIdentifierT>(value);
+  }
+  template <typename MembershipIdentifierT = Aws::String>
+  UpdateMembershipRequest& WithMembershipIdentifier(MembershipIdentifierT&& value) {
+    SetMembershipIdentifier(std::forward<MembershipIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateMembership"; }
+  ///@{
+  /**
+   * <p>An indicator as to whether query logging has been enabled or disabled for the
+   * membership.</p> <p>When <code>ENABLED</code>, Clean Rooms logs details about
+   * queries run within this collaboration and those logs can be viewed in Amazon
+   * CloudWatch Logs. The default value is <code>DISABLED</code>.</p>
+   */
+  inline MembershipQueryLogStatus GetQueryLogStatus() const { return m_queryLogStatus; }
+  inline bool QueryLogStatusHasBeenSet() const { return m_queryLogStatusHasBeenSet; }
+  inline void SetQueryLogStatus(MembershipQueryLogStatus value) {
+    m_queryLogStatusHasBeenSet = true;
+    m_queryLogStatus = value;
+  }
+  inline UpdateMembershipRequest& WithQueryLogStatus(MembershipQueryLogStatus value) {
+    SetQueryLogStatus(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An indicator as to whether job logging has been enabled or disabled for the
+   * collaboration. </p> <p>When <code>ENABLED</code>, Clean Rooms logs details about
+   * jobs run within this collaboration and those logs can be viewed in Amazon
+   * CloudWatch Logs. The default value is <code>DISABLED</code>.</p>
+   */
+  inline MembershipJobLogStatus GetJobLogStatus() const { return m_jobLogStatus; }
+  inline bool JobLogStatusHasBeenSet() const { return m_jobLogStatusHasBeenSet; }
+  inline void SetJobLogStatus(MembershipJobLogStatus value) {
+    m_jobLogStatusHasBeenSet = true;
+    m_jobLogStatus = value;
+  }
+  inline UpdateMembershipRequest& WithJobLogStatus(MembershipJobLogStatus value) {
+    SetJobLogStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The default protected query result configuration as specified by the member
+   * who can receive results.</p>
+   */
+  inline const MembershipProtectedQueryResultConfiguration& GetDefaultResultConfiguration() const { return m_defaultResultConfiguration; }
+  inline bool DefaultResultConfigurationHasBeenSet() const { return m_defaultResultConfigurationHasBeenSet; }
+  template <typename DefaultResultConfigurationT = MembershipProtectedQueryResultConfiguration>
+  void SetDefaultResultConfiguration(DefaultResultConfigurationT&& value) {
+    m_defaultResultConfigurationHasBeenSet = true;
+    m_defaultResultConfiguration = std::forward<DefaultResultConfigurationT>(value);
+  }
+  template <typename DefaultResultConfigurationT = MembershipProtectedQueryResultConfiguration>
+  UpdateMembershipRequest& WithDefaultResultConfiguration(DefaultResultConfigurationT&& value) {
+    SetDefaultResultConfiguration(std::forward<DefaultResultConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the membership.</p>
-     */
-    inline const Aws::String& GetMembershipIdentifier() const{ return m_membershipIdentifier; }
-    inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
-    inline void SetMembershipIdentifier(const Aws::String& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = value; }
-    inline void SetMembershipIdentifier(Aws::String&& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = std::move(value); }
-    inline void SetMembershipIdentifier(const char* value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier.assign(value); }
-    inline UpdateMembershipRequest& WithMembershipIdentifier(const Aws::String& value) { SetMembershipIdentifier(value); return *this;}
-    inline UpdateMembershipRequest& WithMembershipIdentifier(Aws::String&& value) { SetMembershipIdentifier(std::move(value)); return *this;}
-    inline UpdateMembershipRequest& WithMembershipIdentifier(const char* value) { SetMembershipIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The default job result configuration.</p>
+   */
+  inline const MembershipProtectedJobResultConfiguration& GetDefaultJobResultConfiguration() const {
+    return m_defaultJobResultConfiguration;
+  }
+  inline bool DefaultJobResultConfigurationHasBeenSet() const { return m_defaultJobResultConfigurationHasBeenSet; }
+  template <typename DefaultJobResultConfigurationT = MembershipProtectedJobResultConfiguration>
+  void SetDefaultJobResultConfiguration(DefaultJobResultConfigurationT&& value) {
+    m_defaultJobResultConfigurationHasBeenSet = true;
+    m_defaultJobResultConfiguration = std::forward<DefaultJobResultConfigurationT>(value);
+  }
+  template <typename DefaultJobResultConfigurationT = MembershipProtectedJobResultConfiguration>
+  UpdateMembershipRequest& WithDefaultJobResultConfiguration(DefaultJobResultConfigurationT&& value) {
+    SetDefaultJobResultConfiguration(std::forward<DefaultJobResultConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An indicator as to whether query logging has been enabled or disabled for the
-     * membership.</p>
-     */
-    inline const MembershipQueryLogStatus& GetQueryLogStatus() const{ return m_queryLogStatus; }
-    inline bool QueryLogStatusHasBeenSet() const { return m_queryLogStatusHasBeenSet; }
-    inline void SetQueryLogStatus(const MembershipQueryLogStatus& value) { m_queryLogStatusHasBeenSet = true; m_queryLogStatus = value; }
-    inline void SetQueryLogStatus(MembershipQueryLogStatus&& value) { m_queryLogStatusHasBeenSet = true; m_queryLogStatus = std::move(value); }
-    inline UpdateMembershipRequest& WithQueryLogStatus(const MembershipQueryLogStatus& value) { SetQueryLogStatus(value); return *this;}
-    inline UpdateMembershipRequest& WithQueryLogStatus(MembershipQueryLogStatus&& value) { SetQueryLogStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The payment configuration to update for the membership.</p>
+   */
+  inline const UpdateMembershipPaymentConfiguration& GetMembershipPaymentConfiguration() const { return m_membershipPaymentConfiguration; }
+  inline bool MembershipPaymentConfigurationHasBeenSet() const { return m_membershipPaymentConfigurationHasBeenSet; }
+  template <typename MembershipPaymentConfigurationT = UpdateMembershipPaymentConfiguration>
+  void SetMembershipPaymentConfiguration(MembershipPaymentConfigurationT&& value) {
+    m_membershipPaymentConfigurationHasBeenSet = true;
+    m_membershipPaymentConfiguration = std::forward<MembershipPaymentConfigurationT>(value);
+  }
+  template <typename MembershipPaymentConfigurationT = UpdateMembershipPaymentConfiguration>
+  UpdateMembershipRequest& WithMembershipPaymentConfiguration(MembershipPaymentConfigurationT&& value) {
+    SetMembershipPaymentConfiguration(std::forward<MembershipPaymentConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_membershipIdentifier;
 
-    ///@{
-    /**
-     * <p>The default protected query result configuration as specified by the member
-     * who can receive results.</p>
-     */
-    inline const MembershipProtectedQueryResultConfiguration& GetDefaultResultConfiguration() const{ return m_defaultResultConfiguration; }
-    inline bool DefaultResultConfigurationHasBeenSet() const { return m_defaultResultConfigurationHasBeenSet; }
-    inline void SetDefaultResultConfiguration(const MembershipProtectedQueryResultConfiguration& value) { m_defaultResultConfigurationHasBeenSet = true; m_defaultResultConfiguration = value; }
-    inline void SetDefaultResultConfiguration(MembershipProtectedQueryResultConfiguration&& value) { m_defaultResultConfigurationHasBeenSet = true; m_defaultResultConfiguration = std::move(value); }
-    inline UpdateMembershipRequest& WithDefaultResultConfiguration(const MembershipProtectedQueryResultConfiguration& value) { SetDefaultResultConfiguration(value); return *this;}
-    inline UpdateMembershipRequest& WithDefaultResultConfiguration(MembershipProtectedQueryResultConfiguration&& value) { SetDefaultResultConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  MembershipQueryLogStatus m_queryLogStatus{MembershipQueryLogStatus::NOT_SET};
 
-    Aws::String m_membershipIdentifier;
-    bool m_membershipIdentifierHasBeenSet = false;
+  MembershipJobLogStatus m_jobLogStatus{MembershipJobLogStatus::NOT_SET};
 
-    MembershipQueryLogStatus m_queryLogStatus;
-    bool m_queryLogStatusHasBeenSet = false;
+  MembershipProtectedQueryResultConfiguration m_defaultResultConfiguration;
 
-    MembershipProtectedQueryResultConfiguration m_defaultResultConfiguration;
-    bool m_defaultResultConfigurationHasBeenSet = false;
-  };
+  MembershipProtectedJobResultConfiguration m_defaultJobResultConfiguration;
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+  UpdateMembershipPaymentConfiguration m_membershipPaymentConfiguration;
+  bool m_membershipIdentifierHasBeenSet = false;
+  bool m_queryLogStatusHasBeenSet = false;
+  bool m_jobLogStatusHasBeenSet = false;
+  bool m_defaultResultConfigurationHasBeenSet = false;
+  bool m_defaultJobResultConfigurationHasBeenSet = false;
+  bool m_membershipPaymentConfigurationHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

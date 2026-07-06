@@ -4,76 +4,90 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/kinesisanalyticsv2/model/ApplicationDetail.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KinesisAnalyticsV2
-{
-namespace Model
-{
-  class RollbackApplicationResult
-  {
-  public:
-    AWS_KINESISANALYTICSV2_API RollbackApplicationResult();
-    AWS_KINESISANALYTICSV2_API RollbackApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KINESISANALYTICSV2_API RollbackApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisAnalyticsV2 {
+namespace Model {
+class RollbackApplicationResult {
+ public:
+  AWS_KINESISANALYTICSV2_API RollbackApplicationResult() = default;
+  AWS_KINESISANALYTICSV2_API RollbackApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KINESISANALYTICSV2_API RollbackApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ApplicationDetail& GetApplicationDetail() const{ return m_applicationDetail; }
-    inline void SetApplicationDetail(const ApplicationDetail& value) { m_applicationDetail = value; }
-    inline void SetApplicationDetail(ApplicationDetail&& value) { m_applicationDetail = std::move(value); }
-    inline RollbackApplicationResult& WithApplicationDetail(const ApplicationDetail& value) { SetApplicationDetail(value); return *this;}
-    inline RollbackApplicationResult& WithApplicationDetail(ApplicationDetail&& value) { SetApplicationDetail(std::move(value)); return *this;}
-    ///@}
+  inline const ApplicationDetail& GetApplicationDetail() const { return m_applicationDetail; }
+  template <typename ApplicationDetailT = ApplicationDetail>
+  void SetApplicationDetail(ApplicationDetailT&& value) {
+    m_applicationDetailHasBeenSet = true;
+    m_applicationDetail = std::forward<ApplicationDetailT>(value);
+  }
+  template <typename ApplicationDetailT = ApplicationDetail>
+  RollbackApplicationResult& WithApplicationDetail(ApplicationDetailT&& value) {
+    SetApplicationDetail(std::forward<ApplicationDetailT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Operation ID for tracking RollbackApplication request
-     */
-    inline const Aws::String& GetOperationId() const{ return m_operationId; }
-    inline void SetOperationId(const Aws::String& value) { m_operationId = value; }
-    inline void SetOperationId(Aws::String&& value) { m_operationId = std::move(value); }
-    inline void SetOperationId(const char* value) { m_operationId.assign(value); }
-    inline RollbackApplicationResult& WithOperationId(const Aws::String& value) { SetOperationId(value); return *this;}
-    inline RollbackApplicationResult& WithOperationId(Aws::String&& value) { SetOperationId(std::move(value)); return *this;}
-    inline RollbackApplicationResult& WithOperationId(const char* value) { SetOperationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The operation ID that can be used to track the request.</p>
+   */
+  inline const Aws::String& GetOperationId() const { return m_operationId; }
+  template <typename OperationIdT = Aws::String>
+  void SetOperationId(OperationIdT&& value) {
+    m_operationIdHasBeenSet = true;
+    m_operationId = std::forward<OperationIdT>(value);
+  }
+  template <typename OperationIdT = Aws::String>
+  RollbackApplicationResult& WithOperationId(OperationIdT&& value) {
+    SetOperationId(std::forward<OperationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RollbackApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RollbackApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RollbackApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ApplicationDetail m_applicationDetail;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RollbackApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_operationId;
+ private:
+  ApplicationDetail m_applicationDetail;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_operationId;
 
-} // namespace Model
-} // namespace KinesisAnalyticsV2
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationDetailHasBeenSet = false;
+  bool m_operationIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace KinesisAnalyticsV2
+}  // namespace Aws

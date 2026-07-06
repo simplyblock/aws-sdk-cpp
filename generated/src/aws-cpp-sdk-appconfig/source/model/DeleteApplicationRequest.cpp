@@ -12,16 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteApplicationRequest::DeleteApplicationRequest() : 
-    m_applicationIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteApplicationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteApplicationRequest::SerializePayload() const { return {}; }

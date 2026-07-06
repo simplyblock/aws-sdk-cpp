@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSchemaRequest::GetSchemaRequest() : 
-    m_collaborationIdentifierHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String GetSchemaRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSchemaRequest::SerializePayload() const { return {}; }

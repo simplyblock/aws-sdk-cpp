@@ -12,32 +12,18 @@ using namespace Aws::AppStream::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteStackRequest::DeleteStackRequest() : 
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteStackRequest::SerializePayload() const
-{
+Aws::String DeleteStackRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteStackRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteStackRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.DeleteStack"));
   return headers;
-
 }
-
-
-
-

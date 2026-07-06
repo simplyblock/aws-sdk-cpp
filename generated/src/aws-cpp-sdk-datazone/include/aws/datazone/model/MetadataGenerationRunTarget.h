@@ -4,91 +4,96 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/MetadataGenerationTargetType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DataZone {
+namespace Model {
 
+/**
+ * <p>The asset for which metadata was generated.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/MetadataGenerationRunTarget">AWS
+ * API Reference</a></p>
+ */
+class MetadataGenerationRunTarget {
+ public:
+  AWS_DATAZONE_API MetadataGenerationRunTarget() = default;
+  AWS_DATAZONE_API MetadataGenerationRunTarget(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API MetadataGenerationRunTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The asset for which metadata was generated.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/MetadataGenerationRunTarget">AWS
-   * API Reference</a></p>
+   * <p>The type of the asset for which metadata was generated.</p>
    */
-  class MetadataGenerationRunTarget
-  {
-  public:
-    AWS_DATAZONE_API MetadataGenerationRunTarget();
-    AWS_DATAZONE_API MetadataGenerationRunTarget(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API MetadataGenerationRunTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline MetadataGenerationTargetType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(MetadataGenerationTargetType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline MetadataGenerationRunTarget& WithType(MetadataGenerationTargetType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the metadata generation run's target.</p>
+   */
+  inline const Aws::String& GetIdentifier() const { return m_identifier; }
+  inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
+  template <typename IdentifierT = Aws::String>
+  void SetIdentifier(IdentifierT&& value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = std::forward<IdentifierT>(value);
+  }
+  template <typename IdentifierT = Aws::String>
+  MetadataGenerationRunTarget& WithIdentifier(IdentifierT&& value) {
+    SetIdentifier(std::forward<IdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the metadata generation run's target.</p>
-     */
-    inline const Aws::String& GetIdentifier() const{ return m_identifier; }
-    inline bool IdentifierHasBeenSet() const { return m_identifierHasBeenSet; }
-    inline void SetIdentifier(const Aws::String& value) { m_identifierHasBeenSet = true; m_identifier = value; }
-    inline void SetIdentifier(Aws::String&& value) { m_identifierHasBeenSet = true; m_identifier = std::move(value); }
-    inline void SetIdentifier(const char* value) { m_identifierHasBeenSet = true; m_identifier.assign(value); }
-    inline MetadataGenerationRunTarget& WithIdentifier(const Aws::String& value) { SetIdentifier(value); return *this;}
-    inline MetadataGenerationRunTarget& WithIdentifier(Aws::String&& value) { SetIdentifier(std::move(value)); return *this;}
-    inline MetadataGenerationRunTarget& WithIdentifier(const char* value) { SetIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The revision of the asset for which metadata was generated.</p>
+   */
+  inline const Aws::String& GetRevision() const { return m_revision; }
+  inline bool RevisionHasBeenSet() const { return m_revisionHasBeenSet; }
+  template <typename RevisionT = Aws::String>
+  void SetRevision(RevisionT&& value) {
+    m_revisionHasBeenSet = true;
+    m_revision = std::forward<RevisionT>(value);
+  }
+  template <typename RevisionT = Aws::String>
+  MetadataGenerationRunTarget& WithRevision(RevisionT&& value) {
+    SetRevision(std::forward<RevisionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  MetadataGenerationTargetType m_type{MetadataGenerationTargetType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The revision of the asset for which metadata was generated.</p>
-     */
-    inline const Aws::String& GetRevision() const{ return m_revision; }
-    inline bool RevisionHasBeenSet() const { return m_revisionHasBeenSet; }
-    inline void SetRevision(const Aws::String& value) { m_revisionHasBeenSet = true; m_revision = value; }
-    inline void SetRevision(Aws::String&& value) { m_revisionHasBeenSet = true; m_revision = std::move(value); }
-    inline void SetRevision(const char* value) { m_revisionHasBeenSet = true; m_revision.assign(value); }
-    inline MetadataGenerationRunTarget& WithRevision(const Aws::String& value) { SetRevision(value); return *this;}
-    inline MetadataGenerationRunTarget& WithRevision(Aws::String&& value) { SetRevision(std::move(value)); return *this;}
-    inline MetadataGenerationRunTarget& WithRevision(const char* value) { SetRevision(value); return *this;}
-    ///@}
+  Aws::String m_identifier;
 
-    ///@{
-    /**
-     * <p>The type of the asset for which metadata was generated.</p>
-     */
-    inline const MetadataGenerationTargetType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const MetadataGenerationTargetType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(MetadataGenerationTargetType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline MetadataGenerationRunTarget& WithType(const MetadataGenerationTargetType& value) { SetType(value); return *this;}
-    inline MetadataGenerationRunTarget& WithType(MetadataGenerationTargetType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_revision;
+  bool m_typeHasBeenSet = false;
+  bool m_identifierHasBeenSet = false;
+  bool m_revisionHasBeenSet = false;
+};
 
-    Aws::String m_identifier;
-    bool m_identifierHasBeenSet = false;
-
-    Aws::String m_revision;
-    bool m_revisionHasBeenSet = false;
-
-    MetadataGenerationTargetType m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

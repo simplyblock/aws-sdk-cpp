@@ -4,71 +4,86 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
 #include <aws/elasticache/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+/**
+ * <p>Represents the output from the <code>AddTagsToResource</code>,
+ * <code>ListTagsForResource</code>, and <code>RemoveTagsFromResource</code>
+ * operations.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/TagListMessage">AWS
+ * API Reference</a></p>
+ */
+class RemoveTagsFromResourceResult {
+ public:
+  AWS_ELASTICACHE_API RemoveTagsFromResourceResult() = default;
+  AWS_ELASTICACHE_API RemoveTagsFromResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API RemoveTagsFromResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Represents the output from the <code>AddTagsToResource</code>,
-   * <code>ListTagsForResource</code>, and <code>RemoveTagsFromResource</code>
-   * operations.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/TagListMessage">AWS
-   * API Reference</a></p>
+   * <p>A list of tags as key-value pairs.</p>
    */
-  class RemoveTagsFromResourceResult
-  {
-  public:
-    AWS_ELASTICACHE_API RemoveTagsFromResourceResult();
-    AWS_ELASTICACHE_API RemoveTagsFromResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API RemoveTagsFromResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Tag>& GetTagList() const { return m_tagList; }
+  template <typename TagListT = Aws::Vector<Tag>>
+  void SetTagList(TagListT&& value) {
+    m_tagListHasBeenSet = true;
+    m_tagList = std::forward<TagListT>(value);
+  }
+  template <typename TagListT = Aws::Vector<Tag>>
+  RemoveTagsFromResourceResult& WithTagList(TagListT&& value) {
+    SetTagList(std::forward<TagListT>(value));
+    return *this;
+  }
+  template <typename TagListT = Tag>
+  RemoveTagsFromResourceResult& AddTagList(TagListT&& value) {
+    m_tagListHasBeenSet = true;
+    m_tagList.emplace_back(std::forward<TagListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of tags as key-value pairs.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTagList() const{ return m_tagList; }
-    inline void SetTagList(const Aws::Vector<Tag>& value) { m_tagList = value; }
-    inline void SetTagList(Aws::Vector<Tag>&& value) { m_tagList = std::move(value); }
-    inline RemoveTagsFromResourceResult& WithTagList(const Aws::Vector<Tag>& value) { SetTagList(value); return *this;}
-    inline RemoveTagsFromResourceResult& WithTagList(Aws::Vector<Tag>&& value) { SetTagList(std::move(value)); return *this;}
-    inline RemoveTagsFromResourceResult& AddTagList(const Tag& value) { m_tagList.push_back(value); return *this; }
-    inline RemoveTagsFromResourceResult& AddTagList(Tag&& value) { m_tagList.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  RemoveTagsFromResourceResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline RemoveTagsFromResourceResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline RemoveTagsFromResourceResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Tag> m_tagList;
 
-    Aws::Vector<Tag> m_tagList;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_tagListHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

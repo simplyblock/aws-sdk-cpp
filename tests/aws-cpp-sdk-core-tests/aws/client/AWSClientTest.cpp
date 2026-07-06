@@ -17,6 +17,7 @@
 #include <aws/testing/platform/PlatformTesting.h>
 #include <aws/core/platform/FileSystem.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
+#include <aws/core/auth/ProfileCredentialsProvider.h>
 #include <aws/core/platform/Environment.h>
 
 #include <fstream>
@@ -24,6 +25,7 @@
 #include <aws/core/utils/logging/LogMacros.h>
 #include <aws/core/client/AWSErrorMarshaller.h>
 #include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/core/AmazonSerializableWebServiceRequest.h>
 
 
 using namespace Aws;
@@ -419,6 +421,90 @@ TEST_F(AWSClientTestSuite, TestStandardRetryStrategy)
     ASSERT_EQ(3, clientWithStandardRetryStrategy.GetRetryQuotaContainer()->GetRetryQuota());
 }
 
+static AmazonWebServiceRequestMock MakeLongPollingRequest()
+{
+    AmazonWebServiceRequestMock request;
+    request.SetLongPollingOperation(true);
+    return request;
+}
+
+// SEP Test Case 12: long-polling, retryable error, retry quota exhausted - stops without a normal retry.
+TEST_F(AWSClientTestSuite, LongPollingQuotaExhausted)
+{
+    Aws::Environment::EnvironmentRAII env{{{"AWS_NEW_RETRIES_2026", "true"}}};
+    ClientConfiguration config;
+    auto quota = Aws::MakeShared<DefaultRetryQuotaContainer>(ALLOCATION_TAG);
+    config.retryStrategy = Aws::MakeShared<CountedStandardRetryStrategy>(ALLOCATION_TAG, quota);
+    MockAWSClientWithStandardRetryStrategy lpClient(config);
+    ASSERT_TRUE(lpClient.GetRetryQuotaContainer()->AcquireRetryQuota(498));
+
+    HeaderValueCollection responseHeaders;
+    QueueMockResponse(AWSError<CoreErrors>(CoreErrors::NETWORK_CONNECTION, true), responseHeaders);
+
+    auto request = MakeLongPollingRequest();
+    auto outcome = lpClient.MakeRequest(request);
+    ASSERT_FALSE(outcome.IsSuccess());
+    ASSERT_EQ(0, lpClient.GetRequestAttemptedRetries());
+}
+
+// SEP Test Case 14: long-polling, retryable error, stops at max attempts.
+TEST_F(AWSClientTestSuite, LongPollingMaxAttemptsExceeded)
+{
+    Aws::Environment::EnvironmentRAII env{{{"AWS_NEW_RETRIES_2026", "true"}}};
+    ClientConfiguration config;
+    auto quota = Aws::MakeShared<DefaultRetryQuotaContainer>(ALLOCATION_TAG);
+    config.retryStrategy = Aws::MakeShared<CountedStandardRetryStrategy>(ALLOCATION_TAG, quota);
+    MockAWSClientWithStandardRetryStrategy lpClient(config);
+
+    HeaderValueCollection responseHeaders;
+    AWSError<CoreErrors> transientError(CoreErrors::NETWORK_CONNECTION, true);
+    QueueMockResponse(transientError, responseHeaders);
+    QueueMockResponse(transientError, responseHeaders);
+    QueueMockResponse(transientError, responseHeaders);
+
+    auto request = MakeLongPollingRequest();
+    auto outcome = lpClient.MakeRequest(request);
+    ASSERT_FALSE(outcome.IsSuccess());
+    ASSERT_EQ(2, lpClient.GetRequestAttemptedRetries());
+}
+
+// SEP Test Case 15: long-polling, retryable error then success.
+TEST_F(AWSClientTestSuite, LongPollingRetriesThenSucceeds)
+{
+    Aws::Environment::EnvironmentRAII env{{{"AWS_NEW_RETRIES_2026", "true"}}};
+    ClientConfiguration config;
+    auto quota = Aws::MakeShared<DefaultRetryQuotaContainer>(ALLOCATION_TAG);
+    config.retryStrategy = Aws::MakeShared<CountedStandardRetryStrategy>(ALLOCATION_TAG, quota);
+    MockAWSClientWithStandardRetryStrategy lpClient(config);
+
+    HeaderValueCollection responseHeaders;
+    QueueMockResponse(AWSError<CoreErrors>(CoreErrors::NETWORK_CONNECTION, true), responseHeaders);
+    QueueMockResponse(HttpResponseCode::OK, responseHeaders);
+
+    auto request = MakeLongPollingRequest();
+    auto outcome = lpClient.MakeRequest(request);
+    AWS_ASSERT_SUCCESS(outcome);
+    ASSERT_EQ(1, lpClient.GetRequestAttemptedRetries());
+}
+
+// SEP Test Case 16: long-polling, non-retryable error, fails without retrying.
+TEST_F(AWSClientTestSuite, LongPollingNonRetryableError)
+{
+    Aws::Environment::EnvironmentRAII env{{{"AWS_NEW_RETRIES_2026", "true"}}};
+    ClientConfiguration config;
+    auto quota = Aws::MakeShared<DefaultRetryQuotaContainer>(ALLOCATION_TAG);
+    config.retryStrategy = Aws::MakeShared<CountedStandardRetryStrategy>(ALLOCATION_TAG, quota);
+    MockAWSClientWithStandardRetryStrategy lpClient(config);
+
+    HeaderValueCollection responseHeaders;
+    QueueMockResponse(HttpResponseCode::BAD_REQUEST, responseHeaders);
+
+    auto request = MakeLongPollingRequest();
+    auto outcome = lpClient.MakeRequest(request);
+    ASSERT_FALSE(outcome.IsSuccess());
+    ASSERT_EQ(0, lpClient.GetRequestAttemptedRetries());
+}
+
 TEST_F(AWSClientTestSuite, TestRecursionDetection)
 {
     struct AWSClientTestSuite_TestRecursionDetection_TestCase
@@ -519,6 +605,30 @@ TEST_F(AWSClientTestSuite, TestRecursionDetection)
         mockHttpClient->Reset();
     }
 }
+
+TEST_F(AWSClientTestSuite, TestCborUserAgent)
+{
+    HeaderValueCollection responseHeaders;
+    AmazonWebServiceRequestMock request;
+    request.SetAdditionalCustomHeaderValue(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+    QueueMockResponse(HttpResponseCode::OK, responseHeaders);
+    auto outcome = client->MakeRequest(request);
+
+    auto lastRequest = mockHttpClient->GetMostRecentHttpRequest();
+    EXPECT_TRUE(lastRequest.HasUserAgent());
+    const auto& userAgent = lastRequest.GetUserAgent();
+    EXPECT_TRUE(!userAgent.empty());
+
+    const auto userAgentParsed = Aws::Utils::StringUtils::Split(userAgent, ' ');
+
+    EXPECT_TRUE(!Aws::Client::UserAgent::BusinessMetricForFeature(UserAgentFeature::PROTOCOL_RPC_V2_CBOR).empty());
+    // Check for CBOR protocol business metric (M) in user agent
+    auto businessMetrics = std::find_if(userAgentParsed.begin(), userAgentParsed.end(),
+        [](const Aws::String& value) { return value.find("m/") != Aws::String::npos && value.find(Aws::Client::UserAgent::BusinessMetricForFeature(UserAgentFeature::PROTOCOL_RPC_V2_CBOR)) != Aws::String::npos; });
+
+    EXPECT_TRUE(businessMetrics != userAgentParsed.end());
+
+}
 using namespace Aws::Utils::Xml;
 TEST_F(XMLClientTestSuite, TestErrorInBodyOfResponse)
 {
@@ -571,21 +681,15 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithHeadersOnly)
 
     ASSERT_TRUE(httpRequest->HasHeader("test1"));
     ASSERT_TRUE(httpRequest->HasHeader("test2"));
-    ASSERT_TRUE(httpRequest->HasHeader(Http::USER_AGENT_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::HOST_HEADER));
     ASSERT_FALSE(httpRequest->HasHeader(Http::CONTENT_TYPE_HEADER));
     ASSERT_FALSE(httpRequest->HasHeader(Http::CONTENT_LENGTH_HEADER));
 
     HeaderValueCollection finalHeaders = httpRequest->GetHeaders();
-    ASSERT_EQ(4u, finalHeaders.size());
+    ASSERT_EQ(3u, finalHeaders.size());
     ASSERT_EQ("testValue1", finalHeaders["test1"]);
     ASSERT_EQ("testValue2", finalHeaders["test2"]);
     ASSERT_EQ("www.uri.com", finalHeaders[Http::HOST_HEADER]);
-    ASSERT_FALSE(finalHeaders[Http::USER_AGENT_HEADER].empty());
-    auto config = ClientConfiguration();
-    auto expUA = ComputeUserAgentString(&config);
-    auto actualUA = finalHeaders[Http::USER_AGENT_HEADER];
-    ASSERT_EQ(expUA, actualUA) << actualUA << " IS NOT " <<  expUA;
 
     headerValues[Http::CONTENT_LENGTH_HEADER] = "0";
     headerValues[Http::CONTENT_TYPE_HEADER] = "blah";
@@ -595,20 +699,15 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithHeadersOnly)
 
     ASSERT_TRUE(httpRequest->HasHeader("test1"));
     ASSERT_TRUE(httpRequest->HasHeader("test2"));
-    ASSERT_TRUE(httpRequest->HasHeader(Http::USER_AGENT_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::HOST_HEADER));
     ASSERT_FALSE(httpRequest->HasHeader(Http::CONTENT_TYPE_HEADER));
     ASSERT_FALSE(httpRequest->HasHeader(Http::CONTENT_LENGTH_HEADER));
 
     finalHeaders = httpRequest->GetHeaders();
-    ASSERT_EQ(4u, finalHeaders.size());
+    ASSERT_EQ(3u, finalHeaders.size());
     ASSERT_EQ("testValue1", finalHeaders["test1"]);
     ASSERT_EQ("testValue2", finalHeaders["test2"]);
     ASSERT_EQ("www.uri.com", finalHeaders[Http::HOST_HEADER]);
-    ASSERT_FALSE(finalHeaders[Http::USER_AGENT_HEADER].empty());
-    expUA = ComputeUserAgentString(&config);
-    actualUA = finalHeaders[Http::USER_AGENT_HEADER];
-    ASSERT_EQ(expUA, actualUA) << actualUA << " IS NOT " <<  expUA;
 }
 
 TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithHeadersAndBody)
@@ -634,7 +733,6 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithHeadersAndBody)
 
     ASSERT_TRUE(httpRequest->HasHeader("test1"));
     ASSERT_TRUE(httpRequest->HasHeader("test2"));
-    ASSERT_TRUE(httpRequest->HasHeader(Http::USER_AGENT_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::HOST_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::CONTENT_LENGTH_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::CONTENT_MD5_HEADER));
@@ -642,16 +740,11 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithHeadersAndBody)
     auto hashResult = Utils::HashingUtils::Base64Encode(Utils::HashingUtils::CalculateMD5(*ss));
 
     HeaderValueCollection finalHeaders = httpRequest->GetHeaders();
-    ASSERT_EQ(6u, finalHeaders.size());
+    ASSERT_EQ(5u, finalHeaders.size());
     ASSERT_EQ("testValue1", finalHeaders["test1"]);
     ASSERT_EQ("testValue2", finalHeaders["test2"]);
     ASSERT_EQ("www.uri.com", finalHeaders[Http::HOST_HEADER]);
     ASSERT_EQ(hashResult, finalHeaders[Http::CONTENT_MD5_HEADER]);
-    ASSERT_FALSE(finalHeaders[Http::USER_AGENT_HEADER].empty());
-    auto config = ClientConfiguration();
-    auto expUA = ComputeUserAgentString(&config);
-    auto actualUA = finalHeaders[Http::USER_AGENT_HEADER];
-    ASSERT_EQ(expUA, actualUA) << actualUA << " IS NOT " <<  expUA;
 
     Aws::StringStream contentLengthExpected;
     contentLengthExpected << ss->str().length();
@@ -686,7 +779,6 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithAdditionalHeadersAndBody)
     ASSERT_TRUE(httpRequest->HasHeader("test2"));
     ASSERT_TRUE(httpRequest->HasHeader("test3"));
     ASSERT_TRUE(httpRequest->HasHeader("x-amz-request-payer"));
-    ASSERT_TRUE(httpRequest->HasHeader(Http::USER_AGENT_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::HOST_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::CONTENT_LENGTH_HEADER));
     ASSERT_TRUE(httpRequest->HasHeader(Http::CONTENT_MD5_HEADER));
@@ -694,18 +786,13 @@ TEST_F(AWSClientTestSuite, TestBuildHttpRequestWithAdditionalHeadersAndBody)
     auto hashResult = Utils::HashingUtils::Base64Encode(Utils::HashingUtils::CalculateMD5(*ss));
 
     HeaderValueCollection finalHeaders = httpRequest->GetHeaders();
-    ASSERT_EQ(8u, finalHeaders.size());
+    ASSERT_EQ(7u, finalHeaders.size());
     ASSERT_EQ("testValue1", finalHeaders["test1"]);
     ASSERT_EQ("testValue2", finalHeaders["test2"]);
     ASSERT_EQ("testValue3custom", finalHeaders["test3"]);
     ASSERT_EQ("requester", finalHeaders["x-amz-request-payer"]);
     ASSERT_EQ("www.uri.com", finalHeaders[Http::HOST_HEADER]);
     ASSERT_EQ(hashResult, finalHeaders[Http::CONTENT_MD5_HEADER]);
-    ASSERT_FALSE(finalHeaders[Http::USER_AGENT_HEADER].empty());
-    auto config = ClientConfiguration();
-    auto expUA = ComputeUserAgentString(&config);
-    auto actualUA = finalHeaders[Http::USER_AGENT_HEADER];
-    ASSERT_EQ(expUA, actualUA) << actualUA << " IS NOT " <<  expUA;
 
     Aws::StringStream contentLengthExpected;
     contentLengthExpected << ss->str().length();
@@ -776,7 +863,7 @@ public:
         Aws::Environment::UnSetEnv("AWS_DEFAULT_REGION");
         Aws::Environment::UnSetEnv("AWS_REGION");
 
-        auto profileDirectory = ProfileConfigFileAWSCredentialsProvider::GetProfileDirectory();
+        auto profileDirectory = ProfileCredentialsProvider::GetProfileDirectory();
         Aws::FileSystem::CreateDirectoryIfNotExists(profileDirectory.c_str());
     }
 

@@ -12,17 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetUserRequest::GetUserRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_userIdHasBeenSet(false)
-{
-}
-
-Aws::String GetUserRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetUserRequest::SerializePayload() const { return {}; }

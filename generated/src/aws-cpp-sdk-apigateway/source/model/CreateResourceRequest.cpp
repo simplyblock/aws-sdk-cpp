@@ -12,26 +12,12 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateResourceRequest::CreateResourceRequest() : 
-    m_restApiIdHasBeenSet(false),
-    m_parentIdHasBeenSet(false),
-    m_pathPartHasBeenSet(false)
-{
-}
-
-Aws::String CreateResourceRequest::SerializePayload() const
-{
+Aws::String CreateResourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_pathPartHasBeenSet)
-  {
-   payload.WithString("pathPart", m_pathPart);
-
+  if (m_pathPartHasBeenSet) {
+    payload.WithString("pathPart", m_pathPart);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

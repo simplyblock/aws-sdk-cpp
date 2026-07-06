@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/Delivery.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class GetDeliveryResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API GetDeliveryResult();
-    AWS_CLOUDWATCHLOGS_API GetDeliveryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API GetDeliveryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class GetDeliveryResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API GetDeliveryResult() = default;
+  AWS_CLOUDWATCHLOGS_API GetDeliveryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API GetDeliveryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure that contains information about the delivery.</p>
+   */
+  inline const Delivery& GetDelivery() const { return m_delivery; }
+  template <typename DeliveryT = Delivery>
+  void SetDelivery(DeliveryT&& value) {
+    m_deliveryHasBeenSet = true;
+    m_delivery = std::forward<DeliveryT>(value);
+  }
+  template <typename DeliveryT = Delivery>
+  GetDeliveryResult& WithDelivery(DeliveryT&& value) {
+    SetDelivery(std::forward<DeliveryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains information about the delivery.</p>
-     */
-    inline const Delivery& GetDelivery() const{ return m_delivery; }
-    inline void SetDelivery(const Delivery& value) { m_delivery = value; }
-    inline void SetDelivery(Delivery&& value) { m_delivery = std::move(value); }
-    inline GetDeliveryResult& WithDelivery(const Delivery& value) { SetDelivery(value); return *this;}
-    inline GetDeliveryResult& WithDelivery(Delivery&& value) { SetDelivery(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDeliveryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDeliveryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDeliveryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDeliveryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Delivery m_delivery;
+ private:
+  Delivery m_delivery;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deliveryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

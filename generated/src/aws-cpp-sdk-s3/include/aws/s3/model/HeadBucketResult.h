@@ -4,110 +4,160 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3/S3_EXPORTS.h>
 #include <aws/s3/model/LocationType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3
-{
-namespace Model
-{
-  class HeadBucketResult
-  {
-  public:
-    AWS_S3_API HeadBucketResult();
-    AWS_S3_API HeadBucketResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3_API HeadBucketResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3 {
+namespace Model {
+class HeadBucketResult {
+ public:
+  AWS_S3_API HeadBucketResult() = default;
+  AWS_S3_API HeadBucketResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3_API HeadBucketResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the S3 bucket. ARNs uniquely identify
+   * Amazon Web Services resources across all of Amazon Web Services.</p>
+   * <p>This parameter is only supported for S3 directory buckets. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-tagging.html">Using
+   * tags with directory buckets</a>.</p>
+   */
+  inline const Aws::String& GetBucketArn() const { return m_bucketArn; }
+  template <typename BucketArnT = Aws::String>
+  void SetBucketArn(BucketArnT&& value) {
+    m_bucketArnHasBeenSet = true;
+    m_bucketArn = std::forward<BucketArnT>(value);
+  }
+  template <typename BucketArnT = Aws::String>
+  HeadBucketResult& WithBucketArn(BucketArnT&& value) {
+    SetBucketArn(std::forward<BucketArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of location where the bucket is created.</p>  <p>This
-     * functionality is only supported by directory buckets.</p> 
-     */
-    inline const LocationType& GetBucketLocationType() const{ return m_bucketLocationType; }
-    inline void SetBucketLocationType(const LocationType& value) { m_bucketLocationType = value; }
-    inline void SetBucketLocationType(LocationType&& value) { m_bucketLocationType = std::move(value); }
-    inline HeadBucketResult& WithBucketLocationType(const LocationType& value) { SetBucketLocationType(value); return *this;}
-    inline HeadBucketResult& WithBucketLocationType(LocationType&& value) { SetBucketLocationType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of location where the bucket is created.</p>  <p>This
+   * functionality is only supported by directory buckets.</p>
+   */
+  inline LocationType GetBucketLocationType() const { return m_bucketLocationType; }
+  inline void SetBucketLocationType(LocationType value) {
+    m_bucketLocationTypeHasBeenSet = true;
+    m_bucketLocationType = value;
+  }
+  inline HeadBucketResult& WithBucketLocationType(LocationType value) {
+    SetBucketLocationType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the location where the bucket will be created.</p> <p>For
-     * directory buckets, the AZ ID of the Availability Zone where the bucket is
-     * created. An example AZ ID value is <code>usw2-az1</code>.</p>  <p>This
-     * functionality is only supported by directory buckets.</p> 
-     */
-    inline const Aws::String& GetBucketLocationName() const{ return m_bucketLocationName; }
-    inline void SetBucketLocationName(const Aws::String& value) { m_bucketLocationName = value; }
-    inline void SetBucketLocationName(Aws::String&& value) { m_bucketLocationName = std::move(value); }
-    inline void SetBucketLocationName(const char* value) { m_bucketLocationName.assign(value); }
-    inline HeadBucketResult& WithBucketLocationName(const Aws::String& value) { SetBucketLocationName(value); return *this;}
-    inline HeadBucketResult& WithBucketLocationName(Aws::String&& value) { SetBucketLocationName(std::move(value)); return *this;}
-    inline HeadBucketResult& WithBucketLocationName(const char* value) { SetBucketLocationName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the location where the bucket will be created.</p> <p>For
+   * directory buckets, the Zone ID of the Availability Zone or the Local Zone where
+   * the bucket is created. An example Zone ID value for an Availability Zone is
+   * <code>usw2-az1</code>.</p>  <p>This functionality is only supported by
+   * directory buckets.</p>
+   */
+  inline const Aws::String& GetBucketLocationName() const { return m_bucketLocationName; }
+  template <typename BucketLocationNameT = Aws::String>
+  void SetBucketLocationName(BucketLocationNameT&& value) {
+    m_bucketLocationNameHasBeenSet = true;
+    m_bucketLocationName = std::forward<BucketLocationNameT>(value);
+  }
+  template <typename BucketLocationNameT = Aws::String>
+  HeadBucketResult& WithBucketLocationName(BucketLocationNameT&& value) {
+    SetBucketLocationName(std::forward<BucketLocationNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Region that the bucket is located.</p>
-     */
-    inline const Aws::String& GetBucketRegion() const{ return m_bucketRegion; }
-    inline void SetBucketRegion(const Aws::String& value) { m_bucketRegion = value; }
-    inline void SetBucketRegion(Aws::String&& value) { m_bucketRegion = std::move(value); }
-    inline void SetBucketRegion(const char* value) { m_bucketRegion.assign(value); }
-    inline HeadBucketResult& WithBucketRegion(const Aws::String& value) { SetBucketRegion(value); return *this;}
-    inline HeadBucketResult& WithBucketRegion(Aws::String&& value) { SetBucketRegion(std::move(value)); return *this;}
-    inline HeadBucketResult& WithBucketRegion(const char* value) { SetBucketRegion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Region that the bucket is located.</p>
+   */
+  inline const Aws::String& GetBucketRegion() const { return m_bucketRegion; }
+  template <typename BucketRegionT = Aws::String>
+  void SetBucketRegion(BucketRegionT&& value) {
+    m_bucketRegionHasBeenSet = true;
+    m_bucketRegion = std::forward<BucketRegionT>(value);
+  }
+  template <typename BucketRegionT = Aws::String>
+  HeadBucketResult& WithBucketRegion(BucketRegionT&& value) {
+    SetBucketRegion(std::forward<BucketRegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the bucket name used in the request is an access point
-     * alias.</p>  <p>For directory buckets, the value of this field is
-     * <code>false</code>.</p> 
-     */
-    inline bool GetAccessPointAlias() const{ return m_accessPointAlias; }
-    inline void SetAccessPointAlias(bool value) { m_accessPointAlias = value; }
-    inline HeadBucketResult& WithAccessPointAlias(bool value) { SetAccessPointAlias(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the bucket name used in the request is an access point
+   * alias.</p>  <p>For directory buckets, the value of this field is
+   * <code>false</code>.</p>
+   */
+  inline bool GetAccessPointAlias() const { return m_accessPointAlias; }
+  inline void SetAccessPointAlias(bool value) {
+    m_accessPointAliasHasBeenSet = true;
+    m_accessPointAlias = value;
+  }
+  inline HeadBucketResult& WithAccessPointAlias(bool value) {
+    SetAccessPointAlias(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline HeadBucketResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline HeadBucketResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline HeadBucketResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    LocationType m_bucketLocationType;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  HeadBucketResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_bucketLocationName;
+ private:
+  Aws::String m_bucketArn;
 
-    Aws::String m_bucketRegion;
+  LocationType m_bucketLocationType{LocationType::NOT_SET};
 
-    bool m_accessPointAlias;
+  Aws::String m_bucketLocationName;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_bucketRegion;
 
-} // namespace Model
-} // namespace S3
-} // namespace Aws
+  bool m_accessPointAlias{false};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bucketArnHasBeenSet = false;
+  bool m_bucketLocationTypeHasBeenSet = false;
+  bool m_bucketLocationNameHasBeenSet = false;
+  bool m_bucketRegionHasBeenSet = false;
+  bool m_accessPointAliasHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3
+}  // namespace Aws

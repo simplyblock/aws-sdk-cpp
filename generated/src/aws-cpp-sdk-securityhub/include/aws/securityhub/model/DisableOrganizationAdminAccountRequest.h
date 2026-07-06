@@ -4,54 +4,74 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/securityhub/SecurityHubRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHubRequest.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+#include <aws/securityhub/model/SecurityHubFeature.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
 
+/**
+ */
+class DisableOrganizationAdminAccountRequest : public SecurityHubRequest {
+ public:
+  AWS_SECURITYHUB_API DisableOrganizationAdminAccountRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DisableOrganizationAdminAccount"; }
+
+  AWS_SECURITYHUB_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Web Services account identifier of the Security Hub CSPM
+   * administrator account.</p>
    */
-  class DisableOrganizationAdminAccountRequest : public SecurityHubRequest
-  {
-  public:
-    AWS_SECURITYHUB_API DisableOrganizationAdminAccountRequest();
+  inline const Aws::String& GetAdminAccountId() const { return m_adminAccountId; }
+  inline bool AdminAccountIdHasBeenSet() const { return m_adminAccountIdHasBeenSet; }
+  template <typename AdminAccountIdT = Aws::String>
+  void SetAdminAccountId(AdminAccountIdT&& value) {
+    m_adminAccountIdHasBeenSet = true;
+    m_adminAccountId = std::forward<AdminAccountIdT>(value);
+  }
+  template <typename AdminAccountIdT = Aws::String>
+  DisableOrganizationAdminAccountRequest& WithAdminAccountId(AdminAccountIdT&& value) {
+    SetAdminAccountId(std::forward<AdminAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DisableOrganizationAdminAccount"; }
+  ///@{
+  /**
+   * <p>The feature for which the delegated admin account is disabled. Defaults to
+   * Security Hub CSPM if not specified.</p>
+   */
+  inline SecurityHubFeature GetFeature() const { return m_feature; }
+  inline bool FeatureHasBeenSet() const { return m_featureHasBeenSet; }
+  inline void SetFeature(SecurityHubFeature value) {
+    m_featureHasBeenSet = true;
+    m_feature = value;
+  }
+  inline DisableOrganizationAdminAccountRequest& WithFeature(SecurityHubFeature value) {
+    SetFeature(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_adminAccountId;
 
-    AWS_SECURITYHUB_API Aws::String SerializePayload() const override;
+  SecurityHubFeature m_feature{SecurityHubFeature::NOT_SET};
+  bool m_adminAccountIdHasBeenSet = false;
+  bool m_featureHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The Amazon Web Services account identifier of the Security Hub administrator
-     * account.</p>
-     */
-    inline const Aws::String& GetAdminAccountId() const{ return m_adminAccountId; }
-    inline bool AdminAccountIdHasBeenSet() const { return m_adminAccountIdHasBeenSet; }
-    inline void SetAdminAccountId(const Aws::String& value) { m_adminAccountIdHasBeenSet = true; m_adminAccountId = value; }
-    inline void SetAdminAccountId(Aws::String&& value) { m_adminAccountIdHasBeenSet = true; m_adminAccountId = std::move(value); }
-    inline void SetAdminAccountId(const char* value) { m_adminAccountIdHasBeenSet = true; m_adminAccountId.assign(value); }
-    inline DisableOrganizationAdminAccountRequest& WithAdminAccountId(const Aws::String& value) { SetAdminAccountId(value); return *this;}
-    inline DisableOrganizationAdminAccountRequest& WithAdminAccountId(Aws::String&& value) { SetAdminAccountId(std::move(value)); return *this;}
-    inline DisableOrganizationAdminAccountRequest& WithAdminAccountId(const char* value) { SetAdminAccountId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_adminAccountId;
-    bool m_adminAccountIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

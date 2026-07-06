@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/repostspace/model/DeleteSpaceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/repostspace/model/DeleteSpaceRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::repostspace::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteSpaceRequest::DeleteSpaceRequest() : 
-    m_spaceIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteSpaceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteSpaceRequest::SerializePayload() const { return {}; }

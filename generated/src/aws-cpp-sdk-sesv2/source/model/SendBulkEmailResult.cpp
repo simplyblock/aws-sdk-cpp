@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sesv2/model/SendBulkEmailResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/sesv2/model/SendBulkEmailResult.h>
 
 #include <utility>
 
@@ -17,35 +17,26 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-SendBulkEmailResult::SendBulkEmailResult()
-{
-}
+SendBulkEmailResult::SendBulkEmailResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-SendBulkEmailResult::SendBulkEmailResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-SendBulkEmailResult& SendBulkEmailResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+SendBulkEmailResult& SendBulkEmailResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("BulkEmailEntryResults"))
-  {
+  if (jsonValue.ValueExists("BulkEmailEntryResults")) {
     Aws::Utils::Array<JsonView> bulkEmailEntryResultsJsonList = jsonValue.GetArray("BulkEmailEntryResults");
-    for(unsigned bulkEmailEntryResultsIndex = 0; bulkEmailEntryResultsIndex < bulkEmailEntryResultsJsonList.GetLength(); ++bulkEmailEntryResultsIndex)
-    {
+    for (unsigned bulkEmailEntryResultsIndex = 0; bulkEmailEntryResultsIndex < bulkEmailEntryResultsJsonList.GetLength();
+         ++bulkEmailEntryResultsIndex) {
       m_bulkEmailEntryResults.push_back(bulkEmailEntryResultsJsonList[bulkEmailEntryResultsIndex].AsObject());
     }
+    m_bulkEmailEntryResultsHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

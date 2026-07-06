@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace deadline
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace deadline {
+namespace Model {
 
+/**
+ * <p>The job attachment settings. These are the Amazon S3 bucket name and the
+ * Amazon S3 prefix.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/JobAttachmentSettings">AWS
+ * API Reference</a></p>
+ */
+class JobAttachmentSettings {
+ public:
+  AWS_DEADLINE_API JobAttachmentSettings() = default;
+  AWS_DEADLINE_API JobAttachmentSettings(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DEADLINE_API JobAttachmentSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DEADLINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The job attachment settings. These are the Amazon S3 bucket name and the
-   * Amazon S3 prefix.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/JobAttachmentSettings">AWS
-   * API Reference</a></p>
+   * <p>The Amazon S3 bucket name.</p>
    */
-  class JobAttachmentSettings
-  {
-  public:
-    AWS_DEADLINE_API JobAttachmentSettings();
-    AWS_DEADLINE_API JobAttachmentSettings(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DEADLINE_API JobAttachmentSettings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DEADLINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetS3BucketName() const { return m_s3BucketName; }
+  inline bool S3BucketNameHasBeenSet() const { return m_s3BucketNameHasBeenSet; }
+  template <typename S3BucketNameT = Aws::String>
+  void SetS3BucketName(S3BucketNameT&& value) {
+    m_s3BucketNameHasBeenSet = true;
+    m_s3BucketName = std::forward<S3BucketNameT>(value);
+  }
+  template <typename S3BucketNameT = Aws::String>
+  JobAttachmentSettings& WithS3BucketName(S3BucketNameT&& value) {
+    SetS3BucketName(std::forward<S3BucketNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The root prefix.</p>
+   */
+  inline const Aws::String& GetRootPrefix() const { return m_rootPrefix; }
+  inline bool RootPrefixHasBeenSet() const { return m_rootPrefixHasBeenSet; }
+  template <typename RootPrefixT = Aws::String>
+  void SetRootPrefix(RootPrefixT&& value) {
+    m_rootPrefixHasBeenSet = true;
+    m_rootPrefix = std::forward<RootPrefixT>(value);
+  }
+  template <typename RootPrefixT = Aws::String>
+  JobAttachmentSettings& WithRootPrefix(RootPrefixT&& value) {
+    SetRootPrefix(std::forward<RootPrefixT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_s3BucketName;
 
-    ///@{
-    /**
-     * <p>The Amazon S3 bucket name.</p>
-     */
-    inline const Aws::String& GetS3BucketName() const{ return m_s3BucketName; }
-    inline bool S3BucketNameHasBeenSet() const { return m_s3BucketNameHasBeenSet; }
-    inline void SetS3BucketName(const Aws::String& value) { m_s3BucketNameHasBeenSet = true; m_s3BucketName = value; }
-    inline void SetS3BucketName(Aws::String&& value) { m_s3BucketNameHasBeenSet = true; m_s3BucketName = std::move(value); }
-    inline void SetS3BucketName(const char* value) { m_s3BucketNameHasBeenSet = true; m_s3BucketName.assign(value); }
-    inline JobAttachmentSettings& WithS3BucketName(const Aws::String& value) { SetS3BucketName(value); return *this;}
-    inline JobAttachmentSettings& WithS3BucketName(Aws::String&& value) { SetS3BucketName(std::move(value)); return *this;}
-    inline JobAttachmentSettings& WithS3BucketName(const char* value) { SetS3BucketName(value); return *this;}
-    ///@}
+  Aws::String m_rootPrefix;
+  bool m_s3BucketNameHasBeenSet = false;
+  bool m_rootPrefixHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The root prefix.</p>
-     */
-    inline const Aws::String& GetRootPrefix() const{ return m_rootPrefix; }
-    inline bool RootPrefixHasBeenSet() const { return m_rootPrefixHasBeenSet; }
-    inline void SetRootPrefix(const Aws::String& value) { m_rootPrefixHasBeenSet = true; m_rootPrefix = value; }
-    inline void SetRootPrefix(Aws::String&& value) { m_rootPrefixHasBeenSet = true; m_rootPrefix = std::move(value); }
-    inline void SetRootPrefix(const char* value) { m_rootPrefixHasBeenSet = true; m_rootPrefix.assign(value); }
-    inline JobAttachmentSettings& WithRootPrefix(const Aws::String& value) { SetRootPrefix(value); return *this;}
-    inline JobAttachmentSettings& WithRootPrefix(Aws::String&& value) { SetRootPrefix(std::move(value)); return *this;}
-    inline JobAttachmentSettings& WithRootPrefix(const char* value) { SetRootPrefix(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_s3BucketName;
-    bool m_s3BucketNameHasBeenSet = false;
-
-    Aws::String m_rootPrefix;
-    bool m_rootPrefixHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

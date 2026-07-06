@@ -5,101 +5,147 @@
 
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
+#include <aws/backup/model/AdvancedBackupSetting.h>
+#include <aws/backup/model/BackupRule.h>
+#include <aws/backup/model/ScanSetting.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/backup/model/BackupRule.h>
-#include <aws/backup/model/AdvancedBackupSetting.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
 
+/**
+ * <p>Contains an optional backup plan display name and an array of
+ * <code>BackupRule</code> objects, each of which specifies a backup rule. Each
+ * rule in a backup plan is a separate scheduled task and can back up a different
+ * selection of Amazon Web Services resources.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupPlan">AWS
+ * API Reference</a></p>
+ */
+class BackupPlan {
+ public:
+  AWS_BACKUP_API BackupPlan() = default;
+  AWS_BACKUP_API BackupPlan(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BACKUP_API BackupPlan& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BACKUP_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains an optional backup plan display name and an array of
-   * <code>BackupRule</code> objects, each of which specifies a backup rule. Each
-   * rule in a backup plan is a separate scheduled task and can back up a different
-   * selection of Amazon Web Services resources.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupPlan">AWS
-   * API Reference</a></p>
+   * <p>The display name of a backup plan. Must contain only alphanumeric or '-_.'
+   * special characters.</p> <p>If this is set in the console, it can contain 1 to 50
+   * characters; if this is set through CLI or API, it can contain 1 to 200
+   * characters.</p>
    */
-  class BackupPlan
-  {
-  public:
-    AWS_BACKUP_API BackupPlan();
-    AWS_BACKUP_API BackupPlan(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BACKUP_API BackupPlan& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BACKUP_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetBackupPlanName() const { return m_backupPlanName; }
+  inline bool BackupPlanNameHasBeenSet() const { return m_backupPlanNameHasBeenSet; }
+  template <typename BackupPlanNameT = Aws::String>
+  void SetBackupPlanName(BackupPlanNameT&& value) {
+    m_backupPlanNameHasBeenSet = true;
+    m_backupPlanName = std::forward<BackupPlanNameT>(value);
+  }
+  template <typename BackupPlanNameT = Aws::String>
+  BackupPlan& WithBackupPlanName(BackupPlanNameT&& value) {
+    SetBackupPlanName(std::forward<BackupPlanNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An array of <code>BackupRule</code> objects, each of which specifies a
+   * scheduled task that is used to back up a selection of resources. </p>
+   */
+  inline const Aws::Vector<BackupRule>& GetRules() const { return m_rules; }
+  inline bool RulesHasBeenSet() const { return m_rulesHasBeenSet; }
+  template <typename RulesT = Aws::Vector<BackupRule>>
+  void SetRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules = std::forward<RulesT>(value);
+  }
+  template <typename RulesT = Aws::Vector<BackupRule>>
+  BackupPlan& WithRules(RulesT&& value) {
+    SetRules(std::forward<RulesT>(value));
+    return *this;
+  }
+  template <typename RulesT = BackupRule>
+  BackupPlan& AddRules(RulesT&& value) {
+    m_rulesHasBeenSet = true;
+    m_rules.emplace_back(std::forward<RulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The display name of a backup plan. Must contain only alphanumeric or '-_.'
-     * special characters.</p> <p>If this is set in the console, it can contain 1 to 50
-     * characters; if this is set through CLI or API, it can contain 1 to 200
-     * characters.</p>
-     */
-    inline const Aws::String& GetBackupPlanName() const{ return m_backupPlanName; }
-    inline bool BackupPlanNameHasBeenSet() const { return m_backupPlanNameHasBeenSet; }
-    inline void SetBackupPlanName(const Aws::String& value) { m_backupPlanNameHasBeenSet = true; m_backupPlanName = value; }
-    inline void SetBackupPlanName(Aws::String&& value) { m_backupPlanNameHasBeenSet = true; m_backupPlanName = std::move(value); }
-    inline void SetBackupPlanName(const char* value) { m_backupPlanNameHasBeenSet = true; m_backupPlanName.assign(value); }
-    inline BackupPlan& WithBackupPlanName(const Aws::String& value) { SetBackupPlanName(value); return *this;}
-    inline BackupPlan& WithBackupPlanName(Aws::String&& value) { SetBackupPlanName(std::move(value)); return *this;}
-    inline BackupPlan& WithBackupPlanName(const char* value) { SetBackupPlanName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains a list of <code>BackupOptions</code> for each resource type.</p>
+   */
+  inline const Aws::Vector<AdvancedBackupSetting>& GetAdvancedBackupSettings() const { return m_advancedBackupSettings; }
+  inline bool AdvancedBackupSettingsHasBeenSet() const { return m_advancedBackupSettingsHasBeenSet; }
+  template <typename AdvancedBackupSettingsT = Aws::Vector<AdvancedBackupSetting>>
+  void SetAdvancedBackupSettings(AdvancedBackupSettingsT&& value) {
+    m_advancedBackupSettingsHasBeenSet = true;
+    m_advancedBackupSettings = std::forward<AdvancedBackupSettingsT>(value);
+  }
+  template <typename AdvancedBackupSettingsT = Aws::Vector<AdvancedBackupSetting>>
+  BackupPlan& WithAdvancedBackupSettings(AdvancedBackupSettingsT&& value) {
+    SetAdvancedBackupSettings(std::forward<AdvancedBackupSettingsT>(value));
+    return *this;
+  }
+  template <typename AdvancedBackupSettingsT = AdvancedBackupSetting>
+  BackupPlan& AddAdvancedBackupSettings(AdvancedBackupSettingsT&& value) {
+    m_advancedBackupSettingsHasBeenSet = true;
+    m_advancedBackupSettings.emplace_back(std::forward<AdvancedBackupSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>BackupRule</code> objects, each of which specifies a
-     * scheduled task that is used to back up a selection of resources. </p>
-     */
-    inline const Aws::Vector<BackupRule>& GetRules() const{ return m_rules; }
-    inline bool RulesHasBeenSet() const { return m_rulesHasBeenSet; }
-    inline void SetRules(const Aws::Vector<BackupRule>& value) { m_rulesHasBeenSet = true; m_rules = value; }
-    inline void SetRules(Aws::Vector<BackupRule>&& value) { m_rulesHasBeenSet = true; m_rules = std::move(value); }
-    inline BackupPlan& WithRules(const Aws::Vector<BackupRule>& value) { SetRules(value); return *this;}
-    inline BackupPlan& WithRules(Aws::Vector<BackupRule>&& value) { SetRules(std::move(value)); return *this;}
-    inline BackupPlan& AddRules(const BackupRule& value) { m_rulesHasBeenSet = true; m_rules.push_back(value); return *this; }
-    inline BackupPlan& AddRules(BackupRule&& value) { m_rulesHasBeenSet = true; m_rules.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Contains your scanning configuration for the backup plan and includes the
+   * Malware scanner, your selected resources, and scanner role.</p>
+   */
+  inline const Aws::Vector<ScanSetting>& GetScanSettings() const { return m_scanSettings; }
+  inline bool ScanSettingsHasBeenSet() const { return m_scanSettingsHasBeenSet; }
+  template <typename ScanSettingsT = Aws::Vector<ScanSetting>>
+  void SetScanSettings(ScanSettingsT&& value) {
+    m_scanSettingsHasBeenSet = true;
+    m_scanSettings = std::forward<ScanSettingsT>(value);
+  }
+  template <typename ScanSettingsT = Aws::Vector<ScanSetting>>
+  BackupPlan& WithScanSettings(ScanSettingsT&& value) {
+    SetScanSettings(std::forward<ScanSettingsT>(value));
+    return *this;
+  }
+  template <typename ScanSettingsT = ScanSetting>
+  BackupPlan& AddScanSettings(ScanSettingsT&& value) {
+    m_scanSettingsHasBeenSet = true;
+    m_scanSettings.emplace_back(std::forward<ScanSettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_backupPlanName;
 
-    ///@{
-    /**
-     * <p>Contains a list of <code>BackupOptions</code> for each resource type.</p>
-     */
-    inline const Aws::Vector<AdvancedBackupSetting>& GetAdvancedBackupSettings() const{ return m_advancedBackupSettings; }
-    inline bool AdvancedBackupSettingsHasBeenSet() const { return m_advancedBackupSettingsHasBeenSet; }
-    inline void SetAdvancedBackupSettings(const Aws::Vector<AdvancedBackupSetting>& value) { m_advancedBackupSettingsHasBeenSet = true; m_advancedBackupSettings = value; }
-    inline void SetAdvancedBackupSettings(Aws::Vector<AdvancedBackupSetting>&& value) { m_advancedBackupSettingsHasBeenSet = true; m_advancedBackupSettings = std::move(value); }
-    inline BackupPlan& WithAdvancedBackupSettings(const Aws::Vector<AdvancedBackupSetting>& value) { SetAdvancedBackupSettings(value); return *this;}
-    inline BackupPlan& WithAdvancedBackupSettings(Aws::Vector<AdvancedBackupSetting>&& value) { SetAdvancedBackupSettings(std::move(value)); return *this;}
-    inline BackupPlan& AddAdvancedBackupSettings(const AdvancedBackupSetting& value) { m_advancedBackupSettingsHasBeenSet = true; m_advancedBackupSettings.push_back(value); return *this; }
-    inline BackupPlan& AddAdvancedBackupSettings(AdvancedBackupSetting&& value) { m_advancedBackupSettingsHasBeenSet = true; m_advancedBackupSettings.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<BackupRule> m_rules;
 
-    Aws::String m_backupPlanName;
-    bool m_backupPlanNameHasBeenSet = false;
+  Aws::Vector<AdvancedBackupSetting> m_advancedBackupSettings;
 
-    Aws::Vector<BackupRule> m_rules;
-    bool m_rulesHasBeenSet = false;
+  Aws::Vector<ScanSetting> m_scanSettings;
+  bool m_backupPlanNameHasBeenSet = false;
+  bool m_rulesHasBeenSet = false;
+  bool m_advancedBackupSettingsHasBeenSet = false;
+  bool m_scanSettingsHasBeenSet = false;
+};
 
-    Aws::Vector<AdvancedBackupSetting> m_advancedBackupSettings;
-    bool m_advancedBackupSettingsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

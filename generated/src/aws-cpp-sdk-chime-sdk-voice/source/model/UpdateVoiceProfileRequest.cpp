@@ -12,25 +12,12 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateVoiceProfileRequest::UpdateVoiceProfileRequest() : 
-    m_voiceProfileIdHasBeenSet(false),
-    m_speakerSearchTaskIdHasBeenSet(false)
-{
-}
-
-Aws::String UpdateVoiceProfileRequest::SerializePayload() const
-{
+Aws::String UpdateVoiceProfileRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_speakerSearchTaskIdHasBeenSet)
-  {
-   payload.WithString("SpeakerSearchTaskId", m_speakerSearchTaskId);
-
+  if (m_speakerSearchTaskIdHasBeenSet) {
+    payload.WithString("SpeakerSearchTaskId", m_speakerSearchTaskId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

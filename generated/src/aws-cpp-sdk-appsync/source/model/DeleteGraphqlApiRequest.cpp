@@ -12,16 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteGraphqlApiRequest::DeleteGraphqlApiRequest() : 
-    m_apiIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteGraphqlApiRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteGraphqlApiRequest::SerializePayload() const { return {}; }

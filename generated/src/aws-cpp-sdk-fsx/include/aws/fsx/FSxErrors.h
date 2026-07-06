@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/fsx/FSx_EXPORTS.h>
 
-namespace Aws
-{
-namespace FSx
-{
-enum class FSxErrors
-{
-  //From Core//
+namespace Aws {
+namespace FSx {
+enum class FSxErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class FSxErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,8 @@ enum class FSxErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  ACTIVE_DIRECTORY= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ACCESS_POINT_ALREADY_OWNED_BY_YOU = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ACTIVE_DIRECTORY,
   BACKUP_BEING_COPIED,
   BACKUP_IN_PROGRESS,
   BACKUP_NOT_FOUND,
@@ -61,6 +59,7 @@ enum class FSxErrors
   FILE_SYSTEM_NOT_FOUND,
   INCOMPATIBLE_PARAMETER,
   INCOMPATIBLE_REGION_FOR_MULTI_A_Z,
+  INVALID_ACCESS_POINT,
   INVALID_DATA_REPOSITORY_TYPE,
   INVALID_DESTINATION_KMS_KEY,
   INVALID_EXPORT_PATH,
@@ -68,23 +67,25 @@ enum class FSxErrors
   INVALID_NETWORK_SETTINGS,
   INVALID_PER_UNIT_STORAGE_THROUGHPUT,
   INVALID_REGION,
+  INVALID_REQUEST,
   INVALID_SOURCE_KMS_KEY,
   MISSING_FILE_CACHE_CONFIGURATION,
   MISSING_FILE_SYSTEM_CONFIGURATION,
   MISSING_VOLUME_CONFIGURATION,
   NOT_SERVICE_RESOURCE,
   RESOURCE_DOES_NOT_SUPPORT_TAGGING,
+  S3_ACCESS_POINT_ATTACHMENT_NOT_FOUND,
   SERVICE_LIMIT_EXCEEDED,
   SNAPSHOT_NOT_FOUND,
   SOURCE_BACKUP_UNAVAILABLE,
   STORAGE_VIRTUAL_MACHINE_NOT_FOUND,
+  TOO_MANY_ACCESS_POINTS,
   UNSUPPORTED_OPERATION,
   VOLUME_NOT_FOUND
 };
 
-class AWS_FSX_API FSxError : public Aws::Client::AWSError<FSxErrors>
-{
-public:
+class AWS_FSX_API FSxError : public Aws::Client::AWSError<FSxErrors> {
+ public:
   FSxError() {}
   FSxError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<FSxErrors>(rhs) {}
   FSxError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<FSxErrors>(rhs) {}
@@ -95,10 +96,9 @@ public:
   T GetModeledError();
 };
 
-namespace FSxErrorMapper
-{
-  AWS_FSX_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace FSxErrorMapper {
+AWS_FSX_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace FSx
-} // namespace Aws
+}  // namespace FSx
+}  // namespace Aws

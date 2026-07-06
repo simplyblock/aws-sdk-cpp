@@ -12,25 +12,16 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-AssociateApprovedOriginRequest::AssociateApprovedOriginRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_originHasBeenSet(false)
-{
-}
-
-Aws::String AssociateApprovedOriginRequest::SerializePayload() const
-{
+Aws::String AssociateApprovedOriginRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_originHasBeenSet)
-  {
-   payload.WithString("Origin", m_origin);
+  if (m_originHasBeenSet) {
+    payload.WithString("Origin", m_origin);
+  }
 
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("ClientToken", m_clientToken);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

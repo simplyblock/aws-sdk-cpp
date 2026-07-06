@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/dax/model/DescribeDefaultParametersRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/dax/model/DescribeDefaultParametersRequest.h>
 
 #include <utility>
 
@@ -12,40 +12,22 @@ using namespace Aws::DAX::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeDefaultParametersRequest::DescribeDefaultParametersRequest() : 
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String DescribeDefaultParametersRequest::SerializePayload() const
-{
+Aws::String DescribeDefaultParametersRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("MaxResults", m_maxResults);
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("NextToken", m_nextToken);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DescribeDefaultParametersRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeDefaultParametersRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonDAXV3.DescribeDefaultParameters"));
   return headers;
-
 }
-
-
-
-

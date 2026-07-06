@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/chime-sdk-meetings/ChimeSDKMeetings_EXPORTS.h>
 #include <aws/chime-sdk-meetings/model/Meeting.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMeetings
-{
-namespace Model
-{
-  class GetMeetingResult
-  {
-  public:
-    AWS_CHIMESDKMEETINGS_API GetMeetingResult();
-    AWS_CHIMESDKMEETINGS_API GetMeetingResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKMEETINGS_API GetMeetingResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMeetings {
+namespace Model {
+class GetMeetingResult {
+ public:
+  AWS_CHIMESDKMEETINGS_API GetMeetingResult() = default;
+  AWS_CHIMESDKMEETINGS_API GetMeetingResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKMEETINGS_API GetMeetingResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Chime SDK meeting information.</p>
+   */
+  inline const Meeting& GetMeeting() const { return m_meeting; }
+  template <typename MeetingT = Meeting>
+  void SetMeeting(MeetingT&& value) {
+    m_meetingHasBeenSet = true;
+    m_meeting = std::forward<MeetingT>(value);
+  }
+  template <typename MeetingT = Meeting>
+  GetMeetingResult& WithMeeting(MeetingT&& value) {
+    SetMeeting(std::forward<MeetingT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Chime SDK meeting information.</p>
-     */
-    inline const Meeting& GetMeeting() const{ return m_meeting; }
-    inline void SetMeeting(const Meeting& value) { m_meeting = value; }
-    inline void SetMeeting(Meeting&& value) { m_meeting = std::move(value); }
-    inline GetMeetingResult& WithMeeting(const Meeting& value) { SetMeeting(value); return *this;}
-    inline GetMeetingResult& WithMeeting(Meeting&& value) { SetMeeting(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMeetingResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMeetingResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMeetingResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMeetingResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Meeting m_meeting;
+ private:
+  Meeting m_meeting;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_meetingHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKMeetings
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMeetings
+}  // namespace Aws

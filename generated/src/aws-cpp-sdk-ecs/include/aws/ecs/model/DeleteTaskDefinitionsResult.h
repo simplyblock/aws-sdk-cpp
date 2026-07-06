@@ -4,82 +4,106 @@
  */
 
 #pragma once
-#include <aws/ecs/ECS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ecs/model/TaskDefinition.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ecs/ECS_EXPORTS.h>
 #include <aws/ecs/model/Failure.h>
+#include <aws/ecs/model/TaskDefinition.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class DeleteTaskDefinitionsResult
-  {
-  public:
-    AWS_ECS_API DeleteTaskDefinitionsResult();
-    AWS_ECS_API DeleteTaskDefinitionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API DeleteTaskDefinitionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+class DeleteTaskDefinitionsResult {
+ public:
+  AWS_ECS_API DeleteTaskDefinitionsResult() = default;
+  AWS_ECS_API DeleteTaskDefinitionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API DeleteTaskDefinitionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of deleted task definitions.</p>
+   */
+  inline const Aws::Vector<TaskDefinition>& GetTaskDefinitions() const { return m_taskDefinitions; }
+  template <typename TaskDefinitionsT = Aws::Vector<TaskDefinition>>
+  void SetTaskDefinitions(TaskDefinitionsT&& value) {
+    m_taskDefinitionsHasBeenSet = true;
+    m_taskDefinitions = std::forward<TaskDefinitionsT>(value);
+  }
+  template <typename TaskDefinitionsT = Aws::Vector<TaskDefinition>>
+  DeleteTaskDefinitionsResult& WithTaskDefinitions(TaskDefinitionsT&& value) {
+    SetTaskDefinitions(std::forward<TaskDefinitionsT>(value));
+    return *this;
+  }
+  template <typename TaskDefinitionsT = TaskDefinition>
+  DeleteTaskDefinitionsResult& AddTaskDefinitions(TaskDefinitionsT&& value) {
+    m_taskDefinitionsHasBeenSet = true;
+    m_taskDefinitions.emplace_back(std::forward<TaskDefinitionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of deleted task definitions.</p>
-     */
-    inline const Aws::Vector<TaskDefinition>& GetTaskDefinitions() const{ return m_taskDefinitions; }
-    inline void SetTaskDefinitions(const Aws::Vector<TaskDefinition>& value) { m_taskDefinitions = value; }
-    inline void SetTaskDefinitions(Aws::Vector<TaskDefinition>&& value) { m_taskDefinitions = std::move(value); }
-    inline DeleteTaskDefinitionsResult& WithTaskDefinitions(const Aws::Vector<TaskDefinition>& value) { SetTaskDefinitions(value); return *this;}
-    inline DeleteTaskDefinitionsResult& WithTaskDefinitions(Aws::Vector<TaskDefinition>&& value) { SetTaskDefinitions(std::move(value)); return *this;}
-    inline DeleteTaskDefinitionsResult& AddTaskDefinitions(const TaskDefinition& value) { m_taskDefinitions.push_back(value); return *this; }
-    inline DeleteTaskDefinitionsResult& AddTaskDefinitions(TaskDefinition&& value) { m_taskDefinitions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Any failures associated with the call.</p>
+   */
+  inline const Aws::Vector<Failure>& GetFailures() const { return m_failures; }
+  template <typename FailuresT = Aws::Vector<Failure>>
+  void SetFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures = std::forward<FailuresT>(value);
+  }
+  template <typename FailuresT = Aws::Vector<Failure>>
+  DeleteTaskDefinitionsResult& WithFailures(FailuresT&& value) {
+    SetFailures(std::forward<FailuresT>(value));
+    return *this;
+  }
+  template <typename FailuresT = Failure>
+  DeleteTaskDefinitionsResult& AddFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures.emplace_back(std::forward<FailuresT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Any failures associated with the call.</p>
-     */
-    inline const Aws::Vector<Failure>& GetFailures() const{ return m_failures; }
-    inline void SetFailures(const Aws::Vector<Failure>& value) { m_failures = value; }
-    inline void SetFailures(Aws::Vector<Failure>&& value) { m_failures = std::move(value); }
-    inline DeleteTaskDefinitionsResult& WithFailures(const Aws::Vector<Failure>& value) { SetFailures(value); return *this;}
-    inline DeleteTaskDefinitionsResult& WithFailures(Aws::Vector<Failure>&& value) { SetFailures(std::move(value)); return *this;}
-    inline DeleteTaskDefinitionsResult& AddFailures(const Failure& value) { m_failures.push_back(value); return *this; }
-    inline DeleteTaskDefinitionsResult& AddFailures(Failure&& value) { m_failures.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteTaskDefinitionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteTaskDefinitionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteTaskDefinitionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteTaskDefinitionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<TaskDefinition> m_taskDefinitions;
+ private:
+  Aws::Vector<TaskDefinition> m_taskDefinitions;
 
-    Aws::Vector<Failure> m_failures;
+  Aws::Vector<Failure> m_failures;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_taskDefinitionsHasBeenSet = false;
+  bool m_failuresHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

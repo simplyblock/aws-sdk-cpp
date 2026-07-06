@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ProvisionIpamByoasnResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/ProvisionIpamByoasnResponse.h>
 
 #include <utility>
 
@@ -17,41 +17,32 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ProvisionIpamByoasnResponse::ProvisionIpamByoasnResponse()
-{
-}
+ProvisionIpamByoasnResponse::ProvisionIpamByoasnResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ProvisionIpamByoasnResponse::ProvisionIpamByoasnResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ProvisionIpamByoasnResponse& ProvisionIpamByoasnResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ProvisionIpamByoasnResponse& ProvisionIpamByoasnResponse::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ProvisionIpamByoasnResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ProvisionIpamByoasnResponse")) {
     resultNode = rootNode.FirstChild("ProvisionIpamByoasnResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode byoasnNode = resultNode.FirstChild("byoasn");
-    if(!byoasnNode.IsNull())
-    {
+    if (!byoasnNode.IsNull()) {
       m_byoasn = byoasnNode;
+      m_byoasnHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::ProvisionIpamByoasnResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::ProvisionIpamByoasnResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

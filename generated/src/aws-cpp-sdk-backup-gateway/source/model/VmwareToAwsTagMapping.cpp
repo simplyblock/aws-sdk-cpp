@@ -11,91 +11,54 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace BackupGateway {
+namespace Model {
 
-VmwareToAwsTagMapping::VmwareToAwsTagMapping() : 
-    m_awsTagKeyHasBeenSet(false),
-    m_awsTagValueHasBeenSet(false),
-    m_vmwareCategoryHasBeenSet(false),
-    m_vmwareTagNameHasBeenSet(false)
-{
-}
+VmwareToAwsTagMapping::VmwareToAwsTagMapping(JsonView jsonValue) { *this = jsonValue; }
 
-VmwareToAwsTagMapping::VmwareToAwsTagMapping(JsonView jsonValue)
-  : VmwareToAwsTagMapping()
-{
-  *this = jsonValue;
-}
-
-VmwareToAwsTagMapping& VmwareToAwsTagMapping::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AwsTagKey"))
-  {
-    m_awsTagKey = jsonValue.GetString("AwsTagKey");
-
-    m_awsTagKeyHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("AwsTagValue"))
-  {
-    m_awsTagValue = jsonValue.GetString("AwsTagValue");
-
-    m_awsTagValueHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("VmwareCategory"))
-  {
+VmwareToAwsTagMapping& VmwareToAwsTagMapping::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("VmwareCategory")) {
     m_vmwareCategory = jsonValue.GetString("VmwareCategory");
-
     m_vmwareCategoryHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("VmwareTagName"))
-  {
+  if (jsonValue.ValueExists("VmwareTagName")) {
     m_vmwareTagName = jsonValue.GetString("VmwareTagName");
-
     m_vmwareTagNameHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("AwsTagKey")) {
+    m_awsTagKey = jsonValue.GetString("AwsTagKey");
+    m_awsTagKeyHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AwsTagValue")) {
+    m_awsTagValue = jsonValue.GetString("AwsTagValue");
+    m_awsTagValueHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue VmwareToAwsTagMapping::Jsonize() const
-{
+JsonValue VmwareToAwsTagMapping::Jsonize() const {
   JsonValue payload;
 
-  if(m_awsTagKeyHasBeenSet)
-  {
-   payload.WithString("AwsTagKey", m_awsTagKey);
-
+  if (m_vmwareCategoryHasBeenSet) {
+    payload.WithString("VmwareCategory", m_vmwareCategory);
   }
 
-  if(m_awsTagValueHasBeenSet)
-  {
-   payload.WithString("AwsTagValue", m_awsTagValue);
-
+  if (m_vmwareTagNameHasBeenSet) {
+    payload.WithString("VmwareTagName", m_vmwareTagName);
   }
 
-  if(m_vmwareCategoryHasBeenSet)
-  {
-   payload.WithString("VmwareCategory", m_vmwareCategory);
-
+  if (m_awsTagKeyHasBeenSet) {
+    payload.WithString("AwsTagKey", m_awsTagKey);
   }
 
-  if(m_vmwareTagNameHasBeenSet)
-  {
-   payload.WithString("VmwareTagName", m_vmwareTagName);
-
+  if (m_awsTagValueHasBeenSet) {
+    payload.WithString("AwsTagValue", m_awsTagValue);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace BackupGateway
+}  // namespace Aws

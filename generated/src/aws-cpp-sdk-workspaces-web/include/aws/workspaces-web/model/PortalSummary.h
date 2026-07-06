@@ -4,313 +4,438 @@
  */
 
 #pragma once
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/workspaces-web/model/AuthenticationType.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces-web/model/BrowserType.h>
-#include <aws/core/utils/DateTime.h>
 #include <aws/workspaces-web/model/InstanceType.h>
 #include <aws/workspaces-web/model/PortalStatus.h>
 #include <aws/workspaces-web/model/RendererType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
 
+/**
+ * <p>The summary of the portal.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/PortalSummary">AWS
+ * API Reference</a></p>
+ */
+class PortalSummary {
+ public:
+  AWS_WORKSPACESWEB_API PortalSummary() = default;
+  AWS_WORKSPACESWEB_API PortalSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API PortalSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The summary of the portal.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/PortalSummary">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the web portal.</p>
    */
-  class PortalSummary
-  {
-  public:
-    AWS_WORKSPACESWEB_API PortalSummary();
-    AWS_WORKSPACESWEB_API PortalSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API PortalSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKSPACESWEB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPortalArn() const { return m_portalArn; }
+  inline bool PortalArnHasBeenSet() const { return m_portalArnHasBeenSet; }
+  template <typename PortalArnT = Aws::String>
+  void SetPortalArn(PortalArnT&& value) {
+    m_portalArnHasBeenSet = true;
+    m_portalArn = std::forward<PortalArnT>(value);
+  }
+  template <typename PortalArnT = Aws::String>
+  PortalSummary& WithPortalArn(PortalArnT&& value) {
+    SetPortalArn(std::forward<PortalArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The renderer that is used in streaming sessions.</p>
+   */
+  inline RendererType GetRendererType() const { return m_rendererType; }
+  inline bool RendererTypeHasBeenSet() const { return m_rendererTypeHasBeenSet; }
+  inline void SetRendererType(RendererType value) {
+    m_rendererTypeHasBeenSet = true;
+    m_rendererType = value;
+  }
+  inline PortalSummary& WithRendererType(RendererType value) {
+    SetRendererType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of authentication integration points used when signing into the web
-     * portal. Defaults to <code>Standard</code>.</p> <p> <code>Standard</code> web
-     * portals are authenticated directly through your identity provider. You need to
-     * call <code>CreateIdentityProvider</code> to integrate your identity provider
-     * with your web portal. User and group access to your web portal is controlled
-     * through your identity provider.</p> <p> <code>IAM Identity Center</code> web
-     * portals are authenticated through IAM Identity Center. Identity sources
-     * (including external identity provider integration), plus user and group access
-     * to your web portal, can be configured in the IAM Identity Center.</p>
-     */
-    inline const AuthenticationType& GetAuthenticationType() const{ return m_authenticationType; }
-    inline bool AuthenticationTypeHasBeenSet() const { return m_authenticationTypeHasBeenSet; }
-    inline void SetAuthenticationType(const AuthenticationType& value) { m_authenticationTypeHasBeenSet = true; m_authenticationType = value; }
-    inline void SetAuthenticationType(AuthenticationType&& value) { m_authenticationTypeHasBeenSet = true; m_authenticationType = std::move(value); }
-    inline PortalSummary& WithAuthenticationType(const AuthenticationType& value) { SetAuthenticationType(value); return *this;}
-    inline PortalSummary& WithAuthenticationType(AuthenticationType&& value) { SetAuthenticationType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The browser type of the web portal.</p>
+   */
+  inline BrowserType GetBrowserType() const { return m_browserType; }
+  inline bool BrowserTypeHasBeenSet() const { return m_browserTypeHasBeenSet; }
+  inline void SetBrowserType(BrowserType value) {
+    m_browserTypeHasBeenSet = true;
+    m_browserType = value;
+  }
+  inline PortalSummary& WithBrowserType(BrowserType value) {
+    SetBrowserType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the browser settings that is associated with the web portal.</p>
-     */
-    inline const Aws::String& GetBrowserSettingsArn() const{ return m_browserSettingsArn; }
-    inline bool BrowserSettingsArnHasBeenSet() const { return m_browserSettingsArnHasBeenSet; }
-    inline void SetBrowserSettingsArn(const Aws::String& value) { m_browserSettingsArnHasBeenSet = true; m_browserSettingsArn = value; }
-    inline void SetBrowserSettingsArn(Aws::String&& value) { m_browserSettingsArnHasBeenSet = true; m_browserSettingsArn = std::move(value); }
-    inline void SetBrowserSettingsArn(const char* value) { m_browserSettingsArnHasBeenSet = true; m_browserSettingsArn.assign(value); }
-    inline PortalSummary& WithBrowserSettingsArn(const Aws::String& value) { SetBrowserSettingsArn(value); return *this;}
-    inline PortalSummary& WithBrowserSettingsArn(Aws::String&& value) { SetBrowserSettingsArn(std::move(value)); return *this;}
-    inline PortalSummary& WithBrowserSettingsArn(const char* value) { SetBrowserSettingsArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the web portal.</p>
+   */
+  inline PortalStatus GetPortalStatus() const { return m_portalStatus; }
+  inline bool PortalStatusHasBeenSet() const { return m_portalStatusHasBeenSet; }
+  inline void SetPortalStatus(PortalStatus value) {
+    m_portalStatusHasBeenSet = true;
+    m_portalStatus = value;
+  }
+  inline PortalSummary& WithPortalStatus(PortalStatus value) {
+    SetPortalStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The browser type of the web portal.</p>
-     */
-    inline const BrowserType& GetBrowserType() const{ return m_browserType; }
-    inline bool BrowserTypeHasBeenSet() const { return m_browserTypeHasBeenSet; }
-    inline void SetBrowserType(const BrowserType& value) { m_browserTypeHasBeenSet = true; m_browserType = value; }
-    inline void SetBrowserType(BrowserType&& value) { m_browserTypeHasBeenSet = true; m_browserType = std::move(value); }
-    inline PortalSummary& WithBrowserType(const BrowserType& value) { SetBrowserType(value); return *this;}
-    inline PortalSummary& WithBrowserType(BrowserType&& value) { SetBrowserType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The endpoint URL of the web portal that users access in order to start
+   * streaming sessions.</p>
+   */
+  inline const Aws::String& GetPortalEndpoint() const { return m_portalEndpoint; }
+  inline bool PortalEndpointHasBeenSet() const { return m_portalEndpointHasBeenSet; }
+  template <typename PortalEndpointT = Aws::String>
+  void SetPortalEndpoint(PortalEndpointT&& value) {
+    m_portalEndpointHasBeenSet = true;
+    m_portalEndpoint = std::forward<PortalEndpointT>(value);
+  }
+  template <typename PortalEndpointT = Aws::String>
+  PortalSummary& WithPortalEndpoint(PortalEndpointT&& value) {
+    SetPortalEndpoint(std::forward<PortalEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The creation date of the web portal.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDate() const{ return m_creationDate; }
-    inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
-    inline void SetCreationDate(const Aws::Utils::DateTime& value) { m_creationDateHasBeenSet = true; m_creationDate = value; }
-    inline void SetCreationDate(Aws::Utils::DateTime&& value) { m_creationDateHasBeenSet = true; m_creationDate = std::move(value); }
-    inline PortalSummary& WithCreationDate(const Aws::Utils::DateTime& value) { SetCreationDate(value); return *this;}
-    inline PortalSummary& WithCreationDate(Aws::Utils::DateTime&& value) { SetCreationDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the web portal.</p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  PortalSummary& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the web portal.</p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayNameHasBeenSet = true; m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayNameHasBeenSet = true; m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayNameHasBeenSet = true; m_displayName.assign(value); }
-    inline PortalSummary& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline PortalSummary& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline PortalSummary& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The creation date of the web portal.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDate() const { return m_creationDate; }
+  inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  PortalSummary& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type and resources of the underlying instance.</p>
-     */
-    inline const InstanceType& GetInstanceType() const{ return m_instanceType; }
-    inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
-    inline void SetInstanceType(const InstanceType& value) { m_instanceTypeHasBeenSet = true; m_instanceType = value; }
-    inline void SetInstanceType(InstanceType&& value) { m_instanceTypeHasBeenSet = true; m_instanceType = std::move(value); }
-    inline PortalSummary& WithInstanceType(const InstanceType& value) { SetInstanceType(value); return *this;}
-    inline PortalSummary& WithInstanceType(InstanceType&& value) { SetInstanceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the browser settings that is associated with the web portal.</p>
+   */
+  inline const Aws::String& GetBrowserSettingsArn() const { return m_browserSettingsArn; }
+  inline bool BrowserSettingsArnHasBeenSet() const { return m_browserSettingsArnHasBeenSet; }
+  template <typename BrowserSettingsArnT = Aws::String>
+  void SetBrowserSettingsArn(BrowserSettingsArnT&& value) {
+    m_browserSettingsArnHasBeenSet = true;
+    m_browserSettingsArn = std::forward<BrowserSettingsArnT>(value);
+  }
+  template <typename BrowserSettingsArnT = Aws::String>
+  PortalSummary& WithBrowserSettingsArn(BrowserSettingsArnT&& value) {
+    SetBrowserSettingsArn(std::forward<BrowserSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the IP access settings.</p>
-     */
-    inline const Aws::String& GetIpAccessSettingsArn() const{ return m_ipAccessSettingsArn; }
-    inline bool IpAccessSettingsArnHasBeenSet() const { return m_ipAccessSettingsArnHasBeenSet; }
-    inline void SetIpAccessSettingsArn(const Aws::String& value) { m_ipAccessSettingsArnHasBeenSet = true; m_ipAccessSettingsArn = value; }
-    inline void SetIpAccessSettingsArn(Aws::String&& value) { m_ipAccessSettingsArnHasBeenSet = true; m_ipAccessSettingsArn = std::move(value); }
-    inline void SetIpAccessSettingsArn(const char* value) { m_ipAccessSettingsArnHasBeenSet = true; m_ipAccessSettingsArn.assign(value); }
-    inline PortalSummary& WithIpAccessSettingsArn(const Aws::String& value) { SetIpAccessSettingsArn(value); return *this;}
-    inline PortalSummary& WithIpAccessSettingsArn(Aws::String&& value) { SetIpAccessSettingsArn(std::move(value)); return *this;}
-    inline PortalSummary& WithIpAccessSettingsArn(const char* value) { SetIpAccessSettingsArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the data protection settings.</p>
+   */
+  inline const Aws::String& GetDataProtectionSettingsArn() const { return m_dataProtectionSettingsArn; }
+  inline bool DataProtectionSettingsArnHasBeenSet() const { return m_dataProtectionSettingsArnHasBeenSet; }
+  template <typename DataProtectionSettingsArnT = Aws::String>
+  void SetDataProtectionSettingsArn(DataProtectionSettingsArnT&& value) {
+    m_dataProtectionSettingsArnHasBeenSet = true;
+    m_dataProtectionSettingsArn = std::forward<DataProtectionSettingsArnT>(value);
+  }
+  template <typename DataProtectionSettingsArnT = Aws::String>
+  PortalSummary& WithDataProtectionSettingsArn(DataProtectionSettingsArnT&& value) {
+    SetDataProtectionSettingsArn(std::forward<DataProtectionSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of concurrent sessions for the portal.</p>
-     */
-    inline int GetMaxConcurrentSessions() const{ return m_maxConcurrentSessions; }
-    inline bool MaxConcurrentSessionsHasBeenSet() const { return m_maxConcurrentSessionsHasBeenSet; }
-    inline void SetMaxConcurrentSessions(int value) { m_maxConcurrentSessionsHasBeenSet = true; m_maxConcurrentSessions = value; }
-    inline PortalSummary& WithMaxConcurrentSessions(int value) { SetMaxConcurrentSessions(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the user settings that is associated with the web portal.</p>
+   */
+  inline const Aws::String& GetUserSettingsArn() const { return m_userSettingsArn; }
+  inline bool UserSettingsArnHasBeenSet() const { return m_userSettingsArnHasBeenSet; }
+  template <typename UserSettingsArnT = Aws::String>
+  void SetUserSettingsArn(UserSettingsArnT&& value) {
+    m_userSettingsArnHasBeenSet = true;
+    m_userSettingsArn = std::forward<UserSettingsArnT>(value);
+  }
+  template <typename UserSettingsArnT = Aws::String>
+  PortalSummary& WithUserSettingsArn(UserSettingsArnT&& value) {
+    SetUserSettingsArn(std::forward<UserSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the network settings that is associated with the web portal.</p>
-     */
-    inline const Aws::String& GetNetworkSettingsArn() const{ return m_networkSettingsArn; }
-    inline bool NetworkSettingsArnHasBeenSet() const { return m_networkSettingsArnHasBeenSet; }
-    inline void SetNetworkSettingsArn(const Aws::String& value) { m_networkSettingsArnHasBeenSet = true; m_networkSettingsArn = value; }
-    inline void SetNetworkSettingsArn(Aws::String&& value) { m_networkSettingsArnHasBeenSet = true; m_networkSettingsArn = std::move(value); }
-    inline void SetNetworkSettingsArn(const char* value) { m_networkSettingsArnHasBeenSet = true; m_networkSettingsArn.assign(value); }
-    inline PortalSummary& WithNetworkSettingsArn(const Aws::String& value) { SetNetworkSettingsArn(value); return *this;}
-    inline PortalSummary& WithNetworkSettingsArn(Aws::String&& value) { SetNetworkSettingsArn(std::move(value)); return *this;}
-    inline PortalSummary& WithNetworkSettingsArn(const char* value) { SetNetworkSettingsArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the network settings that is associated with the web portal.</p>
+   */
+  inline const Aws::String& GetNetworkSettingsArn() const { return m_networkSettingsArn; }
+  inline bool NetworkSettingsArnHasBeenSet() const { return m_networkSettingsArnHasBeenSet; }
+  template <typename NetworkSettingsArnT = Aws::String>
+  void SetNetworkSettingsArn(NetworkSettingsArnT&& value) {
+    m_networkSettingsArnHasBeenSet = true;
+    m_networkSettingsArn = std::forward<NetworkSettingsArnT>(value);
+  }
+  template <typename NetworkSettingsArnT = Aws::String>
+  PortalSummary& WithNetworkSettingsArn(NetworkSettingsArnT&& value) {
+    SetNetworkSettingsArn(std::forward<NetworkSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the web portal.</p>
-     */
-    inline const Aws::String& GetPortalArn() const{ return m_portalArn; }
-    inline bool PortalArnHasBeenSet() const { return m_portalArnHasBeenSet; }
-    inline void SetPortalArn(const Aws::String& value) { m_portalArnHasBeenSet = true; m_portalArn = value; }
-    inline void SetPortalArn(Aws::String&& value) { m_portalArnHasBeenSet = true; m_portalArn = std::move(value); }
-    inline void SetPortalArn(const char* value) { m_portalArnHasBeenSet = true; m_portalArn.assign(value); }
-    inline PortalSummary& WithPortalArn(const Aws::String& value) { SetPortalArn(value); return *this;}
-    inline PortalSummary& WithPortalArn(Aws::String&& value) { SetPortalArn(std::move(value)); return *this;}
-    inline PortalSummary& WithPortalArn(const char* value) { SetPortalArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the session logger that is assocaited with the portal.</p>
+   */
+  inline const Aws::String& GetSessionLoggerArn() const { return m_sessionLoggerArn; }
+  inline bool SessionLoggerArnHasBeenSet() const { return m_sessionLoggerArnHasBeenSet; }
+  template <typename SessionLoggerArnT = Aws::String>
+  void SetSessionLoggerArn(SessionLoggerArnT&& value) {
+    m_sessionLoggerArnHasBeenSet = true;
+    m_sessionLoggerArn = std::forward<SessionLoggerArnT>(value);
+  }
+  template <typename SessionLoggerArnT = Aws::String>
+  PortalSummary& WithSessionLoggerArn(SessionLoggerArnT&& value) {
+    SetSessionLoggerArn(std::forward<SessionLoggerArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The endpoint URL of the web portal that users access in order to start
-     * streaming sessions.</p>
-     */
-    inline const Aws::String& GetPortalEndpoint() const{ return m_portalEndpoint; }
-    inline bool PortalEndpointHasBeenSet() const { return m_portalEndpointHasBeenSet; }
-    inline void SetPortalEndpoint(const Aws::String& value) { m_portalEndpointHasBeenSet = true; m_portalEndpoint = value; }
-    inline void SetPortalEndpoint(Aws::String&& value) { m_portalEndpointHasBeenSet = true; m_portalEndpoint = std::move(value); }
-    inline void SetPortalEndpoint(const char* value) { m_portalEndpointHasBeenSet = true; m_portalEndpoint.assign(value); }
-    inline PortalSummary& WithPortalEndpoint(const Aws::String& value) { SetPortalEndpoint(value); return *this;}
-    inline PortalSummary& WithPortalEndpoint(Aws::String&& value) { SetPortalEndpoint(std::move(value)); return *this;}
-    inline PortalSummary& WithPortalEndpoint(const char* value) { SetPortalEndpoint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the trust that is associated with this web portal.</p>
+   */
+  inline const Aws::String& GetTrustStoreArn() const { return m_trustStoreArn; }
+  inline bool TrustStoreArnHasBeenSet() const { return m_trustStoreArnHasBeenSet; }
+  template <typename TrustStoreArnT = Aws::String>
+  void SetTrustStoreArn(TrustStoreArnT&& value) {
+    m_trustStoreArnHasBeenSet = true;
+    m_trustStoreArn = std::forward<TrustStoreArnT>(value);
+  }
+  template <typename TrustStoreArnT = Aws::String>
+  PortalSummary& WithTrustStoreArn(TrustStoreArnT&& value) {
+    SetTrustStoreArn(std::forward<TrustStoreArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the web portal.</p>
-     */
-    inline const PortalStatus& GetPortalStatus() const{ return m_portalStatus; }
-    inline bool PortalStatusHasBeenSet() const { return m_portalStatusHasBeenSet; }
-    inline void SetPortalStatus(const PortalStatus& value) { m_portalStatusHasBeenSet = true; m_portalStatus = value; }
-    inline void SetPortalStatus(PortalStatus&& value) { m_portalStatusHasBeenSet = true; m_portalStatus = std::move(value); }
-    inline PortalSummary& WithPortalStatus(const PortalStatus& value) { SetPortalStatus(value); return *this;}
-    inline PortalSummary& WithPortalStatus(PortalStatus&& value) { SetPortalStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the user access logging settings that is associated with the web
+   * portal.</p>
+   */
+  inline const Aws::String& GetUserAccessLoggingSettingsArn() const { return m_userAccessLoggingSettingsArn; }
+  inline bool UserAccessLoggingSettingsArnHasBeenSet() const { return m_userAccessLoggingSettingsArnHasBeenSet; }
+  template <typename UserAccessLoggingSettingsArnT = Aws::String>
+  void SetUserAccessLoggingSettingsArn(UserAccessLoggingSettingsArnT&& value) {
+    m_userAccessLoggingSettingsArnHasBeenSet = true;
+    m_userAccessLoggingSettingsArn = std::forward<UserAccessLoggingSettingsArnT>(value);
+  }
+  template <typename UserAccessLoggingSettingsArnT = Aws::String>
+  PortalSummary& WithUserAccessLoggingSettingsArn(UserAccessLoggingSettingsArnT&& value) {
+    SetUserAccessLoggingSettingsArn(std::forward<UserAccessLoggingSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The renderer that is used in streaming sessions.</p>
-     */
-    inline const RendererType& GetRendererType() const{ return m_rendererType; }
-    inline bool RendererTypeHasBeenSet() const { return m_rendererTypeHasBeenSet; }
-    inline void SetRendererType(const RendererType& value) { m_rendererTypeHasBeenSet = true; m_rendererType = value; }
-    inline void SetRendererType(RendererType&& value) { m_rendererTypeHasBeenSet = true; m_rendererType = std::move(value); }
-    inline PortalSummary& WithRendererType(const RendererType& value) { SetRendererType(value); return *this;}
-    inline PortalSummary& WithRendererType(RendererType&& value) { SetRendererType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of authentication integration points used when signing into the web
+   * portal. Defaults to <code>Standard</code>.</p> <p> <code>Standard</code> web
+   * portals are authenticated directly through your identity provider. You need to
+   * call <code>CreateIdentityProvider</code> to integrate your identity provider
+   * with your web portal. User and group access to your web portal is controlled
+   * through your identity provider.</p> <p> <code>IAM Identity Center</code> web
+   * portals are authenticated through IAM Identity Center. Identity sources
+   * (including external identity provider integration), plus user and group access
+   * to your web portal, can be configured in the IAM Identity Center.</p>
+   */
+  inline AuthenticationType GetAuthenticationType() const { return m_authenticationType; }
+  inline bool AuthenticationTypeHasBeenSet() const { return m_authenticationTypeHasBeenSet; }
+  inline void SetAuthenticationType(AuthenticationType value) {
+    m_authenticationTypeHasBeenSet = true;
+    m_authenticationType = value;
+  }
+  inline PortalSummary& WithAuthenticationType(AuthenticationType value) {
+    SetAuthenticationType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the trust that is associated with this web portal.</p>
-     */
-    inline const Aws::String& GetTrustStoreArn() const{ return m_trustStoreArn; }
-    inline bool TrustStoreArnHasBeenSet() const { return m_trustStoreArnHasBeenSet; }
-    inline void SetTrustStoreArn(const Aws::String& value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn = value; }
-    inline void SetTrustStoreArn(Aws::String&& value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn = std::move(value); }
-    inline void SetTrustStoreArn(const char* value) { m_trustStoreArnHasBeenSet = true; m_trustStoreArn.assign(value); }
-    inline PortalSummary& WithTrustStoreArn(const Aws::String& value) { SetTrustStoreArn(value); return *this;}
-    inline PortalSummary& WithTrustStoreArn(Aws::String&& value) { SetTrustStoreArn(std::move(value)); return *this;}
-    inline PortalSummary& WithTrustStoreArn(const char* value) { SetTrustStoreArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the IP access settings.</p>
+   */
+  inline const Aws::String& GetIpAccessSettingsArn() const { return m_ipAccessSettingsArn; }
+  inline bool IpAccessSettingsArnHasBeenSet() const { return m_ipAccessSettingsArnHasBeenSet; }
+  template <typename IpAccessSettingsArnT = Aws::String>
+  void SetIpAccessSettingsArn(IpAccessSettingsArnT&& value) {
+    m_ipAccessSettingsArnHasBeenSet = true;
+    m_ipAccessSettingsArn = std::forward<IpAccessSettingsArnT>(value);
+  }
+  template <typename IpAccessSettingsArnT = Aws::String>
+  PortalSummary& WithIpAccessSettingsArn(IpAccessSettingsArnT&& value) {
+    SetIpAccessSettingsArn(std::forward<IpAccessSettingsArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the user access logging settings that is associated with the web
-     * portal.</p>
-     */
-    inline const Aws::String& GetUserAccessLoggingSettingsArn() const{ return m_userAccessLoggingSettingsArn; }
-    inline bool UserAccessLoggingSettingsArnHasBeenSet() const { return m_userAccessLoggingSettingsArnHasBeenSet; }
-    inline void SetUserAccessLoggingSettingsArn(const Aws::String& value) { m_userAccessLoggingSettingsArnHasBeenSet = true; m_userAccessLoggingSettingsArn = value; }
-    inline void SetUserAccessLoggingSettingsArn(Aws::String&& value) { m_userAccessLoggingSettingsArnHasBeenSet = true; m_userAccessLoggingSettingsArn = std::move(value); }
-    inline void SetUserAccessLoggingSettingsArn(const char* value) { m_userAccessLoggingSettingsArnHasBeenSet = true; m_userAccessLoggingSettingsArn.assign(value); }
-    inline PortalSummary& WithUserAccessLoggingSettingsArn(const Aws::String& value) { SetUserAccessLoggingSettingsArn(value); return *this;}
-    inline PortalSummary& WithUserAccessLoggingSettingsArn(Aws::String&& value) { SetUserAccessLoggingSettingsArn(std::move(value)); return *this;}
-    inline PortalSummary& WithUserAccessLoggingSettingsArn(const char* value) { SetUserAccessLoggingSettingsArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type and resources of the underlying instance.</p>
+   */
+  inline InstanceType GetInstanceType() const { return m_instanceType; }
+  inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
+  inline void SetInstanceType(InstanceType value) {
+    m_instanceTypeHasBeenSet = true;
+    m_instanceType = value;
+  }
+  inline PortalSummary& WithInstanceType(InstanceType value) {
+    SetInstanceType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the user settings that is associated with the web portal.</p>
-     */
-    inline const Aws::String& GetUserSettingsArn() const{ return m_userSettingsArn; }
-    inline bool UserSettingsArnHasBeenSet() const { return m_userSettingsArnHasBeenSet; }
-    inline void SetUserSettingsArn(const Aws::String& value) { m_userSettingsArnHasBeenSet = true; m_userSettingsArn = value; }
-    inline void SetUserSettingsArn(Aws::String&& value) { m_userSettingsArnHasBeenSet = true; m_userSettingsArn = std::move(value); }
-    inline void SetUserSettingsArn(const char* value) { m_userSettingsArnHasBeenSet = true; m_userSettingsArn.assign(value); }
-    inline PortalSummary& WithUserSettingsArn(const Aws::String& value) { SetUserSettingsArn(value); return *this;}
-    inline PortalSummary& WithUserSettingsArn(Aws::String&& value) { SetUserSettingsArn(std::move(value)); return *this;}
-    inline PortalSummary& WithUserSettingsArn(const char* value) { SetUserSettingsArn(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The maximum number of concurrent sessions for the portal.</p>
+   */
+  inline int GetMaxConcurrentSessions() const { return m_maxConcurrentSessions; }
+  inline bool MaxConcurrentSessionsHasBeenSet() const { return m_maxConcurrentSessionsHasBeenSet; }
+  inline void SetMaxConcurrentSessions(int value) {
+    m_maxConcurrentSessionsHasBeenSet = true;
+    m_maxConcurrentSessions = value;
+  }
+  inline PortalSummary& WithMaxConcurrentSessions(int value) {
+    SetMaxConcurrentSessions(value);
+    return *this;
+  }
+  ///@}
 
-    AuthenticationType m_authenticationType;
-    bool m_authenticationTypeHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The custom domain of the web portal that users access in order to start
+   * streaming sessions.</p>
+   */
+  inline const Aws::String& GetPortalCustomDomain() const { return m_portalCustomDomain; }
+  inline bool PortalCustomDomainHasBeenSet() const { return m_portalCustomDomainHasBeenSet; }
+  template <typename PortalCustomDomainT = Aws::String>
+  void SetPortalCustomDomain(PortalCustomDomainT&& value) {
+    m_portalCustomDomainHasBeenSet = true;
+    m_portalCustomDomain = std::forward<PortalCustomDomainT>(value);
+  }
+  template <typename PortalCustomDomainT = Aws::String>
+  PortalSummary& WithPortalCustomDomain(PortalCustomDomainT&& value) {
+    SetPortalCustomDomain(std::forward<PortalCustomDomainT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_portalArn;
 
-    Aws::String m_browserSettingsArn;
-    bool m_browserSettingsArnHasBeenSet = false;
+  RendererType m_rendererType{RendererType::NOT_SET};
 
-    BrowserType m_browserType;
-    bool m_browserTypeHasBeenSet = false;
+  BrowserType m_browserType{BrowserType::NOT_SET};
 
-    Aws::Utils::DateTime m_creationDate;
-    bool m_creationDateHasBeenSet = false;
+  PortalStatus m_portalStatus{PortalStatus::NOT_SET};
 
-    Aws::String m_displayName;
-    bool m_displayNameHasBeenSet = false;
+  Aws::String m_portalEndpoint;
 
-    InstanceType m_instanceType;
-    bool m_instanceTypeHasBeenSet = false;
+  Aws::String m_displayName;
 
-    Aws::String m_ipAccessSettingsArn;
-    bool m_ipAccessSettingsArnHasBeenSet = false;
+  Aws::Utils::DateTime m_creationDate{};
 
-    int m_maxConcurrentSessions;
-    bool m_maxConcurrentSessionsHasBeenSet = false;
+  Aws::String m_browserSettingsArn;
 
-    Aws::String m_networkSettingsArn;
-    bool m_networkSettingsArnHasBeenSet = false;
+  Aws::String m_dataProtectionSettingsArn;
 
-    Aws::String m_portalArn;
-    bool m_portalArnHasBeenSet = false;
+  Aws::String m_userSettingsArn;
 
-    Aws::String m_portalEndpoint;
-    bool m_portalEndpointHasBeenSet = false;
+  Aws::String m_networkSettingsArn;
 
-    PortalStatus m_portalStatus;
-    bool m_portalStatusHasBeenSet = false;
+  Aws::String m_sessionLoggerArn;
 
-    RendererType m_rendererType;
-    bool m_rendererTypeHasBeenSet = false;
+  Aws::String m_trustStoreArn;
 
-    Aws::String m_trustStoreArn;
-    bool m_trustStoreArnHasBeenSet = false;
+  Aws::String m_userAccessLoggingSettingsArn;
 
-    Aws::String m_userAccessLoggingSettingsArn;
-    bool m_userAccessLoggingSettingsArnHasBeenSet = false;
+  AuthenticationType m_authenticationType{AuthenticationType::NOT_SET};
 
-    Aws::String m_userSettingsArn;
-    bool m_userSettingsArnHasBeenSet = false;
-  };
+  Aws::String m_ipAccessSettingsArn;
 
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+  InstanceType m_instanceType{InstanceType::NOT_SET};
+
+  int m_maxConcurrentSessions{0};
+
+  Aws::String m_portalCustomDomain;
+  bool m_portalArnHasBeenSet = false;
+  bool m_rendererTypeHasBeenSet = false;
+  bool m_browserTypeHasBeenSet = false;
+  bool m_portalStatusHasBeenSet = false;
+  bool m_portalEndpointHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_browserSettingsArnHasBeenSet = false;
+  bool m_dataProtectionSettingsArnHasBeenSet = false;
+  bool m_userSettingsArnHasBeenSet = false;
+  bool m_networkSettingsArnHasBeenSet = false;
+  bool m_sessionLoggerArnHasBeenSet = false;
+  bool m_trustStoreArnHasBeenSet = false;
+  bool m_userAccessLoggingSettingsArnHasBeenSet = false;
+  bool m_authenticationTypeHasBeenSet = false;
+  bool m_ipAccessSettingsArnHasBeenSet = false;
+  bool m_instanceTypeHasBeenSet = false;
+  bool m_maxConcurrentSessionsHasBeenSet = false;
+  bool m_portalCustomDomainHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

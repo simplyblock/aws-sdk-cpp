@@ -4,157 +4,206 @@
  */
 
 #pragma once
-#include <aws/health/Health_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/health/model/DateTimeRange.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/health/Health_EXPORTS.h>
+#include <aws/health/model/DateTimeRange.h>
 #include <aws/health/model/EntityStatusCode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Health
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Health {
+namespace Model {
 
+/**
+ * <p>The values to use to filter results from the <a
+ * href="https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntities.html">DescribeAffectedEntities</a>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/EntityFilter">AWS
+ * API Reference</a></p>
+ */
+class EntityFilter {
+ public:
+  AWS_HEALTH_API EntityFilter() = default;
+  AWS_HEALTH_API EntityFilter(Aws::Utils::Json::JsonView jsonValue);
+  AWS_HEALTH_API EntityFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The values to use to filter results from the <a
-   * href="https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeAffectedEntities.html">DescribeAffectedEntities</a>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/EntityFilter">AWS
-   * API Reference</a></p>
+   * <p>A list of event ARNs (unique identifiers). For example:
+   * <code>"arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-CDE456",
+   * "arn:aws:health:us-west-1::event/EBS/AWS_EBS_LOST_VOLUME/AWS_EBS_LOST_VOLUME_CHI789_JKL101"</code>
+   * </p>
    */
-  class EntityFilter
-  {
-  public:
-    AWS_HEALTH_API EntityFilter();
-    AWS_HEALTH_API EntityFilter(Aws::Utils::Json::JsonView jsonValue);
-    AWS_HEALTH_API EntityFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetEventArns() const { return m_eventArns; }
+  inline bool EventArnsHasBeenSet() const { return m_eventArnsHasBeenSet; }
+  template <typename EventArnsT = Aws::Vector<Aws::String>>
+  void SetEventArns(EventArnsT&& value) {
+    m_eventArnsHasBeenSet = true;
+    m_eventArns = std::forward<EventArnsT>(value);
+  }
+  template <typename EventArnsT = Aws::Vector<Aws::String>>
+  EntityFilter& WithEventArns(EventArnsT&& value) {
+    SetEventArns(std::forward<EventArnsT>(value));
+    return *this;
+  }
+  template <typename EventArnsT = Aws::String>
+  EntityFilter& AddEventArns(EventArnsT&& value) {
+    m_eventArnsHasBeenSet = true;
+    m_eventArns.emplace_back(std::forward<EventArnsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of entity ARNs (unique identifiers).</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetEntityArns() const { return m_entityArns; }
+  inline bool EntityArnsHasBeenSet() const { return m_entityArnsHasBeenSet; }
+  template <typename EntityArnsT = Aws::Vector<Aws::String>>
+  void SetEntityArns(EntityArnsT&& value) {
+    m_entityArnsHasBeenSet = true;
+    m_entityArns = std::forward<EntityArnsT>(value);
+  }
+  template <typename EntityArnsT = Aws::Vector<Aws::String>>
+  EntityFilter& WithEntityArns(EntityArnsT&& value) {
+    SetEntityArns(std::forward<EntityArnsT>(value));
+    return *this;
+  }
+  template <typename EntityArnsT = Aws::String>
+  EntityFilter& AddEntityArns(EntityArnsT&& value) {
+    m_entityArnsHasBeenSet = true;
+    m_entityArns.emplace_back(std::forward<EntityArnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of event ARNs (unique identifiers). For example:
-     * <code>"arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-CDE456",
-     * "arn:aws:health:us-west-1::event/EBS/AWS_EBS_LOST_VOLUME/AWS_EBS_LOST_VOLUME_CHI789_JKL101"</code>
-     * </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetEventArns() const{ return m_eventArns; }
-    inline bool EventArnsHasBeenSet() const { return m_eventArnsHasBeenSet; }
-    inline void SetEventArns(const Aws::Vector<Aws::String>& value) { m_eventArnsHasBeenSet = true; m_eventArns = value; }
-    inline void SetEventArns(Aws::Vector<Aws::String>&& value) { m_eventArnsHasBeenSet = true; m_eventArns = std::move(value); }
-    inline EntityFilter& WithEventArns(const Aws::Vector<Aws::String>& value) { SetEventArns(value); return *this;}
-    inline EntityFilter& WithEventArns(Aws::Vector<Aws::String>&& value) { SetEventArns(std::move(value)); return *this;}
-    inline EntityFilter& AddEventArns(const Aws::String& value) { m_eventArnsHasBeenSet = true; m_eventArns.push_back(value); return *this; }
-    inline EntityFilter& AddEventArns(Aws::String&& value) { m_eventArnsHasBeenSet = true; m_eventArns.push_back(std::move(value)); return *this; }
-    inline EntityFilter& AddEventArns(const char* value) { m_eventArnsHasBeenSet = true; m_eventArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of IDs for affected entities.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetEntityValues() const { return m_entityValues; }
+  inline bool EntityValuesHasBeenSet() const { return m_entityValuesHasBeenSet; }
+  template <typename EntityValuesT = Aws::Vector<Aws::String>>
+  void SetEntityValues(EntityValuesT&& value) {
+    m_entityValuesHasBeenSet = true;
+    m_entityValues = std::forward<EntityValuesT>(value);
+  }
+  template <typename EntityValuesT = Aws::Vector<Aws::String>>
+  EntityFilter& WithEntityValues(EntityValuesT&& value) {
+    SetEntityValues(std::forward<EntityValuesT>(value));
+    return *this;
+  }
+  template <typename EntityValuesT = Aws::String>
+  EntityFilter& AddEntityValues(EntityValuesT&& value) {
+    m_entityValuesHasBeenSet = true;
+    m_entityValues.emplace_back(std::forward<EntityValuesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of entity ARNs (unique identifiers).</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetEntityArns() const{ return m_entityArns; }
-    inline bool EntityArnsHasBeenSet() const { return m_entityArnsHasBeenSet; }
-    inline void SetEntityArns(const Aws::Vector<Aws::String>& value) { m_entityArnsHasBeenSet = true; m_entityArns = value; }
-    inline void SetEntityArns(Aws::Vector<Aws::String>&& value) { m_entityArnsHasBeenSet = true; m_entityArns = std::move(value); }
-    inline EntityFilter& WithEntityArns(const Aws::Vector<Aws::String>& value) { SetEntityArns(value); return *this;}
-    inline EntityFilter& WithEntityArns(Aws::Vector<Aws::String>&& value) { SetEntityArns(std::move(value)); return *this;}
-    inline EntityFilter& AddEntityArns(const Aws::String& value) { m_entityArnsHasBeenSet = true; m_entityArns.push_back(value); return *this; }
-    inline EntityFilter& AddEntityArns(Aws::String&& value) { m_entityArnsHasBeenSet = true; m_entityArns.push_back(std::move(value)); return *this; }
-    inline EntityFilter& AddEntityArns(const char* value) { m_entityArnsHasBeenSet = true; m_entityArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of the most recent dates and times that the entity was updated.</p>
+   */
+  inline const Aws::Vector<DateTimeRange>& GetLastUpdatedTimes() const { return m_lastUpdatedTimes; }
+  inline bool LastUpdatedTimesHasBeenSet() const { return m_lastUpdatedTimesHasBeenSet; }
+  template <typename LastUpdatedTimesT = Aws::Vector<DateTimeRange>>
+  void SetLastUpdatedTimes(LastUpdatedTimesT&& value) {
+    m_lastUpdatedTimesHasBeenSet = true;
+    m_lastUpdatedTimes = std::forward<LastUpdatedTimesT>(value);
+  }
+  template <typename LastUpdatedTimesT = Aws::Vector<DateTimeRange>>
+  EntityFilter& WithLastUpdatedTimes(LastUpdatedTimesT&& value) {
+    SetLastUpdatedTimes(std::forward<LastUpdatedTimesT>(value));
+    return *this;
+  }
+  template <typename LastUpdatedTimesT = DateTimeRange>
+  EntityFilter& AddLastUpdatedTimes(LastUpdatedTimesT&& value) {
+    m_lastUpdatedTimesHasBeenSet = true;
+    m_lastUpdatedTimes.emplace_back(std::forward<LastUpdatedTimesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of IDs for affected entities.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetEntityValues() const{ return m_entityValues; }
-    inline bool EntityValuesHasBeenSet() const { return m_entityValuesHasBeenSet; }
-    inline void SetEntityValues(const Aws::Vector<Aws::String>& value) { m_entityValuesHasBeenSet = true; m_entityValues = value; }
-    inline void SetEntityValues(Aws::Vector<Aws::String>&& value) { m_entityValuesHasBeenSet = true; m_entityValues = std::move(value); }
-    inline EntityFilter& WithEntityValues(const Aws::Vector<Aws::String>& value) { SetEntityValues(value); return *this;}
-    inline EntityFilter& WithEntityValues(Aws::Vector<Aws::String>&& value) { SetEntityValues(std::move(value)); return *this;}
-    inline EntityFilter& AddEntityValues(const Aws::String& value) { m_entityValuesHasBeenSet = true; m_entityValues.push_back(value); return *this; }
-    inline EntityFilter& AddEntityValues(Aws::String&& value) { m_entityValuesHasBeenSet = true; m_entityValues.push_back(std::move(value)); return *this; }
-    inline EntityFilter& AddEntityValues(const char* value) { m_entityValuesHasBeenSet = true; m_entityValues.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A map of entity tags attached to the affected entity.</p>
+   * <p>Currently, the <code>tags</code> property isn't supported.</p>
+   */
+  inline const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Aws::Map<Aws::String, Aws::String>>>
+  EntityFilter& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  EntityFilter& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of the most recent dates and times that the entity was updated.</p>
-     */
-    inline const Aws::Vector<DateTimeRange>& GetLastUpdatedTimes() const{ return m_lastUpdatedTimes; }
-    inline bool LastUpdatedTimesHasBeenSet() const { return m_lastUpdatedTimesHasBeenSet; }
-    inline void SetLastUpdatedTimes(const Aws::Vector<DateTimeRange>& value) { m_lastUpdatedTimesHasBeenSet = true; m_lastUpdatedTimes = value; }
-    inline void SetLastUpdatedTimes(Aws::Vector<DateTimeRange>&& value) { m_lastUpdatedTimesHasBeenSet = true; m_lastUpdatedTimes = std::move(value); }
-    inline EntityFilter& WithLastUpdatedTimes(const Aws::Vector<DateTimeRange>& value) { SetLastUpdatedTimes(value); return *this;}
-    inline EntityFilter& WithLastUpdatedTimes(Aws::Vector<DateTimeRange>&& value) { SetLastUpdatedTimes(std::move(value)); return *this;}
-    inline EntityFilter& AddLastUpdatedTimes(const DateTimeRange& value) { m_lastUpdatedTimesHasBeenSet = true; m_lastUpdatedTimes.push_back(value); return *this; }
-    inline EntityFilter& AddLastUpdatedTimes(DateTimeRange&& value) { m_lastUpdatedTimesHasBeenSet = true; m_lastUpdatedTimes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of entity status codes (<code>IMPAIRED</code>,
+   * <code>UNIMPAIRED</code>, or <code>UNKNOWN</code>).</p>
+   */
+  inline const Aws::Vector<EntityStatusCode>& GetStatusCodes() const { return m_statusCodes; }
+  inline bool StatusCodesHasBeenSet() const { return m_statusCodesHasBeenSet; }
+  template <typename StatusCodesT = Aws::Vector<EntityStatusCode>>
+  void SetStatusCodes(StatusCodesT&& value) {
+    m_statusCodesHasBeenSet = true;
+    m_statusCodes = std::forward<StatusCodesT>(value);
+  }
+  template <typename StatusCodesT = Aws::Vector<EntityStatusCode>>
+  EntityFilter& WithStatusCodes(StatusCodesT&& value) {
+    SetStatusCodes(std::forward<StatusCodesT>(value));
+    return *this;
+  }
+  inline EntityFilter& AddStatusCodes(EntityStatusCode value) {
+    m_statusCodesHasBeenSet = true;
+    m_statusCodes.push_back(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_eventArns;
 
-    ///@{
-    /**
-     * <p>A map of entity tags attached to the affected entity.</p> 
-     * <p>Currently, the <code>tags</code> property isn't supported.</p> 
-     */
-    inline const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Aws::Map<Aws::String, Aws::String>>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline EntityFilter& WithTags(const Aws::Vector<Aws::Map<Aws::String, Aws::String>>& value) { SetTags(value); return *this;}
-    inline EntityFilter& WithTags(Aws::Vector<Aws::Map<Aws::String, Aws::String>>&& value) { SetTags(std::move(value)); return *this;}
-    inline EntityFilter& AddTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline EntityFilter& AddTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_entityArns;
 
-    ///@{
-    /**
-     * <p>A list of entity status codes (<code>IMPAIRED</code>,
-     * <code>UNIMPAIRED</code>, or <code>UNKNOWN</code>).</p>
-     */
-    inline const Aws::Vector<EntityStatusCode>& GetStatusCodes() const{ return m_statusCodes; }
-    inline bool StatusCodesHasBeenSet() const { return m_statusCodesHasBeenSet; }
-    inline void SetStatusCodes(const Aws::Vector<EntityStatusCode>& value) { m_statusCodesHasBeenSet = true; m_statusCodes = value; }
-    inline void SetStatusCodes(Aws::Vector<EntityStatusCode>&& value) { m_statusCodesHasBeenSet = true; m_statusCodes = std::move(value); }
-    inline EntityFilter& WithStatusCodes(const Aws::Vector<EntityStatusCode>& value) { SetStatusCodes(value); return *this;}
-    inline EntityFilter& WithStatusCodes(Aws::Vector<EntityStatusCode>&& value) { SetStatusCodes(std::move(value)); return *this;}
-    inline EntityFilter& AddStatusCodes(const EntityStatusCode& value) { m_statusCodesHasBeenSet = true; m_statusCodes.push_back(value); return *this; }
-    inline EntityFilter& AddStatusCodes(EntityStatusCode&& value) { m_statusCodesHasBeenSet = true; m_statusCodes.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_entityValues;
 
-    Aws::Vector<Aws::String> m_eventArns;
-    bool m_eventArnsHasBeenSet = false;
+  Aws::Vector<DateTimeRange> m_lastUpdatedTimes;
 
-    Aws::Vector<Aws::String> m_entityArns;
-    bool m_entityArnsHasBeenSet = false;
+  Aws::Vector<Aws::Map<Aws::String, Aws::String>> m_tags;
 
-    Aws::Vector<Aws::String> m_entityValues;
-    bool m_entityValuesHasBeenSet = false;
+  Aws::Vector<EntityStatusCode> m_statusCodes;
+  bool m_eventArnsHasBeenSet = false;
+  bool m_entityArnsHasBeenSet = false;
+  bool m_entityValuesHasBeenSet = false;
+  bool m_lastUpdatedTimesHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_statusCodesHasBeenSet = false;
+};
 
-    Aws::Vector<DateTimeRange> m_lastUpdatedTimes;
-    bool m_lastUpdatedTimesHasBeenSet = false;
-
-    Aws::Vector<Aws::Map<Aws::String, Aws::String>> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::Vector<EntityStatusCode> m_statusCodes;
-    bool m_statusCodesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Health
-} // namespace Aws
+}  // namespace Model
+}  // namespace Health
+}  // namespace Aws

@@ -10,36 +10,22 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DeregisterTypeRequest::DeregisterTypeRequest() : 
-    m_arnHasBeenSet(false),
-    m_type(RegistryType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_typeNameHasBeenSet(false),
-    m_versionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeregisterTypeRequest::SerializePayload() const
-{
+Aws::String DeregisterTypeRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeregisterType&";
-  if(m_arnHasBeenSet)
-  {
+  if (m_arnHasBeenSet) {
     ss << "Arn=" << StringUtils::URLEncode(m_arn.c_str()) << "&";
   }
 
-  if(m_typeHasBeenSet)
-  {
-    ss << "Type=" << RegistryTypeMapper::GetNameForRegistryType(m_type) << "&";
+  if (m_typeHasBeenSet) {
+    ss << "Type=" << StringUtils::URLEncode(RegistryTypeMapper::GetNameForRegistryType(m_type)) << "&";
   }
 
-  if(m_typeNameHasBeenSet)
-  {
+  if (m_typeNameHasBeenSet) {
     ss << "TypeName=" << StringUtils::URLEncode(m_typeName.c_str()) << "&";
   }
 
-  if(m_versionIdHasBeenSet)
-  {
+  if (m_versionIdHasBeenSet) {
     ss << "VersionId=" << StringUtils::URLEncode(m_versionId.c_str()) << "&";
   }
 
@@ -47,8 +33,4 @@ Aws::String DeregisterTypeRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeregisterTypeRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeregisterTypeRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

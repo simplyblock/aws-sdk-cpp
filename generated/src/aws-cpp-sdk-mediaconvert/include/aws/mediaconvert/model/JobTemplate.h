@@ -4,262 +4,323 @@
  */
 
 #pragma once
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/mediaconvert/MediaConvert_EXPORTS.h>
 #include <aws/mediaconvert/model/AccelerationSettings.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconvert/model/HopDestination.h>
 #include <aws/mediaconvert/model/JobTemplateSettings.h>
 #include <aws/mediaconvert/model/StatusUpdateInterval.h>
 #include <aws/mediaconvert/model/Type.h>
-#include <aws/mediaconvert/model/HopDestination.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConvert
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConvert {
+namespace Model {
 
+/**
+ * A job template is a pre-made set of encoding instructions that you can use to
+ * quickly create a job.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/JobTemplate">AWS
+ * API Reference</a></p>
+ */
+class JobTemplate {
+ public:
+  AWS_MEDIACONVERT_API JobTemplate() = default;
+  AWS_MEDIACONVERT_API JobTemplate(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API JobTemplate& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * A job template is a pre-made set of encoding instructions that you can use to
-   * quickly create a job.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/JobTemplate">AWS
-   * API Reference</a></p>
+   * Accelerated transcoding can significantly speed up jobs with long, visually
+   * complex content.
    */
-  class JobTemplate
-  {
-  public:
-    AWS_MEDIACONVERT_API JobTemplate();
-    AWS_MEDIACONVERT_API JobTemplate(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API JobTemplate& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONVERT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const AccelerationSettings& GetAccelerationSettings() const { return m_accelerationSettings; }
+  inline bool AccelerationSettingsHasBeenSet() const { return m_accelerationSettingsHasBeenSet; }
+  template <typename AccelerationSettingsT = AccelerationSettings>
+  void SetAccelerationSettings(AccelerationSettingsT&& value) {
+    m_accelerationSettingsHasBeenSet = true;
+    m_accelerationSettings = std::forward<AccelerationSettingsT>(value);
+  }
+  template <typename AccelerationSettingsT = AccelerationSettings>
+  JobTemplate& WithAccelerationSettings(AccelerationSettingsT&& value) {
+    SetAccelerationSettings(std::forward<AccelerationSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * An identifier for this resource that is unique within all of AWS.
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  JobTemplate& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Accelerated transcoding can significantly speed up jobs with long, visually
-     * complex content.
-     */
-    inline const AccelerationSettings& GetAccelerationSettings() const{ return m_accelerationSettings; }
-    inline bool AccelerationSettingsHasBeenSet() const { return m_accelerationSettingsHasBeenSet; }
-    inline void SetAccelerationSettings(const AccelerationSettings& value) { m_accelerationSettingsHasBeenSet = true; m_accelerationSettings = value; }
-    inline void SetAccelerationSettings(AccelerationSettings&& value) { m_accelerationSettingsHasBeenSet = true; m_accelerationSettings = std::move(value); }
-    inline JobTemplate& WithAccelerationSettings(const AccelerationSettings& value) { SetAccelerationSettings(value); return *this;}
-    inline JobTemplate& WithAccelerationSettings(AccelerationSettings&& value) { SetAccelerationSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * An optional category you create to organize your job templates.
+   */
+  inline const Aws::String& GetCategory() const { return m_category; }
+  inline bool CategoryHasBeenSet() const { return m_categoryHasBeenSet; }
+  template <typename CategoryT = Aws::String>
+  void SetCategory(CategoryT&& value) {
+    m_categoryHasBeenSet = true;
+    m_category = std::forward<CategoryT>(value);
+  }
+  template <typename CategoryT = Aws::String>
+  JobTemplate& WithCategory(CategoryT&& value) {
+    SetCategory(std::forward<CategoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * An identifier for this resource that is unique within all of AWS.
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline JobTemplate& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline JobTemplate& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline JobTemplate& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The timestamp in epoch seconds for Job template creation.
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  JobTemplate& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * An optional category you create to organize your job templates.
-     */
-    inline const Aws::String& GetCategory() const{ return m_category; }
-    inline bool CategoryHasBeenSet() const { return m_categoryHasBeenSet; }
-    inline void SetCategory(const Aws::String& value) { m_categoryHasBeenSet = true; m_category = value; }
-    inline void SetCategory(Aws::String&& value) { m_categoryHasBeenSet = true; m_category = std::move(value); }
-    inline void SetCategory(const char* value) { m_categoryHasBeenSet = true; m_category.assign(value); }
-    inline JobTemplate& WithCategory(const Aws::String& value) { SetCategory(value); return *this;}
-    inline JobTemplate& WithCategory(Aws::String&& value) { SetCategory(std::move(value)); return *this;}
-    inline JobTemplate& WithCategory(const char* value) { SetCategory(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * An optional description you create for each job template.
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  JobTemplate& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The timestamp in epoch seconds for Job template creation.
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline JobTemplate& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline JobTemplate& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Optional list of hop destinations.
+   */
+  inline const Aws::Vector<HopDestination>& GetHopDestinations() const { return m_hopDestinations; }
+  inline bool HopDestinationsHasBeenSet() const { return m_hopDestinationsHasBeenSet; }
+  template <typename HopDestinationsT = Aws::Vector<HopDestination>>
+  void SetHopDestinations(HopDestinationsT&& value) {
+    m_hopDestinationsHasBeenSet = true;
+    m_hopDestinations = std::forward<HopDestinationsT>(value);
+  }
+  template <typename HopDestinationsT = Aws::Vector<HopDestination>>
+  JobTemplate& WithHopDestinations(HopDestinationsT&& value) {
+    SetHopDestinations(std::forward<HopDestinationsT>(value));
+    return *this;
+  }
+  template <typename HopDestinationsT = HopDestination>
+  JobTemplate& AddHopDestinations(HopDestinationsT&& value) {
+    m_hopDestinationsHasBeenSet = true;
+    m_hopDestinations.emplace_back(std::forward<HopDestinationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * An optional description you create for each job template.
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline JobTemplate& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline JobTemplate& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline JobTemplate& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The timestamp in epoch seconds when the Job template was last updated.
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdated() const { return m_lastUpdated; }
+  inline bool LastUpdatedHasBeenSet() const { return m_lastUpdatedHasBeenSet; }
+  template <typename LastUpdatedT = Aws::Utils::DateTime>
+  void SetLastUpdated(LastUpdatedT&& value) {
+    m_lastUpdatedHasBeenSet = true;
+    m_lastUpdated = std::forward<LastUpdatedT>(value);
+  }
+  template <typename LastUpdatedT = Aws::Utils::DateTime>
+  JobTemplate& WithLastUpdated(LastUpdatedT&& value) {
+    SetLastUpdated(std::forward<LastUpdatedT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Optional list of hop destinations.
-     */
-    inline const Aws::Vector<HopDestination>& GetHopDestinations() const{ return m_hopDestinations; }
-    inline bool HopDestinationsHasBeenSet() const { return m_hopDestinationsHasBeenSet; }
-    inline void SetHopDestinations(const Aws::Vector<HopDestination>& value) { m_hopDestinationsHasBeenSet = true; m_hopDestinations = value; }
-    inline void SetHopDestinations(Aws::Vector<HopDestination>&& value) { m_hopDestinationsHasBeenSet = true; m_hopDestinations = std::move(value); }
-    inline JobTemplate& WithHopDestinations(const Aws::Vector<HopDestination>& value) { SetHopDestinations(value); return *this;}
-    inline JobTemplate& WithHopDestinations(Aws::Vector<HopDestination>&& value) { SetHopDestinations(std::move(value)); return *this;}
-    inline JobTemplate& AddHopDestinations(const HopDestination& value) { m_hopDestinationsHasBeenSet = true; m_hopDestinations.push_back(value); return *this; }
-    inline JobTemplate& AddHopDestinations(HopDestination&& value) { m_hopDestinationsHasBeenSet = true; m_hopDestinations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * A name you create for each job template. Each name must be unique within your
+   * account.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  JobTemplate& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The timestamp in epoch seconds when the Job template was last updated.
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdated() const{ return m_lastUpdated; }
-    inline bool LastUpdatedHasBeenSet() const { return m_lastUpdatedHasBeenSet; }
-    inline void SetLastUpdated(const Aws::Utils::DateTime& value) { m_lastUpdatedHasBeenSet = true; m_lastUpdated = value; }
-    inline void SetLastUpdated(Aws::Utils::DateTime&& value) { m_lastUpdatedHasBeenSet = true; m_lastUpdated = std::move(value); }
-    inline JobTemplate& WithLastUpdated(const Aws::Utils::DateTime& value) { SetLastUpdated(value); return *this;}
-    inline JobTemplate& WithLastUpdated(Aws::Utils::DateTime&& value) { SetLastUpdated(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Relative priority on the job.
+   */
+  inline int GetPriority() const { return m_priority; }
+  inline bool PriorityHasBeenSet() const { return m_priorityHasBeenSet; }
+  inline void SetPriority(int value) {
+    m_priorityHasBeenSet = true;
+    m_priority = value;
+  }
+  inline JobTemplate& WithPriority(int value) {
+    SetPriority(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A name you create for each job template. Each name must be unique within your
-     * account.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline JobTemplate& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline JobTemplate& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline JobTemplate& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Optional. The queue that jobs created from this template are assigned to. If you
+   * don't specify this, jobs will go to the default queue.
+   */
+  inline const Aws::String& GetQueue() const { return m_queue; }
+  inline bool QueueHasBeenSet() const { return m_queueHasBeenSet; }
+  template <typename QueueT = Aws::String>
+  void SetQueue(QueueT&& value) {
+    m_queueHasBeenSet = true;
+    m_queue = std::forward<QueueT>(value);
+  }
+  template <typename QueueT = Aws::String>
+  JobTemplate& WithQueue(QueueT&& value) {
+    SetQueue(std::forward<QueueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Relative priority on the job.
-     */
-    inline int GetPriority() const{ return m_priority; }
-    inline bool PriorityHasBeenSet() const { return m_priorityHasBeenSet; }
-    inline void SetPriority(int value) { m_priorityHasBeenSet = true; m_priority = value; }
-    inline JobTemplate& WithPriority(int value) { SetPriority(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * JobTemplateSettings contains all the transcode settings saved in the template
+   * that will be applied to jobs created from it.
+   */
+  inline const JobTemplateSettings& GetSettings() const { return m_settings; }
+  inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
+  template <typename SettingsT = JobTemplateSettings>
+  void SetSettings(SettingsT&& value) {
+    m_settingsHasBeenSet = true;
+    m_settings = std::forward<SettingsT>(value);
+  }
+  template <typename SettingsT = JobTemplateSettings>
+  JobTemplate& WithSettings(SettingsT&& value) {
+    SetSettings(std::forward<SettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Optional. The queue that jobs created from this template are assigned to. If you
-     * don't specify this, jobs will go to the default queue.
-     */
-    inline const Aws::String& GetQueue() const{ return m_queue; }
-    inline bool QueueHasBeenSet() const { return m_queueHasBeenSet; }
-    inline void SetQueue(const Aws::String& value) { m_queueHasBeenSet = true; m_queue = value; }
-    inline void SetQueue(Aws::String&& value) { m_queueHasBeenSet = true; m_queue = std::move(value); }
-    inline void SetQueue(const char* value) { m_queueHasBeenSet = true; m_queue.assign(value); }
-    inline JobTemplate& WithQueue(const Aws::String& value) { SetQueue(value); return *this;}
-    inline JobTemplate& WithQueue(Aws::String&& value) { SetQueue(std::move(value)); return *this;}
-    inline JobTemplate& WithQueue(const char* value) { SetQueue(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Specify how often MediaConvert sends STATUS_UPDATE events to Amazon CloudWatch
+   * Events. Set the interval, in seconds, between status updates. MediaConvert sends
+   * an update at this interval from the time the service begins processing your job
+   * to the time it completes the transcode or encounters an error.
+   */
+  inline StatusUpdateInterval GetStatusUpdateInterval() const { return m_statusUpdateInterval; }
+  inline bool StatusUpdateIntervalHasBeenSet() const { return m_statusUpdateIntervalHasBeenSet; }
+  inline void SetStatusUpdateInterval(StatusUpdateInterval value) {
+    m_statusUpdateIntervalHasBeenSet = true;
+    m_statusUpdateInterval = value;
+  }
+  inline JobTemplate& WithStatusUpdateInterval(StatusUpdateInterval value) {
+    SetStatusUpdateInterval(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * JobTemplateSettings contains all the transcode settings saved in the template
-     * that will be applied to jobs created from it.
-     */
-    inline const JobTemplateSettings& GetSettings() const{ return m_settings; }
-    inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
-    inline void SetSettings(const JobTemplateSettings& value) { m_settingsHasBeenSet = true; m_settings = value; }
-    inline void SetSettings(JobTemplateSettings&& value) { m_settingsHasBeenSet = true; m_settings = std::move(value); }
-    inline JobTemplate& WithSettings(const JobTemplateSettings& value) { SetSettings(value); return *this;}
-    inline JobTemplate& WithSettings(JobTemplateSettings&& value) { SetSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * A job template can be of two types: system or custom. System or built-in job
+   * templates can't be modified or deleted by the user.
+   */
+  inline Type GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(Type value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline JobTemplate& WithType(Type value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  AccelerationSettings m_accelerationSettings;
 
-    ///@{
-    /**
-     * Specify how often MediaConvert sends STATUS_UPDATE events to Amazon CloudWatch
-     * Events. Set the interval, in seconds, between status updates. MediaConvert sends
-     * an update at this interval from the time the service begins processing your job
-     * to the time it completes the transcode or encounters an error.
-     */
-    inline const StatusUpdateInterval& GetStatusUpdateInterval() const{ return m_statusUpdateInterval; }
-    inline bool StatusUpdateIntervalHasBeenSet() const { return m_statusUpdateIntervalHasBeenSet; }
-    inline void SetStatusUpdateInterval(const StatusUpdateInterval& value) { m_statusUpdateIntervalHasBeenSet = true; m_statusUpdateInterval = value; }
-    inline void SetStatusUpdateInterval(StatusUpdateInterval&& value) { m_statusUpdateIntervalHasBeenSet = true; m_statusUpdateInterval = std::move(value); }
-    inline JobTemplate& WithStatusUpdateInterval(const StatusUpdateInterval& value) { SetStatusUpdateInterval(value); return *this;}
-    inline JobTemplate& WithStatusUpdateInterval(StatusUpdateInterval&& value) { SetStatusUpdateInterval(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_arn;
 
-    ///@{
-    /**
-     * A job template can be of two types: system or custom. System or built-in job
-     * templates can't be modified or deleted by the user.
-     */
-    inline const Type& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Type& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Type&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline JobTemplate& WithType(const Type& value) { SetType(value); return *this;}
-    inline JobTemplate& WithType(Type&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_category;
 
-    AccelerationSettings m_accelerationSettings;
-    bool m_accelerationSettingsHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_category;
-    bool m_categoryHasBeenSet = false;
+  Aws::Vector<HopDestination> m_hopDestinations;
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdated{};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::Vector<HopDestination> m_hopDestinations;
-    bool m_hopDestinationsHasBeenSet = false;
+  int m_priority{0};
 
-    Aws::Utils::DateTime m_lastUpdated;
-    bool m_lastUpdatedHasBeenSet = false;
+  Aws::String m_queue;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  JobTemplateSettings m_settings;
 
-    int m_priority;
-    bool m_priorityHasBeenSet = false;
+  StatusUpdateInterval m_statusUpdateInterval{StatusUpdateInterval::NOT_SET};
 
-    Aws::String m_queue;
-    bool m_queueHasBeenSet = false;
+  Type m_type{Type::NOT_SET};
+  bool m_accelerationSettingsHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_categoryHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_hopDestinationsHasBeenSet = false;
+  bool m_lastUpdatedHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_priorityHasBeenSet = false;
+  bool m_queueHasBeenSet = false;
+  bool m_settingsHasBeenSet = false;
+  bool m_statusUpdateIntervalHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    JobTemplateSettings m_settings;
-    bool m_settingsHasBeenSet = false;
-
-    StatusUpdateInterval m_statusUpdateInterval;
-    bool m_statusUpdateIntervalHasBeenSet = false;
-
-    Type m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConvert
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConvert
+}  // namespace Aws

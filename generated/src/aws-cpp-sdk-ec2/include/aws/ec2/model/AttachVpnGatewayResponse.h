@@ -4,66 +4,77 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/model/VpcAttachment.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/VpcAttachment.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of AttachVpnGateway.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttachVpnGatewayResult">AWS
+ * API Reference</a></p>
+ */
+class AttachVpnGatewayResponse {
+ public:
+  AWS_EC2_API AttachVpnGatewayResponse() = default;
+  AWS_EC2_API AttachVpnGatewayResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API AttachVpnGatewayResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of AttachVpnGateway.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttachVpnGatewayResult">AWS
-   * API Reference</a></p>
+   * <p>Information about the attachment.</p>
    */
-  class AttachVpnGatewayResponse
-  {
-  public:
-    AWS_EC2_API AttachVpnGatewayResponse();
-    AWS_EC2_API AttachVpnGatewayResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API AttachVpnGatewayResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const VpcAttachment& GetVpcAttachment() const { return m_vpcAttachment; }
+  template <typename VpcAttachmentT = VpcAttachment>
+  void SetVpcAttachment(VpcAttachmentT&& value) {
+    m_vpcAttachmentHasBeenSet = true;
+    m_vpcAttachment = std::forward<VpcAttachmentT>(value);
+  }
+  template <typename VpcAttachmentT = VpcAttachment>
+  AttachVpnGatewayResponse& WithVpcAttachment(VpcAttachmentT&& value) {
+    SetVpcAttachment(std::forward<VpcAttachmentT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the attachment.</p>
-     */
-    inline const VpcAttachment& GetVpcAttachment() const{ return m_vpcAttachment; }
-    inline void SetVpcAttachment(const VpcAttachment& value) { m_vpcAttachment = value; }
-    inline void SetVpcAttachment(VpcAttachment&& value) { m_vpcAttachment = std::move(value); }
-    inline AttachVpnGatewayResponse& WithVpcAttachment(const VpcAttachment& value) { SetVpcAttachment(value); return *this;}
-    inline AttachVpnGatewayResponse& WithVpcAttachment(VpcAttachment&& value) { SetVpcAttachment(std::move(value)); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  AttachVpnGatewayResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline AttachVpnGatewayResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline AttachVpnGatewayResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  VpcAttachment m_vpcAttachment;
 
-    VpcAttachment m_vpcAttachment;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcAttachmentHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

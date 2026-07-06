@@ -4,77 +4,91 @@
  */
 
 #pragma once
-#include <aws/ecr/ECR_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ecr/ECR_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECR
-{
-namespace Model
-{
-  class InitiateLayerUploadResult
-  {
-  public:
-    AWS_ECR_API InitiateLayerUploadResult();
-    AWS_ECR_API InitiateLayerUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECR_API InitiateLayerUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECR {
+namespace Model {
+class InitiateLayerUploadResult {
+ public:
+  AWS_ECR_API InitiateLayerUploadResult() = default;
+  AWS_ECR_API InitiateLayerUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECR_API InitiateLayerUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The upload ID for the layer upload. This parameter is passed to further
+   * <a>UploadLayerPart</a> and <a>CompleteLayerUpload</a> operations.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  InitiateLayerUploadResult& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The upload ID for the layer upload. This parameter is passed to further
-     * <a>UploadLayerPart</a> and <a>CompleteLayerUpload</a> operations.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadId.assign(value); }
-    inline InitiateLayerUploadResult& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline InitiateLayerUploadResult& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline InitiateLayerUploadResult& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The size, in bytes, that Amazon ECR expects future layer part uploads to
+   * be.</p>
+   */
+  inline long long GetPartSize() const { return m_partSize; }
+  inline void SetPartSize(long long value) {
+    m_partSizeHasBeenSet = true;
+    m_partSize = value;
+  }
+  inline InitiateLayerUploadResult& WithPartSize(long long value) {
+    SetPartSize(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The size, in bytes, that Amazon ECR expects future layer part uploads to
-     * be.</p>
-     */
-    inline long long GetPartSize() const{ return m_partSize; }
-    inline void SetPartSize(long long value) { m_partSize = value; }
-    inline InitiateLayerUploadResult& WithPartSize(long long value) { SetPartSize(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline InitiateLayerUploadResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline InitiateLayerUploadResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline InitiateLayerUploadResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  InitiateLayerUploadResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_uploadId;
+ private:
+  Aws::String m_uploadId;
 
-    long long m_partSize;
+  long long m_partSize{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_partSizeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECR
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECR
+}  // namespace Aws

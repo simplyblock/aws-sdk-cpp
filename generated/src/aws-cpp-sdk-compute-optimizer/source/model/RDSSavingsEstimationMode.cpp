@@ -4,56 +4,102 @@
  */
 
 #include <aws/compute-optimizer/model/RDSSavingsEstimationMode.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-RDSSavingsEstimationMode::RDSSavingsEstimationMode() : 
-    m_source(RDSSavingsEstimationModeSource::NOT_SET),
-    m_sourceHasBeenSet(false)
-{
-}
+RDSSavingsEstimationMode::RDSSavingsEstimationMode(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-RDSSavingsEstimationMode::RDSSavingsEstimationMode(JsonView jsonValue)
-  : RDSSavingsEstimationMode()
-{
-  *this = jsonValue;
-}
+RDSSavingsEstimationMode& RDSSavingsEstimationMode::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-RDSSavingsEstimationMode& RDSSavingsEstimationMode::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("source"))
-  {
-    m_source = RDSSavingsEstimationModeSourceMapper::GetRDSSavingsEstimationModeSourceForName(jsonValue.GetString("source"));
+              if (initialKeyStr == "source") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_source = RDSSavingsEstimationModeSourceMapper::GetRDSSavingsEstimationModeSourceForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_sourceHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("RDSSavingsEstimationMode", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-    m_sourceHasBeenSet = true;
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
+
+            if (initialKeyStr == "source") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_source = RDSSavingsEstimationModeSourceMapper::GetRDSSavingsEstimationModeSourceForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_sourceHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue RDSSavingsEstimationMode::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_sourceHasBeenSet)
-  {
-   payload.WithString("source", RDSSavingsEstimationModeSourceMapper::GetNameForRDSSavingsEstimationModeSource(m_source));
+void RDSSavingsEstimationMode::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_sourceHasBeenSet) {
+    mapSize++;
   }
 
-  return payload;
+  encoder.WriteMapStart(mapSize);
+
+  if (m_sourceHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("source"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(RDSSavingsEstimationModeSourceMapper::GetNameForRDSSavingsEstimationModeSource(m_source).c_str()));
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

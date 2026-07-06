@@ -4,85 +4,116 @@
  */
 
 #pragma once
-#include <aws/pcs/PCS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pcs/PCS_EXPORTS.h>
+#include <aws/pcs/model/NetworkType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace PCS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace PCS {
+namespace Model {
 
+/**
+ * <p>The networking configuration for the cluster's control plane.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pcs-2023-02-10/NetworkingRequest">AWS
+ * API Reference</a></p>
+ */
+class NetworkingRequest {
+ public:
+  AWS_PCS_API NetworkingRequest() = default;
+  AWS_PCS_API NetworkingRequest(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PCS_API NetworkingRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The networking configuration for the cluster's control plane.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pcs-2023-02-10/NetworkingRequest">AWS
-   * API Reference</a></p>
+   * <p>The list of subnet IDs where PCS creates an Elastic Network Interface (ENI)
+   * to enable communication between managed controllers and PCS resources. Subnet
+   * IDs have the form <code>subnet-0123456789abcdef0</code>.</p> <p>Subnets can't be
+   * in Outposts, Wavelength or an Amazon Web Services Local Zone.</p>  <p>PCS
+   * currently supports only 1 subnet in this list.</p>
    */
-  class NetworkingRequest
-  {
-  public:
-    AWS_PCS_API NetworkingRequest();
-    AWS_PCS_API NetworkingRequest(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PCS_API NetworkingRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetSubnetIds() const { return m_subnetIds; }
+  inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  void SetSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds = std::forward<SubnetIdsT>(value);
+  }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  NetworkingRequest& WithSubnetIds(SubnetIdsT&& value) {
+    SetSubnetIds(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  template <typename SubnetIdsT = Aws::String>
+  NetworkingRequest& AddSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds.emplace_back(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of security group IDs associated with the Elastic Network Interface
+   * (ENI) created in subnets.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const { return m_securityGroupIds; }
+  inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds = std::forward<SecurityGroupIdsT>(value);
+  }
+  template <typename SecurityGroupIdsT = Aws::Vector<Aws::String>>
+  NetworkingRequest& WithSecurityGroupIds(SecurityGroupIdsT&& value) {
+    SetSecurityGroupIds(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupIdsT = Aws::String>
+  NetworkingRequest& AddSecurityGroupIds(SecurityGroupIdsT&& value) {
+    m_securityGroupIdsHasBeenSet = true;
+    m_securityGroupIds.emplace_back(std::forward<SecurityGroupIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of subnet IDs where Amazon Web Services PCS creates an Elastic
-     * Network Interface (ENI) to enable communication between managed controllers and
-     * Amazon Web Services PCS resources. Subnet IDs have the form
-     * <code>subnet-0123456789abcdef0</code>.</p> <p>Subnets can't be in Outposts,
-     * Wavelength or an Amazon Web Services Local Zone.</p>  <p>Amazon Web
-     * Services PCS currently supports only 1 subnet in this list.</p> 
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnetIds() const{ return m_subnetIds; }
-    inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
-    inline void SetSubnetIds(const Aws::Vector<Aws::String>& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = value; }
-    inline void SetSubnetIds(Aws::Vector<Aws::String>&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = std::move(value); }
-    inline NetworkingRequest& WithSubnetIds(const Aws::Vector<Aws::String>& value) { SetSubnetIds(value); return *this;}
-    inline NetworkingRequest& WithSubnetIds(Aws::Vector<Aws::String>&& value) { SetSubnetIds(std::move(value)); return *this;}
-    inline NetworkingRequest& AddSubnetIds(const Aws::String& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    inline NetworkingRequest& AddSubnetIds(Aws::String&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(std::move(value)); return *this; }
-    inline NetworkingRequest& AddSubnetIds(const char* value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The IP address version the cluster uses. The default is
+   * <code>IPV4</code>.</p>
+   */
+  inline NetworkType GetNetworkType() const { return m_networkType; }
+  inline bool NetworkTypeHasBeenSet() const { return m_networkTypeHasBeenSet; }
+  inline void SetNetworkType(NetworkType value) {
+    m_networkTypeHasBeenSet = true;
+    m_networkType = value;
+  }
+  inline NetworkingRequest& WithNetworkType(NetworkType value) {
+    SetNetworkType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_subnetIds;
 
-    ///@{
-    /**
-     * <p>A list of security group IDs associated with the Elastic Network Interface
-     * (ENI) created in subnets.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupIds() const{ return m_securityGroupIds; }
-    inline bool SecurityGroupIdsHasBeenSet() const { return m_securityGroupIdsHasBeenSet; }
-    inline void SetSecurityGroupIds(const Aws::Vector<Aws::String>& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = value; }
-    inline void SetSecurityGroupIds(Aws::Vector<Aws::String>&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds = std::move(value); }
-    inline NetworkingRequest& WithSecurityGroupIds(const Aws::Vector<Aws::String>& value) { SetSecurityGroupIds(value); return *this;}
-    inline NetworkingRequest& WithSecurityGroupIds(Aws::Vector<Aws::String>&& value) { SetSecurityGroupIds(std::move(value)); return *this;}
-    inline NetworkingRequest& AddSecurityGroupIds(const Aws::String& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    inline NetworkingRequest& AddSecurityGroupIds(Aws::String&& value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(std::move(value)); return *this; }
-    inline NetworkingRequest& AddSecurityGroupIds(const char* value) { m_securityGroupIdsHasBeenSet = true; m_securityGroupIds.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_securityGroupIds;
 
-    Aws::Vector<Aws::String> m_subnetIds;
-    bool m_subnetIdsHasBeenSet = false;
+  NetworkType m_networkType{NetworkType::NOT_SET};
+  bool m_subnetIdsHasBeenSet = false;
+  bool m_securityGroupIdsHasBeenSet = false;
+  bool m_networkTypeHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_securityGroupIds;
-    bool m_securityGroupIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace PCS
-} // namespace Aws
+}  // namespace Model
+}  // namespace PCS
+}  // namespace Aws

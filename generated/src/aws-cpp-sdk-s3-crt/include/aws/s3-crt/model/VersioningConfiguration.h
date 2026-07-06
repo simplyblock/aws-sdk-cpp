@@ -5,78 +5,79 @@
 
 #pragma once
 #include <aws/s3-crt/S3Crt_EXPORTS.h>
-#include <aws/s3-crt/model/MFADelete.h>
 #include <aws/s3-crt/model/BucketVersioningStatus.h>
+#include <aws/s3-crt/model/MFADelete.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace S3Crt
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Crt {
+namespace Model {
 
+/**
+ * <p>Describes the versioning state of an Amazon S3 bucket. For more information,
+ * see <a
+ * href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html">PUT
+ * Bucket versioning</a> in the <i>Amazon S3 API Reference</i>.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/VersioningConfiguration">AWS
+ * API Reference</a></p>
+ */
+class VersioningConfiguration {
+ public:
+  AWS_S3CRT_API VersioningConfiguration() = default;
+  AWS_S3CRT_API VersioningConfiguration(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_S3CRT_API VersioningConfiguration& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_S3CRT_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+
+  ///@{
   /**
-   * <p>Describes the versioning state of an Amazon S3 bucket. For more information,
-   * see <a
-   * href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTVersioningStatus.html">PUT
-   * Bucket versioning</a> in the <i>Amazon S3 API Reference</i>.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/VersioningConfiguration">AWS
-   * API Reference</a></p>
+   * <p>Specifies whether MFA delete is enabled in the bucket versioning
+   * configuration. This element is only returned if the bucket has been configured
+   * with MFA delete. If the bucket has never been so configured, this element is not
+   * returned.</p>
    */
-  class VersioningConfiguration
-  {
-  public:
-    AWS_S3CRT_API VersioningConfiguration();
-    AWS_S3CRT_API VersioningConfiguration(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_S3CRT_API VersioningConfiguration& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline MFADelete GetMFADelete() const { return m_mFADelete; }
+  inline bool MFADeleteHasBeenSet() const { return m_mFADeleteHasBeenSet; }
+  inline void SetMFADelete(MFADelete value) {
+    m_mFADeleteHasBeenSet = true;
+    m_mFADelete = value;
+  }
+  inline VersioningConfiguration& WithMFADelete(MFADelete value) {
+    SetMFADelete(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_S3CRT_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+  ///@{
+  /**
+   * <p>The versioning state of the bucket.</p>
+   */
+  inline BucketVersioningStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(BucketVersioningStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline VersioningConfiguration& WithStatus(BucketVersioningStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+ private:
+  MFADelete m_mFADelete{MFADelete::NOT_SET};
 
+  BucketVersioningStatus m_status{BucketVersioningStatus::NOT_SET};
+  bool m_mFADeleteHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Specifies whether MFA delete is enabled in the bucket versioning
-     * configuration. This element is only returned if the bucket has been configured
-     * with MFA delete. If the bucket has never been so configured, this element is not
-     * returned.</p>
-     */
-    inline const MFADelete& GetMFADelete() const{ return m_mFADelete; }
-    inline bool MFADeleteHasBeenSet() const { return m_mFADeleteHasBeenSet; }
-    inline void SetMFADelete(const MFADelete& value) { m_mFADeleteHasBeenSet = true; m_mFADelete = value; }
-    inline void SetMFADelete(MFADelete&& value) { m_mFADeleteHasBeenSet = true; m_mFADelete = std::move(value); }
-    inline VersioningConfiguration& WithMFADelete(const MFADelete& value) { SetMFADelete(value); return *this;}
-    inline VersioningConfiguration& WithMFADelete(MFADelete&& value) { SetMFADelete(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The versioning state of the bucket.</p>
-     */
-    inline const BucketVersioningStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const BucketVersioningStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(BucketVersioningStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline VersioningConfiguration& WithStatus(const BucketVersioningStatus& value) { SetStatus(value); return *this;}
-    inline VersioningConfiguration& WithStatus(BucketVersioningStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    MFADelete m_mFADelete;
-    bool m_mFADeleteHasBeenSet = false;
-
-    BucketVersioningStatus m_status;
-    bool m_statusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace S3Crt
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3Crt
+}  // namespace Aws

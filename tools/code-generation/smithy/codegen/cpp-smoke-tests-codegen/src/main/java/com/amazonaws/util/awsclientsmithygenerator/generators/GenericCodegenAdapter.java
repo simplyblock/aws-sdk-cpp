@@ -27,6 +27,8 @@ public interface GenericCodegenAdapter<SHAPE, DATA> {
 
     public boolean isList(DATA d);
 
+    public boolean isDouble(DATA d);
+
     public boolean isFloatShape( SHAPE s);
 
     public boolean isBooleanShape(SHAPE s);
@@ -41,6 +43,12 @@ public interface GenericCodegenAdapter<SHAPE, DATA> {
 
     public boolean isEnumShape( SHAPE s);
 
+    public boolean isTimestampShape(SHAPE s);
+
+    public boolean isDoubleShape( SHAPE s);
+
+    public boolean isDocumentShape(SHAPE s);
+
     public List<DATA> getList(DATA d);
 
     public Map<String, DATA> getMap(DATA d);
@@ -54,6 +62,8 @@ public interface GenericCodegenAdapter<SHAPE, DATA> {
     public Float getFloat(DATA d);
 
     public Integer getInteger(DATA d);
+
+    public Double getDouble(DATA d);
 
     public String getShapeName(SHAPE s);
 
@@ -189,9 +199,26 @@ public interface GenericCodegenAdapter<SHAPE, DATA> {
         else if (isString(value) && isEnumShape(shape))
         {
             String shapeName = getShapeName(shape);
-            functionName = String.format("{%s::%s}",shapeName,value);
+            String enumValue = getString(value).replace("-", "_");
+            functionName = String.format("%s::%s",shapeName,enumValue);
         }
-        else
+        else if(isTimestampShape(shape))
+        {
+            if(isString(value))
+            {
+                functionName = String.format("\"%s\"",value);
+            }
+            else if(isDouble(value))
+            {
+                functionName = String.format("{(double)%s}",value);
+            }
+            else
+            {
+                throw new RuntimeException("unsupported timestamp shape format");
+            }
+        } else if (isDocumentShape(shape)) {
+            functionName = String.format("Aws::Utils::Document{R\"({\"%s\", \"%s\"})\"}", key, value);
+        } else
         {
             throw new RuntimeException(String.format("shape not supported:%s",shape));
         }

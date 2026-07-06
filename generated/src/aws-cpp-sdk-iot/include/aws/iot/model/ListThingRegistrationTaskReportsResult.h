@@ -4,96 +4,118 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/iot/model/ReportType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
+#include <aws/iot/model/ReportType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListThingRegistrationTaskReportsResult
-  {
-  public:
-    AWS_IOT_API ListThingRegistrationTaskReportsResult();
-    AWS_IOT_API ListThingRegistrationTaskReportsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListThingRegistrationTaskReportsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListThingRegistrationTaskReportsResult {
+ public:
+  AWS_IOT_API ListThingRegistrationTaskReportsResult() = default;
+  AWS_IOT_API ListThingRegistrationTaskReportsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListThingRegistrationTaskReportsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Links to the task resources.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetResourceLinks() const { return m_resourceLinks; }
+  template <typename ResourceLinksT = Aws::Vector<Aws::String>>
+  void SetResourceLinks(ResourceLinksT&& value) {
+    m_resourceLinksHasBeenSet = true;
+    m_resourceLinks = std::forward<ResourceLinksT>(value);
+  }
+  template <typename ResourceLinksT = Aws::Vector<Aws::String>>
+  ListThingRegistrationTaskReportsResult& WithResourceLinks(ResourceLinksT&& value) {
+    SetResourceLinks(std::forward<ResourceLinksT>(value));
+    return *this;
+  }
+  template <typename ResourceLinksT = Aws::String>
+  ListThingRegistrationTaskReportsResult& AddResourceLinks(ResourceLinksT&& value) {
+    m_resourceLinksHasBeenSet = true;
+    m_resourceLinks.emplace_back(std::forward<ResourceLinksT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Links to the task resources.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetResourceLinks() const{ return m_resourceLinks; }
-    inline void SetResourceLinks(const Aws::Vector<Aws::String>& value) { m_resourceLinks = value; }
-    inline void SetResourceLinks(Aws::Vector<Aws::String>&& value) { m_resourceLinks = std::move(value); }
-    inline ListThingRegistrationTaskReportsResult& WithResourceLinks(const Aws::Vector<Aws::String>& value) { SetResourceLinks(value); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithResourceLinks(Aws::Vector<Aws::String>&& value) { SetResourceLinks(std::move(value)); return *this;}
-    inline ListThingRegistrationTaskReportsResult& AddResourceLinks(const Aws::String& value) { m_resourceLinks.push_back(value); return *this; }
-    inline ListThingRegistrationTaskReportsResult& AddResourceLinks(Aws::String&& value) { m_resourceLinks.push_back(std::move(value)); return *this; }
-    inline ListThingRegistrationTaskReportsResult& AddResourceLinks(const char* value) { m_resourceLinks.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The type of task report.</p>
+   */
+  inline ReportType GetReportType() const { return m_reportType; }
+  inline void SetReportType(ReportType value) {
+    m_reportTypeHasBeenSet = true;
+    m_reportType = value;
+  }
+  inline ListThingRegistrationTaskReportsResult& WithReportType(ReportType value) {
+    SetReportType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of task report.</p>
-     */
-    inline const ReportType& GetReportType() const{ return m_reportType; }
-    inline void SetReportType(const ReportType& value) { m_reportType = value; }
-    inline void SetReportType(ReportType&& value) { m_reportType = std::move(value); }
-    inline ListThingRegistrationTaskReportsResult& WithReportType(const ReportType& value) { SetReportType(value); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithReportType(ReportType&& value) { SetReportType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to get the next set of results, or <b>null</b> if there are
+   * no additional results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListThingRegistrationTaskReportsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to get the next set of results, or <b>null</b> if there are
-     * no additional results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListThingRegistrationTaskReportsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListThingRegistrationTaskReportsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListThingRegistrationTaskReportsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListThingRegistrationTaskReportsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_resourceLinks;
+ private:
+  Aws::Vector<Aws::String> m_resourceLinks;
 
-    ReportType m_reportType;
+  ReportType m_reportType{ReportType::NOT_SET};
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceLinksHasBeenSet = false;
+  bool m_reportTypeHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

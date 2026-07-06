@@ -4,90 +4,117 @@
  */
 
 #pragma once
-#include <aws/importexport/ImportExport_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/importexport/model/ResponseMetadata.h>
+#include <aws/importexport/ImportExport_EXPORTS.h>
 #include <aws/importexport/model/Artifact.h>
+#include <aws/importexport/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ImportExport
-{
-namespace Model
-{
-  /**
-   * Output structure for the UpateJob operation.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/importexport-2010-06-01/UpdateJobOutput">AWS
-   * API Reference</a></p>
-   */
-  class UpdateJobResult
-  {
-  public:
-    AWS_IMPORTEXPORT_API UpdateJobResult();
-    AWS_IMPORTEXPORT_API UpdateJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_IMPORTEXPORT_API UpdateJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ImportExport {
+namespace Model {
+/**
+ * Output structure for the UpateJob operation.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/importexport-2010-06-01/UpdateJobOutput">AWS
+ * API Reference</a></p>
+ */
+class UpdateJobResult {
+ public:
+  AWS_IMPORTEXPORT_API UpdateJobResult() = default;
+  AWS_IMPORTEXPORT_API UpdateJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_IMPORTEXPORT_API UpdateJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline bool GetSuccess() const{ return m_success; }
-    inline void SetSuccess(bool value) { m_success = value; }
-    inline UpdateJobResult& WithSuccess(bool value) { SetSuccess(value); return *this;}
-    ///@}
+  inline bool GetSuccess() const { return m_success; }
+  inline void SetSuccess(bool value) {
+    m_successHasBeenSet = true;
+    m_success = value;
+  }
+  inline UpdateJobResult& WithSuccess(bool value) {
+    SetSuccess(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetWarningMessage() const{ return m_warningMessage; }
-    inline void SetWarningMessage(const Aws::String& value) { m_warningMessage = value; }
-    inline void SetWarningMessage(Aws::String&& value) { m_warningMessage = std::move(value); }
-    inline void SetWarningMessage(const char* value) { m_warningMessage.assign(value); }
-    inline UpdateJobResult& WithWarningMessage(const Aws::String& value) { SetWarningMessage(value); return *this;}
-    inline UpdateJobResult& WithWarningMessage(Aws::String&& value) { SetWarningMessage(std::move(value)); return *this;}
-    inline UpdateJobResult& WithWarningMessage(const char* value) { SetWarningMessage(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Vector<Artifact>& GetArtifactList() const{ return m_artifactList; }
-    inline void SetArtifactList(const Aws::Vector<Artifact>& value) { m_artifactList = value; }
-    inline void SetArtifactList(Aws::Vector<Artifact>&& value) { m_artifactList = std::move(value); }
-    inline UpdateJobResult& WithArtifactList(const Aws::Vector<Artifact>& value) { SetArtifactList(value); return *this;}
-    inline UpdateJobResult& WithArtifactList(Aws::Vector<Artifact>&& value) { SetArtifactList(std::move(value)); return *this;}
-    inline UpdateJobResult& AddArtifactList(const Artifact& value) { m_artifactList.push_back(value); return *this; }
-    inline UpdateJobResult& AddArtifactList(Artifact&& value) { m_artifactList.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetWarningMessage() const { return m_warningMessage; }
+  template <typename WarningMessageT = Aws::String>
+  void SetWarningMessage(WarningMessageT&& value) {
+    m_warningMessageHasBeenSet = true;
+    m_warningMessage = std::forward<WarningMessageT>(value);
+  }
+  template <typename WarningMessageT = Aws::String>
+  UpdateJobResult& WithWarningMessage(WarningMessageT&& value) {
+    SetWarningMessage(std::forward<WarningMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline UpdateJobResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline UpdateJobResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    bool m_success;
+  inline const Aws::Vector<Artifact>& GetArtifactList() const { return m_artifactList; }
+  template <typename ArtifactListT = Aws::Vector<Artifact>>
+  void SetArtifactList(ArtifactListT&& value) {
+    m_artifactListHasBeenSet = true;
+    m_artifactList = std::forward<ArtifactListT>(value);
+  }
+  template <typename ArtifactListT = Aws::Vector<Artifact>>
+  UpdateJobResult& WithArtifactList(ArtifactListT&& value) {
+    SetArtifactList(std::forward<ArtifactListT>(value));
+    return *this;
+  }
+  template <typename ArtifactListT = Artifact>
+  UpdateJobResult& AddArtifactList(ArtifactListT&& value) {
+    m_artifactListHasBeenSet = true;
+    m_artifactList.emplace_back(std::forward<ArtifactListT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_warningMessage;
+  ///@{
 
-    Aws::Vector<Artifact> m_artifactList;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  UpdateJobResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  bool m_success{false};
 
-} // namespace Model
-} // namespace ImportExport
-} // namespace Aws
+  Aws::String m_warningMessage;
+
+  Aws::Vector<Artifact> m_artifactList;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_successHasBeenSet = false;
+  bool m_warningMessageHasBeenSet = false;
+  bool m_artifactListHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ImportExport
+}  // namespace Aws

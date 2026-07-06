@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/emr-serverless/model/StartJobRunRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/emr-serverless/model/StartJobRunRequest.h>
 
 #include <utility>
 
@@ -12,88 +12,52 @@ using namespace Aws::EMRServerless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartJobRunRequest::StartJobRunRequest() : 
-    m_applicationIdHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_executionRoleArnHasBeenSet(false),
-    m_jobDriverHasBeenSet(false),
-    m_configurationOverridesHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_executionTimeoutMinutes(0),
-    m_executionTimeoutMinutesHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_mode(JobRunMode::NOT_SET),
-    m_modeHasBeenSet(false),
-    m_retryPolicyHasBeenSet(false)
-{
-}
-
-Aws::String StartJobRunRequest::SerializePayload() const
-{
+Aws::String StartJobRunRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
-  if(m_executionRoleArnHasBeenSet)
-  {
-   payload.WithString("executionRoleArn", m_executionRoleArn);
-
+  if (m_executionRoleArnHasBeenSet) {
+    payload.WithString("executionRoleArn", m_executionRoleArn);
   }
 
-  if(m_jobDriverHasBeenSet)
-  {
-   payload.WithObject("jobDriver", m_jobDriver.Jsonize());
-
+  if (m_executionIamPolicyHasBeenSet) {
+    payload.WithObject("executionIamPolicy", m_executionIamPolicy.Jsonize());
   }
 
-  if(m_configurationOverridesHasBeenSet)
-  {
-   payload.WithObject("configurationOverrides", m_configurationOverrides.Jsonize());
-
+  if (m_jobDriverHasBeenSet) {
+    payload.WithObject("jobDriver", m_jobDriver.Jsonize());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
-
+  if (m_configurationOverridesHasBeenSet) {
+    payload.WithObject("configurationOverrides", m_configurationOverrides.Jsonize());
   }
 
-  if(m_executionTimeoutMinutesHasBeenSet)
-  {
-   payload.WithInt64("executionTimeoutMinutes", m_executionTimeoutMinutes);
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_executionTimeoutMinutesHasBeenSet) {
+    payload.WithInt64("executionTimeoutMinutes", m_executionTimeoutMinutes);
   }
 
-  if(m_modeHasBeenSet)
-  {
-   payload.WithString("mode", JobRunModeMapper::GetNameForJobRunMode(m_mode));
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_retryPolicyHasBeenSet)
-  {
-   payload.WithObject("retryPolicy", m_retryPolicy.Jsonize());
+  if (m_modeHasBeenSet) {
+    payload.WithString("mode", JobRunModeMapper::GetNameForJobRunMode(m_mode));
+  }
 
+  if (m_retryPolicyHasBeenSet) {
+    payload.WithObject("retryPolicy", m_retryPolicy.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

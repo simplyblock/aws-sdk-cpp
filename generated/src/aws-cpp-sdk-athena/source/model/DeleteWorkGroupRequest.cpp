@@ -12,40 +12,22 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteWorkGroupRequest::DeleteWorkGroupRequest() : 
-    m_workGroupHasBeenSet(false),
-    m_recursiveDeleteOption(false),
-    m_recursiveDeleteOptionHasBeenSet(false)
-{
-}
-
-Aws::String DeleteWorkGroupRequest::SerializePayload() const
-{
+Aws::String DeleteWorkGroupRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_workGroupHasBeenSet)
-  {
-   payload.WithString("WorkGroup", m_workGroup);
-
+  if (m_workGroupHasBeenSet) {
+    payload.WithString("WorkGroup", m_workGroup);
   }
 
-  if(m_recursiveDeleteOptionHasBeenSet)
-  {
-   payload.WithBool("RecursiveDeleteOption", m_recursiveDeleteOption);
-
+  if (m_recursiveDeleteOptionHasBeenSet) {
+    payload.WithBool("RecursiveDeleteOption", m_recursiveDeleteOption);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteWorkGroupRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteWorkGroupRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.DeleteWorkGroup"));
   return headers;
-
 }
-
-
-
-

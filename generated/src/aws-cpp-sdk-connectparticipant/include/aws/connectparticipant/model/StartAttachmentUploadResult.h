@@ -5,77 +5,91 @@
 
 #pragma once
 #include <aws/connectparticipant/ConnectParticipant_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/connectparticipant/model/UploadMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectParticipant
-{
-namespace Model
-{
-  class StartAttachmentUploadResult
-  {
-  public:
-    AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult();
-    AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectParticipant {
+namespace Model {
+class StartAttachmentUploadResult {
+ public:
+  AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult() = default;
+  AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTPARTICIPANT_API StartAttachmentUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A unique identifier for the attachment.</p>
+   */
+  inline const Aws::String& GetAttachmentId() const { return m_attachmentId; }
+  template <typename AttachmentIdT = Aws::String>
+  void SetAttachmentId(AttachmentIdT&& value) {
+    m_attachmentIdHasBeenSet = true;
+    m_attachmentId = std::forward<AttachmentIdT>(value);
+  }
+  template <typename AttachmentIdT = Aws::String>
+  StartAttachmentUploadResult& WithAttachmentId(AttachmentIdT&& value) {
+    SetAttachmentId(std::forward<AttachmentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the attachment.</p>
-     */
-    inline const Aws::String& GetAttachmentId() const{ return m_attachmentId; }
-    inline void SetAttachmentId(const Aws::String& value) { m_attachmentId = value; }
-    inline void SetAttachmentId(Aws::String&& value) { m_attachmentId = std::move(value); }
-    inline void SetAttachmentId(const char* value) { m_attachmentId.assign(value); }
-    inline StartAttachmentUploadResult& WithAttachmentId(const Aws::String& value) { SetAttachmentId(value); return *this;}
-    inline StartAttachmentUploadResult& WithAttachmentId(Aws::String&& value) { SetAttachmentId(std::move(value)); return *this;}
-    inline StartAttachmentUploadResult& WithAttachmentId(const char* value) { SetAttachmentId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The headers to be provided while uploading the file to the URL.</p>
+   */
+  inline const UploadMetadata& GetUploadMetadata() const { return m_uploadMetadata; }
+  template <typename UploadMetadataT = UploadMetadata>
+  void SetUploadMetadata(UploadMetadataT&& value) {
+    m_uploadMetadataHasBeenSet = true;
+    m_uploadMetadata = std::forward<UploadMetadataT>(value);
+  }
+  template <typename UploadMetadataT = UploadMetadata>
+  StartAttachmentUploadResult& WithUploadMetadata(UploadMetadataT&& value) {
+    SetUploadMetadata(std::forward<UploadMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Fields to be used while uploading the attachment.</p>
-     */
-    inline const UploadMetadata& GetUploadMetadata() const{ return m_uploadMetadata; }
-    inline void SetUploadMetadata(const UploadMetadata& value) { m_uploadMetadata = value; }
-    inline void SetUploadMetadata(UploadMetadata&& value) { m_uploadMetadata = std::move(value); }
-    inline StartAttachmentUploadResult& WithUploadMetadata(const UploadMetadata& value) { SetUploadMetadata(value); return *this;}
-    inline StartAttachmentUploadResult& WithUploadMetadata(UploadMetadata&& value) { SetUploadMetadata(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartAttachmentUploadResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartAttachmentUploadResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartAttachmentUploadResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartAttachmentUploadResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_attachmentId;
+ private:
+  Aws::String m_attachmentId;
 
-    UploadMetadata m_uploadMetadata;
+  UploadMetadata m_uploadMetadata;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attachmentIdHasBeenSet = false;
+  bool m_uploadMetadataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConnectParticipant
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectParticipant
+}  // namespace Aws

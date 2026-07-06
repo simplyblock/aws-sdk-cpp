@@ -4,88 +4,108 @@
  */
 
 #pragma once
-#include <aws/docdb/DocDB_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/docdb/model/ResponseMetadata.h>
+#include <aws/docdb/DocDB_EXPORTS.h>
 #include <aws/docdb/model/DBCluster.h>
+#include <aws/docdb/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace DocDB
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace DocDB {
+namespace Model {
+/**
+ * <p>Represents the output of <a>DescribeDBClusters</a>.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DBClusterMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeDBClustersResult {
+ public:
+  AWS_DOCDB_API DescribeDBClustersResult() = default;
+  AWS_DOCDB_API DescribeDBClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_DOCDB_API DescribeDBClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Represents the output of <a>DescribeDBClusters</a>.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/docdb-2014-10-31/DBClusterMessage">AWS
-   * API Reference</a></p>
+   * <p>An optional pagination token provided by a previous request. If this
+   * parameter is specified, the response includes only records beyond the marker, up
+   * to the value specified by <code>MaxRecords</code>.</p>
    */
-  class DescribeDBClustersResult
-  {
-  public:
-    AWS_DOCDB_API DescribeDBClustersResult();
-    AWS_DOCDB_API DescribeDBClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_DOCDB_API DescribeDBClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeDBClustersResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of clusters.</p>
+   */
+  inline const Aws::Vector<DBCluster>& GetDBClusters() const { return m_dBClusters; }
+  template <typename DBClustersT = Aws::Vector<DBCluster>>
+  void SetDBClusters(DBClustersT&& value) {
+    m_dBClustersHasBeenSet = true;
+    m_dBClusters = std::forward<DBClustersT>(value);
+  }
+  template <typename DBClustersT = Aws::Vector<DBCluster>>
+  DescribeDBClustersResult& WithDBClusters(DBClustersT&& value) {
+    SetDBClusters(std::forward<DBClustersT>(value));
+    return *this;
+  }
+  template <typename DBClustersT = DBCluster>
+  DescribeDBClustersResult& AddDBClusters(DBClustersT&& value) {
+    m_dBClustersHasBeenSet = true;
+    m_dBClusters.emplace_back(std::forward<DBClustersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous request. If this
-     * parameter is specified, the response includes only records beyond the marker, up
-     * to the value specified by <code>MaxRecords</code>.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeDBClustersResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeDBClustersResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeDBClustersResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of clusters.</p>
-     */
-    inline const Aws::Vector<DBCluster>& GetDBClusters() const{ return m_dBClusters; }
-    inline void SetDBClusters(const Aws::Vector<DBCluster>& value) { m_dBClusters = value; }
-    inline void SetDBClusters(Aws::Vector<DBCluster>&& value) { m_dBClusters = std::move(value); }
-    inline DescribeDBClustersResult& WithDBClusters(const Aws::Vector<DBCluster>& value) { SetDBClusters(value); return *this;}
-    inline DescribeDBClustersResult& WithDBClusters(Aws::Vector<DBCluster>&& value) { SetDBClusters(std::move(value)); return *this;}
-    inline DescribeDBClustersResult& AddDBClusters(const DBCluster& value) { m_dBClusters.push_back(value); return *this; }
-    inline DescribeDBClustersResult& AddDBClusters(DBCluster&& value) { m_dBClusters.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeDBClustersResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeDBClustersResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeDBClustersResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::Vector<DBCluster> m_dBClusters;
 
-    Aws::Vector<DBCluster> m_dBClusters;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_dBClustersHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace DocDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace DocDB
+}  // namespace Aws

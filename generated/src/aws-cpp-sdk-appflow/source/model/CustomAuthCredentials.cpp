@@ -11,71 +11,45 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Appflow {
+namespace Model {
 
-CustomAuthCredentials::CustomAuthCredentials() : 
-    m_customAuthenticationTypeHasBeenSet(false),
-    m_credentialsMapHasBeenSet(false)
-{
-}
+CustomAuthCredentials::CustomAuthCredentials(JsonView jsonValue) { *this = jsonValue; }
 
-CustomAuthCredentials::CustomAuthCredentials(JsonView jsonValue)
-  : CustomAuthCredentials()
-{
-  *this = jsonValue;
-}
-
-CustomAuthCredentials& CustomAuthCredentials::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("customAuthenticationType"))
-  {
+CustomAuthCredentials& CustomAuthCredentials::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("customAuthenticationType")) {
     m_customAuthenticationType = jsonValue.GetString("customAuthenticationType");
-
     m_customAuthenticationTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("credentialsMap"))
-  {
+  if (jsonValue.ValueExists("credentialsMap")) {
     Aws::Map<Aws::String, JsonView> credentialsMapJsonMap = jsonValue.GetObject("credentialsMap").GetAllObjects();
-    for(auto& credentialsMapItem : credentialsMapJsonMap)
-    {
+    for (auto& credentialsMapItem : credentialsMapJsonMap) {
       m_credentialsMap[credentialsMapItem.first] = credentialsMapItem.second.AsString();
     }
     m_credentialsMapHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CustomAuthCredentials::Jsonize() const
-{
+JsonValue CustomAuthCredentials::Jsonize() const {
   JsonValue payload;
 
-  if(m_customAuthenticationTypeHasBeenSet)
-  {
-   payload.WithString("customAuthenticationType", m_customAuthenticationType);
-
+  if (m_customAuthenticationTypeHasBeenSet) {
+    payload.WithString("customAuthenticationType", m_customAuthenticationType);
   }
 
-  if(m_credentialsMapHasBeenSet)
-  {
-   JsonValue credentialsMapJsonMap;
-   for(auto& credentialsMapItem : m_credentialsMap)
-   {
-     credentialsMapJsonMap.WithString(credentialsMapItem.first, credentialsMapItem.second);
-   }
-   payload.WithObject("credentialsMap", std::move(credentialsMapJsonMap));
-
+  if (m_credentialsMapHasBeenSet) {
+    JsonValue credentialsMapJsonMap;
+    for (auto& credentialsMapItem : m_credentialsMap) {
+      credentialsMapJsonMap.WithString(credentialsMapItem.first, credentialsMapItem.second);
+    }
+    payload.WithObject("credentialsMap", std::move(credentialsMapJsonMap));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

@@ -4,270 +4,361 @@
  */
 
 #pragma once
-#include <aws/rds/RDS_EXPORTS.h>
-#include <aws/rds/RDSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rds/RDSRequest.h>
+#include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace RDS
-{
-namespace Model
-{
+namespace Aws {
+namespace RDS {
+namespace Model {
 
+/**
+ */
+class CreateCustomDBEngineVersionRequest : public RDSRequest {
+ public:
+  AWS_RDS_API CreateCustomDBEngineVersionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateCustomDBEngineVersion"; }
+
+  AWS_RDS_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_RDS_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The database engine.</p> <p>RDS Custom for Oracle supports the following
+   * values:</p> <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p>
+   * <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p>
+   * <code>custom-oracle-se2</code> </p> </li> <li> <p>
+   * <code>custom-oracle-se2-cdb</code> </p> </li> </ul> <p>RDS Custom for SQL Server
+   * supports the following values:</p> <ul> <li> <p>
+   * <code>custom-sqlserver-ee</code> </p> </li> <li> <p>
+   * <code>custom-sqlserver-se</code> </p> </li> <li> <p>
+   * <code>custom-sqlserver-web</code> </p> </li> <li> <p>
+   * <code>custom-sqlserver-dev</code> </p> </li> </ul> <p>RDS for SQL Server
+   * supports the following values:</p> <ul> <li> <p> <code>sqlserver-ee</code>
+   * (Bring Your Own Media)</p> </li> <li> <p> <code>sqlserver-se</code> (Bring Your
+   * Own Media)</p> </li> <li> <p> <code>sqlserver-dev-ee</code> </p> </li> </ul>
    */
-  class CreateCustomDBEngineVersionRequest : public RDSRequest
-  {
-  public:
-    AWS_RDS_API CreateCustomDBEngineVersionRequest();
+  inline const Aws::String& GetEngine() const { return m_engine; }
+  inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
+  template <typename EngineT = Aws::String>
+  void SetEngine(EngineT&& value) {
+    m_engineHasBeenSet = true;
+    m_engine = std::forward<EngineT>(value);
+  }
+  template <typename EngineT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithEngine(EngineT&& value) {
+    SetEngine(std::forward<EngineT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateCustomDBEngineVersion"; }
+  ///@{
+  /**
+   * <p>The name of your custom engine version (CEV).</p> <p>For RDS Custom for
+   * Oracle, the name format is <code>19.*customized_string*</code>. For example, a
+   * valid CEV name is <code>19.my_cev1</code>.</p> <p>For RDS Custom for SQL Server
+   * and RDS for SQL Server <code>sqlserver-dev-ee</code>, the name format is
+   * <code>*major_engine_version*.*minor_engine_version*.*customized_string*</code>.
+   * For example, a valid CEV name is <code>16.00.4215.2.my_cev1</code>.</p> <p>For
+   * RDS for SQL Server Bring Your Own Media (<code>sqlserver-ee</code>,
+   * <code>sqlserver-se</code>), specify the RDS engine version that you want to use.
+   * For example, <code>16.00.4175.1.v1</code>.</p> <p>The CEV name is unique per
+   * customer per Amazon Web Services Regions.</p>
+   */
+  inline const Aws::String& GetEngineVersion() const { return m_engineVersion; }
+  inline bool EngineVersionHasBeenSet() const { return m_engineVersionHasBeenSet; }
+  template <typename EngineVersionT = Aws::String>
+  void SetEngineVersion(EngineVersionT&& value) {
+    m_engineVersionHasBeenSet = true;
+    m_engineVersion = std::forward<EngineVersionT>(value);
+  }
+  template <typename EngineVersionT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithEngineVersion(EngineVersionT&& value) {
+    SetEngineVersion(std::forward<EngineVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_RDS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of an Amazon S3 bucket that contains database installation files for
+   * your CEV. For example, a valid bucket name is
+   * <code>my-custom-installation-files</code>.</p>
+   */
+  inline const Aws::String& GetDatabaseInstallationFilesS3BucketName() const { return m_databaseInstallationFilesS3BucketName; }
+  inline bool DatabaseInstallationFilesS3BucketNameHasBeenSet() const { return m_databaseInstallationFilesS3BucketNameHasBeenSet; }
+  template <typename DatabaseInstallationFilesS3BucketNameT = Aws::String>
+  void SetDatabaseInstallationFilesS3BucketName(DatabaseInstallationFilesS3BucketNameT&& value) {
+    m_databaseInstallationFilesS3BucketNameHasBeenSet = true;
+    m_databaseInstallationFilesS3BucketName = std::forward<DatabaseInstallationFilesS3BucketNameT>(value);
+  }
+  template <typename DatabaseInstallationFilesS3BucketNameT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3BucketName(DatabaseInstallationFilesS3BucketNameT&& value) {
+    SetDatabaseInstallationFilesS3BucketName(std::forward<DatabaseInstallationFilesS3BucketNameT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_RDS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The Amazon S3 directory that contains the database installation files for
+   * your CEV. For example, a valid bucket name is <code>123456789012/cev1</code>. If
+   * this setting isn't specified, no prefix is assumed.</p>
+   */
+  inline const Aws::String& GetDatabaseInstallationFilesS3Prefix() const { return m_databaseInstallationFilesS3Prefix; }
+  inline bool DatabaseInstallationFilesS3PrefixHasBeenSet() const { return m_databaseInstallationFilesS3PrefixHasBeenSet; }
+  template <typename DatabaseInstallationFilesS3PrefixT = Aws::String>
+  void SetDatabaseInstallationFilesS3Prefix(DatabaseInstallationFilesS3PrefixT&& value) {
+    m_databaseInstallationFilesS3PrefixHasBeenSet = true;
+    m_databaseInstallationFilesS3Prefix = std::forward<DatabaseInstallationFilesS3PrefixT>(value);
+  }
+  template <typename DatabaseInstallationFilesS3PrefixT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3Prefix(DatabaseInstallationFilesS3PrefixT&& value) {
+    SetDatabaseInstallationFilesS3Prefix(std::forward<DatabaseInstallationFilesS3PrefixT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The database installation files (ISO and EXE) uploaded to Amazon S3 for your
+   * database engine version to import to Amazon RDS.</p> <p>For RDS for SQL Server
+   * Bring Your Own Media (<code>sqlserver-ee</code>, <code>sqlserver-se</code>),
+   * provide the SQL Server RTM ISO file once per major version and edition
+   * combination. Minor versions reuse the same file.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDatabaseInstallationFiles() const { return m_databaseInstallationFiles; }
+  inline bool DatabaseInstallationFilesHasBeenSet() const { return m_databaseInstallationFilesHasBeenSet; }
+  template <typename DatabaseInstallationFilesT = Aws::Vector<Aws::String>>
+  void SetDatabaseInstallationFiles(DatabaseInstallationFilesT&& value) {
+    m_databaseInstallationFilesHasBeenSet = true;
+    m_databaseInstallationFiles = std::forward<DatabaseInstallationFilesT>(value);
+  }
+  template <typename DatabaseInstallationFilesT = Aws::Vector<Aws::String>>
+  CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFiles(DatabaseInstallationFilesT&& value) {
+    SetDatabaseInstallationFiles(std::forward<DatabaseInstallationFilesT>(value));
+    return *this;
+  }
+  template <typename DatabaseInstallationFilesT = Aws::String>
+  CreateCustomDBEngineVersionRequest& AddDatabaseInstallationFiles(DatabaseInstallationFilesT&& value) {
+    m_databaseInstallationFilesHasBeenSet = true;
+    m_databaseInstallationFiles.emplace_back(std::forward<DatabaseInstallationFilesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The database engine. RDS Custom for Oracle supports the following values:</p>
-     * <ul> <li> <p> <code>custom-oracle-ee</code> </p> </li> <li> <p>
-     * <code>custom-oracle-ee-cdb</code> </p> </li> <li> <p>
-     * <code>custom-oracle-se2</code> </p> </li> <li> <p>
-     * <code>custom-oracle-se2-cdb</code> </p> </li> </ul>
-     */
-    inline const Aws::String& GetEngine() const{ return m_engine; }
-    inline bool EngineHasBeenSet() const { return m_engineHasBeenSet; }
-    inline void SetEngine(const Aws::String& value) { m_engineHasBeenSet = true; m_engine = value; }
-    inline void SetEngine(Aws::String&& value) { m_engineHasBeenSet = true; m_engine = std::move(value); }
-    inline void SetEngine(const char* value) { m_engineHasBeenSet = true; m_engine.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithEngine(const Aws::String& value) { SetEngine(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithEngine(Aws::String&& value) { SetEngine(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithEngine(const char* value) { SetEngine(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the Amazon Machine Image (AMI). For RDS Custom for SQL Server, an
+   * AMI ID is required to create a CEV. For RDS Custom for Oracle, the default is
+   * the most recent AMI available, but you can specify an AMI ID that was used in a
+   * different Oracle CEV. Find the AMIs used by your CEVs by calling the <a
+   * href="https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_DescribeDBEngineVersions.html">DescribeDBEngineVersions</a>
+   * operation.</p>
+   */
+  inline const Aws::String& GetImageId() const { return m_imageId; }
+  inline bool ImageIdHasBeenSet() const { return m_imageIdHasBeenSet; }
+  template <typename ImageIdT = Aws::String>
+  void SetImageId(ImageIdT&& value) {
+    m_imageIdHasBeenSet = true;
+    m_imageId = std::forward<ImageIdT>(value);
+  }
+  template <typename ImageIdT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithImageId(ImageIdT&& value) {
+    SetImageId(std::forward<ImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of your CEV. The name format is 19.<i>customized_string</i>. For
-     * example, a valid CEV name is <code>19.my_cev1</code>. This setting is required
-     * for RDS Custom for Oracle, but optional for Amazon RDS. The combination of
-     * <code>Engine</code> and <code>EngineVersion</code> is unique per customer per
-     * Region.</p>
-     */
-    inline const Aws::String& GetEngineVersion() const{ return m_engineVersion; }
-    inline bool EngineVersionHasBeenSet() const { return m_engineVersionHasBeenSet; }
-    inline void SetEngineVersion(const Aws::String& value) { m_engineVersionHasBeenSet = true; m_engineVersion = value; }
-    inline void SetEngineVersion(Aws::String&& value) { m_engineVersionHasBeenSet = true; m_engineVersion = std::move(value); }
-    inline void SetEngineVersion(const char* value) { m_engineVersionHasBeenSet = true; m_engineVersion.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithEngineVersion(const Aws::String& value) { SetEngineVersion(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithEngineVersion(Aws::String&& value) { SetEngineVersion(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithEngineVersion(const char* value) { SetEngineVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services KMS key identifier for an encrypted CEV. A symmetric
+   * encryption KMS key is required for RDS Custom, but optional for Amazon RDS.</p>
+   * <p>If you have an existing symmetric encryption KMS key in your account, you can
+   * use it with RDS Custom. No further action is necessary. If you don't already
+   * have a symmetric encryption KMS key in your account, follow the instructions in
+   * <a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#create-symmetric-cmk">
+   * Creating a symmetric encryption KMS key</a> in the <i>Amazon Web Services Key
+   * Management Service Developer Guide</i>.</p> <p>You can choose the same symmetric
+   * encryption key when you create a CEV and a DB instance, or choose different
+   * keys.</p>
+   */
+  inline const Aws::String& GetKMSKeyId() const { return m_kMSKeyId; }
+  inline bool KMSKeyIdHasBeenSet() const { return m_kMSKeyIdHasBeenSet; }
+  template <typename KMSKeyIdT = Aws::String>
+  void SetKMSKeyId(KMSKeyIdT&& value) {
+    m_kMSKeyIdHasBeenSet = true;
+    m_kMSKeyId = std::forward<KMSKeyIdT>(value);
+  }
+  template <typename KMSKeyIdT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithKMSKeyId(KMSKeyIdT&& value) {
+    SetKMSKeyId(std::forward<KMSKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of an Amazon S3 bucket that contains database installation files for
-     * your CEV. For example, a valid bucket name is
-     * <code>my-custom-installation-files</code>.</p>
-     */
-    inline const Aws::String& GetDatabaseInstallationFilesS3BucketName() const{ return m_databaseInstallationFilesS3BucketName; }
-    inline bool DatabaseInstallationFilesS3BucketNameHasBeenSet() const { return m_databaseInstallationFilesS3BucketNameHasBeenSet; }
-    inline void SetDatabaseInstallationFilesS3BucketName(const Aws::String& value) { m_databaseInstallationFilesS3BucketNameHasBeenSet = true; m_databaseInstallationFilesS3BucketName = value; }
-    inline void SetDatabaseInstallationFilesS3BucketName(Aws::String&& value) { m_databaseInstallationFilesS3BucketNameHasBeenSet = true; m_databaseInstallationFilesS3BucketName = std::move(value); }
-    inline void SetDatabaseInstallationFilesS3BucketName(const char* value) { m_databaseInstallationFilesS3BucketNameHasBeenSet = true; m_databaseInstallationFilesS3BucketName.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3BucketName(const Aws::String& value) { SetDatabaseInstallationFilesS3BucketName(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3BucketName(Aws::String&& value) { SetDatabaseInstallationFilesS3BucketName(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3BucketName(const char* value) { SetDatabaseInstallationFilesS3BucketName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of a CEV to use as a source for creating a new CEV. You can specify a
+   * different Amazon Machine Imagine (AMI) by using either <code>Source</code> or
+   * <code>UseAwsProvidedLatestImage</code>. You can't specify a different JSON
+   * manifest when you specify
+   * <code>SourceCustomDbEngineVersionIdentifier</code>.</p>
+   */
+  inline const Aws::String& GetSourceCustomDbEngineVersionIdentifier() const { return m_sourceCustomDbEngineVersionIdentifier; }
+  inline bool SourceCustomDbEngineVersionIdentifierHasBeenSet() const { return m_sourceCustomDbEngineVersionIdentifierHasBeenSet; }
+  template <typename SourceCustomDbEngineVersionIdentifierT = Aws::String>
+  void SetSourceCustomDbEngineVersionIdentifier(SourceCustomDbEngineVersionIdentifierT&& value) {
+    m_sourceCustomDbEngineVersionIdentifierHasBeenSet = true;
+    m_sourceCustomDbEngineVersionIdentifier = std::forward<SourceCustomDbEngineVersionIdentifierT>(value);
+  }
+  template <typename SourceCustomDbEngineVersionIdentifierT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithSourceCustomDbEngineVersionIdentifier(SourceCustomDbEngineVersionIdentifierT&& value) {
+    SetSourceCustomDbEngineVersionIdentifier(std::forward<SourceCustomDbEngineVersionIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon S3 directory that contains the database installation files for
-     * your CEV. For example, a valid bucket name is <code>123456789012/cev1</code>. If
-     * this setting isn't specified, no prefix is assumed.</p>
-     */
-    inline const Aws::String& GetDatabaseInstallationFilesS3Prefix() const{ return m_databaseInstallationFilesS3Prefix; }
-    inline bool DatabaseInstallationFilesS3PrefixHasBeenSet() const { return m_databaseInstallationFilesS3PrefixHasBeenSet; }
-    inline void SetDatabaseInstallationFilesS3Prefix(const Aws::String& value) { m_databaseInstallationFilesS3PrefixHasBeenSet = true; m_databaseInstallationFilesS3Prefix = value; }
-    inline void SetDatabaseInstallationFilesS3Prefix(Aws::String&& value) { m_databaseInstallationFilesS3PrefixHasBeenSet = true; m_databaseInstallationFilesS3Prefix = std::move(value); }
-    inline void SetDatabaseInstallationFilesS3Prefix(const char* value) { m_databaseInstallationFilesS3PrefixHasBeenSet = true; m_databaseInstallationFilesS3Prefix.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3Prefix(const Aws::String& value) { SetDatabaseInstallationFilesS3Prefix(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3Prefix(Aws::String&& value) { SetDatabaseInstallationFilesS3Prefix(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDatabaseInstallationFilesS3Prefix(const char* value) { SetDatabaseInstallationFilesS3Prefix(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether to use the latest service-provided Amazon Machine Image
+   * (AMI) for the CEV. If you specify <code>UseAwsProvidedLatestImage</code>, you
+   * can't also specify <code>ImageId</code>.</p>
+   */
+  inline bool GetUseAwsProvidedLatestImage() const { return m_useAwsProvidedLatestImage; }
+  inline bool UseAwsProvidedLatestImageHasBeenSet() const { return m_useAwsProvidedLatestImageHasBeenSet; }
+  inline void SetUseAwsProvidedLatestImage(bool value) {
+    m_useAwsProvidedLatestImageHasBeenSet = true;
+    m_useAwsProvidedLatestImage = value;
+  }
+  inline CreateCustomDBEngineVersionRequest& WithUseAwsProvidedLatestImage(bool value) {
+    SetUseAwsProvidedLatestImage(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon Machine Image (AMI). For RDS Custom for SQL Server, an
-     * AMI ID is required to create a CEV. For RDS Custom for Oracle, the default is
-     * the most recent AMI available, but you can specify an AMI ID that was used in a
-     * different Oracle CEV. Find the AMIs used by your CEVs by calling the <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_DescribeDBEngineVersions.html">DescribeDBEngineVersions</a>
-     * operation.</p>
-     */
-    inline const Aws::String& GetImageId() const{ return m_imageId; }
-    inline bool ImageIdHasBeenSet() const { return m_imageIdHasBeenSet; }
-    inline void SetImageId(const Aws::String& value) { m_imageIdHasBeenSet = true; m_imageId = value; }
-    inline void SetImageId(Aws::String&& value) { m_imageIdHasBeenSet = true; m_imageId = std::move(value); }
-    inline void SetImageId(const char* value) { m_imageIdHasBeenSet = true; m_imageId.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithImageId(const Aws::String& value) { SetImageId(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithImageId(Aws::String&& value) { SetImageId(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithImageId(const char* value) { SetImageId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An optional description of your CEV.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services KMS key identifier for an encrypted CEV. A symmetric
-     * encryption KMS key is required for RDS Custom, but optional for Amazon RDS.</p>
-     * <p>If you have an existing symmetric encryption KMS key in your account, you can
-     * use it with RDS Custom. No further action is necessary. If you don't already
-     * have a symmetric encryption KMS key in your account, follow the instructions in
-     * <a
-     * href="https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html#create-symmetric-cmk">
-     * Creating a symmetric encryption KMS key</a> in the <i>Amazon Web Services Key
-     * Management Service Developer Guide</i>.</p> <p>You can choose the same symmetric
-     * encryption key when you create a CEV and a DB instance, or choose different
-     * keys.</p>
-     */
-    inline const Aws::String& GetKMSKeyId() const{ return m_kMSKeyId; }
-    inline bool KMSKeyIdHasBeenSet() const { return m_kMSKeyIdHasBeenSet; }
-    inline void SetKMSKeyId(const Aws::String& value) { m_kMSKeyIdHasBeenSet = true; m_kMSKeyId = value; }
-    inline void SetKMSKeyId(Aws::String&& value) { m_kMSKeyIdHasBeenSet = true; m_kMSKeyId = std::move(value); }
-    inline void SetKMSKeyId(const char* value) { m_kMSKeyIdHasBeenSet = true; m_kMSKeyId.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithKMSKeyId(const Aws::String& value) { SetKMSKeyId(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithKMSKeyId(Aws::String&& value) { SetKMSKeyId(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithKMSKeyId(const char* value) { SetKMSKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The CEV manifest, which is a JSON document that describes the installation
+   * .zip files stored in Amazon S3. Specify the name/value pairs in a file or a
+   * quoted string. RDS Custom applies the patches in the order in which they are
+   * listed.</p> <p>The following JSON fields are valid:</p> <dl>
+   * <dt>MediaImportTemplateVersion</dt> <dd> <p>Version of the CEV manifest. The
+   * date is in the format <code>YYYY-MM-DD</code>.</p> </dd>
+   * <dt>databaseInstallationFileNames</dt> <dd> <p>Ordered list of installation
+   * files for the CEV.</p> </dd> <dt>opatchFileNames</dt> <dd> <p>Ordered list of
+   * OPatch installers used for the Oracle DB engine.</p> </dd>
+   * <dt>psuRuPatchFileNames</dt> <dd> <p>The PSU and RU patches for this CEV.</p>
+   * </dd> <dt>OtherPatchFileNames</dt> <dd> <p>The patches that are not in the list
+   * of PSU and RU patches. Amazon RDS applies these patches after applying the PSU
+   * and RU patches.</p> </dd> </dl> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.html#custom-cev.preparing.manifest">
+   * Creating the CEV manifest</a> in the <i>Amazon RDS User Guide</i>.</p>
+   */
+  inline const Aws::String& GetManifest() const { return m_manifest; }
+  inline bool ManifestHasBeenSet() const { return m_manifestHasBeenSet; }
+  template <typename ManifestT = Aws::String>
+  void SetManifest(ManifestT&& value) {
+    m_manifestHasBeenSet = true;
+    m_manifest = std::forward<ManifestT>(value);
+  }
+  template <typename ManifestT = Aws::String>
+  CreateCustomDBEngineVersionRequest& WithManifest(ManifestT&& value) {
+    SetManifest(std::forward<ManifestT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional description of your CEV.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The CEV manifest, which is a JSON document that describes the installation
-     * .zip files stored in Amazon S3. Specify the name/value pairs in a file or a
-     * quoted string. RDS Custom applies the patches in the order in which they are
-     * listed.</p> <p>The following JSON fields are valid:</p> <dl>
-     * <dt>MediaImportTemplateVersion</dt> <dd> <p>Version of the CEV manifest. The
-     * date is in the format <code>YYYY-MM-DD</code>.</p> </dd>
-     * <dt>databaseInstallationFileNames</dt> <dd> <p>Ordered list of installation
-     * files for the CEV.</p> </dd> <dt>opatchFileNames</dt> <dd> <p>Ordered list of
-     * OPatch installers used for the Oracle DB engine.</p> </dd>
-     * <dt>psuRuPatchFileNames</dt> <dd> <p>The PSU and RU patches for this CEV.</p>
-     * </dd> <dt>OtherPatchFileNames</dt> <dd> <p>The patches that are not in the list
-     * of PSU and RU patches. Amazon RDS applies these patches after applying the PSU
-     * and RU patches.</p> </dd> </dl> <p>For more information, see <a
-     * href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/custom-cev.html#custom-cev.preparing.manifest">
-     * Creating the CEV manifest</a> in the <i>Amazon RDS User Guide</i>.</p>
-     */
-    inline const Aws::String& GetManifest() const{ return m_manifest; }
-    inline bool ManifestHasBeenSet() const { return m_manifestHasBeenSet; }
-    inline void SetManifest(const Aws::String& value) { m_manifestHasBeenSet = true; m_manifest = value; }
-    inline void SetManifest(Aws::String&& value) { m_manifestHasBeenSet = true; m_manifest = std::move(value); }
-    inline void SetManifest(const char* value) { m_manifestHasBeenSet = true; m_manifest.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithManifest(const Aws::String& value) { SetManifest(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithManifest(Aws::String&& value) { SetManifest(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithManifest(const char* value) { SetManifest(value); return *this;}
-    ///@}
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateCustomDBEngineVersionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateCustomDBEngineVersionRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_engine;
 
-    ///@{
-    
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateCustomDBEngineVersionRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateCustomDBEngineVersionRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_engineVersion;
 
-    ///@{
-    /**
-     * <p>The ARN of a CEV to use as a source for creating a new CEV. You can specify a
-     * different Amazon Machine Imagine (AMI) by using either <code>Source</code> or
-     * <code>UseAwsProvidedLatestImage</code>. You can't specify a different JSON
-     * manifest when you specify
-     * <code>SourceCustomDbEngineVersionIdentifier</code>.</p>
-     */
-    inline const Aws::String& GetSourceCustomDbEngineVersionIdentifier() const{ return m_sourceCustomDbEngineVersionIdentifier; }
-    inline bool SourceCustomDbEngineVersionIdentifierHasBeenSet() const { return m_sourceCustomDbEngineVersionIdentifierHasBeenSet; }
-    inline void SetSourceCustomDbEngineVersionIdentifier(const Aws::String& value) { m_sourceCustomDbEngineVersionIdentifierHasBeenSet = true; m_sourceCustomDbEngineVersionIdentifier = value; }
-    inline void SetSourceCustomDbEngineVersionIdentifier(Aws::String&& value) { m_sourceCustomDbEngineVersionIdentifierHasBeenSet = true; m_sourceCustomDbEngineVersionIdentifier = std::move(value); }
-    inline void SetSourceCustomDbEngineVersionIdentifier(const char* value) { m_sourceCustomDbEngineVersionIdentifierHasBeenSet = true; m_sourceCustomDbEngineVersionIdentifier.assign(value); }
-    inline CreateCustomDBEngineVersionRequest& WithSourceCustomDbEngineVersionIdentifier(const Aws::String& value) { SetSourceCustomDbEngineVersionIdentifier(value); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithSourceCustomDbEngineVersionIdentifier(Aws::String&& value) { SetSourceCustomDbEngineVersionIdentifier(std::move(value)); return *this;}
-    inline CreateCustomDBEngineVersionRequest& WithSourceCustomDbEngineVersionIdentifier(const char* value) { SetSourceCustomDbEngineVersionIdentifier(value); return *this;}
-    ///@}
+  Aws::String m_databaseInstallationFilesS3BucketName;
 
-    ///@{
-    /**
-     * <p>Specifies whether to use the latest service-provided Amazon Machine Image
-     * (AMI) for the CEV. If you specify <code>UseAwsProvidedLatestImage</code>, you
-     * can't also specify <code>ImageId</code>.</p>
-     */
-    inline bool GetUseAwsProvidedLatestImage() const{ return m_useAwsProvidedLatestImage; }
-    inline bool UseAwsProvidedLatestImageHasBeenSet() const { return m_useAwsProvidedLatestImageHasBeenSet; }
-    inline void SetUseAwsProvidedLatestImage(bool value) { m_useAwsProvidedLatestImageHasBeenSet = true; m_useAwsProvidedLatestImage = value; }
-    inline CreateCustomDBEngineVersionRequest& WithUseAwsProvidedLatestImage(bool value) { SetUseAwsProvidedLatestImage(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_databaseInstallationFilesS3Prefix;
 
-    Aws::String m_engine;
-    bool m_engineHasBeenSet = false;
+  Aws::Vector<Aws::String> m_databaseInstallationFiles;
 
-    Aws::String m_engineVersion;
-    bool m_engineVersionHasBeenSet = false;
+  Aws::String m_imageId;
 
-    Aws::String m_databaseInstallationFilesS3BucketName;
-    bool m_databaseInstallationFilesS3BucketNameHasBeenSet = false;
+  Aws::String m_kMSKeyId;
 
-    Aws::String m_databaseInstallationFilesS3Prefix;
-    bool m_databaseInstallationFilesS3PrefixHasBeenSet = false;
+  Aws::String m_sourceCustomDbEngineVersionIdentifier;
 
-    Aws::String m_imageId;
-    bool m_imageIdHasBeenSet = false;
+  bool m_useAwsProvidedLatestImage{false};
 
-    Aws::String m_kMSKeyId;
-    bool m_kMSKeyIdHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::String m_manifest;
 
-    Aws::String m_manifest;
-    bool m_manifestHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
+  bool m_engineHasBeenSet = false;
+  bool m_engineVersionHasBeenSet = false;
+  bool m_databaseInstallationFilesS3BucketNameHasBeenSet = false;
+  bool m_databaseInstallationFilesS3PrefixHasBeenSet = false;
+  bool m_databaseInstallationFilesHasBeenSet = false;
+  bool m_imageIdHasBeenSet = false;
+  bool m_kMSKeyIdHasBeenSet = false;
+  bool m_sourceCustomDbEngineVersionIdentifierHasBeenSet = false;
+  bool m_useAwsProvidedLatestImageHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_manifestHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_sourceCustomDbEngineVersionIdentifier;
-    bool m_sourceCustomDbEngineVersionIdentifierHasBeenSet = false;
-
-    bool m_useAwsProvidedLatestImage;
-    bool m_useAwsProvidedLatestImageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace RDS
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDS
+}  // namespace Aws

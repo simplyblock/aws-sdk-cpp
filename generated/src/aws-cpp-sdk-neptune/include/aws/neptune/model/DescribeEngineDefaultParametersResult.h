@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/neptune/Neptune_EXPORTS.h>
 #include <aws/neptune/model/EngineDefaults.h>
 #include <aws/neptune/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Neptune
-{
-namespace Model
-{
-  class DescribeEngineDefaultParametersResult
-  {
-  public:
-    AWS_NEPTUNE_API DescribeEngineDefaultParametersResult();
-    AWS_NEPTUNE_API DescribeEngineDefaultParametersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_NEPTUNE_API DescribeEngineDefaultParametersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Neptune {
+namespace Model {
+class DescribeEngineDefaultParametersResult {
+ public:
+  AWS_NEPTUNE_API DescribeEngineDefaultParametersResult() = default;
+  AWS_NEPTUNE_API DescribeEngineDefaultParametersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_NEPTUNE_API DescribeEngineDefaultParametersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const EngineDefaults& GetEngineDefaults() const{ return m_engineDefaults; }
-    inline void SetEngineDefaults(const EngineDefaults& value) { m_engineDefaults = value; }
-    inline void SetEngineDefaults(EngineDefaults&& value) { m_engineDefaults = std::move(value); }
-    inline DescribeEngineDefaultParametersResult& WithEngineDefaults(const EngineDefaults& value) { SetEngineDefaults(value); return *this;}
-    inline DescribeEngineDefaultParametersResult& WithEngineDefaults(EngineDefaults&& value) { SetEngineDefaults(std::move(value)); return *this;}
-    ///@}
+  inline const EngineDefaults& GetEngineDefaults() const { return m_engineDefaults; }
+  template <typename EngineDefaultsT = EngineDefaults>
+  void SetEngineDefaults(EngineDefaultsT&& value) {
+    m_engineDefaultsHasBeenSet = true;
+    m_engineDefaults = std::forward<EngineDefaultsT>(value);
+  }
+  template <typename EngineDefaultsT = EngineDefaults>
+  DescribeEngineDefaultParametersResult& WithEngineDefaults(EngineDefaultsT&& value) {
+    SetEngineDefaults(std::forward<EngineDefaultsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeEngineDefaultParametersResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeEngineDefaultParametersResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    EngineDefaults m_engineDefaults;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeEngineDefaultParametersResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  EngineDefaults m_engineDefaults;
 
-} // namespace Model
-} // namespace Neptune
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_engineDefaultsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Neptune
+}  // namespace Aws

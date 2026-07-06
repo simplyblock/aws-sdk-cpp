@@ -4,82 +4,105 @@
  */
 
 #pragma once
-#include <aws/rekognition/Rekognition_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/rekognition/Rekognition_EXPORTS.h>
 #include <aws/rekognition/model/UnsuccessfulFaceDeletion.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Rekognition
-{
-namespace Model
-{
-  class DeleteFacesResult
-  {
-  public:
-    AWS_REKOGNITION_API DeleteFacesResult();
-    AWS_REKOGNITION_API DeleteFacesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REKOGNITION_API DeleteFacesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Rekognition {
+namespace Model {
+class DeleteFacesResult {
+ public:
+  AWS_REKOGNITION_API DeleteFacesResult() = default;
+  AWS_REKOGNITION_API DeleteFacesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REKOGNITION_API DeleteFacesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of strings (face IDs) of the faces that were deleted.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDeletedFaces() const { return m_deletedFaces; }
+  template <typename DeletedFacesT = Aws::Vector<Aws::String>>
+  void SetDeletedFaces(DeletedFacesT&& value) {
+    m_deletedFacesHasBeenSet = true;
+    m_deletedFaces = std::forward<DeletedFacesT>(value);
+  }
+  template <typename DeletedFacesT = Aws::Vector<Aws::String>>
+  DeleteFacesResult& WithDeletedFaces(DeletedFacesT&& value) {
+    SetDeletedFaces(std::forward<DeletedFacesT>(value));
+    return *this;
+  }
+  template <typename DeletedFacesT = Aws::String>
+  DeleteFacesResult& AddDeletedFaces(DeletedFacesT&& value) {
+    m_deletedFacesHasBeenSet = true;
+    m_deletedFaces.emplace_back(std::forward<DeletedFacesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of strings (face IDs) of the faces that were deleted.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDeletedFaces() const{ return m_deletedFaces; }
-    inline void SetDeletedFaces(const Aws::Vector<Aws::String>& value) { m_deletedFaces = value; }
-    inline void SetDeletedFaces(Aws::Vector<Aws::String>&& value) { m_deletedFaces = std::move(value); }
-    inline DeleteFacesResult& WithDeletedFaces(const Aws::Vector<Aws::String>& value) { SetDeletedFaces(value); return *this;}
-    inline DeleteFacesResult& WithDeletedFaces(Aws::Vector<Aws::String>&& value) { SetDeletedFaces(std::move(value)); return *this;}
-    inline DeleteFacesResult& AddDeletedFaces(const Aws::String& value) { m_deletedFaces.push_back(value); return *this; }
-    inline DeleteFacesResult& AddDeletedFaces(Aws::String&& value) { m_deletedFaces.push_back(std::move(value)); return *this; }
-    inline DeleteFacesResult& AddDeletedFaces(const char* value) { m_deletedFaces.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An array of any faces that weren't deleted.</p>
+   */
+  inline const Aws::Vector<UnsuccessfulFaceDeletion>& GetUnsuccessfulFaceDeletions() const { return m_unsuccessfulFaceDeletions; }
+  template <typename UnsuccessfulFaceDeletionsT = Aws::Vector<UnsuccessfulFaceDeletion>>
+  void SetUnsuccessfulFaceDeletions(UnsuccessfulFaceDeletionsT&& value) {
+    m_unsuccessfulFaceDeletionsHasBeenSet = true;
+    m_unsuccessfulFaceDeletions = std::forward<UnsuccessfulFaceDeletionsT>(value);
+  }
+  template <typename UnsuccessfulFaceDeletionsT = Aws::Vector<UnsuccessfulFaceDeletion>>
+  DeleteFacesResult& WithUnsuccessfulFaceDeletions(UnsuccessfulFaceDeletionsT&& value) {
+    SetUnsuccessfulFaceDeletions(std::forward<UnsuccessfulFaceDeletionsT>(value));
+    return *this;
+  }
+  template <typename UnsuccessfulFaceDeletionsT = UnsuccessfulFaceDeletion>
+  DeleteFacesResult& AddUnsuccessfulFaceDeletions(UnsuccessfulFaceDeletionsT&& value) {
+    m_unsuccessfulFaceDeletionsHasBeenSet = true;
+    m_unsuccessfulFaceDeletions.emplace_back(std::forward<UnsuccessfulFaceDeletionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of any faces that weren't deleted.</p>
-     */
-    inline const Aws::Vector<UnsuccessfulFaceDeletion>& GetUnsuccessfulFaceDeletions() const{ return m_unsuccessfulFaceDeletions; }
-    inline void SetUnsuccessfulFaceDeletions(const Aws::Vector<UnsuccessfulFaceDeletion>& value) { m_unsuccessfulFaceDeletions = value; }
-    inline void SetUnsuccessfulFaceDeletions(Aws::Vector<UnsuccessfulFaceDeletion>&& value) { m_unsuccessfulFaceDeletions = std::move(value); }
-    inline DeleteFacesResult& WithUnsuccessfulFaceDeletions(const Aws::Vector<UnsuccessfulFaceDeletion>& value) { SetUnsuccessfulFaceDeletions(value); return *this;}
-    inline DeleteFacesResult& WithUnsuccessfulFaceDeletions(Aws::Vector<UnsuccessfulFaceDeletion>&& value) { SetUnsuccessfulFaceDeletions(std::move(value)); return *this;}
-    inline DeleteFacesResult& AddUnsuccessfulFaceDeletions(const UnsuccessfulFaceDeletion& value) { m_unsuccessfulFaceDeletions.push_back(value); return *this; }
-    inline DeleteFacesResult& AddUnsuccessfulFaceDeletions(UnsuccessfulFaceDeletion&& value) { m_unsuccessfulFaceDeletions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteFacesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteFacesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteFacesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteFacesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_deletedFaces;
+ private:
+  Aws::Vector<Aws::String> m_deletedFaces;
 
-    Aws::Vector<UnsuccessfulFaceDeletion> m_unsuccessfulFaceDeletions;
+  Aws::Vector<UnsuccessfulFaceDeletion> m_unsuccessfulFaceDeletions;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deletedFacesHasBeenSet = false;
+  bool m_unsuccessfulFaceDeletionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Rekognition
-} // namespace Aws
+}  // namespace Model
+}  // namespace Rekognition
+}  // namespace Aws

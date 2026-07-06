@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-PersistentChat::PersistentChat() : 
-    m_rehydrationType(RehydrationType::NOT_SET),
-    m_rehydrationTypeHasBeenSet(false),
-    m_sourceContactIdHasBeenSet(false)
-{
-}
+PersistentChat::PersistentChat(JsonView jsonValue) { *this = jsonValue; }
 
-PersistentChat::PersistentChat(JsonView jsonValue)
-  : PersistentChat()
-{
-  *this = jsonValue;
-}
-
-PersistentChat& PersistentChat::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RehydrationType"))
-  {
+PersistentChat& PersistentChat::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("RehydrationType")) {
     m_rehydrationType = RehydrationTypeMapper::GetRehydrationTypeForName(jsonValue.GetString("RehydrationType"));
-
     m_rehydrationTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("SourceContactId"))
-  {
+  if (jsonValue.ValueExists("SourceContactId")) {
     m_sourceContactId = jsonValue.GetString("SourceContactId");
-
     m_sourceContactIdHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PersistentChat::Jsonize() const
-{
+JsonValue PersistentChat::Jsonize() const {
   JsonValue payload;
 
-  if(m_rehydrationTypeHasBeenSet)
-  {
-   payload.WithString("RehydrationType", RehydrationTypeMapper::GetNameForRehydrationType(m_rehydrationType));
+  if (m_rehydrationTypeHasBeenSet) {
+    payload.WithString("RehydrationType", RehydrationTypeMapper::GetNameForRehydrationType(m_rehydrationType));
   }
 
-  if(m_sourceContactIdHasBeenSet)
-  {
-   payload.WithString("SourceContactId", m_sourceContactId);
-
+  if (m_sourceContactIdHasBeenSet) {
+    payload.WithString("SourceContactId", m_sourceContactId);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

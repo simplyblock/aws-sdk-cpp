@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
-#include <aws/ssm/SSMRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ssm/SSMRequest.h>
+#include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/StopType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SSM
-{
-namespace Model
-{
+namespace Aws {
+namespace SSM {
+namespace Model {
 
+/**
+ */
+class StopAutomationExecutionRequest : public SSMRequest {
+ public:
+  AWS_SSM_API StopAutomationExecutionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StopAutomationExecution"; }
+
+  AWS_SSM_API Aws::String SerializePayload() const override;
+
+  AWS_SSM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The execution ID of the Automation to stop.</p>
    */
-  class StopAutomationExecutionRequest : public SSMRequest
-  {
-  public:
-    AWS_SSM_API StopAutomationExecutionRequest();
+  inline const Aws::String& GetAutomationExecutionId() const { return m_automationExecutionId; }
+  inline bool AutomationExecutionIdHasBeenSet() const { return m_automationExecutionIdHasBeenSet; }
+  template <typename AutomationExecutionIdT = Aws::String>
+  void SetAutomationExecutionId(AutomationExecutionIdT&& value) {
+    m_automationExecutionIdHasBeenSet = true;
+    m_automationExecutionId = std::forward<AutomationExecutionIdT>(value);
+  }
+  template <typename AutomationExecutionIdT = Aws::String>
+  StopAutomationExecutionRequest& WithAutomationExecutionId(AutomationExecutionIdT&& value) {
+    SetAutomationExecutionId(std::forward<AutomationExecutionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StopAutomationExecution"; }
+  ///@{
+  /**
+   * <p>The stop request type. Valid types include the following: Cancel and
+   * Complete. The default type is Cancel.</p>
+   */
+  inline StopType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(StopType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline StopAutomationExecutionRequest& WithType(StopType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_automationExecutionId;
 
-    AWS_SSM_API Aws::String SerializePayload() const override;
+  StopType m_type{StopType::NOT_SET};
+  bool m_automationExecutionIdHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    AWS_SSM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The execution ID of the Automation to stop.</p>
-     */
-    inline const Aws::String& GetAutomationExecutionId() const{ return m_automationExecutionId; }
-    inline bool AutomationExecutionIdHasBeenSet() const { return m_automationExecutionIdHasBeenSet; }
-    inline void SetAutomationExecutionId(const Aws::String& value) { m_automationExecutionIdHasBeenSet = true; m_automationExecutionId = value; }
-    inline void SetAutomationExecutionId(Aws::String&& value) { m_automationExecutionIdHasBeenSet = true; m_automationExecutionId = std::move(value); }
-    inline void SetAutomationExecutionId(const char* value) { m_automationExecutionIdHasBeenSet = true; m_automationExecutionId.assign(value); }
-    inline StopAutomationExecutionRequest& WithAutomationExecutionId(const Aws::String& value) { SetAutomationExecutionId(value); return *this;}
-    inline StopAutomationExecutionRequest& WithAutomationExecutionId(Aws::String&& value) { SetAutomationExecutionId(std::move(value)); return *this;}
-    inline StopAutomationExecutionRequest& WithAutomationExecutionId(const char* value) { SetAutomationExecutionId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The stop request type. Valid types include the following: Cancel and
-     * Complete. The default type is Cancel.</p>
-     */
-    inline const StopType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const StopType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(StopType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline StopAutomationExecutionRequest& WithType(const StopType& value) { SetType(value); return *this;}
-    inline StopAutomationExecutionRequest& WithType(StopType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_automationExecutionId;
-    bool m_automationExecutionIdHasBeenSet = false;
-
-    StopType m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

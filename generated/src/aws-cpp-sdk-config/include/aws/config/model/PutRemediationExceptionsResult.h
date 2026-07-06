@@ -5,66 +5,79 @@
 
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/config/model/FailedRemediationExceptionBatch.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
-  class PutRemediationExceptionsResult
-  {
-  public:
-    AWS_CONFIGSERVICE_API PutRemediationExceptionsResult();
-    AWS_CONFIGSERVICE_API PutRemediationExceptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONFIGSERVICE_API PutRemediationExceptionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
+class PutRemediationExceptionsResult {
+ public:
+  AWS_CONFIGSERVICE_API PutRemediationExceptionsResult() = default;
+  AWS_CONFIGSERVICE_API PutRemediationExceptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONFIGSERVICE_API PutRemediationExceptionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns a list of failed remediation exceptions batch objects. Each object in
+   * the batch consists of a list of failed items and failure messages.</p>
+   */
+  inline const Aws::Vector<FailedRemediationExceptionBatch>& GetFailedBatches() const { return m_failedBatches; }
+  template <typename FailedBatchesT = Aws::Vector<FailedRemediationExceptionBatch>>
+  void SetFailedBatches(FailedBatchesT&& value) {
+    m_failedBatchesHasBeenSet = true;
+    m_failedBatches = std::forward<FailedBatchesT>(value);
+  }
+  template <typename FailedBatchesT = Aws::Vector<FailedRemediationExceptionBatch>>
+  PutRemediationExceptionsResult& WithFailedBatches(FailedBatchesT&& value) {
+    SetFailedBatches(std::forward<FailedBatchesT>(value));
+    return *this;
+  }
+  template <typename FailedBatchesT = FailedRemediationExceptionBatch>
+  PutRemediationExceptionsResult& AddFailedBatches(FailedBatchesT&& value) {
+    m_failedBatchesHasBeenSet = true;
+    m_failedBatches.emplace_back(std::forward<FailedBatchesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns a list of failed remediation exceptions batch objects. Each object in
-     * the batch consists of a list of failed items and failure messages.</p>
-     */
-    inline const Aws::Vector<FailedRemediationExceptionBatch>& GetFailedBatches() const{ return m_failedBatches; }
-    inline void SetFailedBatches(const Aws::Vector<FailedRemediationExceptionBatch>& value) { m_failedBatches = value; }
-    inline void SetFailedBatches(Aws::Vector<FailedRemediationExceptionBatch>&& value) { m_failedBatches = std::move(value); }
-    inline PutRemediationExceptionsResult& WithFailedBatches(const Aws::Vector<FailedRemediationExceptionBatch>& value) { SetFailedBatches(value); return *this;}
-    inline PutRemediationExceptionsResult& WithFailedBatches(Aws::Vector<FailedRemediationExceptionBatch>&& value) { SetFailedBatches(std::move(value)); return *this;}
-    inline PutRemediationExceptionsResult& AddFailedBatches(const FailedRemediationExceptionBatch& value) { m_failedBatches.push_back(value); return *this; }
-    inline PutRemediationExceptionsResult& AddFailedBatches(FailedRemediationExceptionBatch&& value) { m_failedBatches.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutRemediationExceptionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutRemediationExceptionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutRemediationExceptionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutRemediationExceptionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FailedRemediationExceptionBatch> m_failedBatches;
+ private:
+  Aws::Vector<FailedRemediationExceptionBatch> m_failedBatches;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_failedBatchesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

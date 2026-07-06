@@ -5,141 +5,179 @@
 
 #pragma once
 #include <aws/appconfig/AppConfig_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appconfig/model/EnvironmentState.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/appconfig/model/Monitor.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppConfig
-{
-namespace Model
-{
-  class GetEnvironmentResult
-  {
-  public:
-    AWS_APPCONFIG_API GetEnvironmentResult();
-    AWS_APPCONFIG_API GetEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPCONFIG_API GetEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppConfig {
+namespace Model {
+class GetEnvironmentResult {
+ public:
+  AWS_APPCONFIG_API GetEnvironmentResult() = default;
+  AWS_APPCONFIG_API GetEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPCONFIG_API GetEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The application ID.</p>
+   */
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  GetEnvironmentResult& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The application ID.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationId.assign(value); }
-    inline GetEnvironmentResult& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline GetEnvironmentResult& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline GetEnvironmentResult& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The environment ID.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GetEnvironmentResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The environment ID.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline GetEnvironmentResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GetEnvironmentResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GetEnvironmentResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the environment.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetEnvironmentResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the environment.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline GetEnvironmentResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetEnvironmentResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetEnvironmentResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the environment.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  GetEnvironmentResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the environment.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline GetEnvironmentResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline GetEnvironmentResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline GetEnvironmentResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the environment. An environment can be in one of the following
+   * states: <code>READY_FOR_DEPLOYMENT</code>, <code>DEPLOYING</code>,
+   * <code>ROLLING_BACK</code>, or <code>ROLLED_BACK</code> </p>
+   */
+  inline EnvironmentState GetState() const { return m_state; }
+  inline void SetState(EnvironmentState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline GetEnvironmentResult& WithState(EnvironmentState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the environment. An environment can be in one of the following
-     * states: <code>READY_FOR_DEPLOYMENT</code>, <code>DEPLOYING</code>,
-     * <code>ROLLING_BACK</code>, or <code>ROLLED_BACK</code> </p>
-     */
-    inline const EnvironmentState& GetState() const{ return m_state; }
-    inline void SetState(const EnvironmentState& value) { m_state = value; }
-    inline void SetState(EnvironmentState&& value) { m_state = std::move(value); }
-    inline GetEnvironmentResult& WithState(const EnvironmentState& value) { SetState(value); return *this;}
-    inline GetEnvironmentResult& WithState(EnvironmentState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Amazon CloudWatch alarms monitored during the deployment.</p>
+   */
+  inline const Aws::Vector<Monitor>& GetMonitors() const { return m_monitors; }
+  template <typename MonitorsT = Aws::Vector<Monitor>>
+  void SetMonitors(MonitorsT&& value) {
+    m_monitorsHasBeenSet = true;
+    m_monitors = std::forward<MonitorsT>(value);
+  }
+  template <typename MonitorsT = Aws::Vector<Monitor>>
+  GetEnvironmentResult& WithMonitors(MonitorsT&& value) {
+    SetMonitors(std::forward<MonitorsT>(value));
+    return *this;
+  }
+  template <typename MonitorsT = Monitor>
+  GetEnvironmentResult& AddMonitors(MonitorsT&& value) {
+    m_monitorsHasBeenSet = true;
+    m_monitors.emplace_back(std::forward<MonitorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon CloudWatch alarms monitored during the deployment.</p>
-     */
-    inline const Aws::Vector<Monitor>& GetMonitors() const{ return m_monitors; }
-    inline void SetMonitors(const Aws::Vector<Monitor>& value) { m_monitors = value; }
-    inline void SetMonitors(Aws::Vector<Monitor>&& value) { m_monitors = std::move(value); }
-    inline GetEnvironmentResult& WithMonitors(const Aws::Vector<Monitor>& value) { SetMonitors(value); return *this;}
-    inline GetEnvironmentResult& WithMonitors(Aws::Vector<Monitor>&& value) { SetMonitors(std::move(value)); return *this;}
-    inline GetEnvironmentResult& AddMonitors(const Monitor& value) { m_monitors.push_back(value); return *this; }
-    inline GetEnvironmentResult& AddMonitors(Monitor&& value) { m_monitors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEnvironmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEnvironmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEnvironmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEnvironmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_applicationId;
+ private:
+  Aws::String m_applicationId;
 
-    Aws::String m_id;
+  Aws::String m_id;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    Aws::String m_description;
+  Aws::String m_description;
 
-    EnvironmentState m_state;
+  EnvironmentState m_state{EnvironmentState::NOT_SET};
 
-    Aws::Vector<Monitor> m_monitors;
+  Aws::Vector<Monitor> m_monitors;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_monitorsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppConfig
+}  // namespace Aws

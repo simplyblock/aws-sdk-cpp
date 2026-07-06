@@ -4,91 +4,110 @@
  */
 
 #pragma once
-#include <aws/marketplace-entitlement/MarketplaceEntitlementService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/marketplace-entitlement/MarketplaceEntitlementService_EXPORTS.h>
 #include <aws/marketplace-entitlement/model/Entitlement.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MarketplaceEntitlementService
-{
-namespace Model
-{
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace MarketplaceEntitlementService {
+namespace Model {
+/**
+ * <p>The GetEntitlementsRequest contains results from the GetEntitlements
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/entitlement.marketplace-2017-01-11/GetEntitlementsResult">AWS
+ * API Reference</a></p>
+ */
+class GetEntitlementsResult {
+ public:
+  AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult() = default;
+  AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+
+  ///@{
   /**
-   * <p>The GetEntitlementsRequest contains results from the GetEntitlements
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/entitlement.marketplace-2017-01-11/GetEntitlementsResult">AWS
-   * API Reference</a></p>
+   * <p>The set of entitlements found through the GetEntitlements operation. If the
+   * result contains an empty set of entitlements, NextToken might still be present
+   * and should be used.</p>
    */
-  class GetEntitlementsResult
-  {
-  public:
-    AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult();
-    AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MARKETPLACEENTITLEMENTSERVICE_API GetEntitlementsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<Entitlement>& GetEntitlements() const { return m_entitlements; }
+  template <typename EntitlementsT = Aws::Vector<Entitlement>>
+  void SetEntitlements(EntitlementsT&& value) {
+    m_entitlementsHasBeenSet = true;
+    m_entitlements = std::forward<EntitlementsT>(value);
+  }
+  template <typename EntitlementsT = Aws::Vector<Entitlement>>
+  GetEntitlementsResult& WithEntitlements(EntitlementsT&& value) {
+    SetEntitlements(std::forward<EntitlementsT>(value));
+    return *this;
+  }
+  template <typename EntitlementsT = Entitlement>
+  GetEntitlementsResult& AddEntitlements(EntitlementsT&& value) {
+    m_entitlementsHasBeenSet = true;
+    m_entitlements.emplace_back(std::forward<EntitlementsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>For paginated results, use NextToken in subsequent calls to GetEntitlements.
+   * If the result contains an empty set of entitlements, NextToken might still be
+   * present and should be used.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetEntitlementsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The set of entitlements found through the GetEntitlements operation. If the
-     * result contains an empty set of entitlements, NextToken might still be present
-     * and should be used.</p>
-     */
-    inline const Aws::Vector<Entitlement>& GetEntitlements() const{ return m_entitlements; }
-    inline void SetEntitlements(const Aws::Vector<Entitlement>& value) { m_entitlements = value; }
-    inline void SetEntitlements(Aws::Vector<Entitlement>&& value) { m_entitlements = std::move(value); }
-    inline GetEntitlementsResult& WithEntitlements(const Aws::Vector<Entitlement>& value) { SetEntitlements(value); return *this;}
-    inline GetEntitlementsResult& WithEntitlements(Aws::Vector<Entitlement>&& value) { SetEntitlements(std::move(value)); return *this;}
-    inline GetEntitlementsResult& AddEntitlements(const Entitlement& value) { m_entitlements.push_back(value); return *this; }
-    inline GetEntitlementsResult& AddEntitlements(Entitlement&& value) { m_entitlements.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>For paginated results, use NextToken in subsequent calls to GetEntitlements.
-     * If the result contains an empty set of entitlements, NextToken might still be
-     * present and should be used.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetEntitlementsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetEntitlementsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetEntitlementsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEntitlementsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEntitlementsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEntitlementsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEntitlementsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Entitlement> m_entitlements;
 
-    Aws::Vector<Entitlement> m_entitlements;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entitlementsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace MarketplaceEntitlementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace MarketplaceEntitlementService
+}  // namespace Aws

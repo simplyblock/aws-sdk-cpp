@@ -12,15 +12,4 @@ using namespace Aws::Artifact::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAccountSettingsRequest::GetAccountSettingsRequest()
-{
-}
-
-Aws::String GetAccountSettingsRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAccountSettingsRequest::SerializePayload() const { return {}; }

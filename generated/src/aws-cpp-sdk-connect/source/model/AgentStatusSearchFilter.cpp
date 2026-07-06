@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-AgentStatusSearchFilter::AgentStatusSearchFilter() : 
-    m_attributeFilterHasBeenSet(false)
-{
-}
+AgentStatusSearchFilter::AgentStatusSearchFilter(JsonView jsonValue) { *this = jsonValue; }
 
-AgentStatusSearchFilter::AgentStatusSearchFilter(JsonView jsonValue)
-  : AgentStatusSearchFilter()
-{
-  *this = jsonValue;
-}
-
-AgentStatusSearchFilter& AgentStatusSearchFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AttributeFilter"))
-  {
+AgentStatusSearchFilter& AgentStatusSearchFilter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("AttributeFilter")) {
     m_attributeFilter = jsonValue.GetObject("AttributeFilter");
-
     m_attributeFilterHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue AgentStatusSearchFilter::Jsonize() const
-{
+JsonValue AgentStatusSearchFilter::Jsonize() const {
   JsonValue payload;
 
-  if(m_attributeFilterHasBeenSet)
-  {
-   payload.WithObject("AttributeFilter", m_attributeFilter.Jsonize());
-
+  if (m_attributeFilterHasBeenSet) {
+    payload.WithObject("AttributeFilter", m_attributeFilter.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

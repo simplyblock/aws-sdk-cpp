@@ -4,81 +4,104 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IamInstanceProfileAssociation.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeIamInstanceProfileAssociationsResponse
-  {
-  public:
-    AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse();
-    AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeIamInstanceProfileAssociationsResponse {
+ public:
+  AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse() = default;
+  AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeIamInstanceProfileAssociationsResponse& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the IAM instance profile associations.</p>
+   */
+  inline const Aws::Vector<IamInstanceProfileAssociation>& GetIamInstanceProfileAssociations() const {
+    return m_iamInstanceProfileAssociations;
+  }
+  template <typename IamInstanceProfileAssociationsT = Aws::Vector<IamInstanceProfileAssociation>>
+  void SetIamInstanceProfileAssociations(IamInstanceProfileAssociationsT&& value) {
+    m_iamInstanceProfileAssociationsHasBeenSet = true;
+    m_iamInstanceProfileAssociations = std::forward<IamInstanceProfileAssociationsT>(value);
+  }
+  template <typename IamInstanceProfileAssociationsT = Aws::Vector<IamInstanceProfileAssociation>>
+  DescribeIamInstanceProfileAssociationsResponse& WithIamInstanceProfileAssociations(IamInstanceProfileAssociationsT&& value) {
+    SetIamInstanceProfileAssociations(std::forward<IamInstanceProfileAssociationsT>(value));
+    return *this;
+  }
+  template <typename IamInstanceProfileAssociationsT = IamInstanceProfileAssociation>
+  DescribeIamInstanceProfileAssociationsResponse& AddIamInstanceProfileAssociations(IamInstanceProfileAssociationsT&& value) {
+    m_iamInstanceProfileAssociationsHasBeenSet = true;
+    m_iamInstanceProfileAssociations.emplace_back(std::forward<IamInstanceProfileAssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the IAM instance profile associations.</p>
-     */
-    inline const Aws::Vector<IamInstanceProfileAssociation>& GetIamInstanceProfileAssociations() const{ return m_iamInstanceProfileAssociations; }
-    inline void SetIamInstanceProfileAssociations(const Aws::Vector<IamInstanceProfileAssociation>& value) { m_iamInstanceProfileAssociations = value; }
-    inline void SetIamInstanceProfileAssociations(Aws::Vector<IamInstanceProfileAssociation>&& value) { m_iamInstanceProfileAssociations = std::move(value); }
-    inline DescribeIamInstanceProfileAssociationsResponse& WithIamInstanceProfileAssociations(const Aws::Vector<IamInstanceProfileAssociation>& value) { SetIamInstanceProfileAssociations(value); return *this;}
-    inline DescribeIamInstanceProfileAssociationsResponse& WithIamInstanceProfileAssociations(Aws::Vector<IamInstanceProfileAssociation>&& value) { SetIamInstanceProfileAssociations(std::move(value)); return *this;}
-    inline DescribeIamInstanceProfileAssociationsResponse& AddIamInstanceProfileAssociations(const IamInstanceProfileAssociation& value) { m_iamInstanceProfileAssociations.push_back(value); return *this; }
-    inline DescribeIamInstanceProfileAssociationsResponse& AddIamInstanceProfileAssociations(IamInstanceProfileAssociation&& value) { m_iamInstanceProfileAssociations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to include in another request to get the next page of items. This
+   * value is <code>null</code> when there are no more items to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeIamInstanceProfileAssociationsResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to include in another request to get the next page of items. This
-     * value is <code>null</code> when there are no more items to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeIamInstanceProfileAssociationsResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeIamInstanceProfileAssociationsResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeIamInstanceProfileAssociationsResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeIamInstanceProfileAssociationsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeIamInstanceProfileAssociationsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeIamInstanceProfileAssociationsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<IamInstanceProfileAssociation> m_iamInstanceProfileAssociations;
+ private:
+  Aws::Vector<IamInstanceProfileAssociation> m_iamInstanceProfileAssociations;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_iamInstanceProfileAssociationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

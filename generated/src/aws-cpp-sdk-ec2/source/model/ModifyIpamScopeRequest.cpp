@@ -3,46 +3,38 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/ModifyIpamScopeRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/ModifyIpamScopeRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-ModifyIpamScopeRequest::ModifyIpamScopeRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_ipamScopeIdHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String ModifyIpamScopeRequest::SerializePayload() const
-{
+Aws::String ModifyIpamScopeRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ModifyIpamScope&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_ipamScopeIdHasBeenSet)
-  {
+  if (m_ipamScopeIdHasBeenSet) {
     ss << "IpamScopeId=" << StringUtils::URLEncode(m_ipamScopeId.c_str()) << "&";
   }
 
-  if(m_descriptionHasBeenSet)
-  {
+  if (m_descriptionHasBeenSet) {
     ss << "Description=" << StringUtils::URLEncode(m_description.c_str()) << "&";
+  }
+
+  if (m_externalAuthorityConfigurationHasBeenSet) {
+    m_externalAuthorityConfiguration.OutputToStream(ss, "ExternalAuthorityConfiguration");
+  }
+
+  if (m_removeExternalAuthorityConfigurationHasBeenSet) {
+    ss << "RemoveExternalAuthorityConfiguration=" << std::boolalpha << m_removeExternalAuthorityConfiguration << "&";
   }
 
   ss << "Version=2016-11-15";
   return ss.str();
 }
 
-
-void  ModifyIpamScopeRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ModifyIpamScopeRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

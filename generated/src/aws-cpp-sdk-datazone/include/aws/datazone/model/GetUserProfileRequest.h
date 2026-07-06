@@ -4,93 +4,120 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
-#include <aws/datazone/DataZoneRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/datazone/DataZoneRequest.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/UserProfileType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace DataZone {
+namespace Model {
 
+/**
+ */
+class GetUserProfileRequest : public DataZoneRequest {
+ public:
+  AWS_DATAZONE_API GetUserProfileRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetUserProfile"; }
+
+  AWS_DATAZONE_API Aws::String SerializePayload() const override;
+
+  AWS_DATAZONE_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>the ID of the Amazon DataZone domain the data portal of which you want to
+   * get.</p>
    */
-  class GetUserProfileRequest : public DataZoneRequest
-  {
-  public:
-    AWS_DATAZONE_API GetUserProfileRequest();
+  inline const Aws::String& GetDomainIdentifier() const { return m_domainIdentifier; }
+  inline bool DomainIdentifierHasBeenSet() const { return m_domainIdentifierHasBeenSet; }
+  template <typename DomainIdentifierT = Aws::String>
+  void SetDomainIdentifier(DomainIdentifierT&& value) {
+    m_domainIdentifierHasBeenSet = true;
+    m_domainIdentifier = std::forward<DomainIdentifierT>(value);
+  }
+  template <typename DomainIdentifierT = Aws::String>
+  GetUserProfileRequest& WithDomainIdentifier(DomainIdentifierT&& value) {
+    SetDomainIdentifier(std::forward<DomainIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetUserProfile"; }
+  ///@{
+  /**
+   * <p>The identifier of the user for which you want to get the user profile.</p>
+   */
+  inline const Aws::String& GetUserIdentifier() const { return m_userIdentifier; }
+  inline bool UserIdentifierHasBeenSet() const { return m_userIdentifierHasBeenSet; }
+  template <typename UserIdentifierT = Aws::String>
+  void SetUserIdentifier(UserIdentifierT&& value) {
+    m_userIdentifierHasBeenSet = true;
+    m_userIdentifier = std::forward<UserIdentifierT>(value);
+  }
+  template <typename UserIdentifierT = Aws::String>
+  GetUserProfileRequest& WithUserIdentifier(UserIdentifierT&& value) {
+    SetUserIdentifier(std::forward<UserIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DATAZONE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The type of the user profile.</p>
+   */
+  inline UserProfileType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(UserProfileType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline GetUserProfileRequest& WithType(UserProfileType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_DATAZONE_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The session name for IAM role sessions.</p>
+   */
+  inline const Aws::String& GetSessionName() const { return m_sessionName; }
+  inline bool SessionNameHasBeenSet() const { return m_sessionNameHasBeenSet; }
+  template <typename SessionNameT = Aws::String>
+  void SetSessionName(SessionNameT&& value) {
+    m_sessionNameHasBeenSet = true;
+    m_sessionName = std::forward<SessionNameT>(value);
+  }
+  template <typename SessionNameT = Aws::String>
+  GetUserProfileRequest& WithSessionName(SessionNameT&& value) {
+    SetSessionName(std::forward<SessionNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainIdentifier;
 
+  Aws::String m_userIdentifier;
 
-    ///@{
-    /**
-     * <p>the ID of the Amazon DataZone domain the data portal of which you want to
-     * get.</p>
-     */
-    inline const Aws::String& GetDomainIdentifier() const{ return m_domainIdentifier; }
-    inline bool DomainIdentifierHasBeenSet() const { return m_domainIdentifierHasBeenSet; }
-    inline void SetDomainIdentifier(const Aws::String& value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier = value; }
-    inline void SetDomainIdentifier(Aws::String&& value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier = std::move(value); }
-    inline void SetDomainIdentifier(const char* value) { m_domainIdentifierHasBeenSet = true; m_domainIdentifier.assign(value); }
-    inline GetUserProfileRequest& WithDomainIdentifier(const Aws::String& value) { SetDomainIdentifier(value); return *this;}
-    inline GetUserProfileRequest& WithDomainIdentifier(Aws::String&& value) { SetDomainIdentifier(std::move(value)); return *this;}
-    inline GetUserProfileRequest& WithDomainIdentifier(const char* value) { SetDomainIdentifier(value); return *this;}
-    ///@}
+  UserProfileType m_type{UserProfileType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The type of the user profile.</p>
-     */
-    inline const UserProfileType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const UserProfileType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(UserProfileType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline GetUserProfileRequest& WithType(const UserProfileType& value) { SetType(value); return *this;}
-    inline GetUserProfileRequest& WithType(UserProfileType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_sessionName;
+  bool m_domainIdentifierHasBeenSet = false;
+  bool m_userIdentifierHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_sessionNameHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier of the user for which you want to get the user profile.</p>
-     */
-    inline const Aws::String& GetUserIdentifier() const{ return m_userIdentifier; }
-    inline bool UserIdentifierHasBeenSet() const { return m_userIdentifierHasBeenSet; }
-    inline void SetUserIdentifier(const Aws::String& value) { m_userIdentifierHasBeenSet = true; m_userIdentifier = value; }
-    inline void SetUserIdentifier(Aws::String&& value) { m_userIdentifierHasBeenSet = true; m_userIdentifier = std::move(value); }
-    inline void SetUserIdentifier(const char* value) { m_userIdentifierHasBeenSet = true; m_userIdentifier.assign(value); }
-    inline GetUserProfileRequest& WithUserIdentifier(const Aws::String& value) { SetUserIdentifier(value); return *this;}
-    inline GetUserProfileRequest& WithUserIdentifier(Aws::String&& value) { SetUserIdentifier(std::move(value)); return *this;}
-    inline GetUserProfileRequest& WithUserIdentifier(const char* value) { SetUserIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainIdentifier;
-    bool m_domainIdentifierHasBeenSet = false;
-
-    UserProfileType m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::String m_userIdentifier;
-    bool m_userIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

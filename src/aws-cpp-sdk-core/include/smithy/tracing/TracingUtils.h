@@ -19,6 +19,16 @@ namespace smithy {
              * A utility class for common tracing activities.
              */
             class SMITHY_API TracingUtils {
+                using SteadyTime = std::chrono::steady_clock::time_point;
+
+                static void RecordExecutionDuration(
+                    SteadyTime before,
+                    SteadyTime after,
+                    Aws::String metricName,
+                    const Meter &meter,
+                    Aws::Map<Aws::String, Aws::String> attributes,
+                    Aws::String description
+                );
             public:
                 TracingUtils() = default;
 
@@ -65,13 +75,7 @@ namespace smithy {
                     auto before = std::chrono::steady_clock::now();
                     auto returnValue = func();
                     auto after = std::chrono::steady_clock::now();
-                    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
-                    auto histogram = meter.CreateHistogram(metricName, MICROSECOND_METRIC_TYPE, description);
-                    if (!histogram) {
-                        AWS_LOG_ERROR("TracingUtil", "Failed to create histogram");
-                        return {};
-                    }
-                    histogram->record((double) duration, std::forward<Aws::Map<Aws::String, Aws::String>>(attributes));
+                    RecordExecutionDuration(before, after, metricName, meter, attributes, description);
                     return returnValue;
                 }
 
@@ -93,13 +97,7 @@ namespace smithy {
                     auto before = std::chrono::steady_clock::now();
                     func();
                     auto after = std::chrono::steady_clock::now();
-                    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(after - before).count();
-                    auto histogram = meter.CreateHistogram(std::move(metricName), MICROSECOND_METRIC_TYPE, std::move(description));
-                    if (!histogram) {
-                        AWS_LOG_ERROR("TracingUtil", "Failed to create histogram");
-                        return;
-                    }
-                    histogram->record((double) duration, std::forward<Aws::Map<Aws::String, Aws::String>>(attributes));
+                    RecordExecutionDuration(before, after, std::move(metricName), meter, std::move(attributes), std::move(description));
                 }
 
                 /**
@@ -122,8 +120,9 @@ namespace smithy {
                                 std::move(description));
                             if (!histogram) {
                                 AWS_LOG_ERROR("TracingUtil", "Failed to create histogram");
+                            } else {
+                                histogram->record((double) entry.second, attributes);
                             }
-                            histogram->record((double) entry.second, attributes);
                         }
                     }
                 }
@@ -134,32 +133,21 @@ namespace smithy {
                  * @return A tuple of metric name to measurement unit.
                  */
                 static std::pair<Aws::String, Aws::String> ConvertCoreMetricToSmithy(const Aws::String &name) {
-                    //TODO: Make static map, Aws::Map cannot be made static with a customer memory manager as of the moment.
-                    Aws::Map<int, std::pair<Aws::String, Aws::String>> metricsTypeToName =
-                        {
-                            std::pair<int, std::pair<Aws::String, Aws::String>>(
-                                static_cast<int>(Aws::Monitoring::HttpClientMetricsType::DnsLatency),
-                                std::make_pair(SMITHY_METRICS_DNS_DURATION, MICROSECOND_METRIC_TYPE)),
-                            std::pair<int, std::pair<Aws::String, Aws::String>>(
-                                static_cast<int>(Aws::Monitoring::HttpClientMetricsType::ConnectLatency),
-                                std::make_pair(SMITHY_METRICS_CONNECT_DURATION, MICROSECOND_METRIC_TYPE)),
-                            std::pair<int, std::pair<Aws::String, Aws::String>>(
-                                static_cast<int>(Aws::Monitoring::HttpClientMetricsType::SslLatency),
-                                std::make_pair(SMITHY_METRICS_SSL_DURATION, MICROSECOND_METRIC_TYPE)),
-                            std::pair<int, std::pair<Aws::String, Aws::String>>(
-                                static_cast<int>(Aws::Monitoring::HttpClientMetricsType::DownloadSpeed),
-                                std::make_pair(SMITHY_METRICS_DOWNLOAD_SPEED_METRIC, BYTES_PER_SECOND_METRIC_TYPE)),
-                            std::pair<int, std::pair<Aws::String, Aws::String>>(
-                                static_cast<int>(Aws::Monitoring::HttpClientMetricsType::UploadSpeed),
-                                std::make_pair(SMITHY_METRICS_UPLOAD_SPEED_METRIC, BYTES_PER_SECOND_METRIC_TYPE)),
-                        };
-
-                    auto metricType = Aws::Monitoring::GetHttpClientMetricTypeByName(name);
-                    auto it = metricsTypeToName.find(static_cast<int>(metricType));
-                    if (it == metricsTypeToName.end()) {
-                        return std::make_pair(SMITHY_METRICS_UNKNOWN_METRIC, "unknown");
+                    switch (Aws::Monitoring::GetHttpClientMetricTypeByName(name))
+                    {
+                        case Aws::Monitoring::HttpClientMetricsType::DnsLatency:
+                            return std::make_pair(SMITHY_METRICS_DNS_DURATION, MICROSECOND_METRIC_TYPE);
+                        case Aws::Monitoring::HttpClientMetricsType::ConnectLatency:
+                            return std::make_pair(SMITHY_METRICS_CONNECT_DURATION, MICROSECOND_METRIC_TYPE);
+                        case Aws::Monitoring::HttpClientMetricsType::SslLatency:
+                            return std::make_pair(SMITHY_METRICS_SSL_DURATION, MICROSECOND_METRIC_TYPE);
+                        case Aws::Monitoring::HttpClientMetricsType::DownloadSpeed:
+                            return std::make_pair(SMITHY_METRICS_DOWNLOAD_SPEED_METRIC, BYTES_PER_SECOND_METRIC_TYPE);
+                        case Aws::Monitoring::HttpClientMetricsType::UploadSpeed:
+                            return std::make_pair(SMITHY_METRICS_UPLOAD_SPEED_METRIC, BYTES_PER_SECOND_METRIC_TYPE);
+                        default:
+                            return std::make_pair(SMITHY_METRICS_UNKNOWN_METRIC, "unknown");
                     }
-                    return it->second;
                 }
             };
         }

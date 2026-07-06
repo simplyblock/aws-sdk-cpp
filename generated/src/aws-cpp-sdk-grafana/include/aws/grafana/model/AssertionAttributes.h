@@ -4,151 +4,168 @@
  */
 
 #pragma once
-#include <aws/grafana/ManagedGrafana_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/grafana/ManagedGrafana_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ManagedGrafana
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ManagedGrafana {
+namespace Model {
 
+/**
+ * <p>A structure that defines which attributes in the IdP assertion are to be used
+ * to define information about the users authenticated by the IdP to use the
+ * workspace.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/grafana-2020-08-18/AssertionAttributes">AWS
+ * API Reference</a></p>
+ */
+class AssertionAttributes {
+ public:
+  AWS_MANAGEDGRAFANA_API AssertionAttributes() = default;
+  AWS_MANAGEDGRAFANA_API AssertionAttributes(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MANAGEDGRAFANA_API AssertionAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MANAGEDGRAFANA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A structure that defines which attributes in the IdP assertion are to be used
-   * to define information about the users authenticated by the IdP to use the
-   * workspace.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/grafana-2020-08-18/AssertionAttributes">AWS
-   * API Reference</a></p>
+   * <p>The name of the attribute within the SAML assertion to use as the user full
+   * "friendly" names for SAML users.</p>
    */
-  class AssertionAttributes
-  {
-  public:
-    AWS_MANAGEDGRAFANA_API AssertionAttributes();
-    AWS_MANAGEDGRAFANA_API AssertionAttributes(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MANAGEDGRAFANA_API AssertionAttributes& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MANAGEDGRAFANA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  AssertionAttributes& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the attribute within the SAML assertion to use as the login names
+   * for SAML users.</p>
+   */
+  inline const Aws::String& GetLogin() const { return m_login; }
+  inline bool LoginHasBeenSet() const { return m_loginHasBeenSet; }
+  template <typename LoginT = Aws::String>
+  void SetLogin(LoginT&& value) {
+    m_loginHasBeenSet = true;
+    m_login = std::forward<LoginT>(value);
+  }
+  template <typename LoginT = Aws::String>
+  AssertionAttributes& WithLogin(LoginT&& value) {
+    SetLogin(std::forward<LoginT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the email names
-     * for SAML users.</p>
-     */
-    inline const Aws::String& GetEmail() const{ return m_email; }
-    inline bool EmailHasBeenSet() const { return m_emailHasBeenSet; }
-    inline void SetEmail(const Aws::String& value) { m_emailHasBeenSet = true; m_email = value; }
-    inline void SetEmail(Aws::String&& value) { m_emailHasBeenSet = true; m_email = std::move(value); }
-    inline void SetEmail(const char* value) { m_emailHasBeenSet = true; m_email.assign(value); }
-    inline AssertionAttributes& WithEmail(const Aws::String& value) { SetEmail(value); return *this;}
-    inline AssertionAttributes& WithEmail(Aws::String&& value) { SetEmail(std::move(value)); return *this;}
-    inline AssertionAttributes& WithEmail(const char* value) { SetEmail(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the attribute within the SAML assertion to use as the email names
+   * for SAML users.</p>
+   */
+  inline const Aws::String& GetEmail() const { return m_email; }
+  inline bool EmailHasBeenSet() const { return m_emailHasBeenSet; }
+  template <typename EmailT = Aws::String>
+  void SetEmail(EmailT&& value) {
+    m_emailHasBeenSet = true;
+    m_email = std::forward<EmailT>(value);
+  }
+  template <typename EmailT = Aws::String>
+  AssertionAttributes& WithEmail(EmailT&& value) {
+    SetEmail(std::forward<EmailT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the user full
-     * "friendly" names for user groups.</p>
-     */
-    inline const Aws::String& GetGroups() const{ return m_groups; }
-    inline bool GroupsHasBeenSet() const { return m_groupsHasBeenSet; }
-    inline void SetGroups(const Aws::String& value) { m_groupsHasBeenSet = true; m_groups = value; }
-    inline void SetGroups(Aws::String&& value) { m_groupsHasBeenSet = true; m_groups = std::move(value); }
-    inline void SetGroups(const char* value) { m_groupsHasBeenSet = true; m_groups.assign(value); }
-    inline AssertionAttributes& WithGroups(const Aws::String& value) { SetGroups(value); return *this;}
-    inline AssertionAttributes& WithGroups(Aws::String&& value) { SetGroups(std::move(value)); return *this;}
-    inline AssertionAttributes& WithGroups(const char* value) { SetGroups(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the attribute within the SAML assertion to use as the user full
+   * "friendly" names for user groups.</p>
+   */
+  inline const Aws::String& GetGroups() const { return m_groups; }
+  inline bool GroupsHasBeenSet() const { return m_groupsHasBeenSet; }
+  template <typename GroupsT = Aws::String>
+  void SetGroups(GroupsT&& value) {
+    m_groupsHasBeenSet = true;
+    m_groups = std::forward<GroupsT>(value);
+  }
+  template <typename GroupsT = Aws::String>
+  AssertionAttributes& WithGroups(GroupsT&& value) {
+    SetGroups(std::forward<GroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the login names
-     * for SAML users.</p>
-     */
-    inline const Aws::String& GetLogin() const{ return m_login; }
-    inline bool LoginHasBeenSet() const { return m_loginHasBeenSet; }
-    inline void SetLogin(const Aws::String& value) { m_loginHasBeenSet = true; m_login = value; }
-    inline void SetLogin(Aws::String&& value) { m_loginHasBeenSet = true; m_login = std::move(value); }
-    inline void SetLogin(const char* value) { m_loginHasBeenSet = true; m_login.assign(value); }
-    inline AssertionAttributes& WithLogin(const Aws::String& value) { SetLogin(value); return *this;}
-    inline AssertionAttributes& WithLogin(Aws::String&& value) { SetLogin(std::move(value)); return *this;}
-    inline AssertionAttributes& WithLogin(const char* value) { SetLogin(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the attribute within the SAML assertion to use as the user
+   * roles.</p>
+   */
+  inline const Aws::String& GetRole() const { return m_role; }
+  inline bool RoleHasBeenSet() const { return m_roleHasBeenSet; }
+  template <typename RoleT = Aws::String>
+  void SetRole(RoleT&& value) {
+    m_roleHasBeenSet = true;
+    m_role = std::forward<RoleT>(value);
+  }
+  template <typename RoleT = Aws::String>
+  AssertionAttributes& WithRole(RoleT&& value) {
+    SetRole(std::forward<RoleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the user full
-     * "friendly" names for SAML users.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline AssertionAttributes& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline AssertionAttributes& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline AssertionAttributes& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the attribute within the SAML assertion to use as the user full
+   * "friendly" names for the users' organizations.</p>
+   */
+  inline const Aws::String& GetOrg() const { return m_org; }
+  inline bool OrgHasBeenSet() const { return m_orgHasBeenSet; }
+  template <typename OrgT = Aws::String>
+  void SetOrg(OrgT&& value) {
+    m_orgHasBeenSet = true;
+    m_org = std::forward<OrgT>(value);
+  }
+  template <typename OrgT = Aws::String>
+  AssertionAttributes& WithOrg(OrgT&& value) {
+    SetOrg(std::forward<OrgT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the user full
-     * "friendly" names for the users' organizations.</p>
-     */
-    inline const Aws::String& GetOrg() const{ return m_org; }
-    inline bool OrgHasBeenSet() const { return m_orgHasBeenSet; }
-    inline void SetOrg(const Aws::String& value) { m_orgHasBeenSet = true; m_org = value; }
-    inline void SetOrg(Aws::String&& value) { m_orgHasBeenSet = true; m_org = std::move(value); }
-    inline void SetOrg(const char* value) { m_orgHasBeenSet = true; m_org.assign(value); }
-    inline AssertionAttributes& WithOrg(const Aws::String& value) { SetOrg(value); return *this;}
-    inline AssertionAttributes& WithOrg(Aws::String&& value) { SetOrg(std::move(value)); return *this;}
-    inline AssertionAttributes& WithOrg(const char* value) { SetOrg(value); return *this;}
-    ///@}
+  Aws::String m_login;
 
-    ///@{
-    /**
-     * <p>The name of the attribute within the SAML assertion to use as the user
-     * roles.</p>
-     */
-    inline const Aws::String& GetRole() const{ return m_role; }
-    inline bool RoleHasBeenSet() const { return m_roleHasBeenSet; }
-    inline void SetRole(const Aws::String& value) { m_roleHasBeenSet = true; m_role = value; }
-    inline void SetRole(Aws::String&& value) { m_roleHasBeenSet = true; m_role = std::move(value); }
-    inline void SetRole(const char* value) { m_roleHasBeenSet = true; m_role.assign(value); }
-    inline AssertionAttributes& WithRole(const Aws::String& value) { SetRole(value); return *this;}
-    inline AssertionAttributes& WithRole(Aws::String&& value) { SetRole(std::move(value)); return *this;}
-    inline AssertionAttributes& WithRole(const char* value) { SetRole(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_email;
 
-    Aws::String m_email;
-    bool m_emailHasBeenSet = false;
+  Aws::String m_groups;
 
-    Aws::String m_groups;
-    bool m_groupsHasBeenSet = false;
+  Aws::String m_role;
 
-    Aws::String m_login;
-    bool m_loginHasBeenSet = false;
+  Aws::String m_org;
+  bool m_nameHasBeenSet = false;
+  bool m_loginHasBeenSet = false;
+  bool m_emailHasBeenSet = false;
+  bool m_groupsHasBeenSet = false;
+  bool m_roleHasBeenSet = false;
+  bool m_orgHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_org;
-    bool m_orgHasBeenSet = false;
-
-    Aws::String m_role;
-    bool m_roleHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ManagedGrafana
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedGrafana
+}  // namespace Aws

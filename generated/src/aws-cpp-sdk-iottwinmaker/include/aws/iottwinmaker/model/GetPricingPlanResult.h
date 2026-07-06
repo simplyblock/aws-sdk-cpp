@@ -4,76 +4,92 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/iottwinmaker/IoTTwinMaker_EXPORTS.h>
 #include <aws/iottwinmaker/model/PricingPlan.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTTwinMaker
-{
-namespace Model
-{
-  class GetPricingPlanResult
-  {
-  public:
-    AWS_IOTTWINMAKER_API GetPricingPlanResult();
-    AWS_IOTTWINMAKER_API GetPricingPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTTWINMAKER_API GetPricingPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTTwinMaker {
+namespace Model {
+class GetPricingPlanResult {
+ public:
+  AWS_IOTTWINMAKER_API GetPricingPlanResult() = default;
+  AWS_IOTTWINMAKER_API GetPricingPlanResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTTWINMAKER_API GetPricingPlanResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The chosen pricing plan for the current billing cycle.</p>
+   */
+  inline const PricingPlan& GetCurrentPricingPlan() const { return m_currentPricingPlan; }
+  template <typename CurrentPricingPlanT = PricingPlan>
+  void SetCurrentPricingPlan(CurrentPricingPlanT&& value) {
+    m_currentPricingPlanHasBeenSet = true;
+    m_currentPricingPlan = std::forward<CurrentPricingPlanT>(value);
+  }
+  template <typename CurrentPricingPlanT = PricingPlan>
+  GetPricingPlanResult& WithCurrentPricingPlan(CurrentPricingPlanT&& value) {
+    SetCurrentPricingPlan(std::forward<CurrentPricingPlanT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The chosen pricing plan for the current billing cycle.</p>
-     */
-    inline const PricingPlan& GetCurrentPricingPlan() const{ return m_currentPricingPlan; }
-    inline void SetCurrentPricingPlan(const PricingPlan& value) { m_currentPricingPlan = value; }
-    inline void SetCurrentPricingPlan(PricingPlan&& value) { m_currentPricingPlan = std::move(value); }
-    inline GetPricingPlanResult& WithCurrentPricingPlan(const PricingPlan& value) { SetCurrentPricingPlan(value); return *this;}
-    inline GetPricingPlanResult& WithCurrentPricingPlan(PricingPlan&& value) { SetCurrentPricingPlan(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The pending pricing plan.</p>
+   */
+  inline const PricingPlan& GetPendingPricingPlan() const { return m_pendingPricingPlan; }
+  template <typename PendingPricingPlanT = PricingPlan>
+  void SetPendingPricingPlan(PendingPricingPlanT&& value) {
+    m_pendingPricingPlanHasBeenSet = true;
+    m_pendingPricingPlan = std::forward<PendingPricingPlanT>(value);
+  }
+  template <typename PendingPricingPlanT = PricingPlan>
+  GetPricingPlanResult& WithPendingPricingPlan(PendingPricingPlanT&& value) {
+    SetPendingPricingPlan(std::forward<PendingPricingPlanT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pending pricing plan.</p>
-     */
-    inline const PricingPlan& GetPendingPricingPlan() const{ return m_pendingPricingPlan; }
-    inline void SetPendingPricingPlan(const PricingPlan& value) { m_pendingPricingPlan = value; }
-    inline void SetPendingPricingPlan(PricingPlan&& value) { m_pendingPricingPlan = std::move(value); }
-    inline GetPricingPlanResult& WithPendingPricingPlan(const PricingPlan& value) { SetPendingPricingPlan(value); return *this;}
-    inline GetPricingPlanResult& WithPendingPricingPlan(PricingPlan&& value) { SetPendingPricingPlan(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetPricingPlanResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetPricingPlanResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetPricingPlanResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetPricingPlanResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PricingPlan m_currentPricingPlan;
+ private:
+  PricingPlan m_currentPricingPlan;
 
-    PricingPlan m_pendingPricingPlan;
+  PricingPlan m_pendingPricingPlan;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_currentPricingPlanHasBeenSet = false;
+  bool m_pendingPricingPlanHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTTwinMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTTwinMaker
+}  // namespace Aws

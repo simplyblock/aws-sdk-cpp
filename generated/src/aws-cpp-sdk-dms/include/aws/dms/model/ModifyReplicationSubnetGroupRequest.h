@@ -4,94 +4,106 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
-#include <aws/dms/DatabaseMigrationServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationServiceRequest.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Aws {
+namespace DatabaseMigrationService {
+namespace Model {
 
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyReplicationSubnetGroupMessage">AWS
+ * API Reference</a></p>
+ */
+class ModifyReplicationSubnetGroupRequest : public DatabaseMigrationServiceRequest {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API ModifyReplicationSubnetGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ModifyReplicationSubnetGroup"; }
+
+  AWS_DATABASEMIGRATIONSERVICE_API Aws::String SerializePayload() const override;
+
+  AWS_DATABASEMIGRATIONSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyReplicationSubnetGroupMessage">AWS
-   * API Reference</a></p>
+   * <p>The name of the replication instance subnet group.</p>
    */
-  class ModifyReplicationSubnetGroupRequest : public DatabaseMigrationServiceRequest
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API ModifyReplicationSubnetGroupRequest();
+  inline const Aws::String& GetReplicationSubnetGroupIdentifier() const { return m_replicationSubnetGroupIdentifier; }
+  inline bool ReplicationSubnetGroupIdentifierHasBeenSet() const { return m_replicationSubnetGroupIdentifierHasBeenSet; }
+  template <typename ReplicationSubnetGroupIdentifierT = Aws::String>
+  void SetReplicationSubnetGroupIdentifier(ReplicationSubnetGroupIdentifierT&& value) {
+    m_replicationSubnetGroupIdentifierHasBeenSet = true;
+    m_replicationSubnetGroupIdentifier = std::forward<ReplicationSubnetGroupIdentifierT>(value);
+  }
+  template <typename ReplicationSubnetGroupIdentifierT = Aws::String>
+  ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupIdentifier(ReplicationSubnetGroupIdentifierT&& value) {
+    SetReplicationSubnetGroupIdentifier(std::forward<ReplicationSubnetGroupIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ModifyReplicationSubnetGroup"; }
+  ///@{
+  /**
+   * <p>A description for the replication instance subnet group.</p>
+   */
+  inline const Aws::String& GetReplicationSubnetGroupDescription() const { return m_replicationSubnetGroupDescription; }
+  inline bool ReplicationSubnetGroupDescriptionHasBeenSet() const { return m_replicationSubnetGroupDescriptionHasBeenSet; }
+  template <typename ReplicationSubnetGroupDescriptionT = Aws::String>
+  void SetReplicationSubnetGroupDescription(ReplicationSubnetGroupDescriptionT&& value) {
+    m_replicationSubnetGroupDescriptionHasBeenSet = true;
+    m_replicationSubnetGroupDescription = std::forward<ReplicationSubnetGroupDescriptionT>(value);
+  }
+  template <typename ReplicationSubnetGroupDescriptionT = Aws::String>
+  ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupDescription(ReplicationSubnetGroupDescriptionT&& value) {
+    SetReplicationSubnetGroupDescription(std::forward<ReplicationSubnetGroupDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DATABASEMIGRATIONSERVICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A list of subnet IDs.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSubnetIds() const { return m_subnetIds; }
+  inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  void SetSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds = std::forward<SubnetIdsT>(value);
+  }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  ModifyReplicationSubnetGroupRequest& WithSubnetIds(SubnetIdsT&& value) {
+    SetSubnetIds(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  template <typename SubnetIdsT = Aws::String>
+  ModifyReplicationSubnetGroupRequest& AddSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds.emplace_back(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_replicationSubnetGroupIdentifier;
 
-    AWS_DATABASEMIGRATIONSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_replicationSubnetGroupDescription;
 
+  Aws::Vector<Aws::String> m_subnetIds;
+  bool m_replicationSubnetGroupIdentifierHasBeenSet = false;
+  bool m_replicationSubnetGroupDescriptionHasBeenSet = false;
+  bool m_subnetIdsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the replication instance subnet group.</p>
-     */
-    inline const Aws::String& GetReplicationSubnetGroupIdentifier() const{ return m_replicationSubnetGroupIdentifier; }
-    inline bool ReplicationSubnetGroupIdentifierHasBeenSet() const { return m_replicationSubnetGroupIdentifierHasBeenSet; }
-    inline void SetReplicationSubnetGroupIdentifier(const Aws::String& value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier = value; }
-    inline void SetReplicationSubnetGroupIdentifier(Aws::String&& value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier = std::move(value); }
-    inline void SetReplicationSubnetGroupIdentifier(const char* value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier.assign(value); }
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupIdentifier(const Aws::String& value) { SetReplicationSubnetGroupIdentifier(value); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupIdentifier(Aws::String&& value) { SetReplicationSubnetGroupIdentifier(std::move(value)); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupIdentifier(const char* value) { SetReplicationSubnetGroupIdentifier(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A description for the replication instance subnet group.</p>
-     */
-    inline const Aws::String& GetReplicationSubnetGroupDescription() const{ return m_replicationSubnetGroupDescription; }
-    inline bool ReplicationSubnetGroupDescriptionHasBeenSet() const { return m_replicationSubnetGroupDescriptionHasBeenSet; }
-    inline void SetReplicationSubnetGroupDescription(const Aws::String& value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription = value; }
-    inline void SetReplicationSubnetGroupDescription(Aws::String&& value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription = std::move(value); }
-    inline void SetReplicationSubnetGroupDescription(const char* value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription.assign(value); }
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupDescription(const Aws::String& value) { SetReplicationSubnetGroupDescription(value); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupDescription(Aws::String&& value) { SetReplicationSubnetGroupDescription(std::move(value)); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& WithReplicationSubnetGroupDescription(const char* value) { SetReplicationSubnetGroupDescription(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of subnet IDs.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnetIds() const{ return m_subnetIds; }
-    inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
-    inline void SetSubnetIds(const Aws::Vector<Aws::String>& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = value; }
-    inline void SetSubnetIds(Aws::Vector<Aws::String>&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = std::move(value); }
-    inline ModifyReplicationSubnetGroupRequest& WithSubnetIds(const Aws::Vector<Aws::String>& value) { SetSubnetIds(value); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& WithSubnetIds(Aws::Vector<Aws::String>&& value) { SetSubnetIds(std::move(value)); return *this;}
-    inline ModifyReplicationSubnetGroupRequest& AddSubnetIds(const Aws::String& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    inline ModifyReplicationSubnetGroupRequest& AddSubnetIds(Aws::String&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(std::move(value)); return *this; }
-    inline ModifyReplicationSubnetGroupRequest& AddSubnetIds(const char* value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_replicationSubnetGroupIdentifier;
-    bool m_replicationSubnetGroupIdentifierHasBeenSet = false;
-
-    Aws::String m_replicationSubnetGroupDescription;
-    bool m_replicationSubnetGroupDescriptionHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_subnetIds;
-    bool m_subnetIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

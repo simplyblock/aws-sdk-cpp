@@ -136,6 +136,194 @@
                 "smithy.api#xmlNamespace": {
                     "uri": "http://ec2.amazon.com/awsposiedon/V2015_11_01/"
                 },
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://discovery-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://discovery-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://discovery.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://discovery.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -143,27 +331,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -687,17 +875,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -708,17 +885,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -735,17 +901,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -756,17 +911,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1069,6 +1213,16 @@
                     "max": 127
                 },
                 "smithy.api#pattern": "^[\\s\\S]*\\S[\\s\\S]*$"
+            }
+        },
+        "com.amazonaws.applicationdiscoveryservice#ApplicationWave": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 256
+                },
+                "smithy.api#pattern": "^($|[^\\s\\x00]( *[^\\s\\x00])*$)$"
             }
         },
         "com.amazonaws.applicationdiscoveryservice#AssociateConfigurationItemsToApplication": {
@@ -1763,14 +1917,20 @@
                 "name": {
                     "target": "com.amazonaws.applicationdiscoveryservice#ApplicationName",
                     "traits": {
-                        "smithy.api#documentation": "<p>Name of the application to be created.</p>",
+                        "smithy.api#documentation": "<p>The name of the application to be created.</p>",
                         "smithy.api#required": {}
                     }
                 },
                 "description": {
                     "target": "com.amazonaws.applicationdiscoveryservice#ApplicationDescription",
                     "traits": {
-                        "smithy.api#documentation": "<p>Description of the application to be created.</p>"
+                        "smithy.api#documentation": "<p>The description of the application to be created.</p>"
+                    }
+                },
+                "wave": {
+                    "target": "com.amazonaws.applicationdiscoveryservice#ApplicationWave",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the migration wave of the application to be created.</p>"
                     }
                 }
             },
@@ -1784,7 +1944,7 @@
                 "configurationId": {
                     "target": "com.amazonaws.applicationdiscoveryservice#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>Configuration ID of an application to be created.</p>"
+                        "smithy.api#documentation": "<p>The configuration ID of an application to be created.</p>"
                     }
                 }
             },
@@ -3409,6 +3569,35 @@
                 "target": "com.amazonaws.applicationdiscoveryservice#FailedConfiguration"
             }
         },
+        "com.amazonaws.applicationdiscoveryservice#FileClassification": {
+            "type": "enum",
+            "members": {
+                "MODELIZEIT_EXPORT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "MODELIZEIT_EXPORT"
+                    }
+                },
+                "RVTOOLS_EXPORT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "RVTOOLS_EXPORT"
+                    }
+                },
+                "VMWARE_NSX_EXPORT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "VMWARE_NSX_EXPORT"
+                    }
+                },
+                "IMPORT_TEMPLATE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "IMPORT_TEMPLATE"
+                    }
+                }
+            }
+        },
         "com.amazonaws.applicationdiscoveryservice#Filter": {
             "type": "structure",
             "members": {
@@ -3621,6 +3810,12 @@
                         "smithy.api#enumValue": "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED"
                     }
                 },
+                "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE"
+                    }
+                },
                 "DELETE_IN_PROGRESS": {
                     "target": "smithy.api#Unit",
                     "traits": {
@@ -3704,6 +3899,12 @@
                         "smithy.api#documentation": "<p>The time that the import task request was deleted, presented in the Unix time stamp\n      format.</p>"
                     }
                 },
+                "fileClassification": {
+                    "target": "com.amazonaws.applicationdiscoveryservice#FileClassification",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of file detected by the import task.</p>"
+                    }
+                },
                 "serverImportSuccess": {
                     "target": "com.amazonaws.applicationdiscoveryservice#Integer",
                     "traits": {
@@ -3782,6 +3983,12 @@
                     "target": "smithy.api#Unit",
                     "traits": {
                         "smithy.api#enumValue": "NAME"
+                    }
+                },
+                "FILE_CLASSIFICATION": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "FILE_CLASSIFICATION"
                     }
                 }
             }
@@ -4331,6 +4538,9 @@
                 },
                 {
                     "target": "com.amazonaws.applicationdiscoveryservice#HomeRegionNotSetException"
+                },
+                {
+                    "target": "com.amazonaws.applicationdiscoveryservice#InvalidParameterException"
                 },
                 {
                     "target": "com.amazonaws.applicationdiscoveryservice#InvalidParameterValueException"
@@ -5005,6 +5215,12 @@
                     "target": "com.amazonaws.applicationdiscoveryservice#ApplicationDescription",
                     "traits": {
                         "smithy.api#documentation": "<p>New description of the application to be updated.</p>"
+                    }
+                },
+                "wave": {
+                    "target": "com.amazonaws.applicationdiscoveryservice#ApplicationWave",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The new migration wave of the application that you want to update.</p>"
                     }
                 }
             },

@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class CreateHubResult
-  {
-  public:
-    AWS_SAGEMAKER_API CreateHubResult();
-    AWS_SAGEMAKER_API CreateHubResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API CreateHubResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class CreateHubResult {
+ public:
+  AWS_SAGEMAKER_API CreateHubResult() = default;
+  AWS_SAGEMAKER_API CreateHubResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API CreateHubResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the hub.</p>
+   */
+  inline const Aws::String& GetHubArn() const { return m_hubArn; }
+  template <typename HubArnT = Aws::String>
+  void SetHubArn(HubArnT&& value) {
+    m_hubArnHasBeenSet = true;
+    m_hubArn = std::forward<HubArnT>(value);
+  }
+  template <typename HubArnT = Aws::String>
+  CreateHubResult& WithHubArn(HubArnT&& value) {
+    SetHubArn(std::forward<HubArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the hub.</p>
-     */
-    inline const Aws::String& GetHubArn() const{ return m_hubArn; }
-    inline void SetHubArn(const Aws::String& value) { m_hubArn = value; }
-    inline void SetHubArn(Aws::String&& value) { m_hubArn = std::move(value); }
-    inline void SetHubArn(const char* value) { m_hubArn.assign(value); }
-    inline CreateHubResult& WithHubArn(const Aws::String& value) { SetHubArn(value); return *this;}
-    inline CreateHubResult& WithHubArn(Aws::String&& value) { SetHubArn(std::move(value)); return *this;}
-    inline CreateHubResult& WithHubArn(const char* value) { SetHubArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateHubResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateHubResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateHubResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateHubResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_hubArn;
+ private:
+  Aws::String m_hubArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hubArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

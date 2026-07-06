@@ -12,18 +12,4 @@ using namespace Aws::AmplifyUIBuilder::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteComponentRequest::DeleteComponentRequest() : 
-    m_appIdHasBeenSet(false),
-    m_environmentNameHasBeenSet(false),
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteComponentRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteComponentRequest::SerializePayload() const { return {}; }

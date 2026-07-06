@@ -4,158 +4,277 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/lexv2-models/LexModelsV2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/lexv2-models/model/VoiceSettings.h>
+#include <aws/lexv2-models/LexModelsV2Request.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+#include <aws/lexv2-models/model/AudioFillerSettings.h>
 #include <aws/lexv2-models/model/GenerativeAISettings.h>
+#include <aws/lexv2-models/model/SpeechDetectionSensitivity.h>
+#include <aws/lexv2-models/model/SpeechRecognitionSettings.h>
+#include <aws/lexv2-models/model/UnifiedSpeechSettings.h>
+#include <aws/lexv2-models/model/VoiceSettings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ */
+class UpdateBotLocaleRequest : public LexModelsV2Request {
+ public:
+  AWS_LEXMODELSV2_API UpdateBotLocaleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateBotLocale"; }
+
+  AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the bot that contains the locale.</p>
    */
-  class UpdateBotLocaleRequest : public LexModelsV2Request
-  {
-  public:
-    AWS_LEXMODELSV2_API UpdateBotLocaleRequest();
+  inline const Aws::String& GetBotId() const { return m_botId; }
+  inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
+  template <typename BotIdT = Aws::String>
+  void SetBotId(BotIdT&& value) {
+    m_botIdHasBeenSet = true;
+    m_botId = std::forward<BotIdT>(value);
+  }
+  template <typename BotIdT = Aws::String>
+  UpdateBotLocaleRequest& WithBotId(BotIdT&& value) {
+    SetBotId(std::forward<BotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateBotLocale"; }
+  ///@{
+  /**
+   * <p>The version of the bot that contains the locale to be updated. The version
+   * can only be the <code>DRAFT</code> version.</p>
+   */
+  inline const Aws::String& GetBotVersion() const { return m_botVersion; }
+  inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
+  template <typename BotVersionT = Aws::String>
+  void SetBotVersion(BotVersionT&& value) {
+    m_botVersionHasBeenSet = true;
+    m_botVersion = std::forward<BotVersionT>(value);
+  }
+  template <typename BotVersionT = Aws::String>
+  UpdateBotLocaleRequest& WithBotVersion(BotVersionT&& value) {
+    SetBotVersion(std::forward<BotVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The identifier of the language and locale to update. The string must match
+   * one of the supported locales. For more information, see <a
+   * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
+   * languages</a>.</p>
+   */
+  inline const Aws::String& GetLocaleId() const { return m_localeId; }
+  inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
+  template <typename LocaleIdT = Aws::String>
+  void SetLocaleId(LocaleIdT&& value) {
+    m_localeIdHasBeenSet = true;
+    m_localeId = std::forward<LocaleIdT>(value);
+  }
+  template <typename LocaleIdT = Aws::String>
+  UpdateBotLocaleRequest& WithLocaleId(LocaleIdT&& value) {
+    SetLocaleId(std::forward<LocaleIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The new description of the locale.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateBotLocaleRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the bot that contains the locale.</p>
-     */
-    inline const Aws::String& GetBotId() const{ return m_botId; }
-    inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
-    inline void SetBotId(const Aws::String& value) { m_botIdHasBeenSet = true; m_botId = value; }
-    inline void SetBotId(Aws::String&& value) { m_botIdHasBeenSet = true; m_botId = std::move(value); }
-    inline void SetBotId(const char* value) { m_botIdHasBeenSet = true; m_botId.assign(value); }
-    inline UpdateBotLocaleRequest& WithBotId(const Aws::String& value) { SetBotId(value); return *this;}
-    inline UpdateBotLocaleRequest& WithBotId(Aws::String&& value) { SetBotId(std::move(value)); return *this;}
-    inline UpdateBotLocaleRequest& WithBotId(const char* value) { SetBotId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The new confidence threshold where Amazon Lex inserts the
+   * <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code>
+   * intents in the list of possible intents for an utterance.</p>
+   */
+  inline double GetNluIntentConfidenceThreshold() const { return m_nluIntentConfidenceThreshold; }
+  inline bool NluIntentConfidenceThresholdHasBeenSet() const { return m_nluIntentConfidenceThresholdHasBeenSet; }
+  inline void SetNluIntentConfidenceThreshold(double value) {
+    m_nluIntentConfidenceThresholdHasBeenSet = true;
+    m_nluIntentConfidenceThreshold = value;
+  }
+  inline UpdateBotLocaleRequest& WithNluIntentConfidenceThreshold(double value) {
+    SetNluIntentConfidenceThreshold(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the bot that contains the locale to be updated. The version
-     * can only be the <code>DRAFT</code> version.</p>
-     */
-    inline const Aws::String& GetBotVersion() const{ return m_botVersion; }
-    inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
-    inline void SetBotVersion(const Aws::String& value) { m_botVersionHasBeenSet = true; m_botVersion = value; }
-    inline void SetBotVersion(Aws::String&& value) { m_botVersionHasBeenSet = true; m_botVersion = std::move(value); }
-    inline void SetBotVersion(const char* value) { m_botVersionHasBeenSet = true; m_botVersion.assign(value); }
-    inline UpdateBotLocaleRequest& WithBotVersion(const Aws::String& value) { SetBotVersion(value); return *this;}
-    inline UpdateBotLocaleRequest& WithBotVersion(Aws::String&& value) { SetBotVersion(std::move(value)); return *this;}
-    inline UpdateBotLocaleRequest& WithBotVersion(const char* value) { SetBotVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The new Amazon Polly voice Amazon Lex should use for voice interaction with
+   * the user.</p>
+   */
+  inline const VoiceSettings& GetVoiceSettings() const { return m_voiceSettings; }
+  inline bool VoiceSettingsHasBeenSet() const { return m_voiceSettingsHasBeenSet; }
+  template <typename VoiceSettingsT = VoiceSettings>
+  void SetVoiceSettings(VoiceSettingsT&& value) {
+    m_voiceSettingsHasBeenSet = true;
+    m_voiceSettings = std::forward<VoiceSettingsT>(value);
+  }
+  template <typename VoiceSettingsT = VoiceSettings>
+  UpdateBotLocaleRequest& WithVoiceSettings(VoiceSettingsT&& value) {
+    SetVoiceSettings(std::forward<VoiceSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the language and locale to update. The string must match
-     * one of the supported locales. For more information, see <a
-     * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
-     * languages</a>.</p>
-     */
-    inline const Aws::String& GetLocaleId() const{ return m_localeId; }
-    inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
-    inline void SetLocaleId(const Aws::String& value) { m_localeIdHasBeenSet = true; m_localeId = value; }
-    inline void SetLocaleId(Aws::String&& value) { m_localeIdHasBeenSet = true; m_localeId = std::move(value); }
-    inline void SetLocaleId(const char* value) { m_localeIdHasBeenSet = true; m_localeId.assign(value); }
-    inline UpdateBotLocaleRequest& WithLocaleId(const Aws::String& value) { SetLocaleId(value); return *this;}
-    inline UpdateBotLocaleRequest& WithLocaleId(Aws::String&& value) { SetLocaleId(std::move(value)); return *this;}
-    inline UpdateBotLocaleRequest& WithLocaleId(const char* value) { SetLocaleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updated unified speech settings to apply to the bot locale.</p>
+   */
+  inline const UnifiedSpeechSettings& GetUnifiedSpeechSettings() const { return m_unifiedSpeechSettings; }
+  inline bool UnifiedSpeechSettingsHasBeenSet() const { return m_unifiedSpeechSettingsHasBeenSet; }
+  template <typename UnifiedSpeechSettingsT = UnifiedSpeechSettings>
+  void SetUnifiedSpeechSettings(UnifiedSpeechSettingsT&& value) {
+    m_unifiedSpeechSettingsHasBeenSet = true;
+    m_unifiedSpeechSettings = std::forward<UnifiedSpeechSettingsT>(value);
+  }
+  template <typename UnifiedSpeechSettingsT = UnifiedSpeechSettings>
+  UpdateBotLocaleRequest& WithUnifiedSpeechSettings(UnifiedSpeechSettingsT&& value) {
+    SetUnifiedSpeechSettings(std::forward<UnifiedSpeechSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The new description of the locale.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateBotLocaleRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateBotLocaleRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateBotLocaleRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updated audio filler settings to apply to the bot locale. When enabled,
+   * requires <code>unifiedSpeechSettings</code> (speech-to-speech) to be configured
+   * on the bot locale.</p>
+   */
+  inline const AudioFillerSettings& GetAudioFillerSettings() const { return m_audioFillerSettings; }
+  inline bool AudioFillerSettingsHasBeenSet() const { return m_audioFillerSettingsHasBeenSet; }
+  template <typename AudioFillerSettingsT = AudioFillerSettings>
+  void SetAudioFillerSettings(AudioFillerSettingsT&& value) {
+    m_audioFillerSettingsHasBeenSet = true;
+    m_audioFillerSettings = std::forward<AudioFillerSettingsT>(value);
+  }
+  template <typename AudioFillerSettingsT = AudioFillerSettings>
+  UpdateBotLocaleRequest& WithAudioFillerSettings(AudioFillerSettingsT&& value) {
+    SetAudioFillerSettings(std::forward<AudioFillerSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The new confidence threshold where Amazon Lex inserts the
-     * <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code>
-     * intents in the list of possible intents for an utterance.</p>
-     */
-    inline double GetNluIntentConfidenceThreshold() const{ return m_nluIntentConfidenceThreshold; }
-    inline bool NluIntentConfidenceThresholdHasBeenSet() const { return m_nluIntentConfidenceThresholdHasBeenSet; }
-    inline void SetNluIntentConfidenceThreshold(double value) { m_nluIntentConfidenceThresholdHasBeenSet = true; m_nluIntentConfidenceThreshold = value; }
-    inline UpdateBotLocaleRequest& WithNluIntentConfidenceThreshold(double value) { SetNluIntentConfidenceThreshold(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Updated speech-to-text settings to apply to the bot locale.</p>
+   */
+  inline const SpeechRecognitionSettings& GetSpeechRecognitionSettings() const { return m_speechRecognitionSettings; }
+  inline bool SpeechRecognitionSettingsHasBeenSet() const { return m_speechRecognitionSettingsHasBeenSet; }
+  template <typename SpeechRecognitionSettingsT = SpeechRecognitionSettings>
+  void SetSpeechRecognitionSettings(SpeechRecognitionSettingsT&& value) {
+    m_speechRecognitionSettingsHasBeenSet = true;
+    m_speechRecognitionSettings = std::forward<SpeechRecognitionSettingsT>(value);
+  }
+  template <typename SpeechRecognitionSettingsT = SpeechRecognitionSettings>
+  UpdateBotLocaleRequest& WithSpeechRecognitionSettings(SpeechRecognitionSettingsT&& value) {
+    SetSpeechRecognitionSettings(std::forward<SpeechRecognitionSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The new Amazon Polly voice Amazon Lex should use for voice interaction with
-     * the user.</p>
-     */
-    inline const VoiceSettings& GetVoiceSettings() const{ return m_voiceSettings; }
-    inline bool VoiceSettingsHasBeenSet() const { return m_voiceSettingsHasBeenSet; }
-    inline void SetVoiceSettings(const VoiceSettings& value) { m_voiceSettingsHasBeenSet = true; m_voiceSettings = value; }
-    inline void SetVoiceSettings(VoiceSettings&& value) { m_voiceSettingsHasBeenSet = true; m_voiceSettings = std::move(value); }
-    inline UpdateBotLocaleRequest& WithVoiceSettings(const VoiceSettings& value) { SetVoiceSettings(value); return *this;}
-    inline UpdateBotLocaleRequest& WithVoiceSettings(VoiceSettings&& value) { SetVoiceSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains settings for generative AI features powered by Amazon Bedrock for
+   * your bot locale. Use this object to turn generative AI features on and off.
+   * Pricing may differ if you turn a feature on. For more information, see LINK.</p>
+   */
+  inline const GenerativeAISettings& GetGenerativeAISettings() const { return m_generativeAISettings; }
+  inline bool GenerativeAISettingsHasBeenSet() const { return m_generativeAISettingsHasBeenSet; }
+  template <typename GenerativeAISettingsT = GenerativeAISettings>
+  void SetGenerativeAISettings(GenerativeAISettingsT&& value) {
+    m_generativeAISettingsHasBeenSet = true;
+    m_generativeAISettings = std::forward<GenerativeAISettingsT>(value);
+  }
+  template <typename GenerativeAISettingsT = GenerativeAISettings>
+  UpdateBotLocaleRequest& WithGenerativeAISettings(GenerativeAISettingsT&& value) {
+    SetGenerativeAISettings(std::forward<GenerativeAISettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains settings for generative AI features powered by Amazon Bedrock for
-     * your bot locale. Use this object to turn generative AI features on and off.
-     * Pricing may differ if you turn a feature on. For more information, see LINK.</p>
-     */
-    inline const GenerativeAISettings& GetGenerativeAISettings() const{ return m_generativeAISettings; }
-    inline bool GenerativeAISettingsHasBeenSet() const { return m_generativeAISettingsHasBeenSet; }
-    inline void SetGenerativeAISettings(const GenerativeAISettings& value) { m_generativeAISettingsHasBeenSet = true; m_generativeAISettings = value; }
-    inline void SetGenerativeAISettings(GenerativeAISettings&& value) { m_generativeAISettingsHasBeenSet = true; m_generativeAISettings = std::move(value); }
-    inline UpdateBotLocaleRequest& WithGenerativeAISettings(const GenerativeAISettings& value) { SetGenerativeAISettings(value); return *this;}
-    inline UpdateBotLocaleRequest& WithGenerativeAISettings(GenerativeAISettings&& value) { SetGenerativeAISettings(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The new sensitivity level for voice activity detection (VAD) in the bot
+   * locale. This setting helps optimize speech recognition accuracy by adjusting how
+   * the system responds to background noise during voice interactions.</p>
+   */
+  inline SpeechDetectionSensitivity GetSpeechDetectionSensitivity() const { return m_speechDetectionSensitivity; }
+  inline bool SpeechDetectionSensitivityHasBeenSet() const { return m_speechDetectionSensitivityHasBeenSet; }
+  inline void SetSpeechDetectionSensitivity(SpeechDetectionSensitivity value) {
+    m_speechDetectionSensitivityHasBeenSet = true;
+    m_speechDetectionSensitivity = value;
+  }
+  inline UpdateBotLocaleRequest& WithSpeechDetectionSensitivity(SpeechDetectionSensitivity value) {
+    SetSpeechDetectionSensitivity(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_botId;
 
-    Aws::String m_botId;
-    bool m_botIdHasBeenSet = false;
+  Aws::String m_botVersion;
 
-    Aws::String m_botVersion;
-    bool m_botVersionHasBeenSet = false;
+  Aws::String m_localeId;
 
-    Aws::String m_localeId;
-    bool m_localeIdHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  double m_nluIntentConfidenceThreshold{0.0};
 
-    double m_nluIntentConfidenceThreshold;
-    bool m_nluIntentConfidenceThresholdHasBeenSet = false;
+  VoiceSettings m_voiceSettings;
 
-    VoiceSettings m_voiceSettings;
-    bool m_voiceSettingsHasBeenSet = false;
+  UnifiedSpeechSettings m_unifiedSpeechSettings;
 
-    GenerativeAISettings m_generativeAISettings;
-    bool m_generativeAISettingsHasBeenSet = false;
-  };
+  AudioFillerSettings m_audioFillerSettings;
 
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+  SpeechRecognitionSettings m_speechRecognitionSettings;
+
+  GenerativeAISettings m_generativeAISettings;
+
+  SpeechDetectionSensitivity m_speechDetectionSensitivity{SpeechDetectionSensitivity::NOT_SET};
+  bool m_botIdHasBeenSet = false;
+  bool m_botVersionHasBeenSet = false;
+  bool m_localeIdHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_nluIntentConfidenceThresholdHasBeenSet = false;
+  bool m_voiceSettingsHasBeenSet = false;
+  bool m_unifiedSpeechSettingsHasBeenSet = false;
+  bool m_audioFillerSettingsHasBeenSet = false;
+  bool m_speechRecognitionSettingsHasBeenSet = false;
+  bool m_generativeAISettingsHasBeenSet = false;
+  bool m_speechDetectionSensitivityHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

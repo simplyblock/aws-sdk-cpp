@@ -12,24 +12,12 @@ using namespace Aws::Account::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetContactInformationRequest::GetContactInformationRequest() : 
-    m_accountIdHasBeenSet(false)
-{
-}
-
-Aws::String GetContactInformationRequest::SerializePayload() const
-{
+Aws::String GetContactInformationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("AccountId", m_accountId);
-
+  if (m_accountIdHasBeenSet) {
+    payload.WithString("AccountId", m_accountId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

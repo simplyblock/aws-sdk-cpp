@@ -12,39 +12,20 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateApiMappingRequest::CreateApiMappingRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_apiMappingKeyHasBeenSet(false),
-    m_domainNameHasBeenSet(false),
-    m_stageHasBeenSet(false)
-{
-}
-
-Aws::String CreateApiMappingRequest::SerializePayload() const
-{
+Aws::String CreateApiMappingRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_apiIdHasBeenSet)
-  {
-   payload.WithString("apiId", m_apiId);
-
+  if (m_apiIdHasBeenSet) {
+    payload.WithString("apiId", m_apiId);
   }
 
-  if(m_apiMappingKeyHasBeenSet)
-  {
-   payload.WithString("apiMappingKey", m_apiMappingKey);
-
+  if (m_apiMappingKeyHasBeenSet) {
+    payload.WithString("apiMappingKey", m_apiMappingKey);
   }
 
-  if(m_stageHasBeenSet)
-  {
-   payload.WithString("stage", m_stage);
-
+  if (m_stageHasBeenSet) {
+    payload.WithString("stage", m_stage);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

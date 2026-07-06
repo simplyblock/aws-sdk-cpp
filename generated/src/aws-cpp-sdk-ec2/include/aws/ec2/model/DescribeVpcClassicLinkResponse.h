@@ -4,64 +4,79 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/VpcClassicLink.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeVpcClassicLinkResponse
-  {
-  public:
-    AWS_EC2_API DescribeVpcClassicLinkResponse();
-    AWS_EC2_API DescribeVpcClassicLinkResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeVpcClassicLinkResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeVpcClassicLinkResponse {
+ public:
+  AWS_EC2_API DescribeVpcClassicLinkResponse() = default;
+  AWS_EC2_API DescribeVpcClassicLinkResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeVpcClassicLinkResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ClassicLink status of the VPCs.</p>
+   */
+  inline const Aws::Vector<VpcClassicLink>& GetVpcs() const { return m_vpcs; }
+  template <typename VpcsT = Aws::Vector<VpcClassicLink>>
+  void SetVpcs(VpcsT&& value) {
+    m_vpcsHasBeenSet = true;
+    m_vpcs = std::forward<VpcsT>(value);
+  }
+  template <typename VpcsT = Aws::Vector<VpcClassicLink>>
+  DescribeVpcClassicLinkResponse& WithVpcs(VpcsT&& value) {
+    SetVpcs(std::forward<VpcsT>(value));
+    return *this;
+  }
+  template <typename VpcsT = VpcClassicLink>
+  DescribeVpcClassicLinkResponse& AddVpcs(VpcsT&& value) {
+    m_vpcsHasBeenSet = true;
+    m_vpcs.emplace_back(std::forward<VpcsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ClassicLink status of the VPCs.</p>
-     */
-    inline const Aws::Vector<VpcClassicLink>& GetVpcs() const{ return m_vpcs; }
-    inline void SetVpcs(const Aws::Vector<VpcClassicLink>& value) { m_vpcs = value; }
-    inline void SetVpcs(Aws::Vector<VpcClassicLink>&& value) { m_vpcs = std::move(value); }
-    inline DescribeVpcClassicLinkResponse& WithVpcs(const Aws::Vector<VpcClassicLink>& value) { SetVpcs(value); return *this;}
-    inline DescribeVpcClassicLinkResponse& WithVpcs(Aws::Vector<VpcClassicLink>&& value) { SetVpcs(std::move(value)); return *this;}
-    inline DescribeVpcClassicLinkResponse& AddVpcs(const VpcClassicLink& value) { m_vpcs.push_back(value); return *this; }
-    inline DescribeVpcClassicLinkResponse& AddVpcs(VpcClassicLink&& value) { m_vpcs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeVpcClassicLinkResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeVpcClassicLinkResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeVpcClassicLinkResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<VpcClassicLink> m_vpcs;
+ private:
+  Aws::Vector<VpcClassicLink> m_vpcs;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

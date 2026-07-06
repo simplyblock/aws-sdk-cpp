@@ -4,120 +4,137 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/ResourceStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
 
+/**
+ * <p>The template version.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TemplateVersionSummary">AWS
+ * API Reference</a></p>
+ */
+class TemplateVersionSummary {
+ public:
+  AWS_QUICKSIGHT_API TemplateVersionSummary() = default;
+  AWS_QUICKSIGHT_API TemplateVersionSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API TemplateVersionSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The template version.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TemplateVersionSummary">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of the template version.</p>
    */
-  class TemplateVersionSummary
-  {
-  public:
-    AWS_QUICKSIGHT_API TemplateVersionSummary();
-    AWS_QUICKSIGHT_API TemplateVersionSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API TemplateVersionSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  TemplateVersionSummary& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The version number of the template version.</p>
+   */
+  inline long long GetVersionNumber() const { return m_versionNumber; }
+  inline bool VersionNumberHasBeenSet() const { return m_versionNumberHasBeenSet; }
+  inline void SetVersionNumber(long long value) {
+    m_versionNumberHasBeenSet = true;
+    m_versionNumber = value;
+  }
+  inline TemplateVersionSummary& WithVersionNumber(long long value) {
+    SetVersionNumber(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the template version.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline TemplateVersionSummary& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline TemplateVersionSummary& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline TemplateVersionSummary& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that this template version was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTime() const { return m_createdTime; }
+  inline bool CreatedTimeHasBeenSet() const { return m_createdTimeHasBeenSet; }
+  template <typename CreatedTimeT = Aws::Utils::DateTime>
+  void SetCreatedTime(CreatedTimeT&& value) {
+    m_createdTimeHasBeenSet = true;
+    m_createdTime = std::forward<CreatedTimeT>(value);
+  }
+  template <typename CreatedTimeT = Aws::Utils::DateTime>
+  TemplateVersionSummary& WithCreatedTime(CreatedTimeT&& value) {
+    SetCreatedTime(std::forward<CreatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version number of the template version.</p>
-     */
-    inline long long GetVersionNumber() const{ return m_versionNumber; }
-    inline bool VersionNumberHasBeenSet() const { return m_versionNumberHasBeenSet; }
-    inline void SetVersionNumber(long long value) { m_versionNumberHasBeenSet = true; m_versionNumber = value; }
-    inline TemplateVersionSummary& WithVersionNumber(long long value) { SetVersionNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the template version.</p>
+   */
+  inline ResourceStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(ResourceStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline TemplateVersionSummary& WithStatus(ResourceStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that this template version was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTime() const{ return m_createdTime; }
-    inline bool CreatedTimeHasBeenSet() const { return m_createdTimeHasBeenSet; }
-    inline void SetCreatedTime(const Aws::Utils::DateTime& value) { m_createdTimeHasBeenSet = true; m_createdTime = value; }
-    inline void SetCreatedTime(Aws::Utils::DateTime&& value) { m_createdTimeHasBeenSet = true; m_createdTime = std::move(value); }
-    inline TemplateVersionSummary& WithCreatedTime(const Aws::Utils::DateTime& value) { SetCreatedTime(value); return *this;}
-    inline TemplateVersionSummary& WithCreatedTime(Aws::Utils::DateTime&& value) { SetCreatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the template version.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  TemplateVersionSummary& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
-    ///@{
-    /**
-     * <p>The status of the template version.</p>
-     */
-    inline const ResourceStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const ResourceStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(ResourceStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline TemplateVersionSummary& WithStatus(const ResourceStatus& value) { SetStatus(value); return *this;}
-    inline TemplateVersionSummary& WithStatus(ResourceStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  long long m_versionNumber{0};
 
-    ///@{
-    /**
-     * <p>The description of the template version.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline TemplateVersionSummary& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline TemplateVersionSummary& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline TemplateVersionSummary& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
+  Aws::Utils::DateTime m_createdTime{};
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  ResourceStatus m_status{ResourceStatus::NOT_SET};
 
-    long long m_versionNumber;
-    bool m_versionNumberHasBeenSet = false;
+  Aws::String m_description;
+  bool m_arnHasBeenSet = false;
+  bool m_versionNumberHasBeenSet = false;
+  bool m_createdTimeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_createdTime;
-    bool m_createdTimeHasBeenSet = false;
-
-    ResourceStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

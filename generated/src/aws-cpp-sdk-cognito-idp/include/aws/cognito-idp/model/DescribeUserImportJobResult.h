@@ -6,67 +6,78 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/UserImportJobType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
+/**
+ * <p>Represents the response from the server to the request to describe the user
+ * import job.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeUserImportJobResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeUserImportJobResult {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the response from the server to the request to describe the user
-   * import job.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeUserImportJobResponse">AWS
-   * API Reference</a></p>
+   * <p>The details of the user import job. Includes logging destination, status, and
+   * the Amazon S3 pre-signed URL for CSV upload.</p>
    */
-  class DescribeUserImportJobResult
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult();
-    AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOIDENTITYPROVIDER_API DescribeUserImportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const UserImportJobType& GetUserImportJob() const { return m_userImportJob; }
+  template <typename UserImportJobT = UserImportJobType>
+  void SetUserImportJob(UserImportJobT&& value) {
+    m_userImportJobHasBeenSet = true;
+    m_userImportJob = std::forward<UserImportJobT>(value);
+  }
+  template <typename UserImportJobT = UserImportJobType>
+  DescribeUserImportJobResult& WithUserImportJob(UserImportJobT&& value) {
+    SetUserImportJob(std::forward<UserImportJobT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The job object that represents the user import job.</p>
-     */
-    inline const UserImportJobType& GetUserImportJob() const{ return m_userImportJob; }
-    inline void SetUserImportJob(const UserImportJobType& value) { m_userImportJob = value; }
-    inline void SetUserImportJob(UserImportJobType&& value) { m_userImportJob = std::move(value); }
-    inline DescribeUserImportJobResult& WithUserImportJob(const UserImportJobType& value) { SetUserImportJob(value); return *this;}
-    inline DescribeUserImportJobResult& WithUserImportJob(UserImportJobType&& value) { SetUserImportJob(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeUserImportJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeUserImportJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeUserImportJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeUserImportJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  UserImportJobType m_userImportJob;
 
-    UserImportJobType m_userImportJob;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_userImportJobHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

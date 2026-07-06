@@ -6,59 +6,68 @@
 #pragma once
 #include <aws/codeartifact/CodeArtifact_EXPORTS.h>
 #include <aws/codeartifact/model/PackageSummary.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeArtifact
-{
-namespace Model
-{
-  class DeletePackageResult
-  {
-  public:
-    AWS_CODEARTIFACT_API DeletePackageResult();
-    AWS_CODEARTIFACT_API DeletePackageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEARTIFACT_API DeletePackageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeArtifact {
+namespace Model {
+class DeletePackageResult {
+ public:
+  AWS_CODEARTIFACT_API DeletePackageResult() = default;
+  AWS_CODEARTIFACT_API DeletePackageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEARTIFACT_API DeletePackageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const PackageSummary& GetDeletedPackage() const{ return m_deletedPackage; }
-    inline void SetDeletedPackage(const PackageSummary& value) { m_deletedPackage = value; }
-    inline void SetDeletedPackage(PackageSummary&& value) { m_deletedPackage = std::move(value); }
-    inline DeletePackageResult& WithDeletedPackage(const PackageSummary& value) { SetDeletedPackage(value); return *this;}
-    inline DeletePackageResult& WithDeletedPackage(PackageSummary&& value) { SetDeletedPackage(std::move(value)); return *this;}
-    ///@}
+  inline const PackageSummary& GetDeletedPackage() const { return m_deletedPackage; }
+  template <typename DeletedPackageT = PackageSummary>
+  void SetDeletedPackage(DeletedPackageT&& value) {
+    m_deletedPackageHasBeenSet = true;
+    m_deletedPackage = std::forward<DeletedPackageT>(value);
+  }
+  template <typename DeletedPackageT = PackageSummary>
+  DeletePackageResult& WithDeletedPackage(DeletedPackageT&& value) {
+    SetDeletedPackage(std::forward<DeletedPackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeletePackageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeletePackageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeletePackageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    PackageSummary m_deletedPackage;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeletePackageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  PackageSummary m_deletedPackage;
 
-} // namespace Model
-} // namespace CodeArtifact
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deletedPackageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CodeArtifact
+}  // namespace Aws

@@ -11,50 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace BillingConductor {
+namespace Model {
 
-UpdateBillingGroupAccountGrouping::UpdateBillingGroupAccountGrouping() : 
-    m_autoAssociate(false),
-    m_autoAssociateHasBeenSet(false)
-{
-}
+UpdateBillingGroupAccountGrouping::UpdateBillingGroupAccountGrouping(JsonView jsonValue) { *this = jsonValue; }
 
-UpdateBillingGroupAccountGrouping::UpdateBillingGroupAccountGrouping(JsonView jsonValue)
-  : UpdateBillingGroupAccountGrouping()
-{
-  *this = jsonValue;
-}
-
-UpdateBillingGroupAccountGrouping& UpdateBillingGroupAccountGrouping::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("AutoAssociate"))
-  {
+UpdateBillingGroupAccountGrouping& UpdateBillingGroupAccountGrouping::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("AutoAssociate")) {
     m_autoAssociate = jsonValue.GetBool("AutoAssociate");
-
     m_autoAssociateHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("ResponsibilityTransferArn")) {
+    m_responsibilityTransferArn = jsonValue.GetString("ResponsibilityTransferArn");
+    m_responsibilityTransferArnHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue UpdateBillingGroupAccountGrouping::Jsonize() const
-{
+JsonValue UpdateBillingGroupAccountGrouping::Jsonize() const {
   JsonValue payload;
 
-  if(m_autoAssociateHasBeenSet)
-  {
-   payload.WithBool("AutoAssociate", m_autoAssociate);
+  if (m_autoAssociateHasBeenSet) {
+    payload.WithBool("AutoAssociate", m_autoAssociate);
+  }
 
+  if (m_responsibilityTransferArnHasBeenSet) {
+    payload.WithString("ResponsibilityTransferArn", m_responsibilityTransferArn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

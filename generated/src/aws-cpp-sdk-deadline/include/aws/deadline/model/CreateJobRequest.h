@@ -4,257 +4,409 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
-#include <aws/deadline/DeadlineRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/deadline/model/JobTemplateType.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/deadline/DeadlineRequest.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
 #include <aws/deadline/model/Attachments.h>
 #include <aws/deadline/model/CreateJobTargetTaskRunStatus.h>
 #include <aws/deadline/model/JobParameter.h>
+#include <aws/deadline/model/JobTemplateType.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace deadline
-{
-namespace Model
-{
+namespace Aws {
+namespace deadline {
+namespace Model {
 
+/**
+ */
+class CreateJobRequest : public DeadlineRequest {
+ public:
+  AWS_DEADLINE_API CreateJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateJob"; }
+
+  AWS_DEADLINE_API Aws::String SerializePayload() const override;
+
+  AWS_DEADLINE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The farm ID of the farm to connect to the job.</p>
    */
-  class CreateJobRequest : public DeadlineRequest
-  {
-  public:
-    AWS_DEADLINE_API CreateJobRequest();
+  inline const Aws::String& GetFarmId() const { return m_farmId; }
+  inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
+  template <typename FarmIdT = Aws::String>
+  void SetFarmId(FarmIdT&& value) {
+    m_farmIdHasBeenSet = true;
+    m_farmId = std::forward<FarmIdT>(value);
+  }
+  template <typename FarmIdT = Aws::String>
+  CreateJobRequest& WithFarmId(FarmIdT&& value) {
+    SetFarmId(std::forward<FarmIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateJob"; }
+  ///@{
+  /**
+   * <p>The ID of the queue that the job is submitted to.</p>
+   */
+  inline const Aws::String& GetQueueId() const { return m_queueId; }
+  inline bool QueueIdHasBeenSet() const { return m_queueIdHasBeenSet; }
+  template <typename QueueIdT = Aws::String>
+  void SetQueueId(QueueIdT&& value) {
+    m_queueIdHasBeenSet = true;
+    m_queueId = std::forward<QueueIdT>(value);
+  }
+  template <typename QueueIdT = Aws::String>
+  CreateJobRequest& WithQueueId(QueueIdT&& value) {
+    SetQueueId(std::forward<QueueIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEADLINE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The unique token which the server uses to recognize retries of the same
+   * request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateJobRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEADLINE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The job template to use for this job.</p>
+   */
+  inline const Aws::String& GetTemplate() const { return m_template; }
+  inline bool TemplateHasBeenSet() const { return m_templateHasBeenSet; }
+  template <typename TemplateT = Aws::String>
+  void SetTemplate(TemplateT&& value) {
+    m_templateHasBeenSet = true;
+    m_template = std::forward<TemplateT>(value);
+  }
+  template <typename TemplateT = Aws::String>
+  CreateJobRequest& WithTemplate(TemplateT&& value) {
+    SetTemplate(std::forward<TemplateT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The file type for the job template.</p>
+   */
+  inline JobTemplateType GetTemplateType() const { return m_templateType; }
+  inline bool TemplateTypeHasBeenSet() const { return m_templateTypeHasBeenSet; }
+  inline void SetTemplateType(JobTemplateType value) {
+    m_templateTypeHasBeenSet = true;
+    m_templateType = value;
+  }
+  inline CreateJobRequest& WithTemplateType(JobTemplateType value) {
+    SetTemplateType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The farm ID of the farm to connect to the job.</p>
-     */
-    inline const Aws::String& GetFarmId() const{ return m_farmId; }
-    inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
-    inline void SetFarmId(const Aws::String& value) { m_farmIdHasBeenSet = true; m_farmId = value; }
-    inline void SetFarmId(Aws::String&& value) { m_farmIdHasBeenSet = true; m_farmId = std::move(value); }
-    inline void SetFarmId(const char* value) { m_farmIdHasBeenSet = true; m_farmId.assign(value); }
-    inline CreateJobRequest& WithFarmId(const Aws::String& value) { SetFarmId(value); return *this;}
-    inline CreateJobRequest& WithFarmId(Aws::String&& value) { SetFarmId(std::move(value)); return *this;}
-    inline CreateJobRequest& WithFarmId(const char* value) { SetFarmId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The priority of the job. The highest priority (first scheduled) is 100. When
+   * two jobs have the same priority, the oldest job is scheduled first.</p>
+   */
+  inline int GetPriority() const { return m_priority; }
+  inline bool PriorityHasBeenSet() const { return m_priorityHasBeenSet; }
+  inline void SetPriority(int value) {
+    m_priorityHasBeenSet = true;
+    m_priority = value;
+  }
+  inline CreateJobRequest& WithPriority(int value) {
+    SetPriority(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the queue that the job is submitted to.</p>
-     */
-    inline const Aws::String& GetQueueId() const{ return m_queueId; }
-    inline bool QueueIdHasBeenSet() const { return m_queueIdHasBeenSet; }
-    inline void SetQueueId(const Aws::String& value) { m_queueIdHasBeenSet = true; m_queueId = value; }
-    inline void SetQueueId(Aws::String&& value) { m_queueIdHasBeenSet = true; m_queueId = std::move(value); }
-    inline void SetQueueId(const char* value) { m_queueIdHasBeenSet = true; m_queueId.assign(value); }
-    inline CreateJobRequest& WithQueueId(const Aws::String& value) { SetQueueId(value); return *this;}
-    inline CreateJobRequest& WithQueueId(Aws::String&& value) { SetQueueId(std::move(value)); return *this;}
-    inline CreateJobRequest& WithQueueId(const char* value) { SetQueueId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The parameters for the job.</p>
+   */
+  inline const Aws::Map<Aws::String, JobParameter>& GetParameters() const { return m_parameters; }
+  inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
+  template <typename ParametersT = Aws::Map<Aws::String, JobParameter>>
+  void SetParameters(ParametersT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters = std::forward<ParametersT>(value);
+  }
+  template <typename ParametersT = Aws::Map<Aws::String, JobParameter>>
+  CreateJobRequest& WithParameters(ParametersT&& value) {
+    SetParameters(std::forward<ParametersT>(value));
+    return *this;
+  }
+  template <typename ParametersKeyT = Aws::String, typename ParametersValueT = JobParameter>
+  CreateJobRequest& AddParameters(ParametersKeyT&& key, ParametersValueT&& value) {
+    m_parametersHasBeenSet = true;
+    m_parameters.emplace(std::forward<ParametersKeyT>(key), std::forward<ParametersValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique token which the server uses to recognize retries of the same
-     * request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateJobRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateJobRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateJobRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The attachments for the job. Attach files required for the job to run to a
+   * render job.</p>
+   */
+  inline const Attachments& GetAttachments() const { return m_attachments; }
+  inline bool AttachmentsHasBeenSet() const { return m_attachmentsHasBeenSet; }
+  template <typename AttachmentsT = Attachments>
+  void SetAttachments(AttachmentsT&& value) {
+    m_attachmentsHasBeenSet = true;
+    m_attachments = std::forward<AttachmentsT>(value);
+  }
+  template <typename AttachmentsT = Attachments>
+  CreateJobRequest& WithAttachments(AttachmentsT&& value) {
+    SetAttachments(std::forward<AttachmentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The job template to use for this job.</p>
-     */
-    inline const Aws::String& GetTemplate() const{ return m_template; }
-    inline bool TemplateHasBeenSet() const { return m_templateHasBeenSet; }
-    inline void SetTemplate(const Aws::String& value) { m_templateHasBeenSet = true; m_template = value; }
-    inline void SetTemplate(Aws::String&& value) { m_templateHasBeenSet = true; m_template = std::move(value); }
-    inline void SetTemplate(const char* value) { m_templateHasBeenSet = true; m_template.assign(value); }
-    inline CreateJobRequest& WithTemplate(const Aws::String& value) { SetTemplate(value); return *this;}
-    inline CreateJobRequest& WithTemplate(Aws::String&& value) { SetTemplate(std::move(value)); return *this;}
-    inline CreateJobRequest& WithTemplate(const char* value) { SetTemplate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The storage profile ID for the storage profile to connect to the job.</p>
+   */
+  inline const Aws::String& GetStorageProfileId() const { return m_storageProfileId; }
+  inline bool StorageProfileIdHasBeenSet() const { return m_storageProfileIdHasBeenSet; }
+  template <typename StorageProfileIdT = Aws::String>
+  void SetStorageProfileId(StorageProfileIdT&& value) {
+    m_storageProfileIdHasBeenSet = true;
+    m_storageProfileId = std::forward<StorageProfileIdT>(value);
+  }
+  template <typename StorageProfileIdT = Aws::String>
+  CreateJobRequest& WithStorageProfileId(StorageProfileIdT&& value) {
+    SetStorageProfileId(std::forward<StorageProfileIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The file type for the job template.</p>
-     */
-    inline const JobTemplateType& GetTemplateType() const{ return m_templateType; }
-    inline bool TemplateTypeHasBeenSet() const { return m_templateTypeHasBeenSet; }
-    inline void SetTemplateType(const JobTemplateType& value) { m_templateTypeHasBeenSet = true; m_templateType = value; }
-    inline void SetTemplateType(JobTemplateType&& value) { m_templateTypeHasBeenSet = true; m_templateType = std::move(value); }
-    inline CreateJobRequest& WithTemplateType(const JobTemplateType& value) { SetTemplateType(value); return *this;}
-    inline CreateJobRequest& WithTemplateType(JobTemplateType&& value) { SetTemplateType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The initial job status when it is created. Jobs that are created with a
+   * <code>SUSPENDED</code> status will not run until manually requeued.</p>
+   */
+  inline CreateJobTargetTaskRunStatus GetTargetTaskRunStatus() const { return m_targetTaskRunStatus; }
+  inline bool TargetTaskRunStatusHasBeenSet() const { return m_targetTaskRunStatusHasBeenSet; }
+  inline void SetTargetTaskRunStatus(CreateJobTargetTaskRunStatus value) {
+    m_targetTaskRunStatusHasBeenSet = true;
+    m_targetTaskRunStatus = value;
+  }
+  inline CreateJobRequest& WithTargetTaskRunStatus(CreateJobTargetTaskRunStatus value) {
+    SetTargetTaskRunStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The priority of the job on a scale of 0 to 100. The highest priority (first
-     * scheduled) is 100. When two jobs have the same priority, the oldest job is
-     * scheduled first.</p>
-     */
-    inline int GetPriority() const{ return m_priority; }
-    inline bool PriorityHasBeenSet() const { return m_priorityHasBeenSet; }
-    inline void SetPriority(int value) { m_priorityHasBeenSet = true; m_priority = value; }
-    inline CreateJobRequest& WithPriority(int value) { SetPriority(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of task failures before the job stops running and is marked as
+   * <code>FAILED</code>.</p>
+   */
+  inline int GetMaxFailedTasksCount() const { return m_maxFailedTasksCount; }
+  inline bool MaxFailedTasksCountHasBeenSet() const { return m_maxFailedTasksCountHasBeenSet; }
+  inline void SetMaxFailedTasksCount(int value) {
+    m_maxFailedTasksCountHasBeenSet = true;
+    m_maxFailedTasksCount = value;
+  }
+  inline CreateJobRequest& WithMaxFailedTasksCount(int value) {
+    SetMaxFailedTasksCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The parameters for the job.</p>
-     */
-    inline const Aws::Map<Aws::String, JobParameter>& GetParameters() const{ return m_parameters; }
-    inline bool ParametersHasBeenSet() const { return m_parametersHasBeenSet; }
-    inline void SetParameters(const Aws::Map<Aws::String, JobParameter>& value) { m_parametersHasBeenSet = true; m_parameters = value; }
-    inline void SetParameters(Aws::Map<Aws::String, JobParameter>&& value) { m_parametersHasBeenSet = true; m_parameters = std::move(value); }
-    inline CreateJobRequest& WithParameters(const Aws::Map<Aws::String, JobParameter>& value) { SetParameters(value); return *this;}
-    inline CreateJobRequest& WithParameters(Aws::Map<Aws::String, JobParameter>&& value) { SetParameters(std::move(value)); return *this;}
-    inline CreateJobRequest& AddParameters(const Aws::String& key, const JobParameter& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, value); return *this; }
-    inline CreateJobRequest& AddParameters(Aws::String&& key, const JobParameter& value) { m_parametersHasBeenSet = true; m_parameters.emplace(std::move(key), value); return *this; }
-    inline CreateJobRequest& AddParameters(const Aws::String& key, JobParameter&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, std::move(value)); return *this; }
-    inline CreateJobRequest& AddParameters(Aws::String&& key, JobParameter&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateJobRequest& AddParameters(const char* key, JobParameter&& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, std::move(value)); return *this; }
-    inline CreateJobRequest& AddParameters(const char* key, const JobParameter& value) { m_parametersHasBeenSet = true; m_parameters.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum number of retries for each task.</p>
+   */
+  inline int GetMaxRetriesPerTask() const { return m_maxRetriesPerTask; }
+  inline bool MaxRetriesPerTaskHasBeenSet() const { return m_maxRetriesPerTaskHasBeenSet; }
+  inline void SetMaxRetriesPerTask(int value) {
+    m_maxRetriesPerTaskHasBeenSet = true;
+    m_maxRetriesPerTask = value;
+  }
+  inline CreateJobRequest& WithMaxRetriesPerTask(int value) {
+    SetMaxRetriesPerTask(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The attachments for the job. Attach files required for the job to run to a
-     * render job.</p>
-     */
-    inline const Attachments& GetAttachments() const{ return m_attachments; }
-    inline bool AttachmentsHasBeenSet() const { return m_attachmentsHasBeenSet; }
-    inline void SetAttachments(const Attachments& value) { m_attachmentsHasBeenSet = true; m_attachments = value; }
-    inline void SetAttachments(Attachments&& value) { m_attachmentsHasBeenSet = true; m_attachments = std::move(value); }
-    inline CreateJobRequest& WithAttachments(const Attachments& value) { SetAttachments(value); return *this;}
-    inline CreateJobRequest& WithAttachments(Attachments&& value) { SetAttachments(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum number of worker hosts that can concurrently process a job. When
+   * the <code>maxWorkerCount</code> is reached, no more workers will be assigned to
+   * process the job, even if the fleets assigned to the job's queue has available
+   * workers.</p> <p>You can't set the <code>maxWorkerCount</code> to 0. If you set
+   * it to -1, there is no maximum number of workers.</p> <p>If you don't specify the
+   * <code>maxWorkerCount</code>, Deadline Cloud won't throttle the number of workers
+   * used to process the job.</p>
+   */
+  inline int GetMaxWorkerCount() const { return m_maxWorkerCount; }
+  inline bool MaxWorkerCountHasBeenSet() const { return m_maxWorkerCountHasBeenSet; }
+  inline void SetMaxWorkerCount(int value) {
+    m_maxWorkerCountHasBeenSet = true;
+    m_maxWorkerCount = value;
+  }
+  inline CreateJobRequest& WithMaxWorkerCount(int value) {
+    SetMaxWorkerCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The storage profile ID for the storage profile to connect to the job.</p>
-     */
-    inline const Aws::String& GetStorageProfileId() const{ return m_storageProfileId; }
-    inline bool StorageProfileIdHasBeenSet() const { return m_storageProfileIdHasBeenSet; }
-    inline void SetStorageProfileId(const Aws::String& value) { m_storageProfileIdHasBeenSet = true; m_storageProfileId = value; }
-    inline void SetStorageProfileId(Aws::String&& value) { m_storageProfileIdHasBeenSet = true; m_storageProfileId = std::move(value); }
-    inline void SetStorageProfileId(const char* value) { m_storageProfileIdHasBeenSet = true; m_storageProfileId.assign(value); }
-    inline CreateJobRequest& WithStorageProfileId(const Aws::String& value) { SetStorageProfileId(value); return *this;}
-    inline CreateJobRequest& WithStorageProfileId(Aws::String&& value) { SetStorageProfileId(std::move(value)); return *this;}
-    inline CreateJobRequest& WithStorageProfileId(const char* value) { SetStorageProfileId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The job ID for the source job.</p>
+   */
+  inline const Aws::String& GetSourceJobId() const { return m_sourceJobId; }
+  inline bool SourceJobIdHasBeenSet() const { return m_sourceJobIdHasBeenSet; }
+  template <typename SourceJobIdT = Aws::String>
+  void SetSourceJobId(SourceJobIdT&& value) {
+    m_sourceJobIdHasBeenSet = true;
+    m_sourceJobId = std::forward<SourceJobIdT>(value);
+  }
+  template <typename SourceJobIdT = Aws::String>
+  CreateJobRequest& WithSourceJobId(SourceJobIdT&& value) {
+    SetSourceJobId(std::forward<SourceJobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The initial job status when it is created. Jobs that are created with a
-     * <code>SUSPENDED</code> status will not run until manually requeued.</p>
-     */
-    inline const CreateJobTargetTaskRunStatus& GetTargetTaskRunStatus() const{ return m_targetTaskRunStatus; }
-    inline bool TargetTaskRunStatusHasBeenSet() const { return m_targetTaskRunStatusHasBeenSet; }
-    inline void SetTargetTaskRunStatus(const CreateJobTargetTaskRunStatus& value) { m_targetTaskRunStatusHasBeenSet = true; m_targetTaskRunStatus = value; }
-    inline void SetTargetTaskRunStatus(CreateJobTargetTaskRunStatus&& value) { m_targetTaskRunStatusHasBeenSet = true; m_targetTaskRunStatus = std::move(value); }
-    inline CreateJobRequest& WithTargetTaskRunStatus(const CreateJobTargetTaskRunStatus& value) { SetTargetTaskRunStatus(value); return *this;}
-    inline CreateJobRequest& WithTargetTaskRunStatus(CreateJobTargetTaskRunStatus&& value) { SetTargetTaskRunStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A custom name to override the job name derived from the job template.</p>
+   */
+  inline const Aws::String& GetNameOverride() const { return m_nameOverride; }
+  inline bool NameOverrideHasBeenSet() const { return m_nameOverrideHasBeenSet; }
+  template <typename NameOverrideT = Aws::String>
+  void SetNameOverride(NameOverrideT&& value) {
+    m_nameOverrideHasBeenSet = true;
+    m_nameOverride = std::forward<NameOverrideT>(value);
+  }
+  template <typename NameOverrideT = Aws::String>
+  CreateJobRequest& WithNameOverride(NameOverrideT&& value) {
+    SetNameOverride(std::forward<NameOverrideT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of task failures before the job stops running and is marked as
-     * <code>FAILED</code>.</p>
-     */
-    inline int GetMaxFailedTasksCount() const{ return m_maxFailedTasksCount; }
-    inline bool MaxFailedTasksCountHasBeenSet() const { return m_maxFailedTasksCountHasBeenSet; }
-    inline void SetMaxFailedTasksCount(int value) { m_maxFailedTasksCountHasBeenSet = true; m_maxFailedTasksCount = value; }
-    inline CreateJobRequest& WithMaxFailedTasksCount(int value) { SetMaxFailedTasksCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A custom description to override the job description derived from the job
+   * template.</p>
+   */
+  inline const Aws::String& GetDescriptionOverride() const { return m_descriptionOverride; }
+  inline bool DescriptionOverrideHasBeenSet() const { return m_descriptionOverrideHasBeenSet; }
+  template <typename DescriptionOverrideT = Aws::String>
+  void SetDescriptionOverride(DescriptionOverrideT&& value) {
+    m_descriptionOverrideHasBeenSet = true;
+    m_descriptionOverride = std::forward<DescriptionOverrideT>(value);
+  }
+  template <typename DescriptionOverrideT = Aws::String>
+  CreateJobRequest& WithDescriptionOverride(DescriptionOverrideT&& value) {
+    SetDescriptionOverride(std::forward<DescriptionOverrideT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of retries for each task.</p>
-     */
-    inline int GetMaxRetriesPerTask() const{ return m_maxRetriesPerTask; }
-    inline bool MaxRetriesPerTaskHasBeenSet() const { return m_maxRetriesPerTaskHasBeenSet; }
-    inline void SetMaxRetriesPerTask(int value) { m_maxRetriesPerTaskHasBeenSet = true; m_maxRetriesPerTask = value; }
-    inline CreateJobRequest& WithMaxRetriesPerTask(int value) { SetMaxRetriesPerTask(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags to add to your job. Each tag consists of a tag key and a tag value.
+   * Tag keys and values are both required, but tag values can be empty strings.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateJobRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateJobRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_farmId;
 
-    ///@{
-    /**
-     * <p>The job ID for the source job.</p>
-     */
-    inline const Aws::String& GetSourceJobId() const{ return m_sourceJobId; }
-    inline bool SourceJobIdHasBeenSet() const { return m_sourceJobIdHasBeenSet; }
-    inline void SetSourceJobId(const Aws::String& value) { m_sourceJobIdHasBeenSet = true; m_sourceJobId = value; }
-    inline void SetSourceJobId(Aws::String&& value) { m_sourceJobIdHasBeenSet = true; m_sourceJobId = std::move(value); }
-    inline void SetSourceJobId(const char* value) { m_sourceJobIdHasBeenSet = true; m_sourceJobId.assign(value); }
-    inline CreateJobRequest& WithSourceJobId(const Aws::String& value) { SetSourceJobId(value); return *this;}
-    inline CreateJobRequest& WithSourceJobId(Aws::String&& value) { SetSourceJobId(std::move(value)); return *this;}
-    inline CreateJobRequest& WithSourceJobId(const char* value) { SetSourceJobId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_queueId;
 
-    Aws::String m_farmId;
-    bool m_farmIdHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    Aws::String m_queueId;
-    bool m_queueIdHasBeenSet = false;
+  Aws::String m_template;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  JobTemplateType m_templateType{JobTemplateType::NOT_SET};
 
-    Aws::String m_template;
-    bool m_templateHasBeenSet = false;
+  int m_priority{0};
 
-    JobTemplateType m_templateType;
-    bool m_templateTypeHasBeenSet = false;
+  Aws::Map<Aws::String, JobParameter> m_parameters;
 
-    int m_priority;
-    bool m_priorityHasBeenSet = false;
+  Attachments m_attachments;
 
-    Aws::Map<Aws::String, JobParameter> m_parameters;
-    bool m_parametersHasBeenSet = false;
+  Aws::String m_storageProfileId;
 
-    Attachments m_attachments;
-    bool m_attachmentsHasBeenSet = false;
+  CreateJobTargetTaskRunStatus m_targetTaskRunStatus{CreateJobTargetTaskRunStatus::NOT_SET};
 
-    Aws::String m_storageProfileId;
-    bool m_storageProfileIdHasBeenSet = false;
+  int m_maxFailedTasksCount{0};
 
-    CreateJobTargetTaskRunStatus m_targetTaskRunStatus;
-    bool m_targetTaskRunStatusHasBeenSet = false;
+  int m_maxRetriesPerTask{0};
 
-    int m_maxFailedTasksCount;
-    bool m_maxFailedTasksCountHasBeenSet = false;
+  int m_maxWorkerCount{0};
 
-    int m_maxRetriesPerTask;
-    bool m_maxRetriesPerTaskHasBeenSet = false;
+  Aws::String m_sourceJobId;
 
-    Aws::String m_sourceJobId;
-    bool m_sourceJobIdHasBeenSet = false;
-  };
+  Aws::String m_nameOverride;
 
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+  Aws::String m_descriptionOverride;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_farmIdHasBeenSet = false;
+  bool m_queueIdHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_templateHasBeenSet = false;
+  bool m_templateTypeHasBeenSet = false;
+  bool m_priorityHasBeenSet = false;
+  bool m_parametersHasBeenSet = false;
+  bool m_attachmentsHasBeenSet = false;
+  bool m_storageProfileIdHasBeenSet = false;
+  bool m_targetTaskRunStatusHasBeenSet = false;
+  bool m_maxFailedTasksCountHasBeenSet = false;
+  bool m_maxRetriesPerTaskHasBeenSet = false;
+  bool m_maxWorkerCountHasBeenSet = false;
+  bool m_sourceJobIdHasBeenSet = false;
+  bool m_nameOverrideHasBeenSet = false;
+  bool m_descriptionOverrideHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

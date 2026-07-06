@@ -4,120 +4,149 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/quicksight/model/VPCConnectionResourceStatus.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/VPCConnectionAvailabilityStatus.h>
+#include <aws/quicksight/model/VPCConnectionResourceStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class UpdateVPCConnectionResult
-  {
-  public:
-    AWS_QUICKSIGHT_API UpdateVPCConnectionResult();
-    AWS_QUICKSIGHT_API UpdateVPCConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API UpdateVPCConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class UpdateVPCConnectionResult {
+ public:
+  AWS_QUICKSIGHT_API UpdateVPCConnectionResult() = default;
+  AWS_QUICKSIGHT_API UpdateVPCConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API UpdateVPCConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the VPC connection.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateVPCConnectionResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the VPC connection.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UpdateVPCConnectionResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateVPCConnectionResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateVPCConnectionResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the VPC connection that you are updating. This ID is a unique
+   * identifier for each Amazon Web Services Region in anAmazon Web Services
+   * account.</p>
+   */
+  inline const Aws::String& GetVPCConnectionId() const { return m_vPCConnectionId; }
+  template <typename VPCConnectionIdT = Aws::String>
+  void SetVPCConnectionId(VPCConnectionIdT&& value) {
+    m_vPCConnectionIdHasBeenSet = true;
+    m_vPCConnectionId = std::forward<VPCConnectionIdT>(value);
+  }
+  template <typename VPCConnectionIdT = Aws::String>
+  UpdateVPCConnectionResult& WithVPCConnectionId(VPCConnectionIdT&& value) {
+    SetVPCConnectionId(std::forward<VPCConnectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the VPC connection that you are updating. This ID is a unique
-     * identifier for each Amazon Web Services Region in anAmazon Web Services
-     * account.</p>
-     */
-    inline const Aws::String& GetVPCConnectionId() const{ return m_vPCConnectionId; }
-    inline void SetVPCConnectionId(const Aws::String& value) { m_vPCConnectionId = value; }
-    inline void SetVPCConnectionId(Aws::String&& value) { m_vPCConnectionId = std::move(value); }
-    inline void SetVPCConnectionId(const char* value) { m_vPCConnectionId.assign(value); }
-    inline UpdateVPCConnectionResult& WithVPCConnectionId(const Aws::String& value) { SetVPCConnectionId(value); return *this;}
-    inline UpdateVPCConnectionResult& WithVPCConnectionId(Aws::String&& value) { SetVPCConnectionId(std::move(value)); return *this;}
-    inline UpdateVPCConnectionResult& WithVPCConnectionId(const char* value) { SetVPCConnectionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The update status of the VPC connection's last update.</p>
+   */
+  inline VPCConnectionResourceStatus GetUpdateStatus() const { return m_updateStatus; }
+  inline void SetUpdateStatus(VPCConnectionResourceStatus value) {
+    m_updateStatusHasBeenSet = true;
+    m_updateStatus = value;
+  }
+  inline UpdateVPCConnectionResult& WithUpdateStatus(VPCConnectionResourceStatus value) {
+    SetUpdateStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The update status of the VPC connection's last update.</p>
-     */
-    inline const VPCConnectionResourceStatus& GetUpdateStatus() const{ return m_updateStatus; }
-    inline void SetUpdateStatus(const VPCConnectionResourceStatus& value) { m_updateStatus = value; }
-    inline void SetUpdateStatus(VPCConnectionResourceStatus&& value) { m_updateStatus = std::move(value); }
-    inline UpdateVPCConnectionResult& WithUpdateStatus(const VPCConnectionResourceStatus& value) { SetUpdateStatus(value); return *this;}
-    inline UpdateVPCConnectionResult& WithUpdateStatus(VPCConnectionResourceStatus&& value) { SetUpdateStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The availability status of the VPC connection.</p>
+   */
+  inline VPCConnectionAvailabilityStatus GetAvailabilityStatus() const { return m_availabilityStatus; }
+  inline void SetAvailabilityStatus(VPCConnectionAvailabilityStatus value) {
+    m_availabilityStatusHasBeenSet = true;
+    m_availabilityStatus = value;
+  }
+  inline UpdateVPCConnectionResult& WithAvailabilityStatus(VPCConnectionAvailabilityStatus value) {
+    SetAvailabilityStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The availability status of the VPC connection.</p>
-     */
-    inline const VPCConnectionAvailabilityStatus& GetAvailabilityStatus() const{ return m_availabilityStatus; }
-    inline void SetAvailabilityStatus(const VPCConnectionAvailabilityStatus& value) { m_availabilityStatus = value; }
-    inline void SetAvailabilityStatus(VPCConnectionAvailabilityStatus&& value) { m_availabilityStatus = std::move(value); }
-    inline UpdateVPCConnectionResult& WithAvailabilityStatus(const VPCConnectionAvailabilityStatus& value) { SetAvailabilityStatus(value); return *this;}
-    inline UpdateVPCConnectionResult& WithAvailabilityStatus(VPCConnectionAvailabilityStatus&& value) { SetAvailabilityStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateVPCConnectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateVPCConnectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateVPCConnectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateVPCConnectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline UpdateVPCConnectionResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateVPCConnectionResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Aws::String m_arn;
 
-    Aws::String m_vPCConnectionId;
+  Aws::String m_vPCConnectionId;
 
-    VPCConnectionResourceStatus m_updateStatus;
+  VPCConnectionResourceStatus m_updateStatus{VPCConnectionResourceStatus::NOT_SET};
 
-    VPCConnectionAvailabilityStatus m_availabilityStatus;
+  VPCConnectionAvailabilityStatus m_availabilityStatus{VPCConnectionAvailabilityStatus::NOT_SET};
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    int m_status;
-  };
+  int m_status{0};
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_vPCConnectionIdHasBeenSet = false;
+  bool m_updateStatusHasBeenSet = false;
+  bool m_availabilityStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

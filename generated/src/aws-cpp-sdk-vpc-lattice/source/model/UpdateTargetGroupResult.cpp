@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/vpc-lattice/model/UpdateTargetGroupResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/vpc-lattice/model/UpdateTargetGroupResult.h>
 
 #include <utility>
 
@@ -17,65 +17,42 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-UpdateTargetGroupResult::UpdateTargetGroupResult() : 
-    m_status(TargetGroupStatus::NOT_SET),
-    m_type(TargetGroupType::NOT_SET)
-{
-}
+UpdateTargetGroupResult::UpdateTargetGroupResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-UpdateTargetGroupResult::UpdateTargetGroupResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : UpdateTargetGroupResult()
-{
-  *this = result;
-}
-
-UpdateTargetGroupResult& UpdateTargetGroupResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+UpdateTargetGroupResult& UpdateTargetGroupResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("arn"))
-  {
-    m_arn = jsonValue.GetString("arn");
-
-  }
-
-  if(jsonValue.ValueExists("config"))
-  {
-    m_config = jsonValue.GetObject("config");
-
-  }
-
-  if(jsonValue.ValueExists("id"))
-  {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
+    m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("arn")) {
+    m_arn = jsonValue.GetString("arn");
+    m_arnHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
+    m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("status"))
-  {
-    m_status = TargetGroupStatusMapper::GetTargetGroupStatusForName(jsonValue.GetString("status"));
-
-  }
-
-  if(jsonValue.ValueExists("type"))
-  {
+  if (jsonValue.ValueExists("type")) {
     m_type = TargetGroupTypeMapper::GetTargetGroupTypeForName(jsonValue.GetString("type"));
-
+    m_typeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("config")) {
+    m_config = jsonValue.GetObject("config");
+    m_configHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("status")) {
+    m_status = TargetGroupStatusMapper::GetTargetGroupStatusForName(jsonValue.GetString("status"));
+    m_statusHasBeenSet = true;
+  }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

@@ -4,83 +4,95 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/AssessmentStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class DeleteAppAssessmentResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API DeleteAppAssessmentResult();
-    AWS_RESILIENCEHUB_API DeleteAppAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API DeleteAppAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class DeleteAppAssessmentResult {
+ public:
+  AWS_RESILIENCEHUB_API DeleteAppAssessmentResult() = default;
+  AWS_RESILIENCEHUB_API DeleteAppAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API DeleteAppAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is:
+   * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>.
+   * For more information about ARNs, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
+   * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
+   * Reference</i> guide.</p>
+   */
+  inline const Aws::String& GetAssessmentArn() const { return m_assessmentArn; }
+  template <typename AssessmentArnT = Aws::String>
+  void SetAssessmentArn(AssessmentArnT&& value) {
+    m_assessmentArnHasBeenSet = true;
+    m_assessmentArn = std::forward<AssessmentArnT>(value);
+  }
+  template <typename AssessmentArnT = Aws::String>
+  DeleteAppAssessmentResult& WithAssessmentArn(AssessmentArnT&& value) {
+    SetAssessmentArn(std::forward<AssessmentArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the assessment. The format for this ARN is:
-     * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app-assessment/<code>app-id</code>.
-     * For more information about ARNs, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
-     * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
-     * Reference</i> guide.</p>
-     */
-    inline const Aws::String& GetAssessmentArn() const{ return m_assessmentArn; }
-    inline void SetAssessmentArn(const Aws::String& value) { m_assessmentArn = value; }
-    inline void SetAssessmentArn(Aws::String&& value) { m_assessmentArn = std::move(value); }
-    inline void SetAssessmentArn(const char* value) { m_assessmentArn.assign(value); }
-    inline DeleteAppAssessmentResult& WithAssessmentArn(const Aws::String& value) { SetAssessmentArn(value); return *this;}
-    inline DeleteAppAssessmentResult& WithAssessmentArn(Aws::String&& value) { SetAssessmentArn(std::move(value)); return *this;}
-    inline DeleteAppAssessmentResult& WithAssessmentArn(const char* value) { SetAssessmentArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the assessment for the resiliency policy.</p>
+   */
+  inline AssessmentStatus GetAssessmentStatus() const { return m_assessmentStatus; }
+  inline void SetAssessmentStatus(AssessmentStatus value) {
+    m_assessmentStatusHasBeenSet = true;
+    m_assessmentStatus = value;
+  }
+  inline DeleteAppAssessmentResult& WithAssessmentStatus(AssessmentStatus value) {
+    SetAssessmentStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the assessment for the resiliency policy.</p>
-     */
-    inline const AssessmentStatus& GetAssessmentStatus() const{ return m_assessmentStatus; }
-    inline void SetAssessmentStatus(const AssessmentStatus& value) { m_assessmentStatus = value; }
-    inline void SetAssessmentStatus(AssessmentStatus&& value) { m_assessmentStatus = std::move(value); }
-    inline DeleteAppAssessmentResult& WithAssessmentStatus(const AssessmentStatus& value) { SetAssessmentStatus(value); return *this;}
-    inline DeleteAppAssessmentResult& WithAssessmentStatus(AssessmentStatus&& value) { SetAssessmentStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteAppAssessmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteAppAssessmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteAppAssessmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteAppAssessmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_assessmentArn;
+ private:
+  Aws::String m_assessmentArn;
 
-    AssessmentStatus m_assessmentStatus;
+  AssessmentStatus m_assessmentStatus{AssessmentStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_assessmentArnHasBeenSet = false;
+  bool m_assessmentStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteBackupVaultNotificationsRequest::DeleteBackupVaultNotificationsRequest() : 
-    m_backupVaultNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteBackupVaultNotificationsRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteBackupVaultNotificationsRequest::SerializePayload() const { return {}; }

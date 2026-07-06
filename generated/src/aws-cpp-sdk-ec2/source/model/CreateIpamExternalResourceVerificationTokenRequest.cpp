@@ -3,49 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/CreateIpamExternalResourceVerificationTokenRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/CreateIpamExternalResourceVerificationTokenRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-CreateIpamExternalResourceVerificationTokenRequest::CreateIpamExternalResourceVerificationTokenRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_ipamIdHasBeenSet(false),
-    m_tagSpecificationsHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true)
-{
-}
-
-Aws::String CreateIpamExternalResourceVerificationTokenRequest::SerializePayload() const
-{
+Aws::String CreateIpamExternalResourceVerificationTokenRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateIpamExternalResourceVerificationToken&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_ipamIdHasBeenSet)
-  {
+  if (m_ipamIdHasBeenSet) {
     ss << "IpamId=" << StringUtils::URLEncode(m_ipamId.c_str()) << "&";
   }
 
-  if(m_tagSpecificationsHasBeenSet)
-  {
+  if (m_tagSpecificationsHasBeenSet) {
     unsigned tagSpecificationsCount = 1;
-    for(auto& item : m_tagSpecifications)
-    {
+    for (auto& item : m_tagSpecifications) {
       item.OutputToStream(ss, "TagSpecification.", tagSpecificationsCount, "");
       tagSpecificationsCount++;
     }
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
+  if (m_clientTokenHasBeenSet) {
     ss << "ClientToken=" << StringUtils::URLEncode(m_clientToken.c_str()) << "&";
   }
 
@@ -53,8 +37,6 @@ Aws::String CreateIpamExternalResourceVerificationTokenRequest::SerializePayload
   return ss.str();
 }
 
-
-void  CreateIpamExternalResourceVerificationTokenRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
+void CreateIpamExternalResourceVerificationTokenRequest::DumpBodyToUrl(Aws::Http::URI& uri) const {
   uri.SetQueryString(SerializePayload());
 }

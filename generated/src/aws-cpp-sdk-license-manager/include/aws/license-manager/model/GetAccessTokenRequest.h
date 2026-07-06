@@ -4,74 +4,82 @@
  */
 
 #pragma once
-#include <aws/license-manager/LicenseManager_EXPORTS.h>
-#include <aws/license-manager/LicenseManagerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/license-manager/LicenseManagerRequest.h>
+#include <aws/license-manager/LicenseManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LicenseManager
-{
-namespace Model
-{
+namespace Aws {
+namespace LicenseManager {
+namespace Model {
 
+/**
+ */
+class GetAccessTokenRequest : public LicenseManagerRequest {
+ public:
+  AWS_LICENSEMANAGER_API GetAccessTokenRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetAccessToken"; }
+
+  AWS_LICENSEMANAGER_API Aws::String SerializePayload() const override;
+
+  AWS_LICENSEMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Refresh token, encoded as a JWT token.</p>
    */
-  class GetAccessTokenRequest : public LicenseManagerRequest
-  {
-  public:
-    AWS_LICENSEMANAGER_API GetAccessTokenRequest();
+  inline const Aws::String& GetToken() const { return m_token; }
+  inline bool TokenHasBeenSet() const { return m_tokenHasBeenSet; }
+  template <typename TokenT = Aws::String>
+  void SetToken(TokenT&& value) {
+    m_tokenHasBeenSet = true;
+    m_token = std::forward<TokenT>(value);
+  }
+  template <typename TokenT = Aws::String>
+  GetAccessTokenRequest& WithToken(TokenT&& value) {
+    SetToken(std::forward<TokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetAccessToken"; }
+  ///@{
+  /**
+   * <p>Token properties to validate against those present in the JWT token.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTokenProperties() const { return m_tokenProperties; }
+  inline bool TokenPropertiesHasBeenSet() const { return m_tokenPropertiesHasBeenSet; }
+  template <typename TokenPropertiesT = Aws::Vector<Aws::String>>
+  void SetTokenProperties(TokenPropertiesT&& value) {
+    m_tokenPropertiesHasBeenSet = true;
+    m_tokenProperties = std::forward<TokenPropertiesT>(value);
+  }
+  template <typename TokenPropertiesT = Aws::Vector<Aws::String>>
+  GetAccessTokenRequest& WithTokenProperties(TokenPropertiesT&& value) {
+    SetTokenProperties(std::forward<TokenPropertiesT>(value));
+    return *this;
+  }
+  template <typename TokenPropertiesT = Aws::String>
+  GetAccessTokenRequest& AddTokenProperties(TokenPropertiesT&& value) {
+    m_tokenPropertiesHasBeenSet = true;
+    m_tokenProperties.emplace_back(std::forward<TokenPropertiesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_token;
 
-    AWS_LICENSEMANAGER_API Aws::String SerializePayload() const override;
+  Aws::Vector<Aws::String> m_tokenProperties;
+  bool m_tokenHasBeenSet = false;
+  bool m_tokenPropertiesHasBeenSet = false;
+};
 
-    AWS_LICENSEMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>Refresh token, encoded as a JWT token.</p>
-     */
-    inline const Aws::String& GetToken() const{ return m_token; }
-    inline bool TokenHasBeenSet() const { return m_tokenHasBeenSet; }
-    inline void SetToken(const Aws::String& value) { m_tokenHasBeenSet = true; m_token = value; }
-    inline void SetToken(Aws::String&& value) { m_tokenHasBeenSet = true; m_token = std::move(value); }
-    inline void SetToken(const char* value) { m_tokenHasBeenSet = true; m_token.assign(value); }
-    inline GetAccessTokenRequest& WithToken(const Aws::String& value) { SetToken(value); return *this;}
-    inline GetAccessTokenRequest& WithToken(Aws::String&& value) { SetToken(std::move(value)); return *this;}
-    inline GetAccessTokenRequest& WithToken(const char* value) { SetToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Token properties to validate against those present in the JWT token.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTokenProperties() const{ return m_tokenProperties; }
-    inline bool TokenPropertiesHasBeenSet() const { return m_tokenPropertiesHasBeenSet; }
-    inline void SetTokenProperties(const Aws::Vector<Aws::String>& value) { m_tokenPropertiesHasBeenSet = true; m_tokenProperties = value; }
-    inline void SetTokenProperties(Aws::Vector<Aws::String>&& value) { m_tokenPropertiesHasBeenSet = true; m_tokenProperties = std::move(value); }
-    inline GetAccessTokenRequest& WithTokenProperties(const Aws::Vector<Aws::String>& value) { SetTokenProperties(value); return *this;}
-    inline GetAccessTokenRequest& WithTokenProperties(Aws::Vector<Aws::String>&& value) { SetTokenProperties(std::move(value)); return *this;}
-    inline GetAccessTokenRequest& AddTokenProperties(const Aws::String& value) { m_tokenPropertiesHasBeenSet = true; m_tokenProperties.push_back(value); return *this; }
-    inline GetAccessTokenRequest& AddTokenProperties(Aws::String&& value) { m_tokenPropertiesHasBeenSet = true; m_tokenProperties.push_back(std::move(value)); return *this; }
-    inline GetAccessTokenRequest& AddTokenProperties(const char* value) { m_tokenPropertiesHasBeenSet = true; m_tokenProperties.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_token;
-    bool m_tokenHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_tokenProperties;
-    bool m_tokenPropertiesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LicenseManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManager
+}  // namespace Aws

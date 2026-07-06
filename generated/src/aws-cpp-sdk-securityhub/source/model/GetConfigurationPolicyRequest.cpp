@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/securityhub/model/GetConfigurationPolicyRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/GetConfigurationPolicyRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::SecurityHub::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConfigurationPolicyRequest::GetConfigurationPolicyRequest() : 
-    m_identifierHasBeenSet(false)
-{
-}
-
-Aws::String GetConfigurationPolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConfigurationPolicyRequest::SerializePayload() const { return {}; }

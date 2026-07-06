@@ -4,79 +4,95 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/inspector2/Inspector2_EXPORTS.h>
 #include <aws/inspector2/model/Ec2ConfigurationState.h>
 #include <aws/inspector2/model/EcrConfigurationState.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Inspector2
-{
-namespace Model
-{
-  class GetConfigurationResult
-  {
-  public:
-    AWS_INSPECTOR2_API GetConfigurationResult();
-    AWS_INSPECTOR2_API GetConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_INSPECTOR2_API GetConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Inspector2 {
+namespace Model {
+class GetConfigurationResult {
+ public:
+  AWS_INSPECTOR2_API GetConfigurationResult() = default;
+  AWS_INSPECTOR2_API GetConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_INSPECTOR2_API GetConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Specifies how the ECR automated re-scan duration is currently configured for
+   * your environment.</p>
+   */
+  inline const EcrConfigurationState& GetEcrConfiguration() const { return m_ecrConfiguration; }
+  template <typename EcrConfigurationT = EcrConfigurationState>
+  void SetEcrConfiguration(EcrConfigurationT&& value) {
+    m_ecrConfigurationHasBeenSet = true;
+    m_ecrConfiguration = std::forward<EcrConfigurationT>(value);
+  }
+  template <typename EcrConfigurationT = EcrConfigurationState>
+  GetConfigurationResult& WithEcrConfiguration(EcrConfigurationT&& value) {
+    SetEcrConfiguration(std::forward<EcrConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies how the Amazon EC2 automated scan mode is currently configured for
-     * your environment.</p>
-     */
-    inline const Ec2ConfigurationState& GetEc2Configuration() const{ return m_ec2Configuration; }
-    inline void SetEc2Configuration(const Ec2ConfigurationState& value) { m_ec2Configuration = value; }
-    inline void SetEc2Configuration(Ec2ConfigurationState&& value) { m_ec2Configuration = std::move(value); }
-    inline GetConfigurationResult& WithEc2Configuration(const Ec2ConfigurationState& value) { SetEc2Configuration(value); return *this;}
-    inline GetConfigurationResult& WithEc2Configuration(Ec2ConfigurationState&& value) { SetEc2Configuration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies how the Amazon EC2 automated scan mode is currently configured for
+   * your environment.</p>
+   */
+  inline const Ec2ConfigurationState& GetEc2Configuration() const { return m_ec2Configuration; }
+  template <typename Ec2ConfigurationT = Ec2ConfigurationState>
+  void SetEc2Configuration(Ec2ConfigurationT&& value) {
+    m_ec2ConfigurationHasBeenSet = true;
+    m_ec2Configuration = std::forward<Ec2ConfigurationT>(value);
+  }
+  template <typename Ec2ConfigurationT = Ec2ConfigurationState>
+  GetConfigurationResult& WithEc2Configuration(Ec2ConfigurationT&& value) {
+    SetEc2Configuration(std::forward<Ec2ConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies how the ECR automated re-scan duration is currently configured for
-     * your environment.</p>
-     */
-    inline const EcrConfigurationState& GetEcrConfiguration() const{ return m_ecrConfiguration; }
-    inline void SetEcrConfiguration(const EcrConfigurationState& value) { m_ecrConfiguration = value; }
-    inline void SetEcrConfiguration(EcrConfigurationState&& value) { m_ecrConfiguration = std::move(value); }
-    inline GetConfigurationResult& WithEcrConfiguration(const EcrConfigurationState& value) { SetEcrConfiguration(value); return *this;}
-    inline GetConfigurationResult& WithEcrConfiguration(EcrConfigurationState&& value) { SetEcrConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Ec2ConfigurationState m_ec2Configuration;
+ private:
+  EcrConfigurationState m_ecrConfiguration;
 
-    EcrConfigurationState m_ecrConfiguration;
+  Ec2ConfigurationState m_ec2Configuration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ecrConfigurationHasBeenSet = false;
+  bool m_ec2ConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Inspector2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Inspector2
+}  // namespace Aws

@@ -4,226 +4,273 @@
  */
 
 #pragma once
-#include <aws/lookoutequipment/LookoutEquipment_EXPORTS.h>
-#include <aws/lookoutequipment/LookoutEquipmentRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lookoutequipment/LookoutEquipmentRequest.h>
+#include <aws/lookoutequipment/LookoutEquipment_EXPORTS.h>
 #include <aws/lookoutequipment/model/DataUploadFrequency.h>
 #include <aws/lookoutequipment/model/InferenceInputConfiguration.h>
 #include <aws/lookoutequipment/model/InferenceOutputConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/lookoutequipment/model/Tag.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace LookoutEquipment
-{
-namespace Model
-{
+namespace Aws {
+namespace LookoutEquipment {
+namespace Model {
 
+/**
+ */
+class CreateInferenceSchedulerRequest : public LookoutEquipmentRequest {
+ public:
+  AWS_LOOKOUTEQUIPMENT_API CreateInferenceSchedulerRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateInferenceScheduler"; }
+
+  AWS_LOOKOUTEQUIPMENT_API Aws::String SerializePayload() const override;
+
+  AWS_LOOKOUTEQUIPMENT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the previously trained machine learning model being used to
+   * create the inference scheduler. </p>
    */
-  class CreateInferenceSchedulerRequest : public LookoutEquipmentRequest
-  {
-  public:
-    AWS_LOOKOUTEQUIPMENT_API CreateInferenceSchedulerRequest();
+  inline const Aws::String& GetModelName() const { return m_modelName; }
+  inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
+  template <typename ModelNameT = Aws::String>
+  void SetModelName(ModelNameT&& value) {
+    m_modelNameHasBeenSet = true;
+    m_modelName = std::forward<ModelNameT>(value);
+  }
+  template <typename ModelNameT = Aws::String>
+  CreateInferenceSchedulerRequest& WithModelName(ModelNameT&& value) {
+    SetModelName(std::forward<ModelNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateInferenceScheduler"; }
+  ///@{
+  /**
+   * <p>The name of the inference scheduler being created. </p>
+   */
+  inline const Aws::String& GetInferenceSchedulerName() const { return m_inferenceSchedulerName; }
+  inline bool InferenceSchedulerNameHasBeenSet() const { return m_inferenceSchedulerNameHasBeenSet; }
+  template <typename InferenceSchedulerNameT = Aws::String>
+  void SetInferenceSchedulerName(InferenceSchedulerNameT&& value) {
+    m_inferenceSchedulerNameHasBeenSet = true;
+    m_inferenceSchedulerName = std::forward<InferenceSchedulerNameT>(value);
+  }
+  template <typename InferenceSchedulerNameT = Aws::String>
+  CreateInferenceSchedulerRequest& WithInferenceSchedulerName(InferenceSchedulerNameT&& value) {
+    SetInferenceSchedulerName(std::forward<InferenceSchedulerNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LOOKOUTEQUIPMENT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The interval (in minutes) of planned delay at the start of each inference
+   * segment. For example, if inference is set to run every ten minutes, the delay is
+   * set to five minutes and the time is 09:08. The inference scheduler will wake up
+   * at the configured interval (which, without a delay configured, would be 09:10)
+   * plus the additional five minute delay time (so 09:15) to check your Amazon S3
+   * bucket. The delay provides a buffer for you to upload data at the same
+   * frequency, so that you don't have to stop and restart the scheduler when
+   * uploading new data.</p> <p>For more information, see <a
+   * href="https://docs.aws.amazon.com/lookout-for-equipment/latest/ug/understanding-inference-process.html">Understanding
+   * the inference process</a>.</p>
+   */
+  inline long long GetDataDelayOffsetInMinutes() const { return m_dataDelayOffsetInMinutes; }
+  inline bool DataDelayOffsetInMinutesHasBeenSet() const { return m_dataDelayOffsetInMinutesHasBeenSet; }
+  inline void SetDataDelayOffsetInMinutes(long long value) {
+    m_dataDelayOffsetInMinutesHasBeenSet = true;
+    m_dataDelayOffsetInMinutes = value;
+  }
+  inline CreateInferenceSchedulerRequest& WithDataDelayOffsetInMinutes(long long value) {
+    SetDataDelayOffsetInMinutes(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_LOOKOUTEQUIPMENT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p> How often data is uploaded to the source Amazon S3 bucket for the input
+   * data. The value chosen is the length of time between data uploads. For instance,
+   * if you select 5 minutes, Amazon Lookout for Equipment will upload the real-time
+   * data to the source bucket once every 5 minutes. This frequency also determines
+   * how often Amazon Lookout for Equipment runs inference on your data.</p> <p>For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/lookout-for-equipment/latest/ug/understanding-inference-process.html">Understanding
+   * the inference process</a>.</p>
+   */
+  inline DataUploadFrequency GetDataUploadFrequency() const { return m_dataUploadFrequency; }
+  inline bool DataUploadFrequencyHasBeenSet() const { return m_dataUploadFrequencyHasBeenSet; }
+  inline void SetDataUploadFrequency(DataUploadFrequency value) {
+    m_dataUploadFrequencyHasBeenSet = true;
+    m_dataUploadFrequency = value;
+  }
+  inline CreateInferenceSchedulerRequest& WithDataUploadFrequency(DataUploadFrequency value) {
+    SetDataUploadFrequency(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies configuration information for the input data for the inference
+   * scheduler, including delimiter, format, and dataset location. </p>
+   */
+  inline const InferenceInputConfiguration& GetDataInputConfiguration() const { return m_dataInputConfiguration; }
+  inline bool DataInputConfigurationHasBeenSet() const { return m_dataInputConfigurationHasBeenSet; }
+  template <typename DataInputConfigurationT = InferenceInputConfiguration>
+  void SetDataInputConfiguration(DataInputConfigurationT&& value) {
+    m_dataInputConfigurationHasBeenSet = true;
+    m_dataInputConfiguration = std::forward<DataInputConfigurationT>(value);
+  }
+  template <typename DataInputConfigurationT = InferenceInputConfiguration>
+  CreateInferenceSchedulerRequest& WithDataInputConfiguration(DataInputConfigurationT&& value) {
+    SetDataInputConfiguration(std::forward<DataInputConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the previously trained machine learning model being used to
-     * create the inference scheduler. </p>
-     */
-    inline const Aws::String& GetModelName() const{ return m_modelName; }
-    inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
-    inline void SetModelName(const Aws::String& value) { m_modelNameHasBeenSet = true; m_modelName = value; }
-    inline void SetModelName(Aws::String&& value) { m_modelNameHasBeenSet = true; m_modelName = std::move(value); }
-    inline void SetModelName(const char* value) { m_modelNameHasBeenSet = true; m_modelName.assign(value); }
-    inline CreateInferenceSchedulerRequest& WithModelName(const Aws::String& value) { SetModelName(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithModelName(Aws::String&& value) { SetModelName(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& WithModelName(const char* value) { SetModelName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies configuration information for the output results for the inference
+   * scheduler, including the S3 location for the output. </p>
+   */
+  inline const InferenceOutputConfiguration& GetDataOutputConfiguration() const { return m_dataOutputConfiguration; }
+  inline bool DataOutputConfigurationHasBeenSet() const { return m_dataOutputConfigurationHasBeenSet; }
+  template <typename DataOutputConfigurationT = InferenceOutputConfiguration>
+  void SetDataOutputConfiguration(DataOutputConfigurationT&& value) {
+    m_dataOutputConfigurationHasBeenSet = true;
+    m_dataOutputConfiguration = std::forward<DataOutputConfigurationT>(value);
+  }
+  template <typename DataOutputConfigurationT = InferenceOutputConfiguration>
+  CreateInferenceSchedulerRequest& WithDataOutputConfiguration(DataOutputConfigurationT&& value) {
+    SetDataOutputConfiguration(std::forward<DataOutputConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the inference scheduler being created. </p>
-     */
-    inline const Aws::String& GetInferenceSchedulerName() const{ return m_inferenceSchedulerName; }
-    inline bool InferenceSchedulerNameHasBeenSet() const { return m_inferenceSchedulerNameHasBeenSet; }
-    inline void SetInferenceSchedulerName(const Aws::String& value) { m_inferenceSchedulerNameHasBeenSet = true; m_inferenceSchedulerName = value; }
-    inline void SetInferenceSchedulerName(Aws::String&& value) { m_inferenceSchedulerNameHasBeenSet = true; m_inferenceSchedulerName = std::move(value); }
-    inline void SetInferenceSchedulerName(const char* value) { m_inferenceSchedulerNameHasBeenSet = true; m_inferenceSchedulerName.assign(value); }
-    inline CreateInferenceSchedulerRequest& WithInferenceSchedulerName(const Aws::String& value) { SetInferenceSchedulerName(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithInferenceSchedulerName(Aws::String&& value) { SetInferenceSchedulerName(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& WithInferenceSchedulerName(const char* value) { SetInferenceSchedulerName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of a role with permission to access the data
+   * source being used for the inference. </p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  CreateInferenceSchedulerRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The interval (in minutes) of planned delay at the start of each inference
-     * segment. For example, if inference is set to run every ten minutes, the delay is
-     * set to five minutes and the time is 09:08. The inference scheduler will wake up
-     * at the configured interval (which, without a delay configured, would be 09:10)
-     * plus the additional five minute delay time (so 09:15) to check your Amazon S3
-     * bucket. The delay provides a buffer for you to upload data at the same
-     * frequency, so that you don't have to stop and restart the scheduler when
-     * uploading new data.</p> <p>For more information, see <a
-     * href="https://docs.aws.amazon.com/lookout-for-equipment/latest/ug/understanding-inference-process.html">Understanding
-     * the inference process</a>.</p>
-     */
-    inline long long GetDataDelayOffsetInMinutes() const{ return m_dataDelayOffsetInMinutes; }
-    inline bool DataDelayOffsetInMinutesHasBeenSet() const { return m_dataDelayOffsetInMinutesHasBeenSet; }
-    inline void SetDataDelayOffsetInMinutes(long long value) { m_dataDelayOffsetInMinutesHasBeenSet = true; m_dataDelayOffsetInMinutes = value; }
-    inline CreateInferenceSchedulerRequest& WithDataDelayOffsetInMinutes(long long value) { SetDataDelayOffsetInMinutes(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides the identifier of the KMS key used to encrypt inference scheduler
+   * data by Amazon Lookout for Equipment. </p>
+   */
+  inline const Aws::String& GetServerSideKmsKeyId() const { return m_serverSideKmsKeyId; }
+  inline bool ServerSideKmsKeyIdHasBeenSet() const { return m_serverSideKmsKeyIdHasBeenSet; }
+  template <typename ServerSideKmsKeyIdT = Aws::String>
+  void SetServerSideKmsKeyId(ServerSideKmsKeyIdT&& value) {
+    m_serverSideKmsKeyIdHasBeenSet = true;
+    m_serverSideKmsKeyId = std::forward<ServerSideKmsKeyIdT>(value);
+  }
+  template <typename ServerSideKmsKeyIdT = Aws::String>
+  CreateInferenceSchedulerRequest& WithServerSideKmsKeyId(ServerSideKmsKeyIdT&& value) {
+    SetServerSideKmsKeyId(std::forward<ServerSideKmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> How often data is uploaded to the source Amazon S3 bucket for the input
-     * data. The value chosen is the length of time between data uploads. For instance,
-     * if you select 5 minutes, Amazon Lookout for Equipment will upload the real-time
-     * data to the source bucket once every 5 minutes. This frequency also determines
-     * how often Amazon Lookout for Equipment runs inference on your data.</p> <p>For
-     * more information, see <a
-     * href="https://docs.aws.amazon.com/lookout-for-equipment/latest/ug/understanding-inference-process.html">Understanding
-     * the inference process</a>.</p>
-     */
-    inline const DataUploadFrequency& GetDataUploadFrequency() const{ return m_dataUploadFrequency; }
-    inline bool DataUploadFrequencyHasBeenSet() const { return m_dataUploadFrequencyHasBeenSet; }
-    inline void SetDataUploadFrequency(const DataUploadFrequency& value) { m_dataUploadFrequencyHasBeenSet = true; m_dataUploadFrequency = value; }
-    inline void SetDataUploadFrequency(DataUploadFrequency&& value) { m_dataUploadFrequencyHasBeenSet = true; m_dataUploadFrequency = std::move(value); }
-    inline CreateInferenceSchedulerRequest& WithDataUploadFrequency(const DataUploadFrequency& value) { SetDataUploadFrequency(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithDataUploadFrequency(DataUploadFrequency&& value) { SetDataUploadFrequency(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> A unique identifier for the request. If you do not set the client request
+   * token, Amazon Lookout for Equipment generates one. </p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateInferenceSchedulerRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies configuration information for the input data for the inference
-     * scheduler, including delimiter, format, and dataset location. </p>
-     */
-    inline const InferenceInputConfiguration& GetDataInputConfiguration() const{ return m_dataInputConfiguration; }
-    inline bool DataInputConfigurationHasBeenSet() const { return m_dataInputConfigurationHasBeenSet; }
-    inline void SetDataInputConfiguration(const InferenceInputConfiguration& value) { m_dataInputConfigurationHasBeenSet = true; m_dataInputConfiguration = value; }
-    inline void SetDataInputConfiguration(InferenceInputConfiguration&& value) { m_dataInputConfigurationHasBeenSet = true; m_dataInputConfiguration = std::move(value); }
-    inline CreateInferenceSchedulerRequest& WithDataInputConfiguration(const InferenceInputConfiguration& value) { SetDataInputConfiguration(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithDataInputConfiguration(InferenceInputConfiguration&& value) { SetDataInputConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Any tags associated with the inference scheduler. </p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateInferenceSchedulerRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateInferenceSchedulerRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_modelName;
 
-    ///@{
-    /**
-     * <p>Specifies configuration information for the output results for the inference
-     * scheduler, including the S3 location for the output. </p>
-     */
-    inline const InferenceOutputConfiguration& GetDataOutputConfiguration() const{ return m_dataOutputConfiguration; }
-    inline bool DataOutputConfigurationHasBeenSet() const { return m_dataOutputConfigurationHasBeenSet; }
-    inline void SetDataOutputConfiguration(const InferenceOutputConfiguration& value) { m_dataOutputConfigurationHasBeenSet = true; m_dataOutputConfiguration = value; }
-    inline void SetDataOutputConfiguration(InferenceOutputConfiguration&& value) { m_dataOutputConfigurationHasBeenSet = true; m_dataOutputConfiguration = std::move(value); }
-    inline CreateInferenceSchedulerRequest& WithDataOutputConfiguration(const InferenceOutputConfiguration& value) { SetDataOutputConfiguration(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithDataOutputConfiguration(InferenceOutputConfiguration&& value) { SetDataOutputConfiguration(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_inferenceSchedulerName;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of a role with permission to access the data
-     * source being used for the inference. </p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline CreateInferenceSchedulerRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  long long m_dataDelayOffsetInMinutes{0};
 
-    ///@{
-    /**
-     * <p>Provides the identifier of the KMS key used to encrypt inference scheduler
-     * data by Amazon Lookout for Equipment. </p>
-     */
-    inline const Aws::String& GetServerSideKmsKeyId() const{ return m_serverSideKmsKeyId; }
-    inline bool ServerSideKmsKeyIdHasBeenSet() const { return m_serverSideKmsKeyIdHasBeenSet; }
-    inline void SetServerSideKmsKeyId(const Aws::String& value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId = value; }
-    inline void SetServerSideKmsKeyId(Aws::String&& value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId = std::move(value); }
-    inline void SetServerSideKmsKeyId(const char* value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId.assign(value); }
-    inline CreateInferenceSchedulerRequest& WithServerSideKmsKeyId(const Aws::String& value) { SetServerSideKmsKeyId(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithServerSideKmsKeyId(Aws::String&& value) { SetServerSideKmsKeyId(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& WithServerSideKmsKeyId(const char* value) { SetServerSideKmsKeyId(value); return *this;}
-    ///@}
+  DataUploadFrequency m_dataUploadFrequency{DataUploadFrequency::NOT_SET};
 
-    ///@{
-    /**
-     * <p> A unique identifier for the request. If you do not set the client request
-     * token, Amazon Lookout for Equipment generates one. </p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateInferenceSchedulerRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  InferenceInputConfiguration m_dataInputConfiguration;
 
-    ///@{
-    /**
-     * <p>Any tags associated with the inference scheduler. </p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateInferenceSchedulerRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateInferenceSchedulerRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateInferenceSchedulerRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateInferenceSchedulerRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  InferenceOutputConfiguration m_dataOutputConfiguration;
 
-    Aws::String m_modelName;
-    bool m_modelNameHasBeenSet = false;
+  Aws::String m_roleArn;
 
-    Aws::String m_inferenceSchedulerName;
-    bool m_inferenceSchedulerNameHasBeenSet = false;
+  Aws::String m_serverSideKmsKeyId;
 
-    long long m_dataDelayOffsetInMinutes;
-    bool m_dataDelayOffsetInMinutesHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    DataUploadFrequency m_dataUploadFrequency;
-    bool m_dataUploadFrequencyHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
+  bool m_modelNameHasBeenSet = false;
+  bool m_inferenceSchedulerNameHasBeenSet = false;
+  bool m_dataDelayOffsetInMinutesHasBeenSet = false;
+  bool m_dataUploadFrequencyHasBeenSet = false;
+  bool m_dataInputConfigurationHasBeenSet = false;
+  bool m_dataOutputConfigurationHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_serverSideKmsKeyIdHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_tagsHasBeenSet = false;
+};
 
-    InferenceInputConfiguration m_dataInputConfiguration;
-    bool m_dataInputConfigurationHasBeenSet = false;
-
-    InferenceOutputConfiguration m_dataOutputConfiguration;
-    bool m_dataOutputConfigurationHasBeenSet = false;
-
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::String m_serverSideKmsKeyId;
-    bool m_serverSideKmsKeyIdHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LookoutEquipment
-} // namespace Aws
+}  // namespace Model
+}  // namespace LookoutEquipment
+}  // namespace Aws

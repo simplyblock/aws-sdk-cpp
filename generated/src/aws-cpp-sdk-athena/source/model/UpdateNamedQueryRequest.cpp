@@ -12,53 +12,30 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateNamedQueryRequest::UpdateNamedQueryRequest() : 
-    m_namedQueryIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_queryStringHasBeenSet(false)
-{
-}
-
-Aws::String UpdateNamedQueryRequest::SerializePayload() const
-{
+Aws::String UpdateNamedQueryRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_namedQueryIdHasBeenSet)
-  {
-   payload.WithString("NamedQueryId", m_namedQueryId);
-
+  if (m_namedQueryIdHasBeenSet) {
+    payload.WithString("NamedQueryId", m_namedQueryId);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_queryStringHasBeenSet)
-  {
-   payload.WithString("QueryString", m_queryString);
-
+  if (m_queryStringHasBeenSet) {
+    payload.WithString("QueryString", m_queryString);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateNamedQueryRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateNamedQueryRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.UpdateNamedQuery"));
   return headers;
-
 }
-
-
-
-

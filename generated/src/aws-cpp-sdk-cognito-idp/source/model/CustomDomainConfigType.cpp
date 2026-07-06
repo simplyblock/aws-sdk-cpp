@@ -11,49 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
-CustomDomainConfigType::CustomDomainConfigType() : 
-    m_certificateArnHasBeenSet(false)
-{
-}
+CustomDomainConfigType::CustomDomainConfigType(JsonView jsonValue) { *this = jsonValue; }
 
-CustomDomainConfigType::CustomDomainConfigType(JsonView jsonValue)
-  : CustomDomainConfigType()
-{
-  *this = jsonValue;
-}
-
-CustomDomainConfigType& CustomDomainConfigType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("CertificateArn"))
-  {
+CustomDomainConfigType& CustomDomainConfigType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("CertificateArn")) {
     m_certificateArn = jsonValue.GetString("CertificateArn");
-
     m_certificateArnHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("SecurityPolicy")) {
+    m_securityPolicy = SecurityPolicyTypeMapper::GetSecurityPolicyTypeForName(jsonValue.GetString("SecurityPolicy"));
+    m_securityPolicyHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue CustomDomainConfigType::Jsonize() const
-{
+JsonValue CustomDomainConfigType::Jsonize() const {
   JsonValue payload;
 
-  if(m_certificateArnHasBeenSet)
-  {
-   payload.WithString("CertificateArn", m_certificateArn);
+  if (m_certificateArnHasBeenSet) {
+    payload.WithString("CertificateArn", m_certificateArn);
+  }
 
+  if (m_securityPolicyHasBeenSet) {
+    payload.WithString("SecurityPolicy", SecurityPolicyTypeMapper::GetNameForSecurityPolicyType(m_securityPolicy));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

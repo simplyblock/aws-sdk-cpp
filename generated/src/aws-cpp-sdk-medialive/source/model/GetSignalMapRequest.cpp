@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/medialive/model/GetSignalMapRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/medialive/model/GetSignalMapRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::MediaLive::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSignalMapRequest::GetSignalMapRequest() : 
-    m_identifierHasBeenSet(false)
-{
-}
-
-Aws::String GetSignalMapRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSignalMapRequest::SerializePayload() const { return {}; }

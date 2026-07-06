@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/neptune/model/PromoteReadReplicaDBClusterResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/neptune/model/PromoteReadReplicaDBClusterResult.h>
 
 #include <utility>
 
@@ -17,38 +17,33 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-PromoteReadReplicaDBClusterResult::PromoteReadReplicaDBClusterResult()
-{
-}
-
-PromoteReadReplicaDBClusterResult::PromoteReadReplicaDBClusterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+PromoteReadReplicaDBClusterResult::PromoteReadReplicaDBClusterResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-PromoteReadReplicaDBClusterResult& PromoteReadReplicaDBClusterResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+PromoteReadReplicaDBClusterResult& PromoteReadReplicaDBClusterResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "PromoteReadReplicaDBClusterResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "PromoteReadReplicaDBClusterResult")) {
     resultNode = rootNode.FirstChild("PromoteReadReplicaDBClusterResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode dBClusterNode = resultNode.FirstChild("DBCluster");
-    if(!dBClusterNode.IsNull())
-    {
+    if (!dBClusterNode.IsNull()) {
       m_dBCluster = dBClusterNode;
+      m_dBClusterHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::Neptune::Model::PromoteReadReplicaDBClusterResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::Neptune::Model::PromoteReadReplicaDBClusterResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

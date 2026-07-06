@@ -4,140 +4,154 @@
  */
 
 #pragma once
-#include <aws/directory-service-data/DirectoryServiceData_EXPORTS.h>
-#include <aws/directory-service-data/DirectoryServiceDataRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/directory-service-data/DirectoryServiceDataRequest.h>
+#include <aws/directory-service-data/DirectoryServiceData_EXPORTS.h>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace DirectoryServiceData
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace DirectoryServiceData {
+namespace Model {
+
+/**
+ */
+class RemoveGroupMemberRequest : public DirectoryServiceDataRequest {
+ public:
+  AWS_DIRECTORYSERVICEDATA_API RemoveGroupMemberRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "RemoveGroupMember"; }
+
+  AWS_DIRECTORYSERVICEDATA_API Aws::String SerializePayload() const override;
+
+  AWS_DIRECTORYSERVICEDATA_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p> A unique and case-sensitive identifier that you provide to make sure the
+   * idempotency of the request, so multiple identical calls have the same effect as
+   * one single call. </p> <p> A client token is valid for 8 hours after the first
+   * request that uses it completes. After 8 hours, any request with the same client
+   * token is treated as a new request. If the request succeeds, any future uses of
+   * that token will be idempotent for another 8 hours. </p> <p> If you submit a
+   * request with the same client token but change one of the other parameters within
+   * the 8-hour idempotency window, Directory Service Data returns an
+   * <code>ConflictException</code>. </p>  <p> This parameter is optional when
+   * using the CLI or SDK. </p>
    */
-  class RemoveGroupMemberRequest : public DirectoryServiceDataRequest
-  {
-  public:
-    AWS_DIRECTORYSERVICEDATA_API RemoveGroupMemberRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  RemoveGroupMemberRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "RemoveGroupMember"; }
+  ///@{
+  /**
+   * <p> The identifier (ID) of the directory that's associated with the member. </p>
+   */
+  inline const Aws::String& GetDirectoryId() const { return m_directoryId; }
+  inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
+  template <typename DirectoryIdT = Aws::String>
+  void SetDirectoryId(DirectoryIdT&& value) {
+    m_directoryIdHasBeenSet = true;
+    m_directoryId = std::forward<DirectoryIdT>(value);
+  }
+  template <typename DirectoryIdT = Aws::String>
+  RemoveGroupMemberRequest& WithDirectoryId(DirectoryIdT&& value) {
+    SetDirectoryId(std::forward<DirectoryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DIRECTORYSERVICEDATA_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The name of the group. </p>
+   */
+  inline const Aws::String& GetGroupName() const { return m_groupName; }
+  inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
+  template <typename GroupNameT = Aws::String>
+  void SetGroupName(GroupNameT&& value) {
+    m_groupNameHasBeenSet = true;
+    m_groupName = std::forward<GroupNameT>(value);
+  }
+  template <typename GroupNameT = Aws::String>
+  RemoveGroupMemberRequest& WithGroupName(GroupNameT&& value) {
+    SetGroupName(std::forward<GroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DIRECTORYSERVICEDATA_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p> The <code>SAMAccountName</code> of the user, group, or computer to remove
+   * from the group. </p>
+   */
+  inline const Aws::String& GetMemberName() const { return m_memberName; }
+  inline bool MemberNameHasBeenSet() const { return m_memberNameHasBeenSet; }
+  template <typename MemberNameT = Aws::String>
+  void SetMemberName(MemberNameT&& value) {
+    m_memberNameHasBeenSet = true;
+    m_memberName = std::forward<MemberNameT>(value);
+  }
+  template <typename MemberNameT = Aws::String>
+  RemoveGroupMemberRequest& WithMemberName(MemberNameT&& value) {
+    SetMemberName(std::forward<MemberNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The domain name that's associated with the group member. This parameter
+   * defaults to the Managed Microsoft AD domain. </p>  <p> This parameter is
+   * optional and case insensitive. </p>
+   */
+  inline const Aws::String& GetMemberRealm() const { return m_memberRealm; }
+  inline bool MemberRealmHasBeenSet() const { return m_memberRealmHasBeenSet; }
+  template <typename MemberRealmT = Aws::String>
+  void SetMemberRealm(MemberRealmT&& value) {
+    m_memberRealmHasBeenSet = true;
+    m_memberRealm = std::forward<MemberRealmT>(value);
+  }
+  template <typename MemberRealmT = Aws::String>
+  RemoveGroupMemberRequest& WithMemberRealm(MemberRealmT&& value) {
+    SetMemberRealm(std::forward<MemberRealmT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p> A unique and case-sensitive identifier that you provide to make sure the
-     * idempotency of the request, so multiple identical calls have the same effect as
-     * one single call. </p> <p> A client token is valid for 8 hours after the first
-     * request that uses it completes. After 8 hours, any request with the same client
-     * token is treated as a new request. If the request succeeds, any future uses of
-     * that token will be idempotent for another 8 hours. </p> <p> If you submit a
-     * request with the same client token but change one of the other parameters within
-     * the 8-hour idempotency window, Directory Service Data returns an
-     * <code>ConflictException</code>. </p>  <p> This parameter is optional when
-     * using the CLI or SDK. </p> 
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline RemoveGroupMemberRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline RemoveGroupMemberRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline RemoveGroupMemberRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  Aws::String m_directoryId;
 
-    ///@{
-    /**
-     * <p> The identifier (ID) of the directory that's associated with the member. </p>
-     */
-    inline const Aws::String& GetDirectoryId() const{ return m_directoryId; }
-    inline bool DirectoryIdHasBeenSet() const { return m_directoryIdHasBeenSet; }
-    inline void SetDirectoryId(const Aws::String& value) { m_directoryIdHasBeenSet = true; m_directoryId = value; }
-    inline void SetDirectoryId(Aws::String&& value) { m_directoryIdHasBeenSet = true; m_directoryId = std::move(value); }
-    inline void SetDirectoryId(const char* value) { m_directoryIdHasBeenSet = true; m_directoryId.assign(value); }
-    inline RemoveGroupMemberRequest& WithDirectoryId(const Aws::String& value) { SetDirectoryId(value); return *this;}
-    inline RemoveGroupMemberRequest& WithDirectoryId(Aws::String&& value) { SetDirectoryId(std::move(value)); return *this;}
-    inline RemoveGroupMemberRequest& WithDirectoryId(const char* value) { SetDirectoryId(value); return *this;}
-    ///@}
+  Aws::String m_groupName;
 
-    ///@{
-    /**
-     * <p> The name of the group. </p>
-     */
-    inline const Aws::String& GetGroupName() const{ return m_groupName; }
-    inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
-    inline void SetGroupName(const Aws::String& value) { m_groupNameHasBeenSet = true; m_groupName = value; }
-    inline void SetGroupName(Aws::String&& value) { m_groupNameHasBeenSet = true; m_groupName = std::move(value); }
-    inline void SetGroupName(const char* value) { m_groupNameHasBeenSet = true; m_groupName.assign(value); }
-    inline RemoveGroupMemberRequest& WithGroupName(const Aws::String& value) { SetGroupName(value); return *this;}
-    inline RemoveGroupMemberRequest& WithGroupName(Aws::String&& value) { SetGroupName(std::move(value)); return *this;}
-    inline RemoveGroupMemberRequest& WithGroupName(const char* value) { SetGroupName(value); return *this;}
-    ///@}
+  Aws::String m_memberName;
 
-    ///@{
-    /**
-     * <p> The <code>SAMAccountName</code> of the user, group, or computer to remove
-     * from the group. </p>
-     */
-    inline const Aws::String& GetMemberName() const{ return m_memberName; }
-    inline bool MemberNameHasBeenSet() const { return m_memberNameHasBeenSet; }
-    inline void SetMemberName(const Aws::String& value) { m_memberNameHasBeenSet = true; m_memberName = value; }
-    inline void SetMemberName(Aws::String&& value) { m_memberNameHasBeenSet = true; m_memberName = std::move(value); }
-    inline void SetMemberName(const char* value) { m_memberNameHasBeenSet = true; m_memberName.assign(value); }
-    inline RemoveGroupMemberRequest& WithMemberName(const Aws::String& value) { SetMemberName(value); return *this;}
-    inline RemoveGroupMemberRequest& WithMemberName(Aws::String&& value) { SetMemberName(std::move(value)); return *this;}
-    inline RemoveGroupMemberRequest& WithMemberName(const char* value) { SetMemberName(value); return *this;}
-    ///@}
+  Aws::String m_memberRealm;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_directoryIdHasBeenSet = false;
+  bool m_groupNameHasBeenSet = false;
+  bool m_memberNameHasBeenSet = false;
+  bool m_memberRealmHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The domain name that's associated with the group member. This parameter
-     * defaults to the Managed Microsoft AD domain. </p>  <p> This parameter is
-     * optional and case insensitive. </p> 
-     */
-    inline const Aws::String& GetMemberRealm() const{ return m_memberRealm; }
-    inline bool MemberRealmHasBeenSet() const { return m_memberRealmHasBeenSet; }
-    inline void SetMemberRealm(const Aws::String& value) { m_memberRealmHasBeenSet = true; m_memberRealm = value; }
-    inline void SetMemberRealm(Aws::String&& value) { m_memberRealmHasBeenSet = true; m_memberRealm = std::move(value); }
-    inline void SetMemberRealm(const char* value) { m_memberRealmHasBeenSet = true; m_memberRealm.assign(value); }
-    inline RemoveGroupMemberRequest& WithMemberRealm(const Aws::String& value) { SetMemberRealm(value); return *this;}
-    inline RemoveGroupMemberRequest& WithMemberRealm(Aws::String&& value) { SetMemberRealm(std::move(value)); return *this;}
-    inline RemoveGroupMemberRequest& WithMemberRealm(const char* value) { SetMemberRealm(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Aws::String m_directoryId;
-    bool m_directoryIdHasBeenSet = false;
-
-    Aws::String m_groupName;
-    bool m_groupNameHasBeenSet = false;
-
-    Aws::String m_memberName;
-    bool m_memberNameHasBeenSet = false;
-
-    Aws::String m_memberRealm;
-    bool m_memberRealmHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DirectoryServiceData
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryServiceData
+}  // namespace Aws

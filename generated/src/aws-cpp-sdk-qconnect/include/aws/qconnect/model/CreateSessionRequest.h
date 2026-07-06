@@ -4,171 +4,273 @@
  */
 
 #pragma once
-#include <aws/qconnect/QConnect_EXPORTS.h>
-#include <aws/qconnect/QConnectRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/qconnect/model/TagFilter.h>
-#include <aws/qconnect/model/AIAgentType.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/qconnect/QConnectRequest.h>
+#include <aws/qconnect/QConnect_EXPORTS.h>
 #include <aws/qconnect/model/AIAgentConfigurationData.h>
+#include <aws/qconnect/model/AIAgentType.h>
+#include <aws/qconnect/model/OrchestratorConfigurationEntry.h>
+#include <aws/qconnect/model/TagFilter.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace QConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace QConnect {
+namespace Model {
 
+/**
+ */
+class CreateSessionRequest : public QConnectRequest {
+ public:
+  AWS_QCONNECT_API CreateSessionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateSession"; }
+
+  AWS_QCONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the
+   * idempotency of the request. If not provided, the Amazon Web Services SDK
+   * populates this field. For more information about idempotency, see <a
+   * href="http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+   * retries safe with idempotent APIs</a>.</p>
    */
-  class CreateSessionRequest : public QConnectRequest
-  {
-  public:
-    AWS_QCONNECT_API CreateSessionRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateSessionRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateSession"; }
+  ///@{
+  /**
+   * <p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or
+   * the ARN. URLs cannot contain the ARN.</p>
+   */
+  inline const Aws::String& GetAssistantId() const { return m_assistantId; }
+  inline bool AssistantIdHasBeenSet() const { return m_assistantIdHasBeenSet; }
+  template <typename AssistantIdT = Aws::String>
+  void SetAssistantId(AssistantIdT&& value) {
+    m_assistantIdHasBeenSet = true;
+    m_assistantId = std::forward<AssistantIdT>(value);
+  }
+  template <typename AssistantIdT = Aws::String>
+  CreateSessionRequest& WithAssistantId(AssistantIdT&& value) {
+    SetAssistantId(std::forward<AssistantIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_QCONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the session.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateSessionRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The description.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateSessionRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration of the AI Agents (mapped by AI Agent Type to AI Agent
-     * version) that should be used by Amazon Q in Connect for this Session.</p>
-     */
-    inline const Aws::Map<AIAgentType, AIAgentConfigurationData>& GetAiAgentConfiguration() const{ return m_aiAgentConfiguration; }
-    inline bool AiAgentConfigurationHasBeenSet() const { return m_aiAgentConfigurationHasBeenSet; }
-    inline void SetAiAgentConfiguration(const Aws::Map<AIAgentType, AIAgentConfigurationData>& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration = value; }
-    inline void SetAiAgentConfiguration(Aws::Map<AIAgentType, AIAgentConfigurationData>&& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration = std::move(value); }
-    inline CreateSessionRequest& WithAiAgentConfiguration(const Aws::Map<AIAgentType, AIAgentConfigurationData>& value) { SetAiAgentConfiguration(value); return *this;}
-    inline CreateSessionRequest& WithAiAgentConfiguration(Aws::Map<AIAgentType, AIAgentConfigurationData>&& value) { SetAiAgentConfiguration(std::move(value)); return *this;}
-    inline CreateSessionRequest& AddAiAgentConfiguration(const AIAgentType& key, const AIAgentConfigurationData& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration.emplace(key, value); return *this; }
-    inline CreateSessionRequest& AddAiAgentConfiguration(AIAgentType&& key, const AIAgentConfigurationData& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration.emplace(std::move(key), value); return *this; }
-    inline CreateSessionRequest& AddAiAgentConfiguration(const AIAgentType& key, AIAgentConfigurationData&& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration.emplace(key, std::move(value)); return *this; }
-    inline CreateSessionRequest& AddAiAgentConfiguration(AIAgentType&& key, AIAgentConfigurationData&& value) { m_aiAgentConfigurationHasBeenSet = true; m_aiAgentConfiguration.emplace(std::move(key), std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateSessionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateSessionRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Q in Connect assistant. Can be either the ID or
-     * the ARN. URLs cannot contain the ARN.</p>
-     */
-    inline const Aws::String& GetAssistantId() const{ return m_assistantId; }
-    inline bool AssistantIdHasBeenSet() const { return m_assistantIdHasBeenSet; }
-    inline void SetAssistantId(const Aws::String& value) { m_assistantIdHasBeenSet = true; m_assistantId = value; }
-    inline void SetAssistantId(Aws::String&& value) { m_assistantIdHasBeenSet = true; m_assistantId = std::move(value); }
-    inline void SetAssistantId(const char* value) { m_assistantIdHasBeenSet = true; m_assistantId.assign(value); }
-    inline CreateSessionRequest& WithAssistantId(const Aws::String& value) { SetAssistantId(value); return *this;}
-    inline CreateSessionRequest& WithAssistantId(Aws::String&& value) { SetAssistantId(std::move(value)); return *this;}
-    inline CreateSessionRequest& WithAssistantId(const char* value) { SetAssistantId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An object that can be used to specify Tag conditions. </p>
+   */
+  inline const TagFilter& GetTagFilter() const { return m_tagFilter; }
+  inline bool TagFilterHasBeenSet() const { return m_tagFilterHasBeenSet; }
+  template <typename TagFilterT = TagFilter>
+  void SetTagFilter(TagFilterT&& value) {
+    m_tagFilterHasBeenSet = true;
+    m_tagFilter = std::forward<TagFilterT>(value);
+  }
+  template <typename TagFilterT = TagFilter>
+  CreateSessionRequest& WithTagFilter(TagFilterT&& value) {
+    SetTagFilter(std::forward<TagFilterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. If not provided, the Amazon Web Services SDK
-     * populates this field. For more information about idempotency, see <a
-     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
-     * retries safe with idempotent APIs</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateSessionRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateSessionRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateSessionRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration of the AI Agents (mapped by AI Agent Type to AI Agent
+   * version) that should be used by Amazon Q in Connect for this Session.</p>
+   */
+  inline const Aws::Map<AIAgentType, AIAgentConfigurationData>& GetAiAgentConfiguration() const { return m_aiAgentConfiguration; }
+  inline bool AiAgentConfigurationHasBeenSet() const { return m_aiAgentConfigurationHasBeenSet; }
+  template <typename AiAgentConfigurationT = Aws::Map<AIAgentType, AIAgentConfigurationData>>
+  void SetAiAgentConfiguration(AiAgentConfigurationT&& value) {
+    m_aiAgentConfigurationHasBeenSet = true;
+    m_aiAgentConfiguration = std::forward<AiAgentConfigurationT>(value);
+  }
+  template <typename AiAgentConfigurationT = Aws::Map<AIAgentType, AIAgentConfigurationData>>
+  CreateSessionRequest& WithAiAgentConfiguration(AiAgentConfigurationT&& value) {
+    SetAiAgentConfiguration(std::forward<AiAgentConfigurationT>(value));
+    return *this;
+  }
+  inline CreateSessionRequest& AddAiAgentConfiguration(AIAgentType key, AIAgentConfigurationData value) {
+    m_aiAgentConfigurationHasBeenSet = true;
+    m_aiAgentConfiguration.emplace(key, value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateSessionRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateSessionRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateSessionRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the email contact in Amazon Connect. Used
+   * to retrieve email content and establish session context for AI-powered email
+   * assistance.</p>
+   */
+  inline const Aws::String& GetContactArn() const { return m_contactArn; }
+  inline bool ContactArnHasBeenSet() const { return m_contactArnHasBeenSet; }
+  template <typename ContactArnT = Aws::String>
+  void SetContactArn(ContactArnT&& value) {
+    m_contactArnHasBeenSet = true;
+    m_contactArn = std::forward<ContactArnT>(value);
+  }
+  template <typename ContactArnT = Aws::String>
+  CreateSessionRequest& WithContactArn(ContactArnT&& value) {
+    SetContactArn(std::forward<ContactArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the session.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateSessionRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateSessionRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateSessionRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of orchestrator configurations for the session being created.</p>
+   */
+  inline const Aws::Vector<OrchestratorConfigurationEntry>& GetOrchestratorConfigurationList() const {
+    return m_orchestratorConfigurationList;
+  }
+  inline bool OrchestratorConfigurationListHasBeenSet() const { return m_orchestratorConfigurationListHasBeenSet; }
+  template <typename OrchestratorConfigurationListT = Aws::Vector<OrchestratorConfigurationEntry>>
+  void SetOrchestratorConfigurationList(OrchestratorConfigurationListT&& value) {
+    m_orchestratorConfigurationListHasBeenSet = true;
+    m_orchestratorConfigurationList = std::forward<OrchestratorConfigurationListT>(value);
+  }
+  template <typename OrchestratorConfigurationListT = Aws::Vector<OrchestratorConfigurationEntry>>
+  CreateSessionRequest& WithOrchestratorConfigurationList(OrchestratorConfigurationListT&& value) {
+    SetOrchestratorConfigurationList(std::forward<OrchestratorConfigurationListT>(value));
+    return *this;
+  }
+  template <typename OrchestratorConfigurationListT = OrchestratorConfigurationEntry>
+  CreateSessionRequest& AddOrchestratorConfigurationList(OrchestratorConfigurationListT&& value) {
+    m_orchestratorConfigurationListHasBeenSet = true;
+    m_orchestratorConfigurationList.emplace_back(std::forward<OrchestratorConfigurationListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that can be used to specify Tag conditions. </p>
-     */
-    inline const TagFilter& GetTagFilter() const{ return m_tagFilter; }
-    inline bool TagFilterHasBeenSet() const { return m_tagFilterHasBeenSet; }
-    inline void SetTagFilter(const TagFilter& value) { m_tagFilterHasBeenSet = true; m_tagFilter = value; }
-    inline void SetTagFilter(TagFilter&& value) { m_tagFilterHasBeenSet = true; m_tagFilter = std::move(value); }
-    inline CreateSessionRequest& WithTagFilter(const TagFilter& value) { SetTagFilter(value); return *this;}
-    inline CreateSessionRequest& WithTagFilter(TagFilter&& value) { SetTagFilter(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of orchestrator configurations to remove from the session.</p>
+   */
+  inline bool GetRemoveOrchestratorConfigurationList() const { return m_removeOrchestratorConfigurationList; }
+  inline bool RemoveOrchestratorConfigurationListHasBeenSet() const { return m_removeOrchestratorConfigurationListHasBeenSet; }
+  inline void SetRemoveOrchestratorConfigurationList(bool value) {
+    m_removeOrchestratorConfigurationListHasBeenSet = true;
+    m_removeOrchestratorConfigurationList = value;
+  }
+  inline CreateSessionRequest& WithRemoveOrchestratorConfigurationList(bool value) {
+    SetRemoveOrchestratorConfigurationList(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateSessionRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateSessionRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateSessionRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateSessionRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSessionRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSessionRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateSessionRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateSessionRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateSessionRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::String m_assistantId;
 
-    Aws::Map<AIAgentType, AIAgentConfigurationData> m_aiAgentConfiguration;
-    bool m_aiAgentConfigurationHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::String m_assistantId;
-    bool m_assistantIdHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  TagFilter m_tagFilter;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Map<AIAgentType, AIAgentConfigurationData> m_aiAgentConfiguration;
 
-    TagFilter m_tagFilter;
-    bool m_tagFilterHasBeenSet = false;
+  Aws::String m_contactArn;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
+  Aws::Vector<OrchestratorConfigurationEntry> m_orchestratorConfigurationList;
 
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+  bool m_removeOrchestratorConfigurationList{false};
+  bool m_clientTokenHasBeenSet = true;
+  bool m_assistantIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_tagFilterHasBeenSet = false;
+  bool m_aiAgentConfigurationHasBeenSet = false;
+  bool m_contactArnHasBeenSet = false;
+  bool m_orchestratorConfigurationListHasBeenSet = false;
+  bool m_removeOrchestratorConfigurationListHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

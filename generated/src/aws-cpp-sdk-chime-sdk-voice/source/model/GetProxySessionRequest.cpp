@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetProxySessionRequest::GetProxySessionRequest() : 
-    m_voiceConnectorIdHasBeenSet(false),
-    m_proxySessionIdHasBeenSet(false)
-{
-}
-
-Aws::String GetProxySessionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetProxySessionRequest::SerializePayload() const { return {}; }

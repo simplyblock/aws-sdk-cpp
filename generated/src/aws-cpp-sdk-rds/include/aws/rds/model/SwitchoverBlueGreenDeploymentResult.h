@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/BlueGreenDeployment.h>
 #include <aws/rds/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace RDS
-{
-namespace Model
-{
-  class SwitchoverBlueGreenDeploymentResult
-  {
-  public:
-    AWS_RDS_API SwitchoverBlueGreenDeploymentResult();
-    AWS_RDS_API SwitchoverBlueGreenDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_RDS_API SwitchoverBlueGreenDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace RDS {
+namespace Model {
+class SwitchoverBlueGreenDeploymentResult {
+ public:
+  AWS_RDS_API SwitchoverBlueGreenDeploymentResult() = default;
+  AWS_RDS_API SwitchoverBlueGreenDeploymentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_RDS_API SwitchoverBlueGreenDeploymentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const BlueGreenDeployment& GetBlueGreenDeployment() const{ return m_blueGreenDeployment; }
-    inline void SetBlueGreenDeployment(const BlueGreenDeployment& value) { m_blueGreenDeployment = value; }
-    inline void SetBlueGreenDeployment(BlueGreenDeployment&& value) { m_blueGreenDeployment = std::move(value); }
-    inline SwitchoverBlueGreenDeploymentResult& WithBlueGreenDeployment(const BlueGreenDeployment& value) { SetBlueGreenDeployment(value); return *this;}
-    inline SwitchoverBlueGreenDeploymentResult& WithBlueGreenDeployment(BlueGreenDeployment&& value) { SetBlueGreenDeployment(std::move(value)); return *this;}
-    ///@}
+  inline const BlueGreenDeployment& GetBlueGreenDeployment() const { return m_blueGreenDeployment; }
+  template <typename BlueGreenDeploymentT = BlueGreenDeployment>
+  void SetBlueGreenDeployment(BlueGreenDeploymentT&& value) {
+    m_blueGreenDeploymentHasBeenSet = true;
+    m_blueGreenDeployment = std::forward<BlueGreenDeploymentT>(value);
+  }
+  template <typename BlueGreenDeploymentT = BlueGreenDeployment>
+  SwitchoverBlueGreenDeploymentResult& WithBlueGreenDeployment(BlueGreenDeploymentT&& value) {
+    SetBlueGreenDeployment(std::forward<BlueGreenDeploymentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline SwitchoverBlueGreenDeploymentResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline SwitchoverBlueGreenDeploymentResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    BlueGreenDeployment m_blueGreenDeployment;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  SwitchoverBlueGreenDeploymentResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  BlueGreenDeployment m_blueGreenDeployment;
 
-} // namespace Model
-} // namespace RDS
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_blueGreenDeploymentHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace RDS
+}  // namespace Aws

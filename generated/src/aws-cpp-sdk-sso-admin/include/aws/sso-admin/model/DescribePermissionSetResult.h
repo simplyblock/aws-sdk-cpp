@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/sso-admin/SSOAdmin_EXPORTS.h>
 #include <aws/sso-admin/model/PermissionSet.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOAdmin
-{
-namespace Model
-{
-  class DescribePermissionSetResult
-  {
-  public:
-    AWS_SSOADMIN_API DescribePermissionSetResult();
-    AWS_SSOADMIN_API DescribePermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOADMIN_API DescribePermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOAdmin {
+namespace Model {
+class DescribePermissionSetResult {
+ public:
+  AWS_SSOADMIN_API DescribePermissionSetResult() = default;
+  AWS_SSOADMIN_API DescribePermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOADMIN_API DescribePermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes the level of access on an Amazon Web Services account.</p>
+   */
+  inline const PermissionSet& GetPermissionSet() const { return m_permissionSet; }
+  template <typename PermissionSetT = PermissionSet>
+  void SetPermissionSet(PermissionSetT&& value) {
+    m_permissionSetHasBeenSet = true;
+    m_permissionSet = std::forward<PermissionSetT>(value);
+  }
+  template <typename PermissionSetT = PermissionSet>
+  DescribePermissionSetResult& WithPermissionSet(PermissionSetT&& value) {
+    SetPermissionSet(std::forward<PermissionSetT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the level of access on an Amazon Web Services account.</p>
-     */
-    inline const PermissionSet& GetPermissionSet() const{ return m_permissionSet; }
-    inline void SetPermissionSet(const PermissionSet& value) { m_permissionSet = value; }
-    inline void SetPermissionSet(PermissionSet&& value) { m_permissionSet = std::move(value); }
-    inline DescribePermissionSetResult& WithPermissionSet(const PermissionSet& value) { SetPermissionSet(value); return *this;}
-    inline DescribePermissionSetResult& WithPermissionSet(PermissionSet&& value) { SetPermissionSet(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribePermissionSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribePermissionSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribePermissionSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribePermissionSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PermissionSet m_permissionSet;
+ private:
+  PermissionSet m_permissionSet;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_permissionSetHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

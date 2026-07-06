@@ -4,100 +4,139 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
+#include <aws/gamelift/model/ManagedCapacityConfiguration.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class UpdateFleetCapacityResult
-  {
-  public:
-    AWS_GAMELIFT_API UpdateFleetCapacityResult();
-    AWS_GAMELIFT_API UpdateFleetCapacityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API UpdateFleetCapacityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class UpdateFleetCapacityResult {
+ public:
+  AWS_GAMELIFT_API UpdateFleetCapacityResult() = default;
+  AWS_GAMELIFT_API UpdateFleetCapacityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API UpdateFleetCapacityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A unique identifier for the fleet that was updated.</p>
+   */
+  inline const Aws::String& GetFleetId() const { return m_fleetId; }
+  template <typename FleetIdT = Aws::String>
+  void SetFleetId(FleetIdT&& value) {
+    m_fleetIdHasBeenSet = true;
+    m_fleetId = std::forward<FleetIdT>(value);
+  }
+  template <typename FleetIdT = Aws::String>
+  UpdateFleetCapacityResult& WithFleetId(FleetIdT&& value) {
+    SetFleetId(std::forward<FleetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the fleet that was updated.</p>
-     */
-    inline const Aws::String& GetFleetId() const{ return m_fleetId; }
-    inline void SetFleetId(const Aws::String& value) { m_fleetId = value; }
-    inline void SetFleetId(Aws::String&& value) { m_fleetId = std::move(value); }
-    inline void SetFleetId(const char* value) { m_fleetId.assign(value); }
-    inline UpdateFleetCapacityResult& WithFleetId(const Aws::String& value) { SetFleetId(value); return *this;}
-    inline UpdateFleetCapacityResult& WithFleetId(Aws::String&& value) { SetFleetId(std::move(value)); return *this;}
-    inline UpdateFleetCapacityResult& WithFleetId(const char* value) { SetFleetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (<a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>)
+   * that is assigned to a Amazon GameLift Servers fleet resource and uniquely
+   * identifies it. ARNs are unique across all Regions. Format is
+   * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>.
+   * </p>
+   */
+  inline const Aws::String& GetFleetArn() const { return m_fleetArn; }
+  template <typename FleetArnT = Aws::String>
+  void SetFleetArn(FleetArnT&& value) {
+    m_fleetArnHasBeenSet = true;
+    m_fleetArn = std::forward<FleetArnT>(value);
+  }
+  template <typename FleetArnT = Aws::String>
+  UpdateFleetCapacityResult& WithFleetArn(FleetArnT&& value) {
+    SetFleetArn(std::forward<FleetArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (<a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html">ARN</a>)
-     * that is assigned to a Amazon GameLift fleet resource and uniquely identifies it.
-     * ARNs are unique across all Regions. Format is
-     * <code>arn:aws:gamelift:&lt;region&gt;::fleet/fleet-a1234567-b8c9-0d1e-2fa3-b45c6d7e8912</code>.
-     * </p>
-     */
-    inline const Aws::String& GetFleetArn() const{ return m_fleetArn; }
-    inline void SetFleetArn(const Aws::String& value) { m_fleetArn = value; }
-    inline void SetFleetArn(Aws::String&& value) { m_fleetArn = std::move(value); }
-    inline void SetFleetArn(const char* value) { m_fleetArn.assign(value); }
-    inline UpdateFleetCapacityResult& WithFleetArn(const Aws::String& value) { SetFleetArn(value); return *this;}
-    inline UpdateFleetCapacityResult& WithFleetArn(Aws::String&& value) { SetFleetArn(std::move(value)); return *this;}
-    inline UpdateFleetCapacityResult& WithFleetArn(const char* value) { SetFleetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The remote location being updated, expressed as an Amazon Web Services Region
+   * code, such as <code>us-west-2</code>.</p>
+   */
+  inline const Aws::String& GetLocation() const { return m_location; }
+  template <typename LocationT = Aws::String>
+  void SetLocation(LocationT&& value) {
+    m_locationHasBeenSet = true;
+    m_location = std::forward<LocationT>(value);
+  }
+  template <typename LocationT = Aws::String>
+  UpdateFleetCapacityResult& WithLocation(LocationT&& value) {
+    SetLocation(std::forward<LocationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The remote location being updated, expressed as an Amazon Web Services Region
-     * code, such as <code>us-west-2</code>.</p>
-     */
-    inline const Aws::String& GetLocation() const{ return m_location; }
-    inline void SetLocation(const Aws::String& value) { m_location = value; }
-    inline void SetLocation(Aws::String&& value) { m_location = std::move(value); }
-    inline void SetLocation(const char* value) { m_location.assign(value); }
-    inline UpdateFleetCapacityResult& WithLocation(const Aws::String& value) { SetLocation(value); return *this;}
-    inline UpdateFleetCapacityResult& WithLocation(Aws::String&& value) { SetLocation(std::move(value)); return *this;}
-    inline UpdateFleetCapacityResult& WithLocation(const char* value) { SetLocation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration for Amazon GameLift Servers-managed capacity scaling
+   * options.</p>
+   */
+  inline const ManagedCapacityConfiguration& GetManagedCapacityConfiguration() const { return m_managedCapacityConfiguration; }
+  template <typename ManagedCapacityConfigurationT = ManagedCapacityConfiguration>
+  void SetManagedCapacityConfiguration(ManagedCapacityConfigurationT&& value) {
+    m_managedCapacityConfigurationHasBeenSet = true;
+    m_managedCapacityConfiguration = std::forward<ManagedCapacityConfigurationT>(value);
+  }
+  template <typename ManagedCapacityConfigurationT = ManagedCapacityConfiguration>
+  UpdateFleetCapacityResult& WithManagedCapacityConfiguration(ManagedCapacityConfigurationT&& value) {
+    SetManagedCapacityConfiguration(std::forward<ManagedCapacityConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateFleetCapacityResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateFleetCapacityResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateFleetCapacityResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_fleetId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateFleetCapacityResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_fleetArn;
+ private:
+  Aws::String m_fleetId;
 
-    Aws::String m_location;
+  Aws::String m_fleetArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_location;
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+  ManagedCapacityConfiguration m_managedCapacityConfiguration;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fleetIdHasBeenSet = false;
+  bool m_fleetArnHasBeenSet = false;
+  bool m_locationHasBeenSet = false;
+  bool m_managedCapacityConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

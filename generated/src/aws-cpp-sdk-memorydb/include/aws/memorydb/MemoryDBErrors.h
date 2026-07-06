@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/memorydb/MemoryDB_EXPORTS.h>
 
-namespace Aws
-{
-namespace MemoryDB
-{
-enum class MemoryDBErrors
-{
-  //From Core//
+namespace Aws {
+namespace MemoryDB {
+enum class MemoryDBErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class MemoryDBErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,7 @@ enum class MemoryDBErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  A_C_L_ALREADY_EXISTS_FAULT= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  A_C_L_ALREADY_EXISTS_FAULT = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   A_C_L_NOT_FOUND_FAULT,
   A_C_L_QUOTA_EXCEEDED_FAULT,
   A_P_I_CALL_RATE_FOR_CUSTOMER_EXCEEDED_FAULT,
@@ -62,12 +59,16 @@ enum class MemoryDBErrors
   INVALID_CLUSTER_STATE_FAULT,
   INVALID_CREDENTIALS,
   INVALID_K_M_S_KEY_FAULT,
+  INVALID_MULTI_REGION_CLUSTER_STATE_FAULT,
   INVALID_NODE_STATE_FAULT,
   INVALID_PARAMETER_GROUP_STATE_FAULT,
   INVALID_SNAPSHOT_STATE_FAULT,
   INVALID_SUBNET,
   INVALID_USER_STATE_FAULT,
   INVALID_V_P_C_NETWORK_STATE_FAULT,
+  MULTI_REGION_CLUSTER_ALREADY_EXISTS_FAULT,
+  MULTI_REGION_CLUSTER_NOT_FOUND_FAULT,
+  MULTI_REGION_PARAMETER_GROUP_NOT_FOUND_FAULT,
   NODE_QUOTA_FOR_CLUSTER_EXCEEDED_FAULT,
   NODE_QUOTA_FOR_CUSTOMER_EXCEEDED_FAULT,
   NO_OPERATION_FAULT,
@@ -100,9 +101,8 @@ enum class MemoryDBErrors
   USER_QUOTA_EXCEEDED_FAULT
 };
 
-class AWS_MEMORYDB_API MemoryDBError : public Aws::Client::AWSError<MemoryDBErrors>
-{
-public:
+class AWS_MEMORYDB_API MemoryDBError : public Aws::Client::AWSError<MemoryDBErrors> {
+ public:
   MemoryDBError() {}
   MemoryDBError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<MemoryDBErrors>(rhs) {}
   MemoryDBError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<MemoryDBErrors>(rhs) {}
@@ -113,10 +113,9 @@ public:
   T GetModeledError();
 };
 
-namespace MemoryDBErrorMapper
-{
-  AWS_MEMORYDB_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace MemoryDBErrorMapper {
+AWS_MEMORYDB_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace MemoryDB
+}  // namespace Aws

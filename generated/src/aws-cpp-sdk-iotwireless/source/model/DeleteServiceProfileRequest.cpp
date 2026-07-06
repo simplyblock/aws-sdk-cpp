@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotwireless/model/DeleteServiceProfileRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotwireless/model/DeleteServiceProfileRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoTWireless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteServiceProfileRequest::DeleteServiceProfileRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteServiceProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteServiceProfileRequest::SerializePayload() const { return {}; }

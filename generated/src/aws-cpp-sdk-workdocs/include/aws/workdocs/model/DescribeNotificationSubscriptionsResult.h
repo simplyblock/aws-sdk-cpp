@@ -4,82 +4,101 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/workdocs/model/Subscription.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkDocs
-{
-namespace Model
-{
-  class DescribeNotificationSubscriptionsResult
-  {
-  public:
-    AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult();
-    AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkDocs {
+namespace Model {
+class DescribeNotificationSubscriptionsResult {
+ public:
+  AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult() = default;
+  AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKDOCS_API DescribeNotificationSubscriptionsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The subscriptions.</p>
+   */
+  inline const Aws::Vector<Subscription>& GetSubscriptions() const { return m_subscriptions; }
+  template <typename SubscriptionsT = Aws::Vector<Subscription>>
+  void SetSubscriptions(SubscriptionsT&& value) {
+    m_subscriptionsHasBeenSet = true;
+    m_subscriptions = std::forward<SubscriptionsT>(value);
+  }
+  template <typename SubscriptionsT = Aws::Vector<Subscription>>
+  DescribeNotificationSubscriptionsResult& WithSubscriptions(SubscriptionsT&& value) {
+    SetSubscriptions(std::forward<SubscriptionsT>(value));
+    return *this;
+  }
+  template <typename SubscriptionsT = Subscription>
+  DescribeNotificationSubscriptionsResult& AddSubscriptions(SubscriptionsT&& value) {
+    m_subscriptionsHasBeenSet = true;
+    m_subscriptions.emplace_back(std::forward<SubscriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subscriptions.</p>
-     */
-    inline const Aws::Vector<Subscription>& GetSubscriptions() const{ return m_subscriptions; }
-    inline void SetSubscriptions(const Aws::Vector<Subscription>& value) { m_subscriptions = value; }
-    inline void SetSubscriptions(Aws::Vector<Subscription>&& value) { m_subscriptions = std::move(value); }
-    inline DescribeNotificationSubscriptionsResult& WithSubscriptions(const Aws::Vector<Subscription>& value) { SetSubscriptions(value); return *this;}
-    inline DescribeNotificationSubscriptionsResult& WithSubscriptions(Aws::Vector<Subscription>&& value) { SetSubscriptions(std::move(value)); return *this;}
-    inline DescribeNotificationSubscriptionsResult& AddSubscriptions(const Subscription& value) { m_subscriptions.push_back(value); return *this; }
-    inline DescribeNotificationSubscriptionsResult& AddSubscriptions(Subscription&& value) { m_subscriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The marker to use when requesting the next set of results. If there are no
+   * additional results, the string is empty.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeNotificationSubscriptionsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The marker to use when requesting the next set of results. If there are no
-     * additional results, the string is empty.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeNotificationSubscriptionsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeNotificationSubscriptionsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeNotificationSubscriptionsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeNotificationSubscriptionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeNotificationSubscriptionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeNotificationSubscriptionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeNotificationSubscriptionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Subscription> m_subscriptions;
+ private:
+  Aws::Vector<Subscription> m_subscriptions;
 
-    Aws::String m_marker;
+  Aws::String m_marker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_subscriptionsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

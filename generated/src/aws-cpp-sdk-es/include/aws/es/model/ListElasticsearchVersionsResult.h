@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
-  /**
-   * <p> Container for the parameters for response received from <code>
-   * <a>ListElasticsearchVersions</a> </code> operation. </p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListElasticsearchVersionsResponse">AWS
-   * API Reference</a></p>
-   */
-  class ListElasticsearchVersionsResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult();
-    AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p> Container for the parameters for response received from <code>
+ * <a>ListElasticsearchVersions</a> </code> operation. </p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/ListElasticsearchVersionsResponse">AWS
+ * API Reference</a></p>
+ */
+class ListElasticsearchVersionsResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API ListElasticsearchVersionsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Vector<Aws::String>& GetElasticsearchVersions() const{ return m_elasticsearchVersions; }
-    inline void SetElasticsearchVersions(const Aws::Vector<Aws::String>& value) { m_elasticsearchVersions = value; }
-    inline void SetElasticsearchVersions(Aws::Vector<Aws::String>&& value) { m_elasticsearchVersions = std::move(value); }
-    inline ListElasticsearchVersionsResult& WithElasticsearchVersions(const Aws::Vector<Aws::String>& value) { SetElasticsearchVersions(value); return *this;}
-    inline ListElasticsearchVersionsResult& WithElasticsearchVersions(Aws::Vector<Aws::String>&& value) { SetElasticsearchVersions(std::move(value)); return *this;}
-    inline ListElasticsearchVersionsResult& AddElasticsearchVersions(const Aws::String& value) { m_elasticsearchVersions.push_back(value); return *this; }
-    inline ListElasticsearchVersionsResult& AddElasticsearchVersions(Aws::String&& value) { m_elasticsearchVersions.push_back(std::move(value)); return *this; }
-    inline ListElasticsearchVersionsResult& AddElasticsearchVersions(const char* value) { m_elasticsearchVersions.push_back(value); return *this; }
-    ///@}
+  inline const Aws::Vector<Aws::String>& GetElasticsearchVersions() const { return m_elasticsearchVersions; }
+  template <typename ElasticsearchVersionsT = Aws::Vector<Aws::String>>
+  void SetElasticsearchVersions(ElasticsearchVersionsT&& value) {
+    m_elasticsearchVersionsHasBeenSet = true;
+    m_elasticsearchVersions = std::forward<ElasticsearchVersionsT>(value);
+  }
+  template <typename ElasticsearchVersionsT = Aws::Vector<Aws::String>>
+  ListElasticsearchVersionsResult& WithElasticsearchVersions(ElasticsearchVersionsT&& value) {
+    SetElasticsearchVersions(std::forward<ElasticsearchVersionsT>(value));
+    return *this;
+  }
+  template <typename ElasticsearchVersionsT = Aws::String>
+  ListElasticsearchVersionsResult& AddElasticsearchVersions(ElasticsearchVersionsT&& value) {
+    m_elasticsearchVersionsHasBeenSet = true;
+    m_elasticsearchVersions.emplace_back(std::forward<ElasticsearchVersionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListElasticsearchVersionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListElasticsearchVersionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListElasticsearchVersionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListElasticsearchVersionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListElasticsearchVersionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListElasticsearchVersionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListElasticsearchVersionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Aws::String> m_elasticsearchVersions;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListElasticsearchVersionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::Vector<Aws::String> m_elasticsearchVersions;
 
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_elasticsearchVersionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

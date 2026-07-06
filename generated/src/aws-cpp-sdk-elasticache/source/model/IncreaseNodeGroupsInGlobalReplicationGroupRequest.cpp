@@ -3,56 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/IncreaseNodeGroupsInGlobalReplicationGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticache/model/IncreaseNodeGroupsInGlobalReplicationGroupRequest.h>
 
 using namespace Aws::ElastiCache::Model;
 using namespace Aws::Utils;
 
-IncreaseNodeGroupsInGlobalReplicationGroupRequest::IncreaseNodeGroupsInGlobalReplicationGroupRequest() : 
-    m_globalReplicationGroupIdHasBeenSet(false),
-    m_nodeGroupCount(0),
-    m_nodeGroupCountHasBeenSet(false),
-    m_regionalConfigurationsHasBeenSet(false),
-    m_applyImmediately(false),
-    m_applyImmediatelyHasBeenSet(false)
-{
-}
-
-Aws::String IncreaseNodeGroupsInGlobalReplicationGroupRequest::SerializePayload() const
-{
+Aws::String IncreaseNodeGroupsInGlobalReplicationGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=IncreaseNodeGroupsInGlobalReplicationGroup&";
-  if(m_globalReplicationGroupIdHasBeenSet)
-  {
+  if (m_globalReplicationGroupIdHasBeenSet) {
     ss << "GlobalReplicationGroupId=" << StringUtils::URLEncode(m_globalReplicationGroupId.c_str()) << "&";
   }
 
-  if(m_nodeGroupCountHasBeenSet)
-  {
+  if (m_nodeGroupCountHasBeenSet) {
     ss << "NodeGroupCount=" << m_nodeGroupCount << "&";
   }
 
-  if(m_regionalConfigurationsHasBeenSet)
-  {
-    if (m_regionalConfigurations.empty())
-    {
+  if (m_regionalConfigurationsHasBeenSet) {
+    if (m_regionalConfigurations.empty()) {
       ss << "RegionalConfigurations=&";
-    }
-    else
-    {
+    } else {
       unsigned regionalConfigurationsCount = 1;
-      for(auto& item : m_regionalConfigurations)
-      {
-        item.OutputToStream(ss, "RegionalConfigurations.member.", regionalConfigurationsCount, "");
+      for (auto& item : m_regionalConfigurations) {
+        item.OutputToStream(ss, "RegionalConfigurations.RegionalConfiguration.", regionalConfigurationsCount, "");
         regionalConfigurationsCount++;
       }
     }
   }
 
-  if(m_applyImmediatelyHasBeenSet)
-  {
+  if (m_applyImmediatelyHasBeenSet) {
     ss << "ApplyImmediately=" << std::boolalpha << m_applyImmediately << "&";
   }
 
@@ -60,8 +41,4 @@ Aws::String IncreaseNodeGroupsInGlobalReplicationGroupRequest::SerializePayload(
   return ss.str();
 }
 
-
-void  IncreaseNodeGroupsInGlobalReplicationGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void IncreaseNodeGroupsInGlobalReplicationGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

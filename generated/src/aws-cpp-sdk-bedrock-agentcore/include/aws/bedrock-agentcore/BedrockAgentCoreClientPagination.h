@@ -1,0 +1,54 @@
+/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/bedrock-agentcore/BedrockAgentCoreClient.h>
+#include <aws/bedrock-agentcore/model/ListABTestsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListActorsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListBatchEvaluationsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListEventsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListMemoryExtractionJobsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListMemoryRecordsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListPaymentInstrumentsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListPaymentSessionsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListRecommendationsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/ListSessionsPaginationTraits.h>
+#include <aws/bedrock-agentcore/model/RetrieveMemoryRecordsPaginationTraits.h>
+#include <aws/core/utils/pagination/Paginator.h>
+
+namespace Aws {
+namespace BedrockAgentCore {
+
+using ListABTestsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListABTestsRequest,
+                                                               Pagination::ListABTestsPaginationTraits<BedrockAgentCoreClient>>;
+using ListActorsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListActorsRequest,
+                                                              Pagination::ListActorsPaginationTraits<BedrockAgentCoreClient>>;
+using ListBatchEvaluationsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListBatchEvaluationsRequest,
+                                      Pagination::ListBatchEvaluationsPaginationTraits<BedrockAgentCoreClient>>;
+using ListEventsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListEventsRequest,
+                                                              Pagination::ListEventsPaginationTraits<BedrockAgentCoreClient>>;
+using ListMemoryExtractionJobsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListMemoryExtractionJobsRequest,
+                                      Pagination::ListMemoryExtractionJobsPaginationTraits<BedrockAgentCoreClient>>;
+using ListMemoryRecordsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListMemoryRecordsRequest,
+                                                                     Pagination::ListMemoryRecordsPaginationTraits<BedrockAgentCoreClient>>;
+using ListPaymentInstrumentsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListPaymentInstrumentsRequest,
+                                      Pagination::ListPaymentInstrumentsPaginationTraits<BedrockAgentCoreClient>>;
+using ListPaymentSessionsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListPaymentSessionsRequest,
+                                      Pagination::ListPaymentSessionsPaginationTraits<BedrockAgentCoreClient>>;
+using ListRecommendationsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListRecommendationsRequest,
+                                      Pagination::ListRecommendationsPaginationTraits<BedrockAgentCoreClient>>;
+using ListSessionsPaginator = Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::ListSessionsRequest,
+                                                                Pagination::ListSessionsPaginationTraits<BedrockAgentCoreClient>>;
+using RetrieveMemoryRecordsPaginator =
+    Aws::Utils::Pagination::Paginator<BedrockAgentCoreClient, Model::RetrieveMemoryRecordsRequest,
+                                      Pagination::RetrieveMemoryRecordsPaginationTraits<BedrockAgentCoreClient>>;
+
+}  // namespace BedrockAgentCore
+}  // namespace Aws

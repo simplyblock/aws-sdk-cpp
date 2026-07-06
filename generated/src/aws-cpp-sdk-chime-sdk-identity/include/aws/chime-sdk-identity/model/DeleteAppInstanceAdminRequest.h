@@ -4,70 +4,73 @@
  */
 
 #pragma once
-#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/chime-sdk-identity/ChimeSDKIdentityRequest.h>
+#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
+namespace Aws {
+namespace ChimeSDKIdentity {
+namespace Model {
 
+/**
+ */
+class DeleteAppInstanceAdminRequest : public ChimeSDKIdentityRequest {
+ public:
+  AWS_CHIMESDKIDENTITY_API DeleteAppInstanceAdminRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteAppInstanceAdmin"; }
+
+  AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the <code>AppInstance</code>'s administrator.</p>
    */
-  class DeleteAppInstanceAdminRequest : public ChimeSDKIdentityRequest
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API DeleteAppInstanceAdminRequest();
+  inline const Aws::String& GetAppInstanceAdminArn() const { return m_appInstanceAdminArn; }
+  inline bool AppInstanceAdminArnHasBeenSet() const { return m_appInstanceAdminArnHasBeenSet; }
+  template <typename AppInstanceAdminArnT = Aws::String>
+  void SetAppInstanceAdminArn(AppInstanceAdminArnT&& value) {
+    m_appInstanceAdminArnHasBeenSet = true;
+    m_appInstanceAdminArn = std::forward<AppInstanceAdminArnT>(value);
+  }
+  template <typename AppInstanceAdminArnT = Aws::String>
+  DeleteAppInstanceAdminRequest& WithAppInstanceAdminArn(AppInstanceAdminArnT&& value) {
+    SetAppInstanceAdminArn(std::forward<AppInstanceAdminArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteAppInstanceAdmin"; }
+  ///@{
+  /**
+   * <p>The ARN of the <code>AppInstance</code>.</p>
+   */
+  inline const Aws::String& GetAppInstanceArn() const { return m_appInstanceArn; }
+  inline bool AppInstanceArnHasBeenSet() const { return m_appInstanceArnHasBeenSet; }
+  template <typename AppInstanceArnT = Aws::String>
+  void SetAppInstanceArn(AppInstanceArnT&& value) {
+    m_appInstanceArnHasBeenSet = true;
+    m_appInstanceArn = std::forward<AppInstanceArnT>(value);
+  }
+  template <typename AppInstanceArnT = Aws::String>
+  DeleteAppInstanceAdminRequest& WithAppInstanceArn(AppInstanceArnT&& value) {
+    SetAppInstanceArn(std::forward<AppInstanceArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_appInstanceAdminArn;
 
-    AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
+  Aws::String m_appInstanceArn;
+  bool m_appInstanceAdminArnHasBeenSet = false;
+  bool m_appInstanceArnHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The ARN of the <code>AppInstance</code>'s administrator.</p>
-     */
-    inline const Aws::String& GetAppInstanceAdminArn() const{ return m_appInstanceAdminArn; }
-    inline bool AppInstanceAdminArnHasBeenSet() const { return m_appInstanceAdminArnHasBeenSet; }
-    inline void SetAppInstanceAdminArn(const Aws::String& value) { m_appInstanceAdminArnHasBeenSet = true; m_appInstanceAdminArn = value; }
-    inline void SetAppInstanceAdminArn(Aws::String&& value) { m_appInstanceAdminArnHasBeenSet = true; m_appInstanceAdminArn = std::move(value); }
-    inline void SetAppInstanceAdminArn(const char* value) { m_appInstanceAdminArnHasBeenSet = true; m_appInstanceAdminArn.assign(value); }
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceAdminArn(const Aws::String& value) { SetAppInstanceAdminArn(value); return *this;}
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceAdminArn(Aws::String&& value) { SetAppInstanceAdminArn(std::move(value)); return *this;}
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceAdminArn(const char* value) { SetAppInstanceAdminArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The ARN of the <code>AppInstance</code>.</p>
-     */
-    inline const Aws::String& GetAppInstanceArn() const{ return m_appInstanceArn; }
-    inline bool AppInstanceArnHasBeenSet() const { return m_appInstanceArnHasBeenSet; }
-    inline void SetAppInstanceArn(const Aws::String& value) { m_appInstanceArnHasBeenSet = true; m_appInstanceArn = value; }
-    inline void SetAppInstanceArn(Aws::String&& value) { m_appInstanceArnHasBeenSet = true; m_appInstanceArn = std::move(value); }
-    inline void SetAppInstanceArn(const char* value) { m_appInstanceArnHasBeenSet = true; m_appInstanceArn.assign(value); }
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceArn(const Aws::String& value) { SetAppInstanceArn(value); return *this;}
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceArn(Aws::String&& value) { SetAppInstanceArn(std::move(value)); return *this;}
-    inline DeleteAppInstanceAdminRequest& WithAppInstanceArn(const char* value) { SetAppInstanceArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_appInstanceAdminArn;
-    bool m_appInstanceAdminArnHasBeenSet = false;
-
-    Aws::String m_appInstanceArn;
-    bool m_appInstanceArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

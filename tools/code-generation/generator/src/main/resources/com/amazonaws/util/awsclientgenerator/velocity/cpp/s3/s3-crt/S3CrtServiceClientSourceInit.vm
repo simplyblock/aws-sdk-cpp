@@ -55,6 +55,7 @@
     #set($hasEventStreamInputOperation = true)
 #end
 #end
+
 ${className}::${className}(const ${className} &rhs) :
     BASECLASS(rhs.m_clientConfiguration,
         Aws::MakeShared<Aws::Auth::S3ExpressSignerProvider>(ALLOCATION_TAG,
@@ -132,12 +133,14 @@ ${className}::${className}(const ${clientConfigurationNamespace}::ClientConfigur
             false),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${defaultCredentialsProviderChainMember},
 #else${defaultCredentialsProviderChainMember}${virtualAddressingInit}${USEast1RegionalEndpointInitString},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 
@@ -152,12 +155,14 @@ ${className}::${className}(const AWSCredentials& credentials, const ${clientConf
             false),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${simpleCredentialsProviderMember},
 #else${simpleCredentialsProviderMember}${virtualAddressingInit}${USEast1RegionalEndpointInitString},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 
@@ -173,13 +178,15 @@ ${className}::${className}(const std::shared_ptr<AWSCredentialsProvider>& creden
             false),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${credentialsProviderMember},
 #else
     ${credentialsProviderMember}${virtualAddressingInit}${USEast1RegionalEndpointInitString},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 #else
@@ -189,13 +196,15 @@ ${className}::${className}(const ${clientConfigurationNamespace}::ClientConfigur
         SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)${signPayloadsParam}${doubleEncodeValue}),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration${signPayloadsParam}),
     ${defaultCredentialsProviderChainMember},
 #else
     ${defaultCredentialsProviderChainMember}${virtualAddressingInit}${USEast1RegionalEndpointInitString},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 
@@ -205,13 +214,15 @@ ${className}::${className}(const AWSCredentials& credentials, const ${clientConf
          SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)${signPayloadsParam}${doubleEncodeValue}),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${simpleCredentialsProviderMember},
 #else
     ${simpleCredentialsProviderMember}${virtualAddressingInit}${USEast1RegionalEndpointInitString},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 
@@ -222,13 +233,15 @@ ${className}::${className}(const std::shared_ptr<AWSCredentialsProvider>& creden
          SERVICE_NAME, Aws::Region::ComputeSignerRegion(clientConfiguration.region)${signPayloadsParam}${doubleEncodeValue}),
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${virtualAddressingInit},
 #else
     ${virtualAddressingInit}${USEast1RegionalEndpointInitString}${credentialsProviderMember},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(clientConfiguration${credentialsParam});
 }
 #end
@@ -239,13 +252,15 @@ ${className}::${className}(const std::shared_ptr<Aws::Auth::AWSAuthSignerProvide
   BASECLASS(clientConfiguration, signerProvider,
     Aws::MakeShared<${metadata.classNamePrefix}ErrorMarshaller>(ALLOCATION_TAG)),
 #if($serviceModel.endpointRules)
-    m_clientConfiguration(clientConfiguration${signPayloadsParam}${virtualAddressingInit}${USEast1RegionalEndpointInitString}),
+    m_clientConfiguration(clientConfiguration),
     ${virtualAddressingInit},
 #else
     ${virtualAddressingInit},
 #end
     m_identityProvider(Aws::MakeShared<DefaultS3ExpressIdentityProvider>(ALLOCATION_TAG, *this))
 {
+  AWS_UNREFERENCED_PARAM(useVirtualAddressing);
+  AWS_UNREFERENCED_PARAM(USEast1RegionalEndPointOption);
   init(m_clientConfiguration);
 }
 
@@ -385,7 +400,7 @@ void ${className}::init(const ${clientConfigurationNamespace}::ClientConfigurati
   m_crtCredProvider = Aws::Crt::Auth::CredentialsProvider::CreateCredentialsProviderDelegate({
      std::bind([](const std::shared_ptr<AWSCredentialsProvider>& provider) {
          if (provider == nullptr) {
-             AWS_LOGSTREAM_FATAL(ALLOCATION_TAG, "No provider provided, using anonymous provider")
+             AWS_LOGSTREAM_FATAL(ALLOCATION_TAG, "No provider provided, using anonymous provider");
              return Aws::MakeShared<Aws::Crt::Auth::Credentials>(ALLOCATION_TAG);
          }
          AWSCredentials credentials = provider->GetAWSCredentials();
@@ -406,8 +421,7 @@ void ${className}::init(const ${clientConfigurationNamespace}::ClientConfigurati
   m_s3CrtSigningConfig.flags.use_double_uri_encode = false;
   s3CrtConfig.signing_config = &m_s3CrtSigningConfig;
 
-  static const size_t DEFAULT_PART_SIZE = 8 * 1024 * 1024; // 8MB
-  s3CrtConfig.part_size = config.partSize < DEFAULT_PART_SIZE ? DEFAULT_PART_SIZE : config.partSize;
+  s3CrtConfig.part_size = config.partSize;
   s3CrtConfig.multipart_upload_threshold = config.multipartUploadThreshold;
 
   Aws::Crt::Io::TlsConnectionOptions *rawPTlsConnectionOptions = nullptr;
@@ -515,6 +529,18 @@ void ${className}::init(const ${clientConfigurationNamespace}::ClientConfigurati
   s3CrtConfig.factory_user_data = static_cast<void *>(&m_identityProviderUserData);
   s3CrtConfig.s3express_provider_override_factory = S3CrtIdentityProviderAdapter::ProviderFactory;
 
+  UniqueArrayPtr<aws_byte_cursor> interfacesNameCRTArr;
+  if (!config.networkInterfaceNames.empty())
+  {
+    interfacesNameCRTArr = Aws::MakeUniqueArray<aws_byte_cursor>(config.networkInterfaceNames.size(), ALLOCATION_TAG);
+    for(size_t i = 0; i < config.networkInterfaceNames.size(); ++i)
+    {
+      interfacesNameCRTArr.get()[i] = Crt::ByteCursorFromCString(config.networkInterfaceNames[i].c_str());
+    }
+    s3CrtConfig.network_interface_names_array = interfacesNameCRTArr.get();
+    s3CrtConfig.num_network_interface_names = config.networkInterfaceNames.size();
+  }
+
   m_s3CrtClient = aws_s3_client_new(Aws::get_aws_allocator(), &s3CrtConfig);
   if (!m_s3CrtClient)
   {
@@ -571,6 +597,7 @@ void ${className}::OverrideEndpoint(const Aws::String& endpoint)
 {
 #if($serviceModel.endpointRules)
     AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
+    m_clientConfiguration.endpointOverride = endpoint;
     m_endpointProvider->OverrideEndpoint(endpoint);
 #else##-#if($serviceModel.endpointRules)
 #if($virtualAddressingSupported || $arnEndpointSupported || $metadata.hasEndpointTrait)

@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/identitystore/IdentityStore_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/identitystore/IdentityStore_EXPORTS.h>
 #include <aws/identitystore/model/GroupMembershipExistenceResult.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IdentityStore
-{
-namespace Model
-{
-  class IsMemberInGroupsResult
-  {
-  public:
-    AWS_IDENTITYSTORE_API IsMemberInGroupsResult();
-    AWS_IDENTITYSTORE_API IsMemberInGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IDENTITYSTORE_API IsMemberInGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IdentityStore {
+namespace Model {
+class IsMemberInGroupsResult {
+ public:
+  AWS_IDENTITYSTORE_API IsMemberInGroupsResult() = default;
+  AWS_IDENTITYSTORE_API IsMemberInGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IDENTITYSTORE_API IsMemberInGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list containing the results of membership existence checks.</p>
+   */
+  inline const Aws::Vector<GroupMembershipExistenceResult>& GetResults() const { return m_results; }
+  template <typename ResultsT = Aws::Vector<GroupMembershipExistenceResult>>
+  void SetResults(ResultsT&& value) {
+    m_resultsHasBeenSet = true;
+    m_results = std::forward<ResultsT>(value);
+  }
+  template <typename ResultsT = Aws::Vector<GroupMembershipExistenceResult>>
+  IsMemberInGroupsResult& WithResults(ResultsT&& value) {
+    SetResults(std::forward<ResultsT>(value));
+    return *this;
+  }
+  template <typename ResultsT = GroupMembershipExistenceResult>
+  IsMemberInGroupsResult& AddResults(ResultsT&& value) {
+    m_resultsHasBeenSet = true;
+    m_results.emplace_back(std::forward<ResultsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list containing the results of membership existence checks.</p>
-     */
-    inline const Aws::Vector<GroupMembershipExistenceResult>& GetResults() const{ return m_results; }
-    inline void SetResults(const Aws::Vector<GroupMembershipExistenceResult>& value) { m_results = value; }
-    inline void SetResults(Aws::Vector<GroupMembershipExistenceResult>&& value) { m_results = std::move(value); }
-    inline IsMemberInGroupsResult& WithResults(const Aws::Vector<GroupMembershipExistenceResult>& value) { SetResults(value); return *this;}
-    inline IsMemberInGroupsResult& WithResults(Aws::Vector<GroupMembershipExistenceResult>&& value) { SetResults(std::move(value)); return *this;}
-    inline IsMemberInGroupsResult& AddResults(const GroupMembershipExistenceResult& value) { m_results.push_back(value); return *this; }
-    inline IsMemberInGroupsResult& AddResults(GroupMembershipExistenceResult&& value) { m_results.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline IsMemberInGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline IsMemberInGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline IsMemberInGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  IsMemberInGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<GroupMembershipExistenceResult> m_results;
+ private:
+  Aws::Vector<GroupMembershipExistenceResult> m_results;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resultsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IdentityStore
-} // namespace Aws
+}  // namespace Model
+}  // namespace IdentityStore
+}  // namespace Aws

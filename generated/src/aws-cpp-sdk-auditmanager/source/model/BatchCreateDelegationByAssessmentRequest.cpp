@@ -12,30 +12,18 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-BatchCreateDelegationByAssessmentRequest::BatchCreateDelegationByAssessmentRequest() : 
-    m_createDelegationRequestsHasBeenSet(false),
-    m_assessmentIdHasBeenSet(false)
-{
-}
-
-Aws::String BatchCreateDelegationByAssessmentRequest::SerializePayload() const
-{
+Aws::String BatchCreateDelegationByAssessmentRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_createDelegationRequestsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> createDelegationRequestsJsonList(m_createDelegationRequests.size());
-   for(unsigned createDelegationRequestsIndex = 0; createDelegationRequestsIndex < createDelegationRequestsJsonList.GetLength(); ++createDelegationRequestsIndex)
-   {
-     createDelegationRequestsJsonList[createDelegationRequestsIndex].AsObject(m_createDelegationRequests[createDelegationRequestsIndex].Jsonize());
-   }
-   payload.WithArray("createDelegationRequests", std::move(createDelegationRequestsJsonList));
-
+  if (m_createDelegationRequestsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> createDelegationRequestsJsonList(m_createDelegationRequests.size());
+    for (unsigned createDelegationRequestsIndex = 0; createDelegationRequestsIndex < createDelegationRequestsJsonList.GetLength();
+         ++createDelegationRequestsIndex) {
+      createDelegationRequestsJsonList[createDelegationRequestsIndex].AsObject(
+          m_createDelegationRequests[createDelegationRequestsIndex].Jsonize());
+    }
+    payload.WithArray("createDelegationRequests", std::move(createDelegationRequestsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

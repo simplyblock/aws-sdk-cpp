@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/voice-id/model/Watchlist.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
-  class CreateWatchlistResult
-  {
-  public:
-    AWS_VOICEID_API CreateWatchlistResult();
-    AWS_VOICEID_API CreateWatchlistResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_VOICEID_API CreateWatchlistResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
+class CreateWatchlistResult {
+ public:
+  AWS_VOICEID_API CreateWatchlistResult() = default;
+  AWS_VOICEID_API CreateWatchlistResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_VOICEID_API CreateWatchlistResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the newly created watchlist.</p>
+   */
+  inline const Watchlist& GetWatchlist() const { return m_watchlist; }
+  template <typename WatchlistT = Watchlist>
+  void SetWatchlist(WatchlistT&& value) {
+    m_watchlistHasBeenSet = true;
+    m_watchlist = std::forward<WatchlistT>(value);
+  }
+  template <typename WatchlistT = Watchlist>
+  CreateWatchlistResult& WithWatchlist(WatchlistT&& value) {
+    SetWatchlist(std::forward<WatchlistT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the newly created watchlist.</p>
-     */
-    inline const Watchlist& GetWatchlist() const{ return m_watchlist; }
-    inline void SetWatchlist(const Watchlist& value) { m_watchlist = value; }
-    inline void SetWatchlist(Watchlist&& value) { m_watchlist = std::move(value); }
-    inline CreateWatchlistResult& WithWatchlist(const Watchlist& value) { SetWatchlist(value); return *this;}
-    inline CreateWatchlistResult& WithWatchlist(Watchlist&& value) { SetWatchlist(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateWatchlistResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateWatchlistResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateWatchlistResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateWatchlistResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Watchlist m_watchlist;
+ private:
+  Watchlist m_watchlist;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_watchlistHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

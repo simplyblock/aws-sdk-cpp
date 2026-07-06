@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/forecast/ForecastService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/forecast/ForecastService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ForecastService
-{
-namespace Model
-{
-  class CreateMonitorResult
-  {
-  public:
-    AWS_FORECASTSERVICE_API CreateMonitorResult();
-    AWS_FORECASTSERVICE_API CreateMonitorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FORECASTSERVICE_API CreateMonitorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ForecastService {
+namespace Model {
+class CreateMonitorResult {
+ public:
+  AWS_FORECASTSERVICE_API CreateMonitorResult() = default;
+  AWS_FORECASTSERVICE_API CreateMonitorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FORECASTSERVICE_API CreateMonitorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the monitor resource.</p>
+   */
+  inline const Aws::String& GetMonitorArn() const { return m_monitorArn; }
+  template <typename MonitorArnT = Aws::String>
+  void SetMonitorArn(MonitorArnT&& value) {
+    m_monitorArnHasBeenSet = true;
+    m_monitorArn = std::forward<MonitorArnT>(value);
+  }
+  template <typename MonitorArnT = Aws::String>
+  CreateMonitorResult& WithMonitorArn(MonitorArnT&& value) {
+    SetMonitorArn(std::forward<MonitorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the monitor resource.</p>
-     */
-    inline const Aws::String& GetMonitorArn() const{ return m_monitorArn; }
-    inline void SetMonitorArn(const Aws::String& value) { m_monitorArn = value; }
-    inline void SetMonitorArn(Aws::String&& value) { m_monitorArn = std::move(value); }
-    inline void SetMonitorArn(const char* value) { m_monitorArn.assign(value); }
-    inline CreateMonitorResult& WithMonitorArn(const Aws::String& value) { SetMonitorArn(value); return *this;}
-    inline CreateMonitorResult& WithMonitorArn(Aws::String&& value) { SetMonitorArn(std::move(value)); return *this;}
-    inline CreateMonitorResult& WithMonitorArn(const char* value) { SetMonitorArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateMonitorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateMonitorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateMonitorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateMonitorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_monitorArn;
+ private:
+  Aws::String m_monitorArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_monitorArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ForecastService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ForecastService
+}  // namespace Aws

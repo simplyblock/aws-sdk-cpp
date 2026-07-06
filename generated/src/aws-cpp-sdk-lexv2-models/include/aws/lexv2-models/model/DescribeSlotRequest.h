@@ -4,124 +4,139 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/lexv2-models/LexModelsV2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lexv2-models/LexModelsV2Request.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ */
+class DescribeSlotRequest : public LexModelsV2Request {
+ public:
+  AWS_LEXMODELSV2_API DescribeSlotRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeSlot"; }
+
+  AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier for the slot.</p>
    */
-  class DescribeSlotRequest : public LexModelsV2Request
-  {
-  public:
-    AWS_LEXMODELSV2_API DescribeSlotRequest();
+  inline const Aws::String& GetSlotId() const { return m_slotId; }
+  inline bool SlotIdHasBeenSet() const { return m_slotIdHasBeenSet; }
+  template <typename SlotIdT = Aws::String>
+  void SetSlotId(SlotIdT&& value) {
+    m_slotIdHasBeenSet = true;
+    m_slotId = std::forward<SlotIdT>(value);
+  }
+  template <typename SlotIdT = Aws::String>
+  DescribeSlotRequest& WithSlotId(SlotIdT&& value) {
+    SetSlotId(std::forward<SlotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeSlot"; }
+  ///@{
+  /**
+   * <p>The identifier of the bot associated with the slot.</p>
+   */
+  inline const Aws::String& GetBotId() const { return m_botId; }
+  inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
+  template <typename BotIdT = Aws::String>
+  void SetBotId(BotIdT&& value) {
+    m_botIdHasBeenSet = true;
+    m_botId = std::forward<BotIdT>(value);
+  }
+  template <typename BotIdT = Aws::String>
+  DescribeSlotRequest& WithBotId(BotIdT&& value) {
+    SetBotId(std::forward<BotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The version of the bot associated with the slot.</p>
+   */
+  inline const Aws::String& GetBotVersion() const { return m_botVersion; }
+  inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
+  template <typename BotVersionT = Aws::String>
+  void SetBotVersion(BotVersionT&& value) {
+    m_botVersionHasBeenSet = true;
+    m_botVersion = std::forward<BotVersionT>(value);
+  }
+  template <typename BotVersionT = Aws::String>
+  DescribeSlotRequest& WithBotVersion(BotVersionT&& value) {
+    SetBotVersion(std::forward<BotVersionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifier of the language and locale of the slot to describe. The string
+   * must match one of the supported locales. For more information, see <a
+   * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
+   * languages</a>.</p>
+   */
+  inline const Aws::String& GetLocaleId() const { return m_localeId; }
+  inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
+  template <typename LocaleIdT = Aws::String>
+  void SetLocaleId(LocaleIdT&& value) {
+    m_localeIdHasBeenSet = true;
+    m_localeId = std::forward<LocaleIdT>(value);
+  }
+  template <typename LocaleIdT = Aws::String>
+  DescribeSlotRequest& WithLocaleId(LocaleIdT&& value) {
+    SetLocaleId(std::forward<LocaleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the slot.</p>
-     */
-    inline const Aws::String& GetSlotId() const{ return m_slotId; }
-    inline bool SlotIdHasBeenSet() const { return m_slotIdHasBeenSet; }
-    inline void SetSlotId(const Aws::String& value) { m_slotIdHasBeenSet = true; m_slotId = value; }
-    inline void SetSlotId(Aws::String&& value) { m_slotIdHasBeenSet = true; m_slotId = std::move(value); }
-    inline void SetSlotId(const char* value) { m_slotIdHasBeenSet = true; m_slotId.assign(value); }
-    inline DescribeSlotRequest& WithSlotId(const Aws::String& value) { SetSlotId(value); return *this;}
-    inline DescribeSlotRequest& WithSlotId(Aws::String&& value) { SetSlotId(std::move(value)); return *this;}
-    inline DescribeSlotRequest& WithSlotId(const char* value) { SetSlotId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the intent that contains the slot.</p>
+   */
+  inline const Aws::String& GetIntentId() const { return m_intentId; }
+  inline bool IntentIdHasBeenSet() const { return m_intentIdHasBeenSet; }
+  template <typename IntentIdT = Aws::String>
+  void SetIntentId(IntentIdT&& value) {
+    m_intentIdHasBeenSet = true;
+    m_intentId = std::forward<IntentIdT>(value);
+  }
+  template <typename IntentIdT = Aws::String>
+  DescribeSlotRequest& WithIntentId(IntentIdT&& value) {
+    SetIntentId(std::forward<IntentIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_slotId;
 
-    ///@{
-    /**
-     * <p>The identifier of the bot associated with the slot.</p>
-     */
-    inline const Aws::String& GetBotId() const{ return m_botId; }
-    inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
-    inline void SetBotId(const Aws::String& value) { m_botIdHasBeenSet = true; m_botId = value; }
-    inline void SetBotId(Aws::String&& value) { m_botIdHasBeenSet = true; m_botId = std::move(value); }
-    inline void SetBotId(const char* value) { m_botIdHasBeenSet = true; m_botId.assign(value); }
-    inline DescribeSlotRequest& WithBotId(const Aws::String& value) { SetBotId(value); return *this;}
-    inline DescribeSlotRequest& WithBotId(Aws::String&& value) { SetBotId(std::move(value)); return *this;}
-    inline DescribeSlotRequest& WithBotId(const char* value) { SetBotId(value); return *this;}
-    ///@}
+  Aws::String m_botId;
 
-    ///@{
-    /**
-     * <p>The version of the bot associated with the slot.</p>
-     */
-    inline const Aws::String& GetBotVersion() const{ return m_botVersion; }
-    inline bool BotVersionHasBeenSet() const { return m_botVersionHasBeenSet; }
-    inline void SetBotVersion(const Aws::String& value) { m_botVersionHasBeenSet = true; m_botVersion = value; }
-    inline void SetBotVersion(Aws::String&& value) { m_botVersionHasBeenSet = true; m_botVersion = std::move(value); }
-    inline void SetBotVersion(const char* value) { m_botVersionHasBeenSet = true; m_botVersion.assign(value); }
-    inline DescribeSlotRequest& WithBotVersion(const Aws::String& value) { SetBotVersion(value); return *this;}
-    inline DescribeSlotRequest& WithBotVersion(Aws::String&& value) { SetBotVersion(std::move(value)); return *this;}
-    inline DescribeSlotRequest& WithBotVersion(const char* value) { SetBotVersion(value); return *this;}
-    ///@}
+  Aws::String m_botVersion;
 
-    ///@{
-    /**
-     * <p>The identifier of the language and locale of the slot to describe. The string
-     * must match one of the supported locales. For more information, see <a
-     * href="https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html">Supported
-     * languages</a>.</p>
-     */
-    inline const Aws::String& GetLocaleId() const{ return m_localeId; }
-    inline bool LocaleIdHasBeenSet() const { return m_localeIdHasBeenSet; }
-    inline void SetLocaleId(const Aws::String& value) { m_localeIdHasBeenSet = true; m_localeId = value; }
-    inline void SetLocaleId(Aws::String&& value) { m_localeIdHasBeenSet = true; m_localeId = std::move(value); }
-    inline void SetLocaleId(const char* value) { m_localeIdHasBeenSet = true; m_localeId.assign(value); }
-    inline DescribeSlotRequest& WithLocaleId(const Aws::String& value) { SetLocaleId(value); return *this;}
-    inline DescribeSlotRequest& WithLocaleId(Aws::String&& value) { SetLocaleId(std::move(value)); return *this;}
-    inline DescribeSlotRequest& WithLocaleId(const char* value) { SetLocaleId(value); return *this;}
-    ///@}
+  Aws::String m_localeId;
 
-    ///@{
-    /**
-     * <p>The identifier of the intent that contains the slot.</p>
-     */
-    inline const Aws::String& GetIntentId() const{ return m_intentId; }
-    inline bool IntentIdHasBeenSet() const { return m_intentIdHasBeenSet; }
-    inline void SetIntentId(const Aws::String& value) { m_intentIdHasBeenSet = true; m_intentId = value; }
-    inline void SetIntentId(Aws::String&& value) { m_intentIdHasBeenSet = true; m_intentId = std::move(value); }
-    inline void SetIntentId(const char* value) { m_intentIdHasBeenSet = true; m_intentId.assign(value); }
-    inline DescribeSlotRequest& WithIntentId(const Aws::String& value) { SetIntentId(value); return *this;}
-    inline DescribeSlotRequest& WithIntentId(Aws::String&& value) { SetIntentId(std::move(value)); return *this;}
-    inline DescribeSlotRequest& WithIntentId(const char* value) { SetIntentId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_intentId;
+  bool m_slotIdHasBeenSet = false;
+  bool m_botIdHasBeenSet = false;
+  bool m_botVersionHasBeenSet = false;
+  bool m_localeIdHasBeenSet = false;
+  bool m_intentIdHasBeenSet = false;
+};
 
-    Aws::String m_slotId;
-    bool m_slotIdHasBeenSet = false;
-
-    Aws::String m_botId;
-    bool m_botIdHasBeenSet = false;
-
-    Aws::String m_botVersion;
-    bool m_botVersionHasBeenSet = false;
-
-    Aws::String m_localeId;
-    bool m_localeIdHasBeenSet = false;
-
-    Aws::String m_intentId;
-    bool m_intentIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

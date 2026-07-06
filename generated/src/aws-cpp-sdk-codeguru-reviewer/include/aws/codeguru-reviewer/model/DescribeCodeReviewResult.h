@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/codeguru-reviewer/CodeGuruReviewer_EXPORTS.h>
 #include <aws/codeguru-reviewer/model/CodeReview.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeGuruReviewer
-{
-namespace Model
-{
-  class DescribeCodeReviewResult
-  {
-  public:
-    AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult();
-    AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeGuruReviewer {
+namespace Model {
+class DescribeCodeReviewResult {
+ public:
+  AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult() = default;
+  AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEGURUREVIEWER_API DescribeCodeReviewResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the code review.</p>
+   */
+  inline const CodeReview& GetCodeReview() const { return m_codeReview; }
+  template <typename CodeReviewT = CodeReview>
+  void SetCodeReview(CodeReviewT&& value) {
+    m_codeReviewHasBeenSet = true;
+    m_codeReview = std::forward<CodeReviewT>(value);
+  }
+  template <typename CodeReviewT = CodeReview>
+  DescribeCodeReviewResult& WithCodeReview(CodeReviewT&& value) {
+    SetCodeReview(std::forward<CodeReviewT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the code review.</p>
-     */
-    inline const CodeReview& GetCodeReview() const{ return m_codeReview; }
-    inline void SetCodeReview(const CodeReview& value) { m_codeReview = value; }
-    inline void SetCodeReview(CodeReview&& value) { m_codeReview = std::move(value); }
-    inline DescribeCodeReviewResult& WithCodeReview(const CodeReview& value) { SetCodeReview(value); return *this;}
-    inline DescribeCodeReviewResult& WithCodeReview(CodeReview&& value) { SetCodeReview(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeCodeReviewResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeCodeReviewResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeCodeReviewResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeCodeReviewResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CodeReview m_codeReview;
+ private:
+  CodeReview m_codeReview;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_codeReviewHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeGuruReviewer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeGuruReviewer
+}  // namespace Aws

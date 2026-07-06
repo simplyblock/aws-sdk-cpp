@@ -12,38 +12,28 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateDomainNameRequest::CreateDomainNameRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_certificateArnHasBeenSet(false),
-    m_descriptionHasBeenSet(false)
-{
-}
-
-Aws::String CreateDomainNameRequest::SerializePayload() const
-{
+Aws::String CreateDomainNameRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_domainNameHasBeenSet)
-  {
-   payload.WithString("domainName", m_domainName);
-
+  if (m_domainNameHasBeenSet) {
+    payload.WithString("domainName", m_domainName);
   }
 
-  if(m_certificateArnHasBeenSet)
-  {
-   payload.WithString("certificateArn", m_certificateArn);
-
+  if (m_certificateArnHasBeenSet) {
+    payload.WithString("certificateArn", m_certificateArn);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
+  }
 
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

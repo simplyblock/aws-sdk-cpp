@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/ecr/ECR_EXPORTS.h>
 
-namespace Aws
-{
-namespace ECR
-{
-enum class ECRErrors
-{
-  //From Core//
+namespace Aws {
+namespace ECR {
+enum class ECRErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class ECRErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,10 +44,15 @@ enum class ECRErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  EMPTY_UPLOAD= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  BLOCKED_BY_ORGANIZATION_POLICY = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  EMPTY_UPLOAD,
+  EXCLUSION_ALREADY_EXISTS,
+  EXCLUSION_NOT_FOUND,
   IMAGE_ALREADY_EXISTS,
+  IMAGE_ARCHIVED,
   IMAGE_DIGEST_DOES_NOT_MATCH,
   IMAGE_NOT_FOUND,
+  IMAGE_STORAGE_CLASS_UPDATE_NOT_SUPPORTED,
   IMAGE_TAG_ALREADY_EXISTS,
   INVALID_LAYER,
   INVALID_LAYER_PART,
@@ -76,6 +78,7 @@ enum class ECRErrors
   SCAN_NOT_FOUND,
   SECRET_NOT_FOUND,
   SERVER,
+  SIGNING_CONFIGURATION_NOT_FOUND,
   TEMPLATE_ALREADY_EXISTS,
   TEMPLATE_NOT_FOUND,
   TOO_MANY_TAGS,
@@ -83,14 +86,14 @@ enum class ECRErrors
   UNABLE_TO_DECRYPT_SECRET_VALUE,
   UNABLE_TO_GET_UPSTREAM_IMAGE,
   UNABLE_TO_GET_UPSTREAM_LAYER,
+  UNABLE_TO_LIST_UPSTREAM_IMAGE_REFERRERS,
   UNSUPPORTED_IMAGE_TYPE,
   UNSUPPORTED_UPSTREAM_REGISTRY,
   UPLOAD_NOT_FOUND
 };
 
-class AWS_ECR_API ECRError : public Aws::Client::AWSError<ECRErrors>
-{
-public:
+class AWS_ECR_API ECRError : public Aws::Client::AWSError<ECRErrors> {
+ public:
   ECRError() {}
   ECRError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<ECRErrors>(rhs) {}
   ECRError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<ECRErrors>(rhs) {}
@@ -101,10 +104,9 @@ public:
   T GetModeledError();
 };
 
-namespace ECRErrorMapper
-{
-  AWS_ECR_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace ECRErrorMapper {
+AWS_ECR_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace ECR
-} // namespace Aws
+}  // namespace ECR
+}  // namespace Aws

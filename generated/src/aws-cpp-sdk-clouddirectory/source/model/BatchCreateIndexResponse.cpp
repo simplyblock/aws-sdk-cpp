@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CloudDirectory
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudDirectory {
+namespace Model {
 
-BatchCreateIndexResponse::BatchCreateIndexResponse() : 
-    m_objectIdentifierHasBeenSet(false)
-{
-}
+BatchCreateIndexResponse::BatchCreateIndexResponse(JsonView jsonValue) { *this = jsonValue; }
 
-BatchCreateIndexResponse::BatchCreateIndexResponse(JsonView jsonValue)
-  : BatchCreateIndexResponse()
-{
-  *this = jsonValue;
-}
-
-BatchCreateIndexResponse& BatchCreateIndexResponse::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ObjectIdentifier"))
-  {
+BatchCreateIndexResponse& BatchCreateIndexResponse::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ObjectIdentifier")) {
     m_objectIdentifier = jsonValue.GetString("ObjectIdentifier");
-
     m_objectIdentifierHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue BatchCreateIndexResponse::Jsonize() const
-{
+JsonValue BatchCreateIndexResponse::Jsonize() const {
   JsonValue payload;
 
-  if(m_objectIdentifierHasBeenSet)
-  {
-   payload.WithString("ObjectIdentifier", m_objectIdentifier);
-
+  if (m_objectIdentifierHasBeenSet) {
+    payload.WithString("ObjectIdentifier", m_objectIdentifier);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

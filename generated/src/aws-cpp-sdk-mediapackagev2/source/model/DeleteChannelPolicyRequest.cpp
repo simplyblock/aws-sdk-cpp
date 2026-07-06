@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mediapackagev2/model/DeleteChannelPolicyRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mediapackagev2/model/DeleteChannelPolicyRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::mediapackagev2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteChannelPolicyRequest::DeleteChannelPolicyRequest() : 
-    m_channelGroupNameHasBeenSet(false),
-    m_channelNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteChannelPolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteChannelPolicyRequest::SerializePayload() const { return {}; }

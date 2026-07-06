@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/model/TransitGatewayRouteTable.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/TransitGatewayRouteTable.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CreateTransitGatewayRouteTableResponse
-  {
-  public:
-    AWS_EC2_API CreateTransitGatewayRouteTableResponse();
-    AWS_EC2_API CreateTransitGatewayRouteTableResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateTransitGatewayRouteTableResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CreateTransitGatewayRouteTableResponse {
+ public:
+  AWS_EC2_API CreateTransitGatewayRouteTableResponse() = default;
+  AWS_EC2_API CreateTransitGatewayRouteTableResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateTransitGatewayRouteTableResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the transit gateway route table.</p>
+   */
+  inline const TransitGatewayRouteTable& GetTransitGatewayRouteTable() const { return m_transitGatewayRouteTable; }
+  template <typename TransitGatewayRouteTableT = TransitGatewayRouteTable>
+  void SetTransitGatewayRouteTable(TransitGatewayRouteTableT&& value) {
+    m_transitGatewayRouteTableHasBeenSet = true;
+    m_transitGatewayRouteTable = std::forward<TransitGatewayRouteTableT>(value);
+  }
+  template <typename TransitGatewayRouteTableT = TransitGatewayRouteTable>
+  CreateTransitGatewayRouteTableResponse& WithTransitGatewayRouteTable(TransitGatewayRouteTableT&& value) {
+    SetTransitGatewayRouteTable(std::forward<TransitGatewayRouteTableT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the transit gateway route table.</p>
-     */
-    inline const TransitGatewayRouteTable& GetTransitGatewayRouteTable() const{ return m_transitGatewayRouteTable; }
-    inline void SetTransitGatewayRouteTable(const TransitGatewayRouteTable& value) { m_transitGatewayRouteTable = value; }
-    inline void SetTransitGatewayRouteTable(TransitGatewayRouteTable&& value) { m_transitGatewayRouteTable = std::move(value); }
-    inline CreateTransitGatewayRouteTableResponse& WithTransitGatewayRouteTable(const TransitGatewayRouteTable& value) { SetTransitGatewayRouteTable(value); return *this;}
-    inline CreateTransitGatewayRouteTableResponse& WithTransitGatewayRouteTable(TransitGatewayRouteTable&& value) { SetTransitGatewayRouteTable(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateTransitGatewayRouteTableResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateTransitGatewayRouteTableResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateTransitGatewayRouteTableResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TransitGatewayRouteTable m_transitGatewayRouteTable;
+ private:
+  TransitGatewayRouteTable m_transitGatewayRouteTable;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_transitGatewayRouteTableHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

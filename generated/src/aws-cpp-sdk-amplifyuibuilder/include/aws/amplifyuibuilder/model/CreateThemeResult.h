@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/amplifyuibuilder/AmplifyUIBuilder_EXPORTS.h>
 #include <aws/amplifyuibuilder/model/Theme.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AmplifyUIBuilder
-{
-namespace Model
-{
-  class CreateThemeResult
-  {
-  public:
-    AWS_AMPLIFYUIBUILDER_API CreateThemeResult();
-    AWS_AMPLIFYUIBUILDER_API CreateThemeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFYUIBUILDER_API CreateThemeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AmplifyUIBuilder {
+namespace Model {
+class CreateThemeResult {
+ public:
+  AWS_AMPLIFYUIBUILDER_API CreateThemeResult() = default;
+  AWS_AMPLIFYUIBUILDER_API CreateThemeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFYUIBUILDER_API CreateThemeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes the configuration of the new theme.</p>
+   */
+  inline const Theme& GetEntity() const { return m_entity; }
+  template <typename EntityT = Theme>
+  void SetEntity(EntityT&& value) {
+    m_entityHasBeenSet = true;
+    m_entity = std::forward<EntityT>(value);
+  }
+  template <typename EntityT = Theme>
+  CreateThemeResult& WithEntity(EntityT&& value) {
+    SetEntity(std::forward<EntityT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the configuration of the new theme.</p>
-     */
-    inline const Theme& GetEntity() const{ return m_entity; }
-    inline void SetEntity(const Theme& value) { m_entity = value; }
-    inline void SetEntity(Theme&& value) { m_entity = std::move(value); }
-    inline CreateThemeResult& WithEntity(const Theme& value) { SetEntity(value); return *this;}
-    inline CreateThemeResult& WithEntity(Theme&& value) { SetEntity(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateThemeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateThemeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateThemeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateThemeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Theme m_entity;
+ private:
+  Theme m_entity;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entityHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AmplifyUIBuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyUIBuilder
+}  // namespace Aws

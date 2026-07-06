@@ -4,65 +4,92 @@
  */
 
 #pragma once
-#include <aws/taxsettings/TaxSettings_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/taxsettings/TaxSettings_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
-  class GetTaxRegistrationDocumentResult
-  {
-  public:
-    AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult();
-    AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
+class GetTaxRegistrationDocumentResult {
+ public:
+  AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult() = default;
+  AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TAXSETTINGS_API GetTaxRegistrationDocumentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The file path of the Amazon S3 bucket where you want to download your tax
+   * document to.</p>
+   */
+  inline const Aws::String& GetDestinationFilePath() const { return m_destinationFilePath; }
+  template <typename DestinationFilePathT = Aws::String>
+  void SetDestinationFilePath(DestinationFilePathT&& value) {
+    m_destinationFilePathHasBeenSet = true;
+    m_destinationFilePath = std::forward<DestinationFilePathT>(value);
+  }
+  template <typename DestinationFilePathT = Aws::String>
+  GetTaxRegistrationDocumentResult& WithDestinationFilePath(DestinationFilePathT&& value) {
+    SetDestinationFilePath(std::forward<DestinationFilePathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The file path of the Amazon S3 bucket where you want to download your tax
-     * document to.</p>
-     */
-    inline const Aws::String& GetDestinationFilePath() const{ return m_destinationFilePath; }
-    inline void SetDestinationFilePath(const Aws::String& value) { m_destinationFilePath = value; }
-    inline void SetDestinationFilePath(Aws::String&& value) { m_destinationFilePath = std::move(value); }
-    inline void SetDestinationFilePath(const char* value) { m_destinationFilePath.assign(value); }
-    inline GetTaxRegistrationDocumentResult& WithDestinationFilePath(const Aws::String& value) { SetDestinationFilePath(value); return *this;}
-    inline GetTaxRegistrationDocumentResult& WithDestinationFilePath(Aws::String&& value) { SetDestinationFilePath(std::move(value)); return *this;}
-    inline GetTaxRegistrationDocumentResult& WithDestinationFilePath(const char* value) { SetDestinationFilePath(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon S3 presigned URL of the tax registration document. </p>
+   */
+  inline const Aws::String& GetPresignedS3Url() const { return m_presignedS3Url; }
+  template <typename PresignedS3UrlT = Aws::String>
+  void SetPresignedS3Url(PresignedS3UrlT&& value) {
+    m_presignedS3UrlHasBeenSet = true;
+    m_presignedS3Url = std::forward<PresignedS3UrlT>(value);
+  }
+  template <typename PresignedS3UrlT = Aws::String>
+  GetTaxRegistrationDocumentResult& WithPresignedS3Url(PresignedS3UrlT&& value) {
+    SetPresignedS3Url(std::forward<PresignedS3UrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTaxRegistrationDocumentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTaxRegistrationDocumentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTaxRegistrationDocumentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_destinationFilePath;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTaxRegistrationDocumentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_destinationFilePath;
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+  Aws::String m_presignedS3Url;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_destinationFilePathHasBeenSet = false;
+  bool m_presignedS3UrlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

@@ -3,47 +3,31 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/ResetClusterParameterGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/redshift/model/ResetClusterParameterGroupRequest.h>
 
 using namespace Aws::Redshift::Model;
 using namespace Aws::Utils;
 
-ResetClusterParameterGroupRequest::ResetClusterParameterGroupRequest() : 
-    m_parameterGroupNameHasBeenSet(false),
-    m_resetAllParameters(false),
-    m_resetAllParametersHasBeenSet(false),
-    m_parametersHasBeenSet(false)
-{
-}
-
-Aws::String ResetClusterParameterGroupRequest::SerializePayload() const
-{
+Aws::String ResetClusterParameterGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ResetClusterParameterGroup&";
-  if(m_parameterGroupNameHasBeenSet)
-  {
+  if (m_parameterGroupNameHasBeenSet) {
     ss << "ParameterGroupName=" << StringUtils::URLEncode(m_parameterGroupName.c_str()) << "&";
   }
 
-  if(m_resetAllParametersHasBeenSet)
-  {
+  if (m_resetAllParametersHasBeenSet) {
     ss << "ResetAllParameters=" << std::boolalpha << m_resetAllParameters << "&";
   }
 
-  if(m_parametersHasBeenSet)
-  {
-    if (m_parameters.empty())
-    {
+  if (m_parametersHasBeenSet) {
+    if (m_parameters.empty()) {
       ss << "Parameters=&";
-    }
-    else
-    {
+    } else {
       unsigned parametersCount = 1;
-      for(auto& item : m_parameters)
-      {
-        item.OutputToStream(ss, "Parameters.member.", parametersCount, "");
+      for (auto& item : m_parameters) {
+        item.OutputToStream(ss, "Parameters.Parameter.", parametersCount, "");
         parametersCount++;
       }
     }
@@ -53,8 +37,4 @@ Aws::String ResetClusterParameterGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ResetClusterParameterGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ResetClusterParameterGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

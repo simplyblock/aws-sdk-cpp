@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/codeconnections/CodeConnections_EXPORTS.h>
 #include <aws/codeconnections/model/RepositoryLinkInfo.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeConnections
-{
-namespace Model
-{
-  class GetRepositoryLinkResult
-  {
-  public:
-    AWS_CODECONNECTIONS_API GetRepositoryLinkResult();
-    AWS_CODECONNECTIONS_API GetRepositoryLinkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODECONNECTIONS_API GetRepositoryLinkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeConnections {
+namespace Model {
+class GetRepositoryLinkResult {
+ public:
+  AWS_CODECONNECTIONS_API GetRepositoryLinkResult() = default;
+  AWS_CODECONNECTIONS_API GetRepositoryLinkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODECONNECTIONS_API GetRepositoryLinkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The information returned for a specified repository link.</p>
+   */
+  inline const RepositoryLinkInfo& GetRepositoryLinkInfo() const { return m_repositoryLinkInfo; }
+  template <typename RepositoryLinkInfoT = RepositoryLinkInfo>
+  void SetRepositoryLinkInfo(RepositoryLinkInfoT&& value) {
+    m_repositoryLinkInfoHasBeenSet = true;
+    m_repositoryLinkInfo = std::forward<RepositoryLinkInfoT>(value);
+  }
+  template <typename RepositoryLinkInfoT = RepositoryLinkInfo>
+  GetRepositoryLinkResult& WithRepositoryLinkInfo(RepositoryLinkInfoT&& value) {
+    SetRepositoryLinkInfo(std::forward<RepositoryLinkInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information returned for a specified repository link.</p>
-     */
-    inline const RepositoryLinkInfo& GetRepositoryLinkInfo() const{ return m_repositoryLinkInfo; }
-    inline void SetRepositoryLinkInfo(const RepositoryLinkInfo& value) { m_repositoryLinkInfo = value; }
-    inline void SetRepositoryLinkInfo(RepositoryLinkInfo&& value) { m_repositoryLinkInfo = std::move(value); }
-    inline GetRepositoryLinkResult& WithRepositoryLinkInfo(const RepositoryLinkInfo& value) { SetRepositoryLinkInfo(value); return *this;}
-    inline GetRepositoryLinkResult& WithRepositoryLinkInfo(RepositoryLinkInfo&& value) { SetRepositoryLinkInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRepositoryLinkResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRepositoryLinkResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRepositoryLinkResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRepositoryLinkResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RepositoryLinkInfo m_repositoryLinkInfo;
+ private:
+  RepositoryLinkInfo m_repositoryLinkInfo;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_repositoryLinkInfoHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeConnections
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeConnections
+}  // namespace Aws

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DescribeDBClusterBacktracksResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/rds/model/DescribeDBClusterBacktracksResult.h>
 
 #include <utility>
 
@@ -17,49 +17,43 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeDBClusterBacktracksResult::DescribeDBClusterBacktracksResult()
-{
-}
-
-DescribeDBClusterBacktracksResult::DescribeDBClusterBacktracksResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeDBClusterBacktracksResult::DescribeDBClusterBacktracksResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeDBClusterBacktracksResult& DescribeDBClusterBacktracksResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeDBClusterBacktracksResult& DescribeDBClusterBacktracksResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeDBClusterBacktracksResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeDBClusterBacktracksResult")) {
     resultNode = rootNode.FirstChild("DescribeDBClusterBacktracksResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode markerNode = resultNode.FirstChild("Marker");
-    if(!markerNode.IsNull())
-    {
+    if (!markerNode.IsNull()) {
       m_marker = Aws::Utils::Xml::DecodeEscapedXmlText(markerNode.GetText());
+      m_markerHasBeenSet = true;
     }
     XmlNode dBClusterBacktracksNode = resultNode.FirstChild("DBClusterBacktracks");
-    if(!dBClusterBacktracksNode.IsNull())
-    {
+    if (!dBClusterBacktracksNode.IsNull()) {
       XmlNode dBClusterBacktracksMember = dBClusterBacktracksNode.FirstChild("DBClusterBacktrack");
-      while(!dBClusterBacktracksMember.IsNull())
-      {
+      m_dBClusterBacktracksHasBeenSet = !dBClusterBacktracksMember.IsNull();
+      while (!dBClusterBacktracksMember.IsNull()) {
         m_dBClusterBacktracks.push_back(dBClusterBacktracksMember);
         dBClusterBacktracksMember = dBClusterBacktracksMember.NextNode("DBClusterBacktrack");
       }
 
+      m_dBClusterBacktracksHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DescribeDBClusterBacktracksResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DescribeDBClusterBacktracksResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

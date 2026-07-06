@@ -5,82 +5,103 @@
 
 #pragma once
 #include <aws/compute-optimizer/ComputeOptimizer_EXPORTS.h>
+#include <aws/compute-optimizer/model/LambdaFunctionRecommendation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/compute-optimizer/model/LambdaFunctionRecommendation.h>
-#include <utility>
+#include <aws/crt/cbor/Cbor.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ComputeOptimizer
-{
-namespace Model
-{
-  class GetLambdaFunctionRecommendationsResult
-  {
-  public:
-    AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult();
-    AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComputeOptimizer {
+namespace Model {
+class GetLambdaFunctionRecommendationsResult {
+ public:
+  AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult() = default;
+  AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_COMPUTEOPTIMIZER_API GetLambdaFunctionRecommendationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The token to use to advance to the next page of function recommendations.</p>
+   * <p>This value is null when there are no more pages of function recommendations
+   * to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetLambdaFunctionRecommendationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to advance to the next page of function recommendations.</p>
-     * <p>This value is null when there are no more pages of function recommendations
-     * to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetLambdaFunctionRecommendationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of objects that describe function recommendations.</p>
+   */
+  inline const Aws::Vector<LambdaFunctionRecommendation>& GetLambdaFunctionRecommendations() const {
+    return m_lambdaFunctionRecommendations;
+  }
+  template <typename LambdaFunctionRecommendationsT = Aws::Vector<LambdaFunctionRecommendation>>
+  void SetLambdaFunctionRecommendations(LambdaFunctionRecommendationsT&& value) {
+    m_lambdaFunctionRecommendationsHasBeenSet = true;
+    m_lambdaFunctionRecommendations = std::forward<LambdaFunctionRecommendationsT>(value);
+  }
+  template <typename LambdaFunctionRecommendationsT = Aws::Vector<LambdaFunctionRecommendation>>
+  GetLambdaFunctionRecommendationsResult& WithLambdaFunctionRecommendations(LambdaFunctionRecommendationsT&& value) {
+    SetLambdaFunctionRecommendations(std::forward<LambdaFunctionRecommendationsT>(value));
+    return *this;
+  }
+  template <typename LambdaFunctionRecommendationsT = LambdaFunctionRecommendation>
+  GetLambdaFunctionRecommendationsResult& AddLambdaFunctionRecommendations(LambdaFunctionRecommendationsT&& value) {
+    m_lambdaFunctionRecommendationsHasBeenSet = true;
+    m_lambdaFunctionRecommendations.emplace_back(std::forward<LambdaFunctionRecommendationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects that describe function recommendations.</p>
-     */
-    inline const Aws::Vector<LambdaFunctionRecommendation>& GetLambdaFunctionRecommendations() const{ return m_lambdaFunctionRecommendations; }
-    inline void SetLambdaFunctionRecommendations(const Aws::Vector<LambdaFunctionRecommendation>& value) { m_lambdaFunctionRecommendations = value; }
-    inline void SetLambdaFunctionRecommendations(Aws::Vector<LambdaFunctionRecommendation>&& value) { m_lambdaFunctionRecommendations = std::move(value); }
-    inline GetLambdaFunctionRecommendationsResult& WithLambdaFunctionRecommendations(const Aws::Vector<LambdaFunctionRecommendation>& value) { SetLambdaFunctionRecommendations(value); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& WithLambdaFunctionRecommendations(Aws::Vector<LambdaFunctionRecommendation>&& value) { SetLambdaFunctionRecommendations(std::move(value)); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& AddLambdaFunctionRecommendations(const LambdaFunctionRecommendation& value) { m_lambdaFunctionRecommendations.push_back(value); return *this; }
-    inline GetLambdaFunctionRecommendationsResult& AddLambdaFunctionRecommendations(LambdaFunctionRecommendation&& value) { m_lambdaFunctionRecommendations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLambdaFunctionRecommendationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLambdaFunctionRecommendationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLambdaFunctionRecommendationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<LambdaFunctionRecommendation> m_lambdaFunctionRecommendations;
+  Aws::Vector<LambdaFunctionRecommendation> m_lambdaFunctionRecommendations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_lambdaFunctionRecommendationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

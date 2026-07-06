@@ -10,31 +10,18 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-SetDesiredCapacityRequest::SetDesiredCapacityRequest() : 
-    m_autoScalingGroupNameHasBeenSet(false),
-    m_desiredCapacity(0),
-    m_desiredCapacityHasBeenSet(false),
-    m_honorCooldown(false),
-    m_honorCooldownHasBeenSet(false)
-{
-}
-
-Aws::String SetDesiredCapacityRequest::SerializePayload() const
-{
+Aws::String SetDesiredCapacityRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=SetDesiredCapacity&";
-  if(m_autoScalingGroupNameHasBeenSet)
-  {
+  if (m_autoScalingGroupNameHasBeenSet) {
     ss << "AutoScalingGroupName=" << StringUtils::URLEncode(m_autoScalingGroupName.c_str()) << "&";
   }
 
-  if(m_desiredCapacityHasBeenSet)
-  {
+  if (m_desiredCapacityHasBeenSet) {
     ss << "DesiredCapacity=" << m_desiredCapacity << "&";
   }
 
-  if(m_honorCooldownHasBeenSet)
-  {
+  if (m_honorCooldownHasBeenSet) {
     ss << "HonorCooldown=" << std::boolalpha << m_honorCooldown << "&";
   }
 
@@ -42,8 +29,4 @@ Aws::String SetDesiredCapacityRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  SetDesiredCapacityRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void SetDesiredCapacityRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

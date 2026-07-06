@@ -4,109 +4,114 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
 
+/**
+ * <p>Describes the status of a parameter group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterStatus">AWS
+ * API Reference</a></p>
+ */
+class ClusterParameterStatus {
+ public:
+  AWS_REDSHIFT_API ClusterParameterStatus() = default;
+  AWS_REDSHIFT_API ClusterParameterStatus(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_REDSHIFT_API ClusterParameterStatus& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes the status of a parameter group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ClusterParameterStatus">AWS
-   * API Reference</a></p>
+   * <p>The name of the parameter.</p>
    */
-  class ClusterParameterStatus
-  {
-  public:
-    AWS_REDSHIFT_API ClusterParameterStatus();
-    AWS_REDSHIFT_API ClusterParameterStatus(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_REDSHIFT_API ClusterParameterStatus& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetParameterName() const { return m_parameterName; }
+  inline bool ParameterNameHasBeenSet() const { return m_parameterNameHasBeenSet; }
+  template <typename ParameterNameT = Aws::String>
+  void SetParameterName(ParameterNameT&& value) {
+    m_parameterNameHasBeenSet = true;
+    m_parameterName = std::forward<ParameterNameT>(value);
+  }
+  template <typename ParameterNameT = Aws::String>
+  ClusterParameterStatus& WithParameterName(ParameterNameT&& value) {
+    SetParameterName(std::forward<ParameterNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_REDSHIFT_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The status of the parameter that indicates whether the parameter is in sync
+   * with the database, waiting for a cluster reboot, or encountered an error when
+   * being applied.</p> <p>The following are possible statuses and descriptions.</p>
+   * <ul> <li> <p> <code>in-sync</code>: The parameter value is in sync with the
+   * database.</p> </li> <li> <p> <code>pending-reboot</code>: The parameter value
+   * will be applied after the cluster reboots.</p> </li> <li> <p>
+   * <code>applying</code>: The parameter value is being applied to the database.</p>
+   * </li> <li> <p> <code>invalid-parameter</code>: Cannot apply the parameter value
+   * because it has an invalid value or syntax.</p> </li> <li> <p>
+   * <code>apply-deferred</code>: The parameter contains static property changes. The
+   * changes are deferred until the cluster reboots.</p> </li> <li> <p>
+   * <code>apply-error</code>: Cannot connect to the cluster. The parameter change
+   * will be applied after the cluster reboots.</p> </li> <li> <p>
+   * <code>unknown-error</code>: Cannot apply the parameter change right now. The
+   * change will be applied after the cluster reboots.</p> </li> </ul>
+   */
+  inline const Aws::String& GetParameterApplyStatus() const { return m_parameterApplyStatus; }
+  inline bool ParameterApplyStatusHasBeenSet() const { return m_parameterApplyStatusHasBeenSet; }
+  template <typename ParameterApplyStatusT = Aws::String>
+  void SetParameterApplyStatus(ParameterApplyStatusT&& value) {
+    m_parameterApplyStatusHasBeenSet = true;
+    m_parameterApplyStatus = std::forward<ParameterApplyStatusT>(value);
+  }
+  template <typename ParameterApplyStatusT = Aws::String>
+  ClusterParameterStatus& WithParameterApplyStatus(ParameterApplyStatusT&& value) {
+    SetParameterApplyStatus(std::forward<ParameterApplyStatusT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The error that prevented the parameter from being applied to the
+   * database.</p>
+   */
+  inline const Aws::String& GetParameterApplyErrorDescription() const { return m_parameterApplyErrorDescription; }
+  inline bool ParameterApplyErrorDescriptionHasBeenSet() const { return m_parameterApplyErrorDescriptionHasBeenSet; }
+  template <typename ParameterApplyErrorDescriptionT = Aws::String>
+  void SetParameterApplyErrorDescription(ParameterApplyErrorDescriptionT&& value) {
+    m_parameterApplyErrorDescriptionHasBeenSet = true;
+    m_parameterApplyErrorDescription = std::forward<ParameterApplyErrorDescriptionT>(value);
+  }
+  template <typename ParameterApplyErrorDescriptionT = Aws::String>
+  ClusterParameterStatus& WithParameterApplyErrorDescription(ParameterApplyErrorDescriptionT&& value) {
+    SetParameterApplyErrorDescription(std::forward<ParameterApplyErrorDescriptionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_parameterName;
 
-    ///@{
-    /**
-     * <p>The name of the parameter.</p>
-     */
-    inline const Aws::String& GetParameterName() const{ return m_parameterName; }
-    inline bool ParameterNameHasBeenSet() const { return m_parameterNameHasBeenSet; }
-    inline void SetParameterName(const Aws::String& value) { m_parameterNameHasBeenSet = true; m_parameterName = value; }
-    inline void SetParameterName(Aws::String&& value) { m_parameterNameHasBeenSet = true; m_parameterName = std::move(value); }
-    inline void SetParameterName(const char* value) { m_parameterNameHasBeenSet = true; m_parameterName.assign(value); }
-    inline ClusterParameterStatus& WithParameterName(const Aws::String& value) { SetParameterName(value); return *this;}
-    inline ClusterParameterStatus& WithParameterName(Aws::String&& value) { SetParameterName(std::move(value)); return *this;}
-    inline ClusterParameterStatus& WithParameterName(const char* value) { SetParameterName(value); return *this;}
-    ///@}
+  Aws::String m_parameterApplyStatus;
 
-    ///@{
-    /**
-     * <p>The status of the parameter that indicates whether the parameter is in sync
-     * with the database, waiting for a cluster reboot, or encountered an error when
-     * being applied.</p> <p>The following are possible statuses and descriptions.</p>
-     * <ul> <li> <p> <code>in-sync</code>: The parameter value is in sync with the
-     * database.</p> </li> <li> <p> <code>pending-reboot</code>: The parameter value
-     * will be applied after the cluster reboots.</p> </li> <li> <p>
-     * <code>applying</code>: The parameter value is being applied to the database.</p>
-     * </li> <li> <p> <code>invalid-parameter</code>: Cannot apply the parameter value
-     * because it has an invalid value or syntax.</p> </li> <li> <p>
-     * <code>apply-deferred</code>: The parameter contains static property changes. The
-     * changes are deferred until the cluster reboots.</p> </li> <li> <p>
-     * <code>apply-error</code>: Cannot connect to the cluster. The parameter change
-     * will be applied after the cluster reboots.</p> </li> <li> <p>
-     * <code>unknown-error</code>: Cannot apply the parameter change right now. The
-     * change will be applied after the cluster reboots.</p> </li> </ul>
-     */
-    inline const Aws::String& GetParameterApplyStatus() const{ return m_parameterApplyStatus; }
-    inline bool ParameterApplyStatusHasBeenSet() const { return m_parameterApplyStatusHasBeenSet; }
-    inline void SetParameterApplyStatus(const Aws::String& value) { m_parameterApplyStatusHasBeenSet = true; m_parameterApplyStatus = value; }
-    inline void SetParameterApplyStatus(Aws::String&& value) { m_parameterApplyStatusHasBeenSet = true; m_parameterApplyStatus = std::move(value); }
-    inline void SetParameterApplyStatus(const char* value) { m_parameterApplyStatusHasBeenSet = true; m_parameterApplyStatus.assign(value); }
-    inline ClusterParameterStatus& WithParameterApplyStatus(const Aws::String& value) { SetParameterApplyStatus(value); return *this;}
-    inline ClusterParameterStatus& WithParameterApplyStatus(Aws::String&& value) { SetParameterApplyStatus(std::move(value)); return *this;}
-    inline ClusterParameterStatus& WithParameterApplyStatus(const char* value) { SetParameterApplyStatus(value); return *this;}
-    ///@}
+  Aws::String m_parameterApplyErrorDescription;
+  bool m_parameterNameHasBeenSet = false;
+  bool m_parameterApplyStatusHasBeenSet = false;
+  bool m_parameterApplyErrorDescriptionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The error that prevented the parameter from being applied to the
-     * database.</p>
-     */
-    inline const Aws::String& GetParameterApplyErrorDescription() const{ return m_parameterApplyErrorDescription; }
-    inline bool ParameterApplyErrorDescriptionHasBeenSet() const { return m_parameterApplyErrorDescriptionHasBeenSet; }
-    inline void SetParameterApplyErrorDescription(const Aws::String& value) { m_parameterApplyErrorDescriptionHasBeenSet = true; m_parameterApplyErrorDescription = value; }
-    inline void SetParameterApplyErrorDescription(Aws::String&& value) { m_parameterApplyErrorDescriptionHasBeenSet = true; m_parameterApplyErrorDescription = std::move(value); }
-    inline void SetParameterApplyErrorDescription(const char* value) { m_parameterApplyErrorDescriptionHasBeenSet = true; m_parameterApplyErrorDescription.assign(value); }
-    inline ClusterParameterStatus& WithParameterApplyErrorDescription(const Aws::String& value) { SetParameterApplyErrorDescription(value); return *this;}
-    inline ClusterParameterStatus& WithParameterApplyErrorDescription(Aws::String&& value) { SetParameterApplyErrorDescription(std::move(value)); return *this;}
-    inline ClusterParameterStatus& WithParameterApplyErrorDescription(const char* value) { SetParameterApplyErrorDescription(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_parameterName;
-    bool m_parameterNameHasBeenSet = false;
-
-    Aws::String m_parameterApplyStatus;
-    bool m_parameterApplyStatusHasBeenSet = false;
-
-    Aws::String m_parameterApplyErrorDescription;
-    bool m_parameterApplyErrorDescriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

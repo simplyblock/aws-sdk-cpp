@@ -6,67 +6,76 @@
 #pragma once
 #include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/amplify/model/BackendEnvironment.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Amplify
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Amplify {
+namespace Model {
+/**
+ * <p>The result structure for the create backend environment request.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateBackendEnvironmentResult">AWS
+ * API Reference</a></p>
+ */
+class CreateBackendEnvironmentResult {
+ public:
+  AWS_AMPLIFY_API CreateBackendEnvironmentResult() = default;
+  AWS_AMPLIFY_API CreateBackendEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFY_API CreateBackendEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result structure for the create backend environment request.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateBackendEnvironmentResult">AWS
-   * API Reference</a></p>
+   * <p>Describes the backend environment for an Amplify app. </p>
    */
-  class CreateBackendEnvironmentResult
-  {
-  public:
-    AWS_AMPLIFY_API CreateBackendEnvironmentResult();
-    AWS_AMPLIFY_API CreateBackendEnvironmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFY_API CreateBackendEnvironmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const BackendEnvironment& GetBackendEnvironment() const { return m_backendEnvironment; }
+  template <typename BackendEnvironmentT = BackendEnvironment>
+  void SetBackendEnvironment(BackendEnvironmentT&& value) {
+    m_backendEnvironmentHasBeenSet = true;
+    m_backendEnvironment = std::forward<BackendEnvironmentT>(value);
+  }
+  template <typename BackendEnvironmentT = BackendEnvironment>
+  CreateBackendEnvironmentResult& WithBackendEnvironment(BackendEnvironmentT&& value) {
+    SetBackendEnvironment(std::forward<BackendEnvironmentT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Describes the backend environment for an Amplify app. </p>
-     */
-    inline const BackendEnvironment& GetBackendEnvironment() const{ return m_backendEnvironment; }
-    inline void SetBackendEnvironment(const BackendEnvironment& value) { m_backendEnvironment = value; }
-    inline void SetBackendEnvironment(BackendEnvironment&& value) { m_backendEnvironment = std::move(value); }
-    inline CreateBackendEnvironmentResult& WithBackendEnvironment(const BackendEnvironment& value) { SetBackendEnvironment(value); return *this;}
-    inline CreateBackendEnvironmentResult& WithBackendEnvironment(BackendEnvironment&& value) { SetBackendEnvironment(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateBackendEnvironmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateBackendEnvironmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateBackendEnvironmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateBackendEnvironmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  BackendEnvironment m_backendEnvironment;
 
-    BackendEnvironment m_backendEnvironment;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_backendEnvironmentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace Amplify
-} // namespace Aws
+}  // namespace Model
+}  // namespace Amplify
+}  // namespace Aws

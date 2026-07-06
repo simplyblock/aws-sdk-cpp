@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteProxySessionRequest::DeleteProxySessionRequest() : 
-    m_voiceConnectorIdHasBeenSet(false),
-    m_proxySessionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteProxySessionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteProxySessionRequest::SerializePayload() const { return {}; }

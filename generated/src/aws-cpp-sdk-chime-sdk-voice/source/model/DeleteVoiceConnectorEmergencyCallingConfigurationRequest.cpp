@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteVoiceConnectorEmergencyCallingConfigurationRequest::DeleteVoiceConnectorEmergencyCallingConfigurationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const { return {}; }

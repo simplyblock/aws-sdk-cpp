@@ -4,104 +4,115 @@
  */
 
 #pragma once
-#include <aws/frauddetector/FraudDetector_EXPORTS.h>
-#include <aws/frauddetector/FraudDetectorRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/frauddetector/FraudDetectorRequest.h>
+#include <aws/frauddetector/FraudDetector_EXPORTS.h>
 #include <aws/frauddetector/model/ModelTypeEnum.h>
 #include <aws/frauddetector/model/ModelVersionStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace FraudDetector
-{
-namespace Model
-{
+namespace Aws {
+namespace FraudDetector {
+namespace Model {
 
+/**
+ */
+class UpdateModelVersionStatusRequest : public FraudDetectorRequest {
+ public:
+  AWS_FRAUDDETECTOR_API UpdateModelVersionStatusRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateModelVersionStatus"; }
+
+  AWS_FRAUDDETECTOR_API Aws::String SerializePayload() const override;
+
+  AWS_FRAUDDETECTOR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The model ID of the model version to update.</p>
    */
-  class UpdateModelVersionStatusRequest : public FraudDetectorRequest
-  {
-  public:
-    AWS_FRAUDDETECTOR_API UpdateModelVersionStatusRequest();
+  inline const Aws::String& GetModelId() const { return m_modelId; }
+  inline bool ModelIdHasBeenSet() const { return m_modelIdHasBeenSet; }
+  template <typename ModelIdT = Aws::String>
+  void SetModelId(ModelIdT&& value) {
+    m_modelIdHasBeenSet = true;
+    m_modelId = std::forward<ModelIdT>(value);
+  }
+  template <typename ModelIdT = Aws::String>
+  UpdateModelVersionStatusRequest& WithModelId(ModelIdT&& value) {
+    SetModelId(std::forward<ModelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateModelVersionStatus"; }
+  ///@{
+  /**
+   * <p>The model type.</p>
+   */
+  inline ModelTypeEnum GetModelType() const { return m_modelType; }
+  inline bool ModelTypeHasBeenSet() const { return m_modelTypeHasBeenSet; }
+  inline void SetModelType(ModelTypeEnum value) {
+    m_modelTypeHasBeenSet = true;
+    m_modelType = value;
+  }
+  inline UpdateModelVersionStatusRequest& WithModelType(ModelTypeEnum value) {
+    SetModelType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_FRAUDDETECTOR_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The model version number.</p>
+   */
+  inline const Aws::String& GetModelVersionNumber() const { return m_modelVersionNumber; }
+  inline bool ModelVersionNumberHasBeenSet() const { return m_modelVersionNumberHasBeenSet; }
+  template <typename ModelVersionNumberT = Aws::String>
+  void SetModelVersionNumber(ModelVersionNumberT&& value) {
+    m_modelVersionNumberHasBeenSet = true;
+    m_modelVersionNumber = std::forward<ModelVersionNumberT>(value);
+  }
+  template <typename ModelVersionNumberT = Aws::String>
+  UpdateModelVersionStatusRequest& WithModelVersionNumber(ModelVersionNumberT&& value) {
+    SetModelVersionNumber(std::forward<ModelVersionNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_FRAUDDETECTOR_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The model version status.</p>
+   */
+  inline ModelVersionStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(ModelVersionStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline UpdateModelVersionStatusRequest& WithStatus(ModelVersionStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_modelId;
 
+  ModelTypeEnum m_modelType{ModelTypeEnum::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The model ID of the model version to update.</p>
-     */
-    inline const Aws::String& GetModelId() const{ return m_modelId; }
-    inline bool ModelIdHasBeenSet() const { return m_modelIdHasBeenSet; }
-    inline void SetModelId(const Aws::String& value) { m_modelIdHasBeenSet = true; m_modelId = value; }
-    inline void SetModelId(Aws::String&& value) { m_modelIdHasBeenSet = true; m_modelId = std::move(value); }
-    inline void SetModelId(const char* value) { m_modelIdHasBeenSet = true; m_modelId.assign(value); }
-    inline UpdateModelVersionStatusRequest& WithModelId(const Aws::String& value) { SetModelId(value); return *this;}
-    inline UpdateModelVersionStatusRequest& WithModelId(Aws::String&& value) { SetModelId(std::move(value)); return *this;}
-    inline UpdateModelVersionStatusRequest& WithModelId(const char* value) { SetModelId(value); return *this;}
-    ///@}
+  Aws::String m_modelVersionNumber;
 
-    ///@{
-    /**
-     * <p>The model type.</p>
-     */
-    inline const ModelTypeEnum& GetModelType() const{ return m_modelType; }
-    inline bool ModelTypeHasBeenSet() const { return m_modelTypeHasBeenSet; }
-    inline void SetModelType(const ModelTypeEnum& value) { m_modelTypeHasBeenSet = true; m_modelType = value; }
-    inline void SetModelType(ModelTypeEnum&& value) { m_modelTypeHasBeenSet = true; m_modelType = std::move(value); }
-    inline UpdateModelVersionStatusRequest& WithModelType(const ModelTypeEnum& value) { SetModelType(value); return *this;}
-    inline UpdateModelVersionStatusRequest& WithModelType(ModelTypeEnum&& value) { SetModelType(std::move(value)); return *this;}
-    ///@}
+  ModelVersionStatus m_status{ModelVersionStatus::NOT_SET};
+  bool m_modelIdHasBeenSet = false;
+  bool m_modelTypeHasBeenSet = false;
+  bool m_modelVersionNumberHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The model version number.</p>
-     */
-    inline const Aws::String& GetModelVersionNumber() const{ return m_modelVersionNumber; }
-    inline bool ModelVersionNumberHasBeenSet() const { return m_modelVersionNumberHasBeenSet; }
-    inline void SetModelVersionNumber(const Aws::String& value) { m_modelVersionNumberHasBeenSet = true; m_modelVersionNumber = value; }
-    inline void SetModelVersionNumber(Aws::String&& value) { m_modelVersionNumberHasBeenSet = true; m_modelVersionNumber = std::move(value); }
-    inline void SetModelVersionNumber(const char* value) { m_modelVersionNumberHasBeenSet = true; m_modelVersionNumber.assign(value); }
-    inline UpdateModelVersionStatusRequest& WithModelVersionNumber(const Aws::String& value) { SetModelVersionNumber(value); return *this;}
-    inline UpdateModelVersionStatusRequest& WithModelVersionNumber(Aws::String&& value) { SetModelVersionNumber(std::move(value)); return *this;}
-    inline UpdateModelVersionStatusRequest& WithModelVersionNumber(const char* value) { SetModelVersionNumber(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The model version status.</p>
-     */
-    inline const ModelVersionStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const ModelVersionStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(ModelVersionStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline UpdateModelVersionStatusRequest& WithStatus(const ModelVersionStatus& value) { SetStatus(value); return *this;}
-    inline UpdateModelVersionStatusRequest& WithStatus(ModelVersionStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_modelId;
-    bool m_modelIdHasBeenSet = false;
-
-    ModelTypeEnum m_modelType;
-    bool m_modelTypeHasBeenSet = false;
-
-    Aws::String m_modelVersionNumber;
-    bool m_modelVersionNumberHasBeenSet = false;
-
-    ModelVersionStatus m_status;
-    bool m_statusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace FraudDetector
-} // namespace Aws
+}  // namespace Model
+}  // namespace FraudDetector
+}  // namespace Aws

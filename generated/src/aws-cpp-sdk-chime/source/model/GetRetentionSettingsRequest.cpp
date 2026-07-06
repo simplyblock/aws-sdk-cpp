@@ -12,16 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRetentionSettingsRequest::GetRetentionSettingsRequest() : 
-    m_accountIdHasBeenSet(false)
-{
-}
-
-Aws::String GetRetentionSettingsRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRetentionSettingsRequest::SerializePayload() const { return {}; }

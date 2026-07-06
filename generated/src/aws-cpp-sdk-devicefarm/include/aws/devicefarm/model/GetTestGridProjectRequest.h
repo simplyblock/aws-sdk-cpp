@@ -4,56 +4,55 @@
  */
 
 #pragma once
-#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
-#include <aws/devicefarm/DeviceFarmRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/devicefarm/DeviceFarmRequest.h>
+#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DeviceFarm
-{
-namespace Model
-{
+namespace Aws {
+namespace DeviceFarm {
+namespace Model {
 
+/**
+ */
+class GetTestGridProjectRequest : public DeviceFarmRequest {
+ public:
+  AWS_DEVICEFARM_API GetTestGridProjectRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetTestGridProject"; }
+
+  AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
+
+  AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ARN of the Selenium testing project, from either
+   * <a>CreateTestGridProject</a> or <a>ListTestGridProjects</a>.</p>
    */
-  class GetTestGridProjectRequest : public DeviceFarmRequest
-  {
-  public:
-    AWS_DEVICEFARM_API GetTestGridProjectRequest();
+  inline const Aws::String& GetProjectArn() const { return m_projectArn; }
+  inline bool ProjectArnHasBeenSet() const { return m_projectArnHasBeenSet; }
+  template <typename ProjectArnT = Aws::String>
+  void SetProjectArn(ProjectArnT&& value) {
+    m_projectArnHasBeenSet = true;
+    m_projectArn = std::forward<ProjectArnT>(value);
+  }
+  template <typename ProjectArnT = Aws::String>
+  GetTestGridProjectRequest& WithProjectArn(ProjectArnT&& value) {
+    SetProjectArn(std::forward<ProjectArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_projectArn;
+  bool m_projectArnHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetTestGridProject"; }
-
-    AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
-
-    AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The ARN of the Selenium testing project, from either
-     * <a>CreateTestGridProject</a> or <a>ListTestGridProjects</a>.</p>
-     */
-    inline const Aws::String& GetProjectArn() const{ return m_projectArn; }
-    inline bool ProjectArnHasBeenSet() const { return m_projectArnHasBeenSet; }
-    inline void SetProjectArn(const Aws::String& value) { m_projectArnHasBeenSet = true; m_projectArn = value; }
-    inline void SetProjectArn(Aws::String&& value) { m_projectArnHasBeenSet = true; m_projectArn = std::move(value); }
-    inline void SetProjectArn(const char* value) { m_projectArnHasBeenSet = true; m_projectArn.assign(value); }
-    inline GetTestGridProjectRequest& WithProjectArn(const Aws::String& value) { SetProjectArn(value); return *this;}
-    inline GetTestGridProjectRequest& WithProjectArn(Aws::String&& value) { SetProjectArn(std::move(value)); return *this;}
-    inline GetTestGridProjectRequest& WithProjectArn(const char* value) { SetProjectArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_projectArn;
-    bool m_projectArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

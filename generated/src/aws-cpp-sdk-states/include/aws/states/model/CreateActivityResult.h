@@ -4,78 +4,92 @@
  */
 
 #pragma once
-#include <aws/states/SFN_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/states/SFN_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SFN
-{
-namespace Model
-{
-  class CreateActivityResult
-  {
-  public:
-    AWS_SFN_API CreateActivityResult();
-    AWS_SFN_API CreateActivityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SFN_API CreateActivityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SFN {
+namespace Model {
+class CreateActivityResult {
+ public:
+  AWS_SFN_API CreateActivityResult() = default;
+  AWS_SFN_API CreateActivityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SFN_API CreateActivityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) that identifies the created activity.</p>
+   */
+  inline const Aws::String& GetActivityArn() const { return m_activityArn; }
+  template <typename ActivityArnT = Aws::String>
+  void SetActivityArn(ActivityArnT&& value) {
+    m_activityArnHasBeenSet = true;
+    m_activityArn = std::forward<ActivityArnT>(value);
+  }
+  template <typename ActivityArnT = Aws::String>
+  CreateActivityResult& WithActivityArn(ActivityArnT&& value) {
+    SetActivityArn(std::forward<ActivityArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) that identifies the created activity.</p>
-     */
-    inline const Aws::String& GetActivityArn() const{ return m_activityArn; }
-    inline void SetActivityArn(const Aws::String& value) { m_activityArn = value; }
-    inline void SetActivityArn(Aws::String&& value) { m_activityArn = std::move(value); }
-    inline void SetActivityArn(const char* value) { m_activityArn.assign(value); }
-    inline CreateActivityResult& WithActivityArn(const Aws::String& value) { SetActivityArn(value); return *this;}
-    inline CreateActivityResult& WithActivityArn(Aws::String&& value) { SetActivityArn(std::move(value)); return *this;}
-    inline CreateActivityResult& WithActivityArn(const char* value) { SetActivityArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date the activity is created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDate() const { return m_creationDate; }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  CreateActivityResult& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date the activity is created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDate() const{ return m_creationDate; }
-    inline void SetCreationDate(const Aws::Utils::DateTime& value) { m_creationDate = value; }
-    inline void SetCreationDate(Aws::Utils::DateTime&& value) { m_creationDate = std::move(value); }
-    inline CreateActivityResult& WithCreationDate(const Aws::Utils::DateTime& value) { SetCreationDate(value); return *this;}
-    inline CreateActivityResult& WithCreationDate(Aws::Utils::DateTime&& value) { SetCreationDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateActivityResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateActivityResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateActivityResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateActivityResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_activityArn;
+ private:
+  Aws::String m_activityArn;
 
-    Aws::Utils::DateTime m_creationDate;
+  Aws::Utils::DateTime m_creationDate{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_activityArnHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SFN
-} // namespace Aws
+}  // namespace Model
+}  // namespace SFN
+}  // namespace Aws

@@ -4,55 +4,97 @@
  */
 
 #pragma once
-#include <aws/directconnect/DirectConnect_EXPORTS.h>
-#include <aws/directconnect/DirectConnectRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/directconnect/DirectConnectRequest.h>
+#include <aws/directconnect/DirectConnect_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DirectConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace DirectConnect {
+namespace Model {
 
+/**
+ */
+class DescribeConnectionsRequest : public DirectConnectRequest {
+ public:
+  AWS_DIRECTCONNECT_API DescribeConnectionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeConnections"; }
+
+  AWS_DIRECTCONNECT_API Aws::String SerializePayload() const override;
+
+  AWS_DIRECTCONNECT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the connection.</p>
    */
-  class DescribeConnectionsRequest : public DirectConnectRequest
-  {
-  public:
-    AWS_DIRECTCONNECT_API DescribeConnectionsRequest();
+  inline const Aws::String& GetConnectionId() const { return m_connectionId; }
+  inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
+  template <typename ConnectionIdT = Aws::String>
+  void SetConnectionId(ConnectionIdT&& value) {
+    m_connectionIdHasBeenSet = true;
+    m_connectionId = std::forward<ConnectionIdT>(value);
+  }
+  template <typename ConnectionIdT = Aws::String>
+  DescribeConnectionsRequest& WithConnectionId(ConnectionIdT&& value) {
+    SetConnectionId(std::forward<ConnectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeConnections"; }
+  ///@{
+  /**
+   * <p>The maximum number of results to return with a single call. To retrieve the
+   * remaining results, make another call with the returned <code>nextToken</code>
+   * value.</p> <p>If <code>MaxResults</code> is given a value larger than 100, only
+   * 100 results are returned.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline DescribeConnectionsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_DIRECTCONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The token for the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeConnectionsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_connectionId;
 
-    AWS_DIRECTCONNECT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  int m_maxResults{0};
 
+  Aws::String m_nextToken;
+  bool m_connectionIdHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ID of the connection.</p>
-     */
-    inline const Aws::String& GetConnectionId() const{ return m_connectionId; }
-    inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
-    inline void SetConnectionId(const Aws::String& value) { m_connectionIdHasBeenSet = true; m_connectionId = value; }
-    inline void SetConnectionId(Aws::String&& value) { m_connectionIdHasBeenSet = true; m_connectionId = std::move(value); }
-    inline void SetConnectionId(const char* value) { m_connectionIdHasBeenSet = true; m_connectionId.assign(value); }
-    inline DescribeConnectionsRequest& WithConnectionId(const Aws::String& value) { SetConnectionId(value); return *this;}
-    inline DescribeConnectionsRequest& WithConnectionId(Aws::String&& value) { SetConnectionId(std::move(value)); return *this;}
-    inline DescribeConnectionsRequest& WithConnectionId(const char* value) { SetConnectionId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_connectionId;
-    bool m_connectionIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

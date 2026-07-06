@@ -4,93 +4,98 @@
  */
 
 #pragma once
-#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace KinesisAnalyticsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisAnalyticsV2 {
+namespace Model {
 
+/**
+ * <p>The information required to specify a Maven reference. You can use Maven
+ * references to specify dependency JAR files.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/MavenReference">AWS
+ * API Reference</a></p>
+ */
+class MavenReference {
+ public:
+  AWS_KINESISANALYTICSV2_API MavenReference() = default;
+  AWS_KINESISANALYTICSV2_API MavenReference(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API MavenReference& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The information required to specify a Maven reference. You can use Maven
-   * references to specify dependency JAR files.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/MavenReference">AWS
-   * API Reference</a></p>
+   * <p>The group ID of the Maven reference.</p>
    */
-  class MavenReference
-  {
-  public:
-    AWS_KINESISANALYTICSV2_API MavenReference();
-    AWS_KINESISANALYTICSV2_API MavenReference(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API MavenReference& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetGroupId() const { return m_groupId; }
+  inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
+  template <typename GroupIdT = Aws::String>
+  void SetGroupId(GroupIdT&& value) {
+    m_groupIdHasBeenSet = true;
+    m_groupId = std::forward<GroupIdT>(value);
+  }
+  template <typename GroupIdT = Aws::String>
+  MavenReference& WithGroupId(GroupIdT&& value) {
+    SetGroupId(std::forward<GroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The artifact ID of the Maven reference.</p>
+   */
+  inline const Aws::String& GetArtifactId() const { return m_artifactId; }
+  inline bool ArtifactIdHasBeenSet() const { return m_artifactIdHasBeenSet; }
+  template <typename ArtifactIdT = Aws::String>
+  void SetArtifactId(ArtifactIdT&& value) {
+    m_artifactIdHasBeenSet = true;
+    m_artifactId = std::forward<ArtifactIdT>(value);
+  }
+  template <typename ArtifactIdT = Aws::String>
+  MavenReference& WithArtifactId(ArtifactIdT&& value) {
+    SetArtifactId(std::forward<ArtifactIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The group ID of the Maven reference.</p>
-     */
-    inline const Aws::String& GetGroupId() const{ return m_groupId; }
-    inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
-    inline void SetGroupId(const Aws::String& value) { m_groupIdHasBeenSet = true; m_groupId = value; }
-    inline void SetGroupId(Aws::String&& value) { m_groupIdHasBeenSet = true; m_groupId = std::move(value); }
-    inline void SetGroupId(const char* value) { m_groupIdHasBeenSet = true; m_groupId.assign(value); }
-    inline MavenReference& WithGroupId(const Aws::String& value) { SetGroupId(value); return *this;}
-    inline MavenReference& WithGroupId(Aws::String&& value) { SetGroupId(std::move(value)); return *this;}
-    inline MavenReference& WithGroupId(const char* value) { SetGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the Maven reference.</p>
+   */
+  inline const Aws::String& GetVersion() const { return m_version; }
+  inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
+  template <typename VersionT = Aws::String>
+  void SetVersion(VersionT&& value) {
+    m_versionHasBeenSet = true;
+    m_version = std::forward<VersionT>(value);
+  }
+  template <typename VersionT = Aws::String>
+  MavenReference& WithVersion(VersionT&& value) {
+    SetVersion(std::forward<VersionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_groupId;
 
-    ///@{
-    /**
-     * <p>The artifact ID of the Maven reference.</p>
-     */
-    inline const Aws::String& GetArtifactId() const{ return m_artifactId; }
-    inline bool ArtifactIdHasBeenSet() const { return m_artifactIdHasBeenSet; }
-    inline void SetArtifactId(const Aws::String& value) { m_artifactIdHasBeenSet = true; m_artifactId = value; }
-    inline void SetArtifactId(Aws::String&& value) { m_artifactIdHasBeenSet = true; m_artifactId = std::move(value); }
-    inline void SetArtifactId(const char* value) { m_artifactIdHasBeenSet = true; m_artifactId.assign(value); }
-    inline MavenReference& WithArtifactId(const Aws::String& value) { SetArtifactId(value); return *this;}
-    inline MavenReference& WithArtifactId(Aws::String&& value) { SetArtifactId(std::move(value)); return *this;}
-    inline MavenReference& WithArtifactId(const char* value) { SetArtifactId(value); return *this;}
-    ///@}
+  Aws::String m_artifactId;
 
-    ///@{
-    /**
-     * <p>The version of the Maven reference.</p>
-     */
-    inline const Aws::String& GetVersion() const{ return m_version; }
-    inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
-    inline void SetVersion(const Aws::String& value) { m_versionHasBeenSet = true; m_version = value; }
-    inline void SetVersion(Aws::String&& value) { m_versionHasBeenSet = true; m_version = std::move(value); }
-    inline void SetVersion(const char* value) { m_versionHasBeenSet = true; m_version.assign(value); }
-    inline MavenReference& WithVersion(const Aws::String& value) { SetVersion(value); return *this;}
-    inline MavenReference& WithVersion(Aws::String&& value) { SetVersion(std::move(value)); return *this;}
-    inline MavenReference& WithVersion(const char* value) { SetVersion(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_version;
+  bool m_groupIdHasBeenSet = false;
+  bool m_artifactIdHasBeenSet = false;
+  bool m_versionHasBeenSet = false;
+};
 
-    Aws::String m_groupId;
-    bool m_groupIdHasBeenSet = false;
-
-    Aws::String m_artifactId;
-    bool m_artifactIdHasBeenSet = false;
-
-    Aws::String m_version;
-    bool m_versionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace KinesisAnalyticsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisAnalyticsV2
+}  // namespace Aws

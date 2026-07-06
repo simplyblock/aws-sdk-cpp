@@ -4,96 +4,104 @@
  */
 
 #pragma once
-#include <aws/license-manager-linux-subscriptions/LicenseManagerLinuxSubscriptions_EXPORTS.h>
-#include <aws/license-manager-linux-subscriptions/LicenseManagerLinuxSubscriptionsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/license-manager-linux-subscriptions/model/SubscriptionProviderSource.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/license-manager-linux-subscriptions/LicenseManagerLinuxSubscriptionsRequest.h>
+#include <aws/license-manager-linux-subscriptions/LicenseManagerLinuxSubscriptions_EXPORTS.h>
+#include <aws/license-manager-linux-subscriptions/model/SubscriptionProviderSource.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LicenseManagerLinuxSubscriptions
-{
-namespace Model
-{
+namespace Aws {
+namespace LicenseManagerLinuxSubscriptions {
+namespace Model {
 
+/**
+ */
+class RegisterSubscriptionProviderRequest : public LicenseManagerLinuxSubscriptionsRequest {
+ public:
+  AWS_LICENSEMANAGERLINUXSUBSCRIPTIONS_API RegisterSubscriptionProviderRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "RegisterSubscriptionProvider"; }
+
+  AWS_LICENSEMANAGERLINUXSUBSCRIPTIONS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) of the secret where you've stored your
+   * subscription provider's access token. For RHEL subscriptions managed through the
+   * Red Hat Subscription Manager (RHSM), the secret contains your Red Hat Offline
+   * token.</p>
    */
-  class RegisterSubscriptionProviderRequest : public LicenseManagerLinuxSubscriptionsRequest
-  {
-  public:
-    AWS_LICENSEMANAGERLINUXSUBSCRIPTIONS_API RegisterSubscriptionProviderRequest();
+  inline const Aws::String& GetSecretArn() const { return m_secretArn; }
+  inline bool SecretArnHasBeenSet() const { return m_secretArnHasBeenSet; }
+  template <typename SecretArnT = Aws::String>
+  void SetSecretArn(SecretArnT&& value) {
+    m_secretArnHasBeenSet = true;
+    m_secretArn = std::forward<SecretArnT>(value);
+  }
+  template <typename SecretArnT = Aws::String>
+  RegisterSubscriptionProviderRequest& WithSecretArn(SecretArnT&& value) {
+    SetSecretArn(std::forward<SecretArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "RegisterSubscriptionProvider"; }
+  ///@{
+  /**
+   * <p>The supported Linux subscription provider to register.</p>
+   */
+  inline SubscriptionProviderSource GetSubscriptionProviderSource() const { return m_subscriptionProviderSource; }
+  inline bool SubscriptionProviderSourceHasBeenSet() const { return m_subscriptionProviderSourceHasBeenSet; }
+  inline void SetSubscriptionProviderSource(SubscriptionProviderSource value) {
+    m_subscriptionProviderSourceHasBeenSet = true;
+    m_subscriptionProviderSource = value;
+  }
+  inline RegisterSubscriptionProviderRequest& WithSubscriptionProviderSource(SubscriptionProviderSource value) {
+    SetSubscriptionProviderSource(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_LICENSEMANAGERLINUXSUBSCRIPTIONS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The metadata tags to assign to your registered Linux subscription provider
+   * resource.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  RegisterSubscriptionProviderRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  RegisterSubscriptionProviderRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_secretArn;
 
+  SubscriptionProviderSource m_subscriptionProviderSource{SubscriptionProviderSource::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the secret where you've stored your
-     * subscription provider's access token. For RHEL subscriptions managed through the
-     * Red Hat Subscription Manager (RHSM), the secret contains your Red Hat Offline
-     * token.</p>
-     */
-    inline const Aws::String& GetSecretArn() const{ return m_secretArn; }
-    inline bool SecretArnHasBeenSet() const { return m_secretArnHasBeenSet; }
-    inline void SetSecretArn(const Aws::String& value) { m_secretArnHasBeenSet = true; m_secretArn = value; }
-    inline void SetSecretArn(Aws::String&& value) { m_secretArnHasBeenSet = true; m_secretArn = std::move(value); }
-    inline void SetSecretArn(const char* value) { m_secretArnHasBeenSet = true; m_secretArn.assign(value); }
-    inline RegisterSubscriptionProviderRequest& WithSecretArn(const Aws::String& value) { SetSecretArn(value); return *this;}
-    inline RegisterSubscriptionProviderRequest& WithSecretArn(Aws::String&& value) { SetSecretArn(std::move(value)); return *this;}
-    inline RegisterSubscriptionProviderRequest& WithSecretArn(const char* value) { SetSecretArn(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_secretArnHasBeenSet = false;
+  bool m_subscriptionProviderSourceHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The supported Linux subscription provider to register.</p>
-     */
-    inline const SubscriptionProviderSource& GetSubscriptionProviderSource() const{ return m_subscriptionProviderSource; }
-    inline bool SubscriptionProviderSourceHasBeenSet() const { return m_subscriptionProviderSourceHasBeenSet; }
-    inline void SetSubscriptionProviderSource(const SubscriptionProviderSource& value) { m_subscriptionProviderSourceHasBeenSet = true; m_subscriptionProviderSource = value; }
-    inline void SetSubscriptionProviderSource(SubscriptionProviderSource&& value) { m_subscriptionProviderSourceHasBeenSet = true; m_subscriptionProviderSource = std::move(value); }
-    inline RegisterSubscriptionProviderRequest& WithSubscriptionProviderSource(const SubscriptionProviderSource& value) { SetSubscriptionProviderSource(value); return *this;}
-    inline RegisterSubscriptionProviderRequest& WithSubscriptionProviderSource(SubscriptionProviderSource&& value) { SetSubscriptionProviderSource(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The metadata tags to assign to your registered Linux subscription provider
-     * resource.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline RegisterSubscriptionProviderRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline RegisterSubscriptionProviderRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline RegisterSubscriptionProviderRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline RegisterSubscriptionProviderRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_secretArn;
-    bool m_secretArnHasBeenSet = false;
-
-    SubscriptionProviderSource m_subscriptionProviderSource;
-    bool m_subscriptionProviderSourceHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LicenseManagerLinuxSubscriptions
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManagerLinuxSubscriptions
+}  // namespace Aws

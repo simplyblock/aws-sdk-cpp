@@ -4,155 +4,184 @@
  */
 
 #pragma once
-#include <aws/opensearch/OpenSearchService_EXPORTS.h>
-#include <aws/opensearch/model/DomainInformationContainer.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/opensearch/model/OutboundConnectionStatus.h>
+#include <aws/opensearch/OpenSearchService_EXPORTS.h>
 #include <aws/opensearch/model/ConnectionMode.h>
 #include <aws/opensearch/model/ConnectionProperties.h>
+#include <aws/opensearch/model/DomainInformationContainer.h>
+#include <aws/opensearch/model/OutboundConnectionStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace OpenSearchService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace OpenSearchService {
+namespace Model {
 
+/**
+ * <p>Specifies details about an outbound cross-cluster connection.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/OutboundConnection">AWS
+ * API Reference</a></p>
+ */
+class OutboundConnection {
+ public:
+  AWS_OPENSEARCHSERVICE_API OutboundConnection() = default;
+  AWS_OPENSEARCHSERVICE_API OutboundConnection(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API OutboundConnection& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies details about an outbound cross-cluster connection.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/OutboundConnection">AWS
-   * API Reference</a></p>
+   * <p>Information about the source (local) domain.</p>
    */
-  class OutboundConnection
-  {
-  public:
-    AWS_OPENSEARCHSERVICE_API OutboundConnection();
-    AWS_OPENSEARCHSERVICE_API OutboundConnection(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API OutboundConnection& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_OPENSEARCHSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const DomainInformationContainer& GetLocalDomainInfo() const { return m_localDomainInfo; }
+  inline bool LocalDomainInfoHasBeenSet() const { return m_localDomainInfoHasBeenSet; }
+  template <typename LocalDomainInfoT = DomainInformationContainer>
+  void SetLocalDomainInfo(LocalDomainInfoT&& value) {
+    m_localDomainInfoHasBeenSet = true;
+    m_localDomainInfo = std::forward<LocalDomainInfoT>(value);
+  }
+  template <typename LocalDomainInfoT = DomainInformationContainer>
+  OutboundConnection& WithLocalDomainInfo(LocalDomainInfoT&& value) {
+    SetLocalDomainInfo(std::forward<LocalDomainInfoT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Information about the destination (remote) domain.</p>
+   */
+  inline const DomainInformationContainer& GetRemoteDomainInfo() const { return m_remoteDomainInfo; }
+  inline bool RemoteDomainInfoHasBeenSet() const { return m_remoteDomainInfoHasBeenSet; }
+  template <typename RemoteDomainInfoT = DomainInformationContainer>
+  void SetRemoteDomainInfo(RemoteDomainInfoT&& value) {
+    m_remoteDomainInfoHasBeenSet = true;
+    m_remoteDomainInfo = std::forward<RemoteDomainInfoT>(value);
+  }
+  template <typename RemoteDomainInfoT = DomainInformationContainer>
+  OutboundConnection& WithRemoteDomainInfo(RemoteDomainInfoT&& value) {
+    SetRemoteDomainInfo(std::forward<RemoteDomainInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the source (local) domain.</p>
-     */
-    inline const DomainInformationContainer& GetLocalDomainInfo() const{ return m_localDomainInfo; }
-    inline bool LocalDomainInfoHasBeenSet() const { return m_localDomainInfoHasBeenSet; }
-    inline void SetLocalDomainInfo(const DomainInformationContainer& value) { m_localDomainInfoHasBeenSet = true; m_localDomainInfo = value; }
-    inline void SetLocalDomainInfo(DomainInformationContainer&& value) { m_localDomainInfoHasBeenSet = true; m_localDomainInfo = std::move(value); }
-    inline OutboundConnection& WithLocalDomainInfo(const DomainInformationContainer& value) { SetLocalDomainInfo(value); return *this;}
-    inline OutboundConnection& WithLocalDomainInfo(DomainInformationContainer&& value) { SetLocalDomainInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique identifier of the connection.</p>
+   */
+  inline const Aws::String& GetConnectionId() const { return m_connectionId; }
+  inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
+  template <typename ConnectionIdT = Aws::String>
+  void SetConnectionId(ConnectionIdT&& value) {
+    m_connectionIdHasBeenSet = true;
+    m_connectionId = std::forward<ConnectionIdT>(value);
+  }
+  template <typename ConnectionIdT = Aws::String>
+  OutboundConnection& WithConnectionId(ConnectionIdT&& value) {
+    SetConnectionId(std::forward<ConnectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the destination (remote) domain.</p>
-     */
-    inline const DomainInformationContainer& GetRemoteDomainInfo() const{ return m_remoteDomainInfo; }
-    inline bool RemoteDomainInfoHasBeenSet() const { return m_remoteDomainInfoHasBeenSet; }
-    inline void SetRemoteDomainInfo(const DomainInformationContainer& value) { m_remoteDomainInfoHasBeenSet = true; m_remoteDomainInfo = value; }
-    inline void SetRemoteDomainInfo(DomainInformationContainer&& value) { m_remoteDomainInfoHasBeenSet = true; m_remoteDomainInfo = std::move(value); }
-    inline OutboundConnection& WithRemoteDomainInfo(const DomainInformationContainer& value) { SetRemoteDomainInfo(value); return *this;}
-    inline OutboundConnection& WithRemoteDomainInfo(DomainInformationContainer&& value) { SetRemoteDomainInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Name of the connection.</p>
+   */
+  inline const Aws::String& GetConnectionAlias() const { return m_connectionAlias; }
+  inline bool ConnectionAliasHasBeenSet() const { return m_connectionAliasHasBeenSet; }
+  template <typename ConnectionAliasT = Aws::String>
+  void SetConnectionAlias(ConnectionAliasT&& value) {
+    m_connectionAliasHasBeenSet = true;
+    m_connectionAlias = std::forward<ConnectionAliasT>(value);
+  }
+  template <typename ConnectionAliasT = Aws::String>
+  OutboundConnection& WithConnectionAlias(ConnectionAliasT&& value) {
+    SetConnectionAlias(std::forward<ConnectionAliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Unique identifier of the connection.</p>
-     */
-    inline const Aws::String& GetConnectionId() const{ return m_connectionId; }
-    inline bool ConnectionIdHasBeenSet() const { return m_connectionIdHasBeenSet; }
-    inline void SetConnectionId(const Aws::String& value) { m_connectionIdHasBeenSet = true; m_connectionId = value; }
-    inline void SetConnectionId(Aws::String&& value) { m_connectionIdHasBeenSet = true; m_connectionId = std::move(value); }
-    inline void SetConnectionId(const char* value) { m_connectionIdHasBeenSet = true; m_connectionId.assign(value); }
-    inline OutboundConnection& WithConnectionId(const Aws::String& value) { SetConnectionId(value); return *this;}
-    inline OutboundConnection& WithConnectionId(Aws::String&& value) { SetConnectionId(std::move(value)); return *this;}
-    inline OutboundConnection& WithConnectionId(const char* value) { SetConnectionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Status of the connection.</p>
+   */
+  inline const OutboundConnectionStatus& GetConnectionStatus() const { return m_connectionStatus; }
+  inline bool ConnectionStatusHasBeenSet() const { return m_connectionStatusHasBeenSet; }
+  template <typename ConnectionStatusT = OutboundConnectionStatus>
+  void SetConnectionStatus(ConnectionStatusT&& value) {
+    m_connectionStatusHasBeenSet = true;
+    m_connectionStatus = std::forward<ConnectionStatusT>(value);
+  }
+  template <typename ConnectionStatusT = OutboundConnectionStatus>
+  OutboundConnection& WithConnectionStatus(ConnectionStatusT&& value) {
+    SetConnectionStatus(std::forward<ConnectionStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the connection.</p>
-     */
-    inline const Aws::String& GetConnectionAlias() const{ return m_connectionAlias; }
-    inline bool ConnectionAliasHasBeenSet() const { return m_connectionAliasHasBeenSet; }
-    inline void SetConnectionAlias(const Aws::String& value) { m_connectionAliasHasBeenSet = true; m_connectionAlias = value; }
-    inline void SetConnectionAlias(Aws::String&& value) { m_connectionAliasHasBeenSet = true; m_connectionAlias = std::move(value); }
-    inline void SetConnectionAlias(const char* value) { m_connectionAliasHasBeenSet = true; m_connectionAlias.assign(value); }
-    inline OutboundConnection& WithConnectionAlias(const Aws::String& value) { SetConnectionAlias(value); return *this;}
-    inline OutboundConnection& WithConnectionAlias(Aws::String&& value) { SetConnectionAlias(std::move(value)); return *this;}
-    inline OutboundConnection& WithConnectionAlias(const char* value) { SetConnectionAlias(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The connection mode.</p>
+   */
+  inline ConnectionMode GetConnectionMode() const { return m_connectionMode; }
+  inline bool ConnectionModeHasBeenSet() const { return m_connectionModeHasBeenSet; }
+  inline void SetConnectionMode(ConnectionMode value) {
+    m_connectionModeHasBeenSet = true;
+    m_connectionMode = value;
+  }
+  inline OutboundConnection& WithConnectionMode(ConnectionMode value) {
+    SetConnectionMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Status of the connection.</p>
-     */
-    inline const OutboundConnectionStatus& GetConnectionStatus() const{ return m_connectionStatus; }
-    inline bool ConnectionStatusHasBeenSet() const { return m_connectionStatusHasBeenSet; }
-    inline void SetConnectionStatus(const OutboundConnectionStatus& value) { m_connectionStatusHasBeenSet = true; m_connectionStatus = value; }
-    inline void SetConnectionStatus(OutboundConnectionStatus&& value) { m_connectionStatusHasBeenSet = true; m_connectionStatus = std::move(value); }
-    inline OutboundConnection& WithConnectionStatus(const OutboundConnectionStatus& value) { SetConnectionStatus(value); return *this;}
-    inline OutboundConnection& WithConnectionStatus(OutboundConnectionStatus&& value) { SetConnectionStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Properties for the outbound connection.</p>
+   */
+  inline const ConnectionProperties& GetConnectionProperties() const { return m_connectionProperties; }
+  inline bool ConnectionPropertiesHasBeenSet() const { return m_connectionPropertiesHasBeenSet; }
+  template <typename ConnectionPropertiesT = ConnectionProperties>
+  void SetConnectionProperties(ConnectionPropertiesT&& value) {
+    m_connectionPropertiesHasBeenSet = true;
+    m_connectionProperties = std::forward<ConnectionPropertiesT>(value);
+  }
+  template <typename ConnectionPropertiesT = ConnectionProperties>
+  OutboundConnection& WithConnectionProperties(ConnectionPropertiesT&& value) {
+    SetConnectionProperties(std::forward<ConnectionPropertiesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  DomainInformationContainer m_localDomainInfo;
 
-    ///@{
-    /**
-     * <p>The connection mode.</p>
-     */
-    inline const ConnectionMode& GetConnectionMode() const{ return m_connectionMode; }
-    inline bool ConnectionModeHasBeenSet() const { return m_connectionModeHasBeenSet; }
-    inline void SetConnectionMode(const ConnectionMode& value) { m_connectionModeHasBeenSet = true; m_connectionMode = value; }
-    inline void SetConnectionMode(ConnectionMode&& value) { m_connectionModeHasBeenSet = true; m_connectionMode = std::move(value); }
-    inline OutboundConnection& WithConnectionMode(const ConnectionMode& value) { SetConnectionMode(value); return *this;}
-    inline OutboundConnection& WithConnectionMode(ConnectionMode&& value) { SetConnectionMode(std::move(value)); return *this;}
-    ///@}
+  DomainInformationContainer m_remoteDomainInfo;
 
-    ///@{
-    /**
-     * <p>Properties for the outbound connection.</p>
-     */
-    inline const ConnectionProperties& GetConnectionProperties() const{ return m_connectionProperties; }
-    inline bool ConnectionPropertiesHasBeenSet() const { return m_connectionPropertiesHasBeenSet; }
-    inline void SetConnectionProperties(const ConnectionProperties& value) { m_connectionPropertiesHasBeenSet = true; m_connectionProperties = value; }
-    inline void SetConnectionProperties(ConnectionProperties&& value) { m_connectionPropertiesHasBeenSet = true; m_connectionProperties = std::move(value); }
-    inline OutboundConnection& WithConnectionProperties(const ConnectionProperties& value) { SetConnectionProperties(value); return *this;}
-    inline OutboundConnection& WithConnectionProperties(ConnectionProperties&& value) { SetConnectionProperties(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_connectionId;
 
-    DomainInformationContainer m_localDomainInfo;
-    bool m_localDomainInfoHasBeenSet = false;
+  Aws::String m_connectionAlias;
 
-    DomainInformationContainer m_remoteDomainInfo;
-    bool m_remoteDomainInfoHasBeenSet = false;
+  OutboundConnectionStatus m_connectionStatus;
 
-    Aws::String m_connectionId;
-    bool m_connectionIdHasBeenSet = false;
+  ConnectionMode m_connectionMode{ConnectionMode::NOT_SET};
 
-    Aws::String m_connectionAlias;
-    bool m_connectionAliasHasBeenSet = false;
+  ConnectionProperties m_connectionProperties;
+  bool m_localDomainInfoHasBeenSet = false;
+  bool m_remoteDomainInfoHasBeenSet = false;
+  bool m_connectionIdHasBeenSet = false;
+  bool m_connectionAliasHasBeenSet = false;
+  bool m_connectionStatusHasBeenSet = false;
+  bool m_connectionModeHasBeenSet = false;
+  bool m_connectionPropertiesHasBeenSet = false;
+};
 
-    OutboundConnectionStatus m_connectionStatus;
-    bool m_connectionStatusHasBeenSet = false;
-
-    ConnectionMode m_connectionMode;
-    bool m_connectionModeHasBeenSet = false;
-
-    ConnectionProperties m_connectionProperties;
-    bool m_connectionPropertiesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace OpenSearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchService
+}  // namespace Aws

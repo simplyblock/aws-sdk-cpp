@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/macie2/model/DeleteFindingsFilterRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/macie2/model/DeleteFindingsFilterRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Macie2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteFindingsFilterRequest::DeleteFindingsFilterRequest() : 
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteFindingsFilterRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteFindingsFilterRequest::SerializePayload() const { return {}; }

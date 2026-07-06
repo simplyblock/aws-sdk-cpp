@@ -30,7 +30,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Accepts the request that originated from <a>StartPrimaryEmailUpdate</a> to update the primary email address (also known\n            as the root user email address) for the specified account.</p>",
+                "smithy.api#documentation": "<p>Accepts the request that originated from <a>StartPrimaryEmailUpdate</a> to update the primary email address (also known as the root user email address) for the specified account.</p>",
                 "smithy.api#http": {
                     "uri": "/acceptPrimaryEmailUpdate",
                     "method": "POST",
@@ -44,21 +44,21 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. To use this parameter, the caller must be an identity in\n            the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <p>This operation can only be called from the management account or the delegated\n            administrator account of an organization for a member account.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>.</p>\n         </note>",
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <p>This operation can only be called from the management account or the delegated administrator account of an organization for a member account.</p> <note> <p>The management account can't specify its own <code>AccountId</code>.</p> </note>",
                         "smithy.api#required": {}
                     }
                 },
                 "PrimaryEmail": {
                     "target": "com.amazonaws.account#PrimaryEmailAddress",
                     "traits": {
-                        "smithy.api#documentation": "<p>The new primary email address for use with the specified account. This must\n            match the <code>PrimaryEmail</code> from the <code>StartPrimaryEmailUpdate</code> API\n            call.</p>",
+                        "smithy.api#documentation": "<p>The new primary email address for use with the specified account. This must match the <code>PrimaryEmail</code> from the <code>StartPrimaryEmailUpdate</code> API call.</p>",
                         "smithy.api#required": {}
                     }
                 },
                 "Otp": {
                     "target": "com.amazonaws.account#Otp",
                     "traits": {
-                        "smithy.api#documentation": "<p>The OTP code sent to the <code>PrimaryEmail</code> specified on the\n                <code>StartPrimaryEmailUpdate</code> API call.</p>",
+                        "smithy.api#documentation": "<p>The OTP code sent to the <code>PrimaryEmail</code> specified on the <code>StartPrimaryEmailUpdate</code> API call.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -89,10 +89,17 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The operation failed because the calling identity doesn't have the minimum required\n            permissions.</p>",
+                "smithy.api#documentation": "<p>The operation failed because the calling identity doesn't have the minimum required permissions.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 403
             }
@@ -102,7 +109,13 @@
             "version": "2021-02-01",
             "resources": [
                 {
+                    "target": "com.amazonaws.account#AccountNameResource"
+                },
+                {
                     "target": "com.amazonaws.account#AlternateContactResource"
+                },
+                {
+                    "target": "com.amazonaws.account#CommercialToGovCloudGatewayResource"
                 },
                 {
                     "target": "com.amazonaws.account#ContactInformationResource"
@@ -123,6 +136,9 @@
                 "aws.auth#sigv4": {
                     "name": "account"
                 },
+                "aws.endpoints#standardPartitionalEndpoints": {
+                    "endpointPatternType": "service_region_dnsSuffix"
+                },
                 "aws.protocols#restJson1": {},
                 "smithy.api#cors": {},
                 "smithy.api#documentation": "<p>Operations for Amazon Web Services Account Management</p>",
@@ -135,34 +151,250 @@
                     "EventSource"
                 ],
                 "smithy.api#title": "AWS Account",
-                "smithy.rules#endpointRuleSet": {
-                    "version": "1.0",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
                     "parameters": {
-                        "Region": {
-                            "builtIn": "AWS::Region",
-                            "required": false,
-                            "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
-                        },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
+                        },
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://account-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://account-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://account.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://account.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                                "properties": {
+                                    "authSchemes": [
+                                        {
+                                            "name": "sigv4",
+                                            "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                        }
+                                    ]
+                                },
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
+                "smithy.rules#endpointRuleSet": {
+                    "version": "1.0",
+                    "parameters": {
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        },
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -194,173 +426,11 @@
                                     "type": "error"
                                 },
                                 {
-                                    "conditions": [
-                                        {
-                                            "fn": "booleanEquals",
-                                            "argv": [
-                                                {
-                                                    "ref": "UseDualStack"
-                                                },
-                                                true
-                                            ]
-                                        }
-                                    ],
-                                    "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
-                                    "type": "error"
-                                },
-                                {
                                     "conditions": [],
-                                    "endpoint": {
-                                        "url": {
-                                            "ref": "Endpoint"
-                                        },
-                                        "properties": {},
-                                        "headers": {}
-                                    },
-                                    "type": "endpoint"
-                                }
-                            ],
-                            "type": "tree"
-                        },
-                        {
-                            "conditions": [
-                                {
-                                    "fn": "isSet",
-                                    "argv": [
-                                        {
-                                            "ref": "Region"
-                                        }
-                                    ]
-                                }
-                            ],
-                            "rules": [
-                                {
-                                    "conditions": [
-                                        {
-                                            "fn": "aws.partition",
-                                            "argv": [
-                                                {
-                                                    "ref": "Region"
-                                                }
-                                            ],
-                                            "assign": "PartitionResult"
-                                        }
-                                    ],
                                     "rules": [
                                         {
                                             "conditions": [
                                                 {
-                                                    "fn": "stringEquals",
-                                                    "argv": [
-                                                        {
-                                                            "fn": "getAttr",
-                                                            "argv": [
-                                                                {
-                                                                    "ref": "PartitionResult"
-                                                                },
-                                                                "name"
-                                                            ]
-                                                        },
-                                                        "aws"
-                                                    ]
-                                                },
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseFIPS"
-                                                        },
-                                                        false
-                                                    ]
-                                                },
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseDualStack"
-                                                        },
-                                                        false
-                                                    ]
-                                                }
-                                            ],
-                                            "endpoint": {
-                                                "url": "https://account.us-east-1.amazonaws.com",
-                                                "properties": {
-                                                    "authSchemes": [
-                                                        {
-                                                            "name": "sigv4",
-                                                            "signingName": "account",
-                                                            "signingRegion": "us-east-1"
-                                                        }
-                                                    ]
-                                                },
-                                                "headers": {}
-                                            },
-                                            "type": "endpoint"
-                                        },
-                                        {
-                                            "conditions": [
-                                                {
-                                                    "fn": "stringEquals",
-                                                    "argv": [
-                                                        {
-                                                            "fn": "getAttr",
-                                                            "argv": [
-                                                                {
-                                                                    "ref": "PartitionResult"
-                                                                },
-                                                                "name"
-                                                            ]
-                                                        },
-                                                        "aws-cn"
-                                                    ]
-                                                },
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseFIPS"
-                                                        },
-                                                        false
-                                                    ]
-                                                },
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseDualStack"
-                                                        },
-                                                        false
-                                                    ]
-                                                }
-                                            ],
-                                            "endpoint": {
-                                                "url": "https://account.cn-northwest-1.amazonaws.com.cn",
-                                                "properties": {
-                                                    "authSchemes": [
-                                                        {
-                                                            "name": "sigv4",
-                                                            "signingName": "account",
-                                                            "signingRegion": "cn-northwest-1"
-                                                        }
-                                                    ]
-                                                },
-                                                "headers": {}
-                                            },
-                                            "type": "endpoint"
-                                        },
-                                        {
-                                            "conditions": [
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseFIPS"
-                                                        },
-                                                        true
-                                                    ]
-                                                },
-                                                {
                                                     "fn": "booleanEquals",
                                                     "argv": [
                                                         {
@@ -370,169 +440,15 @@
                                                     ]
                                                 }
                                             ],
-                                            "rules": [
-                                                {
-                                                    "conditions": [
-                                                        {
-                                                            "fn": "booleanEquals",
-                                                            "argv": [
-                                                                true,
-                                                                {
-                                                                    "fn": "getAttr",
-                                                                    "argv": [
-                                                                        {
-                                                                            "ref": "PartitionResult"
-                                                                        },
-                                                                        "supportsFIPS"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "fn": "booleanEquals",
-                                                            "argv": [
-                                                                true,
-                                                                {
-                                                                    "fn": "getAttr",
-                                                                    "argv": [
-                                                                        {
-                                                                            "ref": "PartitionResult"
-                                                                        },
-                                                                        "supportsDualStack"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    ],
-                                                    "rules": [
-                                                        {
-                                                            "conditions": [],
-                                                            "endpoint": {
-                                                                "url": "https://account-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                                                "properties": {},
-                                                                "headers": {}
-                                                            },
-                                                            "type": "endpoint"
-                                                        }
-                                                    ],
-                                                    "type": "tree"
-                                                },
-                                                {
-                                                    "conditions": [],
-                                                    "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
-                                                    "type": "error"
-                                                }
-                                            ],
-                                            "type": "tree"
-                                        },
-                                        {
-                                            "conditions": [
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseFIPS"
-                                                        },
-                                                        true
-                                                    ]
-                                                }
-                                            ],
-                                            "rules": [
-                                                {
-                                                    "conditions": [
-                                                        {
-                                                            "fn": "booleanEquals",
-                                                            "argv": [
-                                                                {
-                                                                    "fn": "getAttr",
-                                                                    "argv": [
-                                                                        {
-                                                                            "ref": "PartitionResult"
-                                                                        },
-                                                                        "supportsFIPS"
-                                                                    ]
-                                                                },
-                                                                true
-                                                            ]
-                                                        }
-                                                    ],
-                                                    "rules": [
-                                                        {
-                                                            "conditions": [],
-                                                            "endpoint": {
-                                                                "url": "https://account-fips.{Region}.{PartitionResult#dnsSuffix}",
-                                                                "properties": {},
-                                                                "headers": {}
-                                                            },
-                                                            "type": "endpoint"
-                                                        }
-                                                    ],
-                                                    "type": "tree"
-                                                },
-                                                {
-                                                    "conditions": [],
-                                                    "error": "FIPS is enabled but this partition does not support FIPS",
-                                                    "type": "error"
-                                                }
-                                            ],
-                                            "type": "tree"
-                                        },
-                                        {
-                                            "conditions": [
-                                                {
-                                                    "fn": "booleanEquals",
-                                                    "argv": [
-                                                        {
-                                                            "ref": "UseDualStack"
-                                                        },
-                                                        true
-                                                    ]
-                                                }
-                                            ],
-                                            "rules": [
-                                                {
-                                                    "conditions": [
-                                                        {
-                                                            "fn": "booleanEquals",
-                                                            "argv": [
-                                                                true,
-                                                                {
-                                                                    "fn": "getAttr",
-                                                                    "argv": [
-                                                                        {
-                                                                            "ref": "PartitionResult"
-                                                                        },
-                                                                        "supportsDualStack"
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    ],
-                                                    "rules": [
-                                                        {
-                                                            "conditions": [],
-                                                            "endpoint": {
-                                                                "url": "https://account.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                                                                "properties": {},
-                                                                "headers": {}
-                                                            },
-                                                            "type": "endpoint"
-                                                        }
-                                                    ],
-                                                    "type": "tree"
-                                                },
-                                                {
-                                                    "conditions": [],
-                                                    "error": "DualStack is enabled but this partition does not support DualStack",
-                                                    "type": "error"
-                                                }
-                                            ],
-                                            "type": "tree"
+                                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                                            "type": "error"
                                         },
                                         {
                                             "conditions": [],
                                             "endpoint": {
-                                                "url": "https://account.{Region}.{PartitionResult#dnsSuffix}",
+                                                "url": {
+                                                    "ref": "Endpoint"
+                                                },
                                                 "properties": {},
                                                 "headers": {}
                                             },
@@ -546,39 +462,330 @@
                         },
                         {
                             "conditions": [],
-                            "error": "Invalid Configuration: Missing Region",
-                            "type": "error"
+                            "rules": [
+                                {
+                                    "conditions": [
+                                        {
+                                            "fn": "isSet",
+                                            "argv": [
+                                                {
+                                                    "ref": "Region"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "rules": [
+                                        {
+                                            "conditions": [
+                                                {
+                                                    "fn": "aws.partition",
+                                                    "argv": [
+                                                        {
+                                                            "ref": "Region"
+                                                        }
+                                                    ],
+                                                    "assign": "PartitionResult"
+                                                }
+                                            ],
+                                            "rules": [
+                                                {
+                                                    "conditions": [
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseFIPS"
+                                                                },
+                                                                true
+                                                            ]
+                                                        },
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseDualStack"
+                                                                },
+                                                                true
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "rules": [
+                                                        {
+                                                            "conditions": [
+                                                                {
+                                                                    "fn": "booleanEquals",
+                                                                    "argv": [
+                                                                        true,
+                                                                        {
+                                                                            "fn": "getAttr",
+                                                                            "argv": [
+                                                                                {
+                                                                                    "ref": "PartitionResult"
+                                                                                },
+                                                                                "supportsFIPS"
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "fn": "booleanEquals",
+                                                                    "argv": [
+                                                                        true,
+                                                                        {
+                                                                            "fn": "getAttr",
+                                                                            "argv": [
+                                                                                {
+                                                                                    "ref": "PartitionResult"
+                                                                                },
+                                                                                "supportsDualStack"
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "rules": [
+                                                                {
+                                                                    "conditions": [],
+                                                                    "endpoint": {
+                                                                        "url": "https://account-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                                                                        "properties": {
+                                                                            "authSchemes": [
+                                                                                {
+                                                                                    "name": "sigv4",
+                                                                                    "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "headers": {}
+                                                                    },
+                                                                    "type": "endpoint"
+                                                                }
+                                                            ],
+                                                            "type": "tree"
+                                                        },
+                                                        {
+                                                            "conditions": [],
+                                                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                                                            "type": "error"
+                                                        }
+                                                    ],
+                                                    "type": "tree"
+                                                },
+                                                {
+                                                    "conditions": [
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseFIPS"
+                                                                },
+                                                                true
+                                                            ]
+                                                        },
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseDualStack"
+                                                                },
+                                                                false
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "rules": [
+                                                        {
+                                                            "conditions": [
+                                                                {
+                                                                    "fn": "booleanEquals",
+                                                                    "argv": [
+                                                                        {
+                                                                            "fn": "getAttr",
+                                                                            "argv": [
+                                                                                {
+                                                                                    "ref": "PartitionResult"
+                                                                                },
+                                                                                "supportsFIPS"
+                                                                            ]
+                                                                        },
+                                                                        true
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "rules": [
+                                                                {
+                                                                    "conditions": [],
+                                                                    "endpoint": {
+                                                                        "url": "https://account-fips.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                                                                        "properties": {
+                                                                            "authSchemes": [
+                                                                                {
+                                                                                    "name": "sigv4",
+                                                                                    "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "headers": {}
+                                                                    },
+                                                                    "type": "endpoint"
+                                                                }
+                                                            ],
+                                                            "type": "tree"
+                                                        },
+                                                        {
+                                                            "conditions": [],
+                                                            "error": "FIPS is enabled but this partition does not support FIPS",
+                                                            "type": "error"
+                                                        }
+                                                    ],
+                                                    "type": "tree"
+                                                },
+                                                {
+                                                    "conditions": [
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseFIPS"
+                                                                },
+                                                                false
+                                                            ]
+                                                        },
+                                                        {
+                                                            "fn": "booleanEquals",
+                                                            "argv": [
+                                                                {
+                                                                    "ref": "UseDualStack"
+                                                                },
+                                                                true
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "rules": [
+                                                        {
+                                                            "conditions": [
+                                                                {
+                                                                    "fn": "booleanEquals",
+                                                                    "argv": [
+                                                                        true,
+                                                                        {
+                                                                            "fn": "getAttr",
+                                                                            "argv": [
+                                                                                {
+                                                                                    "ref": "PartitionResult"
+                                                                                },
+                                                                                "supportsDualStack"
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "rules": [
+                                                                {
+                                                                    "conditions": [],
+                                                                    "endpoint": {
+                                                                        "url": "https://account.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dualStackDnsSuffix}",
+                                                                        "properties": {
+                                                                            "authSchemes": [
+                                                                                {
+                                                                                    "name": "sigv4",
+                                                                                    "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "headers": {}
+                                                                    },
+                                                                    "type": "endpoint"
+                                                                }
+                                                            ],
+                                                            "type": "tree"
+                                                        },
+                                                        {
+                                                            "conditions": [],
+                                                            "error": "DualStack is enabled but this partition does not support DualStack",
+                                                            "type": "error"
+                                                        }
+                                                    ],
+                                                    "type": "tree"
+                                                },
+                                                {
+                                                    "conditions": [],
+                                                    "endpoint": {
+                                                        "url": "https://account.{PartitionResult#implicitGlobalRegion}.{PartitionResult#dnsSuffix}",
+                                                        "properties": {
+                                                            "authSchemes": [
+                                                                {
+                                                                    "name": "sigv4",
+                                                                    "signingRegion": "{PartitionResult#implicitGlobalRegion}"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "headers": {}
+                                                    },
+                                                    "type": "endpoint"
+                                                }
+                                            ],
+                                            "type": "tree"
+                                        }
+                                    ],
+                                    "type": "tree"
+                                },
+                                {
+                                    "conditions": [],
+                                    "error": "Invalid Configuration: Missing Region",
+                                    "type": "error"
+                                }
+                            ],
+                            "type": "tree"
                         }
                     ]
                 },
                 "smithy.rules#endpointTests": {
                     "testCases": [
                         {
-                            "documentation": "For region aws-global with FIPS disabled and DualStack disabled",
+                            "documentation": "For custom endpoint with region not set and fips disabled",
                             "expect": {
                                 "endpoint": {
-                                    "properties": {
-                                        "authSchemes": [
-                                            {
-                                                "name": "sigv4",
-                                                "signingName": "account",
-                                                "signingRegion": "us-east-1"
-                                            }
-                                        ]
-                                    },
-                                    "url": "https://account.us-east-1.amazonaws.com"
+                                    "url": "https://example.com"
                                 }
                             },
                             "params": {
-                                "Region": "aws-global",
+                                "Endpoint": "https://example.com",
+                                "UseFIPS": false
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with fips enabled",
+                            "expect": {
+                                "error": "Invalid Configuration: FIPS and custom endpoint are not supported"
+                            },
+                            "params": {
+                                "Endpoint": "https://example.com",
+                                "UseFIPS": true
+                            }
+                        },
+                        {
+                            "documentation": "For custom endpoint with fips disabled and dualstack enabled",
+                            "expect": {
+                                "error": "Invalid Configuration: Dualstack and custom endpoint are not supported"
+                            },
+                            "params": {
+                                "Endpoint": "https://example.com",
                                 "UseFIPS": false,
-                                "UseDualStack": false
+                                "UseDualStack": true
                             }
                         },
                         {
                             "documentation": "For region us-east-1 with FIPS enabled and DualStack enabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account-fips.us-east-1.api.aws"
                                 }
                             },
@@ -592,6 +799,14 @@
                             "documentation": "For region us-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account-fips.us-east-1.amazonaws.com"
                                 }
                             },
@@ -605,6 +820,14 @@
                             "documentation": "For region us-east-1 with FIPS disabled and DualStack enabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account.us-east-1.api.aws"
                                 }
                             },
@@ -622,7 +845,6 @@
                                         "authSchemes": [
                                             {
                                                 "name": "sigv4",
-                                                "signingName": "account",
                                                 "signingRegion": "us-east-1"
                                             }
                                         ]
@@ -637,14 +859,76 @@
                             }
                         },
                         {
-                            "documentation": "For region aws-cn-global with FIPS disabled and DualStack disabled",
+                            "documentation": "For region cn-northwest-1 with FIPS enabled and DualStack enabled",
                             "expect": {
                                 "endpoint": {
                                     "properties": {
                                         "authSchemes": [
                                             {
                                                 "name": "sigv4",
-                                                "signingName": "account",
+                                                "signingRegion": "cn-northwest-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.cn-northwest-1.api.amazonwebservices.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-northwest-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-northwest-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "cn-northwest-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.cn-northwest-1.amazonaws.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-northwest-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-northwest-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "cn-northwest-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.cn-northwest-1.api.amazonwebservices.com.cn"
+                                }
+                            },
+                            "params": {
+                                "Region": "cn-northwest-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region cn-northwest-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
                                                 "signingRegion": "cn-northwest-1"
                                             }
                                         ]
@@ -653,139 +937,65 @@
                                 }
                             },
                             "params": {
-                                "Region": "aws-cn-global",
+                                "Region": "cn-northwest-1",
                                 "UseFIPS": false,
                                 "UseDualStack": false
                             }
                         },
                         {
-                            "documentation": "For region cn-north-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account-fips.cn-north-1.api.amazonwebservices.com.cn"
-                                }
-                            },
-                            "params": {
-                                "Region": "cn-north-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
-                            "documentation": "For region cn-north-1 with FIPS enabled and DualStack disabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account-fips.cn-north-1.amazonaws.com.cn"
-                                }
-                            },
-                            "params": {
-                                "Region": "cn-north-1",
-                                "UseFIPS": true,
-                                "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region cn-north-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account.cn-north-1.api.amazonwebservices.com.cn"
-                                }
-                            },
-                            "params": {
-                                "Region": "cn-north-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
-                            "documentation": "For region cn-north-1 with FIPS disabled and DualStack disabled",
+                            "documentation": "For region eusc-de-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
                                     "properties": {
                                         "authSchemes": [
                                             {
                                                 "name": "sigv4",
-                                                "signingName": "account",
-                                                "signingRegion": "cn-northwest-1"
+                                                "signingRegion": "eusc-de-east-1"
                                             }
                                         ]
                                     },
-                                    "url": "https://account.cn-northwest-1.amazonaws.com.cn"
+                                    "url": "https://account-fips.eusc-de-east-1.amazonaws.eu"
                                 }
                             },
                             "params": {
-                                "Region": "cn-north-1",
-                                "UseFIPS": false,
-                                "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account-fips.us-gov-east-1.api.aws"
-                                }
-                            },
-                            "params": {
-                                "Region": "us-gov-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
-                            "documentation": "For region us-gov-east-1 with FIPS enabled and DualStack disabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account-fips.us-gov-east-1.amazonaws.com"
-                                }
-                            },
-                            "params": {
-                                "Region": "us-gov-east-1",
+                                "Region": "eusc-de-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
                             }
                         },
                         {
-                            "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack enabled",
+                            "documentation": "For region eusc-de-east-1 with FIPS disabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
-                                    "url": "https://account.us-gov-east-1.api.aws"
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "eusc-de-east-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.eusc-de-east-1.amazonaws.eu"
                                 }
                             },
                             "params": {
-                                "Region": "us-gov-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
-                            "documentation": "For region us-gov-east-1 with FIPS disabled and DualStack disabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://account.us-gov-east-1.amazonaws.com"
-                                }
-                            },
-                            "params": {
-                                "Region": "us-gov-east-1",
+                                "Region": "eusc-de-east-1",
                                 "UseFIPS": false,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
                             }
                         },
                         {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-iso-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account-fips.us-iso-east-1.c2s.ic.gov"
                                 }
                             },
@@ -796,20 +1006,17 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-iso-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account.us-iso-east-1.c2s.ic.gov"
                                 }
                             },
@@ -820,20 +1027,17 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-isob-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account-fips.us-isob-east-1.sc2s.sgov.gov"
                                 }
                             },
@@ -844,20 +1048,17 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-isob-east-1"
+                                            }
+                                        ]
+                                    },
                                     "url": "https://account.us-isob-east-1.sc2s.sgov.gov"
                                 }
                             },
@@ -868,54 +1069,171 @@
                             }
                         },
                         {
-                            "documentation": "For custom endpoint with region set and fips disabled and dualstack disabled",
+                            "documentation": "For region eu-isoe-west-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
-                                    "url": "https://example.com"
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "eu-isoe-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.eu-isoe-west-1.cloud.adc-e.uk"
                                 }
                             },
                             "params": {
-                                "Region": "us-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": false,
-                                "Endpoint": "https://example.com"
-                            }
-                        },
-                        {
-                            "documentation": "For custom endpoint with region not set and fips disabled and dualstack disabled",
-                            "expect": {
-                                "endpoint": {
-                                    "url": "https://example.com"
-                                }
-                            },
-                            "params": {
-                                "UseFIPS": false,
-                                "UseDualStack": false,
-                                "Endpoint": "https://example.com"
-                            }
-                        },
-                        {
-                            "documentation": "For custom endpoint with fips enabled and dualstack disabled",
-                            "expect": {
-                                "error": "Invalid Configuration: FIPS and custom endpoint are not supported"
-                            },
-                            "params": {
-                                "Region": "us-east-1",
+                                "Region": "eu-isoe-west-1",
                                 "UseFIPS": true,
-                                "UseDualStack": false,
-                                "Endpoint": "https://example.com"
+                                "UseDualStack": false
                             }
                         },
                         {
-                            "documentation": "For custom endpoint with fips disabled and dualstack enabled",
+                            "documentation": "For region eu-isoe-west-1 with FIPS disabled and DualStack disabled",
                             "expect": {
-                                "error": "Invalid Configuration: Dualstack and custom endpoint are not supported"
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "eu-isoe-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.eu-isoe-west-1.cloud.adc-e.uk"
+                                }
                             },
                             "params": {
-                                "Region": "us-east-1",
+                                "Region": "eu-isoe-west-1",
                                 "UseFIPS": false,
-                                "UseDualStack": true,
-                                "Endpoint": "https://example.com"
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-isof-south-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.us-isof-south-1.csp.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-isof-south-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-isof-south-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.us-isof-south-1.csp.hci.ic.gov"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-isof-south-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-west-1 with FIPS enabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-gov-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.us-gov-west-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-west-1",
+                                "UseFIPS": true,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-west-1 with FIPS enabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-gov-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account-fips.us-gov-west-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-west-1",
+                                "UseFIPS": true,
+                                "UseDualStack": false
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-west-1 with FIPS disabled and DualStack enabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-gov-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.us-gov-west-1.api.aws"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-west-1",
+                                "UseFIPS": false,
+                                "UseDualStack": true
+                            }
+                        },
+                        {
+                            "documentation": "For region us-gov-west-1 with FIPS disabled and DualStack disabled",
+                            "expect": {
+                                "endpoint": {
+                                    "properties": {
+                                        "authSchemes": [
+                                            {
+                                                "name": "sigv4",
+                                                "signingRegion": "us-gov-west-1"
+                                            }
+                                        ]
+                                    },
+                                    "url": "https://account.us-gov-west-1.amazonaws.com"
+                                }
+                            },
+                            "params": {
+                                "Region": "us-gov-west-1",
+                                "UseFIPS": false,
+                                "UseDualStack": false
                             }
                         },
                         {
@@ -929,10 +1247,64 @@
                 }
             }
         },
+        "com.amazonaws.account#AccountCreatedDate": {
+            "type": "timestamp",
+            "traits": {
+                "smithy.api#timestampFormat": "date-time"
+            }
+        },
         "com.amazonaws.account#AccountId": {
             "type": "string",
             "traits": {
                 "smithy.api#pattern": "^\\d{12}$"
+            }
+        },
+        "com.amazonaws.account#AccountName": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 50
+                },
+                "smithy.api#pattern": "^[ -;=?-~]+$",
+                "smithy.api#sensitive": {}
+            }
+        },
+        "com.amazonaws.account#AccountNameResource": {
+            "type": "resource",
+            "put": {
+                "target": "com.amazonaws.account#PutAccountName"
+            },
+            "read": {
+                "target": "com.amazonaws.account#GetAccountInformation"
+            },
+            "traits": {
+                "aws.api#arn": {
+                    "template": "AccountName"
+                }
+            }
+        },
+        "com.amazonaws.account#AccountState": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "PENDING_ACTIVATION",
+                        "name": "PENDING_ACTIVATION"
+                    },
+                    {
+                        "value": "ACTIVE",
+                        "name": "ACTIVE"
+                    },
+                    {
+                        "value": "SUSPENDED",
+                        "name": "SUSPENDED"
+                    },
+                    {
+                        "value": "CLOSED",
+                        "name": "CLOSED"
+                    }
+                ]
             }
         },
         "com.amazonaws.account#AddressLine": {
@@ -980,7 +1352,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>A structure that contains the details of an alternate contact associated with an Amazon Web Services\n            account</p>"
+                "smithy.api#documentation": "<p>A structure that contains the details of an alternate contact associated with an Amazon Web Services account</p>"
             }
         },
         "com.amazonaws.account#AlternateContactResource": {
@@ -1024,6 +1396,29 @@
                 ]
             }
         },
+        "com.amazonaws.account#AwsAccountState": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "PENDING_ACTIVATION",
+                        "name": "PENDING_ACTIVATION"
+                    },
+                    {
+                        "value": "ACTIVE",
+                        "name": "ACTIVE"
+                    },
+                    {
+                        "value": "SUSPENDED",
+                        "name": "SUSPENDED"
+                    },
+                    {
+                        "value": "CLOSED",
+                        "name": "CLOSED"
+                    }
+                ]
+            }
+        },
         "com.amazonaws.account#City": {
             "type": "string",
             "traits": {
@@ -1032,6 +1427,19 @@
                     "max": 50
                 },
                 "smithy.api#sensitive": {}
+            }
+        },
+        "com.amazonaws.account#CommercialToGovCloudGatewayResource": {
+            "type": "resource",
+            "operations": [
+                {
+                    "target": "com.amazonaws.account#GetGovCloudAccountInformation"
+                }
+            ],
+            "traits": {
+                "aws.api#arn": {
+                    "template": "CommercialToGovCloudGateway"
+                }
             }
         },
         "com.amazonaws.account#CompanyName": {
@@ -1052,10 +1460,17 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The request could not be processed because of a conflict in the current status of the\n            resource. For example, this happens if you try to enable a Region that is currently being disabled\n            (in a status of DISABLING).</p>",
+                "smithy.api#documentation": "<p>The request could not be processed because of a conflict in the current status of the resource. For example, this happens if you try to enable a Region that is currently being disabled (in a status of DISABLING) or if you try to change an account’s root user email to an email address which is already in use.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 409
             }
@@ -1099,7 +1514,7 @@
                 "StateOrRegion": {
                     "target": "com.amazonaws.account#StateOrRegion",
                     "traits": {
-                        "smithy.api#documentation": "<p>The state or region of the primary contact address. If the mailing address is within the United States (US), the\n            value in this field can be either a two character state code (for example, <code>NJ</code>) or the full state name\n            (for example, <code>New Jersey</code>). This field is required in the following countries: <code>US</code>,\n                <code>CA</code>, <code>GB</code>, <code>DE</code>, <code>JP</code>, <code>IN</code>,\n            and <code>BR</code>.</p>"
+                        "smithy.api#documentation": "<p>The state or region of the primary contact address. If the mailing address is within the United States (US), the value in this field can be either a two character state code (for example, <code>NJ</code>) or the full state name (for example, <code>New Jersey</code>). This field is required in the following countries: <code>US</code>, <code>CA</code>, <code>GB</code>, <code>DE</code>, <code>JP</code>, <code>IN</code>, and <code>BR</code>.</p>"
                     }
                 },
                 "DistrictOrCounty": {
@@ -1125,14 +1540,14 @@
                 "PhoneNumber": {
                     "target": "com.amazonaws.account#ContactInformationPhoneNumber",
                     "traits": {
-                        "smithy.api#documentation": "<p>The phone number of the primary contact information. The number will be validated and,\n            in some countries, checked for activation.</p>",
+                        "smithy.api#documentation": "<p>The phone number of the primary contact information. The number will be validated and, in some countries, checked for activation.</p>",
                         "smithy.api#required": {}
                     }
                 },
                 "CompanyName": {
                     "target": "com.amazonaws.account#CompanyName",
                     "traits": {
-                        "smithy.api#documentation": "<p>The name of the company associated with the primary contact information, if\n            any.</p>"
+                        "smithy.api#documentation": "<p>The name of the company associated with the primary contact information, if any.</p>"
                     }
                 },
                 "WebsiteUrl": {
@@ -1143,7 +1558,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an\n            Amazon Web Services account.</p>"
+                "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an Amazon Web Services account.</p>"
             }
         },
         "com.amazonaws.account#ContactInformationPhoneNumber": {
@@ -1207,7 +1622,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Deletes the specified alternate contact from an Amazon Web Services account.</p>\n         <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact.html\">Access or\n                updating the alternate contacts</a>.</p>\n         <note>\n            <p>Before you can update the alternate contact information for an \n     Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management\n     and Organizations.  For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enabling trusted access for \n     Amazon Web Services Account Management</a>.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Deletes the specified alternate contact from an Amazon Web Services account.</p> <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-alternate.html\">Update the alternate contacts for your Amazon Web Services account</a>.</p> <note> <p>Before you can update the alternate contact information for an Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management and Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enable trusted access for Amazon Web Services Account Management</a>.</p> </note>",
                 "smithy.api#http": {
                     "uri": "/deleteAlternateContact",
                     "method": "POST",
@@ -1229,7 +1644,7 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that \n        you want to access or modify with this operation.</p>\n         <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the \n        identity used to call the operation.</p>\n         <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and \n        the specified account ID must be a member account in the same organization. The\n        organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features \n        enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled for the \n        Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account \n        assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>; it must call\n            the operation in standalone context by not including the <code>AccountId</code> \n            parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, then \n        don't specify this parameter, and call the operation using an identity belonging to\n        the account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 }
             },
@@ -1263,7 +1678,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Disables (opts-out) a particular Region for an account.</p>\n         <note>\n            <p>The act of disabling a Region will remove all IAM access to any resources that\n                reside in that Region.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Disables (opts-out) a particular Region for an account.</p> <note> <p>The act of disabling a Region will remove all IAM access to any resources that reside in that Region.</p> </note>",
                 "smithy.api#http": {
                     "uri": "/disableRegion",
                     "method": "POST",
@@ -1277,13 +1692,13 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 },
                 "RegionName": {
                     "target": "com.amazonaws.account#RegionName",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example,\n                <code>af-south-1</code>). When you disable a Region, Amazon Web Services performs actions to\n            deactivate that Region in your account, such as destroying IAM resources in the Region.\n            This process takes a few minutes for most accounts, but this can take several hours. You\n            cannot enable the Region until the disabling process is fully completed.</p>",
+                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example, <code>af-south-1</code>). When you disable a Region, Amazon Web Services performs actions to deactivate that Region in your account, such as destroying IAM resources in the Region. This process takes a few minutes for most accounts, but this can take several hours. You cannot enable the Region until the disabling process is fully completed.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -1353,13 +1768,13 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 },
                 "RegionName": {
                     "target": "com.amazonaws.account#RegionName",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example,\n                <code>af-south-1</code>). When you enable a Region, Amazon Web Services performs actions to\n            prepare your account in that Region, such as distributing your IAM resources to the\n            Region. This process takes a few minutes for most accounts, but it can take several\n            hours. You cannot use the Region until this process is complete. Furthermore, you cannot\n            disable the Region until the enabling process is fully completed.</p>",
+                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example, <code>af-south-1</code>). When you enable a Region, Amazon Web Services performs actions to prepare your account in that Region, such as distributing your IAM resources to the Region. This process takes a few minutes for most accounts, but it can take several hours. You cannot use the Region until this process is complete. Furthermore, you cannot disable the Region until the enabling process is fully completed.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -1376,6 +1791,87 @@
                     "max": 50
                 },
                 "smithy.api#sensitive": {}
+            }
+        },
+        "com.amazonaws.account#GetAccountInformation": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.account#GetAccountInformationRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.account#GetAccountInformationResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.account#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.account#InternalServerException"
+                },
+                {
+                    "target": "com.amazonaws.account#TooManyRequestsException"
+                },
+                {
+                    "target": "com.amazonaws.account#ValidationException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Retrieves information about the specified account including its account name, account ID, account creation date and time, and account state. To use this API, an IAM user or role must have the <code>account:GetAccountInformation</code> IAM permission. </p>",
+                "smithy.api#http": {
+                    "uri": "/getAccountInformation",
+                    "method": "POST",
+                    "code": 200
+                },
+                "smithy.api#readonly": {},
+                "smithy.api#suppress": [
+                    "HttpMethodSemantics"
+                ]
+            }
+        },
+        "com.amazonaws.account#GetAccountInformationRequest": {
+            "type": "structure",
+            "members": {
+                "AccountId": {
+                    "target": "com.amazonaws.account#AccountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.account#GetAccountInformationResponse": {
+            "type": "structure",
+            "members": {
+                "AccountId": {
+                    "target": "com.amazonaws.account#AccountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <p>This operation can only be called from the management account or the delegated administrator account of an organization for a member account.</p> <note> <p>The management account can't specify its own <code>AccountId</code>.</p> </note>"
+                    }
+                },
+                "AccountName": {
+                    "target": "com.amazonaws.account#AccountName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the account.</p>"
+                    }
+                },
+                "AccountCreatedDate": {
+                    "target": "com.amazonaws.account#AccountCreatedDate",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The date and time the account was created.</p>"
+                    }
+                },
+                "AccountState": {
+                    "target": "com.amazonaws.account#AccountState",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The state of the account. Each account state represents a specific phase in the account lifecycle. Use this information to manage account access, automate workflows, or trigger actions based on account state changes.</p> <p>Valid values: <code>PENDING_ACTIVATION | ACTIVE | SUSPENDED | CLOSED</code> </p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.account#GetAlternateContact": {
@@ -1404,7 +1900,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the specified alternate contact attached to an Amazon Web Services account.</p>\n         <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact.html\">Access or\n                updating the alternate contacts</a>.</p>\n         <note>\n            <p>Before you can update the alternate contact information for an \n     Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management\n     and Organizations.  For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enabling trusted access for \n     Amazon Web Services Account Management</a>.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Retrieves the specified alternate contact attached to an Amazon Web Services account.</p> <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-alternate.html\">Update the alternate contacts for your Amazon Web Services account</a>.</p> <note> <p>Before you can update the alternate contact information for an Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management and Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enable trusted access for Amazon Web Services Account Management</a>.</p> </note>",
                 "smithy.api#http": {
                     "uri": "/getAlternateContact",
                     "method": "POST",
@@ -1429,7 +1925,7 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that \n        you want to access or modify with this operation.</p>\n         <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the \n        identity used to call the operation.</p>\n         <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and \n        the specified account ID must be a member account in the same organization. The\n        organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features \n        enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled for the \n        Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account \n        assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>; it must call\n            the operation in standalone context by not including the <code>AccountId</code> \n            parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, then \n        don't specify this parameter, and call the operation using an identity belonging to\n        the account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 }
             },
@@ -1477,7 +1973,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Retrieves the primary contact information of an Amazon Web Services account.</p>\n         <p>For complete details about how to use the primary contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact.html\">Update\n                the primary and alternate contact information</a>.</p>",
+                "smithy.api#documentation": "<p>Retrieves the primary contact information of an Amazon Web Services account.</p> <p>For complete details about how to use the primary contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-primary.html\">Update the primary contact for your Amazon Web Services account</a>.</p>",
                 "smithy.api#http": {
                     "uri": "/getContactInformation",
                     "method": "POST",
@@ -1495,7 +1991,7 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 }
             },
@@ -1509,7 +2005,81 @@
                 "ContactInformation": {
                     "target": "com.amazonaws.account#ContactInformation",
                     "traits": {
-                        "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an\n            Amazon Web Services account.</p>"
+                        "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an Amazon Web Services account.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.account#GetGovCloudAccountInformation": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.account#GetGovCloudAccountInformationRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.account#GetGovCloudAccountInformationResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.account#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.account#InternalServerException"
+                },
+                {
+                    "target": "com.amazonaws.account#ResourceNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.account#ResourceUnavailableException"
+                },
+                {
+                    "target": "com.amazonaws.account#TooManyRequestsException"
+                },
+                {
+                    "target": "com.amazonaws.account#ValidationException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Retrieves information about the GovCloud account linked to the specified standard account (if it exists) including the GovCloud account ID and state. To use this API, an IAM user or role must have the <code>account:GetGovCloudAccountInformation</code> IAM permission. </p>",
+                "smithy.api#http": {
+                    "uri": "/getGovCloudAccountInformation",
+                    "method": "POST",
+                    "code": 200
+                },
+                "smithy.api#readonly": {}
+            }
+        },
+        "com.amazonaws.account#GetGovCloudAccountInformationRequest": {
+            "type": "structure",
+            "members": {
+                "StandardAccountId": {
+                    "target": "com.amazonaws.account#AccountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.account#GetGovCloudAccountInformationResponse": {
+            "type": "structure",
+            "members": {
+                "GovCloudAccountId": {
+                    "target": "com.amazonaws.account#AccountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The 12-digit account ID number of the linked GovCloud account.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "AccountState": {
+                    "target": "com.amazonaws.account#AwsAccountState",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The account state of the linked GovCloud account.</p>",
+                        "smithy.api#required": {}
                     }
                 }
             },
@@ -1561,7 +2131,7 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. To use this parameter, the caller must be an identity in\n            the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <p>This operation can only be called from the management account or the delegated\n            administrator account of an organization for a member account.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>.</p>\n         </note>",
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <p>This operation can only be called from the management account or the delegated administrator account of an organization for a member account.</p> <note> <p>The management account can't specify its own <code>AccountId</code>.</p> </note>",
                         "smithy.api#required": {}
                     }
                 }
@@ -1576,7 +2146,7 @@
                 "PrimaryEmail": {
                     "target": "com.amazonaws.account#PrimaryEmailAddress",
                     "traits": {
-                        "smithy.api#documentation": "<p>Retrieves the primary email address associated with the specified\n            account.</p>"
+                        "smithy.api#documentation": "<p>Retrieves the primary email address associated with the specified account.</p>"
                     }
                 }
             },
@@ -1625,13 +2195,13 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 },
                 "RegionName": {
                     "target": "com.amazonaws.account#RegionName",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example,\n                <code>af-south-1</code>). This function will return the status of whatever Region\n            you pass into this parameter. </p>",
+                        "smithy.api#documentation": "<p>Specifies the Region-code for a given Region name (for example, <code>af-south-1</code>). This function will return the status of whatever Region you pass into this parameter. </p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -1652,7 +2222,7 @@
                 "RegionOptStatus": {
                     "target": "com.amazonaws.account#RegionOptStatus",
                     "traits": {
-                        "smithy.api#documentation": "<p>One of the potential statuses a Region can undergo (Enabled, Enabling, Disabled,\n            Disabling, Enabled_By_Default).</p>"
+                        "smithy.api#documentation": "<p>One of the potential statuses a Region can undergo (Enabled, Enabling, Disabled, Disabling, Enabled_By_Default).</p>"
                     }
                 }
             },
@@ -1668,10 +2238,17 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The operation failed because of an error internal to Amazon Web Services. Try your operation again\n            later.</p>",
+                "smithy.api#documentation": "<p>The operation failed because of an error internal to Amazon Web Services. Try your operation again later.</p>",
                 "smithy.api#error": "server",
                 "smithy.api#httpError": 500,
                 "smithy.api#retryable": {}
@@ -1700,7 +2277,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Lists all the Regions for a given account and their respective opt-in statuses.\n            Optionally, this list can be filtered by the <code>region-opt-status-contains</code>\n            parameter. </p>",
+                "smithy.api#documentation": "<p>Lists all the Regions for a given account and their respective opt-in statuses. Optionally, this list can be filtered by the <code>region-opt-status-contains</code> parameter. </p>",
                 "smithy.api#http": {
                     "uri": "/listRegions",
                     "method": "POST",
@@ -1724,13 +2301,13 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 },
                 "MaxResults": {
                     "target": "smithy.api#Integer",
                     "traits": {
-                        "smithy.api#documentation": "<p>The total number of items to return in the command’s output. If the total number of\n            items available is more than the value specified, a <code>NextToken</code> is provided\n            in the command’s output. To resume pagination, provide the <code>NextToken</code> value\n            in the <code>starting-token</code> argument of a subsequent command. Do not use the\n                <code>NextToken</code> response element directly outside of the Amazon Web Services CLI. For usage\n            examples, see <a href=\"http://docs.aws.amazon.com/cli/latest/userguide/pagination.html\">Pagination</a> in the <i>Amazon Web Services Command Line Interface User\n                Guide</i>. </p>",
+                        "smithy.api#documentation": "<p>The total number of items to return in the command’s output. If the total number of items available is more than the value specified, a <code>NextToken</code> is provided in the command’s output. To resume pagination, provide the <code>NextToken</code> value in the <code>starting-token</code> argument of a subsequent command. Do not use the <code>NextToken</code> response element directly outside of the Amazon Web Services CLI. For usage examples, see <a href=\"http://docs.aws.amazon.com/cli/latest/userguide/pagination.html\">Pagination</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>. </p>",
                         "smithy.api#range": {
                             "min": 1,
                             "max": 50
@@ -1740,7 +2317,7 @@
                 "NextToken": {
                     "target": "smithy.api#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>A token used to specify where to start paginating. This is the <code>NextToken</code>\n            from a previously truncated response. For usage examples, see <a href=\"http://docs.aws.amazon.com/cli/latest/userguide/pagination.html\">Pagination</a> in the\n                <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
+                        "smithy.api#documentation": "<p>A token used to specify where to start paginating. This is the <code>NextToken</code> from a previously truncated response. For usage examples, see <a href=\"http://docs.aws.amazon.com/cli/latest/userguide/pagination.html\">Pagination</a> in the <i>Amazon Web Services Command Line Interface User Guide</i>.</p>",
                         "smithy.api#length": {
                             "max": 1000
                         }
@@ -1749,7 +2326,7 @@
                 "RegionOptStatusContains": {
                     "target": "com.amazonaws.account#RegionOptStatusList",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of Region statuses (Enabling, Enabled, Disabling, Disabled, Enabled_by_default)\n            to use to filter the list of Regions for a given account. For example, passing in a\n            value of ENABLING will only return a list of Regions with a Region status of\n            ENABLING.</p>"
+                        "smithy.api#documentation": "<p>A list of Region statuses (Enabling, Enabled, Disabling, Disabled, Enabled_by_default) to use to filter the list of Regions for a given account. For example, passing in a value of ENABLING will only return a list of Regions with a Region status of ENABLING.</p>"
                     }
                 }
             },
@@ -1763,13 +2340,13 @@
                 "NextToken": {
                     "target": "smithy.api#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>If there is more data to be returned, this will be populated. It should be passed into\n            the <code>next-token</code> request parameter of <code>list-regions</code>.</p>"
+                        "smithy.api#documentation": "<p>If there is more data to be returned, this will be populated. It should be passed into the <code>next-token</code> request parameter of <code>list-regions</code>.</p>"
                     }
                 },
                 "Regions": {
                     "target": "com.amazonaws.account#RegionOptList",
                     "traits": {
-                        "smithy.api#documentation": "<p>This is a list of Regions for a given account, or if the filtered parameter was used,\n            a list of Regions that match the filter criteria set in the <code>filter</code>\n            parameter.</p>"
+                        "smithy.api#documentation": "<p>This is a list of Regions for a given account, or if the filtered parameter was used, a list of Regions that match the filter criteria set in the <code>filter</code> parameter.</p>"
                     }
                 }
             },
@@ -1859,6 +2436,59 @@
                 ]
             }
         },
+        "com.amazonaws.account#PutAccountName": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.account#PutAccountNameRequest"
+            },
+            "output": {
+                "target": "smithy.api#Unit"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.account#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.account#InternalServerException"
+                },
+                {
+                    "target": "com.amazonaws.account#TooManyRequestsException"
+                },
+                {
+                    "target": "com.amazonaws.account#ValidationException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Updates the account name of the specified account. To use this API, IAM principals must have the <code>account:PutAccountName</code> IAM permission. </p>",
+                "smithy.api#http": {
+                    "uri": "/putAccountName",
+                    "method": "POST",
+                    "code": 200
+                },
+                "smithy.api#idempotent": {}
+            }
+        },
+        "com.amazonaws.account#PutAccountNameRequest": {
+            "type": "structure",
+            "members": {
+                "AccountName": {
+                    "target": "com.amazonaws.account#AccountName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the account.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "AccountId": {
+                    "target": "com.amazonaws.account#AccountId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
         "com.amazonaws.account#PutAlternateContact": {
             "type": "operation",
             "input": {
@@ -1882,7 +2512,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Modifies the specified alternate contact attached to an Amazon Web Services account.</p>\n         <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact.html\">Access or\n                updating the alternate contacts</a>.</p>\n         <note>\n            <p>Before you can update the alternate contact information for an \n     Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management\n     and Organizations.  For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enabling trusted access for \n     Amazon Web Services Account Management</a>.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Modifies the specified alternate contact attached to an Amazon Web Services account.</p> <p>For complete details about how to use the alternate contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-alternate.html\">Update the alternate contacts for your Amazon Web Services account</a>.</p> <note> <p>Before you can update the alternate contact information for an Amazon Web Services account that is managed by Organizations, you must first enable integration between Amazon Web Services Account Management and Organizations. For more information, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/using-orgs-trusted-access.html\">Enable trusted access for Amazon Web Services Account Management</a>.</p> </note>",
                 "smithy.api#http": {
                     "uri": "/putAlternateContact",
                     "method": "POST",
@@ -1932,7 +2562,7 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that \n        you want to access or modify with this operation.</p>\n         <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the \n        identity used to call the operation.</p>\n         <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and \n        the specified account ID must be a member account in the same organization. The\n        organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features \n        enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled for the \n        Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account \n        assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>; it must call\n            the operation in standalone context by not including the <code>AccountId</code> \n            parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, then \n        don't specify this parameter, and call the operation using an identity belonging to\n        the account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12 digit account ID number of the Amazon Web Services account that you want to access or modify with this operation.</p> <p>If you do not specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation.</p> <p>To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account, and the specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>; it must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, then don't specify this parameter, and call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 }
             },
@@ -1963,7 +2593,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Updates the primary contact information of an Amazon Web Services account.</p>\n         <p>For complete details about how to use the primary contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact.html\">Update\n                the primary and alternate contact information</a>.</p>",
+                "smithy.api#documentation": "<p>Updates the primary contact information of an Amazon Web Services account.</p> <p>For complete details about how to use the primary contact operations, see <a href=\"https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-update-contact-primary.html\">Update the primary contact for your Amazon Web Services account</a>.</p>",
                 "smithy.api#http": {
                     "uri": "/putContactInformation",
                     "method": "POST",
@@ -1978,14 +2608,14 @@
                 "ContactInformation": {
                     "target": "com.amazonaws.account#ContactInformation",
                     "traits": {
-                        "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an\n            Amazon Web Services account.</p>",
+                        "smithy.api#documentation": "<p>Contains the details of the primary contact information associated with an Amazon Web Services account.</p>",
                         "smithy.api#required": {}
                     }
                 },
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. If you don't specify this parameter, it defaults to the\n            Amazon Web Services account of the identity used to call the operation. To use this\n            parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>. It must call\n                the operation in standalone context by not including the <code>AccountId</code>\n                parameter.</p>\n         </note>\n         <p>To call this operation on an account that is not a member of an organization, don't\n            specify this parameter. Instead, call the operation using an identity belonging to the\n            account whose contacts you wish to retrieve or modify.</p>"
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. If you don't specify this parameter, it defaults to the Amazon Web Services account of the identity used to call the operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/services-that-can-integrate-account.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated administrator</a> account assigned.</p> <note> <p>The management account can't specify its own <code>AccountId</code>. It must call the operation in standalone context by not including the <code>AccountId</code> parameter.</p> </note> <p>To call this operation on an account that is not a member of an organization, don't specify this parameter. Instead, call the operation using an identity belonging to the account whose contacts you wish to retrieve or modify.</p>"
                     }
                 }
             },
@@ -2005,12 +2635,12 @@
                 "RegionOptStatus": {
                     "target": "com.amazonaws.account#RegionOptStatus",
                     "traits": {
-                        "smithy.api#documentation": "<p>One of potential statuses a Region can undergo (Enabled, Enabling, Disabled,\n            Disabling, Enabled_By_Default).</p>"
+                        "smithy.api#documentation": "<p>One of potential statuses a Region can undergo (Enabled, Enabling, Disabled, Disabling, Enabled_By_Default).</p>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>This is a structure that expresses the Region for a given account, consisting of a\n            name and opt-in status.</p>"
+                "smithy.api#documentation": "<p>This is a structure that expresses the Region for a given account, consisting of a name and opt-in status.</p>"
             }
         },
         "com.amazonaws.account#RegionName": {
@@ -2091,12 +2721,42 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
                 }
             },
             "traits": {
                 "smithy.api#documentation": "<p>The operation failed because it specified a resource that can't be found.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 404
+            }
+        },
+        "com.amazonaws.account#ResourceUnavailableException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The operation failed because it specified a resource that is not currently available.</p>",
+                "smithy.api#error": "client",
+                "smithy.api#httpError": 424
             }
         },
         "com.amazonaws.account#SensitiveString": {
@@ -2134,7 +2794,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Starts the process to update the primary email address for the specified\n            account.</p>",
+                "smithy.api#documentation": "<p>Starts the process to update the primary email address for the specified account.</p>",
                 "smithy.api#http": {
                     "uri": "/startPrimaryEmailUpdate",
                     "method": "POST",
@@ -2148,14 +2808,14 @@
                 "AccountId": {
                     "target": "com.amazonaws.account#AccountId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access\n            or modify with this operation. To use this parameter, the caller must be an identity in\n            the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's\n                management account</a> or a delegated administrator account. The specified\n            account ID must be a member account in the same organization. The organization must have\n                <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features\n                enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-trusted-access.html\">trusted access</a> enabled\n            for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/using-orgs-delegated-admin.html\">delegated admin</a> account\n            assigned.</p>\n         <p>This operation can only be called from the management account or the delegated\n            administrator account of an organization for a member account.</p>\n         <note>\n            <p>The management account can't specify its own <code>AccountId</code>.</p>\n         </note>",
+                        "smithy.api#documentation": "<p>Specifies the 12-digit account ID number of the Amazon Web Services account that you want to access or modify with this operation. To use this parameter, the caller must be an identity in the <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#account\">organization's management account</a> or a delegated administrator account. The specified account ID must be a member account in the same organization. The organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_org_support-all-features.html\">all features enabled</a>, and the organization must have <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_integrate_services.html\">trusted access</a> enabled for the Account Management service, and optionally a <a href=\"https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html#delegated-admin\">delegated admin</a> account assigned.</p> <p>This operation can only be called from the management account or the delegated administrator account of an organization for a member account.</p> <note> <p>The management account can't specify its own <code>AccountId</code>.</p> </note>",
                         "smithy.api#required": {}
                     }
                 },
                 "PrimaryEmail": {
                     "target": "com.amazonaws.account#PrimaryEmailAddress",
                     "traits": {
-                        "smithy.api#documentation": "<p>The new primary email address (also known as the root user email address) to\n            use in the specified account.</p>",
+                        "smithy.api#documentation": "<p>The new primary email address (also known as the root user email address) to use in the specified account.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -2206,10 +2866,17 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "errorType": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The value populated to the <code>x-amzn-ErrorType</code> response header by API Gateway.</p>",
+                        "smithy.api#httpHeader": "x-amzn-ErrorType"
+                    }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The operation failed because it was called too frequently and exceeded a throttle\n            limit.</p>",
+                "smithy.api#documentation": "<p>The operation failed because it was called too frequently and exceeded a throttle limit.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 429,
                 "smithy.api#retryable": {

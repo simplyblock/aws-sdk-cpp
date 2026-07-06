@@ -4,74 +4,82 @@
  */
 
 #pragma once
-#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
-#include <aws/secretsmanager/SecretsManagerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/secretsmanager/SecretsManagerRequest.h>
+#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SecretsManager
-{
-namespace Model
-{
+namespace Aws {
+namespace SecretsManager {
+namespace Model {
 
+/**
+ */
+class RemoveRegionsFromReplicationRequest : public SecretsManagerRequest {
+ public:
+  AWS_SECRETSMANAGER_API RemoveRegionsFromReplicationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "RemoveRegionsFromReplication"; }
+
+  AWS_SECRETSMANAGER_API Aws::String SerializePayload() const override;
+
+  AWS_SECRETSMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ARN or name of the secret.</p>
    */
-  class RemoveRegionsFromReplicationRequest : public SecretsManagerRequest
-  {
-  public:
-    AWS_SECRETSMANAGER_API RemoveRegionsFromReplicationRequest();
+  inline const Aws::String& GetSecretId() const { return m_secretId; }
+  inline bool SecretIdHasBeenSet() const { return m_secretIdHasBeenSet; }
+  template <typename SecretIdT = Aws::String>
+  void SetSecretId(SecretIdT&& value) {
+    m_secretIdHasBeenSet = true;
+    m_secretId = std::forward<SecretIdT>(value);
+  }
+  template <typename SecretIdT = Aws::String>
+  RemoveRegionsFromReplicationRequest& WithSecretId(SecretIdT&& value) {
+    SetSecretId(std::forward<SecretIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "RemoveRegionsFromReplication"; }
+  ///@{
+  /**
+   * <p>The Regions of the replicas to remove.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetRemoveReplicaRegions() const { return m_removeReplicaRegions; }
+  inline bool RemoveReplicaRegionsHasBeenSet() const { return m_removeReplicaRegionsHasBeenSet; }
+  template <typename RemoveReplicaRegionsT = Aws::Vector<Aws::String>>
+  void SetRemoveReplicaRegions(RemoveReplicaRegionsT&& value) {
+    m_removeReplicaRegionsHasBeenSet = true;
+    m_removeReplicaRegions = std::forward<RemoveReplicaRegionsT>(value);
+  }
+  template <typename RemoveReplicaRegionsT = Aws::Vector<Aws::String>>
+  RemoveRegionsFromReplicationRequest& WithRemoveReplicaRegions(RemoveReplicaRegionsT&& value) {
+    SetRemoveReplicaRegions(std::forward<RemoveReplicaRegionsT>(value));
+    return *this;
+  }
+  template <typename RemoveReplicaRegionsT = Aws::String>
+  RemoveRegionsFromReplicationRequest& AddRemoveReplicaRegions(RemoveReplicaRegionsT&& value) {
+    m_removeReplicaRegionsHasBeenSet = true;
+    m_removeReplicaRegions.emplace_back(std::forward<RemoveReplicaRegionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_secretId;
 
-    AWS_SECRETSMANAGER_API Aws::String SerializePayload() const override;
+  Aws::Vector<Aws::String> m_removeReplicaRegions;
+  bool m_secretIdHasBeenSet = false;
+  bool m_removeReplicaRegionsHasBeenSet = false;
+};
 
-    AWS_SECRETSMANAGER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The ARN or name of the secret.</p>
-     */
-    inline const Aws::String& GetSecretId() const{ return m_secretId; }
-    inline bool SecretIdHasBeenSet() const { return m_secretIdHasBeenSet; }
-    inline void SetSecretId(const Aws::String& value) { m_secretIdHasBeenSet = true; m_secretId = value; }
-    inline void SetSecretId(Aws::String&& value) { m_secretIdHasBeenSet = true; m_secretId = std::move(value); }
-    inline void SetSecretId(const char* value) { m_secretIdHasBeenSet = true; m_secretId.assign(value); }
-    inline RemoveRegionsFromReplicationRequest& WithSecretId(const Aws::String& value) { SetSecretId(value); return *this;}
-    inline RemoveRegionsFromReplicationRequest& WithSecretId(Aws::String&& value) { SetSecretId(std::move(value)); return *this;}
-    inline RemoveRegionsFromReplicationRequest& WithSecretId(const char* value) { SetSecretId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Regions of the replicas to remove.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetRemoveReplicaRegions() const{ return m_removeReplicaRegions; }
-    inline bool RemoveReplicaRegionsHasBeenSet() const { return m_removeReplicaRegionsHasBeenSet; }
-    inline void SetRemoveReplicaRegions(const Aws::Vector<Aws::String>& value) { m_removeReplicaRegionsHasBeenSet = true; m_removeReplicaRegions = value; }
-    inline void SetRemoveReplicaRegions(Aws::Vector<Aws::String>&& value) { m_removeReplicaRegionsHasBeenSet = true; m_removeReplicaRegions = std::move(value); }
-    inline RemoveRegionsFromReplicationRequest& WithRemoveReplicaRegions(const Aws::Vector<Aws::String>& value) { SetRemoveReplicaRegions(value); return *this;}
-    inline RemoveRegionsFromReplicationRequest& WithRemoveReplicaRegions(Aws::Vector<Aws::String>&& value) { SetRemoveReplicaRegions(std::move(value)); return *this;}
-    inline RemoveRegionsFromReplicationRequest& AddRemoveReplicaRegions(const Aws::String& value) { m_removeReplicaRegionsHasBeenSet = true; m_removeReplicaRegions.push_back(value); return *this; }
-    inline RemoveRegionsFromReplicationRequest& AddRemoveReplicaRegions(Aws::String&& value) { m_removeReplicaRegionsHasBeenSet = true; m_removeReplicaRegions.push_back(std::move(value)); return *this; }
-    inline RemoveRegionsFromReplicationRequest& AddRemoveReplicaRegions(const char* value) { m_removeReplicaRegionsHasBeenSet = true; m_removeReplicaRegions.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_secretId;
-    bool m_secretIdHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_removeReplicaRegions;
-    bool m_removeReplicaRegionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecretsManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecretsManager
+}  // namespace Aws

@@ -12,37 +12,20 @@ using namespace Aws::CodeGuruProfiler::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ConfigureAgentRequest::ConfigureAgentRequest() : 
-    m_fleetInstanceIdHasBeenSet(false),
-    m_metadataHasBeenSet(false),
-    m_profilingGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String ConfigureAgentRequest::SerializePayload() const
-{
+Aws::String ConfigureAgentRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_fleetInstanceIdHasBeenSet)
-  {
-   payload.WithString("fleetInstanceId", m_fleetInstanceId);
-
+  if (m_fleetInstanceIdHasBeenSet) {
+    payload.WithString("fleetInstanceId", m_fleetInstanceId);
   }
 
-  if(m_metadataHasBeenSet)
-  {
-   JsonValue metadataJsonMap;
-   for(auto& metadataItem : m_metadata)
-   {
-     metadataJsonMap.WithString(MetadataFieldMapper::GetNameForMetadataField(metadataItem.first), metadataItem.second);
-   }
-   payload.WithObject("metadata", std::move(metadataJsonMap));
-
+  if (m_metadataHasBeenSet) {
+    JsonValue metadataJsonMap;
+    for (auto& metadataItem : m_metadata) {
+      metadataJsonMap.WithString(MetadataFieldMapper::GetNameForMetadataField(metadataItem.first), metadataItem.second);
+    }
+    payload.WithObject("metadata", std::move(metadataJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

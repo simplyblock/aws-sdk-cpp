@@ -4,114 +4,144 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class ImportKeyPairResponse
-  {
-  public:
-    AWS_EC2_API ImportKeyPairResponse();
-    AWS_EC2_API ImportKeyPairResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API ImportKeyPairResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class ImportKeyPairResponse {
+ public:
+  AWS_EC2_API ImportKeyPairResponse() = default;
+  AWS_EC2_API ImportKeyPairResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API ImportKeyPairResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <ul> <li> <p>For RSA key pairs, the key fingerprint is the MD5 public key
+   * fingerprint as specified in section 4 of RFC 4716.</p> </li> <li> <p>For ED25519
+   * key pairs, the key fingerprint is the base64-encoded SHA-256 digest, which is
+   * the default for OpenSSH, starting with <a
+   * href="http://www.openssh.com/txt/release-6.8">OpenSSH 6.8</a>.</p> </li> </ul>
+   */
+  inline const Aws::String& GetKeyFingerprint() const { return m_keyFingerprint; }
+  template <typename KeyFingerprintT = Aws::String>
+  void SetKeyFingerprint(KeyFingerprintT&& value) {
+    m_keyFingerprintHasBeenSet = true;
+    m_keyFingerprint = std::forward<KeyFingerprintT>(value);
+  }
+  template <typename KeyFingerprintT = Aws::String>
+  ImportKeyPairResponse& WithKeyFingerprint(KeyFingerprintT&& value) {
+    SetKeyFingerprint(std::forward<KeyFingerprintT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <ul> <li> <p>For RSA key pairs, the key fingerprint is the MD5 public key
-     * fingerprint as specified in section 4 of RFC 4716.</p> </li> <li> <p>For ED25519
-     * key pairs, the key fingerprint is the base64-encoded SHA-256 digest, which is
-     * the default for OpenSSH, starting with <a
-     * href="http://www.openssh.com/txt/release-6.8">OpenSSH 6.8</a>.</p> </li> </ul>
-     */
-    inline const Aws::String& GetKeyFingerprint() const{ return m_keyFingerprint; }
-    inline void SetKeyFingerprint(const Aws::String& value) { m_keyFingerprint = value; }
-    inline void SetKeyFingerprint(Aws::String&& value) { m_keyFingerprint = std::move(value); }
-    inline void SetKeyFingerprint(const char* value) { m_keyFingerprint.assign(value); }
-    inline ImportKeyPairResponse& WithKeyFingerprint(const Aws::String& value) { SetKeyFingerprint(value); return *this;}
-    inline ImportKeyPairResponse& WithKeyFingerprint(Aws::String&& value) { SetKeyFingerprint(std::move(value)); return *this;}
-    inline ImportKeyPairResponse& WithKeyFingerprint(const char* value) { SetKeyFingerprint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The key pair name that you provided.</p>
+   */
+  inline const Aws::String& GetKeyName() const { return m_keyName; }
+  template <typename KeyNameT = Aws::String>
+  void SetKeyName(KeyNameT&& value) {
+    m_keyNameHasBeenSet = true;
+    m_keyName = std::forward<KeyNameT>(value);
+  }
+  template <typename KeyNameT = Aws::String>
+  ImportKeyPairResponse& WithKeyName(KeyNameT&& value) {
+    SetKeyName(std::forward<KeyNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The key pair name that you provided.</p>
-     */
-    inline const Aws::String& GetKeyName() const{ return m_keyName; }
-    inline void SetKeyName(const Aws::String& value) { m_keyName = value; }
-    inline void SetKeyName(Aws::String&& value) { m_keyName = std::move(value); }
-    inline void SetKeyName(const char* value) { m_keyName.assign(value); }
-    inline ImportKeyPairResponse& WithKeyName(const Aws::String& value) { SetKeyName(value); return *this;}
-    inline ImportKeyPairResponse& WithKeyName(Aws::String&& value) { SetKeyName(std::move(value)); return *this;}
-    inline ImportKeyPairResponse& WithKeyName(const char* value) { SetKeyName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the resulting key pair.</p>
+   */
+  inline const Aws::String& GetKeyPairId() const { return m_keyPairId; }
+  template <typename KeyPairIdT = Aws::String>
+  void SetKeyPairId(KeyPairIdT&& value) {
+    m_keyPairIdHasBeenSet = true;
+    m_keyPairId = std::forward<KeyPairIdT>(value);
+  }
+  template <typename KeyPairIdT = Aws::String>
+  ImportKeyPairResponse& WithKeyPairId(KeyPairIdT&& value) {
+    SetKeyPairId(std::forward<KeyPairIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the resulting key pair.</p>
-     */
-    inline const Aws::String& GetKeyPairId() const{ return m_keyPairId; }
-    inline void SetKeyPairId(const Aws::String& value) { m_keyPairId = value; }
-    inline void SetKeyPairId(Aws::String&& value) { m_keyPairId = std::move(value); }
-    inline void SetKeyPairId(const char* value) { m_keyPairId.assign(value); }
-    inline ImportKeyPairResponse& WithKeyPairId(const Aws::String& value) { SetKeyPairId(value); return *this;}
-    inline ImportKeyPairResponse& WithKeyPairId(Aws::String&& value) { SetKeyPairId(std::move(value)); return *this;}
-    inline ImportKeyPairResponse& WithKeyPairId(const char* value) { SetKeyPairId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags applied to the imported key pair.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  ImportKeyPairResponse& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  ImportKeyPairResponse& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags applied to the imported key pair.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tags = std::move(value); }
-    inline ImportKeyPairResponse& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline ImportKeyPairResponse& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ImportKeyPairResponse& AddTags(const Tag& value) { m_tags.push_back(value); return *this; }
-    inline ImportKeyPairResponse& AddTags(Tag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ImportKeyPairResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ImportKeyPairResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ImportKeyPairResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_keyFingerprint;
+ private:
+  Aws::String m_keyFingerprint;
 
-    Aws::String m_keyName;
+  Aws::String m_keyName;
 
-    Aws::String m_keyPairId;
+  Aws::String m_keyPairId;
 
-    Aws::Vector<Tag> m_tags;
+  Aws::Vector<Tag> m_tags;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_keyFingerprintHasBeenSet = false;
+  bool m_keyNameHasBeenSet = false;
+  bool m_keyPairIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

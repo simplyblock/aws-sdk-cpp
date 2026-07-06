@@ -4,103 +4,116 @@
  */
 
 #pragma once
-#include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/snowball/model/KeyRange.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/snowball/Snowball_EXPORTS.h>
+#include <aws/snowball/model/KeyRange.h>
 #include <aws/snowball/model/TargetOnDeviceService.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Snowball
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace Snowball {
+namespace Model {
 
+/**
+ * <p>Each <code>S3Resource</code> object represents an Amazon S3 bucket that your
+ * transferred data will be exported from or imported into. For export jobs, this
+ * object can have an optional <code>KeyRange</code> value. The length of the range
+ * is defined at job creation, and has either an inclusive
+ * <code>BeginMarker</code>, an inclusive <code>EndMarker</code>, or both. Ranges
+ * are UTF-8 binary sorted.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/S3Resource">AWS
+ * API Reference</a></p>
+ */
+class S3Resource {
+ public:
+  AWS_SNOWBALL_API S3Resource() = default;
+  AWS_SNOWBALL_API S3Resource(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API S3Resource& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>Each <code>S3Resource</code> object represents an Amazon S3 bucket that your
-   * transferred data will be exported from or imported into. For export jobs, this
-   * object can have an optional <code>KeyRange</code> value. The length of the range
-   * is defined at job creation, and has either an inclusive
-   * <code>BeginMarker</code>, an inclusive <code>EndMarker</code>, or both. Ranges
-   * are UTF-8 binary sorted.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/S3Resource">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of an Amazon S3 bucket.</p>
    */
-  class S3Resource
-  {
-  public:
-    AWS_SNOWBALL_API S3Resource();
-    AWS_SNOWBALL_API S3Resource(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API S3Resource& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetBucketArn() const { return m_bucketArn; }
+  inline bool BucketArnHasBeenSet() const { return m_bucketArnHasBeenSet; }
+  template <typename BucketArnT = Aws::String>
+  void SetBucketArn(BucketArnT&& value) {
+    m_bucketArnHasBeenSet = true;
+    m_bucketArn = std::forward<BucketArnT>(value);
+  }
+  template <typename BucketArnT = Aws::String>
+  S3Resource& WithBucketArn(BucketArnT&& value) {
+    SetBucketArn(std::forward<BucketArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>For export jobs, you can provide an optional <code>KeyRange</code> within a
+   * specific Amazon S3 bucket. The length of the range is defined at job creation,
+   * and has either an inclusive <code>BeginMarker</code>, an inclusive
+   * <code>EndMarker</code>, or both. Ranges are UTF-8 binary sorted.</p>
+   */
+  inline const KeyRange& GetKeyRange() const { return m_keyRange; }
+  inline bool KeyRangeHasBeenSet() const { return m_keyRangeHasBeenSet; }
+  template <typename KeyRangeT = KeyRange>
+  void SetKeyRange(KeyRangeT&& value) {
+    m_keyRangeHasBeenSet = true;
+    m_keyRange = std::forward<KeyRangeT>(value);
+  }
+  template <typename KeyRangeT = KeyRange>
+  S3Resource& WithKeyRange(KeyRangeT&& value) {
+    SetKeyRange(std::forward<KeyRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of an Amazon S3 bucket.</p>
-     */
-    inline const Aws::String& GetBucketArn() const{ return m_bucketArn; }
-    inline bool BucketArnHasBeenSet() const { return m_bucketArnHasBeenSet; }
-    inline void SetBucketArn(const Aws::String& value) { m_bucketArnHasBeenSet = true; m_bucketArn = value; }
-    inline void SetBucketArn(Aws::String&& value) { m_bucketArnHasBeenSet = true; m_bucketArn = std::move(value); }
-    inline void SetBucketArn(const char* value) { m_bucketArnHasBeenSet = true; m_bucketArn.assign(value); }
-    inline S3Resource& WithBucketArn(const Aws::String& value) { SetBucketArn(value); return *this;}
-    inline S3Resource& WithBucketArn(Aws::String&& value) { SetBucketArn(std::move(value)); return *this;}
-    inline S3Resource& WithBucketArn(const char* value) { SetBucketArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the service or services on the Snow Family device that your
+   * transferred data will be exported from or imported into. Amazon Web Services
+   * Snow Family supports Amazon S3 and NFS (Network File System).</p>
+   */
+  inline const Aws::Vector<TargetOnDeviceService>& GetTargetOnDeviceServices() const { return m_targetOnDeviceServices; }
+  inline bool TargetOnDeviceServicesHasBeenSet() const { return m_targetOnDeviceServicesHasBeenSet; }
+  template <typename TargetOnDeviceServicesT = Aws::Vector<TargetOnDeviceService>>
+  void SetTargetOnDeviceServices(TargetOnDeviceServicesT&& value) {
+    m_targetOnDeviceServicesHasBeenSet = true;
+    m_targetOnDeviceServices = std::forward<TargetOnDeviceServicesT>(value);
+  }
+  template <typename TargetOnDeviceServicesT = Aws::Vector<TargetOnDeviceService>>
+  S3Resource& WithTargetOnDeviceServices(TargetOnDeviceServicesT&& value) {
+    SetTargetOnDeviceServices(std::forward<TargetOnDeviceServicesT>(value));
+    return *this;
+  }
+  template <typename TargetOnDeviceServicesT = TargetOnDeviceService>
+  S3Resource& AddTargetOnDeviceServices(TargetOnDeviceServicesT&& value) {
+    m_targetOnDeviceServicesHasBeenSet = true;
+    m_targetOnDeviceServices.emplace_back(std::forward<TargetOnDeviceServicesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_bucketArn;
 
-    ///@{
-    /**
-     * <p>For export jobs, you can provide an optional <code>KeyRange</code> within a
-     * specific Amazon S3 bucket. The length of the range is defined at job creation,
-     * and has either an inclusive <code>BeginMarker</code>, an inclusive
-     * <code>EndMarker</code>, or both. Ranges are UTF-8 binary sorted.</p>
-     */
-    inline const KeyRange& GetKeyRange() const{ return m_keyRange; }
-    inline bool KeyRangeHasBeenSet() const { return m_keyRangeHasBeenSet; }
-    inline void SetKeyRange(const KeyRange& value) { m_keyRangeHasBeenSet = true; m_keyRange = value; }
-    inline void SetKeyRange(KeyRange&& value) { m_keyRangeHasBeenSet = true; m_keyRange = std::move(value); }
-    inline S3Resource& WithKeyRange(const KeyRange& value) { SetKeyRange(value); return *this;}
-    inline S3Resource& WithKeyRange(KeyRange&& value) { SetKeyRange(std::move(value)); return *this;}
-    ///@}
+  KeyRange m_keyRange;
 
-    ///@{
-    /**
-     * <p>Specifies the service or services on the Snow Family device that your
-     * transferred data will be exported from or imported into. Amazon Web Services
-     * Snow Family supports Amazon S3 and NFS (Network File System).</p>
-     */
-    inline const Aws::Vector<TargetOnDeviceService>& GetTargetOnDeviceServices() const{ return m_targetOnDeviceServices; }
-    inline bool TargetOnDeviceServicesHasBeenSet() const { return m_targetOnDeviceServicesHasBeenSet; }
-    inline void SetTargetOnDeviceServices(const Aws::Vector<TargetOnDeviceService>& value) { m_targetOnDeviceServicesHasBeenSet = true; m_targetOnDeviceServices = value; }
-    inline void SetTargetOnDeviceServices(Aws::Vector<TargetOnDeviceService>&& value) { m_targetOnDeviceServicesHasBeenSet = true; m_targetOnDeviceServices = std::move(value); }
-    inline S3Resource& WithTargetOnDeviceServices(const Aws::Vector<TargetOnDeviceService>& value) { SetTargetOnDeviceServices(value); return *this;}
-    inline S3Resource& WithTargetOnDeviceServices(Aws::Vector<TargetOnDeviceService>&& value) { SetTargetOnDeviceServices(std::move(value)); return *this;}
-    inline S3Resource& AddTargetOnDeviceServices(const TargetOnDeviceService& value) { m_targetOnDeviceServicesHasBeenSet = true; m_targetOnDeviceServices.push_back(value); return *this; }
-    inline S3Resource& AddTargetOnDeviceServices(TargetOnDeviceService&& value) { m_targetOnDeviceServicesHasBeenSet = true; m_targetOnDeviceServices.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<TargetOnDeviceService> m_targetOnDeviceServices;
+  bool m_bucketArnHasBeenSet = false;
+  bool m_keyRangeHasBeenSet = false;
+  bool m_targetOnDeviceServicesHasBeenSet = false;
+};
 
-    Aws::String m_bucketArn;
-    bool m_bucketArnHasBeenSet = false;
-
-    KeyRange m_keyRange;
-    bool m_keyRangeHasBeenSet = false;
-
-    Aws::Vector<TargetOnDeviceService> m_targetOnDeviceServices;
-    bool m_targetOnDeviceServicesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Model
+}  // namespace Snowball
+}  // namespace Aws

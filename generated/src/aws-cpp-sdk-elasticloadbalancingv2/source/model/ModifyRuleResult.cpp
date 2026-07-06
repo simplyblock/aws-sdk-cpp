@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticloadbalancingv2/model/ModifyRuleResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticloadbalancingv2/model/ModifyRuleResult.h>
 
 #include <utility>
 
@@ -17,44 +17,36 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ModifyRuleResult::ModifyRuleResult()
-{
-}
+ModifyRuleResult::ModifyRuleResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ModifyRuleResult::ModifyRuleResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ModifyRuleResult& ModifyRuleResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifyRuleResult& ModifyRuleResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyRuleResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyRuleResult")) {
     resultNode = rootNode.FirstChild("ModifyRuleResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode rulesNode = resultNode.FirstChild("Rules");
-    if(!rulesNode.IsNull())
-    {
+    if (!rulesNode.IsNull()) {
       XmlNode rulesMember = rulesNode.FirstChild("member");
-      while(!rulesMember.IsNull())
-      {
+      m_rulesHasBeenSet = !rulesMember.IsNull();
+      while (!rulesMember.IsNull()) {
         m_rules.push_back(rulesMember);
         rulesMember = rulesMember.NextNode("member");
       }
 
+      m_rulesHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancingv2::Model::ModifyRuleResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancingv2::Model::ModifyRuleResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

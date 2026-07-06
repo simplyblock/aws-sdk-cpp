@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class CreateWorkforceResult
-  {
-  public:
-    AWS_SAGEMAKER_API CreateWorkforceResult();
-    AWS_SAGEMAKER_API CreateWorkforceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API CreateWorkforceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class CreateWorkforceResult {
+ public:
+  AWS_SAGEMAKER_API CreateWorkforceResult() = default;
+  AWS_SAGEMAKER_API CreateWorkforceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API CreateWorkforceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the workforce.</p>
+   */
+  inline const Aws::String& GetWorkforceArn() const { return m_workforceArn; }
+  template <typename WorkforceArnT = Aws::String>
+  void SetWorkforceArn(WorkforceArnT&& value) {
+    m_workforceArnHasBeenSet = true;
+    m_workforceArn = std::forward<WorkforceArnT>(value);
+  }
+  template <typename WorkforceArnT = Aws::String>
+  CreateWorkforceResult& WithWorkforceArn(WorkforceArnT&& value) {
+    SetWorkforceArn(std::forward<WorkforceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the workforce.</p>
-     */
-    inline const Aws::String& GetWorkforceArn() const{ return m_workforceArn; }
-    inline void SetWorkforceArn(const Aws::String& value) { m_workforceArn = value; }
-    inline void SetWorkforceArn(Aws::String&& value) { m_workforceArn = std::move(value); }
-    inline void SetWorkforceArn(const char* value) { m_workforceArn.assign(value); }
-    inline CreateWorkforceResult& WithWorkforceArn(const Aws::String& value) { SetWorkforceArn(value); return *this;}
-    inline CreateWorkforceResult& WithWorkforceArn(Aws::String&& value) { SetWorkforceArn(std::move(value)); return *this;}
-    inline CreateWorkforceResult& WithWorkforceArn(const char* value) { SetWorkforceArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateWorkforceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateWorkforceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateWorkforceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateWorkforceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_workforceArn;
+ private:
+  Aws::String m_workforceArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workforceArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

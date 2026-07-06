@@ -3,113 +3,86 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticmapreduce/model/StepSummary.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/elasticmapreduce/model/StepSummary.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EMR
-{
-namespace Model
-{
+namespace Aws {
+namespace EMR {
+namespace Model {
 
-StepSummary::StepSummary() : 
-    m_idHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_configHasBeenSet(false),
-    m_actionOnFailure(ActionOnFailure::NOT_SET),
-    m_actionOnFailureHasBeenSet(false),
-    m_statusHasBeenSet(false)
-{
-}
+StepSummary::StepSummary(JsonView jsonValue) { *this = jsonValue; }
 
-StepSummary::StepSummary(JsonView jsonValue)
-  : StepSummary()
-{
-  *this = jsonValue;
-}
-
-StepSummary& StepSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Id"))
-  {
+StepSummary& StepSummary::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Id")) {
     m_id = jsonValue.GetString("Id");
-
     m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Name"))
-  {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Config"))
-  {
+  if (jsonValue.ValueExists("Config")) {
     m_config = jsonValue.GetObject("Config");
-
     m_configHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ActionOnFailure"))
-  {
+  if (jsonValue.ValueExists("ActionOnFailure")) {
     m_actionOnFailure = ActionOnFailureMapper::GetActionOnFailureForName(jsonValue.GetString("ActionOnFailure"));
-
     m_actionOnFailureHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Status"))
-  {
+  if (jsonValue.ValueExists("Status")) {
     m_status = jsonValue.GetObject("Status");
-
     m_statusHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("LogUri")) {
+    m_logUri = jsonValue.GetString("LogUri");
+    m_logUriHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("EncryptionKeyArn")) {
+    m_encryptionKeyArn = jsonValue.GetString("EncryptionKeyArn");
+    m_encryptionKeyArnHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue StepSummary::Jsonize() const
-{
+JsonValue StepSummary::Jsonize() const {
   JsonValue payload;
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("Id", m_id);
-
+  if (m_idHasBeenSet) {
+    payload.WithString("Id", m_id);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_configHasBeenSet)
-  {
-   payload.WithObject("Config", m_config.Jsonize());
-
+  if (m_configHasBeenSet) {
+    payload.WithObject("Config", m_config.Jsonize());
   }
 
-  if(m_actionOnFailureHasBeenSet)
-  {
-   payload.WithString("ActionOnFailure", ActionOnFailureMapper::GetNameForActionOnFailure(m_actionOnFailure));
+  if (m_actionOnFailureHasBeenSet) {
+    payload.WithString("ActionOnFailure", ActionOnFailureMapper::GetNameForActionOnFailure(m_actionOnFailure));
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithObject("Status", m_status.Jsonize());
+  if (m_statusHasBeenSet) {
+    payload.WithObject("Status", m_status.Jsonize());
+  }
 
+  if (m_logUriHasBeenSet) {
+    payload.WithString("LogUri", m_logUri);
+  }
+
+  if (m_encryptionKeyArnHasBeenSet) {
+    payload.WithString("EncryptionKeyArn", m_encryptionKeyArn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

@@ -4,85 +4,102 @@
  */
 
 #pragma once
-#include <aws/redshift-data/RedshiftDataAPIService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift-data/RedshiftDataAPIService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RedshiftDataAPIService
-{
-namespace Model
-{
-  class ListDatabasesResult
-  {
-  public:
-    AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult();
-    AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RedshiftDataAPIService {
+namespace Model {
+class ListDatabasesResult {
+ public:
+  AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult() = default;
+  AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REDSHIFTDATAAPISERVICE_API ListDatabasesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The names of databases. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDatabases() const { return m_databases; }
+  template <typename DatabasesT = Aws::Vector<Aws::String>>
+  void SetDatabases(DatabasesT&& value) {
+    m_databasesHasBeenSet = true;
+    m_databases = std::forward<DatabasesT>(value);
+  }
+  template <typename DatabasesT = Aws::Vector<Aws::String>>
+  ListDatabasesResult& WithDatabases(DatabasesT&& value) {
+    SetDatabases(std::forward<DatabasesT>(value));
+    return *this;
+  }
+  template <typename DatabasesT = Aws::String>
+  ListDatabasesResult& AddDatabases(DatabasesT&& value) {
+    m_databasesHasBeenSet = true;
+    m_databases.emplace_back(std::forward<DatabasesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The names of databases. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDatabases() const{ return m_databases; }
-    inline void SetDatabases(const Aws::Vector<Aws::String>& value) { m_databases = value; }
-    inline void SetDatabases(Aws::Vector<Aws::String>&& value) { m_databases = std::move(value); }
-    inline ListDatabasesResult& WithDatabases(const Aws::Vector<Aws::String>& value) { SetDatabases(value); return *this;}
-    inline ListDatabasesResult& WithDatabases(Aws::Vector<Aws::String>&& value) { SetDatabases(std::move(value)); return *this;}
-    inline ListDatabasesResult& AddDatabases(const Aws::String& value) { m_databases.push_back(value); return *this; }
-    inline ListDatabasesResult& AddDatabases(Aws::String&& value) { m_databases.push_back(std::move(value)); return *this; }
-    inline ListDatabasesResult& AddDatabases(const char* value) { m_databases.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A value that indicates the starting point for the next set of response
+   * records in a subsequent request. If a value is returned in a response, you can
+   * retrieve the next set of records by providing this returned NextToken value in
+   * the next NextToken parameter and retrying the command. If the NextToken field is
+   * empty, all response records have been retrieved for the request. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDatabasesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A value that indicates the starting point for the next set of response
-     * records in a subsequent request. If a value is returned in a response, you can
-     * retrieve the next set of records by providing this returned NextToken value in
-     * the next NextToken parameter and retrying the command. If the NextToken field is
-     * empty, all response records have been retrieved for the request. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDatabasesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDatabasesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDatabasesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDatabasesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDatabasesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDatabasesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDatabasesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_databases;
+ private:
+  Aws::Vector<Aws::String> m_databases;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_databasesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RedshiftDataAPIService
-} // namespace Aws
+}  // namespace Model
+}  // namespace RedshiftDataAPIService
+}  // namespace Aws

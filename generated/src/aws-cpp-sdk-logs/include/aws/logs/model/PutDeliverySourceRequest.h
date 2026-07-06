@@ -4,126 +4,222 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
-#include <aws/logs/CloudWatchLogsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/logs/CloudWatchLogsRequest.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudWatchLogs
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudWatchLogs {
+namespace Model {
 
+/**
+ */
+class PutDeliverySourceRequest : public CloudWatchLogsRequest {
+ public:
+  AWS_CLOUDWATCHLOGS_API PutDeliverySourceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutDeliverySource"; }
+
+  AWS_CLOUDWATCHLOGS_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUDWATCHLOGS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>A name for this delivery source. This name must be unique for all delivery
+   * sources in your account.</p>
    */
-  class PutDeliverySourceRequest : public CloudWatchLogsRequest
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API PutDeliverySourceRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  PutDeliverySourceRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutDeliverySource"; }
+  ///@{
+  /**
+   * <p>The ARN of the Amazon Web Services resource that is generating and sending
+   * logs. For example,
+   * <code>arn:aws:workmail:us-east-1:123456789012:organization/m-1234EXAMPLEabcd1234abcd1234abcd1234</code>
+   * </p> <p>For the <code>SECURITY_FINDING_LOGS</code> logType, use a wildcard ARN
+   * for the hub resource. For Amazon Web Services Security Hub CSPM, use
+   * <code>arn:aws:securityhub:us-east-1:111122223333:hub/ *</code> and for Amazon Web
+   * Services Security Hub, use
+   * <code>arn:aws:securityhub:us-east-1:111122223333:hubv2/ *</code> </p>
+   */
+  inline const Aws::String& GetResourceArn() const { return m_resourceArn; }
+  inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
+  template <typename ResourceArnT = Aws::String>
+  void SetResourceArn(ResourceArnT&& value) {
+    m_resourceArnHasBeenSet = true;
+    m_resourceArn = std::forward<ResourceArnT>(value);
+  }
+  template <typename ResourceArnT = Aws::String>
+  PutDeliverySourceRequest& WithResourceArn(ResourceArnT&& value) {
+    SetResourceArn(std::forward<ResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCHLOGS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Defines the type of log that the source is sending.</p> <ul> <li> <p>For
+   * Amazon Bedrock Agents, the valid values are <code>APPLICATION_LOGS</code> and
+   * <code>EVENT_LOGS</code>.</p> </li> <li> <p>For Amazon Bedrock Knowledge Bases,
+   * the valid value is <code>APPLICATION_LOGS</code>.</p> </li> <li> <p>For Amazon
+   * Bedrock AgentCore Runtime, the valid values are <code>APPLICATION_LOGS</code>,
+   * <code>USAGE_LOGS</code> and <code>TRACES</code>.</p> </li> <li> <p>For Amazon
+   * Bedrock AgentCore Tools, the valid values are <code>APPLICATION_LOGS</code>,
+   * <code>USAGE_LOGS</code> and <code>TRACES</code>.</p> </li> <li> <p>For Amazon
+   * Bedrock AgentCore Identity, the valid values are <code>APPLICATION_LOGS</code>
+   * and <code>TRACES</code>.</p> </li> <li> <p>For Amazon Bedrock AgentCore Memory,
+   * the valid values are <code>APPLICATION_LOGS</code> and <code>TRACES</code>.</p>
+   * </li> <li> <p>For Amazon Bedrock AgentCore Gateway, the valid values are
+   * <code>APPLICATION_LOGS</code> and <code>TRACES</code>.</p> </li> <li> <p>For
+   * Amazon Bedrock AgentCore Payments, the valid values are
+   * <code>APPLICATION_LOGS</code> and <code>TRACES</code>.</p> </li> <li> <p>For
+   * CloudFront, the valid value is <code>ACCESS_LOGS</code>.</p> </li> <li> <p>For
+   * DevOps Agent, the valid value is <code>APPLICATION_LOGS</code>.</p> </li> <li>
+   * <p>For Amazon CodeWhisperer, the valid value is <code>EVENT_LOGS</code>.</p>
+   * </li> <li> <p>For Elemental MediaPackage, the valid values are
+   * <code>EGRESS_ACCESS_LOGS</code> and <code>INGRESS_ACCESS_LOGS</code>.</p> </li>
+   * <li> <p>For Elemental MediaTailor, the valid values are
+   * <code>AD_DECISION_SERVER_LOGS</code>, <code>MANIFEST_SERVICE_LOGS</code>, and
+   * <code>TRANSCODE_LOGS</code>.</p> </li> <li> <p>For Amazon EKS Auto Mode, the
+   * valid values are <code>AUTO_MODE_BLOCK_STORAGE_LOGS</code>,
+   * <code>AUTO_MODE_COMPUTE_LOGS</code>, <code>AUTO_MODE_IPAM_LOGS</code>, and
+   * <code>AUTO_MODE_LOAD_BALANCING_LOGS</code>.</p> </li> <li> <p>For Amazon EKS
+   * Capability Logs, the valid values are <code>EKS_CAPABILITY_ACK_LOGS</code>,
+   * <code>EKS_CAPABILITY_ARGOCD_APPLICATION_LOGS</code>,
+   * <code>EKS_CAPABILITY_ARGOCD_APPLICATIONSET_LOGS</code>,
+   * <code>EKS_CAPABILITY_ARGOCD_COMMITSERVER_LOGS</code>,
+   * <code>EKS_CAPABILITY_ARGOCD_REPOSERVER_LOGS</code>,
+   * <code>EKS_CAPABILITY_ARGOCD_SERVER_LOGS</code>, and
+   * <code>EKS_CAPABILITY_KRO_LOGS</code>.</p> </li> <li> <p>For Entity Resolution,
+   * the valid value is <code>WORKFLOW_LOGS</code>.</p> </li> <li> <p>For IAM
+   * Identity Center, the valid value is <code>ERROR_LOGS</code>.</p> </li> <li>
+   * <p>For Network Firewall Proxy, the valid values are <code>ALERT_LOGS</code>,
+   * <code>ALLOW_LOGS</code>, and <code>DENY_LOGS</code>.</p> </li> <li> <p>For
+   * Network Load Balancer, the valid value is <code>NLB_ACCESS_LOGS</code>.</p>
+   * </li> <li> <p>For PCS, the valid values are <code>PCS_SCHEDULER_LOGS</code>,
+   * <code>PCS_JOBCOMP_LOGS</code>, and <code>PCS_SCHEDULER_AUDIT_LOGS</code>.</p>
+   * </li> <li> <p>For Quick, the valid values are <code>AGENT_HOURS_LOGS</code>,
+   * <code>CHAT_LOGS</code>, <code>FEEDBACK_LOGS</code>, and
+   * <code>INDEX_USAGE_LOGS</code>.</p> </li> <li> <p>For Amazon Web Services RTB
+   * Fabric, the valid values is <code>APPLICATION_LOGS</code>.</p> </li> <li> <p>For
+   * Amazon Q, the valid values are <code>EVENT_LOGS</code> and
+   * <code>SYNC_JOB_LOGS</code>.</p> </li> <li> <p>For Amazon Web Services Security
+   * Hub CSPM, the valid value is <code>SECURITY_FINDING_LOGS</code>.</p> </li> <li>
+   * <p>For Amazon Web Services Security Hub, the valid value is
+   * <code>SECURITY_FINDING_LOGS</code>.</p> </li> <li> <p>For Amazon SES mail
+   * manager, the valid values are <code>APPLICATION_LOGS</code> and
+   * <code>TRAFFIC_POLICY_DEBUG_LOGS</code>.</p> </li> <li> <p>For Amazon WorkMail,
+   * the valid values are <code>ACCESS_CONTROL_LOGS</code>,
+   * <code>AUTHENTICATION_LOGS</code>,
+   * <code>WORKMAIL_AVAILABILITY_PROVIDER_LOGS</code>,
+   * <code>WORKMAIL_MAILBOX_ACCESS_LOGS</code>, and
+   * <code>WORKMAIL_PERSONAL_ACCESS_TOKEN_LOGS</code>.</p> </li> <li> <p>For Amazon
+   * VPC Route Server, the valid value is <code>EVENT_LOGS</code>.</p> </li> </ul>
+   */
+  inline const Aws::String& GetLogType() const { return m_logType; }
+  inline bool LogTypeHasBeenSet() const { return m_logTypeHasBeenSet; }
+  template <typename LogTypeT = Aws::String>
+  void SetLogType(LogTypeT&& value) {
+    m_logTypeHasBeenSet = true;
+    m_logType = std::forward<LogTypeT>(value);
+  }
+  template <typename LogTypeT = Aws::String>
+  PutDeliverySourceRequest& WithLogType(LogTypeT&& value) {
+    SetLogType(std::forward<LogTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCHLOGS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>An optional list of key-value pairs to associate with the resource.</p>
+   * <p>For more information about tagging, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
+   * Amazon Web Services resources</a> </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  PutDeliverySourceRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  PutDeliverySourceRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A map of key-value pairs to configure the delivery source. Both keys and
+   * values must be between 1 and 255 characters in length. For example,
+   * <code>{"samplingRate": "50"}</code>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetDeliverySourceConfiguration() const { return m_deliverySourceConfiguration; }
+  inline bool DeliverySourceConfigurationHasBeenSet() const { return m_deliverySourceConfigurationHasBeenSet; }
+  template <typename DeliverySourceConfigurationT = Aws::Map<Aws::String, Aws::String>>
+  void SetDeliverySourceConfiguration(DeliverySourceConfigurationT&& value) {
+    m_deliverySourceConfigurationHasBeenSet = true;
+    m_deliverySourceConfiguration = std::forward<DeliverySourceConfigurationT>(value);
+  }
+  template <typename DeliverySourceConfigurationT = Aws::Map<Aws::String, Aws::String>>
+  PutDeliverySourceRequest& WithDeliverySourceConfiguration(DeliverySourceConfigurationT&& value) {
+    SetDeliverySourceConfiguration(std::forward<DeliverySourceConfigurationT>(value));
+    return *this;
+  }
+  template <typename DeliverySourceConfigurationKeyT = Aws::String, typename DeliverySourceConfigurationValueT = Aws::String>
+  PutDeliverySourceRequest& AddDeliverySourceConfiguration(DeliverySourceConfigurationKeyT&& key,
+                                                           DeliverySourceConfigurationValueT&& value) {
+    m_deliverySourceConfigurationHasBeenSet = true;
+    m_deliverySourceConfiguration.emplace(std::forward<DeliverySourceConfigurationKeyT>(key),
+                                          std::forward<DeliverySourceConfigurationValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>A name for this delivery source. This name must be unique for all delivery
-     * sources in your account.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline PutDeliverySourceRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline PutDeliverySourceRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline PutDeliverySourceRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_resourceArn;
 
-    ///@{
-    /**
-     * <p>The ARN of the Amazon Web Services resource that is generating and sending
-     * logs. For example,
-     * <code>arn:aws:workmail:us-east-1:123456789012:organization/m-1234EXAMPLEabcd1234abcd1234abcd1234</code>
-     * </p>
-     */
-    inline const Aws::String& GetResourceArn() const{ return m_resourceArn; }
-    inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
-    inline void SetResourceArn(const Aws::String& value) { m_resourceArnHasBeenSet = true; m_resourceArn = value; }
-    inline void SetResourceArn(Aws::String&& value) { m_resourceArnHasBeenSet = true; m_resourceArn = std::move(value); }
-    inline void SetResourceArn(const char* value) { m_resourceArnHasBeenSet = true; m_resourceArn.assign(value); }
-    inline PutDeliverySourceRequest& WithResourceArn(const Aws::String& value) { SetResourceArn(value); return *this;}
-    inline PutDeliverySourceRequest& WithResourceArn(Aws::String&& value) { SetResourceArn(std::move(value)); return *this;}
-    inline PutDeliverySourceRequest& WithResourceArn(const char* value) { SetResourceArn(value); return *this;}
-    ///@}
+  Aws::String m_logType;
 
-    ///@{
-    /**
-     * <p>Defines the type of log that the source is sending.</p> <ul> <li> <p>For
-     * Amazon Bedrock, the valid value is <code>APPLICATION_LOGS</code>.</p> </li> <li>
-     * <p>For Amazon CodeWhisperer, the valid value is <code>EVENT_LOGS</code>.</p>
-     * </li> <li> <p>For IAM Identity Center, the valid value is
-     * <code>ERROR_LOGS</code>.</p> </li> <li> <p>For Amazon WorkMail, the valid values
-     * are <code>ACCESS_CONTROL_LOGS</code>, <code>AUTHENTICATION_LOGS</code>,
-     * <code>WORKMAIL_AVAILABILITY_PROVIDER_LOGS</code>, and
-     * <code>WORKMAIL_MAILBOX_ACCESS_LOGS</code>.</p> </li> </ul>
-     */
-    inline const Aws::String& GetLogType() const{ return m_logType; }
-    inline bool LogTypeHasBeenSet() const { return m_logTypeHasBeenSet; }
-    inline void SetLogType(const Aws::String& value) { m_logTypeHasBeenSet = true; m_logType = value; }
-    inline void SetLogType(Aws::String&& value) { m_logTypeHasBeenSet = true; m_logType = std::move(value); }
-    inline void SetLogType(const char* value) { m_logTypeHasBeenSet = true; m_logType.assign(value); }
-    inline PutDeliverySourceRequest& WithLogType(const Aws::String& value) { SetLogType(value); return *this;}
-    inline PutDeliverySourceRequest& WithLogType(Aws::String&& value) { SetLogType(std::move(value)); return *this;}
-    inline PutDeliverySourceRequest& WithLogType(const char* value) { SetLogType(value); return *this;}
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    ///@{
-    /**
-     * <p>An optional list of key-value pairs to associate with the resource.</p>
-     * <p>For more information about tagging, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
-     * Amazon Web Services resources</a> </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline PutDeliverySourceRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline PutDeliverySourceRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline PutDeliverySourceRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline PutDeliverySourceRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline PutDeliverySourceRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline PutDeliverySourceRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline PutDeliverySourceRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline PutDeliverySourceRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline PutDeliverySourceRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_deliverySourceConfiguration;
+  bool m_nameHasBeenSet = false;
+  bool m_resourceArnHasBeenSet = false;
+  bool m_logTypeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_deliverySourceConfigurationHasBeenSet = false;
+};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet = false;
-
-    Aws::String m_logType;
-    bool m_logTypeHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

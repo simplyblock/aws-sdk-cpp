@@ -5,133 +5,218 @@
 
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/cleanrooms/model/AdditionalAnalyses.h>
 #include <aws/cleanrooms/model/DifferentialPrivacyConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
 
+/**
+ * <p>A type of analysis rule that enables the table owner to approve custom SQL
+ * queries on their configured tables. It supports differential
+ * privacy.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/AnalysisRuleCustom">AWS
+ * API Reference</a></p>
+ */
+class AnalysisRuleCustom {
+ public:
+  AWS_CLEANROOMS_API AnalysisRuleCustom() = default;
+  AWS_CLEANROOMS_API AnalysisRuleCustom(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API AnalysisRuleCustom& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A type of analysis rule that enables the table owner to approve custom SQL
-   * queries on their configured tables. It supports differential
-   * privacy.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/AnalysisRuleCustom">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the analysis templates that are allowed by the custom analysis
+   * rule.</p>
    */
-  class AnalysisRuleCustom
-  {
-  public:
-    AWS_CLEANROOMS_API AnalysisRuleCustom();
-    AWS_CLEANROOMS_API AnalysisRuleCustom(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API AnalysisRuleCustom& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CLEANROOMS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetAllowedAnalyses() const { return m_allowedAnalyses; }
+  inline bool AllowedAnalysesHasBeenSet() const { return m_allowedAnalysesHasBeenSet; }
+  template <typename AllowedAnalysesT = Aws::Vector<Aws::String>>
+  void SetAllowedAnalyses(AllowedAnalysesT&& value) {
+    m_allowedAnalysesHasBeenSet = true;
+    m_allowedAnalyses = std::forward<AllowedAnalysesT>(value);
+  }
+  template <typename AllowedAnalysesT = Aws::Vector<Aws::String>>
+  AnalysisRuleCustom& WithAllowedAnalyses(AllowedAnalysesT&& value) {
+    SetAllowedAnalyses(std::forward<AllowedAnalysesT>(value));
+    return *this;
+  }
+  template <typename AllowedAnalysesT = Aws::String>
+  AnalysisRuleCustom& AddAllowedAnalyses(AllowedAnalysesT&& value) {
+    m_allowedAnalysesHasBeenSet = true;
+    m_allowedAnalyses.emplace_back(std::forward<AllowedAnalysesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The IDs of the Amazon Web Services accounts that are allowed to query by the
+   * custom analysis rule. Required when <code>allowedAnalyses</code> is
+   * <code>ANY_QUERY</code>.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAllowedAnalysisProviders() const { return m_allowedAnalysisProviders; }
+  inline bool AllowedAnalysisProvidersHasBeenSet() const { return m_allowedAnalysisProvidersHasBeenSet; }
+  template <typename AllowedAnalysisProvidersT = Aws::Vector<Aws::String>>
+  void SetAllowedAnalysisProviders(AllowedAnalysisProvidersT&& value) {
+    m_allowedAnalysisProvidersHasBeenSet = true;
+    m_allowedAnalysisProviders = std::forward<AllowedAnalysisProvidersT>(value);
+  }
+  template <typename AllowedAnalysisProvidersT = Aws::Vector<Aws::String>>
+  AnalysisRuleCustom& WithAllowedAnalysisProviders(AllowedAnalysisProvidersT&& value) {
+    SetAllowedAnalysisProviders(std::forward<AllowedAnalysisProvidersT>(value));
+    return *this;
+  }
+  template <typename AllowedAnalysisProvidersT = Aws::String>
+  AnalysisRuleCustom& AddAllowedAnalysisProviders(AllowedAnalysisProvidersT&& value) {
+    m_allowedAnalysisProvidersHasBeenSet = true;
+    m_allowedAnalysisProviders.emplace_back(std::forward<AllowedAnalysisProvidersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the analysis templates that are allowed by the custom analysis
-     * rule.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetAllowedAnalyses() const{ return m_allowedAnalyses; }
-    inline bool AllowedAnalysesHasBeenSet() const { return m_allowedAnalysesHasBeenSet; }
-    inline void SetAllowedAnalyses(const Aws::Vector<Aws::String>& value) { m_allowedAnalysesHasBeenSet = true; m_allowedAnalyses = value; }
-    inline void SetAllowedAnalyses(Aws::Vector<Aws::String>&& value) { m_allowedAnalysesHasBeenSet = true; m_allowedAnalyses = std::move(value); }
-    inline AnalysisRuleCustom& WithAllowedAnalyses(const Aws::Vector<Aws::String>& value) { SetAllowedAnalyses(value); return *this;}
-    inline AnalysisRuleCustom& WithAllowedAnalyses(Aws::Vector<Aws::String>&& value) { SetAllowedAnalyses(std::move(value)); return *this;}
-    inline AnalysisRuleCustom& AddAllowedAnalyses(const Aws::String& value) { m_allowedAnalysesHasBeenSet = true; m_allowedAnalyses.push_back(value); return *this; }
-    inline AnalysisRuleCustom& AddAllowedAnalyses(Aws::String&& value) { m_allowedAnalysesHasBeenSet = true; m_allowedAnalyses.push_back(std::move(value)); return *this; }
-    inline AnalysisRuleCustom& AddAllowedAnalyses(const char* value) { m_allowedAnalysesHasBeenSet = true; m_allowedAnalyses.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> An indicator as to whether additional analyses (such as Clean Rooms ML) can
+   * be applied to the output of the direct query.</p>
+   */
+  inline AdditionalAnalyses GetAdditionalAnalyses() const { return m_additionalAnalyses; }
+  inline bool AdditionalAnalysesHasBeenSet() const { return m_additionalAnalysesHasBeenSet; }
+  inline void SetAdditionalAnalyses(AdditionalAnalyses value) {
+    m_additionalAnalysesHasBeenSet = true;
+    m_additionalAnalyses = value;
+  }
+  inline AnalysisRuleCustom& WithAdditionalAnalyses(AdditionalAnalyses value) {
+    SetAdditionalAnalyses(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IDs of the Amazon Web Services accounts that are allowed to query by the
-     * custom analysis rule. Required when <code>allowedAnalyses</code> is
-     * <code>ANY_QUERY</code>.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetAllowedAnalysisProviders() const{ return m_allowedAnalysisProviders; }
-    inline bool AllowedAnalysisProvidersHasBeenSet() const { return m_allowedAnalysisProvidersHasBeenSet; }
-    inline void SetAllowedAnalysisProviders(const Aws::Vector<Aws::String>& value) { m_allowedAnalysisProvidersHasBeenSet = true; m_allowedAnalysisProviders = value; }
-    inline void SetAllowedAnalysisProviders(Aws::Vector<Aws::String>&& value) { m_allowedAnalysisProvidersHasBeenSet = true; m_allowedAnalysisProviders = std::move(value); }
-    inline AnalysisRuleCustom& WithAllowedAnalysisProviders(const Aws::Vector<Aws::String>& value) { SetAllowedAnalysisProviders(value); return *this;}
-    inline AnalysisRuleCustom& WithAllowedAnalysisProviders(Aws::Vector<Aws::String>&& value) { SetAllowedAnalysisProviders(std::move(value)); return *this;}
-    inline AnalysisRuleCustom& AddAllowedAnalysisProviders(const Aws::String& value) { m_allowedAnalysisProvidersHasBeenSet = true; m_allowedAnalysisProviders.push_back(value); return *this; }
-    inline AnalysisRuleCustom& AddAllowedAnalysisProviders(Aws::String&& value) { m_allowedAnalysisProvidersHasBeenSet = true; m_allowedAnalysisProviders.push_back(std::move(value)); return *this; }
-    inline AnalysisRuleCustom& AddAllowedAnalysisProviders(const char* value) { m_allowedAnalysisProvidersHasBeenSet = true; m_allowedAnalysisProviders.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> A list of columns that aren't allowed to be shown in the query output.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDisallowedOutputColumns() const { return m_disallowedOutputColumns; }
+  inline bool DisallowedOutputColumnsHasBeenSet() const { return m_disallowedOutputColumnsHasBeenSet; }
+  template <typename DisallowedOutputColumnsT = Aws::Vector<Aws::String>>
+  void SetDisallowedOutputColumns(DisallowedOutputColumnsT&& value) {
+    m_disallowedOutputColumnsHasBeenSet = true;
+    m_disallowedOutputColumns = std::forward<DisallowedOutputColumnsT>(value);
+  }
+  template <typename DisallowedOutputColumnsT = Aws::Vector<Aws::String>>
+  AnalysisRuleCustom& WithDisallowedOutputColumns(DisallowedOutputColumnsT&& value) {
+    SetDisallowedOutputColumns(std::forward<DisallowedOutputColumnsT>(value));
+    return *this;
+  }
+  template <typename DisallowedOutputColumnsT = Aws::String>
+  AnalysisRuleCustom& AddDisallowedOutputColumns(DisallowedOutputColumnsT&& value) {
+    m_disallowedOutputColumnsHasBeenSet = true;
+    m_disallowedOutputColumns.emplace_back(std::forward<DisallowedOutputColumnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An indicator as to whether additional analyses (such as Clean Rooms ML) can
-     * be applied to the output of the direct query.</p>
-     */
-    inline const AdditionalAnalyses& GetAdditionalAnalyses() const{ return m_additionalAnalyses; }
-    inline bool AdditionalAnalysesHasBeenSet() const { return m_additionalAnalysesHasBeenSet; }
-    inline void SetAdditionalAnalyses(const AdditionalAnalyses& value) { m_additionalAnalysesHasBeenSet = true; m_additionalAnalyses = value; }
-    inline void SetAdditionalAnalyses(AdditionalAnalyses&& value) { m_additionalAnalysesHasBeenSet = true; m_additionalAnalyses = std::move(value); }
-    inline AnalysisRuleCustom& WithAdditionalAnalyses(const AdditionalAnalyses& value) { SetAdditionalAnalyses(value); return *this;}
-    inline AnalysisRuleCustom& WithAdditionalAnalyses(AdditionalAnalyses&& value) { SetAdditionalAnalyses(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The differential privacy configuration.</p>
+   */
+  inline const DifferentialPrivacyConfiguration& GetDifferentialPrivacy() const { return m_differentialPrivacy; }
+  inline bool DifferentialPrivacyHasBeenSet() const { return m_differentialPrivacyHasBeenSet; }
+  template <typename DifferentialPrivacyT = DifferentialPrivacyConfiguration>
+  void SetDifferentialPrivacy(DifferentialPrivacyT&& value) {
+    m_differentialPrivacyHasBeenSet = true;
+    m_differentialPrivacy = std::forward<DifferentialPrivacyT>(value);
+  }
+  template <typename DifferentialPrivacyT = DifferentialPrivacyConfiguration>
+  AnalysisRuleCustom& WithDifferentialPrivacy(DifferentialPrivacyT&& value) {
+    SetDifferentialPrivacy(std::forward<DifferentialPrivacyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A list of columns that aren't allowed to be shown in the query output.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDisallowedOutputColumns() const{ return m_disallowedOutputColumns; }
-    inline bool DisallowedOutputColumnsHasBeenSet() const { return m_disallowedOutputColumnsHasBeenSet; }
-    inline void SetDisallowedOutputColumns(const Aws::Vector<Aws::String>& value) { m_disallowedOutputColumnsHasBeenSet = true; m_disallowedOutputColumns = value; }
-    inline void SetDisallowedOutputColumns(Aws::Vector<Aws::String>&& value) { m_disallowedOutputColumnsHasBeenSet = true; m_disallowedOutputColumns = std::move(value); }
-    inline AnalysisRuleCustom& WithDisallowedOutputColumns(const Aws::Vector<Aws::String>& value) { SetDisallowedOutputColumns(value); return *this;}
-    inline AnalysisRuleCustom& WithDisallowedOutputColumns(Aws::Vector<Aws::String>&& value) { SetDisallowedOutputColumns(std::move(value)); return *this;}
-    inline AnalysisRuleCustom& AddDisallowedOutputColumns(const Aws::String& value) { m_disallowedOutputColumnsHasBeenSet = true; m_disallowedOutputColumns.push_back(value); return *this; }
-    inline AnalysisRuleCustom& AddDisallowedOutputColumns(Aws::String&& value) { m_disallowedOutputColumnsHasBeenSet = true; m_disallowedOutputColumns.push_back(std::move(value)); return *this; }
-    inline AnalysisRuleCustom& AddDisallowedOutputColumns(const char* value) { m_disallowedOutputColumnsHasBeenSet = true; m_disallowedOutputColumns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The list of Amazon Web Services account IDs that are allowed to receive
+   * results from queries run on the configured table.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAllowedResultReceivers() const { return m_allowedResultReceivers; }
+  inline bool AllowedResultReceiversHasBeenSet() const { return m_allowedResultReceiversHasBeenSet; }
+  template <typename AllowedResultReceiversT = Aws::Vector<Aws::String>>
+  void SetAllowedResultReceivers(AllowedResultReceiversT&& value) {
+    m_allowedResultReceiversHasBeenSet = true;
+    m_allowedResultReceivers = std::forward<AllowedResultReceiversT>(value);
+  }
+  template <typename AllowedResultReceiversT = Aws::Vector<Aws::String>>
+  AnalysisRuleCustom& WithAllowedResultReceivers(AllowedResultReceiversT&& value) {
+    SetAllowedResultReceivers(std::forward<AllowedResultReceiversT>(value));
+    return *this;
+  }
+  template <typename AllowedResultReceiversT = Aws::String>
+  AnalysisRuleCustom& AddAllowedResultReceivers(AllowedResultReceiversT&& value) {
+    m_allowedResultReceiversHasBeenSet = true;
+    m_allowedResultReceivers.emplace_back(std::forward<AllowedResultReceiversT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The differential privacy configuration.</p>
-     */
-    inline const DifferentialPrivacyConfiguration& GetDifferentialPrivacy() const{ return m_differentialPrivacy; }
-    inline bool DifferentialPrivacyHasBeenSet() const { return m_differentialPrivacyHasBeenSet; }
-    inline void SetDifferentialPrivacy(const DifferentialPrivacyConfiguration& value) { m_differentialPrivacyHasBeenSet = true; m_differentialPrivacy = value; }
-    inline void SetDifferentialPrivacy(DifferentialPrivacyConfiguration&& value) { m_differentialPrivacyHasBeenSet = true; m_differentialPrivacy = std::move(value); }
-    inline AnalysisRuleCustom& WithDifferentialPrivacy(const DifferentialPrivacyConfiguration& value) { SetDifferentialPrivacy(value); return *this;}
-    inline AnalysisRuleCustom& WithDifferentialPrivacy(DifferentialPrivacyConfiguration&& value) { SetDifferentialPrivacy(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The list of allowed additional analyses for the custom analysis rule.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAllowedAdditionalAnalyses() const { return m_allowedAdditionalAnalyses; }
+  inline bool AllowedAdditionalAnalysesHasBeenSet() const { return m_allowedAdditionalAnalysesHasBeenSet; }
+  template <typename AllowedAdditionalAnalysesT = Aws::Vector<Aws::String>>
+  void SetAllowedAdditionalAnalyses(AllowedAdditionalAnalysesT&& value) {
+    m_allowedAdditionalAnalysesHasBeenSet = true;
+    m_allowedAdditionalAnalyses = std::forward<AllowedAdditionalAnalysesT>(value);
+  }
+  template <typename AllowedAdditionalAnalysesT = Aws::Vector<Aws::String>>
+  AnalysisRuleCustom& WithAllowedAdditionalAnalyses(AllowedAdditionalAnalysesT&& value) {
+    SetAllowedAdditionalAnalyses(std::forward<AllowedAdditionalAnalysesT>(value));
+    return *this;
+  }
+  template <typename AllowedAdditionalAnalysesT = Aws::String>
+  AnalysisRuleCustom& AddAllowedAdditionalAnalyses(AllowedAdditionalAnalysesT&& value) {
+    m_allowedAdditionalAnalysesHasBeenSet = true;
+    m_allowedAdditionalAnalyses.emplace_back(std::forward<AllowedAdditionalAnalysesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_allowedAnalyses;
 
-    Aws::Vector<Aws::String> m_allowedAnalyses;
-    bool m_allowedAnalysesHasBeenSet = false;
+  Aws::Vector<Aws::String> m_allowedAnalysisProviders;
 
-    Aws::Vector<Aws::String> m_allowedAnalysisProviders;
-    bool m_allowedAnalysisProvidersHasBeenSet = false;
+  AdditionalAnalyses m_additionalAnalyses{AdditionalAnalyses::NOT_SET};
 
-    AdditionalAnalyses m_additionalAnalyses;
-    bool m_additionalAnalysesHasBeenSet = false;
+  Aws::Vector<Aws::String> m_disallowedOutputColumns;
 
-    Aws::Vector<Aws::String> m_disallowedOutputColumns;
-    bool m_disallowedOutputColumnsHasBeenSet = false;
+  DifferentialPrivacyConfiguration m_differentialPrivacy;
 
-    DifferentialPrivacyConfiguration m_differentialPrivacy;
-    bool m_differentialPrivacyHasBeenSet = false;
-  };
+  Aws::Vector<Aws::String> m_allowedResultReceivers;
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+  Aws::Vector<Aws::String> m_allowedAdditionalAnalyses;
+  bool m_allowedAnalysesHasBeenSet = false;
+  bool m_allowedAnalysisProvidersHasBeenSet = false;
+  bool m_additionalAnalysesHasBeenSet = false;
+  bool m_disallowedOutputColumnsHasBeenSet = false;
+  bool m_differentialPrivacyHasBeenSet = false;
+  bool m_allowedResultReceiversHasBeenSet = false;
+  bool m_allowedAdditionalAnalysesHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

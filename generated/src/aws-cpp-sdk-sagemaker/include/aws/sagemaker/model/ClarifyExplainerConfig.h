@@ -4,94 +4,103 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/ClarifyInferenceConfig.h>
 #include <aws/sagemaker/model/ClarifyShapConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>The configuration parameters for the SageMaker Clarify
+ * explainer.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClarifyExplainerConfig">AWS
+ * API Reference</a></p>
+ */
+class ClarifyExplainerConfig {
+ public:
+  AWS_SAGEMAKER_API ClarifyExplainerConfig() = default;
+  AWS_SAGEMAKER_API ClarifyExplainerConfig(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API ClarifyExplainerConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration parameters for the SageMaker Clarify
-   * explainer.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClarifyExplainerConfig">AWS
-   * API Reference</a></p>
+   * <p>A JMESPath boolean expression used to filter which records to explain.
+   * Explanations are activated by default. See <a
+   * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
+   * <code>EnableExplanations</code> </a>for additional information.</p>
    */
-  class ClarifyExplainerConfig
-  {
-  public:
-    AWS_SAGEMAKER_API ClarifyExplainerConfig();
-    AWS_SAGEMAKER_API ClarifyExplainerConfig(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API ClarifyExplainerConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEnableExplanations() const { return m_enableExplanations; }
+  inline bool EnableExplanationsHasBeenSet() const { return m_enableExplanationsHasBeenSet; }
+  template <typename EnableExplanationsT = Aws::String>
+  void SetEnableExplanations(EnableExplanationsT&& value) {
+    m_enableExplanationsHasBeenSet = true;
+    m_enableExplanations = std::forward<EnableExplanationsT>(value);
+  }
+  template <typename EnableExplanationsT = Aws::String>
+  ClarifyExplainerConfig& WithEnableExplanations(EnableExplanationsT&& value) {
+    SetEnableExplanations(std::forward<EnableExplanationsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The inference configuration parameter for the model container.</p>
+   */
+  inline const ClarifyInferenceConfig& GetInferenceConfig() const { return m_inferenceConfig; }
+  inline bool InferenceConfigHasBeenSet() const { return m_inferenceConfigHasBeenSet; }
+  template <typename InferenceConfigT = ClarifyInferenceConfig>
+  void SetInferenceConfig(InferenceConfigT&& value) {
+    m_inferenceConfigHasBeenSet = true;
+    m_inferenceConfig = std::forward<InferenceConfigT>(value);
+  }
+  template <typename InferenceConfigT = ClarifyInferenceConfig>
+  ClarifyExplainerConfig& WithInferenceConfig(InferenceConfigT&& value) {
+    SetInferenceConfig(std::forward<InferenceConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A JMESPath boolean expression used to filter which records to explain.
-     * Explanations are activated by default. See <a
-     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-online-explainability-create-endpoint.html#clarify-online-explainability-create-endpoint-enable">
-     * <code>EnableExplanations</code> </a>for additional information.</p>
-     */
-    inline const Aws::String& GetEnableExplanations() const{ return m_enableExplanations; }
-    inline bool EnableExplanationsHasBeenSet() const { return m_enableExplanationsHasBeenSet; }
-    inline void SetEnableExplanations(const Aws::String& value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations = value; }
-    inline void SetEnableExplanations(Aws::String&& value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations = std::move(value); }
-    inline void SetEnableExplanations(const char* value) { m_enableExplanationsHasBeenSet = true; m_enableExplanations.assign(value); }
-    inline ClarifyExplainerConfig& WithEnableExplanations(const Aws::String& value) { SetEnableExplanations(value); return *this;}
-    inline ClarifyExplainerConfig& WithEnableExplanations(Aws::String&& value) { SetEnableExplanations(std::move(value)); return *this;}
-    inline ClarifyExplainerConfig& WithEnableExplanations(const char* value) { SetEnableExplanations(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration for SHAP analysis.</p>
+   */
+  inline const ClarifyShapConfig& GetShapConfig() const { return m_shapConfig; }
+  inline bool ShapConfigHasBeenSet() const { return m_shapConfigHasBeenSet; }
+  template <typename ShapConfigT = ClarifyShapConfig>
+  void SetShapConfig(ShapConfigT&& value) {
+    m_shapConfigHasBeenSet = true;
+    m_shapConfig = std::forward<ShapConfigT>(value);
+  }
+  template <typename ShapConfigT = ClarifyShapConfig>
+  ClarifyExplainerConfig& WithShapConfig(ShapConfigT&& value) {
+    SetShapConfig(std::forward<ShapConfigT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_enableExplanations;
 
-    ///@{
-    /**
-     * <p>The inference configuration parameter for the model container.</p>
-     */
-    inline const ClarifyInferenceConfig& GetInferenceConfig() const{ return m_inferenceConfig; }
-    inline bool InferenceConfigHasBeenSet() const { return m_inferenceConfigHasBeenSet; }
-    inline void SetInferenceConfig(const ClarifyInferenceConfig& value) { m_inferenceConfigHasBeenSet = true; m_inferenceConfig = value; }
-    inline void SetInferenceConfig(ClarifyInferenceConfig&& value) { m_inferenceConfigHasBeenSet = true; m_inferenceConfig = std::move(value); }
-    inline ClarifyExplainerConfig& WithInferenceConfig(const ClarifyInferenceConfig& value) { SetInferenceConfig(value); return *this;}
-    inline ClarifyExplainerConfig& WithInferenceConfig(ClarifyInferenceConfig&& value) { SetInferenceConfig(std::move(value)); return *this;}
-    ///@}
+  ClarifyInferenceConfig m_inferenceConfig;
 
-    ///@{
-    /**
-     * <p>The configuration for SHAP analysis.</p>
-     */
-    inline const ClarifyShapConfig& GetShapConfig() const{ return m_shapConfig; }
-    inline bool ShapConfigHasBeenSet() const { return m_shapConfigHasBeenSet; }
-    inline void SetShapConfig(const ClarifyShapConfig& value) { m_shapConfigHasBeenSet = true; m_shapConfig = value; }
-    inline void SetShapConfig(ClarifyShapConfig&& value) { m_shapConfigHasBeenSet = true; m_shapConfig = std::move(value); }
-    inline ClarifyExplainerConfig& WithShapConfig(const ClarifyShapConfig& value) { SetShapConfig(value); return *this;}
-    inline ClarifyExplainerConfig& WithShapConfig(ClarifyShapConfig&& value) { SetShapConfig(std::move(value)); return *this;}
-    ///@}
-  private:
+  ClarifyShapConfig m_shapConfig;
+  bool m_enableExplanationsHasBeenSet = false;
+  bool m_inferenceConfigHasBeenSet = false;
+  bool m_shapConfigHasBeenSet = false;
+};
 
-    Aws::String m_enableExplanations;
-    bool m_enableExplanationsHasBeenSet = false;
-
-    ClarifyInferenceConfig m_inferenceConfig;
-    bool m_inferenceConfigHasBeenSet = false;
-
-    ClarifyShapConfig m_shapConfig;
-    bool m_shapConfigHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

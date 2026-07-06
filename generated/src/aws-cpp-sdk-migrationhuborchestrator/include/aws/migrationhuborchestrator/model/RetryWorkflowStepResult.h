@@ -4,108 +4,131 @@
  */
 
 #pragma once
-#include <aws/migrationhuborchestrator/MigrationHubOrchestrator_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/migrationhuborchestrator/MigrationHubOrchestrator_EXPORTS.h>
 #include <aws/migrationhuborchestrator/model/StepStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MigrationHubOrchestrator
-{
-namespace Model
-{
-  class RetryWorkflowStepResult
-  {
-  public:
-    AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult();
-    AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MigrationHubOrchestrator {
+namespace Model {
+class RetryWorkflowStepResult {
+ public:
+  AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult() = default;
+  AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MIGRATIONHUBORCHESTRATOR_API RetryWorkflowStepResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the step group.</p>
+   */
+  inline const Aws::String& GetStepGroupId() const { return m_stepGroupId; }
+  template <typename StepGroupIdT = Aws::String>
+  void SetStepGroupId(StepGroupIdT&& value) {
+    m_stepGroupIdHasBeenSet = true;
+    m_stepGroupId = std::forward<StepGroupIdT>(value);
+  }
+  template <typename StepGroupIdT = Aws::String>
+  RetryWorkflowStepResult& WithStepGroupId(StepGroupIdT&& value) {
+    SetStepGroupId(std::forward<StepGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the step group.</p>
-     */
-    inline const Aws::String& GetStepGroupId() const{ return m_stepGroupId; }
-    inline void SetStepGroupId(const Aws::String& value) { m_stepGroupId = value; }
-    inline void SetStepGroupId(Aws::String&& value) { m_stepGroupId = std::move(value); }
-    inline void SetStepGroupId(const char* value) { m_stepGroupId.assign(value); }
-    inline RetryWorkflowStepResult& WithStepGroupId(const Aws::String& value) { SetStepGroupId(value); return *this;}
-    inline RetryWorkflowStepResult& WithStepGroupId(Aws::String&& value) { SetStepGroupId(std::move(value)); return *this;}
-    inline RetryWorkflowStepResult& WithStepGroupId(const char* value) { SetStepGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the migration workflow.</p>
+   */
+  inline const Aws::String& GetWorkflowId() const { return m_workflowId; }
+  template <typename WorkflowIdT = Aws::String>
+  void SetWorkflowId(WorkflowIdT&& value) {
+    m_workflowIdHasBeenSet = true;
+    m_workflowId = std::forward<WorkflowIdT>(value);
+  }
+  template <typename WorkflowIdT = Aws::String>
+  RetryWorkflowStepResult& WithWorkflowId(WorkflowIdT&& value) {
+    SetWorkflowId(std::forward<WorkflowIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the migration workflow.</p>
-     */
-    inline const Aws::String& GetWorkflowId() const{ return m_workflowId; }
-    inline void SetWorkflowId(const Aws::String& value) { m_workflowId = value; }
-    inline void SetWorkflowId(Aws::String&& value) { m_workflowId = std::move(value); }
-    inline void SetWorkflowId(const char* value) { m_workflowId.assign(value); }
-    inline RetryWorkflowStepResult& WithWorkflowId(const Aws::String& value) { SetWorkflowId(value); return *this;}
-    inline RetryWorkflowStepResult& WithWorkflowId(Aws::String&& value) { SetWorkflowId(std::move(value)); return *this;}
-    inline RetryWorkflowStepResult& WithWorkflowId(const char* value) { SetWorkflowId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the step.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  RetryWorkflowStepResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the step.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline RetryWorkflowStepResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline RetryWorkflowStepResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline RetryWorkflowStepResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the step.</p>
+   */
+  inline StepStatus GetStatus() const { return m_status; }
+  inline void SetStatus(StepStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline RetryWorkflowStepResult& WithStatus(StepStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the step.</p>
-     */
-    inline const StepStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const StepStatus& value) { m_status = value; }
-    inline void SetStatus(StepStatus&& value) { m_status = std::move(value); }
-    inline RetryWorkflowStepResult& WithStatus(const StepStatus& value) { SetStatus(value); return *this;}
-    inline RetryWorkflowStepResult& WithStatus(StepStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RetryWorkflowStepResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RetryWorkflowStepResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RetryWorkflowStepResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RetryWorkflowStepResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_stepGroupId;
+ private:
+  Aws::String m_stepGroupId;
 
-    Aws::String m_workflowId;
+  Aws::String m_workflowId;
 
-    Aws::String m_id;
+  Aws::String m_id;
 
-    StepStatus m_status;
+  StepStatus m_status{StepStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_stepGroupIdHasBeenSet = false;
+  bool m_workflowIdHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MigrationHubOrchestrator
-} // namespace Aws
+}  // namespace Model
+}  // namespace MigrationHubOrchestrator
+}  // namespace Aws

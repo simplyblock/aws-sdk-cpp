@@ -4,89 +4,103 @@
  */
 
 #pragma once
-#include <aws/pi/PI_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pi/PI_EXPORTS.h>
 #include <aws/pi/model/FeatureMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PI
-{
-namespace Model
-{
-  class GetResourceMetadataResult
-  {
-  public:
-    AWS_PI_API GetResourceMetadataResult();
-    AWS_PI_API GetResourceMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PI_API GetResourceMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PI {
+namespace Model {
+class GetResourceMetadataResult {
+ public:
+  AWS_PI_API GetResourceMetadataResult() = default;
+  AWS_PI_API GetResourceMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PI_API GetResourceMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An immutable identifier for a data source that is unique for an Amazon Web
+   * Services Region. Performance Insights gathers metrics from this data source. To
+   * use a DB instance as a data source, specify its <code>DbiResourceId</code>
+   * value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>. </p>
+   */
+  inline const Aws::String& GetIdentifier() const { return m_identifier; }
+  template <typename IdentifierT = Aws::String>
+  void SetIdentifier(IdentifierT&& value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = std::forward<IdentifierT>(value);
+  }
+  template <typename IdentifierT = Aws::String>
+  GetResourceMetadataResult& WithIdentifier(IdentifierT&& value) {
+    SetIdentifier(std::forward<IdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An immutable identifier for a data source that is unique for an Amazon Web
-     * Services Region. Performance Insights gathers metrics from this data source. To
-     * use a DB instance as a data source, specify its <code>DbiResourceId</code>
-     * value. For example, specify <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>. </p>
-     */
-    inline const Aws::String& GetIdentifier() const{ return m_identifier; }
-    inline void SetIdentifier(const Aws::String& value) { m_identifier = value; }
-    inline void SetIdentifier(Aws::String&& value) { m_identifier = std::move(value); }
-    inline void SetIdentifier(const char* value) { m_identifier.assign(value); }
-    inline GetResourceMetadataResult& WithIdentifier(const Aws::String& value) { SetIdentifier(value); return *this;}
-    inline GetResourceMetadataResult& WithIdentifier(Aws::String&& value) { SetIdentifier(std::move(value)); return *this;}
-    inline GetResourceMetadataResult& WithIdentifier(const char* value) { SetIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The metadata for different features. For example, the metadata might indicate
+   * that a feature is turned on or off on a specific DB instance.</p>
+   */
+  inline const Aws::Map<Aws::String, FeatureMetadata>& GetFeatures() const { return m_features; }
+  template <typename FeaturesT = Aws::Map<Aws::String, FeatureMetadata>>
+  void SetFeatures(FeaturesT&& value) {
+    m_featuresHasBeenSet = true;
+    m_features = std::forward<FeaturesT>(value);
+  }
+  template <typename FeaturesT = Aws::Map<Aws::String, FeatureMetadata>>
+  GetResourceMetadataResult& WithFeatures(FeaturesT&& value) {
+    SetFeatures(std::forward<FeaturesT>(value));
+    return *this;
+  }
+  template <typename FeaturesKeyT = Aws::String, typename FeaturesValueT = FeatureMetadata>
+  GetResourceMetadataResult& AddFeatures(FeaturesKeyT&& key, FeaturesValueT&& value) {
+    m_featuresHasBeenSet = true;
+    m_features.emplace(std::forward<FeaturesKeyT>(key), std::forward<FeaturesValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metadata for different features. For example, the metadata might indicate
-     * that a feature is turned on or off on a specific DB instance.</p>
-     */
-    inline const Aws::Map<Aws::String, FeatureMetadata>& GetFeatures() const{ return m_features; }
-    inline void SetFeatures(const Aws::Map<Aws::String, FeatureMetadata>& value) { m_features = value; }
-    inline void SetFeatures(Aws::Map<Aws::String, FeatureMetadata>&& value) { m_features = std::move(value); }
-    inline GetResourceMetadataResult& WithFeatures(const Aws::Map<Aws::String, FeatureMetadata>& value) { SetFeatures(value); return *this;}
-    inline GetResourceMetadataResult& WithFeatures(Aws::Map<Aws::String, FeatureMetadata>&& value) { SetFeatures(std::move(value)); return *this;}
-    inline GetResourceMetadataResult& AddFeatures(const Aws::String& key, const FeatureMetadata& value) { m_features.emplace(key, value); return *this; }
-    inline GetResourceMetadataResult& AddFeatures(Aws::String&& key, const FeatureMetadata& value) { m_features.emplace(std::move(key), value); return *this; }
-    inline GetResourceMetadataResult& AddFeatures(const Aws::String& key, FeatureMetadata&& value) { m_features.emplace(key, std::move(value)); return *this; }
-    inline GetResourceMetadataResult& AddFeatures(Aws::String&& key, FeatureMetadata&& value) { m_features.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetResourceMetadataResult& AddFeatures(const char* key, FeatureMetadata&& value) { m_features.emplace(key, std::move(value)); return *this; }
-    inline GetResourceMetadataResult& AddFeatures(const char* key, const FeatureMetadata& value) { m_features.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetResourceMetadataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetResourceMetadataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetResourceMetadataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetResourceMetadataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_identifier;
+ private:
+  Aws::String m_identifier;
 
-    Aws::Map<Aws::String, FeatureMetadata> m_features;
+  Aws::Map<Aws::String, FeatureMetadata> m_features;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_identifierHasBeenSet = false;
+  bool m_featuresHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PI
-} // namespace Aws
+}  // namespace Model
+}  // namespace PI
+}  // namespace Aws

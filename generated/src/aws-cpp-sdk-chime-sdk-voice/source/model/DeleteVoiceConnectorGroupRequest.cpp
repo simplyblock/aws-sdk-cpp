@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteVoiceConnectorGroupRequest::DeleteVoiceConnectorGroupRequest() : 
-    m_voiceConnectorGroupIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteVoiceConnectorGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteVoiceConnectorGroupRequest::SerializePayload() const { return {}; }

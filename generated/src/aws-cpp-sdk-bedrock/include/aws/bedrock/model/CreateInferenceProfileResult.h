@@ -5,78 +5,90 @@
 
 #pragma once
 #include <aws/bedrock/Bedrock_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/bedrock/model/InferenceProfileStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Bedrock
-{
-namespace Model
-{
-  class CreateInferenceProfileResult
-  {
-  public:
-    AWS_BEDROCK_API CreateInferenceProfileResult();
-    AWS_BEDROCK_API CreateInferenceProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCK_API CreateInferenceProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Bedrock {
+namespace Model {
+class CreateInferenceProfileResult {
+ public:
+  AWS_BEDROCK_API CreateInferenceProfileResult() = default;
+  AWS_BEDROCK_API CreateInferenceProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCK_API CreateInferenceProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the inference profile that you created.</p>
+   */
+  inline const Aws::String& GetInferenceProfileArn() const { return m_inferenceProfileArn; }
+  template <typename InferenceProfileArnT = Aws::String>
+  void SetInferenceProfileArn(InferenceProfileArnT&& value) {
+    m_inferenceProfileArnHasBeenSet = true;
+    m_inferenceProfileArn = std::forward<InferenceProfileArnT>(value);
+  }
+  template <typename InferenceProfileArnT = Aws::String>
+  CreateInferenceProfileResult& WithInferenceProfileArn(InferenceProfileArnT&& value) {
+    SetInferenceProfileArn(std::forward<InferenceProfileArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the inference profile that you created.</p>
-     */
-    inline const Aws::String& GetInferenceProfileArn() const{ return m_inferenceProfileArn; }
-    inline void SetInferenceProfileArn(const Aws::String& value) { m_inferenceProfileArn = value; }
-    inline void SetInferenceProfileArn(Aws::String&& value) { m_inferenceProfileArn = std::move(value); }
-    inline void SetInferenceProfileArn(const char* value) { m_inferenceProfileArn.assign(value); }
-    inline CreateInferenceProfileResult& WithInferenceProfileArn(const Aws::String& value) { SetInferenceProfileArn(value); return *this;}
-    inline CreateInferenceProfileResult& WithInferenceProfileArn(Aws::String&& value) { SetInferenceProfileArn(std::move(value)); return *this;}
-    inline CreateInferenceProfileResult& WithInferenceProfileArn(const char* value) { SetInferenceProfileArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the inference profile. <code>ACTIVE</code> means that the
+   * inference profile is ready to be used.</p>
+   */
+  inline InferenceProfileStatus GetStatus() const { return m_status; }
+  inline void SetStatus(InferenceProfileStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline CreateInferenceProfileResult& WithStatus(InferenceProfileStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the inference profile. <code>ACTIVE</code> means that the
-     * inference profile is ready to be used.</p>
-     */
-    inline const InferenceProfileStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const InferenceProfileStatus& value) { m_status = value; }
-    inline void SetStatus(InferenceProfileStatus&& value) { m_status = std::move(value); }
-    inline CreateInferenceProfileResult& WithStatus(const InferenceProfileStatus& value) { SetStatus(value); return *this;}
-    inline CreateInferenceProfileResult& WithStatus(InferenceProfileStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateInferenceProfileResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateInferenceProfileResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateInferenceProfileResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateInferenceProfileResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_inferenceProfileArn;
+ private:
+  Aws::String m_inferenceProfileArn;
 
-    InferenceProfileStatus m_status;
+  InferenceProfileStatus m_status{InferenceProfileStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_inferenceProfileArnHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

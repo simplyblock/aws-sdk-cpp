@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/CreateContentAssociationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qconnect/model/CreateContentAssociationRequest.h>
 
 #include <utility>
 
@@ -12,53 +12,28 @@ using namespace Aws::QConnect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateContentAssociationRequest::CreateContentAssociationRequest() : 
-    m_associationHasBeenSet(false),
-    m_associationType(ContentAssociationType::NOT_SET),
-    m_associationTypeHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_contentIdHasBeenSet(false),
-    m_knowledgeBaseIdHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateContentAssociationRequest::SerializePayload() const
-{
+Aws::String CreateContentAssociationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_associationHasBeenSet)
-  {
-   payload.WithObject("association", m_association.Jsonize());
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
-  if(m_associationTypeHasBeenSet)
-  {
-   payload.WithString("associationType", ContentAssociationTypeMapper::GetNameForContentAssociationType(m_associationType));
+  if (m_associationTypeHasBeenSet) {
+    payload.WithString("associationType", ContentAssociationTypeMapper::GetNameForContentAssociationType(m_associationType));
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_associationHasBeenSet) {
+    payload.WithObject("association", m_association.Jsonize());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

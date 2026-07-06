@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/securityhub/model/UpdateSecurityHubConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/UpdateSecurityHubConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,17 @@ using namespace Aws::SecurityHub::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateSecurityHubConfigurationRequest::UpdateSecurityHubConfigurationRequest() : 
-    m_autoEnableControls(false),
-    m_autoEnableControlsHasBeenSet(false),
-    m_controlFindingGenerator(ControlFindingGenerator::NOT_SET),
-    m_controlFindingGeneratorHasBeenSet(false)
-{
-}
-
-Aws::String UpdateSecurityHubConfigurationRequest::SerializePayload() const
-{
+Aws::String UpdateSecurityHubConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_autoEnableControlsHasBeenSet)
-  {
-   payload.WithBool("AutoEnableControls", m_autoEnableControls);
-
+  if (m_autoEnableControlsHasBeenSet) {
+    payload.WithBool("AutoEnableControls", m_autoEnableControls);
   }
 
-  if(m_controlFindingGeneratorHasBeenSet)
-  {
-   payload.WithString("ControlFindingGenerator", ControlFindingGeneratorMapper::GetNameForControlFindingGenerator(m_controlFindingGenerator));
+  if (m_controlFindingGeneratorHasBeenSet) {
+    payload.WithString("ControlFindingGenerator",
+                       ControlFindingGeneratorMapper::GetNameForControlFindingGenerator(m_controlFindingGenerator));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

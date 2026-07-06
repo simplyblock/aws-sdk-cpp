@@ -4,74 +4,91 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/DataSetRefreshProperties.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class DescribeDataSetRefreshPropertiesResult
-  {
-  public:
-    AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult();
-    AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class DescribeDataSetRefreshPropertiesResult {
+ public:
+  AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult() = default;
+  AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API DescribeDataSetRefreshPropertiesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeDataSetRefreshPropertiesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeDataSetRefreshPropertiesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeDataSetRefreshPropertiesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeDataSetRefreshPropertiesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline DescribeDataSetRefreshPropertiesResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeDataSetRefreshPropertiesResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The dataset refresh properties.</p>
-     */
-    inline const DataSetRefreshProperties& GetDataSetRefreshProperties() const{ return m_dataSetRefreshProperties; }
-    inline void SetDataSetRefreshProperties(const DataSetRefreshProperties& value) { m_dataSetRefreshProperties = value; }
-    inline void SetDataSetRefreshProperties(DataSetRefreshProperties&& value) { m_dataSetRefreshProperties = std::move(value); }
-    inline DescribeDataSetRefreshPropertiesResult& WithDataSetRefreshProperties(const DataSetRefreshProperties& value) { SetDataSetRefreshProperties(value); return *this;}
-    inline DescribeDataSetRefreshPropertiesResult& WithDataSetRefreshProperties(DataSetRefreshProperties&& value) { SetDataSetRefreshProperties(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The dataset refresh properties.</p>
+   */
+  inline const DataSetRefreshProperties& GetDataSetRefreshProperties() const { return m_dataSetRefreshProperties; }
+  template <typename DataSetRefreshPropertiesT = DataSetRefreshProperties>
+  void SetDataSetRefreshProperties(DataSetRefreshPropertiesT&& value) {
+    m_dataSetRefreshPropertiesHasBeenSet = true;
+    m_dataSetRefreshProperties = std::forward<DataSetRefreshPropertiesT>(value);
+  }
+  template <typename DataSetRefreshPropertiesT = DataSetRefreshProperties>
+  DescribeDataSetRefreshPropertiesResult& WithDataSetRefreshProperties(DataSetRefreshPropertiesT&& value) {
+    SetDataSetRefreshProperties(std::forward<DataSetRefreshPropertiesT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
+ private:
+  Aws::String m_requestId;
 
-    int m_status;
+  int m_status{0};
 
-    DataSetRefreshProperties m_dataSetRefreshProperties;
-  };
+  DataSetRefreshProperties m_dataSetRefreshProperties;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_dataSetRefreshPropertiesHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

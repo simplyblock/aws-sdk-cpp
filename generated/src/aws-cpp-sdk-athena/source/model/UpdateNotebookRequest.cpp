@@ -12,60 +12,34 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateNotebookRequest::UpdateNotebookRequest() : 
-    m_notebookIdHasBeenSet(false),
-    m_payloadHasBeenSet(false),
-    m_type(NotebookType::NOT_SET),
-    m_typeHasBeenSet(false),
-    m_sessionIdHasBeenSet(false),
-    m_clientRequestTokenHasBeenSet(false)
-{
-}
-
-Aws::String UpdateNotebookRequest::SerializePayload() const
-{
+Aws::String UpdateNotebookRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_notebookIdHasBeenSet)
-  {
-   payload.WithString("NotebookId", m_notebookId);
-
+  if (m_notebookIdHasBeenSet) {
+    payload.WithString("NotebookId", m_notebookId);
   }
 
-  if(m_payloadHasBeenSet)
-  {
-   payload.WithString("Payload", m_payload);
-
+  if (m_payloadHasBeenSet) {
+    payload.WithString("Payload", m_payload);
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("Type", NotebookTypeMapper::GetNameForNotebookType(m_type));
+  if (m_typeHasBeenSet) {
+    payload.WithString("Type", NotebookTypeMapper::GetNameForNotebookType(m_type));
   }
 
-  if(m_sessionIdHasBeenSet)
-  {
-   payload.WithString("SessionId", m_sessionId);
-
+  if (m_sessionIdHasBeenSet) {
+    payload.WithString("SessionId", m_sessionId);
   }
 
-  if(m_clientRequestTokenHasBeenSet)
-  {
-   payload.WithString("ClientRequestToken", m_clientRequestToken);
-
+  if (m_clientRequestTokenHasBeenSet) {
+    payload.WithString("ClientRequestToken", m_clientRequestToken);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateNotebookRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateNotebookRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.UpdateNotebook"));
   return headers;
-
 }
-
-
-
-

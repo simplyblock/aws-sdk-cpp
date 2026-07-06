@@ -4,87 +4,105 @@
  */
 
 #pragma once
-#include <aws/mailmanager/MailManager_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mailmanager/MailManager_EXPORTS.h>
 #include <aws/mailmanager/model/Archive.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MailManager
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MailManager {
+namespace Model {
+/**
+ * <p>The response containing a list of your email archives.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/ListArchivesResponse">AWS
+ * API Reference</a></p>
+ */
+class ListArchivesResult {
+ public:
+  AWS_MAILMANAGER_API ListArchivesResult() = default;
+  AWS_MAILMANAGER_API ListArchivesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAILMANAGER_API ListArchivesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response containing a list of your email archives.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/ListArchivesResponse">AWS
-   * API Reference</a></p>
+   * <p>The list of archive details.</p>
    */
-  class ListArchivesResult
-  {
-  public:
-    AWS_MAILMANAGER_API ListArchivesResult();
-    AWS_MAILMANAGER_API ListArchivesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAILMANAGER_API ListArchivesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<Archive>& GetArchives() const { return m_archives; }
+  template <typename ArchivesT = Aws::Vector<Archive>>
+  void SetArchives(ArchivesT&& value) {
+    m_archivesHasBeenSet = true;
+    m_archives = std::forward<ArchivesT>(value);
+  }
+  template <typename ArchivesT = Aws::Vector<Archive>>
+  ListArchivesResult& WithArchives(ArchivesT&& value) {
+    SetArchives(std::forward<ArchivesT>(value));
+    return *this;
+  }
+  template <typename ArchivesT = Archive>
+  ListArchivesResult& AddArchives(ArchivesT&& value) {
+    m_archivesHasBeenSet = true;
+    m_archives.emplace_back(std::forward<ArchivesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>If present, use to retrieve the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListArchivesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of archive details.</p>
-     */
-    inline const Aws::Vector<Archive>& GetArchives() const{ return m_archives; }
-    inline void SetArchives(const Aws::Vector<Archive>& value) { m_archives = value; }
-    inline void SetArchives(Aws::Vector<Archive>&& value) { m_archives = std::move(value); }
-    inline ListArchivesResult& WithArchives(const Aws::Vector<Archive>& value) { SetArchives(value); return *this;}
-    inline ListArchivesResult& WithArchives(Aws::Vector<Archive>&& value) { SetArchives(std::move(value)); return *this;}
-    inline ListArchivesResult& AddArchives(const Archive& value) { m_archives.push_back(value); return *this; }
-    inline ListArchivesResult& AddArchives(Archive&& value) { m_archives.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>If present, use to retrieve the next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListArchivesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListArchivesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListArchivesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListArchivesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListArchivesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListArchivesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListArchivesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Archive> m_archives;
 
-    Aws::Vector<Archive> m_archives;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_archivesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

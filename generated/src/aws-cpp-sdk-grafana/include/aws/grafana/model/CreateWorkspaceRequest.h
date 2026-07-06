@@ -4,383 +4,519 @@
  */
 
 #pragma once
-#include <aws/grafana/ManagedGrafana_EXPORTS.h>
-#include <aws/grafana/ManagedGrafanaRequest.h>
-#include <aws/grafana/model/AccountAccessType.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/grafana/model/NetworkAccessConfiguration.h>
-#include <aws/grafana/model/PermissionType.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/grafana/model/VpcConfiguration.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/grafana/ManagedGrafanaRequest.h>
+#include <aws/grafana/ManagedGrafana_EXPORTS.h>
+#include <aws/grafana/model/AccountAccessType.h>
 #include <aws/grafana/model/AuthenticationProviderTypes.h>
 #include <aws/grafana/model/DataSourceType.h>
+#include <aws/grafana/model/IPAddressType.h>
+#include <aws/grafana/model/NetworkAccessConfiguration.h>
 #include <aws/grafana/model/NotificationDestinationType.h>
+#include <aws/grafana/model/PermissionType.h>
+#include <aws/grafana/model/VpcConfiguration.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace ManagedGrafana
-{
-namespace Model
-{
+namespace Aws {
+namespace ManagedGrafana {
+namespace Model {
 
+/**
+ */
+class CreateWorkspaceRequest : public ManagedGrafanaRequest {
+ public:
+  AWS_MANAGEDGRAFANA_API CreateWorkspaceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateWorkspace"; }
+
+  AWS_MANAGEDGRAFANA_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>Specifies whether the workspace can access Amazon Web Services resources in
+   * this Amazon Web Services account only, or whether it can also access Amazon Web
+   * Services resources in other accounts in the same organization. If you specify
+   * <code>ORGANIZATION</code>, you must specify which organizational units the
+   * workspace can access in the <code>workspaceOrganizationalUnits</code>
+   * parameter.</p>
    */
-  class CreateWorkspaceRequest : public ManagedGrafanaRequest
-  {
-  public:
-    AWS_MANAGEDGRAFANA_API CreateWorkspaceRequest();
+  inline AccountAccessType GetAccountAccessType() const { return m_accountAccessType; }
+  inline bool AccountAccessTypeHasBeenSet() const { return m_accountAccessTypeHasBeenSet; }
+  inline void SetAccountAccessType(AccountAccessType value) {
+    m_accountAccessTypeHasBeenSet = true;
+    m_accountAccessType = value;
+  }
+  inline CreateWorkspaceRequest& WithAccountAccessType(AccountAccessType value) {
+    SetAccountAccessType(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateWorkspace"; }
+  ///@{
+  /**
+   * <p>A unique, case-sensitive, user-provided identifier to ensure the idempotency
+   * of the request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateWorkspaceRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MANAGEDGRAFANA_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of an IAM role that already exists to use with Organizations to
+   * access Amazon Web Services data sources and notification channels in other
+   * accounts in an organization.</p>
+   */
+  inline const Aws::String& GetOrganizationRoleName() const { return m_organizationRoleName; }
+  inline bool OrganizationRoleNameHasBeenSet() const { return m_organizationRoleNameHasBeenSet; }
+  template <typename OrganizationRoleNameT = Aws::String>
+  void SetOrganizationRoleName(OrganizationRoleNameT&& value) {
+    m_organizationRoleNameHasBeenSet = true;
+    m_organizationRoleName = std::forward<OrganizationRoleNameT>(value);
+  }
+  template <typename OrganizationRoleNameT = Aws::String>
+  CreateWorkspaceRequest& WithOrganizationRoleName(OrganizationRoleNameT&& value) {
+    SetOrganizationRoleName(std::forward<OrganizationRoleNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>When creating a workspace through the Amazon Web Services API, CLI or Amazon
+   * Web Services CloudFormation, you must manage IAM roles and provision the
+   * permissions that the workspace needs to use Amazon Web Services data sources and
+   * notification channels.</p> <p>You must also specify a
+   * <code>workspaceRoleArn</code> for a role that you will manage for the workspace
+   * to use when accessing those datasources and notification channels.</p> <p>The
+   * ability for Amazon Managed Grafana to create and update IAM roles on behalf of
+   * the user is supported only in the Amazon Managed Grafana console, where this
+   * value may be set to <code>SERVICE_MANAGED</code>.</p>  <p>Use only the
+   * <code>CUSTOMER_MANAGED</code> permission type when creating a workspace with the
+   * API, CLI or Amazon Web Services CloudFormation. </p>  <p>For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-manage-permissions.html">Amazon
+   * Managed Grafana permissions and policies for Amazon Web Services data sources
+   * and notification channels</a>.</p>
+   */
+  inline PermissionType GetPermissionType() const { return m_permissionType; }
+  inline bool PermissionTypeHasBeenSet() const { return m_permissionTypeHasBeenSet; }
+  inline void SetPermissionType(PermissionType value) {
+    m_permissionTypeHasBeenSet = true;
+    m_permissionType = value;
+  }
+  inline CreateWorkspaceRequest& WithPermissionType(PermissionType value) {
+    SetPermissionType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies whether the workspace can access Amazon Web Services resources in
-     * this Amazon Web Services account only, or whether it can also access Amazon Web
-     * Services resources in other accounts in the same organization. If you specify
-     * <code>ORGANIZATION</code>, you must specify which organizational units the
-     * workspace can access in the <code>workspaceOrganizationalUnits</code>
-     * parameter.</p>
-     */
-    inline const AccountAccessType& GetAccountAccessType() const{ return m_accountAccessType; }
-    inline bool AccountAccessTypeHasBeenSet() const { return m_accountAccessTypeHasBeenSet; }
-    inline void SetAccountAccessType(const AccountAccessType& value) { m_accountAccessTypeHasBeenSet = true; m_accountAccessType = value; }
-    inline void SetAccountAccessType(AccountAccessType&& value) { m_accountAccessTypeHasBeenSet = true; m_accountAccessType = std::move(value); }
-    inline CreateWorkspaceRequest& WithAccountAccessType(const AccountAccessType& value) { SetAccountAccessType(value); return *this;}
-    inline CreateWorkspaceRequest& WithAccountAccessType(AccountAccessType&& value) { SetAccountAccessType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the CloudFormation stack set to use to generate IAM roles to be
+   * used for this workspace.</p>
+   */
+  inline const Aws::String& GetStackSetName() const { return m_stackSetName; }
+  inline bool StackSetNameHasBeenSet() const { return m_stackSetNameHasBeenSet; }
+  template <typename StackSetNameT = Aws::String>
+  void SetStackSetName(StackSetNameT&& value) {
+    m_stackSetNameHasBeenSet = true;
+    m_stackSetName = std::forward<StackSetNameT>(value);
+  }
+  template <typename StackSetNameT = Aws::String>
+  CreateWorkspaceRequest& WithStackSetName(StackSetNameT&& value) {
+    SetStackSetName(std::forward<StackSetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies whether this workspace uses SAML 2.0, IAM Identity Center, or both
-     * to authenticate users for using the Grafana console within a workspace. For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/grafana/latest/userguide/authentication-in-AMG.html">User
-     * authentication in Amazon Managed Grafana</a>.</p>
-     */
-    inline const Aws::Vector<AuthenticationProviderTypes>& GetAuthenticationProviders() const{ return m_authenticationProviders; }
-    inline bool AuthenticationProvidersHasBeenSet() const { return m_authenticationProvidersHasBeenSet; }
-    inline void SetAuthenticationProviders(const Aws::Vector<AuthenticationProviderTypes>& value) { m_authenticationProvidersHasBeenSet = true; m_authenticationProviders = value; }
-    inline void SetAuthenticationProviders(Aws::Vector<AuthenticationProviderTypes>&& value) { m_authenticationProvidersHasBeenSet = true; m_authenticationProviders = std::move(value); }
-    inline CreateWorkspaceRequest& WithAuthenticationProviders(const Aws::Vector<AuthenticationProviderTypes>& value) { SetAuthenticationProviders(value); return *this;}
-    inline CreateWorkspaceRequest& WithAuthenticationProviders(Aws::Vector<AuthenticationProviderTypes>&& value) { SetAuthenticationProviders(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddAuthenticationProviders(const AuthenticationProviderTypes& value) { m_authenticationProvidersHasBeenSet = true; m_authenticationProviders.push_back(value); return *this; }
-    inline CreateWorkspaceRequest& AddAuthenticationProviders(AuthenticationProviderTypes&& value) { m_authenticationProvidersHasBeenSet = true; m_authenticationProviders.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>This parameter is for internal use only, and should not be used.</p>
+   */
+  inline const Aws::Vector<DataSourceType>& GetWorkspaceDataSources() const { return m_workspaceDataSources; }
+  inline bool WorkspaceDataSourcesHasBeenSet() const { return m_workspaceDataSourcesHasBeenSet; }
+  template <typename WorkspaceDataSourcesT = Aws::Vector<DataSourceType>>
+  void SetWorkspaceDataSources(WorkspaceDataSourcesT&& value) {
+    m_workspaceDataSourcesHasBeenSet = true;
+    m_workspaceDataSources = std::forward<WorkspaceDataSourcesT>(value);
+  }
+  template <typename WorkspaceDataSourcesT = Aws::Vector<DataSourceType>>
+  CreateWorkspaceRequest& WithWorkspaceDataSources(WorkspaceDataSourcesT&& value) {
+    SetWorkspaceDataSources(std::forward<WorkspaceDataSourcesT>(value));
+    return *this;
+  }
+  inline CreateWorkspaceRequest& AddWorkspaceDataSources(DataSourceType value) {
+    m_workspaceDataSourcesHasBeenSet = true;
+    m_workspaceDataSources.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive, user-provided identifier to ensure the idempotency
-     * of the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateWorkspaceRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateWorkspaceRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A description for the workspace. This is used only to help you identify this
+   * workspace.</p> <p>Pattern: <code>^[\\p{L}\\p{Z}\\p{N}\\p{P}]{0,2048}$</code>
+   * </p>
+   */
+  inline const Aws::String& GetWorkspaceDescription() const { return m_workspaceDescription; }
+  inline bool WorkspaceDescriptionHasBeenSet() const { return m_workspaceDescriptionHasBeenSet; }
+  template <typename WorkspaceDescriptionT = Aws::String>
+  void SetWorkspaceDescription(WorkspaceDescriptionT&& value) {
+    m_workspaceDescriptionHasBeenSet = true;
+    m_workspaceDescription = std::forward<WorkspaceDescriptionT>(value);
+  }
+  template <typename WorkspaceDescriptionT = Aws::String>
+  CreateWorkspaceRequest& WithWorkspaceDescription(WorkspaceDescriptionT&& value) {
+    SetWorkspaceDescription(std::forward<WorkspaceDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration string for the workspace that you create. For more
-     * information about the format and configuration options available, see <a
-     * href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-workspace.html">Working
-     * in your Grafana workspace</a>.</p>
-     */
-    inline const Aws::String& GetConfiguration() const{ return m_configuration; }
-    inline bool ConfigurationHasBeenSet() const { return m_configurationHasBeenSet; }
-    inline void SetConfiguration(const Aws::String& value) { m_configurationHasBeenSet = true; m_configuration = value; }
-    inline void SetConfiguration(Aws::String&& value) { m_configurationHasBeenSet = true; m_configuration = std::move(value); }
-    inline void SetConfiguration(const char* value) { m_configurationHasBeenSet = true; m_configuration.assign(value); }
-    inline CreateWorkspaceRequest& WithConfiguration(const Aws::String& value) { SetConfiguration(value); return *this;}
-    inline CreateWorkspaceRequest& WithConfiguration(Aws::String&& value) { SetConfiguration(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithConfiguration(const char* value) { SetConfiguration(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name for the workspace. It does not have to be unique.</p>
+   */
+  inline const Aws::String& GetWorkspaceName() const { return m_workspaceName; }
+  inline bool WorkspaceNameHasBeenSet() const { return m_workspaceNameHasBeenSet; }
+  template <typename WorkspaceNameT = Aws::String>
+  void SetWorkspaceName(WorkspaceNameT&& value) {
+    m_workspaceNameHasBeenSet = true;
+    m_workspaceName = std::forward<WorkspaceNameT>(value);
+  }
+  template <typename WorkspaceNameT = Aws::String>
+  CreateWorkspaceRequest& WithWorkspaceName(WorkspaceNameT&& value) {
+    SetWorkspaceName(std::forward<WorkspaceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the version of Grafana to support in the new workspace. If not
-     * specified, defaults to the latest version (for example, 10.4).</p> <p>To get a
-     * list of supported versions, use the <code>ListVersions</code> operation.</p>
-     */
-    inline const Aws::String& GetGrafanaVersion() const{ return m_grafanaVersion; }
-    inline bool GrafanaVersionHasBeenSet() const { return m_grafanaVersionHasBeenSet; }
-    inline void SetGrafanaVersion(const Aws::String& value) { m_grafanaVersionHasBeenSet = true; m_grafanaVersion = value; }
-    inline void SetGrafanaVersion(Aws::String&& value) { m_grafanaVersionHasBeenSet = true; m_grafanaVersion = std::move(value); }
-    inline void SetGrafanaVersion(const char* value) { m_grafanaVersionHasBeenSet = true; m_grafanaVersion.assign(value); }
-    inline CreateWorkspaceRequest& WithGrafanaVersion(const Aws::String& value) { SetGrafanaVersion(value); return *this;}
-    inline CreateWorkspaceRequest& WithGrafanaVersion(Aws::String&& value) { SetGrafanaVersion(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithGrafanaVersion(const char* value) { SetGrafanaVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specify the Amazon Web Services notification channels that you plan to use in
+   * this workspace. Specifying these data sources here enables Amazon Managed
+   * Grafana to create IAM roles and permissions that allow Amazon Managed Grafana to
+   * use these channels.</p>
+   */
+  inline const Aws::Vector<NotificationDestinationType>& GetWorkspaceNotificationDestinations() const {
+    return m_workspaceNotificationDestinations;
+  }
+  inline bool WorkspaceNotificationDestinationsHasBeenSet() const { return m_workspaceNotificationDestinationsHasBeenSet; }
+  template <typename WorkspaceNotificationDestinationsT = Aws::Vector<NotificationDestinationType>>
+  void SetWorkspaceNotificationDestinations(WorkspaceNotificationDestinationsT&& value) {
+    m_workspaceNotificationDestinationsHasBeenSet = true;
+    m_workspaceNotificationDestinations = std::forward<WorkspaceNotificationDestinationsT>(value);
+  }
+  template <typename WorkspaceNotificationDestinationsT = Aws::Vector<NotificationDestinationType>>
+  CreateWorkspaceRequest& WithWorkspaceNotificationDestinations(WorkspaceNotificationDestinationsT&& value) {
+    SetWorkspaceNotificationDestinations(std::forward<WorkspaceNotificationDestinationsT>(value));
+    return *this;
+  }
+  inline CreateWorkspaceRequest& AddWorkspaceNotificationDestinations(NotificationDestinationType value) {
+    m_workspaceNotificationDestinationsHasBeenSet = true;
+    m_workspaceNotificationDestinations.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Configuration for network access to your workspace.</p> <p>When this is
-     * configured, only listed IP addresses and VPC endpoints will be able to access
-     * your workspace. Standard Grafana authentication and authorization will still be
-     * required.</p> <p>If this is not configured, or is removed, then all IP addresses
-     * and VPC endpoints will be allowed. Standard Grafana authentication and
-     * authorization will still be required.</p>
-     */
-    inline const NetworkAccessConfiguration& GetNetworkAccessControl() const{ return m_networkAccessControl; }
-    inline bool NetworkAccessControlHasBeenSet() const { return m_networkAccessControlHasBeenSet; }
-    inline void SetNetworkAccessControl(const NetworkAccessConfiguration& value) { m_networkAccessControlHasBeenSet = true; m_networkAccessControl = value; }
-    inline void SetNetworkAccessControl(NetworkAccessConfiguration&& value) { m_networkAccessControlHasBeenSet = true; m_networkAccessControl = std::move(value); }
-    inline CreateWorkspaceRequest& WithNetworkAccessControl(const NetworkAccessConfiguration& value) { SetNetworkAccessControl(value); return *this;}
-    inline CreateWorkspaceRequest& WithNetworkAccessControl(NetworkAccessConfiguration&& value) { SetNetworkAccessControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the organizational units that this workspace is allowed to use data
+   * sources from, if this workspace is in an account that is part of an
+   * organization.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetWorkspaceOrganizationalUnits() const { return m_workspaceOrganizationalUnits; }
+  inline bool WorkspaceOrganizationalUnitsHasBeenSet() const { return m_workspaceOrganizationalUnitsHasBeenSet; }
+  template <typename WorkspaceOrganizationalUnitsT = Aws::Vector<Aws::String>>
+  void SetWorkspaceOrganizationalUnits(WorkspaceOrganizationalUnitsT&& value) {
+    m_workspaceOrganizationalUnitsHasBeenSet = true;
+    m_workspaceOrganizationalUnits = std::forward<WorkspaceOrganizationalUnitsT>(value);
+  }
+  template <typename WorkspaceOrganizationalUnitsT = Aws::Vector<Aws::String>>
+  CreateWorkspaceRequest& WithWorkspaceOrganizationalUnits(WorkspaceOrganizationalUnitsT&& value) {
+    SetWorkspaceOrganizationalUnits(std::forward<WorkspaceOrganizationalUnitsT>(value));
+    return *this;
+  }
+  template <typename WorkspaceOrganizationalUnitsT = Aws::String>
+  CreateWorkspaceRequest& AddWorkspaceOrganizationalUnits(WorkspaceOrganizationalUnitsT&& value) {
+    m_workspaceOrganizationalUnitsHasBeenSet = true;
+    m_workspaceOrganizationalUnits.emplace_back(std::forward<WorkspaceOrganizationalUnitsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of an IAM role that already exists to use with Organizations to
-     * access Amazon Web Services data sources and notification channels in other
-     * accounts in an organization.</p>
-     */
-    inline const Aws::String& GetOrganizationRoleName() const{ return m_organizationRoleName; }
-    inline bool OrganizationRoleNameHasBeenSet() const { return m_organizationRoleNameHasBeenSet; }
-    inline void SetOrganizationRoleName(const Aws::String& value) { m_organizationRoleNameHasBeenSet = true; m_organizationRoleName = value; }
-    inline void SetOrganizationRoleName(Aws::String&& value) { m_organizationRoleNameHasBeenSet = true; m_organizationRoleName = std::move(value); }
-    inline void SetOrganizationRoleName(const char* value) { m_organizationRoleNameHasBeenSet = true; m_organizationRoleName.assign(value); }
-    inline CreateWorkspaceRequest& WithOrganizationRoleName(const Aws::String& value) { SetOrganizationRoleName(value); return *this;}
-    inline CreateWorkspaceRequest& WithOrganizationRoleName(Aws::String&& value) { SetOrganizationRoleName(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithOrganizationRoleName(const char* value) { SetOrganizationRoleName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specified the IAM role that grants permissions to the Amazon Web Services
+   * resources that the workspace will view data from, including both data sources
+   * and notification channels. You are responsible for managing the permissions for
+   * this role as new data sources or notification channels are added. </p>
+   */
+  inline const Aws::String& GetWorkspaceRoleArn() const { return m_workspaceRoleArn; }
+  inline bool WorkspaceRoleArnHasBeenSet() const { return m_workspaceRoleArnHasBeenSet; }
+  template <typename WorkspaceRoleArnT = Aws::String>
+  void SetWorkspaceRoleArn(WorkspaceRoleArnT&& value) {
+    m_workspaceRoleArnHasBeenSet = true;
+    m_workspaceRoleArn = std::forward<WorkspaceRoleArnT>(value);
+  }
+  template <typename WorkspaceRoleArnT = Aws::String>
+  CreateWorkspaceRequest& WithWorkspaceRoleArn(WorkspaceRoleArnT&& value) {
+    SetWorkspaceRoleArn(std::forward<WorkspaceRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When creating a workspace through the Amazon Web Services API, CLI or Amazon
-     * Web Services CloudFormation, you must manage IAM roles and provision the
-     * permissions that the workspace needs to use Amazon Web Services data sources and
-     * notification channels.</p> <p>You must also specify a
-     * <code>workspaceRoleArn</code> for a role that you will manage for the workspace
-     * to use when accessing those datasources and notification channels.</p> <p>The
-     * ability for Amazon Managed Grafana to create and update IAM roles on behalf of
-     * the user is supported only in the Amazon Managed Grafana console, where this
-     * value may be set to <code>SERVICE_MANAGED</code>.</p>  <p>Use only the
-     * <code>CUSTOMER_MANAGED</code> permission type when creating a workspace with the
-     * API, CLI or Amazon Web Services CloudFormation. </p>  <p>For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-manage-permissions.html">Amazon
-     * Managed Grafana permissions and policies for Amazon Web Services data sources
-     * and notification channels</a>.</p>
-     */
-    inline const PermissionType& GetPermissionType() const{ return m_permissionType; }
-    inline bool PermissionTypeHasBeenSet() const { return m_permissionTypeHasBeenSet; }
-    inline void SetPermissionType(const PermissionType& value) { m_permissionTypeHasBeenSet = true; m_permissionType = value; }
-    inline void SetPermissionType(PermissionType&& value) { m_permissionTypeHasBeenSet = true; m_permissionType = std::move(value); }
-    inline CreateWorkspaceRequest& WithPermissionType(const PermissionType& value) { SetPermissionType(value); return *this;}
-    inline CreateWorkspaceRequest& WithPermissionType(PermissionType&& value) { SetPermissionType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether this workspace uses SAML 2.0, IAM Identity Center, or both
+   * to authenticate users for using the Grafana console within a workspace. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/grafana/latest/userguide/authentication-in-AMG.html">User
+   * authentication in Amazon Managed Grafana</a>.</p>
+   */
+  inline const Aws::Vector<AuthenticationProviderTypes>& GetAuthenticationProviders() const { return m_authenticationProviders; }
+  inline bool AuthenticationProvidersHasBeenSet() const { return m_authenticationProvidersHasBeenSet; }
+  template <typename AuthenticationProvidersT = Aws::Vector<AuthenticationProviderTypes>>
+  void SetAuthenticationProviders(AuthenticationProvidersT&& value) {
+    m_authenticationProvidersHasBeenSet = true;
+    m_authenticationProviders = std::forward<AuthenticationProvidersT>(value);
+  }
+  template <typename AuthenticationProvidersT = Aws::Vector<AuthenticationProviderTypes>>
+  CreateWorkspaceRequest& WithAuthenticationProviders(AuthenticationProvidersT&& value) {
+    SetAuthenticationProviders(std::forward<AuthenticationProvidersT>(value));
+    return *this;
+  }
+  inline CreateWorkspaceRequest& AddAuthenticationProviders(AuthenticationProviderTypes value) {
+    m_authenticationProvidersHasBeenSet = true;
+    m_authenticationProviders.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the CloudFormation stack set to use to generate IAM roles to be
-     * used for this workspace.</p>
-     */
-    inline const Aws::String& GetStackSetName() const{ return m_stackSetName; }
-    inline bool StackSetNameHasBeenSet() const { return m_stackSetNameHasBeenSet; }
-    inline void SetStackSetName(const Aws::String& value) { m_stackSetNameHasBeenSet = true; m_stackSetName = value; }
-    inline void SetStackSetName(Aws::String&& value) { m_stackSetNameHasBeenSet = true; m_stackSetName = std::move(value); }
-    inline void SetStackSetName(const char* value) { m_stackSetNameHasBeenSet = true; m_stackSetName.assign(value); }
-    inline CreateWorkspaceRequest& WithStackSetName(const Aws::String& value) { SetStackSetName(value); return *this;}
-    inline CreateWorkspaceRequest& WithStackSetName(Aws::String&& value) { SetStackSetName(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithStackSetName(const char* value) { SetStackSetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of tags associated with the workspace.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateWorkspaceRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateWorkspaceRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of tags associated with the workspace.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateWorkspaceRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateWorkspaceRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateWorkspaceRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration settings for an Amazon VPC that contains data sources for
+   * your Grafana workspace to connect to.</p>  <p>Connecting to a private VPC
+   * is not yet available in the Asia Pacific (Seoul) Region (ap-northeast-2).</p>
+   *
+   */
+  inline const VpcConfiguration& GetVpcConfiguration() const { return m_vpcConfiguration; }
+  inline bool VpcConfigurationHasBeenSet() const { return m_vpcConfigurationHasBeenSet; }
+  template <typename VpcConfigurationT = VpcConfiguration>
+  void SetVpcConfiguration(VpcConfigurationT&& value) {
+    m_vpcConfigurationHasBeenSet = true;
+    m_vpcConfiguration = std::forward<VpcConfigurationT>(value);
+  }
+  template <typename VpcConfigurationT = VpcConfiguration>
+  CreateWorkspaceRequest& WithVpcConfiguration(VpcConfigurationT&& value) {
+    SetVpcConfiguration(std::forward<VpcConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration settings for an Amazon VPC that contains data sources for
-     * your Grafana workspace to connect to.</p>  <p>Connecting to a private VPC
-     * is not yet available in the Asia Pacific (Seoul) Region (ap-northeast-2).</p>
-     * 
-     */
-    inline const VpcConfiguration& GetVpcConfiguration() const{ return m_vpcConfiguration; }
-    inline bool VpcConfigurationHasBeenSet() const { return m_vpcConfigurationHasBeenSet; }
-    inline void SetVpcConfiguration(const VpcConfiguration& value) { m_vpcConfigurationHasBeenSet = true; m_vpcConfiguration = value; }
-    inline void SetVpcConfiguration(VpcConfiguration&& value) { m_vpcConfigurationHasBeenSet = true; m_vpcConfiguration = std::move(value); }
-    inline CreateWorkspaceRequest& WithVpcConfiguration(const VpcConfiguration& value) { SetVpcConfiguration(value); return *this;}
-    inline CreateWorkspaceRequest& WithVpcConfiguration(VpcConfiguration&& value) { SetVpcConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration string for the workspace that you create. For more
+   * information about the format and configuration options available, see <a
+   * href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-workspace.html">Working
+   * in your Grafana workspace</a>.</p>
+   */
+  inline const Aws::String& GetConfiguration() const { return m_configuration; }
+  inline bool ConfigurationHasBeenSet() const { return m_configurationHasBeenSet; }
+  template <typename ConfigurationT = Aws::String>
+  void SetConfiguration(ConfigurationT&& value) {
+    m_configurationHasBeenSet = true;
+    m_configuration = std::forward<ConfigurationT>(value);
+  }
+  template <typename ConfigurationT = Aws::String>
+  CreateWorkspaceRequest& WithConfiguration(ConfigurationT&& value) {
+    SetConfiguration(std::forward<ConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This parameter is for internal use only, and should not be used.</p>
-     */
-    inline const Aws::Vector<DataSourceType>& GetWorkspaceDataSources() const{ return m_workspaceDataSources; }
-    inline bool WorkspaceDataSourcesHasBeenSet() const { return m_workspaceDataSourcesHasBeenSet; }
-    inline void SetWorkspaceDataSources(const Aws::Vector<DataSourceType>& value) { m_workspaceDataSourcesHasBeenSet = true; m_workspaceDataSources = value; }
-    inline void SetWorkspaceDataSources(Aws::Vector<DataSourceType>&& value) { m_workspaceDataSourcesHasBeenSet = true; m_workspaceDataSources = std::move(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceDataSources(const Aws::Vector<DataSourceType>& value) { SetWorkspaceDataSources(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceDataSources(Aws::Vector<DataSourceType>&& value) { SetWorkspaceDataSources(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddWorkspaceDataSources(const DataSourceType& value) { m_workspaceDataSourcesHasBeenSet = true; m_workspaceDataSources.push_back(value); return *this; }
-    inline CreateWorkspaceRequest& AddWorkspaceDataSources(DataSourceType&& value) { m_workspaceDataSourcesHasBeenSet = true; m_workspaceDataSources.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration for network access to your workspace.</p> <p>When this is
+   * configured, only listed IP addresses and VPC endpoints will be able to access
+   * your workspace. Standard Grafana authentication and authorization will still be
+   * required.</p> <p>If this is not configured, or is removed, then all IP addresses
+   * and VPC endpoints will be allowed. Standard Grafana authentication and
+   * authorization will still be required.</p>
+   */
+  inline const NetworkAccessConfiguration& GetNetworkAccessControl() const { return m_networkAccessControl; }
+  inline bool NetworkAccessControlHasBeenSet() const { return m_networkAccessControlHasBeenSet; }
+  template <typename NetworkAccessControlT = NetworkAccessConfiguration>
+  void SetNetworkAccessControl(NetworkAccessControlT&& value) {
+    m_networkAccessControlHasBeenSet = true;
+    m_networkAccessControl = std::forward<NetworkAccessControlT>(value);
+  }
+  template <typename NetworkAccessControlT = NetworkAccessConfiguration>
+  CreateWorkspaceRequest& WithNetworkAccessControl(NetworkAccessControlT&& value) {
+    SetNetworkAccessControl(std::forward<NetworkAccessControlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description for the workspace. This is used only to help you identify this
-     * workspace.</p> <p>Pattern: <code>^[\\p{L}\\p{Z}\\p{N}\\p{P}]{0,2048}$</code>
-     * </p>
-     */
-    inline const Aws::String& GetWorkspaceDescription() const{ return m_workspaceDescription; }
-    inline bool WorkspaceDescriptionHasBeenSet() const { return m_workspaceDescriptionHasBeenSet; }
-    inline void SetWorkspaceDescription(const Aws::String& value) { m_workspaceDescriptionHasBeenSet = true; m_workspaceDescription = value; }
-    inline void SetWorkspaceDescription(Aws::String&& value) { m_workspaceDescriptionHasBeenSet = true; m_workspaceDescription = std::move(value); }
-    inline void SetWorkspaceDescription(const char* value) { m_workspaceDescriptionHasBeenSet = true; m_workspaceDescription.assign(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceDescription(const Aws::String& value) { SetWorkspaceDescription(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceDescription(Aws::String&& value) { SetWorkspaceDescription(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceDescription(const char* value) { SetWorkspaceDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the version of Grafana to support in the new workspace. If not
+   * specified, defaults to the latest version (for example, 10.4).</p> <p>To get a
+   * list of supported versions, use the <code>ListVersions</code> operation.</p>
+   */
+  inline const Aws::String& GetGrafanaVersion() const { return m_grafanaVersion; }
+  inline bool GrafanaVersionHasBeenSet() const { return m_grafanaVersionHasBeenSet; }
+  template <typename GrafanaVersionT = Aws::String>
+  void SetGrafanaVersion(GrafanaVersionT&& value) {
+    m_grafanaVersionHasBeenSet = true;
+    m_grafanaVersion = std::forward<GrafanaVersionT>(value);
+  }
+  template <typename GrafanaVersionT = Aws::String>
+  CreateWorkspaceRequest& WithGrafanaVersion(GrafanaVersionT&& value) {
+    SetGrafanaVersion(std::forward<GrafanaVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name for the workspace. It does not have to be unique.</p>
-     */
-    inline const Aws::String& GetWorkspaceName() const{ return m_workspaceName; }
-    inline bool WorkspaceNameHasBeenSet() const { return m_workspaceNameHasBeenSet; }
-    inline void SetWorkspaceName(const Aws::String& value) { m_workspaceNameHasBeenSet = true; m_workspaceName = value; }
-    inline void SetWorkspaceName(Aws::String&& value) { m_workspaceNameHasBeenSet = true; m_workspaceName = std::move(value); }
-    inline void SetWorkspaceName(const char* value) { m_workspaceNameHasBeenSet = true; m_workspaceName.assign(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceName(const Aws::String& value) { SetWorkspaceName(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceName(Aws::String&& value) { SetWorkspaceName(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceName(const char* value) { SetWorkspaceName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies whether the workspace supports IPv4 only, or IPv4 and IPv6. Valid
+   * values are <code>IPv4</code> and <code>DualStack</code>. For more information
+   * about IP address types, see <a
+   * href="https://docs.aws.amazon.com/grafana/latest/userguide/AMG-configure-nac.html">Network
+   * access control</a>.</p>
+   */
+  inline IPAddressType GetIpAddressType() const { return m_ipAddressType; }
+  inline bool IpAddressTypeHasBeenSet() const { return m_ipAddressTypeHasBeenSet; }
+  inline void SetIpAddressType(IPAddressType value) {
+    m_ipAddressTypeHasBeenSet = true;
+    m_ipAddressType = value;
+  }
+  inline CreateWorkspaceRequest& WithIpAddressType(IPAddressType value) {
+    SetIpAddressType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specify the Amazon Web Services notification channels that you plan to use in
-     * this workspace. Specifying these data sources here enables Amazon Managed
-     * Grafana to create IAM roles and permissions that allow Amazon Managed Grafana to
-     * use these channels.</p>
-     */
-    inline const Aws::Vector<NotificationDestinationType>& GetWorkspaceNotificationDestinations() const{ return m_workspaceNotificationDestinations; }
-    inline bool WorkspaceNotificationDestinationsHasBeenSet() const { return m_workspaceNotificationDestinationsHasBeenSet; }
-    inline void SetWorkspaceNotificationDestinations(const Aws::Vector<NotificationDestinationType>& value) { m_workspaceNotificationDestinationsHasBeenSet = true; m_workspaceNotificationDestinations = value; }
-    inline void SetWorkspaceNotificationDestinations(Aws::Vector<NotificationDestinationType>&& value) { m_workspaceNotificationDestinationsHasBeenSet = true; m_workspaceNotificationDestinations = std::move(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceNotificationDestinations(const Aws::Vector<NotificationDestinationType>& value) { SetWorkspaceNotificationDestinations(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceNotificationDestinations(Aws::Vector<NotificationDestinationType>&& value) { SetWorkspaceNotificationDestinations(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddWorkspaceNotificationDestinations(const NotificationDestinationType& value) { m_workspaceNotificationDestinationsHasBeenSet = true; m_workspaceNotificationDestinations.push_back(value); return *this; }
-    inline CreateWorkspaceRequest& AddWorkspaceNotificationDestinations(NotificationDestinationType&& value) { m_workspaceNotificationDestinationsHasBeenSet = true; m_workspaceNotificationDestinations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The ID or ARN of the Key Management Service key to use for encrypting
+   * workspace data.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  CreateWorkspaceRequest& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  AccountAccessType m_accountAccessType{AccountAccessType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies the organizational units that this workspace is allowed to use data
-     * sources from, if this workspace is in an account that is part of an
-     * organization.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetWorkspaceOrganizationalUnits() const{ return m_workspaceOrganizationalUnits; }
-    inline bool WorkspaceOrganizationalUnitsHasBeenSet() const { return m_workspaceOrganizationalUnitsHasBeenSet; }
-    inline void SetWorkspaceOrganizationalUnits(const Aws::Vector<Aws::String>& value) { m_workspaceOrganizationalUnitsHasBeenSet = true; m_workspaceOrganizationalUnits = value; }
-    inline void SetWorkspaceOrganizationalUnits(Aws::Vector<Aws::String>&& value) { m_workspaceOrganizationalUnitsHasBeenSet = true; m_workspaceOrganizationalUnits = std::move(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceOrganizationalUnits(const Aws::Vector<Aws::String>& value) { SetWorkspaceOrganizationalUnits(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceOrganizationalUnits(Aws::Vector<Aws::String>&& value) { SetWorkspaceOrganizationalUnits(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& AddWorkspaceOrganizationalUnits(const Aws::String& value) { m_workspaceOrganizationalUnitsHasBeenSet = true; m_workspaceOrganizationalUnits.push_back(value); return *this; }
-    inline CreateWorkspaceRequest& AddWorkspaceOrganizationalUnits(Aws::String&& value) { m_workspaceOrganizationalUnitsHasBeenSet = true; m_workspaceOrganizationalUnits.push_back(std::move(value)); return *this; }
-    inline CreateWorkspaceRequest& AddWorkspaceOrganizationalUnits(const char* value) { m_workspaceOrganizationalUnitsHasBeenSet = true; m_workspaceOrganizationalUnits.push_back(value); return *this; }
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>Specified the IAM role that grants permissions to the Amazon Web Services
-     * resources that the workspace will view data from, including both data sources
-     * and notification channels. You are responsible for managing the permissions for
-     * this role as new data sources or notification channels are added. </p>
-     */
-    inline const Aws::String& GetWorkspaceRoleArn() const{ return m_workspaceRoleArn; }
-    inline bool WorkspaceRoleArnHasBeenSet() const { return m_workspaceRoleArnHasBeenSet; }
-    inline void SetWorkspaceRoleArn(const Aws::String& value) { m_workspaceRoleArnHasBeenSet = true; m_workspaceRoleArn = value; }
-    inline void SetWorkspaceRoleArn(Aws::String&& value) { m_workspaceRoleArnHasBeenSet = true; m_workspaceRoleArn = std::move(value); }
-    inline void SetWorkspaceRoleArn(const char* value) { m_workspaceRoleArnHasBeenSet = true; m_workspaceRoleArn.assign(value); }
-    inline CreateWorkspaceRequest& WithWorkspaceRoleArn(const Aws::String& value) { SetWorkspaceRoleArn(value); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceRoleArn(Aws::String&& value) { SetWorkspaceRoleArn(std::move(value)); return *this;}
-    inline CreateWorkspaceRequest& WithWorkspaceRoleArn(const char* value) { SetWorkspaceRoleArn(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_organizationRoleName;
 
-    AccountAccessType m_accountAccessType;
-    bool m_accountAccessTypeHasBeenSet = false;
+  PermissionType m_permissionType{PermissionType::NOT_SET};
 
-    Aws::Vector<AuthenticationProviderTypes> m_authenticationProviders;
-    bool m_authenticationProvidersHasBeenSet = false;
+  Aws::String m_stackSetName;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::Vector<DataSourceType> m_workspaceDataSources;
 
-    Aws::String m_configuration;
-    bool m_configurationHasBeenSet = false;
+  Aws::String m_workspaceDescription;
 
-    Aws::String m_grafanaVersion;
-    bool m_grafanaVersionHasBeenSet = false;
+  Aws::String m_workspaceName;
 
-    NetworkAccessConfiguration m_networkAccessControl;
-    bool m_networkAccessControlHasBeenSet = false;
+  Aws::Vector<NotificationDestinationType> m_workspaceNotificationDestinations;
 
-    Aws::String m_organizationRoleName;
-    bool m_organizationRoleNameHasBeenSet = false;
+  Aws::Vector<Aws::String> m_workspaceOrganizationalUnits;
 
-    PermissionType m_permissionType;
-    bool m_permissionTypeHasBeenSet = false;
+  Aws::String m_workspaceRoleArn;
 
-    Aws::String m_stackSetName;
-    bool m_stackSetNameHasBeenSet = false;
+  Aws::Vector<AuthenticationProviderTypes> m_authenticationProviders;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    VpcConfiguration m_vpcConfiguration;
-    bool m_vpcConfigurationHasBeenSet = false;
+  VpcConfiguration m_vpcConfiguration;
 
-    Aws::Vector<DataSourceType> m_workspaceDataSources;
-    bool m_workspaceDataSourcesHasBeenSet = false;
+  Aws::String m_configuration;
 
-    Aws::String m_workspaceDescription;
-    bool m_workspaceDescriptionHasBeenSet = false;
+  NetworkAccessConfiguration m_networkAccessControl;
 
-    Aws::String m_workspaceName;
-    bool m_workspaceNameHasBeenSet = false;
+  Aws::String m_grafanaVersion;
 
-    Aws::Vector<NotificationDestinationType> m_workspaceNotificationDestinations;
-    bool m_workspaceNotificationDestinationsHasBeenSet = false;
+  IPAddressType m_ipAddressType{IPAddressType::NOT_SET};
 
-    Aws::Vector<Aws::String> m_workspaceOrganizationalUnits;
-    bool m_workspaceOrganizationalUnitsHasBeenSet = false;
+  Aws::String m_kmsKeyId;
+  bool m_accountAccessTypeHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_organizationRoleNameHasBeenSet = false;
+  bool m_permissionTypeHasBeenSet = false;
+  bool m_stackSetNameHasBeenSet = false;
+  bool m_workspaceDataSourcesHasBeenSet = false;
+  bool m_workspaceDescriptionHasBeenSet = false;
+  bool m_workspaceNameHasBeenSet = false;
+  bool m_workspaceNotificationDestinationsHasBeenSet = false;
+  bool m_workspaceOrganizationalUnitsHasBeenSet = false;
+  bool m_workspaceRoleArnHasBeenSet = false;
+  bool m_authenticationProvidersHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_vpcConfigurationHasBeenSet = false;
+  bool m_configurationHasBeenSet = false;
+  bool m_networkAccessControlHasBeenSet = false;
+  bool m_grafanaVersionHasBeenSet = false;
+  bool m_ipAddressTypeHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
+};
 
-    Aws::String m_workspaceRoleArn;
-    bool m_workspaceRoleArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ManagedGrafana
-} // namespace Aws
+}  // namespace Model
+}  // namespace ManagedGrafana
+}  // namespace Aws

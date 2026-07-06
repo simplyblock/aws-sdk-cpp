@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopBackupJobRequest::StopBackupJobRequest() : 
-    m_backupJobIdHasBeenSet(false)
-{
-}
-
-Aws::String StopBackupJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StopBackupJobRequest::SerializePayload() const { return {}; }

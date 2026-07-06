@@ -12,16 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteUsagePlanRequest::DeleteUsagePlanRequest() : 
-    m_usagePlanIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteUsagePlanRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteUsagePlanRequest::SerializePayload() const { return {}; }

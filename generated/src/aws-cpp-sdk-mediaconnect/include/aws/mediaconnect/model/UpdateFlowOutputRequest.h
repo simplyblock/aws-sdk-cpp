@@ -4,340 +4,544 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
-#include <aws/mediaconnect/MediaConnectRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/mediaconnect/model/UpdateEncryption.h>
-#include <aws/mediaconnect/model/Protocol.h>
-#include <aws/mediaconnect/model/VpcInterfaceAttachment.h>
-#include <aws/mediaconnect/model/OutputStatus.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconnect/MediaConnectRequest.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/FlowTransitEncryption.h>
 #include <aws/mediaconnect/model/MediaStreamOutputConfigurationRequest.h>
+#include <aws/mediaconnect/model/NdiOutputTimecodeSource.h>
+#include <aws/mediaconnect/model/OutputStatus.h>
+#include <aws/mediaconnect/model/Protocol.h>
+#include <aws/mediaconnect/model/State.h>
+#include <aws/mediaconnect/model/UpdateEncryption.h>
+#include <aws/mediaconnect/model/VpcInterfaceAttachment.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaConnect {
+namespace Model {
 
+/**
+ */
+class UpdateFlowOutputRequest : public MediaConnectRequest {
+ public:
+  AWS_MEDIACONNECT_API UpdateFlowOutputRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateFlowOutput"; }
+
+  AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * The fields that you want to update in the output.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/UpdateFlowOutputRequest">AWS
-   * API Reference</a></p>
+   * <p> The range of IP addresses that should be allowed to initiate output requests
+   * to this flow. These IP addresses should be in the form of a Classless
+   * Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.</p>
    */
-  class UpdateFlowOutputRequest : public MediaConnectRequest
-  {
-  public:
-    AWS_MEDIACONNECT_API UpdateFlowOutputRequest();
+  inline const Aws::Vector<Aws::String>& GetCidrAllowList() const { return m_cidrAllowList; }
+  inline bool CidrAllowListHasBeenSet() const { return m_cidrAllowListHasBeenSet; }
+  template <typename CidrAllowListT = Aws::Vector<Aws::String>>
+  void SetCidrAllowList(CidrAllowListT&& value) {
+    m_cidrAllowListHasBeenSet = true;
+    m_cidrAllowList = std::forward<CidrAllowListT>(value);
+  }
+  template <typename CidrAllowListT = Aws::Vector<Aws::String>>
+  UpdateFlowOutputRequest& WithCidrAllowList(CidrAllowListT&& value) {
+    SetCidrAllowList(std::forward<CidrAllowListT>(value));
+    return *this;
+  }
+  template <typename CidrAllowListT = Aws::String>
+  UpdateFlowOutputRequest& AddCidrAllowList(CidrAllowListT&& value) {
+    m_cidrAllowListHasBeenSet = true;
+    m_cidrAllowList.emplace_back(std::forward<CidrAllowListT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateFlowOutput"; }
+  ///@{
+  /**
+   * <p> A description of the output. This description appears only on the
+   * MediaConnect console and will not be seen by the end user.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateFlowOutputRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIACONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The IP address where you want to send the output.</p>
+   */
+  inline const Aws::String& GetDestination() const { return m_destination; }
+  inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
+  template <typename DestinationT = Aws::String>
+  void SetDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination = std::forward<DestinationT>(value);
+  }
+  template <typename DestinationT = Aws::String>
+  UpdateFlowOutputRequest& WithDestination(DestinationT&& value) {
+    SetDestination(std::forward<DestinationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The type of key used for the encryption. If no <code>keyType</code> is
+   * provided, the service will use the default setting (static-key). Allowable
+   * encryption types: static-key.</p>
+   */
+  inline const UpdateEncryption& GetEncryption() const { return m_encryption; }
+  inline bool EncryptionHasBeenSet() const { return m_encryptionHasBeenSet; }
+  template <typename EncryptionT = UpdateEncryption>
+  void SetEncryption(EncryptionT&& value) {
+    m_encryptionHasBeenSet = true;
+    m_encryption = std::forward<EncryptionT>(value);
+  }
+  template <typename EncryptionT = UpdateEncryption>
+  UpdateFlowOutputRequest& WithEncryption(EncryptionT&& value) {
+    SetEncryption(std::forward<EncryptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The range of IP addresses that should be allowed to initiate output requests to
-     * this flow. These IP addresses should be in the form of a Classless Inter-Domain
-     * Routing (CIDR) block; for example, 10.0.0.0/16.
-     */
-    inline const Aws::Vector<Aws::String>& GetCidrAllowList() const{ return m_cidrAllowList; }
-    inline bool CidrAllowListHasBeenSet() const { return m_cidrAllowListHasBeenSet; }
-    inline void SetCidrAllowList(const Aws::Vector<Aws::String>& value) { m_cidrAllowListHasBeenSet = true; m_cidrAllowList = value; }
-    inline void SetCidrAllowList(Aws::Vector<Aws::String>&& value) { m_cidrAllowListHasBeenSet = true; m_cidrAllowList = std::move(value); }
-    inline UpdateFlowOutputRequest& WithCidrAllowList(const Aws::Vector<Aws::String>& value) { SetCidrAllowList(value); return *this;}
-    inline UpdateFlowOutputRequest& WithCidrAllowList(Aws::Vector<Aws::String>&& value) { SetCidrAllowList(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& AddCidrAllowList(const Aws::String& value) { m_cidrAllowListHasBeenSet = true; m_cidrAllowList.push_back(value); return *this; }
-    inline UpdateFlowOutputRequest& AddCidrAllowList(Aws::String&& value) { m_cidrAllowListHasBeenSet = true; m_cidrAllowList.push_back(std::move(value)); return *this; }
-    inline UpdateFlowOutputRequest& AddCidrAllowList(const char* value) { m_cidrAllowListHasBeenSet = true; m_cidrAllowList.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The Amazon Resource Name (ARN) of the flow that is associated with the
+   * output that you want to update.</p>
+   */
+  inline const Aws::String& GetFlowArn() const { return m_flowArn; }
+  inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
+  template <typename FlowArnT = Aws::String>
+  void SetFlowArn(FlowArnT&& value) {
+    m_flowArnHasBeenSet = true;
+    m_flowArn = std::forward<FlowArnT>(value);
+  }
+  template <typename FlowArnT = Aws::String>
+  UpdateFlowOutputRequest& WithFlowArn(FlowArnT&& value) {
+    SetFlowArn(std::forward<FlowArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A description of the output. This description appears only on the AWS Elemental
-     * MediaConnect console and will not be seen by the end user.
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateFlowOutputRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateFlowOutputRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The maximum latency in milliseconds. This parameter applies only to
+   * RIST-based and Zixi-based streams.</p>
+   */
+  inline int GetMaxLatency() const { return m_maxLatency; }
+  inline bool MaxLatencyHasBeenSet() const { return m_maxLatencyHasBeenSet; }
+  inline void SetMaxLatency(int value) {
+    m_maxLatencyHasBeenSet = true;
+    m_maxLatency = value;
+  }
+  inline UpdateFlowOutputRequest& WithMaxLatency(int value) {
+    SetMaxLatency(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The IP address where you want to send the output.
-     */
-    inline const Aws::String& GetDestination() const{ return m_destination; }
-    inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
-    inline void SetDestination(const Aws::String& value) { m_destinationHasBeenSet = true; m_destination = value; }
-    inline void SetDestination(Aws::String&& value) { m_destinationHasBeenSet = true; m_destination = std::move(value); }
-    inline void SetDestination(const char* value) { m_destinationHasBeenSet = true; m_destination.assign(value); }
-    inline UpdateFlowOutputRequest& WithDestination(const Aws::String& value) { SetDestination(value); return *this;}
-    inline UpdateFlowOutputRequest& WithDestination(Aws::String&& value) { SetDestination(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithDestination(const char* value) { SetDestination(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The media streams that are associated with the output, and the parameters
+   * for those associations.</p>
+   */
+  inline const Aws::Vector<MediaStreamOutputConfigurationRequest>& GetMediaStreamOutputConfigurations() const {
+    return m_mediaStreamOutputConfigurations;
+  }
+  inline bool MediaStreamOutputConfigurationsHasBeenSet() const { return m_mediaStreamOutputConfigurationsHasBeenSet; }
+  template <typename MediaStreamOutputConfigurationsT = Aws::Vector<MediaStreamOutputConfigurationRequest>>
+  void SetMediaStreamOutputConfigurations(MediaStreamOutputConfigurationsT&& value) {
+    m_mediaStreamOutputConfigurationsHasBeenSet = true;
+    m_mediaStreamOutputConfigurations = std::forward<MediaStreamOutputConfigurationsT>(value);
+  }
+  template <typename MediaStreamOutputConfigurationsT = Aws::Vector<MediaStreamOutputConfigurationRequest>>
+  UpdateFlowOutputRequest& WithMediaStreamOutputConfigurations(MediaStreamOutputConfigurationsT&& value) {
+    SetMediaStreamOutputConfigurations(std::forward<MediaStreamOutputConfigurationsT>(value));
+    return *this;
+  }
+  template <typename MediaStreamOutputConfigurationsT = MediaStreamOutputConfigurationRequest>
+  UpdateFlowOutputRequest& AddMediaStreamOutputConfigurations(MediaStreamOutputConfigurationsT&& value) {
+    m_mediaStreamOutputConfigurationsHasBeenSet = true;
+    m_mediaStreamOutputConfigurations.emplace_back(std::forward<MediaStreamOutputConfigurationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The type of key used for the encryption. If no keyType is provided, the service
-     * will use the default setting (static-key). Allowable encryption types:
-     * static-key.
-     */
-    inline const UpdateEncryption& GetEncryption() const{ return m_encryption; }
-    inline bool EncryptionHasBeenSet() const { return m_encryptionHasBeenSet; }
-    inline void SetEncryption(const UpdateEncryption& value) { m_encryptionHasBeenSet = true; m_encryption = value; }
-    inline void SetEncryption(UpdateEncryption&& value) { m_encryptionHasBeenSet = true; m_encryption = std::move(value); }
-    inline UpdateFlowOutputRequest& WithEncryption(const UpdateEncryption& value) { SetEncryption(value); return *this;}
-    inline UpdateFlowOutputRequest& WithEncryption(UpdateEncryption&& value) { SetEncryption(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The minimum latency in milliseconds for SRT-based streams. In streams that
+   * use the SRT protocol, this value that you set on your MediaConnect source or
+   * output represents the minimal potential latency of that connection. The latency
+   * of the stream is set to the highest number between the sender’s minimum latency
+   * and the receiver’s minimum latency.</p>
+   */
+  inline int GetMinLatency() const { return m_minLatency; }
+  inline bool MinLatencyHasBeenSet() const { return m_minLatencyHasBeenSet; }
+  inline void SetMinLatency(int value) {
+    m_minLatencyHasBeenSet = true;
+    m_minLatency = value;
+  }
+  inline UpdateFlowOutputRequest& WithMinLatency(int value) {
+    SetMinLatency(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The flow that is associated with the output that you want to update.
-     */
-    inline const Aws::String& GetFlowArn() const{ return m_flowArn; }
-    inline bool FlowArnHasBeenSet() const { return m_flowArnHasBeenSet; }
-    inline void SetFlowArn(const Aws::String& value) { m_flowArnHasBeenSet = true; m_flowArn = value; }
-    inline void SetFlowArn(Aws::String&& value) { m_flowArnHasBeenSet = true; m_flowArn = std::move(value); }
-    inline void SetFlowArn(const char* value) { m_flowArnHasBeenSet = true; m_flowArn.assign(value); }
-    inline UpdateFlowOutputRequest& WithFlowArn(const Aws::String& value) { SetFlowArn(value); return *this;}
-    inline UpdateFlowOutputRequest& WithFlowArn(Aws::String&& value) { SetFlowArn(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithFlowArn(const char* value) { SetFlowArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The ARN of the output that you want to update.</p>
+   */
+  inline const Aws::String& GetOutputArn() const { return m_outputArn; }
+  inline bool OutputArnHasBeenSet() const { return m_outputArnHasBeenSet; }
+  template <typename OutputArnT = Aws::String>
+  void SetOutputArn(OutputArnT&& value) {
+    m_outputArnHasBeenSet = true;
+    m_outputArn = std::forward<OutputArnT>(value);
+  }
+  template <typename OutputArnT = Aws::String>
+  UpdateFlowOutputRequest& WithOutputArn(OutputArnT&& value) {
+    SetOutputArn(std::forward<OutputArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The maximum latency in milliseconds. This parameter applies only to RIST-based,
-     * Zixi-based, and Fujitsu-based streams.
-     */
-    inline int GetMaxLatency() const{ return m_maxLatency; }
-    inline bool MaxLatencyHasBeenSet() const { return m_maxLatencyHasBeenSet; }
-    inline void SetMaxLatency(int value) { m_maxLatencyHasBeenSet = true; m_maxLatency = value; }
-    inline UpdateFlowOutputRequest& WithMaxLatency(int value) { SetMaxLatency(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The port to use when content is distributed to this output.</p>
+   */
+  inline int GetPort() const { return m_port; }
+  inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
+  inline void SetPort(int value) {
+    m_portHasBeenSet = true;
+    m_port = value;
+  }
+  inline UpdateFlowOutputRequest& WithPort(int value) {
+    SetPort(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The media streams that are associated with the output, and the parameters for
-     * those associations.
-     */
-    inline const Aws::Vector<MediaStreamOutputConfigurationRequest>& GetMediaStreamOutputConfigurations() const{ return m_mediaStreamOutputConfigurations; }
-    inline bool MediaStreamOutputConfigurationsHasBeenSet() const { return m_mediaStreamOutputConfigurationsHasBeenSet; }
-    inline void SetMediaStreamOutputConfigurations(const Aws::Vector<MediaStreamOutputConfigurationRequest>& value) { m_mediaStreamOutputConfigurationsHasBeenSet = true; m_mediaStreamOutputConfigurations = value; }
-    inline void SetMediaStreamOutputConfigurations(Aws::Vector<MediaStreamOutputConfigurationRequest>&& value) { m_mediaStreamOutputConfigurationsHasBeenSet = true; m_mediaStreamOutputConfigurations = std::move(value); }
-    inline UpdateFlowOutputRequest& WithMediaStreamOutputConfigurations(const Aws::Vector<MediaStreamOutputConfigurationRequest>& value) { SetMediaStreamOutputConfigurations(value); return *this;}
-    inline UpdateFlowOutputRequest& WithMediaStreamOutputConfigurations(Aws::Vector<MediaStreamOutputConfigurationRequest>&& value) { SetMediaStreamOutputConfigurations(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& AddMediaStreamOutputConfigurations(const MediaStreamOutputConfigurationRequest& value) { m_mediaStreamOutputConfigurationsHasBeenSet = true; m_mediaStreamOutputConfigurations.push_back(value); return *this; }
-    inline UpdateFlowOutputRequest& AddMediaStreamOutputConfigurations(MediaStreamOutputConfigurationRequest&& value) { m_mediaStreamOutputConfigurationsHasBeenSet = true; m_mediaStreamOutputConfigurations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The protocol to use for the output.</p>  <p>Elemental MediaConnect no
+   * longer supports the Fujitsu QoS protocol. This reference is maintained for
+   * legacy purposes only.</p>
+   */
+  inline Protocol GetProtocol() const { return m_protocol; }
+  inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
+  inline void SetProtocol(Protocol value) {
+    m_protocolHasBeenSet = true;
+    m_protocol = value;
+  }
+  inline UpdateFlowOutputRequest& WithProtocol(Protocol value) {
+    SetProtocol(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The minimum latency in milliseconds for SRT-based streams. In streams that use
-     * the SRT protocol, this value that you set on your MediaConnect source or output
-     * represents the minimal potential latency of that connection. The latency of the
-     * stream is set to the highest number between the sender’s minimum latency and the
-     * receiver’s minimum latency.
-     */
-    inline int GetMinLatency() const{ return m_minLatency; }
-    inline bool MinLatencyHasBeenSet() const { return m_minLatencyHasBeenSet; }
-    inline void SetMinLatency(int value) { m_minLatencyHasBeenSet = true; m_minLatency = value; }
-    inline UpdateFlowOutputRequest& WithMinLatency(int value) { SetMinLatency(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The remote ID for the Zixi-pull stream.</p>
+   */
+  inline const Aws::String& GetRemoteId() const { return m_remoteId; }
+  inline bool RemoteIdHasBeenSet() const { return m_remoteIdHasBeenSet; }
+  template <typename RemoteIdT = Aws::String>
+  void SetRemoteId(RemoteIdT&& value) {
+    m_remoteIdHasBeenSet = true;
+    m_remoteId = std::forward<RemoteIdT>(value);
+  }
+  template <typename RemoteIdT = Aws::String>
+  UpdateFlowOutputRequest& WithRemoteId(RemoteIdT&& value) {
+    SetRemoteId(std::forward<RemoteIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ARN of the output that you want to update.
-     */
-    inline const Aws::String& GetOutputArn() const{ return m_outputArn; }
-    inline bool OutputArnHasBeenSet() const { return m_outputArnHasBeenSet; }
-    inline void SetOutputArn(const Aws::String& value) { m_outputArnHasBeenSet = true; m_outputArn = value; }
-    inline void SetOutputArn(Aws::String&& value) { m_outputArnHasBeenSet = true; m_outputArn = std::move(value); }
-    inline void SetOutputArn(const char* value) { m_outputArnHasBeenSet = true; m_outputArn.assign(value); }
-    inline UpdateFlowOutputRequest& WithOutputArn(const Aws::String& value) { SetOutputArn(value); return *this;}
-    inline UpdateFlowOutputRequest& WithOutputArn(Aws::String&& value) { SetOutputArn(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithOutputArn(const char* value) { SetOutputArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The port that the flow uses to send outbound requests to initiate connection
+   * with the sender.</p>
+   */
+  inline int GetSenderControlPort() const { return m_senderControlPort; }
+  inline bool SenderControlPortHasBeenSet() const { return m_senderControlPortHasBeenSet; }
+  inline void SetSenderControlPort(int value) {
+    m_senderControlPortHasBeenSet = true;
+    m_senderControlPort = value;
+  }
+  inline UpdateFlowOutputRequest& WithSenderControlPort(int value) {
+    SetSenderControlPort(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The port to use when content is distributed to this output.
-     */
-    inline int GetPort() const{ return m_port; }
-    inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
-    inline void SetPort(int value) { m_portHasBeenSet = true; m_port = value; }
-    inline UpdateFlowOutputRequest& WithPort(int value) { SetPort(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The IP address that the flow communicates with to initiate connection with
+   * the sender.</p>
+   */
+  inline const Aws::String& GetSenderIpAddress() const { return m_senderIpAddress; }
+  inline bool SenderIpAddressHasBeenSet() const { return m_senderIpAddressHasBeenSet; }
+  template <typename SenderIpAddressT = Aws::String>
+  void SetSenderIpAddress(SenderIpAddressT&& value) {
+    m_senderIpAddressHasBeenSet = true;
+    m_senderIpAddress = std::forward<SenderIpAddressT>(value);
+  }
+  template <typename SenderIpAddressT = Aws::String>
+  UpdateFlowOutputRequest& WithSenderIpAddress(SenderIpAddressT&& value) {
+    SetSenderIpAddress(std::forward<SenderIpAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The protocol to use for the output.
-     */
-    inline const Protocol& GetProtocol() const{ return m_protocol; }
-    inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
-    inline void SetProtocol(const Protocol& value) { m_protocolHasBeenSet = true; m_protocol = value; }
-    inline void SetProtocol(Protocol&& value) { m_protocolHasBeenSet = true; m_protocol = std::move(value); }
-    inline UpdateFlowOutputRequest& WithProtocol(const Protocol& value) { SetProtocol(value); return *this;}
-    inline UpdateFlowOutputRequest& WithProtocol(Protocol&& value) { SetProtocol(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The smoothing latency in milliseconds for RIST, RTP, and RTP-FEC
+   * streams.</p>
+   */
+  inline int GetSmoothingLatency() const { return m_smoothingLatency; }
+  inline bool SmoothingLatencyHasBeenSet() const { return m_smoothingLatencyHasBeenSet; }
+  inline void SetSmoothingLatency(int value) {
+    m_smoothingLatencyHasBeenSet = true;
+    m_smoothingLatency = value;
+  }
+  inline UpdateFlowOutputRequest& WithSmoothingLatency(int value) {
+    SetSmoothingLatency(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The remote ID for the Zixi-pull stream.
-     */
-    inline const Aws::String& GetRemoteId() const{ return m_remoteId; }
-    inline bool RemoteIdHasBeenSet() const { return m_remoteIdHasBeenSet; }
-    inline void SetRemoteId(const Aws::String& value) { m_remoteIdHasBeenSet = true; m_remoteId = value; }
-    inline void SetRemoteId(Aws::String&& value) { m_remoteIdHasBeenSet = true; m_remoteId = std::move(value); }
-    inline void SetRemoteId(const char* value) { m_remoteIdHasBeenSet = true; m_remoteId.assign(value); }
-    inline UpdateFlowOutputRequest& WithRemoteId(const Aws::String& value) { SetRemoteId(value); return *this;}
-    inline UpdateFlowOutputRequest& WithRemoteId(Aws::String&& value) { SetRemoteId(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithRemoteId(const char* value) { SetRemoteId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The stream ID that you want to use for this transport. This parameter
+   * applies only to Zixi and SRT caller-based streams.</p>
+   */
+  inline const Aws::String& GetStreamId() const { return m_streamId; }
+  inline bool StreamIdHasBeenSet() const { return m_streamIdHasBeenSet; }
+  template <typename StreamIdT = Aws::String>
+  void SetStreamId(StreamIdT&& value) {
+    m_streamIdHasBeenSet = true;
+    m_streamId = std::forward<StreamIdT>(value);
+  }
+  template <typename StreamIdT = Aws::String>
+  UpdateFlowOutputRequest& WithStreamId(StreamIdT&& value) {
+    SetStreamId(std::forward<StreamIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The port that the flow uses to send outbound requests to initiate connection
-     * with the sender.
-     */
-    inline int GetSenderControlPort() const{ return m_senderControlPort; }
-    inline bool SenderControlPortHasBeenSet() const { return m_senderControlPortHasBeenSet; }
-    inline void SetSenderControlPort(int value) { m_senderControlPortHasBeenSet = true; m_senderControlPort = value; }
-    inline UpdateFlowOutputRequest& WithSenderControlPort(int value) { SetSenderControlPort(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The name of the VPC interface attachment to use for this output.</p>
+   */
+  inline const VpcInterfaceAttachment& GetVpcInterfaceAttachment() const { return m_vpcInterfaceAttachment; }
+  inline bool VpcInterfaceAttachmentHasBeenSet() const { return m_vpcInterfaceAttachmentHasBeenSet; }
+  template <typename VpcInterfaceAttachmentT = VpcInterfaceAttachment>
+  void SetVpcInterfaceAttachment(VpcInterfaceAttachmentT&& value) {
+    m_vpcInterfaceAttachmentHasBeenSet = true;
+    m_vpcInterfaceAttachment = std::forward<VpcInterfaceAttachmentT>(value);
+  }
+  template <typename VpcInterfaceAttachmentT = VpcInterfaceAttachment>
+  UpdateFlowOutputRequest& WithVpcInterfaceAttachment(VpcInterfaceAttachmentT&& value) {
+    SetVpcInterfaceAttachment(std::forward<VpcInterfaceAttachmentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The IP address that the flow communicates with to initiate connection with the
-     * sender.
-     */
-    inline const Aws::String& GetSenderIpAddress() const{ return m_senderIpAddress; }
-    inline bool SenderIpAddressHasBeenSet() const { return m_senderIpAddressHasBeenSet; }
-    inline void SetSenderIpAddress(const Aws::String& value) { m_senderIpAddressHasBeenSet = true; m_senderIpAddress = value; }
-    inline void SetSenderIpAddress(Aws::String&& value) { m_senderIpAddressHasBeenSet = true; m_senderIpAddress = std::move(value); }
-    inline void SetSenderIpAddress(const char* value) { m_senderIpAddressHasBeenSet = true; m_senderIpAddress.assign(value); }
-    inline UpdateFlowOutputRequest& WithSenderIpAddress(const Aws::String& value) { SetSenderIpAddress(value); return *this;}
-    inline UpdateFlowOutputRequest& WithSenderIpAddress(Aws::String&& value) { SetSenderIpAddress(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithSenderIpAddress(const char* value) { SetSenderIpAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> An indication of whether the output should transmit data or not. If you
+   * don't specify the <code>outputStatus</code> field in your request, MediaConnect
+   * leaves the value unchanged.</p>
+   */
+  inline OutputStatus GetOutputStatus() const { return m_outputStatus; }
+  inline bool OutputStatusHasBeenSet() const { return m_outputStatusHasBeenSet; }
+  inline void SetOutputStatus(OutputStatus value) {
+    m_outputStatusHasBeenSet = true;
+    m_outputStatus = value;
+  }
+  inline UpdateFlowOutputRequest& WithOutputStatus(OutputStatus value) {
+    SetOutputStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The smoothing latency in milliseconds for RIST, RTP, and RTP-FEC streams.
-     */
-    inline int GetSmoothingLatency() const{ return m_smoothingLatency; }
-    inline bool SmoothingLatencyHasBeenSet() const { return m_smoothingLatencyHasBeenSet; }
-    inline void SetSmoothingLatency(int value) { m_smoothingLatencyHasBeenSet = true; m_smoothingLatency = value; }
-    inline UpdateFlowOutputRequest& WithSmoothingLatency(int value) { SetSmoothingLatency(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> A suffix for the name of the NDI® sender that the flow creates. If a custom
+   * name isn't specified, MediaConnect uses the output name. </p>
+   */
+  inline const Aws::String& GetNdiProgramName() const { return m_ndiProgramName; }
+  inline bool NdiProgramNameHasBeenSet() const { return m_ndiProgramNameHasBeenSet; }
+  template <typename NdiProgramNameT = Aws::String>
+  void SetNdiProgramName(NdiProgramNameT&& value) {
+    m_ndiProgramNameHasBeenSet = true;
+    m_ndiProgramName = std::forward<NdiProgramNameT>(value);
+  }
+  template <typename NdiProgramNameT = Aws::String>
+  UpdateFlowOutputRequest& WithNdiProgramName(NdiProgramNameT&& value) {
+    SetNdiProgramName(std::forward<NdiProgramNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The stream ID that you want to use for this transport. This parameter applies
-     * only to Zixi and SRT caller-based streams.
-     */
-    inline const Aws::String& GetStreamId() const{ return m_streamId; }
-    inline bool StreamIdHasBeenSet() const { return m_streamIdHasBeenSet; }
-    inline void SetStreamId(const Aws::String& value) { m_streamIdHasBeenSet = true; m_streamId = value; }
-    inline void SetStreamId(Aws::String&& value) { m_streamIdHasBeenSet = true; m_streamId = std::move(value); }
-    inline void SetStreamId(const char* value) { m_streamIdHasBeenSet = true; m_streamId.assign(value); }
-    inline UpdateFlowOutputRequest& WithStreamId(const Aws::String& value) { SetStreamId(value); return *this;}
-    inline UpdateFlowOutputRequest& WithStreamId(Aws::String&& value) { SetStreamId(std::move(value)); return *this;}
-    inline UpdateFlowOutputRequest& WithStreamId(const char* value) { SetStreamId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A quality setting for the NDI Speed HQ encoder. </p>
+   */
+  inline int GetNdiSpeedHqQuality() const { return m_ndiSpeedHqQuality; }
+  inline bool NdiSpeedHqQualityHasBeenSet() const { return m_ndiSpeedHqQualityHasBeenSet; }
+  inline void SetNdiSpeedHqQuality(int value) {
+    m_ndiSpeedHqQualityHasBeenSet = true;
+    m_ndiSpeedHqQuality = value;
+  }
+  inline UpdateFlowOutputRequest& WithNdiSpeedHqQuality(int value) {
+    SetNdiSpeedHqQuality(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the VPC interface attachment to use for this output.
-     */
-    inline const VpcInterfaceAttachment& GetVpcInterfaceAttachment() const{ return m_vpcInterfaceAttachment; }
-    inline bool VpcInterfaceAttachmentHasBeenSet() const { return m_vpcInterfaceAttachmentHasBeenSet; }
-    inline void SetVpcInterfaceAttachment(const VpcInterfaceAttachment& value) { m_vpcInterfaceAttachmentHasBeenSet = true; m_vpcInterfaceAttachment = value; }
-    inline void SetVpcInterfaceAttachment(VpcInterfaceAttachment&& value) { m_vpcInterfaceAttachmentHasBeenSet = true; m_vpcInterfaceAttachment = std::move(value); }
-    inline UpdateFlowOutputRequest& WithVpcInterfaceAttachment(const VpcInterfaceAttachment& value) { SetVpcInterfaceAttachment(value); return *this;}
-    inline UpdateFlowOutputRequest& WithVpcInterfaceAttachment(VpcInterfaceAttachment&& value) { SetVpcInterfaceAttachment(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether to enable or disable router integration for this flow
+   * output.</p>
+   */
+  inline State GetRouterIntegrationState() const { return m_routerIntegrationState; }
+  inline bool RouterIntegrationStateHasBeenSet() const { return m_routerIntegrationStateHasBeenSet; }
+  inline void SetRouterIntegrationState(State value) {
+    m_routerIntegrationStateHasBeenSet = true;
+    m_routerIntegrationState = value;
+  }
+  inline UpdateFlowOutputRequest& WithRouterIntegrationState(State value) {
+    SetRouterIntegrationState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * An indication of whether the output should transmit data or not. If you don't
-     * specify the outputStatus field in your request, MediaConnect leaves the value
-     * unchanged.
-     */
-    inline const OutputStatus& GetOutputStatus() const{ return m_outputStatus; }
-    inline bool OutputStatusHasBeenSet() const { return m_outputStatusHasBeenSet; }
-    inline void SetOutputStatus(const OutputStatus& value) { m_outputStatusHasBeenSet = true; m_outputStatus = value; }
-    inline void SetOutputStatus(OutputStatus&& value) { m_outputStatusHasBeenSet = true; m_outputStatus = std::move(value); }
-    inline UpdateFlowOutputRequest& WithOutputStatus(const OutputStatus& value) { SetOutputStatus(value); return *this;}
-    inline UpdateFlowOutputRequest& WithOutputStatus(OutputStatus&& value) { SetOutputStatus(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<Aws::String> m_cidrAllowList;
-    bool m_cidrAllowListHasBeenSet = false;
+  inline const FlowTransitEncryption& GetRouterIntegrationTransitEncryption() const { return m_routerIntegrationTransitEncryption; }
+  inline bool RouterIntegrationTransitEncryptionHasBeenSet() const { return m_routerIntegrationTransitEncryptionHasBeenSet; }
+  template <typename RouterIntegrationTransitEncryptionT = FlowTransitEncryption>
+  void SetRouterIntegrationTransitEncryption(RouterIntegrationTransitEncryptionT&& value) {
+    m_routerIntegrationTransitEncryptionHasBeenSet = true;
+    m_routerIntegrationTransitEncryption = std::forward<RouterIntegrationTransitEncryptionT>(value);
+  }
+  template <typename RouterIntegrationTransitEncryptionT = FlowTransitEncryption>
+  UpdateFlowOutputRequest& WithRouterIntegrationTransitEncryption(RouterIntegrationTransitEncryptionT&& value) {
+    SetRouterIntegrationTransitEncryption(std::forward<RouterIntegrationTransitEncryptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Controls how MediaConnect generates timecodes for NDI output frames. If you
+   * don't specify this field, MediaConnect leaves the value unchanged.</p> <ul> <li>
+   * <p> <code>EMBEDDED_TIMECODE</code> - Preserves timecodes from the input
+   * transport stream. The timecodes must be embedded in the video stream as SEI
+   * timing messages. If no embedded timecode is detected, MediaConnect uses the UTC
+   * system time instead.</p> </li> <li> <p> <code>UTC_SYSTEM_TIME</code> - Generates
+   * timecodes based on the system clock time when each frame is sent.</p> </li>
+   * </ul>
+   */
+  inline NdiOutputTimecodeSource GetNdiOutputTimecodeSource() const { return m_ndiOutputTimecodeSource; }
+  inline bool NdiOutputTimecodeSourceHasBeenSet() const { return m_ndiOutputTimecodeSourceHasBeenSet; }
+  inline void SetNdiOutputTimecodeSource(NdiOutputTimecodeSource value) {
+    m_ndiOutputTimecodeSourceHasBeenSet = true;
+    m_ndiOutputTimecodeSource = value;
+  }
+  inline UpdateFlowOutputRequest& WithNdiOutputTimecodeSource(NdiOutputTimecodeSource value) {
+    SetNdiOutputTimecodeSource(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_cidrAllowList;
 
-    Aws::String m_destination;
-    bool m_destinationHasBeenSet = false;
+  Aws::String m_description;
 
-    UpdateEncryption m_encryption;
-    bool m_encryptionHasBeenSet = false;
+  Aws::String m_destination;
 
-    Aws::String m_flowArn;
-    bool m_flowArnHasBeenSet = false;
+  UpdateEncryption m_encryption;
 
-    int m_maxLatency;
-    bool m_maxLatencyHasBeenSet = false;
+  Aws::String m_flowArn;
 
-    Aws::Vector<MediaStreamOutputConfigurationRequest> m_mediaStreamOutputConfigurations;
-    bool m_mediaStreamOutputConfigurationsHasBeenSet = false;
+  int m_maxLatency{0};
 
-    int m_minLatency;
-    bool m_minLatencyHasBeenSet = false;
+  Aws::Vector<MediaStreamOutputConfigurationRequest> m_mediaStreamOutputConfigurations;
 
-    Aws::String m_outputArn;
-    bool m_outputArnHasBeenSet = false;
+  int m_minLatency{0};
 
-    int m_port;
-    bool m_portHasBeenSet = false;
+  Aws::String m_outputArn;
 
-    Protocol m_protocol;
-    bool m_protocolHasBeenSet = false;
+  int m_port{0};
 
-    Aws::String m_remoteId;
-    bool m_remoteIdHasBeenSet = false;
+  Protocol m_protocol{Protocol::NOT_SET};
 
-    int m_senderControlPort;
-    bool m_senderControlPortHasBeenSet = false;
+  Aws::String m_remoteId;
 
-    Aws::String m_senderIpAddress;
-    bool m_senderIpAddressHasBeenSet = false;
+  int m_senderControlPort{0};
 
-    int m_smoothingLatency;
-    bool m_smoothingLatencyHasBeenSet = false;
+  Aws::String m_senderIpAddress;
 
-    Aws::String m_streamId;
-    bool m_streamIdHasBeenSet = false;
+  int m_smoothingLatency{0};
 
-    VpcInterfaceAttachment m_vpcInterfaceAttachment;
-    bool m_vpcInterfaceAttachmentHasBeenSet = false;
+  Aws::String m_streamId;
 
-    OutputStatus m_outputStatus;
-    bool m_outputStatusHasBeenSet = false;
-  };
+  VpcInterfaceAttachment m_vpcInterfaceAttachment;
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+  OutputStatus m_outputStatus{OutputStatus::NOT_SET};
+
+  Aws::String m_ndiProgramName;
+
+  int m_ndiSpeedHqQuality{0};
+
+  State m_routerIntegrationState{State::NOT_SET};
+
+  FlowTransitEncryption m_routerIntegrationTransitEncryption;
+
+  NdiOutputTimecodeSource m_ndiOutputTimecodeSource{NdiOutputTimecodeSource::NOT_SET};
+  bool m_cidrAllowListHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_destinationHasBeenSet = false;
+  bool m_encryptionHasBeenSet = false;
+  bool m_flowArnHasBeenSet = false;
+  bool m_maxLatencyHasBeenSet = false;
+  bool m_mediaStreamOutputConfigurationsHasBeenSet = false;
+  bool m_minLatencyHasBeenSet = false;
+  bool m_outputArnHasBeenSet = false;
+  bool m_portHasBeenSet = false;
+  bool m_protocolHasBeenSet = false;
+  bool m_remoteIdHasBeenSet = false;
+  bool m_senderControlPortHasBeenSet = false;
+  bool m_senderIpAddressHasBeenSet = false;
+  bool m_smoothingLatencyHasBeenSet = false;
+  bool m_streamIdHasBeenSet = false;
+  bool m_vpcInterfaceAttachmentHasBeenSet = false;
+  bool m_outputStatusHasBeenSet = false;
+  bool m_ndiProgramNameHasBeenSet = false;
+  bool m_ndiSpeedHqQualityHasBeenSet = false;
+  bool m_routerIntegrationStateHasBeenSet = false;
+  bool m_routerIntegrationTransitEncryptionHasBeenSet = false;
+  bool m_ndiOutputTimecodeSourceHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

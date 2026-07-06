@@ -4,73 +4,76 @@
  */
 
 #pragma once
-#include <aws/eventbridge/EventBridge_EXPORTS.h>
-#include <aws/eventbridge/EventBridgeRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/eventbridge/EventBridgeRequest.h>
+#include <aws/eventbridge/EventBridge_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EventBridge
-{
-namespace Model
-{
+namespace Aws {
+namespace EventBridge {
+namespace Model {
 
+/**
+ */
+class DescribeRuleRequest : public EventBridgeRequest {
+ public:
+  AWS_EVENTBRIDGE_API DescribeRuleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeRule"; }
+
+  AWS_EVENTBRIDGE_API Aws::String SerializePayload() const override;
+
+  AWS_EVENTBRIDGE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the rule.</p>
    */
-  class DescribeRuleRequest : public EventBridgeRequest
-  {
-  public:
-    AWS_EVENTBRIDGE_API DescribeRuleRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeRuleRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeRule"; }
+  ///@{
+  /**
+   * <p>The name or ARN of the event bus associated with the rule. If you omit this,
+   * the default event bus is used.</p>
+   */
+  inline const Aws::String& GetEventBusName() const { return m_eventBusName; }
+  inline bool EventBusNameHasBeenSet() const { return m_eventBusNameHasBeenSet; }
+  template <typename EventBusNameT = Aws::String>
+  void SetEventBusName(EventBusNameT&& value) {
+    m_eventBusNameHasBeenSet = true;
+    m_eventBusName = std::forward<EventBusNameT>(value);
+  }
+  template <typename EventBusNameT = Aws::String>
+  DescribeRuleRequest& WithEventBusName(EventBusNameT&& value) {
+    SetEventBusName(std::forward<EventBusNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    AWS_EVENTBRIDGE_API Aws::String SerializePayload() const override;
+  Aws::String m_eventBusName;
+  bool m_nameHasBeenSet = false;
+  bool m_eventBusNameHasBeenSet = false;
+};
 
-    AWS_EVENTBRIDGE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the rule.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline DescribeRuleRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeRuleRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeRuleRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name or ARN of the event bus associated with the rule. If you omit this,
-     * the default event bus is used.</p>
-     */
-    inline const Aws::String& GetEventBusName() const{ return m_eventBusName; }
-    inline bool EventBusNameHasBeenSet() const { return m_eventBusNameHasBeenSet; }
-    inline void SetEventBusName(const Aws::String& value) { m_eventBusNameHasBeenSet = true; m_eventBusName = value; }
-    inline void SetEventBusName(Aws::String&& value) { m_eventBusNameHasBeenSet = true; m_eventBusName = std::move(value); }
-    inline void SetEventBusName(const char* value) { m_eventBusNameHasBeenSet = true; m_eventBusName.assign(value); }
-    inline DescribeRuleRequest& WithEventBusName(const Aws::String& value) { SetEventBusName(value); return *this;}
-    inline DescribeRuleRequest& WithEventBusName(Aws::String&& value) { SetEventBusName(std::move(value)); return *this;}
-    inline DescribeRuleRequest& WithEventBusName(const char* value) { SetEventBusName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_eventBusName;
-    bool m_eventBusNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EventBridge
-} // namespace Aws
+}  // namespace Model
+}  // namespace EventBridge
+}  // namespace Aws

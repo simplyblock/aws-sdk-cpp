@@ -5,78 +5,94 @@
 
 #pragma once
 #include <aws/ce/CostExplorer_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ce/model/RecommendationDetailData.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CostExplorer
-{
-namespace Model
-{
-  class GetSavingsPlanPurchaseRecommendationDetailsResult
-  {
-  public:
-    AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult();
-    AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CostExplorer {
+namespace Model {
+class GetSavingsPlanPurchaseRecommendationDetailsResult {
+ public:
+  AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult() = default;
+  AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COSTEXPLORER_API GetSavingsPlanPurchaseRecommendationDetailsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID that is associated with the Savings Plan recommendation.</p>
+   */
+  inline const Aws::String& GetRecommendationDetailId() const { return m_recommendationDetailId; }
+  template <typename RecommendationDetailIdT = Aws::String>
+  void SetRecommendationDetailId(RecommendationDetailIdT&& value) {
+    m_recommendationDetailIdHasBeenSet = true;
+    m_recommendationDetailId = std::forward<RecommendationDetailIdT>(value);
+  }
+  template <typename RecommendationDetailIdT = Aws::String>
+  GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailId(RecommendationDetailIdT&& value) {
+    SetRecommendationDetailId(std::forward<RecommendationDetailIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID that is associated with the Savings Plan recommendation.</p>
-     */
-    inline const Aws::String& GetRecommendationDetailId() const{ return m_recommendationDetailId; }
-    inline void SetRecommendationDetailId(const Aws::String& value) { m_recommendationDetailId = value; }
-    inline void SetRecommendationDetailId(Aws::String&& value) { m_recommendationDetailId = std::move(value); }
-    inline void SetRecommendationDetailId(const char* value) { m_recommendationDetailId.assign(value); }
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailId(const Aws::String& value) { SetRecommendationDetailId(value); return *this;}
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailId(Aws::String&& value) { SetRecommendationDetailId(std::move(value)); return *this;}
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailId(const char* value) { SetRecommendationDetailId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains detailed information about a specific Savings Plan
+   * recommendation.</p>
+   */
+  inline const RecommendationDetailData& GetRecommendationDetailData() const { return m_recommendationDetailData; }
+  template <typename RecommendationDetailDataT = RecommendationDetailData>
+  void SetRecommendationDetailData(RecommendationDetailDataT&& value) {
+    m_recommendationDetailDataHasBeenSet = true;
+    m_recommendationDetailData = std::forward<RecommendationDetailDataT>(value);
+  }
+  template <typename RecommendationDetailDataT = RecommendationDetailData>
+  GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailData(RecommendationDetailDataT&& value) {
+    SetRecommendationDetailData(std::forward<RecommendationDetailDataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains detailed information about a specific Savings Plan
-     * recommendation.</p>
-     */
-    inline const RecommendationDetailData& GetRecommendationDetailData() const{ return m_recommendationDetailData; }
-    inline void SetRecommendationDetailData(const RecommendationDetailData& value) { m_recommendationDetailData = value; }
-    inline void SetRecommendationDetailData(RecommendationDetailData&& value) { m_recommendationDetailData = std::move(value); }
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailData(const RecommendationDetailData& value) { SetRecommendationDetailData(value); return *this;}
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRecommendationDetailData(RecommendationDetailData&& value) { SetRecommendationDetailData(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSavingsPlanPurchaseRecommendationDetailsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSavingsPlanPurchaseRecommendationDetailsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_recommendationDetailId;
+ private:
+  Aws::String m_recommendationDetailId;
 
-    RecommendationDetailData m_recommendationDetailData;
+  RecommendationDetailData m_recommendationDetailData;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_recommendationDetailIdHasBeenSet = false;
+  bool m_recommendationDetailDataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CostExplorer
-} // namespace Aws
+}  // namespace Model
+}  // namespace CostExplorer
+}  // namespace Aws

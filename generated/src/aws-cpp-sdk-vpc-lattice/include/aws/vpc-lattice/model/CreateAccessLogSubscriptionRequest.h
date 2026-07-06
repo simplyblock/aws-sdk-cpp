@@ -4,116 +4,148 @@
  */
 
 #pragma once
-#include <aws/vpc-lattice/VPCLattice_EXPORTS.h>
-#include <aws/vpc-lattice/VPCLatticeRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/vpc-lattice/VPCLatticeRequest.h>
+#include <aws/vpc-lattice/VPCLattice_EXPORTS.h>
+#include <aws/vpc-lattice/model/ServiceNetworkLogType.h>
 
-namespace Aws
-{
-namespace VPCLattice
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace VPCLattice {
+namespace Model {
+
+/**
+ */
+class CreateAccessLogSubscriptionRequest : public VPCLatticeRequest {
+ public:
+  AWS_VPCLATTICE_API CreateAccessLogSubscriptionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateAccessLogSubscription"; }
+
+  AWS_VPCLATTICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the
+   * idempotency of the request. If you retry a request that completed successfully
+   * using the same client token and parameters, the retry succeeds without
+   * performing any actions. If the parameters aren't identical, the retry fails.</p>
    */
-  class CreateAccessLogSubscriptionRequest : public VPCLatticeRequest
-  {
-  public:
-    AWS_VPCLATTICE_API CreateAccessLogSubscriptionRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateAccessLogSubscriptionRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateAccessLogSubscription"; }
+  ///@{
+  /**
+   * <p>The ID or ARN of the service network or service.</p>
+   */
+  inline const Aws::String& GetResourceIdentifier() const { return m_resourceIdentifier; }
+  inline bool ResourceIdentifierHasBeenSet() const { return m_resourceIdentifierHasBeenSet; }
+  template <typename ResourceIdentifierT = Aws::String>
+  void SetResourceIdentifier(ResourceIdentifierT&& value) {
+    m_resourceIdentifierHasBeenSet = true;
+    m_resourceIdentifier = std::forward<ResourceIdentifierT>(value);
+  }
+  template <typename ResourceIdentifierT = Aws::String>
+  CreateAccessLogSubscriptionRequest& WithResourceIdentifier(ResourceIdentifierT&& value) {
+    SetResourceIdentifier(std::forward<ResourceIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_VPCLATTICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the destination. The supported destination
+   * types are CloudWatch Log groups, Kinesis Data Firehose delivery streams, and
+   * Amazon S3 buckets.</p>
+   */
+  inline const Aws::String& GetDestinationArn() const { return m_destinationArn; }
+  inline bool DestinationArnHasBeenSet() const { return m_destinationArnHasBeenSet; }
+  template <typename DestinationArnT = Aws::String>
+  void SetDestinationArn(DestinationArnT&& value) {
+    m_destinationArnHasBeenSet = true;
+    m_destinationArn = std::forward<DestinationArnT>(value);
+  }
+  template <typename DestinationArnT = Aws::String>
+  CreateAccessLogSubscriptionRequest& WithDestinationArn(DestinationArnT&& value) {
+    SetDestinationArn(std::forward<DestinationArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The type of log that monitors your Amazon VPC Lattice service networks.</p>
+   */
+  inline ServiceNetworkLogType GetServiceNetworkLogType() const { return m_serviceNetworkLogType; }
+  inline bool ServiceNetworkLogTypeHasBeenSet() const { return m_serviceNetworkLogTypeHasBeenSet; }
+  inline void SetServiceNetworkLogType(ServiceNetworkLogType value) {
+    m_serviceNetworkLogTypeHasBeenSet = true;
+    m_serviceNetworkLogType = value;
+  }
+  inline CreateAccessLogSubscriptionRequest& WithServiceNetworkLogType(ServiceNetworkLogType value) {
+    SetServiceNetworkLogType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. If you retry a request that completed successfully
-     * using the same client token and parameters, the retry succeeds without
-     * performing any actions. If the parameters aren't identical, the retry fails.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateAccessLogSubscriptionRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags for the access log subscription.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateAccessLogSubscriptionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateAccessLogSubscriptionRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the destination. The supported destination
-     * types are CloudWatch Log groups, Kinesis Data Firehose delivery streams, and
-     * Amazon S3 buckets.</p>
-     */
-    inline const Aws::String& GetDestinationArn() const{ return m_destinationArn; }
-    inline bool DestinationArnHasBeenSet() const { return m_destinationArnHasBeenSet; }
-    inline void SetDestinationArn(const Aws::String& value) { m_destinationArnHasBeenSet = true; m_destinationArn = value; }
-    inline void SetDestinationArn(Aws::String&& value) { m_destinationArnHasBeenSet = true; m_destinationArn = std::move(value); }
-    inline void SetDestinationArn(const char* value) { m_destinationArnHasBeenSet = true; m_destinationArn.assign(value); }
-    inline CreateAccessLogSubscriptionRequest& WithDestinationArn(const Aws::String& value) { SetDestinationArn(value); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithDestinationArn(Aws::String&& value) { SetDestinationArn(std::move(value)); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithDestinationArn(const char* value) { SetDestinationArn(value); return *this;}
-    ///@}
+  Aws::String m_resourceIdentifier;
 
-    ///@{
-    /**
-     * <p>The ID or Amazon Resource Name (ARN) of the service network or service.</p>
-     */
-    inline const Aws::String& GetResourceIdentifier() const{ return m_resourceIdentifier; }
-    inline bool ResourceIdentifierHasBeenSet() const { return m_resourceIdentifierHasBeenSet; }
-    inline void SetResourceIdentifier(const Aws::String& value) { m_resourceIdentifierHasBeenSet = true; m_resourceIdentifier = value; }
-    inline void SetResourceIdentifier(Aws::String&& value) { m_resourceIdentifierHasBeenSet = true; m_resourceIdentifier = std::move(value); }
-    inline void SetResourceIdentifier(const char* value) { m_resourceIdentifierHasBeenSet = true; m_resourceIdentifier.assign(value); }
-    inline CreateAccessLogSubscriptionRequest& WithResourceIdentifier(const Aws::String& value) { SetResourceIdentifier(value); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithResourceIdentifier(Aws::String&& value) { SetResourceIdentifier(std::move(value)); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithResourceIdentifier(const char* value) { SetResourceIdentifier(value); return *this;}
-    ///@}
+  Aws::String m_destinationArn;
 
-    ///@{
-    /**
-     * <p>The tags for the access log subscription.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateAccessLogSubscriptionRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateAccessLogSubscriptionRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateAccessLogSubscriptionRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateAccessLogSubscriptionRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  ServiceNetworkLogType m_serviceNetworkLogType{ServiceNetworkLogType::NOT_SET};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_resourceIdentifierHasBeenSet = false;
+  bool m_destinationArnHasBeenSet = false;
+  bool m_serviceNetworkLogTypeHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    Aws::String m_destinationArn;
-    bool m_destinationArnHasBeenSet = false;
-
-    Aws::String m_resourceIdentifier;
-    bool m_resourceIdentifierHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace VPCLattice
-} // namespace Aws
+}  // namespace Model
+}  // namespace VPCLattice
+}  // namespace Aws

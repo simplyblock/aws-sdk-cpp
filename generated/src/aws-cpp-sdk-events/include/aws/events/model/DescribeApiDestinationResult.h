@@ -4,196 +4,254 @@
  */
 
 #pragma once
-#include <aws/events/CloudWatchEvents_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/events/model/ApiDestinationState.h>
-#include <aws/events/model/ApiDestinationHttpMethod.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/events/CloudWatchEvents_EXPORTS.h>
+#include <aws/events/model/ApiDestinationHttpMethod.h>
+#include <aws/events/model/ApiDestinationState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchEvents
-{
-namespace Model
-{
-  class DescribeApiDestinationResult
-  {
-  public:
-    AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult();
-    AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchEvents {
+namespace Model {
+class DescribeApiDestinationResult {
+ public:
+  AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult() = default;
+  AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHEVENTS_API DescribeApiDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the API destination retrieved.</p>
+   */
+  inline const Aws::String& GetApiDestinationArn() const { return m_apiDestinationArn; }
+  template <typename ApiDestinationArnT = Aws::String>
+  void SetApiDestinationArn(ApiDestinationArnT&& value) {
+    m_apiDestinationArnHasBeenSet = true;
+    m_apiDestinationArn = std::forward<ApiDestinationArnT>(value);
+  }
+  template <typename ApiDestinationArnT = Aws::String>
+  DescribeApiDestinationResult& WithApiDestinationArn(ApiDestinationArnT&& value) {
+    SetApiDestinationArn(std::forward<ApiDestinationArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the API destination retrieved.</p>
-     */
-    inline const Aws::String& GetApiDestinationArn() const{ return m_apiDestinationArn; }
-    inline void SetApiDestinationArn(const Aws::String& value) { m_apiDestinationArn = value; }
-    inline void SetApiDestinationArn(Aws::String&& value) { m_apiDestinationArn = std::move(value); }
-    inline void SetApiDestinationArn(const char* value) { m_apiDestinationArn.assign(value); }
-    inline DescribeApiDestinationResult& WithApiDestinationArn(const Aws::String& value) { SetApiDestinationArn(value); return *this;}
-    inline DescribeApiDestinationResult& WithApiDestinationArn(Aws::String&& value) { SetApiDestinationArn(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithApiDestinationArn(const char* value) { SetApiDestinationArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the API destination retrieved.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeApiDestinationResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the API destination retrieved.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline DescribeApiDestinationResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeApiDestinationResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description for the API destination retrieved.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  DescribeApiDestinationResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description for the API destination retrieved.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline DescribeApiDestinationResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline DescribeApiDestinationResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the API destination retrieved.</p>
+   */
+  inline ApiDestinationState GetApiDestinationState() const { return m_apiDestinationState; }
+  inline void SetApiDestinationState(ApiDestinationState value) {
+    m_apiDestinationStateHasBeenSet = true;
+    m_apiDestinationState = value;
+  }
+  inline DescribeApiDestinationResult& WithApiDestinationState(ApiDestinationState value) {
+    SetApiDestinationState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the API destination retrieved.</p>
-     */
-    inline const ApiDestinationState& GetApiDestinationState() const{ return m_apiDestinationState; }
-    inline void SetApiDestinationState(const ApiDestinationState& value) { m_apiDestinationState = value; }
-    inline void SetApiDestinationState(ApiDestinationState&& value) { m_apiDestinationState = std::move(value); }
-    inline DescribeApiDestinationResult& WithApiDestinationState(const ApiDestinationState& value) { SetApiDestinationState(value); return *this;}
-    inline DescribeApiDestinationResult& WithApiDestinationState(ApiDestinationState&& value) { SetApiDestinationState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the connection specified for the API destination retrieved.</p>
+   */
+  inline const Aws::String& GetConnectionArn() const { return m_connectionArn; }
+  template <typename ConnectionArnT = Aws::String>
+  void SetConnectionArn(ConnectionArnT&& value) {
+    m_connectionArnHasBeenSet = true;
+    m_connectionArn = std::forward<ConnectionArnT>(value);
+  }
+  template <typename ConnectionArnT = Aws::String>
+  DescribeApiDestinationResult& WithConnectionArn(ConnectionArnT&& value) {
+    SetConnectionArn(std::forward<ConnectionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the connection specified for the API destination retrieved.</p>
-     */
-    inline const Aws::String& GetConnectionArn() const{ return m_connectionArn; }
-    inline void SetConnectionArn(const Aws::String& value) { m_connectionArn = value; }
-    inline void SetConnectionArn(Aws::String&& value) { m_connectionArn = std::move(value); }
-    inline void SetConnectionArn(const char* value) { m_connectionArn.assign(value); }
-    inline DescribeApiDestinationResult& WithConnectionArn(const Aws::String& value) { SetConnectionArn(value); return *this;}
-    inline DescribeApiDestinationResult& WithConnectionArn(Aws::String&& value) { SetConnectionArn(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithConnectionArn(const char* value) { SetConnectionArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The URL to use to connect to the HTTP endpoint.</p>
+   */
+  inline const Aws::String& GetInvocationEndpoint() const { return m_invocationEndpoint; }
+  template <typename InvocationEndpointT = Aws::String>
+  void SetInvocationEndpoint(InvocationEndpointT&& value) {
+    m_invocationEndpointHasBeenSet = true;
+    m_invocationEndpoint = std::forward<InvocationEndpointT>(value);
+  }
+  template <typename InvocationEndpointT = Aws::String>
+  DescribeApiDestinationResult& WithInvocationEndpoint(InvocationEndpointT&& value) {
+    SetInvocationEndpoint(std::forward<InvocationEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL to use to connect to the HTTP endpoint.</p>
-     */
-    inline const Aws::String& GetInvocationEndpoint() const{ return m_invocationEndpoint; }
-    inline void SetInvocationEndpoint(const Aws::String& value) { m_invocationEndpoint = value; }
-    inline void SetInvocationEndpoint(Aws::String&& value) { m_invocationEndpoint = std::move(value); }
-    inline void SetInvocationEndpoint(const char* value) { m_invocationEndpoint.assign(value); }
-    inline DescribeApiDestinationResult& WithInvocationEndpoint(const Aws::String& value) { SetInvocationEndpoint(value); return *this;}
-    inline DescribeApiDestinationResult& WithInvocationEndpoint(Aws::String&& value) { SetInvocationEndpoint(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithInvocationEndpoint(const char* value) { SetInvocationEndpoint(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The method to use to connect to the HTTP endpoint.</p>
+   */
+  inline ApiDestinationHttpMethod GetHttpMethod() const { return m_httpMethod; }
+  inline void SetHttpMethod(ApiDestinationHttpMethod value) {
+    m_httpMethodHasBeenSet = true;
+    m_httpMethod = value;
+  }
+  inline DescribeApiDestinationResult& WithHttpMethod(ApiDestinationHttpMethod value) {
+    SetHttpMethod(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The method to use to connect to the HTTP endpoint.</p>
-     */
-    inline const ApiDestinationHttpMethod& GetHttpMethod() const{ return m_httpMethod; }
-    inline void SetHttpMethod(const ApiDestinationHttpMethod& value) { m_httpMethod = value; }
-    inline void SetHttpMethod(ApiDestinationHttpMethod&& value) { m_httpMethod = std::move(value); }
-    inline DescribeApiDestinationResult& WithHttpMethod(const ApiDestinationHttpMethod& value) { SetHttpMethod(value); return *this;}
-    inline DescribeApiDestinationResult& WithHttpMethod(ApiDestinationHttpMethod&& value) { SetHttpMethod(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum number of invocations per second to specified for the API
+   * destination. Note that if you set the invocation rate maximum to a value lower
+   * the rate necessary to send all events received on to the destination HTTP
+   * endpoint, some events may not be delivered within the 24-hour retry window. If
+   * you plan to set the rate lower than the rate necessary to deliver all events,
+   * consider using a dead-letter queue to catch events that are not delivered within
+   * 24 hours.</p>
+   */
+  inline int GetInvocationRateLimitPerSecond() const { return m_invocationRateLimitPerSecond; }
+  inline void SetInvocationRateLimitPerSecond(int value) {
+    m_invocationRateLimitPerSecondHasBeenSet = true;
+    m_invocationRateLimitPerSecond = value;
+  }
+  inline DescribeApiDestinationResult& WithInvocationRateLimitPerSecond(int value) {
+    SetInvocationRateLimitPerSecond(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of invocations per second to specified for the API
-     * destination. Note that if you set the invocation rate maximum to a value lower
-     * the rate necessary to send all events received on to the destination HTTP
-     * endpoint, some events may not be delivered within the 24-hour retry window. If
-     * you plan to set the rate lower than the rate necessary to deliver all events,
-     * consider using a dead-letter queue to catch events that are not delivered within
-     * 24 hours.</p>
-     */
-    inline int GetInvocationRateLimitPerSecond() const{ return m_invocationRateLimitPerSecond; }
-    inline void SetInvocationRateLimitPerSecond(int value) { m_invocationRateLimitPerSecond = value; }
-    inline DescribeApiDestinationResult& WithInvocationRateLimitPerSecond(int value) { SetInvocationRateLimitPerSecond(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A time stamp for the time that the API destination was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeApiDestinationResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A time stamp for the time that the API destination was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeApiDestinationResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeApiDestinationResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A time stamp for the time that the API destination was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  DescribeApiDestinationResult& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A time stamp for the time that the API destination was last modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTime = std::move(value); }
-    inline DescribeApiDestinationResult& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline DescribeApiDestinationResult& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeApiDestinationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeApiDestinationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeApiDestinationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeApiDestinationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_apiDestinationArn;
+ private:
+  Aws::String m_apiDestinationArn;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    Aws::String m_description;
+  Aws::String m_description;
 
-    ApiDestinationState m_apiDestinationState;
+  ApiDestinationState m_apiDestinationState{ApiDestinationState::NOT_SET};
 
-    Aws::String m_connectionArn;
+  Aws::String m_connectionArn;
 
-    Aws::String m_invocationEndpoint;
+  Aws::String m_invocationEndpoint;
 
-    ApiDestinationHttpMethod m_httpMethod;
+  ApiDestinationHttpMethod m_httpMethod{ApiDestinationHttpMethod::NOT_SET};
 
-    int m_invocationRateLimitPerSecond;
+  int m_invocationRateLimitPerSecond{0};
 
-    Aws::Utils::DateTime m_creationTime;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::Utils::DateTime m_lastModifiedTime;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_apiDestinationArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_apiDestinationStateHasBeenSet = false;
+  bool m_connectionArnHasBeenSet = false;
+  bool m_invocationEndpointHasBeenSet = false;
+  bool m_httpMethodHasBeenSet = false;
+  bool m_invocationRateLimitPerSecondHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchEvents
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchEvents
+}  // namespace Aws

@@ -60,14 +60,19 @@ file(GLOB PLATFORM_HEADERS "include/aws/core/platform/*.h")
 file(GLOB UTILS_HEADERS "include/aws/core/utils/*.h")
 file(GLOB UTILS_EVENT_HEADERS "include/aws/core/utils/event/*.h")
 file(GLOB UTILS_BASE64_HEADERS "include/aws/core/utils/base64/*.h")
+file(GLOB UTILS_CHECKSUM_HEADERS "include/aws/core/utils/checksum/*.h")
 file(GLOB UTILS_CRYPTO_HEADERS "include/aws/core/utils/crypto/*.h")
 file(GLOB UTILS_JSON_HEADERS "include/aws/core/utils/json/*.h")
+file(GLOB UTILS_LOCAL_HEADERS "include/aws/core/utils/local/*.h")
+file(GLOB UTILS_LOCAL_STREAM_HEADERS "include/aws/core/utils/local/stream/*.h")
+file(GLOB UTILS_CBOR_HEADERS "include/aws/core/utils/cbor/*.h")
 file(GLOB UTILS_THREADING_HEADERS "include/aws/core/utils/threading/*.h")
 file(GLOB UTILS_XML_HEADERS "include/aws/core/utils/xml/*.h")
 file(GLOB UTILS_MEMORY_HEADERS "include/aws/core/utils/memory/*.h")
 file(GLOB UTILS_COMPONENT_REGISTRY_HEADERS "include/aws/core/utils/component-registry/*.h")
 file(GLOB UTILS_STL_HEADERS "include/aws/core/utils/memory/stl/*.h")
 file(GLOB UTILS_LOGGING_HEADERS "include/aws/core/utils/logging/*.h")
+file(GLOB UTILS_PAGINATION_HEADERS "include/aws/core/utils/pagination/*.h")
 file(GLOB UTILS_RATE_LIMITER_HEADERS "include/aws/core/utils/ratelimiter/*.h")
 file(GLOB UTILS_STREAM_HEADERS "include/aws/core/utils/stream/*.h")
 file(GLOB CJSON_HEADERS "include/aws/core/external/cjson/*.h")
@@ -92,6 +97,7 @@ file(GLOB SMITHY_IDENTITY_SIGNER_HEADERS "include/smithy/identity/signer/*.h")
 file(GLOB SMITHY_IDENTITY_SIGNER_BUILTIN_HEADERS "include/smithy/identity/signer/built-in/*.h")
 file(GLOB SMITHY_INTERCEPTOR_HEADERS "include/smithy/interceptor/*.h")
 file(GLOB SMITHY_INTERCEPTOR_IMPL_HEADERS "include/smithy/interceptor/impl/*.h")
+file(GLOB SMITHY_CLIENT_SCHEMA_HEADERS "include/smithy/client/schema/*.h")
 
 file(GLOB AWS_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
 file(GLOB AWS_TINYXML2_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/external/tinyxml2/*.cpp")
@@ -113,8 +119,12 @@ file(GLOB MONITORING_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/monitoring/*.cpp
 file(GLOB UTILS_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/*.cpp")
 file(GLOB UTILS_EVENT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/event/*.cpp")
 file(GLOB UTILS_BASE64_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/base64/*.cpp")
+file(GLOB UTILS_CHECKSUM_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/checksum/*.cpp")
 file(GLOB UTILS_CRYPTO_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/crypto/*.cpp")
 file(GLOB UTILS_JSON_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/json/*.cpp")
+file(GLOB UTILS_LOCAL_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/local/*.cpp")
+file(GLOB UTILS_LOCAL_STREAM_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/local/stream/*.cpp")
+file(GLOB UTILS_CBOR_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/cbor/*.cpp")
 file(GLOB UTILS_THREADING_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/threading/*.cpp")
 file(GLOB UTILS_XML_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/xml/*.cpp")
 file(GLOB UTILS_LOGGING_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/utils/logging/*.cpp")
@@ -127,6 +137,7 @@ file(GLOB SMITHY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/smithy/*.cpp")
 file(GLOB SMITHY_CLIENT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/smithy/client/*.cpp")
 file(GLOB SMITHY_IDENTITY_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/smithy/identity/*.cpp")
 file(GLOB SMITHY_TRACING_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/smithy/tracing/*.cpp")
+file(GLOB SMITHY_CLIENT_SCHEMA_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/smithy/client/schema/*.cpp")
 
 include(CheckCSourceCompiles)
 include(CheckCXXSourceCompiles)
@@ -189,69 +200,6 @@ elseif(ENABLE_WINDOWS_CLIENT)
     else()
         file(GLOB HTTP_WINDOWS_CLIENT_HEADERS "include/aws/core/http/windows/Win*.h")
         file(GLOB HTTP_WINDOWS_CLIENT_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/http/windows/Win*.cpp")
-
-        # Starting with Windows 10, version 1507, WinINet supports HTTP2.
-        # https://docs.microsoft.com/en-us/windows/desktop/WinInet/option-flags#INTERNET_OPTION_ENABLE_HTTP_PROTOCOL
-        # Starting with Windows 10, version 1607, WinHttp supports HTTP2.
-        # https://docs.microsoft.com/en-us/windows/desktop/WinHttp/option-flags#WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL
-        set(CMAKE_REQUIRED_LIBRARIES "WinHttp.lib")
-        check_cxx_source_runs("
-        #include <Windows.h>
-        #include <winhttp.h>
-        int main() {
-
-        auto handle = WinHttpOpen(L\"aws-cpp-sdk\"/*user-agent*/,
-        WINHTTP_ACCESS_TYPE_NO_PROXY,
-        nullptr/*pszProxyW*/,
-        nullptr/*pszProxyBypassW*/,
-        0/*dwFlags*/);
-
-        DWORD http2 = WINHTTP_PROTOCOL_FLAG_HTTP2;
-        if (WinHttpSetOption(handle, WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL, &http2, sizeof(http2)))
-        {
-            return 0;
-        }
-        return 1;
-        }" WINHTTP_HAS_H2)
-
-        check_cxx_source_runs("
-        #include <Windows.h>
-        #include <winhttp.h>
-        int main() {
-
-        auto handle = WinHttpOpen(L\"aws-cpp-sdk\"/*user-agent*/,
-        WINHTTP_ACCESS_TYPE_NO_PROXY,
-        nullptr/*pszProxyW*/,
-        nullptr/*pszProxyBypassW*/,
-        0/*dwFlags*/);
-
-        DWORD http3 = WINHTTP_PROTOCOL_FLAG_HTTP3;
-        if (WinHttpSetOption(handle, WINHTTP_OPTION_ENABLE_HTTP_PROTOCOL, &http3, sizeof(http3)))
-        {
-            return 0;
-        }
-        return 1;
-        }" WINHTTP_HAS_H3)
-
-        set(CMAKE_REQUIRED_LIBRARIES "Wininet.lib")
-        check_cxx_source_runs("
-        #include <Windows.h>
-        #include <WinInet.h>
-        int main() {
-        auto handle = InternetOpenA(\"aws-cpp-sdk\"/*lpszAgent*/,
-            INTERNET_OPEN_TYPE_DIRECT /*dwAccessType*/,
-            nullptr /*lpszProxy*/,
-            nullptr /*lpszProxyBypass*/,
-            0 /*dwFlags*/);
-        DWORD http2 = HTTP_PROTOCOL_FLAG_HTTP2;
-        if (InternetSetOptionA(handle, INTERNET_OPTION_ENABLE_HTTP_PROTOCOL, &http2, sizeof(http2)))
-        {
-            return 0;
-        }
-        return 1;
-        }" WININET_HAS_H2)
-        unset(CMAKE_REQUIRED_LIBRARIES)
-
     endif()
 elseif(USE_CRT_HTTP_CLIENT)
     file(GLOB CRT_HTTP_HEADERS "include/aws/core/http/crt/*.h")
@@ -329,8 +277,12 @@ file(GLOB AWS_NATIVE_SDK_COMMON_HEADERS
   ${UTILS_HEADERS}
   ${UTILS_EVENT_HEADERS}
   ${UTILS_BASE64_HEADERS}
+  ${UTILS_CHECKSUM_HEADERS}
   ${UTILS_CRYPTO_HEADERS}
   ${UTILS_JSON_HEADERS}
+  ${UTILS_LOCAL_HEADERS}
+  ${UTILS_LOCAL_STREAM_HEADERS}
+  ${UTILS_CBOR_HEADERS}
   ${UTILS_THREADING_HEADERS}
   ${UTILS_RETRY_HEADERS}
   ${UTILS_XML_HEADERS}
@@ -339,6 +291,7 @@ file(GLOB AWS_NATIVE_SDK_COMMON_HEADERS
   ${UTILS_COMPONENT_REGISTRY_HEADERS}
   ${UTILS_STL_HEADERS}
   ${UTILS_STREAM_HEADERS}
+  ${UTILS_PAGINATION_HEADERS}
   ${UTILS_RATE_LIMITER_HEADERS}
   ${CJSON_HEADERS}
   ${TINYXML2_HEADERS}
@@ -365,6 +318,7 @@ file(GLOB AWS_NATIVE_SDK_COMMON_HEADERS
   ${OPTEL_HEADERS}
   ${SMITHY_INTERCEPTOR_HEADERS}
   ${SMITHY_INTERCEPTOR_IMPL_HEADERS}
+  ${SMITHY_CLIENT_SCHEMA_HEADERS}
 )
 
 # misc platform-specific, not related to features (encryption/http clients)
@@ -381,6 +335,10 @@ elseif(PLATFORM_LINUX OR PLATFORM_APPLE)
   #add unix specific impl stuff here.
 
   file(GLOB PLATFORM_LINUX_SHARED_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/platform/linux-shared/*.cpp")
+  if(CMAKE_SYSTEM_NAME STREQUAL "AIX")
+      list(REMOVE_ITEM PLATFORM_LINUX_SHARED_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/platform/linux-shared/Time.cpp")
+      list(APPEND PLATFORM_LINUX_SHARED_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/source/platform/aix/*.cpp")
+  endif()
 
   file(GLOB AWS_NATIVE_SDK_LINUX_SHARED_SRC
      ${PLATFORM_LINUX_SHARED_SOURCE}
@@ -411,14 +369,19 @@ file(GLOB AWS_NATIVE_SDK_NON_UNITY_SRC
     ${MONITORING_SOURCE}
     ${UTILS_CRYPTO_FACTORY_SOURCE}
     ${UTILS_JSON_SOURCE}
+    ${UTILS_LOCAL_SOURCE}
+    ${UTILS_LOCAL_STREAM_SOURCE}
+    ${UTILS_CBOR_SOURCE}
     ${UTILS_EVENT_SOURCE}
     ${UTILS_SOURCE}
     ${NET_SOURCE}
     ${HTTP_SOURCE}
     ${CJSON_SOURCE}
     ${AWS_NATIVE_SDK_CUSTOM_SRC}
+    ${UTILS_CHECKSUM_SOURCE}
     ${UTILS_CRYPTO_SOURCE}
     ${OPTEL_SOURCE}
+    ${SMITHY_CLIENT_SCHEMA_SOURCE}
 )
 
 file(GLOB AWS_NATIVE_SDK_UNITY_SRC
@@ -464,11 +427,15 @@ if(MSVC)
     source_group("Header Files\\aws\\core\\platform" FILES ${PLATFORM_HEADERS})
     source_group("Header Files\\aws\\core\\utils" FILES ${UTILS_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\base64" FILES ${UTILS_BASE64_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\checksum" FILES ${UTILS_CHECKSUM_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\crypto" FILES ${UTILS_CRYPTO_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\crypto\\crt" FILES ${UTILS_CRYPTO_CRT_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\event" FILES ${UTILS_EVENT_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\exceptions" FILES ${UTILS_EXCEPTIONS_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\json" FILES ${UTILS_JSON_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\local" FILES ${UTILS_LOCAL_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\local" FILES ${UTILS_LOCAL_STREAM_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\cbor" FILES ${UTILS_CBOR_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\threading" FILES ${UTILS_THREADING_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\xml" FILES ${UTILS_XML_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\logging" FILES ${UTILS_LOGGING_HEADERS})
@@ -476,6 +443,7 @@ if(MSVC)
     source_group("Header Files\\aws\\core\\utils\\component-registry" FILES ${UTILS_COMPONENT_REGISTRY_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\memory\\stl" FILES ${UTILS_STL_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\stream" FILES ${UTILS_STREAM_HEADERS})
+    source_group("Header Files\\aws\\core\\utils\\pagination" FILES ${UTILS_PAGINATION_HEADERS})
     source_group("Header Files\\aws\\core\\utils\\ratelimiter" FILES ${UTILS_RATE_LIMITER_HEADERS})
     source_group("Header Files\\aws\\core\\external\\cjson" FILES ${CJSON_HEADERS})
     source_group("Header Files\\aws\\core\\external\\tinyxml2" FILES ${TINYXML2_HEADERS})
@@ -498,6 +466,7 @@ if(MSVC)
     source_group("Header Files\\smithy\\identity\\signer\\built-in" FILES ${SMITHY_IDENTITY_SIGNER_BUILTIN_HEADERS})
     source_group("Header Files\\smithy\\interceptor" FILES ${SMITHY_INTERCEPTOR_HEADERS})
     source_group("Header Files\\smithy\\interceptor" FILES ${SMITHY_INTERCEPTOR_IMPL_HEADERS})
+    source_group("Header Files\\smithy\\client\\schema" FILES ${SMITHY_CLIENT_SCHEMA_HEADERS})
 
     # http client conditional headers
     if(ENABLE_CURL_CLIENT)
@@ -531,11 +500,15 @@ if(MSVC)
     source_group("Source Files\\platform\\windows" FILES ${PLATFORM_WINDOWS_SOURCE})
     source_group("Source Files\\utils" FILES ${UTILS_SOURCE})
     source_group("Source Files\\utils\\base64" FILES ${UTILS_BASE64_SOURCE})
+    source_group("Source Files\\utils\\checksum" FILES ${UTILS_CHECKSUM_SOURCE})
     source_group("Source Files\\utils\\crypto" FILES ${UTILS_CRYPTO_SOURCE})
     source_group("Source Files\\utils\\crypto\\factory" FILES ${UTILS_CRYPTO_FACTORY_SOURCE})
     source_group("Source Files\\utils\\event" FILES ${UTILS_EVENT_SOURCE})
     source_group("Source Files\\utils\\exceptions" FILES ${UTILS_EXCEPTIONS_SOURCE})
     source_group("Source Files\\utils\\json" FILES ${UTILS_JSON_SOURCE})
+    source_group("Source Files\\utils\\local" FILES ${UTILS_LOCAL_SOURCE})
+    source_group("Source Files\\utils\\local" FILES ${UTILS_LOCAL_STREAM_SOURCE})
+    source_group("Source Files\\utils\\cbor" FILES ${UTILS_CBOR_SOURCE})
     source_group("Source Files\\utils\\threading" FILES ${UTILS_THREADING_SOURCE})
     source_group("Source Files\\utils\\xml" FILES ${UTILS_XML_SOURCE})
     source_group("Source Files\\utils\\stream" FILES ${UTILS_STREAM_SOURCE})
@@ -745,14 +718,17 @@ install (FILES ${PLATFORM_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/pla
 install (FILES ${UTILS_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils)
 install (FILES ${UTILS_EVENT_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/event)
 install (FILES ${UTILS_BASE64_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/base64)
+install (FILES ${UTILS_CHECKSUM_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/checksum)
 install (FILES ${UTILS_CRYPTO_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/crypto)
 install (FILES ${UTILS_JSON_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/json)
+install (FILES ${UTILS_CBOR_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/cbor)
 install (FILES ${UTILS_RETRY_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/retry)
 install (FILES ${UTILS_XML_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/xml)
 install (FILES ${UTILS_LOGGING_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/logging)
 install (FILES ${UTILS_MEMORY_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/memory)
 install (FILES ${UTILS_COMPONENT_REGISTRY_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/component-registry)
 install (FILES ${UTILS_STL_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/memory/stl)
+install (FILES ${UTILS_PAGINATION_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/pagination)
 install (FILES ${UTILS_RATE_LIMITER_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/ratelimiter)
 install (FILES ${UTILS_STREAM_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/stream)
 install (FILES ${UTILS_THREADING_HEADERS} DESTINATION ${INCLUDE_DIRECTORY}/aws/core/utils/threading)

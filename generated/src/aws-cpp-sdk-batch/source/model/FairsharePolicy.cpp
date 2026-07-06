@@ -11,87 +11,53 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Batch
-{
-namespace Model
-{
+namespace Aws {
+namespace Batch {
+namespace Model {
 
-FairsharePolicy::FairsharePolicy() : 
-    m_shareDecaySeconds(0),
-    m_shareDecaySecondsHasBeenSet(false),
-    m_computeReservation(0),
-    m_computeReservationHasBeenSet(false),
-    m_shareDistributionHasBeenSet(false)
-{
-}
+FairsharePolicy::FairsharePolicy(JsonView jsonValue) { *this = jsonValue; }
 
-FairsharePolicy::FairsharePolicy(JsonView jsonValue)
-  : FairsharePolicy()
-{
-  *this = jsonValue;
-}
-
-FairsharePolicy& FairsharePolicy::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("shareDecaySeconds"))
-  {
+FairsharePolicy& FairsharePolicy::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("shareDecaySeconds")) {
     m_shareDecaySeconds = jsonValue.GetInteger("shareDecaySeconds");
-
     m_shareDecaySecondsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("computeReservation"))
-  {
+  if (jsonValue.ValueExists("computeReservation")) {
     m_computeReservation = jsonValue.GetInteger("computeReservation");
-
     m_computeReservationHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("shareDistribution"))
-  {
+  if (jsonValue.ValueExists("shareDistribution")) {
     Aws::Utils::Array<JsonView> shareDistributionJsonList = jsonValue.GetArray("shareDistribution");
-    for(unsigned shareDistributionIndex = 0; shareDistributionIndex < shareDistributionJsonList.GetLength(); ++shareDistributionIndex)
-    {
+    for (unsigned shareDistributionIndex = 0; shareDistributionIndex < shareDistributionJsonList.GetLength(); ++shareDistributionIndex) {
       m_shareDistribution.push_back(shareDistributionJsonList[shareDistributionIndex].AsObject());
     }
     m_shareDistributionHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue FairsharePolicy::Jsonize() const
-{
+JsonValue FairsharePolicy::Jsonize() const {
   JsonValue payload;
 
-  if(m_shareDecaySecondsHasBeenSet)
-  {
-   payload.WithInteger("shareDecaySeconds", m_shareDecaySeconds);
-
+  if (m_shareDecaySecondsHasBeenSet) {
+    payload.WithInteger("shareDecaySeconds", m_shareDecaySeconds);
   }
 
-  if(m_computeReservationHasBeenSet)
-  {
-   payload.WithInteger("computeReservation", m_computeReservation);
-
+  if (m_computeReservationHasBeenSet) {
+    payload.WithInteger("computeReservation", m_computeReservation);
   }
 
-  if(m_shareDistributionHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> shareDistributionJsonList(m_shareDistribution.size());
-   for(unsigned shareDistributionIndex = 0; shareDistributionIndex < shareDistributionJsonList.GetLength(); ++shareDistributionIndex)
-   {
-     shareDistributionJsonList[shareDistributionIndex].AsObject(m_shareDistribution[shareDistributionIndex].Jsonize());
-   }
-   payload.WithArray("shareDistribution", std::move(shareDistributionJsonList));
-
+  if (m_shareDistributionHasBeenSet) {
+    Aws::Utils::Array<JsonValue> shareDistributionJsonList(m_shareDistribution.size());
+    for (unsigned shareDistributionIndex = 0; shareDistributionIndex < shareDistributionJsonList.GetLength(); ++shareDistributionIndex) {
+      shareDistributionJsonList[shareDistributionIndex].AsObject(m_shareDistribution[shareDistributionIndex].Jsonize());
+    }
+    payload.WithArray("shareDistribution", std::move(shareDistributionJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Batch
-} // namespace Aws
+}  // namespace Model
+}  // namespace Batch
+}  // namespace Aws

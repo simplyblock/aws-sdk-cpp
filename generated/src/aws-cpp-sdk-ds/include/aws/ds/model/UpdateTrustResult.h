@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/ds/DirectoryService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ds/DirectoryService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectoryService
-{
-namespace Model
-{
-  class UpdateTrustResult
-  {
-  public:
-    AWS_DIRECTORYSERVICE_API UpdateTrustResult();
-    AWS_DIRECTORYSERVICE_API UpdateTrustResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTORYSERVICE_API UpdateTrustResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectoryService {
+namespace Model {
+class UpdateTrustResult {
+ public:
+  AWS_DIRECTORYSERVICE_API UpdateTrustResult() = default;
+  AWS_DIRECTORYSERVICE_API UpdateTrustResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTORYSERVICE_API UpdateTrustResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateTrustResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateTrustResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateTrustResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateTrustResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Identifier of the trust relationship.</p>
-     */
-    inline const Aws::String& GetTrustId() const{ return m_trustId; }
-    inline void SetTrustId(const Aws::String& value) { m_trustId = value; }
-    inline void SetTrustId(Aws::String&& value) { m_trustId = std::move(value); }
-    inline void SetTrustId(const char* value) { m_trustId.assign(value); }
-    inline UpdateTrustResult& WithTrustId(const Aws::String& value) { SetTrustId(value); return *this;}
-    inline UpdateTrustResult& WithTrustId(Aws::String&& value) { SetTrustId(std::move(value)); return *this;}
-    inline UpdateTrustResult& WithTrustId(const char* value) { SetTrustId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Identifier of the trust relationship.</p>
+   */
+  inline const Aws::String& GetTrustId() const { return m_trustId; }
+  template <typename TrustIdT = Aws::String>
+  void SetTrustId(TrustIdT&& value) {
+    m_trustIdHasBeenSet = true;
+    m_trustId = std::forward<TrustIdT>(value);
+  }
+  template <typename TrustIdT = Aws::String>
+  UpdateTrustResult& WithTrustId(TrustIdT&& value) {
+    SetTrustId(std::forward<TrustIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
+ private:
+  Aws::String m_requestId;
 
-    Aws::String m_trustId;
-  };
+  Aws::String m_trustId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_trustIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

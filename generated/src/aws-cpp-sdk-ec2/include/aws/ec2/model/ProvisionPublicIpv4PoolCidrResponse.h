@@ -4,77 +4,93 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/PublicIpv4PoolRange.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class ProvisionPublicIpv4PoolCidrResponse
-  {
-  public:
-    AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse();
-    AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class ProvisionPublicIpv4PoolCidrResponse {
+ public:
+  AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse() = default;
+  AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API ProvisionPublicIpv4PoolCidrResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the pool that you want to provision the CIDR to.</p>
+   */
+  inline const Aws::String& GetPoolId() const { return m_poolId; }
+  template <typename PoolIdT = Aws::String>
+  void SetPoolId(PoolIdT&& value) {
+    m_poolIdHasBeenSet = true;
+    m_poolId = std::forward<PoolIdT>(value);
+  }
+  template <typename PoolIdT = Aws::String>
+  ProvisionPublicIpv4PoolCidrResponse& WithPoolId(PoolIdT&& value) {
+    SetPoolId(std::forward<PoolIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the pool that you want to provision the CIDR to.</p>
-     */
-    inline const Aws::String& GetPoolId() const{ return m_poolId; }
-    inline void SetPoolId(const Aws::String& value) { m_poolId = value; }
-    inline void SetPoolId(Aws::String&& value) { m_poolId = std::move(value); }
-    inline void SetPoolId(const char* value) { m_poolId.assign(value); }
-    inline ProvisionPublicIpv4PoolCidrResponse& WithPoolId(const Aws::String& value) { SetPoolId(value); return *this;}
-    inline ProvisionPublicIpv4PoolCidrResponse& WithPoolId(Aws::String&& value) { SetPoolId(std::move(value)); return *this;}
-    inline ProvisionPublicIpv4PoolCidrResponse& WithPoolId(const char* value) { SetPoolId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the address range of the public IPv4 pool.</p>
+   */
+  inline const PublicIpv4PoolRange& GetPoolAddressRange() const { return m_poolAddressRange; }
+  template <typename PoolAddressRangeT = PublicIpv4PoolRange>
+  void SetPoolAddressRange(PoolAddressRangeT&& value) {
+    m_poolAddressRangeHasBeenSet = true;
+    m_poolAddressRange = std::forward<PoolAddressRangeT>(value);
+  }
+  template <typename PoolAddressRangeT = PublicIpv4PoolRange>
+  ProvisionPublicIpv4PoolCidrResponse& WithPoolAddressRange(PoolAddressRangeT&& value) {
+    SetPoolAddressRange(std::forward<PoolAddressRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the address range of the public IPv4 pool.</p>
-     */
-    inline const PublicIpv4PoolRange& GetPoolAddressRange() const{ return m_poolAddressRange; }
-    inline void SetPoolAddressRange(const PublicIpv4PoolRange& value) { m_poolAddressRange = value; }
-    inline void SetPoolAddressRange(PublicIpv4PoolRange&& value) { m_poolAddressRange = std::move(value); }
-    inline ProvisionPublicIpv4PoolCidrResponse& WithPoolAddressRange(const PublicIpv4PoolRange& value) { SetPoolAddressRange(value); return *this;}
-    inline ProvisionPublicIpv4PoolCidrResponse& WithPoolAddressRange(PublicIpv4PoolRange&& value) { SetPoolAddressRange(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ProvisionPublicIpv4PoolCidrResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ProvisionPublicIpv4PoolCidrResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ProvisionPublicIpv4PoolCidrResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_poolId;
+ private:
+  Aws::String m_poolId;
 
-    PublicIpv4PoolRange m_poolAddressRange;
+  PublicIpv4PoolRange m_poolAddressRange;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_poolIdHasBeenSet = false;
+  bool m_poolAddressRangeHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

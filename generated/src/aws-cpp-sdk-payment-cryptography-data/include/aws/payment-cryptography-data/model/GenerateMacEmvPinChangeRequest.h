@@ -4,161 +4,188 @@
  */
 
 #pragma once
-#include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
-#include <aws/payment-cryptography-data/PaymentCryptographyDataRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/payment-cryptography-data/model/PinBlockFormatForEmvPinChange.h>
+#include <aws/payment-cryptography-data/PaymentCryptographyDataRequest.h>
+#include <aws/payment-cryptography-data/PaymentCryptographyData_EXPORTS.h>
 #include <aws/payment-cryptography-data/model/DerivationMethodAttributes.h>
+#include <aws/payment-cryptography-data/model/PinBlockFormatForEmvPinChange.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace PaymentCryptographyData
-{
-namespace Model
-{
+namespace Aws {
+namespace PaymentCryptographyData {
+namespace Model {
 
+/**
+ */
+class GenerateMacEmvPinChangeRequest : public PaymentCryptographyDataRequest {
+ public:
+  AWS_PAYMENTCRYPTOGRAPHYDATA_API GenerateMacEmvPinChangeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GenerateMacEmvPinChange"; }
+
+  AWS_PAYMENTCRYPTOGRAPHYDATA_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The <code>keyARN</code> of the PEK protecting the incoming new encrypted PIN
+   * block.</p>
    */
-  class GenerateMacEmvPinChangeRequest : public PaymentCryptographyDataRequest
-  {
-  public:
-    AWS_PAYMENTCRYPTOGRAPHYDATA_API GenerateMacEmvPinChangeRequest();
+  inline const Aws::String& GetNewPinPekIdentifier() const { return m_newPinPekIdentifier; }
+  inline bool NewPinPekIdentifierHasBeenSet() const { return m_newPinPekIdentifierHasBeenSet; }
+  template <typename NewPinPekIdentifierT = Aws::String>
+  void SetNewPinPekIdentifier(NewPinPekIdentifierT&& value) {
+    m_newPinPekIdentifierHasBeenSet = true;
+    m_newPinPekIdentifier = std::forward<NewPinPekIdentifierT>(value);
+  }
+  template <typename NewPinPekIdentifierT = Aws::String>
+  GenerateMacEmvPinChangeRequest& WithNewPinPekIdentifier(NewPinPekIdentifierT&& value) {
+    SetNewPinPekIdentifier(std::forward<NewPinPekIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GenerateMacEmvPinChange"; }
+  ///@{
+  /**
+   * <p>The incoming new encrypted PIN block data for offline pin change on an EMV
+   * card.</p>
+   */
+  inline const Aws::String& GetNewEncryptedPinBlock() const { return m_newEncryptedPinBlock; }
+  inline bool NewEncryptedPinBlockHasBeenSet() const { return m_newEncryptedPinBlockHasBeenSet; }
+  template <typename NewEncryptedPinBlockT = Aws::String>
+  void SetNewEncryptedPinBlock(NewEncryptedPinBlockT&& value) {
+    m_newEncryptedPinBlockHasBeenSet = true;
+    m_newEncryptedPinBlock = std::forward<NewEncryptedPinBlockT>(value);
+  }
+  template <typename NewEncryptedPinBlockT = Aws::String>
+  GenerateMacEmvPinChangeRequest& WithNewEncryptedPinBlock(NewEncryptedPinBlockT&& value) {
+    SetNewEncryptedPinBlock(std::forward<NewEncryptedPinBlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PAYMENTCRYPTOGRAPHYDATA_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The PIN encoding format of the incoming new encrypted PIN block as specified
+   * in ISO 9564.</p>
+   */
+  inline PinBlockFormatForEmvPinChange GetPinBlockFormat() const { return m_pinBlockFormat; }
+  inline bool PinBlockFormatHasBeenSet() const { return m_pinBlockFormatHasBeenSet; }
+  inline void SetPinBlockFormat(PinBlockFormatForEmvPinChange value) {
+    m_pinBlockFormatHasBeenSet = true;
+    m_pinBlockFormat = value;
+  }
+  inline GenerateMacEmvPinChangeRequest& WithPinBlockFormat(PinBlockFormatForEmvPinChange value) {
+    SetPinBlockFormat(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The <code>keyARN</code> of the issuer master key (IMK-SMI) used to
+   * authenticate the issuer script response.</p>
+   */
+  inline const Aws::String& GetSecureMessagingIntegrityKeyIdentifier() const { return m_secureMessagingIntegrityKeyIdentifier; }
+  inline bool SecureMessagingIntegrityKeyIdentifierHasBeenSet() const { return m_secureMessagingIntegrityKeyIdentifierHasBeenSet; }
+  template <typename SecureMessagingIntegrityKeyIdentifierT = Aws::String>
+  void SetSecureMessagingIntegrityKeyIdentifier(SecureMessagingIntegrityKeyIdentifierT&& value) {
+    m_secureMessagingIntegrityKeyIdentifierHasBeenSet = true;
+    m_secureMessagingIntegrityKeyIdentifier = std::forward<SecureMessagingIntegrityKeyIdentifierT>(value);
+  }
+  template <typename SecureMessagingIntegrityKeyIdentifierT = Aws::String>
+  GenerateMacEmvPinChangeRequest& WithSecureMessagingIntegrityKeyIdentifier(SecureMessagingIntegrityKeyIdentifierT&& value) {
+    SetSecureMessagingIntegrityKeyIdentifier(std::forward<SecureMessagingIntegrityKeyIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>keyARN</code> of the PEK protecting the incoming new encrypted PIN
-     * block.</p>
-     */
-    inline const Aws::String& GetNewPinPekIdentifier() const{ return m_newPinPekIdentifier; }
-    inline bool NewPinPekIdentifierHasBeenSet() const { return m_newPinPekIdentifierHasBeenSet; }
-    inline void SetNewPinPekIdentifier(const Aws::String& value) { m_newPinPekIdentifierHasBeenSet = true; m_newPinPekIdentifier = value; }
-    inline void SetNewPinPekIdentifier(Aws::String&& value) { m_newPinPekIdentifierHasBeenSet = true; m_newPinPekIdentifier = std::move(value); }
-    inline void SetNewPinPekIdentifier(const char* value) { m_newPinPekIdentifierHasBeenSet = true; m_newPinPekIdentifier.assign(value); }
-    inline GenerateMacEmvPinChangeRequest& WithNewPinPekIdentifier(const Aws::String& value) { SetNewPinPekIdentifier(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithNewPinPekIdentifier(Aws::String&& value) { SetNewPinPekIdentifier(std::move(value)); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithNewPinPekIdentifier(const char* value) { SetNewPinPekIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>keyARN</code> of the issuer master key (IMK-SMC) used to protect
+   * the PIN block data in the issuer script response.</p>
+   */
+  inline const Aws::String& GetSecureMessagingConfidentialityKeyIdentifier() const { return m_secureMessagingConfidentialityKeyIdentifier; }
+  inline bool SecureMessagingConfidentialityKeyIdentifierHasBeenSet() const {
+    return m_secureMessagingConfidentialityKeyIdentifierHasBeenSet;
+  }
+  template <typename SecureMessagingConfidentialityKeyIdentifierT = Aws::String>
+  void SetSecureMessagingConfidentialityKeyIdentifier(SecureMessagingConfidentialityKeyIdentifierT&& value) {
+    m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = true;
+    m_secureMessagingConfidentialityKeyIdentifier = std::forward<SecureMessagingConfidentialityKeyIdentifierT>(value);
+  }
+  template <typename SecureMessagingConfidentialityKeyIdentifierT = Aws::String>
+  GenerateMacEmvPinChangeRequest& WithSecureMessagingConfidentialityKeyIdentifier(SecureMessagingConfidentialityKeyIdentifierT&& value) {
+    SetSecureMessagingConfidentialityKeyIdentifier(std::forward<SecureMessagingConfidentialityKeyIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The incoming new encrypted PIN block data for offline pin change on an EMV
-     * card.</p>
-     */
-    inline const Aws::String& GetNewEncryptedPinBlock() const{ return m_newEncryptedPinBlock; }
-    inline bool NewEncryptedPinBlockHasBeenSet() const { return m_newEncryptedPinBlockHasBeenSet; }
-    inline void SetNewEncryptedPinBlock(const Aws::String& value) { m_newEncryptedPinBlockHasBeenSet = true; m_newEncryptedPinBlock = value; }
-    inline void SetNewEncryptedPinBlock(Aws::String&& value) { m_newEncryptedPinBlockHasBeenSet = true; m_newEncryptedPinBlock = std::move(value); }
-    inline void SetNewEncryptedPinBlock(const char* value) { m_newEncryptedPinBlockHasBeenSet = true; m_newEncryptedPinBlock.assign(value); }
-    inline GenerateMacEmvPinChangeRequest& WithNewEncryptedPinBlock(const Aws::String& value) { SetNewEncryptedPinBlock(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithNewEncryptedPinBlock(Aws::String&& value) { SetNewEncryptedPinBlock(std::move(value)); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithNewEncryptedPinBlock(const char* value) { SetNewEncryptedPinBlock(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The message data is the APDU command from the card reader or terminal. The
+   * target encrypted PIN block, after translation to ISO2 format, is appended to
+   * this message data to generate an issuer script response.</p>
+   */
+  inline const Aws::String& GetMessageData() const { return m_messageData; }
+  inline bool MessageDataHasBeenSet() const { return m_messageDataHasBeenSet; }
+  template <typename MessageDataT = Aws::String>
+  void SetMessageData(MessageDataT&& value) {
+    m_messageDataHasBeenSet = true;
+    m_messageData = std::forward<MessageDataT>(value);
+  }
+  template <typename MessageDataT = Aws::String>
+  GenerateMacEmvPinChangeRequest& WithMessageData(MessageDataT&& value) {
+    SetMessageData(std::forward<MessageDataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The PIN encoding format of the incoming new encrypted PIN block as specified
-     * in ISO 9564.</p>
-     */
-    inline const PinBlockFormatForEmvPinChange& GetPinBlockFormat() const{ return m_pinBlockFormat; }
-    inline bool PinBlockFormatHasBeenSet() const { return m_pinBlockFormatHasBeenSet; }
-    inline void SetPinBlockFormat(const PinBlockFormatForEmvPinChange& value) { m_pinBlockFormatHasBeenSet = true; m_pinBlockFormat = value; }
-    inline void SetPinBlockFormat(PinBlockFormatForEmvPinChange&& value) { m_pinBlockFormatHasBeenSet = true; m_pinBlockFormat = std::move(value); }
-    inline GenerateMacEmvPinChangeRequest& WithPinBlockFormat(const PinBlockFormatForEmvPinChange& value) { SetPinBlockFormat(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithPinBlockFormat(PinBlockFormatForEmvPinChange&& value) { SetPinBlockFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The attributes and data values to derive payment card specific
+   * confidentiality and integrity keys.</p>
+   */
+  inline const DerivationMethodAttributes& GetDerivationMethodAttributes() const { return m_derivationMethodAttributes; }
+  inline bool DerivationMethodAttributesHasBeenSet() const { return m_derivationMethodAttributesHasBeenSet; }
+  template <typename DerivationMethodAttributesT = DerivationMethodAttributes>
+  void SetDerivationMethodAttributes(DerivationMethodAttributesT&& value) {
+    m_derivationMethodAttributesHasBeenSet = true;
+    m_derivationMethodAttributes = std::forward<DerivationMethodAttributesT>(value);
+  }
+  template <typename DerivationMethodAttributesT = DerivationMethodAttributes>
+  GenerateMacEmvPinChangeRequest& WithDerivationMethodAttributes(DerivationMethodAttributesT&& value) {
+    SetDerivationMethodAttributes(std::forward<DerivationMethodAttributesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_newPinPekIdentifier;
 
-    ///@{
-    /**
-     * <p>The <code>keyARN</code> of the issuer master key (IMK-SMI) used to
-     * authenticate the issuer script response.</p>
-     */
-    inline const Aws::String& GetSecureMessagingIntegrityKeyIdentifier() const{ return m_secureMessagingIntegrityKeyIdentifier; }
-    inline bool SecureMessagingIntegrityKeyIdentifierHasBeenSet() const { return m_secureMessagingIntegrityKeyIdentifierHasBeenSet; }
-    inline void SetSecureMessagingIntegrityKeyIdentifier(const Aws::String& value) { m_secureMessagingIntegrityKeyIdentifierHasBeenSet = true; m_secureMessagingIntegrityKeyIdentifier = value; }
-    inline void SetSecureMessagingIntegrityKeyIdentifier(Aws::String&& value) { m_secureMessagingIntegrityKeyIdentifierHasBeenSet = true; m_secureMessagingIntegrityKeyIdentifier = std::move(value); }
-    inline void SetSecureMessagingIntegrityKeyIdentifier(const char* value) { m_secureMessagingIntegrityKeyIdentifierHasBeenSet = true; m_secureMessagingIntegrityKeyIdentifier.assign(value); }
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingIntegrityKeyIdentifier(const Aws::String& value) { SetSecureMessagingIntegrityKeyIdentifier(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingIntegrityKeyIdentifier(Aws::String&& value) { SetSecureMessagingIntegrityKeyIdentifier(std::move(value)); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingIntegrityKeyIdentifier(const char* value) { SetSecureMessagingIntegrityKeyIdentifier(value); return *this;}
-    ///@}
+  Aws::String m_newEncryptedPinBlock;
 
-    ///@{
-    /**
-     * <p>The <code>keyARN</code> of the issuer master key (IMK-SMC) used to protect
-     * the PIN block data in the issuer script response.</p>
-     */
-    inline const Aws::String& GetSecureMessagingConfidentialityKeyIdentifier() const{ return m_secureMessagingConfidentialityKeyIdentifier; }
-    inline bool SecureMessagingConfidentialityKeyIdentifierHasBeenSet() const { return m_secureMessagingConfidentialityKeyIdentifierHasBeenSet; }
-    inline void SetSecureMessagingConfidentialityKeyIdentifier(const Aws::String& value) { m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = true; m_secureMessagingConfidentialityKeyIdentifier = value; }
-    inline void SetSecureMessagingConfidentialityKeyIdentifier(Aws::String&& value) { m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = true; m_secureMessagingConfidentialityKeyIdentifier = std::move(value); }
-    inline void SetSecureMessagingConfidentialityKeyIdentifier(const char* value) { m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = true; m_secureMessagingConfidentialityKeyIdentifier.assign(value); }
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingConfidentialityKeyIdentifier(const Aws::String& value) { SetSecureMessagingConfidentialityKeyIdentifier(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingConfidentialityKeyIdentifier(Aws::String&& value) { SetSecureMessagingConfidentialityKeyIdentifier(std::move(value)); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithSecureMessagingConfidentialityKeyIdentifier(const char* value) { SetSecureMessagingConfidentialityKeyIdentifier(value); return *this;}
-    ///@}
+  PinBlockFormatForEmvPinChange m_pinBlockFormat{PinBlockFormatForEmvPinChange::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The message data is the APDU command from the card reader or terminal. The
-     * target encrypted PIN block, after translation to ISO2 format, is appended to
-     * this message data to generate an issuer script response.</p>
-     */
-    inline const Aws::String& GetMessageData() const{ return m_messageData; }
-    inline bool MessageDataHasBeenSet() const { return m_messageDataHasBeenSet; }
-    inline void SetMessageData(const Aws::String& value) { m_messageDataHasBeenSet = true; m_messageData = value; }
-    inline void SetMessageData(Aws::String&& value) { m_messageDataHasBeenSet = true; m_messageData = std::move(value); }
-    inline void SetMessageData(const char* value) { m_messageDataHasBeenSet = true; m_messageData.assign(value); }
-    inline GenerateMacEmvPinChangeRequest& WithMessageData(const Aws::String& value) { SetMessageData(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithMessageData(Aws::String&& value) { SetMessageData(std::move(value)); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithMessageData(const char* value) { SetMessageData(value); return *this;}
-    ///@}
+  Aws::String m_secureMessagingIntegrityKeyIdentifier;
 
-    ///@{
-    /**
-     * <p>The attributes and data values to derive payment card specific
-     * confidentiality and integrity keys.</p>
-     */
-    inline const DerivationMethodAttributes& GetDerivationMethodAttributes() const{ return m_derivationMethodAttributes; }
-    inline bool DerivationMethodAttributesHasBeenSet() const { return m_derivationMethodAttributesHasBeenSet; }
-    inline void SetDerivationMethodAttributes(const DerivationMethodAttributes& value) { m_derivationMethodAttributesHasBeenSet = true; m_derivationMethodAttributes = value; }
-    inline void SetDerivationMethodAttributes(DerivationMethodAttributes&& value) { m_derivationMethodAttributesHasBeenSet = true; m_derivationMethodAttributes = std::move(value); }
-    inline GenerateMacEmvPinChangeRequest& WithDerivationMethodAttributes(const DerivationMethodAttributes& value) { SetDerivationMethodAttributes(value); return *this;}
-    inline GenerateMacEmvPinChangeRequest& WithDerivationMethodAttributes(DerivationMethodAttributes&& value) { SetDerivationMethodAttributes(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_secureMessagingConfidentialityKeyIdentifier;
 
-    Aws::String m_newPinPekIdentifier;
-    bool m_newPinPekIdentifierHasBeenSet = false;
+  Aws::String m_messageData;
 
-    Aws::String m_newEncryptedPinBlock;
-    bool m_newEncryptedPinBlockHasBeenSet = false;
+  DerivationMethodAttributes m_derivationMethodAttributes;
+  bool m_newPinPekIdentifierHasBeenSet = false;
+  bool m_newEncryptedPinBlockHasBeenSet = false;
+  bool m_pinBlockFormatHasBeenSet = false;
+  bool m_secureMessagingIntegrityKeyIdentifierHasBeenSet = false;
+  bool m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = false;
+  bool m_messageDataHasBeenSet = false;
+  bool m_derivationMethodAttributesHasBeenSet = false;
+};
 
-    PinBlockFormatForEmvPinChange m_pinBlockFormat;
-    bool m_pinBlockFormatHasBeenSet = false;
-
-    Aws::String m_secureMessagingIntegrityKeyIdentifier;
-    bool m_secureMessagingIntegrityKeyIdentifierHasBeenSet = false;
-
-    Aws::String m_secureMessagingConfidentialityKeyIdentifier;
-    bool m_secureMessagingConfidentialityKeyIdentifierHasBeenSet = false;
-
-    Aws::String m_messageData;
-    bool m_messageDataHasBeenSet = false;
-
-    DerivationMethodAttributes m_derivationMethodAttributes;
-    bool m_derivationMethodAttributesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace PaymentCryptographyData
-} // namespace Aws
+}  // namespace Model
+}  // namespace PaymentCryptographyData
+}  // namespace Aws

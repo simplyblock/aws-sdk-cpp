@@ -4,70 +4,120 @@
  */
 
 #include <aws/compute-optimizer/model/UtilizationPreference.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace ComputeOptimizer {
+namespace Model {
 
-UtilizationPreference::UtilizationPreference() : 
-    m_metricName(CustomizableMetricName::NOT_SET),
-    m_metricNameHasBeenSet(false),
-    m_metricParametersHasBeenSet(false)
-{
-}
+UtilizationPreference::UtilizationPreference(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) { *this = decoder; }
 
-UtilizationPreference::UtilizationPreference(JsonView jsonValue)
-  : UtilizationPreference()
-{
-  *this = jsonValue;
-}
+UtilizationPreference& UtilizationPreference::operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder) {
+  if (decoder != nullptr) {
+    auto initialMapType = decoder->PeekType();
+    if (initialMapType.has_value() && (initialMapType.value() == CborType::MapStart || initialMapType.value() == CborType::IndefMapStart)) {
+      if (initialMapType.value() == CborType::MapStart) {
+        auto mapSize = decoder->PopNextMapStart();
+        if (mapSize.has_value()) {
+          for (size_t i = 0; i < mapSize.value(); ++i) {
+            auto initialKey = decoder->PopNextTextVal();
+            if (initialKey.has_value()) {
+              Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-UtilizationPreference& UtilizationPreference::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("metricName"))
-  {
-    m_metricName = CustomizableMetricNameMapper::GetCustomizableMetricNameForName(jsonValue.GetString("metricName"));
+              if (initialKeyStr == "metricName") {
+                auto val = decoder->PopNextTextVal();
+                if (val.has_value()) {
+                  m_metricName = CustomizableMetricNameMapper::GetCustomizableMetricNameForName(
+                      Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+                }
+                m_metricNameHasBeenSet = true;
+              }
 
-    m_metricNameHasBeenSet = true;
-  }
+              else if (initialKeyStr == "metricParameters") {
+                m_metricParameters = CustomizableMetricParameters(decoder);
+                m_metricParametersHasBeenSet = true;
+              } else {
+                // Unknown key, skip the value
+                decoder->ConsumeNextWholeDataItem();
+              }
+              if ((decoder->LastError() != AWS_ERROR_UNKNOWN)) {
+                AWS_LOG_ERROR("UtilizationPreference", "Invalid data received for %s", initialKeyStr.c_str());
+                break;
+              }
+            }
+          }
+        }
+      } else  // IndefMapStart
+      {
+        decoder->ConsumeNextSingleElement();  // consume the IndefMapStart
+        while (decoder->LastError() == AWS_ERROR_UNKNOWN) {
+          auto outerMapNextType = decoder->PeekType();
+          if (!outerMapNextType.has_value() || outerMapNextType.value() == CborType::Break) {
+            if (outerMapNextType.has_value()) {
+              decoder->ConsumeNextSingleElement();  // consume the Break
+            }
+            break;
+          }
 
-  if(jsonValue.ValueExists("metricParameters"))
-  {
-    m_metricParameters = jsonValue.GetObject("metricParameters");
+          auto initialKey = decoder->PopNextTextVal();
+          if (initialKey.has_value()) {
+            Aws::String initialKeyStr(reinterpret_cast<const char*>(initialKey.value().ptr), initialKey.value().len);
 
-    m_metricParametersHasBeenSet = true;
+            if (initialKeyStr == "metricName") {
+              auto val = decoder->PopNextTextVal();
+              if (val.has_value()) {
+                m_metricName = CustomizableMetricNameMapper::GetCustomizableMetricNameForName(
+                    Aws::String(reinterpret_cast<const char*>(val.value().ptr), val.value().len));
+              }
+              m_metricNameHasBeenSet = true;
+            }
+
+            else if (initialKeyStr == "metricParameters") {
+              m_metricParameters = CustomizableMetricParameters(decoder);
+              m_metricParametersHasBeenSet = true;
+            } else {
+              // Unknown key, skip the value
+              decoder->ConsumeNextWholeDataItem();
+            }
+          }
+        }
+      }
+    }
   }
 
   return *this;
 }
 
-JsonValue UtilizationPreference::Jsonize() const
-{
-  JsonValue payload;
-
-  if(m_metricNameHasBeenSet)
-  {
-   payload.WithString("metricName", CustomizableMetricNameMapper::GetNameForCustomizableMetricName(m_metricName));
+void UtilizationPreference::CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const {
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_metricNameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_metricParametersHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_metricParametersHasBeenSet)
-  {
-   payload.WithObject("metricParameters", m_metricParameters.Jsonize());
+  encoder.WriteMapStart(mapSize);
 
+  if (m_metricNameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("metricName"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(CustomizableMetricNameMapper::GetNameForCustomizableMetricName(m_metricName).c_str()));
   }
 
-  return payload;
+  if (m_metricParametersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("metricParameters"));
+    m_metricParameters.CborEncode(encoder);
+  }
 }
 
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

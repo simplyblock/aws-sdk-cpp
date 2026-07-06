@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/directconnect/DirectConnect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/directconnect/DirectConnect_EXPORTS.h>
 #include <aws/directconnect/model/Location.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectConnect
-{
-namespace Model
-{
-  class DescribeLocationsResult
-  {
-  public:
-    AWS_DIRECTCONNECT_API DescribeLocationsResult();
-    AWS_DIRECTCONNECT_API DescribeLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTCONNECT_API DescribeLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectConnect {
+namespace Model {
+class DescribeLocationsResult {
+ public:
+  AWS_DIRECTCONNECT_API DescribeLocationsResult() = default;
+  AWS_DIRECTCONNECT_API DescribeLocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTCONNECT_API DescribeLocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The locations.</p>
+   */
+  inline const Aws::Vector<Location>& GetLocations() const { return m_locations; }
+  template <typename LocationsT = Aws::Vector<Location>>
+  void SetLocations(LocationsT&& value) {
+    m_locationsHasBeenSet = true;
+    m_locations = std::forward<LocationsT>(value);
+  }
+  template <typename LocationsT = Aws::Vector<Location>>
+  DescribeLocationsResult& WithLocations(LocationsT&& value) {
+    SetLocations(std::forward<LocationsT>(value));
+    return *this;
+  }
+  template <typename LocationsT = Location>
+  DescribeLocationsResult& AddLocations(LocationsT&& value) {
+    m_locationsHasBeenSet = true;
+    m_locations.emplace_back(std::forward<LocationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The locations.</p>
-     */
-    inline const Aws::Vector<Location>& GetLocations() const{ return m_locations; }
-    inline void SetLocations(const Aws::Vector<Location>& value) { m_locations = value; }
-    inline void SetLocations(Aws::Vector<Location>&& value) { m_locations = std::move(value); }
-    inline DescribeLocationsResult& WithLocations(const Aws::Vector<Location>& value) { SetLocations(value); return *this;}
-    inline DescribeLocationsResult& WithLocations(Aws::Vector<Location>&& value) { SetLocations(std::move(value)); return *this;}
-    inline DescribeLocationsResult& AddLocations(const Location& value) { m_locations.push_back(value); return *this; }
-    inline DescribeLocationsResult& AddLocations(Location&& value) { m_locations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeLocationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeLocationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeLocationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeLocationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Location> m_locations;
+ private:
+  Aws::Vector<Location> m_locations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_locationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

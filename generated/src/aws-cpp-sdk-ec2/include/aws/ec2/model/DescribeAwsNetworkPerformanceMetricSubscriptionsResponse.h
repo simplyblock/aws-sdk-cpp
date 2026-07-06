@@ -4,81 +4,103 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
 #include <aws/ec2/model/Subscription.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeAwsNetworkPerformanceMetricSubscriptionsResponse
-  {
-  public:
-    AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse();
-    AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeAwsNetworkPerformanceMetricSubscriptionsResponse {
+ public:
+  AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse() = default;
+  AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the current Infrastructure Performance subscriptions.</p>
+   */
+  inline const Aws::Vector<Subscription>& GetSubscriptions() const { return m_subscriptions; }
+  template <typename SubscriptionsT = Aws::Vector<Subscription>>
+  void SetSubscriptions(SubscriptionsT&& value) {
+    m_subscriptionsHasBeenSet = true;
+    m_subscriptions = std::forward<SubscriptionsT>(value);
+  }
+  template <typename SubscriptionsT = Aws::Vector<Subscription>>
+  DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithSubscriptions(SubscriptionsT&& value) {
+    SetSubscriptions(std::forward<SubscriptionsT>(value));
+    return *this;
+  }
+  template <typename SubscriptionsT = Subscription>
+  DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& AddSubscriptions(SubscriptionsT&& value) {
+    m_subscriptionsHasBeenSet = true;
+    m_subscriptions.emplace_back(std::forward<SubscriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the current Infrastructure Performance subscriptions.</p>
-     */
-    inline const Aws::Vector<Subscription>& GetSubscriptions() const{ return m_subscriptions; }
-    inline void SetSubscriptions(const Aws::Vector<Subscription>& value) { m_subscriptions = value; }
-    inline void SetSubscriptions(Aws::Vector<Subscription>&& value) { m_subscriptions = std::move(value); }
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithSubscriptions(const Aws::Vector<Subscription>& value) { SetSubscriptions(value); return *this;}
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithSubscriptions(Aws::Vector<Subscription>&& value) { SetSubscriptions(std::move(value)); return *this;}
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& AddSubscriptions(const Subscription& value) { m_subscriptions.push_back(value); return *this; }
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& AddSubscriptions(Subscription&& value) { m_subscriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeAwsNetworkPerformanceMetricSubscriptionsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<Subscription> m_subscriptions;
+  Aws::Vector<Subscription> m_subscriptions;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_subscriptionsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

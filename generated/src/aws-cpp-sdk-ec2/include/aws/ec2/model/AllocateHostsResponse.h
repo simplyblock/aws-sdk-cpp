@@ -4,71 +4,85 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of AllocateHosts.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AllocateHostsResult">AWS
+ * API Reference</a></p>
+ */
+class AllocateHostsResponse {
+ public:
+  AWS_EC2_API AllocateHostsResponse() = default;
+  AWS_EC2_API AllocateHostsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API AllocateHostsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of AllocateHosts.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AllocateHostsResult">AWS
-   * API Reference</a></p>
+   * <p>The ID of the allocated Dedicated Host. This is used to launch an instance
+   * onto a specific host.</p>
    */
-  class AllocateHostsResponse
-  {
-  public:
-    AWS_EC2_API AllocateHostsResponse();
-    AWS_EC2_API AllocateHostsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API AllocateHostsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetHostIds() const { return m_hostIds; }
+  template <typename HostIdsT = Aws::Vector<Aws::String>>
+  void SetHostIds(HostIdsT&& value) {
+    m_hostIdsHasBeenSet = true;
+    m_hostIds = std::forward<HostIdsT>(value);
+  }
+  template <typename HostIdsT = Aws::Vector<Aws::String>>
+  AllocateHostsResponse& WithHostIds(HostIdsT&& value) {
+    SetHostIds(std::forward<HostIdsT>(value));
+    return *this;
+  }
+  template <typename HostIdsT = Aws::String>
+  AllocateHostsResponse& AddHostIds(HostIdsT&& value) {
+    m_hostIdsHasBeenSet = true;
+    m_hostIds.emplace_back(std::forward<HostIdsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The ID of the allocated Dedicated Host. This is used to launch an instance
-     * onto a specific host.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetHostIds() const{ return m_hostIds; }
-    inline void SetHostIds(const Aws::Vector<Aws::String>& value) { m_hostIds = value; }
-    inline void SetHostIds(Aws::Vector<Aws::String>&& value) { m_hostIds = std::move(value); }
-    inline AllocateHostsResponse& WithHostIds(const Aws::Vector<Aws::String>& value) { SetHostIds(value); return *this;}
-    inline AllocateHostsResponse& WithHostIds(Aws::Vector<Aws::String>&& value) { SetHostIds(std::move(value)); return *this;}
-    inline AllocateHostsResponse& AddHostIds(const Aws::String& value) { m_hostIds.push_back(value); return *this; }
-    inline AllocateHostsResponse& AddHostIds(Aws::String&& value) { m_hostIds.push_back(std::move(value)); return *this; }
-    inline AllocateHostsResponse& AddHostIds(const char* value) { m_hostIds.push_back(value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  AllocateHostsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline AllocateHostsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline AllocateHostsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_hostIds;
 
-    Aws::Vector<Aws::String> m_hostIds;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hostIdsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

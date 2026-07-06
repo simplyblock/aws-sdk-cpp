@@ -4,327 +4,507 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/VolumeType.h>
-#include <aws/ec2/model/SSEType.h>
-#include <aws/ec2/model/VolumeState.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/OperatorResponse.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/SSEType.h>
 #include <aws/ec2/model/Tag.h>
 #include <aws/ec2/model/VolumeAttachment.h>
+#include <aws/ec2/model/VolumeState.h>
+#include <aws/ec2/model/VolumeType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a volume.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/Volume">AWS API
+ * Reference</a></p>
+ */
+class Volume {
+ public:
+  AWS_EC2_API Volume() = default;
+  AWS_EC2_API Volume(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API Volume& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a volume.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/Volume">AWS API
-   * Reference</a></p>
+   * <p>The ID of the Availability Zone for the volume.</p>
    */
-  class Volume
-  {
-  public:
-    AWS_EC2_API Volume();
-    AWS_EC2_API Volume(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API Volume& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetAvailabilityZoneId() const { return m_availabilityZoneId; }
+  inline bool AvailabilityZoneIdHasBeenSet() const { return m_availabilityZoneIdHasBeenSet; }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  void SetAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    m_availabilityZoneIdHasBeenSet = true;
+    m_availabilityZoneId = std::forward<AvailabilityZoneIdT>(value);
+  }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  Volume& WithAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    SetAvailabilityZoneId(std::forward<AvailabilityZoneIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the Outpost.</p>
+   */
+  inline const Aws::String& GetOutpostArn() const { return m_outpostArn; }
+  inline bool OutpostArnHasBeenSet() const { return m_outpostArnHasBeenSet; }
+  template <typename OutpostArnT = Aws::String>
+  void SetOutpostArn(OutpostArnT&& value) {
+    m_outpostArnHasBeenSet = true;
+    m_outpostArn = std::forward<OutpostArnT>(value);
+  }
+  template <typename OutpostArnT = Aws::String>
+  Volume& WithOutpostArn(OutpostArnT&& value) {
+    SetOutpostArn(std::forward<OutpostArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the source volume from which the volume copy was created. Only for
+   * volume copies.</p>
+   */
+  inline const Aws::String& GetSourceVolumeId() const { return m_sourceVolumeId; }
+  inline bool SourceVolumeIdHasBeenSet() const { return m_sourceVolumeIdHasBeenSet; }
+  template <typename SourceVolumeIdT = Aws::String>
+  void SetSourceVolumeId(SourceVolumeIdT&& value) {
+    m_sourceVolumeIdHasBeenSet = true;
+    m_sourceVolumeId = std::forward<SourceVolumeIdT>(value);
+  }
+  template <typename SourceVolumeIdT = Aws::String>
+  Volume& WithSourceVolumeId(SourceVolumeIdT&& value) {
+    SetSourceVolumeId(std::forward<SourceVolumeIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the Outpost.</p>
-     */
-    inline const Aws::String& GetOutpostArn() const{ return m_outpostArn; }
-    inline bool OutpostArnHasBeenSet() const { return m_outpostArnHasBeenSet; }
-    inline void SetOutpostArn(const Aws::String& value) { m_outpostArnHasBeenSet = true; m_outpostArn = value; }
-    inline void SetOutpostArn(Aws::String&& value) { m_outpostArnHasBeenSet = true; m_outpostArn = std::move(value); }
-    inline void SetOutpostArn(const char* value) { m_outpostArnHasBeenSet = true; m_outpostArn.assign(value); }
-    inline Volume& WithOutpostArn(const Aws::String& value) { SetOutpostArn(value); return *this;}
-    inline Volume& WithOutpostArn(Aws::String&& value) { SetOutpostArn(std::move(value)); return *this;}
-    inline Volume& WithOutpostArn(const char* value) { SetOutpostArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of I/O operations per second (IOPS). For <code>gp3</code>,
+   * <code>io1</code>, and <code>io2</code> volumes, this represents the number of
+   * IOPS that are provisioned for the volume. For <code>gp2</code> volumes, this
+   * represents the baseline performance of the volume and the rate at which the
+   * volume accumulates I/O credits for bursting.</p>
+   */
+  inline int GetIops() const { return m_iops; }
+  inline bool IopsHasBeenSet() const { return m_iopsHasBeenSet; }
+  inline void SetIops(int value) {
+    m_iopsHasBeenSet = true;
+    m_iops = value;
+  }
+  inline Volume& WithIops(int value) {
+    SetIops(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of I/O operations per second (IOPS). For <code>gp3</code>,
-     * <code>io1</code>, and <code>io2</code> volumes, this represents the number of
-     * IOPS that are provisioned for the volume. For <code>gp2</code> volumes, this
-     * represents the baseline performance of the volume and the rate at which the
-     * volume accumulates I/O credits for bursting.</p>
-     */
-    inline int GetIops() const{ return m_iops; }
-    inline bool IopsHasBeenSet() const { return m_iopsHasBeenSet; }
-    inline void SetIops(int value) { m_iopsHasBeenSet = true; m_iops = value; }
-    inline Volume& WithIops(int value) { SetIops(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Any tags assigned to the volume.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  Volume& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  Volume& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Any tags assigned to the volume.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline Volume& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline Volume& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline Volume& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline Volume& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The volume type.</p>
+   */
+  inline VolumeType GetVolumeType() const { return m_volumeType; }
+  inline bool VolumeTypeHasBeenSet() const { return m_volumeTypeHasBeenSet; }
+  inline void SetVolumeType(VolumeType value) {
+    m_volumeTypeHasBeenSet = true;
+    m_volumeType = value;
+  }
+  inline Volume& WithVolumeType(VolumeType value) {
+    SetVolumeType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The volume type.</p>
-     */
-    inline const VolumeType& GetVolumeType() const{ return m_volumeType; }
-    inline bool VolumeTypeHasBeenSet() const { return m_volumeTypeHasBeenSet; }
-    inline void SetVolumeType(const VolumeType& value) { m_volumeTypeHasBeenSet = true; m_volumeType = value; }
-    inline void SetVolumeType(VolumeType&& value) { m_volumeTypeHasBeenSet = true; m_volumeType = std::move(value); }
-    inline Volume& WithVolumeType(const VolumeType& value) { SetVolumeType(value); return *this;}
-    inline Volume& WithVolumeType(VolumeType&& value) { SetVolumeType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *  <p>This parameter is not returned by CreateVolume.</p>
+   * <p>Indicates whether the volume was created using fast snapshot restore.</p>
+   */
+  inline bool GetFastRestored() const { return m_fastRestored; }
+  inline bool FastRestoredHasBeenSet() const { return m_fastRestoredHasBeenSet; }
+  inline void SetFastRestored(bool value) {
+    m_fastRestoredHasBeenSet = true;
+    m_fastRestored = value;
+  }
+  inline Volume& WithFastRestored(bool value) {
+    SetFastRestored(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     *  <p>This parameter is not returned by CreateVolume.</p> 
-     * <p>Indicates whether the volume was created using fast snapshot restore.</p>
-     */
-    inline bool GetFastRestored() const{ return m_fastRestored; }
-    inline bool FastRestoredHasBeenSet() const { return m_fastRestoredHasBeenSet; }
-    inline void SetFastRestored(bool value) { m_fastRestoredHasBeenSet = true; m_fastRestored = value; }
-    inline Volume& WithFastRestored(bool value) { SetFastRestored(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether Amazon EBS Multi-Attach is enabled.</p>
+   */
+  inline bool GetMultiAttachEnabled() const { return m_multiAttachEnabled; }
+  inline bool MultiAttachEnabledHasBeenSet() const { return m_multiAttachEnabledHasBeenSet; }
+  inline void SetMultiAttachEnabled(bool value) {
+    m_multiAttachEnabledHasBeenSet = true;
+    m_multiAttachEnabled = value;
+  }
+  inline Volume& WithMultiAttachEnabled(bool value) {
+    SetMultiAttachEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether Amazon EBS Multi-Attach is enabled.</p>
-     */
-    inline bool GetMultiAttachEnabled() const{ return m_multiAttachEnabled; }
-    inline bool MultiAttachEnabledHasBeenSet() const { return m_multiAttachEnabledHasBeenSet; }
-    inline void SetMultiAttachEnabled(bool value) { m_multiAttachEnabledHasBeenSet = true; m_multiAttachEnabled = value; }
-    inline Volume& WithMultiAttachEnabled(bool value) { SetMultiAttachEnabled(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The throughput that the volume supports, in MiB/s.</p>
+   */
+  inline int GetThroughput() const { return m_throughput; }
+  inline bool ThroughputHasBeenSet() const { return m_throughputHasBeenSet; }
+  inline void SetThroughput(int value) {
+    m_throughputHasBeenSet = true;
+    m_throughput = value;
+  }
+  inline Volume& WithThroughput(int value) {
+    SetThroughput(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The throughput that the volume supports, in MiB/s.</p>
-     */
-    inline int GetThroughput() const{ return m_throughput; }
-    inline bool ThroughputHasBeenSet() const { return m_throughputHasBeenSet; }
-    inline void SetThroughput(int value) { m_throughputHasBeenSet = true; m_throughput = value; }
-    inline Volume& WithThroughput(int value) { SetThroughput(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *  <p>This parameter is not returned by CreateVolume.</p>
+   * <p>Reserved for future use.</p>
+   */
+  inline SSEType GetSseType() const { return m_sseType; }
+  inline bool SseTypeHasBeenSet() const { return m_sseTypeHasBeenSet; }
+  inline void SetSseType(SSEType value) {
+    m_sseTypeHasBeenSet = true;
+    m_sseType = value;
+  }
+  inline Volume& WithSseType(SSEType value) {
+    SetSseType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     *  <p>This parameter is not returned by CreateVolume.</p> 
-     * <p>Reserved for future use.</p>
-     */
-    inline const SSEType& GetSseType() const{ return m_sseType; }
-    inline bool SseTypeHasBeenSet() const { return m_sseTypeHasBeenSet; }
-    inline void SetSseType(const SSEType& value) { m_sseTypeHasBeenSet = true; m_sseType = value; }
-    inline void SetSseType(SSEType&& value) { m_sseTypeHasBeenSet = true; m_sseType = std::move(value); }
-    inline Volume& WithSseType(const SSEType& value) { SetSseType(value); return *this;}
-    inline Volume& WithSseType(SSEType&& value) { SetSseType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The service provider that manages the volume.</p>
+   */
+  inline const OperatorResponse& GetOperator() const { return m_operator; }
+  inline bool OperatorHasBeenSet() const { return m_operatorHasBeenSet; }
+  template <typename OperatorT = OperatorResponse>
+  void SetOperator(OperatorT&& value) {
+    m_operatorHasBeenSet = true;
+    m_operator = std::forward<OperatorT>(value);
+  }
+  template <typename OperatorT = OperatorResponse>
+  Volume& WithOperator(OperatorT&& value) {
+    SetOperator(std::forward<OperatorT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the volume.</p>
-     */
-    inline const Aws::String& GetVolumeId() const{ return m_volumeId; }
-    inline bool VolumeIdHasBeenSet() const { return m_volumeIdHasBeenSet; }
-    inline void SetVolumeId(const Aws::String& value) { m_volumeIdHasBeenSet = true; m_volumeId = value; }
-    inline void SetVolumeId(Aws::String&& value) { m_volumeIdHasBeenSet = true; m_volumeId = std::move(value); }
-    inline void SetVolumeId(const char* value) { m_volumeIdHasBeenSet = true; m_volumeId.assign(value); }
-    inline Volume& WithVolumeId(const Aws::String& value) { SetVolumeId(value); return *this;}
-    inline Volume& WithVolumeId(Aws::String&& value) { SetVolumeId(std::move(value)); return *this;}
-    inline Volume& WithVolumeId(const char* value) { SetVolumeId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon EBS Provisioned Rate for Volume Initialization (volume
+   * initialization rate) specified for the volume during creation, in MiB/s. If no
+   * volume initialization rate was specified, the value is <code>null</code>.</p>
+   */
+  inline int GetVolumeInitializationRate() const { return m_volumeInitializationRate; }
+  inline bool VolumeInitializationRateHasBeenSet() const { return m_volumeInitializationRateHasBeenSet; }
+  inline void SetVolumeInitializationRate(int value) {
+    m_volumeInitializationRateHasBeenSet = true;
+    m_volumeInitializationRate = value;
+  }
+  inline Volume& WithVolumeInitializationRate(int value) {
+    SetVolumeInitializationRate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The size of the volume, in GiBs.</p>
-     */
-    inline int GetSize() const{ return m_size; }
-    inline bool SizeHasBeenSet() const { return m_sizeHasBeenSet; }
-    inline void SetSize(int value) { m_sizeHasBeenSet = true; m_size = value; }
-    inline Volume& WithSize(int value) { SetSize(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the volume.</p>
+   */
+  inline const Aws::String& GetVolumeId() const { return m_volumeId; }
+  inline bool VolumeIdHasBeenSet() const { return m_volumeIdHasBeenSet; }
+  template <typename VolumeIdT = Aws::String>
+  void SetVolumeId(VolumeIdT&& value) {
+    m_volumeIdHasBeenSet = true;
+    m_volumeId = std::forward<VolumeIdT>(value);
+  }
+  template <typename VolumeIdT = Aws::String>
+  Volume& WithVolumeId(VolumeIdT&& value) {
+    SetVolumeId(std::forward<VolumeIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The snapshot from which the volume was created, if applicable.</p>
-     */
-    inline const Aws::String& GetSnapshotId() const{ return m_snapshotId; }
-    inline bool SnapshotIdHasBeenSet() const { return m_snapshotIdHasBeenSet; }
-    inline void SetSnapshotId(const Aws::String& value) { m_snapshotIdHasBeenSet = true; m_snapshotId = value; }
-    inline void SetSnapshotId(Aws::String&& value) { m_snapshotIdHasBeenSet = true; m_snapshotId = std::move(value); }
-    inline void SetSnapshotId(const char* value) { m_snapshotIdHasBeenSet = true; m_snapshotId.assign(value); }
-    inline Volume& WithSnapshotId(const Aws::String& value) { SetSnapshotId(value); return *this;}
-    inline Volume& WithSnapshotId(Aws::String&& value) { SetSnapshotId(std::move(value)); return *this;}
-    inline Volume& WithSnapshotId(const char* value) { SetSnapshotId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The size of the volume, in GiBs.</p>
+   */
+  inline int GetSize() const { return m_size; }
+  inline bool SizeHasBeenSet() const { return m_sizeHasBeenSet; }
+  inline void SetSize(int value) {
+    m_sizeHasBeenSet = true;
+    m_size = value;
+  }
+  inline Volume& WithSize(int value) {
+    SetSize(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Availability Zone for the volume.</p>
-     */
-    inline const Aws::String& GetAvailabilityZone() const{ return m_availabilityZone; }
-    inline bool AvailabilityZoneHasBeenSet() const { return m_availabilityZoneHasBeenSet; }
-    inline void SetAvailabilityZone(const Aws::String& value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone = value; }
-    inline void SetAvailabilityZone(Aws::String&& value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone = std::move(value); }
-    inline void SetAvailabilityZone(const char* value) { m_availabilityZoneHasBeenSet = true; m_availabilityZone.assign(value); }
-    inline Volume& WithAvailabilityZone(const Aws::String& value) { SetAvailabilityZone(value); return *this;}
-    inline Volume& WithAvailabilityZone(Aws::String&& value) { SetAvailabilityZone(std::move(value)); return *this;}
-    inline Volume& WithAvailabilityZone(const char* value) { SetAvailabilityZone(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The snapshot from which the volume was created, if applicable.</p>
+   */
+  inline const Aws::String& GetSnapshotId() const { return m_snapshotId; }
+  inline bool SnapshotIdHasBeenSet() const { return m_snapshotIdHasBeenSet; }
+  template <typename SnapshotIdT = Aws::String>
+  void SetSnapshotId(SnapshotIdT&& value) {
+    m_snapshotIdHasBeenSet = true;
+    m_snapshotId = std::forward<SnapshotIdT>(value);
+  }
+  template <typename SnapshotIdT = Aws::String>
+  Volume& WithSnapshotId(SnapshotIdT&& value) {
+    SetSnapshotId(std::forward<SnapshotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The volume state.</p>
-     */
-    inline const VolumeState& GetState() const{ return m_state; }
-    inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
-    inline void SetState(const VolumeState& value) { m_stateHasBeenSet = true; m_state = value; }
-    inline void SetState(VolumeState&& value) { m_stateHasBeenSet = true; m_state = std::move(value); }
-    inline Volume& WithState(const VolumeState& value) { SetState(value); return *this;}
-    inline Volume& WithState(VolumeState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Availability Zone for the volume.</p>
+   */
+  inline const Aws::String& GetAvailabilityZone() const { return m_availabilityZone; }
+  inline bool AvailabilityZoneHasBeenSet() const { return m_availabilityZoneHasBeenSet; }
+  template <typename AvailabilityZoneT = Aws::String>
+  void SetAvailabilityZone(AvailabilityZoneT&& value) {
+    m_availabilityZoneHasBeenSet = true;
+    m_availabilityZone = std::forward<AvailabilityZoneT>(value);
+  }
+  template <typename AvailabilityZoneT = Aws::String>
+  Volume& WithAvailabilityZone(AvailabilityZoneT&& value) {
+    SetAvailabilityZone(std::forward<AvailabilityZoneT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time stamp when volume creation was initiated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateTime() const{ return m_createTime; }
-    inline bool CreateTimeHasBeenSet() const { return m_createTimeHasBeenSet; }
-    inline void SetCreateTime(const Aws::Utils::DateTime& value) { m_createTimeHasBeenSet = true; m_createTime = value; }
-    inline void SetCreateTime(Aws::Utils::DateTime&& value) { m_createTimeHasBeenSet = true; m_createTime = std::move(value); }
-    inline Volume& WithCreateTime(const Aws::Utils::DateTime& value) { SetCreateTime(value); return *this;}
-    inline Volume& WithCreateTime(Aws::Utils::DateTime&& value) { SetCreateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The volume state.</p>
+   */
+  inline VolumeState GetState() const { return m_state; }
+  inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
+  inline void SetState(VolumeState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline Volume& WithState(VolumeState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     *  <p>This parameter is not returned by CreateVolume.</p> 
-     * <p>Information about the volume attachments.</p>
-     */
-    inline const Aws::Vector<VolumeAttachment>& GetAttachments() const{ return m_attachments; }
-    inline bool AttachmentsHasBeenSet() const { return m_attachmentsHasBeenSet; }
-    inline void SetAttachments(const Aws::Vector<VolumeAttachment>& value) { m_attachmentsHasBeenSet = true; m_attachments = value; }
-    inline void SetAttachments(Aws::Vector<VolumeAttachment>&& value) { m_attachmentsHasBeenSet = true; m_attachments = std::move(value); }
-    inline Volume& WithAttachments(const Aws::Vector<VolumeAttachment>& value) { SetAttachments(value); return *this;}
-    inline Volume& WithAttachments(Aws::Vector<VolumeAttachment>&& value) { SetAttachments(std::move(value)); return *this;}
-    inline Volume& AddAttachments(const VolumeAttachment& value) { m_attachmentsHasBeenSet = true; m_attachments.push_back(value); return *this; }
-    inline Volume& AddAttachments(VolumeAttachment&& value) { m_attachmentsHasBeenSet = true; m_attachments.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The time stamp when volume creation was initiated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateTime() const { return m_createTime; }
+  inline bool CreateTimeHasBeenSet() const { return m_createTimeHasBeenSet; }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  void SetCreateTime(CreateTimeT&& value) {
+    m_createTimeHasBeenSet = true;
+    m_createTime = std::forward<CreateTimeT>(value);
+  }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  Volume& WithCreateTime(CreateTimeT&& value) {
+    SetCreateTime(std::forward<CreateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the volume is encrypted.</p>
-     */
-    inline bool GetEncrypted() const{ return m_encrypted; }
-    inline bool EncryptedHasBeenSet() const { return m_encryptedHasBeenSet; }
-    inline void SetEncrypted(bool value) { m_encryptedHasBeenSet = true; m_encrypted = value; }
-    inline Volume& WithEncrypted(bool value) { SetEncrypted(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   *  <p>This parameter is not returned by CreateVolume.</p>
+   * <p>Information about the volume attachments.</p>
+   */
+  inline const Aws::Vector<VolumeAttachment>& GetAttachments() const { return m_attachments; }
+  inline bool AttachmentsHasBeenSet() const { return m_attachmentsHasBeenSet; }
+  template <typename AttachmentsT = Aws::Vector<VolumeAttachment>>
+  void SetAttachments(AttachmentsT&& value) {
+    m_attachmentsHasBeenSet = true;
+    m_attachments = std::forward<AttachmentsT>(value);
+  }
+  template <typename AttachmentsT = Aws::Vector<VolumeAttachment>>
+  Volume& WithAttachments(AttachmentsT&& value) {
+    SetAttachments(std::forward<AttachmentsT>(value));
+    return *this;
+  }
+  template <typename AttachmentsT = VolumeAttachment>
+  Volume& AddAttachments(AttachmentsT&& value) {
+    m_attachmentsHasBeenSet = true;
+    m_attachments.emplace_back(std::forward<AttachmentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the KMS key that was used to protect the
-     * volume encryption key for the volume.</p>
-     */
-    inline const Aws::String& GetKmsKeyId() const{ return m_kmsKeyId; }
-    inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
-    inline void SetKmsKeyId(const Aws::String& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = value; }
-    inline void SetKmsKeyId(Aws::String&& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = std::move(value); }
-    inline void SetKmsKeyId(const char* value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId.assign(value); }
-    inline Volume& WithKmsKeyId(const Aws::String& value) { SetKmsKeyId(value); return *this;}
-    inline Volume& WithKmsKeyId(Aws::String&& value) { SetKmsKeyId(std::move(value)); return *this;}
-    inline Volume& WithKmsKeyId(const char* value) { SetKmsKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the volume is encrypted.</p>
+   */
+  inline bool GetEncrypted() const { return m_encrypted; }
+  inline bool EncryptedHasBeenSet() const { return m_encryptedHasBeenSet; }
+  inline void SetEncrypted(bool value) {
+    m_encryptedHasBeenSet = true;
+    m_encrypted = value;
+  }
+  inline Volume& WithEncrypted(bool value) {
+    SetEncrypted(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline Volume& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline Volume& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the KMS key that was used to protect the
+   * volume encryption key for the volume.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  Volume& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_outpostArn;
-    bool m_outpostArnHasBeenSet = false;
+  ///@{
 
-    int m_iops;
-    bool m_iopsHasBeenSet = false;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  Volume& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_availabilityZoneId;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::String m_outpostArn;
 
-    VolumeType m_volumeType;
-    bool m_volumeTypeHasBeenSet = false;
+  Aws::String m_sourceVolumeId;
 
-    bool m_fastRestored;
-    bool m_fastRestoredHasBeenSet = false;
+  int m_iops{0};
 
-    bool m_multiAttachEnabled;
-    bool m_multiAttachEnabledHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    int m_throughput;
-    bool m_throughputHasBeenSet = false;
+  VolumeType m_volumeType{VolumeType::NOT_SET};
 
-    SSEType m_sseType;
-    bool m_sseTypeHasBeenSet = false;
+  bool m_fastRestored{false};
 
-    Aws::String m_volumeId;
-    bool m_volumeIdHasBeenSet = false;
+  bool m_multiAttachEnabled{false};
 
-    int m_size;
-    bool m_sizeHasBeenSet = false;
+  int m_throughput{0};
 
-    Aws::String m_snapshotId;
-    bool m_snapshotIdHasBeenSet = false;
+  SSEType m_sseType{SSEType::NOT_SET};
 
-    Aws::String m_availabilityZone;
-    bool m_availabilityZoneHasBeenSet = false;
+  OperatorResponse m_operator;
 
-    VolumeState m_state;
-    bool m_stateHasBeenSet = false;
+  int m_volumeInitializationRate{0};
 
-    Aws::Utils::DateTime m_createTime;
-    bool m_createTimeHasBeenSet = false;
+  Aws::String m_volumeId;
 
-    Aws::Vector<VolumeAttachment> m_attachments;
-    bool m_attachmentsHasBeenSet = false;
+  int m_size{0};
 
-    bool m_encrypted;
-    bool m_encryptedHasBeenSet = false;
+  Aws::String m_snapshotId;
 
-    Aws::String m_kmsKeyId;
-    bool m_kmsKeyIdHasBeenSet = false;
+  Aws::String m_availabilityZone;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  VolumeState m_state{VolumeState::NOT_SET};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+  Aws::Utils::DateTime m_createTime{};
+
+  Aws::Vector<VolumeAttachment> m_attachments;
+
+  bool m_encrypted{false};
+
+  Aws::String m_kmsKeyId;
+
+  ResponseMetadata m_responseMetadata;
+  bool m_availabilityZoneIdHasBeenSet = false;
+  bool m_outpostArnHasBeenSet = false;
+  bool m_sourceVolumeIdHasBeenSet = false;
+  bool m_iopsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_volumeTypeHasBeenSet = false;
+  bool m_fastRestoredHasBeenSet = false;
+  bool m_multiAttachEnabledHasBeenSet = false;
+  bool m_throughputHasBeenSet = false;
+  bool m_sseTypeHasBeenSet = false;
+  bool m_operatorHasBeenSet = false;
+  bool m_volumeInitializationRateHasBeenSet = false;
+  bool m_volumeIdHasBeenSet = false;
+  bool m_sizeHasBeenSet = false;
+  bool m_snapshotIdHasBeenSet = false;
+  bool m_availabilityZoneHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_createTimeHasBeenSet = false;
+  bool m_attachmentsHasBeenSet = false;
+  bool m_encryptedHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = true;
+};
+
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

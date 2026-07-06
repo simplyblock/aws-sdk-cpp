@@ -6,78 +6,79 @@
 #pragma once
 #include <aws/appmesh/AppMesh_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AppMesh
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AppMesh {
+namespace Model {
 
+/**
+ * <p>An object that represents a local file certificate. The certificate must meet
+ * specific requirements and you must have proxy authorization enabled. For more
+ * information, see <a
+ * href="https://docs.aws.amazon.com/app-mesh/latest/userguide/tls.html#virtual-node-tls-prerequisites">Transport
+ * Layer Security (TLS)</a>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appmesh-2019-01-25/ListenerTlsFileCertificate">AWS
+ * API Reference</a></p>
+ */
+class ListenerTlsFileCertificate {
+ public:
+  AWS_APPMESH_API ListenerTlsFileCertificate() = default;
+  AWS_APPMESH_API ListenerTlsFileCertificate(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPMESH_API ListenerTlsFileCertificate& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPMESH_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object that represents a local file certificate. The certificate must meet
-   * specific requirements and you must have proxy authorization enabled. For more
-   * information, see <a
-   * href="https://docs.aws.amazon.com/app-mesh/latest/userguide/tls.html#virtual-node-tls-prerequisites">Transport
-   * Layer Security (TLS)</a>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appmesh-2019-01-25/ListenerTlsFileCertificate">AWS
-   * API Reference</a></p>
+   * <p>The certificate chain for the certificate.</p>
    */
-  class ListenerTlsFileCertificate
-  {
-  public:
-    AWS_APPMESH_API ListenerTlsFileCertificate();
-    AWS_APPMESH_API ListenerTlsFileCertificate(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPMESH_API ListenerTlsFileCertificate& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPMESH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCertificateChain() const { return m_certificateChain; }
+  inline bool CertificateChainHasBeenSet() const { return m_certificateChainHasBeenSet; }
+  template <typename CertificateChainT = Aws::String>
+  void SetCertificateChain(CertificateChainT&& value) {
+    m_certificateChainHasBeenSet = true;
+    m_certificateChain = std::forward<CertificateChainT>(value);
+  }
+  template <typename CertificateChainT = Aws::String>
+  ListenerTlsFileCertificate& WithCertificateChain(CertificateChainT&& value) {
+    SetCertificateChain(std::forward<CertificateChainT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The private key for a certificate stored on the file system of the virtual
+   * node that the proxy is running on.</p>
+   */
+  inline const Aws::String& GetPrivateKey() const { return m_privateKey; }
+  inline bool PrivateKeyHasBeenSet() const { return m_privateKeyHasBeenSet; }
+  template <typename PrivateKeyT = Aws::String>
+  void SetPrivateKey(PrivateKeyT&& value) {
+    m_privateKeyHasBeenSet = true;
+    m_privateKey = std::forward<PrivateKeyT>(value);
+  }
+  template <typename PrivateKeyT = Aws::String>
+  ListenerTlsFileCertificate& WithPrivateKey(PrivateKeyT&& value) {
+    SetPrivateKey(std::forward<PrivateKeyT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateChain;
 
-    ///@{
-    /**
-     * <p>The certificate chain for the certificate.</p>
-     */
-    inline const Aws::String& GetCertificateChain() const{ return m_certificateChain; }
-    inline bool CertificateChainHasBeenSet() const { return m_certificateChainHasBeenSet; }
-    inline void SetCertificateChain(const Aws::String& value) { m_certificateChainHasBeenSet = true; m_certificateChain = value; }
-    inline void SetCertificateChain(Aws::String&& value) { m_certificateChainHasBeenSet = true; m_certificateChain = std::move(value); }
-    inline void SetCertificateChain(const char* value) { m_certificateChainHasBeenSet = true; m_certificateChain.assign(value); }
-    inline ListenerTlsFileCertificate& WithCertificateChain(const Aws::String& value) { SetCertificateChain(value); return *this;}
-    inline ListenerTlsFileCertificate& WithCertificateChain(Aws::String&& value) { SetCertificateChain(std::move(value)); return *this;}
-    inline ListenerTlsFileCertificate& WithCertificateChain(const char* value) { SetCertificateChain(value); return *this;}
-    ///@}
+  Aws::String m_privateKey;
+  bool m_certificateChainHasBeenSet = false;
+  bool m_privateKeyHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The private key for a certificate stored on the file system of the virtual
-     * node that the proxy is running on.</p>
-     */
-    inline const Aws::String& GetPrivateKey() const{ return m_privateKey; }
-    inline bool PrivateKeyHasBeenSet() const { return m_privateKeyHasBeenSet; }
-    inline void SetPrivateKey(const Aws::String& value) { m_privateKeyHasBeenSet = true; m_privateKey = value; }
-    inline void SetPrivateKey(Aws::String&& value) { m_privateKeyHasBeenSet = true; m_privateKey = std::move(value); }
-    inline void SetPrivateKey(const char* value) { m_privateKeyHasBeenSet = true; m_privateKey.assign(value); }
-    inline ListenerTlsFileCertificate& WithPrivateKey(const Aws::String& value) { SetPrivateKey(value); return *this;}
-    inline ListenerTlsFileCertificate& WithPrivateKey(Aws::String&& value) { SetPrivateKey(std::move(value)); return *this;}
-    inline ListenerTlsFileCertificate& WithPrivateKey(const char* value) { SetPrivateKey(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateChain;
-    bool m_certificateChainHasBeenSet = false;
-
-    Aws::String m_privateKey;
-    bool m_privateKeyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AppMesh
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppMesh
+}  // namespace Aws

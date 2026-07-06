@@ -4,65 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/ConnectionStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class CreateConnectionResult
-  {
-  public:
-    AWS_GLUE_API CreateConnectionResult();
-    AWS_GLUE_API CreateConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API CreateConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class CreateConnectionResult {
+ public:
+  AWS_GLUE_API CreateConnectionResult() = default;
+  AWS_GLUE_API CreateConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API CreateConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status of the connection creation request. The request can take some time
+   * for certain authentication types, for example when creating an OAuth connection
+   * with token exchange over VPC.</p>
+   */
+  inline ConnectionStatus GetCreateConnectionStatus() const { return m_createConnectionStatus; }
+  inline void SetCreateConnectionStatus(ConnectionStatus value) {
+    m_createConnectionStatusHasBeenSet = true;
+    m_createConnectionStatus = value;
+  }
+  inline CreateConnectionResult& WithCreateConnectionStatus(ConnectionStatus value) {
+    SetCreateConnectionStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the connection creation request. The request can take some time
-     * for certain authentication types, for example when creating an OAuth connection
-     * with token exchange over VPC.</p>
-     */
-    inline const ConnectionStatus& GetCreateConnectionStatus() const{ return m_createConnectionStatus; }
-    inline void SetCreateConnectionStatus(const ConnectionStatus& value) { m_createConnectionStatus = value; }
-    inline void SetCreateConnectionStatus(ConnectionStatus&& value) { m_createConnectionStatus = std::move(value); }
-    inline CreateConnectionResult& WithCreateConnectionStatus(const ConnectionStatus& value) { SetCreateConnectionStatus(value); return *this;}
-    inline CreateConnectionResult& WithCreateConnectionStatus(ConnectionStatus&& value) { SetCreateConnectionStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateConnectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateConnectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateConnectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateConnectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ConnectionStatus m_createConnectionStatus;
+ private:
+  ConnectionStatus m_createConnectionStatus{ConnectionStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_createConnectionStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

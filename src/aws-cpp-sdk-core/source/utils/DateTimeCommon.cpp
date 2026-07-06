@@ -1127,6 +1127,12 @@ DateTime::DateTime(double secondsSinceEpoch) : m_valid(true)
     m_time = std::chrono::system_clock::time_point(std::chrono::duration_cast<std::chrono::milliseconds>(timestamp));
 }
 
+DateTime::DateTime(uint64_t secondsSinceEpoch) : m_valid(true)
+{
+  std::chrono::duration<uint64_t, std::chrono::seconds::period> timestamp(secondsSinceEpoch);
+  m_time = std::chrono::system_clock::time_point(timestamp);
+}
+
 DateTime::DateTime(const Aws::String& timestamp, DateFormat format) : m_valid(true)
 {
     ConvertTimestampStringToTimePoint(timestamp.c_str(), format);
@@ -1494,8 +1500,7 @@ void DateTime::ConvertTimestampStringToTimePoint(const char* timestamp, DateForm
         }
         else
         {
-            assert(0);
-            AWS_LOGSTREAM_WARN(CLASS_TAG, "Non-UTC timestamp detected. This is always a bug. Make the world a better place and fix whatever sent you this timestamp: " << timestamp)
+            AWS_LOGSTREAM_ERROR(CLASS_TAG, "Non-UTC timestamp detected. This is always a bug. Make the world a better place and fix whatever sent you this timestamp: " << timestamp)
             tt = std::mktime(&timeStruct);
         }
         m_time = std::chrono::system_clock::from_time_t(tt);

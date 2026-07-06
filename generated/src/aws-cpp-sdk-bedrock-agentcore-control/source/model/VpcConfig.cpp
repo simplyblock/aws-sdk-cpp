@@ -1,0 +1,70 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/bedrock-agentcore-control/model/VpcConfig.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+#include <utility>
+
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+namespace Aws {
+namespace BedrockAgentCoreControl {
+namespace Model {
+
+VpcConfig::VpcConfig(JsonView jsonValue) { *this = jsonValue; }
+
+VpcConfig& VpcConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("securityGroups")) {
+    Aws::Utils::Array<JsonView> securityGroupsJsonList = jsonValue.GetArray("securityGroups");
+    for (unsigned securityGroupsIndex = 0; securityGroupsIndex < securityGroupsJsonList.GetLength(); ++securityGroupsIndex) {
+      m_securityGroups.push_back(securityGroupsJsonList[securityGroupsIndex].AsString());
+    }
+    m_securityGroupsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("subnets")) {
+    Aws::Utils::Array<JsonView> subnetsJsonList = jsonValue.GetArray("subnets");
+    for (unsigned subnetsIndex = 0; subnetsIndex < subnetsJsonList.GetLength(); ++subnetsIndex) {
+      m_subnets.push_back(subnetsJsonList[subnetsIndex].AsString());
+    }
+    m_subnetsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("requireServiceS3Endpoint")) {
+    m_requireServiceS3Endpoint = jsonValue.GetBool("requireServiceS3Endpoint");
+    m_requireServiceS3EndpointHasBeenSet = true;
+  }
+  return *this;
+}
+
+JsonValue VpcConfig::Jsonize() const {
+  JsonValue payload;
+
+  if (m_securityGroupsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> securityGroupsJsonList(m_securityGroups.size());
+    for (unsigned securityGroupsIndex = 0; securityGroupsIndex < securityGroupsJsonList.GetLength(); ++securityGroupsIndex) {
+      securityGroupsJsonList[securityGroupsIndex].AsString(m_securityGroups[securityGroupsIndex]);
+    }
+    payload.WithArray("securityGroups", std::move(securityGroupsJsonList));
+  }
+
+  if (m_subnetsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> subnetsJsonList(m_subnets.size());
+    for (unsigned subnetsIndex = 0; subnetsIndex < subnetsJsonList.GetLength(); ++subnetsIndex) {
+      subnetsJsonList[subnetsIndex].AsString(m_subnets[subnetsIndex]);
+    }
+    payload.WithArray("subnets", std::move(subnetsJsonList));
+  }
+
+  if (m_requireServiceS3EndpointHasBeenSet) {
+    payload.WithBool("requireServiceS3Endpoint", m_requireServiceS3Endpoint);
+  }
+
+  return payload;
+}
+
+}  // namespace Model
+}  // namespace BedrockAgentCoreControl
+}  // namespace Aws

@@ -4,150 +4,201 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/Subnet.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
 
+/**
+ * <p>Describes a subnet group in response to a request by the
+ * <code>DescribeReplicationSubnetGroups</code> operation.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ReplicationSubnetGroup">AWS
+ * API Reference</a></p>
+ */
+class ReplicationSubnetGroup {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATABASEMIGRATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes a subnet group in response to a request by the
-   * <code>DescribeReplicationSubnetGroups</code> operation.</p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ReplicationSubnetGroup">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the replication instance subnet group.</p>
    */
-  class ReplicationSubnetGroup
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup();
-    AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATABASEMIGRATIONSERVICE_API ReplicationSubnetGroup& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATABASEMIGRATIONSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetReplicationSubnetGroupIdentifier() const { return m_replicationSubnetGroupIdentifier; }
+  inline bool ReplicationSubnetGroupIdentifierHasBeenSet() const { return m_replicationSubnetGroupIdentifierHasBeenSet; }
+  template <typename ReplicationSubnetGroupIdentifierT = Aws::String>
+  void SetReplicationSubnetGroupIdentifier(ReplicationSubnetGroupIdentifierT&& value) {
+    m_replicationSubnetGroupIdentifierHasBeenSet = true;
+    m_replicationSubnetGroupIdentifier = std::forward<ReplicationSubnetGroupIdentifierT>(value);
+  }
+  template <typename ReplicationSubnetGroupIdentifierT = Aws::String>
+  ReplicationSubnetGroup& WithReplicationSubnetGroupIdentifier(ReplicationSubnetGroupIdentifierT&& value) {
+    SetReplicationSubnetGroupIdentifier(std::forward<ReplicationSubnetGroupIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A description for the replication subnet group.</p>
+   */
+  inline const Aws::String& GetReplicationSubnetGroupDescription() const { return m_replicationSubnetGroupDescription; }
+  inline bool ReplicationSubnetGroupDescriptionHasBeenSet() const { return m_replicationSubnetGroupDescriptionHasBeenSet; }
+  template <typename ReplicationSubnetGroupDescriptionT = Aws::String>
+  void SetReplicationSubnetGroupDescription(ReplicationSubnetGroupDescriptionT&& value) {
+    m_replicationSubnetGroupDescriptionHasBeenSet = true;
+    m_replicationSubnetGroupDescription = std::forward<ReplicationSubnetGroupDescriptionT>(value);
+  }
+  template <typename ReplicationSubnetGroupDescriptionT = Aws::String>
+  ReplicationSubnetGroup& WithReplicationSubnetGroupDescription(ReplicationSubnetGroupDescriptionT&& value) {
+    SetReplicationSubnetGroupDescription(std::forward<ReplicationSubnetGroupDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the replication instance subnet group.</p>
-     */
-    inline const Aws::String& GetReplicationSubnetGroupIdentifier() const{ return m_replicationSubnetGroupIdentifier; }
-    inline bool ReplicationSubnetGroupIdentifierHasBeenSet() const { return m_replicationSubnetGroupIdentifierHasBeenSet; }
-    inline void SetReplicationSubnetGroupIdentifier(const Aws::String& value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier = value; }
-    inline void SetReplicationSubnetGroupIdentifier(Aws::String&& value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier = std::move(value); }
-    inline void SetReplicationSubnetGroupIdentifier(const char* value) { m_replicationSubnetGroupIdentifierHasBeenSet = true; m_replicationSubnetGroupIdentifier.assign(value); }
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupIdentifier(const Aws::String& value) { SetReplicationSubnetGroupIdentifier(value); return *this;}
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupIdentifier(Aws::String&& value) { SetReplicationSubnetGroupIdentifier(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupIdentifier(const char* value) { SetReplicationSubnetGroupIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the VPC.</p>
+   */
+  inline const Aws::String& GetVpcId() const { return m_vpcId; }
+  inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
+  template <typename VpcIdT = Aws::String>
+  void SetVpcId(VpcIdT&& value) {
+    m_vpcIdHasBeenSet = true;
+    m_vpcId = std::forward<VpcIdT>(value);
+  }
+  template <typename VpcIdT = Aws::String>
+  ReplicationSubnetGroup& WithVpcId(VpcIdT&& value) {
+    SetVpcId(std::forward<VpcIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description for the replication subnet group.</p>
-     */
-    inline const Aws::String& GetReplicationSubnetGroupDescription() const{ return m_replicationSubnetGroupDescription; }
-    inline bool ReplicationSubnetGroupDescriptionHasBeenSet() const { return m_replicationSubnetGroupDescriptionHasBeenSet; }
-    inline void SetReplicationSubnetGroupDescription(const Aws::String& value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription = value; }
-    inline void SetReplicationSubnetGroupDescription(Aws::String&& value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription = std::move(value); }
-    inline void SetReplicationSubnetGroupDescription(const char* value) { m_replicationSubnetGroupDescriptionHasBeenSet = true; m_replicationSubnetGroupDescription.assign(value); }
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupDescription(const Aws::String& value) { SetReplicationSubnetGroupDescription(value); return *this;}
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupDescription(Aws::String&& value) { SetReplicationSubnetGroupDescription(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& WithReplicationSubnetGroupDescription(const char* value) { SetReplicationSubnetGroupDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the subnet group.</p>
+   */
+  inline const Aws::String& GetSubnetGroupStatus() const { return m_subnetGroupStatus; }
+  inline bool SubnetGroupStatusHasBeenSet() const { return m_subnetGroupStatusHasBeenSet; }
+  template <typename SubnetGroupStatusT = Aws::String>
+  void SetSubnetGroupStatus(SubnetGroupStatusT&& value) {
+    m_subnetGroupStatusHasBeenSet = true;
+    m_subnetGroupStatus = std::forward<SubnetGroupStatusT>(value);
+  }
+  template <typename SubnetGroupStatusT = Aws::String>
+  ReplicationSubnetGroup& WithSubnetGroupStatus(SubnetGroupStatusT&& value) {
+    SetSubnetGroupStatus(std::forward<SubnetGroupStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the VPC.</p>
-     */
-    inline const Aws::String& GetVpcId() const{ return m_vpcId; }
-    inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
-    inline void SetVpcId(const Aws::String& value) { m_vpcIdHasBeenSet = true; m_vpcId = value; }
-    inline void SetVpcId(Aws::String&& value) { m_vpcIdHasBeenSet = true; m_vpcId = std::move(value); }
-    inline void SetVpcId(const char* value) { m_vpcIdHasBeenSet = true; m_vpcId.assign(value); }
-    inline ReplicationSubnetGroup& WithVpcId(const Aws::String& value) { SetVpcId(value); return *this;}
-    inline ReplicationSubnetGroup& WithVpcId(Aws::String&& value) { SetVpcId(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& WithVpcId(const char* value) { SetVpcId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The subnets that are in the subnet group.</p>
+   */
+  inline const Aws::Vector<Subnet>& GetSubnets() const { return m_subnets; }
+  inline bool SubnetsHasBeenSet() const { return m_subnetsHasBeenSet; }
+  template <typename SubnetsT = Aws::Vector<Subnet>>
+  void SetSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets = std::forward<SubnetsT>(value);
+  }
+  template <typename SubnetsT = Aws::Vector<Subnet>>
+  ReplicationSubnetGroup& WithSubnets(SubnetsT&& value) {
+    SetSubnets(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  template <typename SubnetsT = Subnet>
+  ReplicationSubnetGroup& AddSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets.emplace_back(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the subnet group.</p>
-     */
-    inline const Aws::String& GetSubnetGroupStatus() const{ return m_subnetGroupStatus; }
-    inline bool SubnetGroupStatusHasBeenSet() const { return m_subnetGroupStatusHasBeenSet; }
-    inline void SetSubnetGroupStatus(const Aws::String& value) { m_subnetGroupStatusHasBeenSet = true; m_subnetGroupStatus = value; }
-    inline void SetSubnetGroupStatus(Aws::String&& value) { m_subnetGroupStatusHasBeenSet = true; m_subnetGroupStatus = std::move(value); }
-    inline void SetSubnetGroupStatus(const char* value) { m_subnetGroupStatusHasBeenSet = true; m_subnetGroupStatus.assign(value); }
-    inline ReplicationSubnetGroup& WithSubnetGroupStatus(const Aws::String& value) { SetSubnetGroupStatus(value); return *this;}
-    inline ReplicationSubnetGroup& WithSubnetGroupStatus(Aws::String&& value) { SetSubnetGroupStatus(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& WithSubnetGroupStatus(const char* value) { SetSubnetGroupStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP addressing protocol supported by the subnet group. This is used by a
+   * replication instance with values such as IPv4 only or Dual-stack that supports
+   * both IPv4 and IPv6 addressing. IPv6 only is not yet supported.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSupportedNetworkTypes() const { return m_supportedNetworkTypes; }
+  inline bool SupportedNetworkTypesHasBeenSet() const { return m_supportedNetworkTypesHasBeenSet; }
+  template <typename SupportedNetworkTypesT = Aws::Vector<Aws::String>>
+  void SetSupportedNetworkTypes(SupportedNetworkTypesT&& value) {
+    m_supportedNetworkTypesHasBeenSet = true;
+    m_supportedNetworkTypes = std::forward<SupportedNetworkTypesT>(value);
+  }
+  template <typename SupportedNetworkTypesT = Aws::Vector<Aws::String>>
+  ReplicationSubnetGroup& WithSupportedNetworkTypes(SupportedNetworkTypesT&& value) {
+    SetSupportedNetworkTypes(std::forward<SupportedNetworkTypesT>(value));
+    return *this;
+  }
+  template <typename SupportedNetworkTypesT = Aws::String>
+  ReplicationSubnetGroup& AddSupportedNetworkTypes(SupportedNetworkTypesT&& value) {
+    m_supportedNetworkTypesHasBeenSet = true;
+    m_supportedNetworkTypes.emplace_back(std::forward<SupportedNetworkTypesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subnets that are in the subnet group.</p>
-     */
-    inline const Aws::Vector<Subnet>& GetSubnets() const{ return m_subnets; }
-    inline bool SubnetsHasBeenSet() const { return m_subnetsHasBeenSet; }
-    inline void SetSubnets(const Aws::Vector<Subnet>& value) { m_subnetsHasBeenSet = true; m_subnets = value; }
-    inline void SetSubnets(Aws::Vector<Subnet>&& value) { m_subnetsHasBeenSet = true; m_subnets = std::move(value); }
-    inline ReplicationSubnetGroup& WithSubnets(const Aws::Vector<Subnet>& value) { SetSubnets(value); return *this;}
-    inline ReplicationSubnetGroup& WithSubnets(Aws::Vector<Subnet>&& value) { SetSubnets(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& AddSubnets(const Subnet& value) { m_subnetsHasBeenSet = true; m_subnets.push_back(value); return *this; }
-    inline ReplicationSubnetGroup& AddSubnets(Subnet&& value) { m_subnetsHasBeenSet = true; m_subnets.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the replication subnet group is read-only. When set to
+   * <code>true</code>, this subnet group is managed by DMS as part of a zero-ETL
+   * integration and cannot be modified or deleted directly. You can only modify or
+   * delete read-only subnet groups through their associated zero-ETL
+   * integration.</p>
+   */
+  inline bool GetIsReadOnly() const { return m_isReadOnly; }
+  inline bool IsReadOnlyHasBeenSet() const { return m_isReadOnlyHasBeenSet; }
+  inline void SetIsReadOnly(bool value) {
+    m_isReadOnlyHasBeenSet = true;
+    m_isReadOnly = value;
+  }
+  inline ReplicationSubnetGroup& WithIsReadOnly(bool value) {
+    SetIsReadOnly(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_replicationSubnetGroupIdentifier;
 
-    ///@{
-    /**
-     * <p>The IP addressing protocol supported by the subnet group. This is used by a
-     * replication instance with values such as IPv4 only or Dual-stack that supports
-     * both IPv4 and IPv6 addressing. IPv6 only is not yet supported.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSupportedNetworkTypes() const{ return m_supportedNetworkTypes; }
-    inline bool SupportedNetworkTypesHasBeenSet() const { return m_supportedNetworkTypesHasBeenSet; }
-    inline void SetSupportedNetworkTypes(const Aws::Vector<Aws::String>& value) { m_supportedNetworkTypesHasBeenSet = true; m_supportedNetworkTypes = value; }
-    inline void SetSupportedNetworkTypes(Aws::Vector<Aws::String>&& value) { m_supportedNetworkTypesHasBeenSet = true; m_supportedNetworkTypes = std::move(value); }
-    inline ReplicationSubnetGroup& WithSupportedNetworkTypes(const Aws::Vector<Aws::String>& value) { SetSupportedNetworkTypes(value); return *this;}
-    inline ReplicationSubnetGroup& WithSupportedNetworkTypes(Aws::Vector<Aws::String>&& value) { SetSupportedNetworkTypes(std::move(value)); return *this;}
-    inline ReplicationSubnetGroup& AddSupportedNetworkTypes(const Aws::String& value) { m_supportedNetworkTypesHasBeenSet = true; m_supportedNetworkTypes.push_back(value); return *this; }
-    inline ReplicationSubnetGroup& AddSupportedNetworkTypes(Aws::String&& value) { m_supportedNetworkTypesHasBeenSet = true; m_supportedNetworkTypes.push_back(std::move(value)); return *this; }
-    inline ReplicationSubnetGroup& AddSupportedNetworkTypes(const char* value) { m_supportedNetworkTypesHasBeenSet = true; m_supportedNetworkTypes.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_replicationSubnetGroupDescription;
 
-    Aws::String m_replicationSubnetGroupIdentifier;
-    bool m_replicationSubnetGroupIdentifierHasBeenSet = false;
+  Aws::String m_vpcId;
 
-    Aws::String m_replicationSubnetGroupDescription;
-    bool m_replicationSubnetGroupDescriptionHasBeenSet = false;
+  Aws::String m_subnetGroupStatus;
 
-    Aws::String m_vpcId;
-    bool m_vpcIdHasBeenSet = false;
+  Aws::Vector<Subnet> m_subnets;
 
-    Aws::String m_subnetGroupStatus;
-    bool m_subnetGroupStatusHasBeenSet = false;
+  Aws::Vector<Aws::String> m_supportedNetworkTypes;
 
-    Aws::Vector<Subnet> m_subnets;
-    bool m_subnetsHasBeenSet = false;
+  bool m_isReadOnly{false};
+  bool m_replicationSubnetGroupIdentifierHasBeenSet = false;
+  bool m_replicationSubnetGroupDescriptionHasBeenSet = false;
+  bool m_vpcIdHasBeenSet = false;
+  bool m_subnetGroupStatusHasBeenSet = false;
+  bool m_subnetsHasBeenSet = false;
+  bool m_supportedNetworkTypesHasBeenSet = false;
+  bool m_isReadOnlyHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_supportedNetworkTypes;
-    bool m_supportedNetworkTypesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

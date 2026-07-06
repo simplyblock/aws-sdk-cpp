@@ -4,84 +4,105 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/ResponseMetadata.h>
 #include <aws/elasticache/model/ServerlessCacheSnapshot.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class DescribeServerlessCacheSnapshotsResult
-  {
-  public:
-    AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult();
-    AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class DescribeServerlessCacheSnapshotsResult {
+ public:
+  AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult() = default;
+  AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API DescribeServerlessCacheSnapshotsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>An optional marker returned from a prior request to support pagination of
+   * results from this operation. If this parameter is specified, the response
+   * includes only records beyond the marker, up to the value specified by
+   * max-results. Available for Valkey, Redis OSS and Serverless Memcached only.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeServerlessCacheSnapshotsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional marker returned from a prior request to support pagination of
-     * results from this operation. If this parameter is specified, the response
-     * includes only records beyond the marker, up to the value specified by
-     * max-results. Available for Valkey, Redis OSS and Serverless Memcached only.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeServerlessCacheSnapshotsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeServerlessCacheSnapshotsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeServerlessCacheSnapshotsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The serverless caches snapshots associated with a given description request.
+   * Available for Valkey, Redis OSS and Serverless Memcached only.</p>
+   */
+  inline const Aws::Vector<ServerlessCacheSnapshot>& GetServerlessCacheSnapshots() const { return m_serverlessCacheSnapshots; }
+  template <typename ServerlessCacheSnapshotsT = Aws::Vector<ServerlessCacheSnapshot>>
+  void SetServerlessCacheSnapshots(ServerlessCacheSnapshotsT&& value) {
+    m_serverlessCacheSnapshotsHasBeenSet = true;
+    m_serverlessCacheSnapshots = std::forward<ServerlessCacheSnapshotsT>(value);
+  }
+  template <typename ServerlessCacheSnapshotsT = Aws::Vector<ServerlessCacheSnapshot>>
+  DescribeServerlessCacheSnapshotsResult& WithServerlessCacheSnapshots(ServerlessCacheSnapshotsT&& value) {
+    SetServerlessCacheSnapshots(std::forward<ServerlessCacheSnapshotsT>(value));
+    return *this;
+  }
+  template <typename ServerlessCacheSnapshotsT = ServerlessCacheSnapshot>
+  DescribeServerlessCacheSnapshotsResult& AddServerlessCacheSnapshots(ServerlessCacheSnapshotsT&& value) {
+    m_serverlessCacheSnapshotsHasBeenSet = true;
+    m_serverlessCacheSnapshots.emplace_back(std::forward<ServerlessCacheSnapshotsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The serverless caches snapshots associated with a given description request.
-     * Available for Valkey, Redis OSS and Serverless Memcached only.</p>
-     */
-    inline const Aws::Vector<ServerlessCacheSnapshot>& GetServerlessCacheSnapshots() const{ return m_serverlessCacheSnapshots; }
-    inline void SetServerlessCacheSnapshots(const Aws::Vector<ServerlessCacheSnapshot>& value) { m_serverlessCacheSnapshots = value; }
-    inline void SetServerlessCacheSnapshots(Aws::Vector<ServerlessCacheSnapshot>&& value) { m_serverlessCacheSnapshots = std::move(value); }
-    inline DescribeServerlessCacheSnapshotsResult& WithServerlessCacheSnapshots(const Aws::Vector<ServerlessCacheSnapshot>& value) { SetServerlessCacheSnapshots(value); return *this;}
-    inline DescribeServerlessCacheSnapshotsResult& WithServerlessCacheSnapshots(Aws::Vector<ServerlessCacheSnapshot>&& value) { SetServerlessCacheSnapshots(std::move(value)); return *this;}
-    inline DescribeServerlessCacheSnapshotsResult& AddServerlessCacheSnapshots(const ServerlessCacheSnapshot& value) { m_serverlessCacheSnapshots.push_back(value); return *this; }
-    inline DescribeServerlessCacheSnapshotsResult& AddServerlessCacheSnapshots(ServerlessCacheSnapshot&& value) { m_serverlessCacheSnapshots.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeServerlessCacheSnapshotsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeServerlessCacheSnapshotsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeServerlessCacheSnapshotsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<ServerlessCacheSnapshot> m_serverlessCacheSnapshots;
+  Aws::Vector<ServerlessCacheSnapshot> m_serverlessCacheSnapshots;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_serverlessCacheSnapshotsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

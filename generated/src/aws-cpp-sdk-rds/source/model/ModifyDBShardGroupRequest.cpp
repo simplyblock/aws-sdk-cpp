@@ -3,45 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/ModifyDBShardGroupRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/ModifyDBShardGroupRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-ModifyDBShardGroupRequest::ModifyDBShardGroupRequest() : 
-    m_dBShardGroupIdentifierHasBeenSet(false),
-    m_maxACU(0.0),
-    m_maxACUHasBeenSet(false),
-    m_minACU(0.0),
-    m_minACUHasBeenSet(false),
-    m_computeRedundancy(0),
-    m_computeRedundancyHasBeenSet(false)
-{
-}
-
-Aws::String ModifyDBShardGroupRequest::SerializePayload() const
-{
+Aws::String ModifyDBShardGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=ModifyDBShardGroup&";
-  if(m_dBShardGroupIdentifierHasBeenSet)
-  {
+  if (m_dBShardGroupIdentifierHasBeenSet) {
     ss << "DBShardGroupIdentifier=" << StringUtils::URLEncode(m_dBShardGroupIdentifier.c_str()) << "&";
   }
 
-  if(m_maxACUHasBeenSet)
-  {
+  if (m_maxACUHasBeenSet) {
     ss << "MaxACU=" << StringUtils::URLEncode(m_maxACU) << "&";
   }
 
-  if(m_minACUHasBeenSet)
-  {
+  if (m_minACUHasBeenSet) {
     ss << "MinACU=" << StringUtils::URLEncode(m_minACU) << "&";
   }
 
-  if(m_computeRedundancyHasBeenSet)
-  {
+  if (m_computeRedundancyHasBeenSet) {
     ss << "ComputeRedundancy=" << m_computeRedundancy << "&";
   }
 
@@ -49,8 +33,4 @@ Aws::String ModifyDBShardGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  ModifyDBShardGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void ModifyDBShardGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

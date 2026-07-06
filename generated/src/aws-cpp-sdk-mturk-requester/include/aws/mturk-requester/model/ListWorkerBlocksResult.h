@@ -4,92 +4,117 @@
  */
 
 #pragma once
-#include <aws/mturk-requester/MTurk_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mturk-requester/MTurk_EXPORTS.h>
 #include <aws/mturk-requester/model/WorkerBlock.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MTurk
-{
-namespace Model
-{
-  class ListWorkerBlocksResult
-  {
-  public:
-    AWS_MTURK_API ListWorkerBlocksResult();
-    AWS_MTURK_API ListWorkerBlocksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MTURK_API ListWorkerBlocksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MTurk {
+namespace Model {
+class ListWorkerBlocksResult {
+ public:
+  AWS_MTURK_API ListWorkerBlocksResult() = default;
+  AWS_MTURK_API ListWorkerBlocksResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MTURK_API ListWorkerBlocksResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListWorkerBlocksResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListWorkerBlocksResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListWorkerBlocksResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListWorkerBlocksResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The number of assignments on the page in the filtered results list,
-     * equivalent to the number of assignments returned by this call.</p>
-     */
-    inline int GetNumResults() const{ return m_numResults; }
-    inline void SetNumResults(int value) { m_numResults = value; }
-    inline ListWorkerBlocksResult& WithNumResults(int value) { SetNumResults(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The number of assignments on the page in the filtered results list,
+   * equivalent to the number of assignments returned by this call.</p>
+   */
+  inline int GetNumResults() const { return m_numResults; }
+  inline void SetNumResults(int value) {
+    m_numResultsHasBeenSet = true;
+    m_numResults = value;
+  }
+  inline ListWorkerBlocksResult& WithNumResults(int value) {
+    SetNumResults(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The list of WorkerBlocks, containing the collection of Worker IDs and
-     * reasons for blocking.</p>
-     */
-    inline const Aws::Vector<WorkerBlock>& GetWorkerBlocks() const{ return m_workerBlocks; }
-    inline void SetWorkerBlocks(const Aws::Vector<WorkerBlock>& value) { m_workerBlocks = value; }
-    inline void SetWorkerBlocks(Aws::Vector<WorkerBlock>&& value) { m_workerBlocks = std::move(value); }
-    inline ListWorkerBlocksResult& WithWorkerBlocks(const Aws::Vector<WorkerBlock>& value) { SetWorkerBlocks(value); return *this;}
-    inline ListWorkerBlocksResult& WithWorkerBlocks(Aws::Vector<WorkerBlock>&& value) { SetWorkerBlocks(std::move(value)); return *this;}
-    inline ListWorkerBlocksResult& AddWorkerBlocks(const WorkerBlock& value) { m_workerBlocks.push_back(value); return *this; }
-    inline ListWorkerBlocksResult& AddWorkerBlocks(WorkerBlock&& value) { m_workerBlocks.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The list of WorkerBlocks, containing the collection of Worker IDs and
+   * reasons for blocking.</p>
+   */
+  inline const Aws::Vector<WorkerBlock>& GetWorkerBlocks() const { return m_workerBlocks; }
+  template <typename WorkerBlocksT = Aws::Vector<WorkerBlock>>
+  void SetWorkerBlocks(WorkerBlocksT&& value) {
+    m_workerBlocksHasBeenSet = true;
+    m_workerBlocks = std::forward<WorkerBlocksT>(value);
+  }
+  template <typename WorkerBlocksT = Aws::Vector<WorkerBlock>>
+  ListWorkerBlocksResult& WithWorkerBlocks(WorkerBlocksT&& value) {
+    SetWorkerBlocks(std::forward<WorkerBlocksT>(value));
+    return *this;
+  }
+  template <typename WorkerBlocksT = WorkerBlock>
+  ListWorkerBlocksResult& AddWorkerBlocks(WorkerBlocksT&& value) {
+    m_workerBlocksHasBeenSet = true;
+    m_workerBlocks.emplace_back(std::forward<WorkerBlocksT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListWorkerBlocksResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListWorkerBlocksResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListWorkerBlocksResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListWorkerBlocksResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    int m_numResults;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<WorkerBlock> m_workerBlocks;
+  int m_numResults{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::Vector<WorkerBlock> m_workerBlocks;
 
-} // namespace Model
-} // namespace MTurk
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_numResultsHasBeenSet = false;
+  bool m_workerBlocksHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MTurk
+}  // namespace Aws

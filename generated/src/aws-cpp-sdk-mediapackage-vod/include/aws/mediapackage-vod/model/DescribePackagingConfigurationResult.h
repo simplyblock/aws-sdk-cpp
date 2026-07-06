@@ -4,176 +4,233 @@
  */
 
 #pragma once
-#include <aws/mediapackage-vod/MediaPackageVod_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediapackage-vod/MediaPackageVod_EXPORTS.h>
 #include <aws/mediapackage-vod/model/CmafPackage.h>
 #include <aws/mediapackage-vod/model/DashPackage.h>
 #include <aws/mediapackage-vod/model/HlsPackage.h>
 #include <aws/mediapackage-vod/model/MssPackage.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaPackageVod
-{
-namespace Model
-{
-  class DescribePackagingConfigurationResult
-  {
-  public:
-    AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult();
-    AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaPackageVod {
+namespace Model {
+class DescribePackagingConfigurationResult {
+ public:
+  AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult() = default;
+  AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIAPACKAGEVOD_API DescribePackagingConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * The ARN of the PackagingConfiguration.
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  DescribePackagingConfigurationResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ARN of the PackagingConfiguration.
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline DescribePackagingConfigurationResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const CmafPackage& GetCmafPackage() const{ return m_cmafPackage; }
-    inline void SetCmafPackage(const CmafPackage& value) { m_cmafPackage = value; }
-    inline void SetCmafPackage(CmafPackage&& value) { m_cmafPackage = std::move(value); }
-    inline DescribePackagingConfigurationResult& WithCmafPackage(const CmafPackage& value) { SetCmafPackage(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithCmafPackage(CmafPackage&& value) { SetCmafPackage(std::move(value)); return *this;}
-    ///@}
+  inline const CmafPackage& GetCmafPackage() const { return m_cmafPackage; }
+  template <typename CmafPackageT = CmafPackage>
+  void SetCmafPackage(CmafPackageT&& value) {
+    m_cmafPackageHasBeenSet = true;
+    m_cmafPackage = std::forward<CmafPackageT>(value);
+  }
+  template <typename CmafPackageT = CmafPackage>
+  DescribePackagingConfigurationResult& WithCmafPackage(CmafPackageT&& value) {
+    SetCmafPackage(std::forward<CmafPackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The time the PackagingConfiguration was created.
-     */
-    inline const Aws::String& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::String& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::String&& value) { m_createdAt = std::move(value); }
-    inline void SetCreatedAt(const char* value) { m_createdAt.assign(value); }
-    inline DescribePackagingConfigurationResult& WithCreatedAt(const Aws::String& value) { SetCreatedAt(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithCreatedAt(Aws::String&& value) { SetCreatedAt(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& WithCreatedAt(const char* value) { SetCreatedAt(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The time the PackagingConfiguration was created.
+   */
+  inline const Aws::String& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::String>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::String>
+  DescribePackagingConfigurationResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const DashPackage& GetDashPackage() const{ return m_dashPackage; }
-    inline void SetDashPackage(const DashPackage& value) { m_dashPackage = value; }
-    inline void SetDashPackage(DashPackage&& value) { m_dashPackage = std::move(value); }
-    inline DescribePackagingConfigurationResult& WithDashPackage(const DashPackage& value) { SetDashPackage(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithDashPackage(DashPackage&& value) { SetDashPackage(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const HlsPackage& GetHlsPackage() const{ return m_hlsPackage; }
-    inline void SetHlsPackage(const HlsPackage& value) { m_hlsPackage = value; }
-    inline void SetHlsPackage(HlsPackage&& value) { m_hlsPackage = std::move(value); }
-    inline DescribePackagingConfigurationResult& WithHlsPackage(const HlsPackage& value) { SetHlsPackage(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithHlsPackage(HlsPackage&& value) { SetHlsPackage(std::move(value)); return *this;}
-    ///@}
+  inline const DashPackage& GetDashPackage() const { return m_dashPackage; }
+  template <typename DashPackageT = DashPackage>
+  void SetDashPackage(DashPackageT&& value) {
+    m_dashPackageHasBeenSet = true;
+    m_dashPackage = std::forward<DashPackageT>(value);
+  }
+  template <typename DashPackageT = DashPackage>
+  DescribePackagingConfigurationResult& WithDashPackage(DashPackageT&& value) {
+    SetDashPackage(std::forward<DashPackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ID of the PackagingConfiguration.
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline DescribePackagingConfigurationResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const MssPackage& GetMssPackage() const{ return m_mssPackage; }
-    inline void SetMssPackage(const MssPackage& value) { m_mssPackage = value; }
-    inline void SetMssPackage(MssPackage&& value) { m_mssPackage = std::move(value); }
-    inline DescribePackagingConfigurationResult& WithMssPackage(const MssPackage& value) { SetMssPackage(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithMssPackage(MssPackage&& value) { SetMssPackage(std::move(value)); return *this;}
-    ///@}
+  inline const HlsPackage& GetHlsPackage() const { return m_hlsPackage; }
+  template <typename HlsPackageT = HlsPackage>
+  void SetHlsPackage(HlsPackageT&& value) {
+    m_hlsPackageHasBeenSet = true;
+    m_hlsPackage = std::forward<HlsPackageT>(value);
+  }
+  template <typename HlsPackageT = HlsPackage>
+  DescribePackagingConfigurationResult& WithHlsPackage(HlsPackageT&& value) {
+    SetHlsPackage(std::forward<HlsPackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The ID of a PackagingGroup.
-     */
-    inline const Aws::String& GetPackagingGroupId() const{ return m_packagingGroupId; }
-    inline void SetPackagingGroupId(const Aws::String& value) { m_packagingGroupId = value; }
-    inline void SetPackagingGroupId(Aws::String&& value) { m_packagingGroupId = std::move(value); }
-    inline void SetPackagingGroupId(const char* value) { m_packagingGroupId.assign(value); }
-    inline DescribePackagingConfigurationResult& WithPackagingGroupId(const Aws::String& value) { SetPackagingGroupId(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithPackagingGroupId(Aws::String&& value) { SetPackagingGroupId(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& WithPackagingGroupId(const char* value) { SetPackagingGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The ID of the PackagingConfiguration.
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  DescribePackagingConfigurationResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline DescribePackagingConfigurationResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribePackagingConfigurationResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribePackagingConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribePackagingConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribePackagingConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const MssPackage& GetMssPackage() const { return m_mssPackage; }
+  template <typename MssPackageT = MssPackage>
+  void SetMssPackage(MssPackageT&& value) {
+    m_mssPackageHasBeenSet = true;
+    m_mssPackage = std::forward<MssPackageT>(value);
+  }
+  template <typename MssPackageT = MssPackage>
+  DescribePackagingConfigurationResult& WithMssPackage(MssPackageT&& value) {
+    SetMssPackage(std::forward<MssPackageT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
+  ///@{
+  /**
+   * The ID of a PackagingGroup.
+   */
+  inline const Aws::String& GetPackagingGroupId() const { return m_packagingGroupId; }
+  template <typename PackagingGroupIdT = Aws::String>
+  void SetPackagingGroupId(PackagingGroupIdT&& value) {
+    m_packagingGroupIdHasBeenSet = true;
+    m_packagingGroupId = std::forward<PackagingGroupIdT>(value);
+  }
+  template <typename PackagingGroupIdT = Aws::String>
+  DescribePackagingConfigurationResult& WithPackagingGroupId(PackagingGroupIdT&& value) {
+    SetPackagingGroupId(std::forward<PackagingGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    CmafPackage m_cmafPackage;
+  ///@{
 
-    Aws::String m_createdAt;
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DescribePackagingConfigurationResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DescribePackagingConfigurationResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    DashPackage m_dashPackage;
+  ///@{
 
-    HlsPackage m_hlsPackage;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribePackagingConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_id;
+ private:
+  Aws::String m_arn;
 
-    MssPackage m_mssPackage;
+  CmafPackage m_cmafPackage;
 
-    Aws::String m_packagingGroupId;
+  Aws::String m_createdAt;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  DashPackage m_dashPackage;
 
-    Aws::String m_requestId;
-  };
+  HlsPackage m_hlsPackage;
 
-} // namespace Model
-} // namespace MediaPackageVod
-} // namespace Aws
+  Aws::String m_id;
+
+  MssPackage m_mssPackage;
+
+  Aws::String m_packagingGroupId;
+
+  Aws::Map<Aws::String, Aws::String> m_tags;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_cmafPackageHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_dashPackageHasBeenSet = false;
+  bool m_hlsPackageHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_mssPackageHasBeenSet = false;
+  bool m_packagingGroupIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaPackageVod
+}  // namespace Aws

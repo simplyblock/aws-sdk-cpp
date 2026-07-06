@@ -4,70 +4,85 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/CustomerGateway.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+/**
+ * <p>Contains the output of DescribeCustomerGateways.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCustomerGatewaysResult">AWS
+ * API Reference</a></p>
+ */
+class DescribeCustomerGatewaysResponse {
+ public:
+  AWS_EC2_API DescribeCustomerGatewaysResponse() = default;
+  AWS_EC2_API DescribeCustomerGatewaysResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeCustomerGatewaysResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of DescribeCustomerGateways.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCustomerGatewaysResult">AWS
-   * API Reference</a></p>
+   * <p>Information about one or more customer gateways.</p>
    */
-  class DescribeCustomerGatewaysResponse
-  {
-  public:
-    AWS_EC2_API DescribeCustomerGatewaysResponse();
-    AWS_EC2_API DescribeCustomerGatewaysResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeCustomerGatewaysResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<CustomerGateway>& GetCustomerGateways() const { return m_customerGateways; }
+  template <typename CustomerGatewaysT = Aws::Vector<CustomerGateway>>
+  void SetCustomerGateways(CustomerGatewaysT&& value) {
+    m_customerGatewaysHasBeenSet = true;
+    m_customerGateways = std::forward<CustomerGatewaysT>(value);
+  }
+  template <typename CustomerGatewaysT = Aws::Vector<CustomerGateway>>
+  DescribeCustomerGatewaysResponse& WithCustomerGateways(CustomerGatewaysT&& value) {
+    SetCustomerGateways(std::forward<CustomerGatewaysT>(value));
+    return *this;
+  }
+  template <typename CustomerGatewaysT = CustomerGateway>
+  DescribeCustomerGatewaysResponse& AddCustomerGateways(CustomerGatewaysT&& value) {
+    m_customerGatewaysHasBeenSet = true;
+    m_customerGateways.emplace_back(std::forward<CustomerGatewaysT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about one or more customer gateways.</p>
-     */
-    inline const Aws::Vector<CustomerGateway>& GetCustomerGateways() const{ return m_customerGateways; }
-    inline void SetCustomerGateways(const Aws::Vector<CustomerGateway>& value) { m_customerGateways = value; }
-    inline void SetCustomerGateways(Aws::Vector<CustomerGateway>&& value) { m_customerGateways = std::move(value); }
-    inline DescribeCustomerGatewaysResponse& WithCustomerGateways(const Aws::Vector<CustomerGateway>& value) { SetCustomerGateways(value); return *this;}
-    inline DescribeCustomerGatewaysResponse& WithCustomerGateways(Aws::Vector<CustomerGateway>&& value) { SetCustomerGateways(std::move(value)); return *this;}
-    inline DescribeCustomerGatewaysResponse& AddCustomerGateways(const CustomerGateway& value) { m_customerGateways.push_back(value); return *this; }
-    inline DescribeCustomerGatewaysResponse& AddCustomerGateways(CustomerGateway&& value) { m_customerGateways.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeCustomerGatewaysResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeCustomerGatewaysResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeCustomerGatewaysResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<CustomerGateway> m_customerGateways;
 
-    Aws::Vector<CustomerGateway> m_customerGateways;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_customerGatewaysHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

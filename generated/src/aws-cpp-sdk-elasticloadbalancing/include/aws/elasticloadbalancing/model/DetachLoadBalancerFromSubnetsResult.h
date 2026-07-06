@@ -4,71 +4,86 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the output of DetachLoadBalancerFromSubnets.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DetachLoadBalancerFromSubnetsOutput">AWS
+ * API Reference</a></p>
+ */
+class DetachLoadBalancerFromSubnetsResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult() = default;
+  AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of DetachLoadBalancerFromSubnets.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DetachLoadBalancerFromSubnetsOutput">AWS
-   * API Reference</a></p>
+   * <p>The IDs of the remaining subnets for the load balancer.</p>
    */
-  class DetachLoadBalancerFromSubnetsResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult();
-    AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API DetachLoadBalancerFromSubnetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetSubnets() const { return m_subnets; }
+  template <typename SubnetsT = Aws::Vector<Aws::String>>
+  void SetSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets = std::forward<SubnetsT>(value);
+  }
+  template <typename SubnetsT = Aws::Vector<Aws::String>>
+  DetachLoadBalancerFromSubnetsResult& WithSubnets(SubnetsT&& value) {
+    SetSubnets(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  template <typename SubnetsT = Aws::String>
+  DetachLoadBalancerFromSubnetsResult& AddSubnets(SubnetsT&& value) {
+    m_subnetsHasBeenSet = true;
+    m_subnets.emplace_back(std::forward<SubnetsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The IDs of the remaining subnets for the load balancer.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnets() const{ return m_subnets; }
-    inline void SetSubnets(const Aws::Vector<Aws::String>& value) { m_subnets = value; }
-    inline void SetSubnets(Aws::Vector<Aws::String>&& value) { m_subnets = std::move(value); }
-    inline DetachLoadBalancerFromSubnetsResult& WithSubnets(const Aws::Vector<Aws::String>& value) { SetSubnets(value); return *this;}
-    inline DetachLoadBalancerFromSubnetsResult& WithSubnets(Aws::Vector<Aws::String>&& value) { SetSubnets(std::move(value)); return *this;}
-    inline DetachLoadBalancerFromSubnetsResult& AddSubnets(const Aws::String& value) { m_subnets.push_back(value); return *this; }
-    inline DetachLoadBalancerFromSubnetsResult& AddSubnets(Aws::String&& value) { m_subnets.push_back(std::move(value)); return *this; }
-    inline DetachLoadBalancerFromSubnetsResult& AddSubnets(const char* value) { m_subnets.push_back(value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DetachLoadBalancerFromSubnetsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DetachLoadBalancerFromSubnetsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DetachLoadBalancerFromSubnetsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_subnets;
 
-    Aws::Vector<Aws::String> m_subnets;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_subnetsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

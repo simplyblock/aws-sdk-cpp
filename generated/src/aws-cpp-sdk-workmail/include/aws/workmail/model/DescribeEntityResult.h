@@ -4,93 +4,110 @@
  */
 
 #pragma once
-#include <aws/workmail/WorkMail_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workmail/WorkMail_EXPORTS.h>
 #include <aws/workmail/model/EntityType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkMail
-{
-namespace Model
-{
-  class DescribeEntityResult
-  {
-  public:
-    AWS_WORKMAIL_API DescribeEntityResult();
-    AWS_WORKMAIL_API DescribeEntityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKMAIL_API DescribeEntityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkMail {
+namespace Model {
+class DescribeEntityResult {
+ public:
+  AWS_WORKMAIL_API DescribeEntityResult() = default;
+  AWS_WORKMAIL_API DescribeEntityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKMAIL_API DescribeEntityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The entity ID under which the entity exists.</p>
+   */
+  inline const Aws::String& GetEntityId() const { return m_entityId; }
+  template <typename EntityIdT = Aws::String>
+  void SetEntityId(EntityIdT&& value) {
+    m_entityIdHasBeenSet = true;
+    m_entityId = std::forward<EntityIdT>(value);
+  }
+  template <typename EntityIdT = Aws::String>
+  DescribeEntityResult& WithEntityId(EntityIdT&& value) {
+    SetEntityId(std::forward<EntityIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The entity ID under which the entity exists.</p>
-     */
-    inline const Aws::String& GetEntityId() const{ return m_entityId; }
-    inline void SetEntityId(const Aws::String& value) { m_entityId = value; }
-    inline void SetEntityId(Aws::String&& value) { m_entityId = std::move(value); }
-    inline void SetEntityId(const char* value) { m_entityId.assign(value); }
-    inline DescribeEntityResult& WithEntityId(const Aws::String& value) { SetEntityId(value); return *this;}
-    inline DescribeEntityResult& WithEntityId(Aws::String&& value) { SetEntityId(std::move(value)); return *this;}
-    inline DescribeEntityResult& WithEntityId(const char* value) { SetEntityId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Username, GroupName, or ResourceName based on entity type.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeEntityResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Username, GroupName, or ResourceName based on entity type.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline DescribeEntityResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeEntityResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeEntityResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Entity type.</p>
+   */
+  inline EntityType GetType() const { return m_type; }
+  inline void SetType(EntityType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline DescribeEntityResult& WithType(EntityType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Entity type.</p>
-     */
-    inline const EntityType& GetType() const{ return m_type; }
-    inline void SetType(const EntityType& value) { m_type = value; }
-    inline void SetType(EntityType&& value) { m_type = std::move(value); }
-    inline DescribeEntityResult& WithType(const EntityType& value) { SetType(value); return *this;}
-    inline DescribeEntityResult& WithType(EntityType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeEntityResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeEntityResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeEntityResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeEntityResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_entityId;
+ private:
+  Aws::String m_entityId;
 
-    Aws::String m_name;
+  Aws::String m_name;
 
-    EntityType m_type;
+  EntityType m_type{EntityType::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entityIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkMail
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkMail
+}  // namespace Aws

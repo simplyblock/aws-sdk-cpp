@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces/WorkSpaces_EXPORTS.h>
 #include <aws/workspaces/model/AccountLink.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpaces
-{
-namespace Model
-{
-  class CreateAccountLinkInvitationResult
-  {
-  public:
-    AWS_WORKSPACES_API CreateAccountLinkInvitationResult();
-    AWS_WORKSPACES_API CreateAccountLinkInvitationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACES_API CreateAccountLinkInvitationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpaces {
+namespace Model {
+class CreateAccountLinkInvitationResult {
+ public:
+  AWS_WORKSPACES_API CreateAccountLinkInvitationResult() = default;
+  AWS_WORKSPACES_API CreateAccountLinkInvitationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACES_API CreateAccountLinkInvitationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the account link.</p>
+   */
+  inline const AccountLink& GetAccountLink() const { return m_accountLink; }
+  template <typename AccountLinkT = AccountLink>
+  void SetAccountLink(AccountLinkT&& value) {
+    m_accountLinkHasBeenSet = true;
+    m_accountLink = std::forward<AccountLinkT>(value);
+  }
+  template <typename AccountLinkT = AccountLink>
+  CreateAccountLinkInvitationResult& WithAccountLink(AccountLinkT&& value) {
+    SetAccountLink(std::forward<AccountLinkT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the account link.</p>
-     */
-    inline const AccountLink& GetAccountLink() const{ return m_accountLink; }
-    inline void SetAccountLink(const AccountLink& value) { m_accountLink = value; }
-    inline void SetAccountLink(AccountLink&& value) { m_accountLink = std::move(value); }
-    inline CreateAccountLinkInvitationResult& WithAccountLink(const AccountLink& value) { SetAccountLink(value); return *this;}
-    inline CreateAccountLinkInvitationResult& WithAccountLink(AccountLink&& value) { SetAccountLink(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAccountLinkInvitationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAccountLinkInvitationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAccountLinkInvitationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAccountLinkInvitationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AccountLink m_accountLink;
+ private:
+  AccountLink m_accountLink;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountLinkHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

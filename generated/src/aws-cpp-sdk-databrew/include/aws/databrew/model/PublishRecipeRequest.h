@@ -4,71 +4,74 @@
  */
 
 #pragma once
-#include <aws/databrew/GlueDataBrew_EXPORTS.h>
-#include <aws/databrew/GlueDataBrewRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/databrew/GlueDataBrewRequest.h>
+#include <aws/databrew/GlueDataBrew_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GlueDataBrew
-{
-namespace Model
-{
+namespace Aws {
+namespace GlueDataBrew {
+namespace Model {
 
+/**
+ */
+class PublishRecipeRequest : public GlueDataBrewRequest {
+ public:
+  AWS_GLUEDATABREW_API PublishRecipeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PublishRecipe"; }
+
+  AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A description of the recipe to be published, for this version of the
+   * recipe.</p>
    */
-  class PublishRecipeRequest : public GlueDataBrewRequest
-  {
-  public:
-    AWS_GLUEDATABREW_API PublishRecipeRequest();
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  PublishRecipeRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PublishRecipe"; }
+  ///@{
+  /**
+   * <p>The name of the recipe to be published.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  PublishRecipeRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_description;
 
-    AWS_GLUEDATABREW_API Aws::String SerializePayload() const override;
+  Aws::String m_name;
+  bool m_descriptionHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>A description of the recipe to be published, for this version of the
-     * recipe.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline PublishRecipeRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline PublishRecipeRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline PublishRecipeRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name of the recipe to be published.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline PublishRecipeRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline PublishRecipeRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline PublishRecipeRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GlueDataBrew
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlueDataBrew
+}  // namespace Aws

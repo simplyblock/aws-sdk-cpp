@@ -3,57 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/emr-serverless/model/ImageConfigurationInput.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/emr-serverless/model/ImageConfigurationInput.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EMRServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace EMRServerless {
+namespace Model {
 
-ImageConfigurationInput::ImageConfigurationInput() : 
-    m_imageUriHasBeenSet(false)
-{
-}
+ImageConfigurationInput::ImageConfigurationInput(JsonView jsonValue) { *this = jsonValue; }
 
-ImageConfigurationInput::ImageConfigurationInput(JsonView jsonValue)
-  : ImageConfigurationInput()
-{
-  *this = jsonValue;
-}
-
-ImageConfigurationInput& ImageConfigurationInput::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("imageUri"))
-  {
+ImageConfigurationInput& ImageConfigurationInput::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("imageUri")) {
     m_imageUri = jsonValue.GetString("imageUri");
-
     m_imageUriHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("applicationLevelDigestResolution")) {
+    m_applicationLevelDigestResolution = jsonValue.GetBool("applicationLevelDigestResolution");
+    m_applicationLevelDigestResolutionHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ImageConfigurationInput::Jsonize() const
-{
+JsonValue ImageConfigurationInput::Jsonize() const {
   JsonValue payload;
 
-  if(m_imageUriHasBeenSet)
-  {
-   payload.WithString("imageUri", m_imageUri);
+  if (m_imageUriHasBeenSet) {
+    payload.WithString("imageUri", m_imageUri);
+  }
 
+  if (m_applicationLevelDigestResolutionHasBeenSet) {
+    payload.WithBool("applicationLevelDigestResolution", m_applicationLevelDigestResolution);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace EMRServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMRServerless
+}  // namespace Aws

@@ -4,64 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/FleetUtilization.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class DescribeFleetLocationUtilizationResult
-  {
-  public:
-    AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult();
-    AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class DescribeFleetLocationUtilizationResult {
+ public:
+  AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult() = default;
+  AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API DescribeFleetLocationUtilizationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>Utilization information for the requested fleet location. Utilization objects
+   * are returned only for fleets and locations that currently exist.</p>
+   */
+  inline const FleetUtilization& GetFleetUtilization() const { return m_fleetUtilization; }
+  template <typename FleetUtilizationT = FleetUtilization>
+  void SetFleetUtilization(FleetUtilizationT&& value) {
+    m_fleetUtilizationHasBeenSet = true;
+    m_fleetUtilization = std::forward<FleetUtilizationT>(value);
+  }
+  template <typename FleetUtilizationT = FleetUtilization>
+  DescribeFleetLocationUtilizationResult& WithFleetUtilization(FleetUtilizationT&& value) {
+    SetFleetUtilization(std::forward<FleetUtilizationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Utilization information for the requested fleet location. Utilization objects
-     * are returned only for fleets and locations that currently exist.</p>
-     */
-    inline const FleetUtilization& GetFleetUtilization() const{ return m_fleetUtilization; }
-    inline void SetFleetUtilization(const FleetUtilization& value) { m_fleetUtilization = value; }
-    inline void SetFleetUtilization(FleetUtilization&& value) { m_fleetUtilization = std::move(value); }
-    inline DescribeFleetLocationUtilizationResult& WithFleetUtilization(const FleetUtilization& value) { SetFleetUtilization(value); return *this;}
-    inline DescribeFleetLocationUtilizationResult& WithFleetUtilization(FleetUtilization&& value) { SetFleetUtilization(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeFleetLocationUtilizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeFleetLocationUtilizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeFleetLocationUtilizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeFleetLocationUtilizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    FleetUtilization m_fleetUtilization;
+ private:
+  FleetUtilization m_fleetUtilization;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fleetUtilizationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

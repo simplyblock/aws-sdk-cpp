@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/opensearch/model/RevokeVpcEndpointAccessRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/opensearch/model/RevokeVpcEndpointAccessRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,20 @@ using namespace Aws::OpenSearchService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RevokeVpcEndpointAccessRequest::RevokeVpcEndpointAccessRequest() : 
-    m_domainNameHasBeenSet(false),
-    m_accountHasBeenSet(false),
-    m_service(AWSServicePrincipal::NOT_SET),
-    m_serviceHasBeenSet(false)
-{
-}
-
-Aws::String RevokeVpcEndpointAccessRequest::SerializePayload() const
-{
+Aws::String RevokeVpcEndpointAccessRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountHasBeenSet)
-  {
-   payload.WithString("Account", m_account);
-
+  if (m_accountHasBeenSet) {
+    payload.WithString("Account", m_account);
   }
 
-  if(m_serviceHasBeenSet)
-  {
-   payload.WithString("Service", AWSServicePrincipalMapper::GetNameForAWSServicePrincipal(m_service));
+  if (m_serviceHasBeenSet) {
+    payload.WithString("Service", AWSServicePrincipalMapper::GetNameForAWSServicePrincipal(m_service));
+  }
+
+  if (m_serviceOptionsHasBeenSet) {
+    payload.WithObject("ServiceOptions", m_serviceOptions.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,75 +4,86 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
 #include <aws/es/model/Limits.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
-  /**
-   * <p> Container for the parameters received from <code>
-   * <a>DescribeElasticsearchInstanceTypeLimits</a> </code> operation. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DescribeElasticsearchInstanceTypeLimitsResponse">AWS
-   * API Reference</a></p>
-   */
-  class DescribeElasticsearchInstanceTypeLimitsResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult();
-    AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p> Container for the parameters received from <code>
+ * <a>DescribeElasticsearchInstanceTypeLimits</a> </code> operation. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/DescribeElasticsearchInstanceTypeLimitsResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeElasticsearchInstanceTypeLimitsResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API DescribeElasticsearchInstanceTypeLimitsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Map<Aws::String, Limits>& GetLimitsByRole() const{ return m_limitsByRole; }
-    inline void SetLimitsByRole(const Aws::Map<Aws::String, Limits>& value) { m_limitsByRole = value; }
-    inline void SetLimitsByRole(Aws::Map<Aws::String, Limits>&& value) { m_limitsByRole = std::move(value); }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& WithLimitsByRole(const Aws::Map<Aws::String, Limits>& value) { SetLimitsByRole(value); return *this;}
-    inline DescribeElasticsearchInstanceTypeLimitsResult& WithLimitsByRole(Aws::Map<Aws::String, Limits>&& value) { SetLimitsByRole(std::move(value)); return *this;}
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(const Aws::String& key, const Limits& value) { m_limitsByRole.emplace(key, value); return *this; }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(Aws::String&& key, const Limits& value) { m_limitsByRole.emplace(std::move(key), value); return *this; }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(const Aws::String& key, Limits&& value) { m_limitsByRole.emplace(key, std::move(value)); return *this; }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(Aws::String&& key, Limits&& value) { m_limitsByRole.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(const char* key, Limits&& value) { m_limitsByRole.emplace(key, std::move(value)); return *this; }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(const char* key, const Limits& value) { m_limitsByRole.emplace(key, value); return *this; }
-    ///@}
+  inline const Aws::Map<Aws::String, Limits>& GetLimitsByRole() const { return m_limitsByRole; }
+  template <typename LimitsByRoleT = Aws::Map<Aws::String, Limits>>
+  void SetLimitsByRole(LimitsByRoleT&& value) {
+    m_limitsByRoleHasBeenSet = true;
+    m_limitsByRole = std::forward<LimitsByRoleT>(value);
+  }
+  template <typename LimitsByRoleT = Aws::Map<Aws::String, Limits>>
+  DescribeElasticsearchInstanceTypeLimitsResult& WithLimitsByRole(LimitsByRoleT&& value) {
+    SetLimitsByRole(std::forward<LimitsByRoleT>(value));
+    return *this;
+  }
+  template <typename LimitsByRoleKeyT = Aws::String, typename LimitsByRoleValueT = Limits>
+  DescribeElasticsearchInstanceTypeLimitsResult& AddLimitsByRole(LimitsByRoleKeyT&& key, LimitsByRoleValueT&& value) {
+    m_limitsByRoleHasBeenSet = true;
+    m_limitsByRole.emplace(std::forward<LimitsByRoleKeyT>(key), std::forward<LimitsByRoleValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeElasticsearchInstanceTypeLimitsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeElasticsearchInstanceTypeLimitsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeElasticsearchInstanceTypeLimitsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Map<Aws::String, Limits> m_limitsByRole;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeElasticsearchInstanceTypeLimitsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::Map<Aws::String, Limits> m_limitsByRole;
 
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_limitsByRoleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

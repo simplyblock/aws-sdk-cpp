@@ -4,84 +4,115 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/securityhub/model/ConfigurationPolicyAssociationSummary.h>
 #include <aws/securityhub/model/UnprocessedConfigurationPolicyAssociation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
-  class BatchGetConfigurationPolicyAssociationsResult
-  {
-  public:
-    AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult();
-    AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
+class BatchGetConfigurationPolicyAssociationsResult {
+ public:
+  AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult() = default;
+  AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYHUB_API BatchGetConfigurationPolicyAssociationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> Describes associations for the target accounts, OUs, or the root. </p>
+   */
+  inline const Aws::Vector<ConfigurationPolicyAssociationSummary>& GetConfigurationPolicyAssociations() const {
+    return m_configurationPolicyAssociations;
+  }
+  template <typename ConfigurationPolicyAssociationsT = Aws::Vector<ConfigurationPolicyAssociationSummary>>
+  void SetConfigurationPolicyAssociations(ConfigurationPolicyAssociationsT&& value) {
+    m_configurationPolicyAssociationsHasBeenSet = true;
+    m_configurationPolicyAssociations = std::forward<ConfigurationPolicyAssociationsT>(value);
+  }
+  template <typename ConfigurationPolicyAssociationsT = Aws::Vector<ConfigurationPolicyAssociationSummary>>
+  BatchGetConfigurationPolicyAssociationsResult& WithConfigurationPolicyAssociations(ConfigurationPolicyAssociationsT&& value) {
+    SetConfigurationPolicyAssociations(std::forward<ConfigurationPolicyAssociationsT>(value));
+    return *this;
+  }
+  template <typename ConfigurationPolicyAssociationsT = ConfigurationPolicyAssociationSummary>
+  BatchGetConfigurationPolicyAssociationsResult& AddConfigurationPolicyAssociations(ConfigurationPolicyAssociationsT&& value) {
+    m_configurationPolicyAssociationsHasBeenSet = true;
+    m_configurationPolicyAssociations.emplace_back(std::forward<ConfigurationPolicyAssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Describes associations for the target accounts, OUs, or the root. </p>
-     */
-    inline const Aws::Vector<ConfigurationPolicyAssociationSummary>& GetConfigurationPolicyAssociations() const{ return m_configurationPolicyAssociations; }
-    inline void SetConfigurationPolicyAssociations(const Aws::Vector<ConfigurationPolicyAssociationSummary>& value) { m_configurationPolicyAssociations = value; }
-    inline void SetConfigurationPolicyAssociations(Aws::Vector<ConfigurationPolicyAssociationSummary>&& value) { m_configurationPolicyAssociations = std::move(value); }
-    inline BatchGetConfigurationPolicyAssociationsResult& WithConfigurationPolicyAssociations(const Aws::Vector<ConfigurationPolicyAssociationSummary>& value) { SetConfigurationPolicyAssociations(value); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& WithConfigurationPolicyAssociations(Aws::Vector<ConfigurationPolicyAssociationSummary>&& value) { SetConfigurationPolicyAssociations(std::move(value)); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& AddConfigurationPolicyAssociations(const ConfigurationPolicyAssociationSummary& value) { m_configurationPolicyAssociations.push_back(value); return *this; }
-    inline BatchGetConfigurationPolicyAssociationsResult& AddConfigurationPolicyAssociations(ConfigurationPolicyAssociationSummary&& value) { m_configurationPolicyAssociations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> An array of configuration policy associations, one for each configuration
+   * policy association identifier, that was specified in the request but couldn’t be
+   * processed due to an error. </p>
+   */
+  inline const Aws::Vector<UnprocessedConfigurationPolicyAssociation>& GetUnprocessedConfigurationPolicyAssociations() const {
+    return m_unprocessedConfigurationPolicyAssociations;
+  }
+  template <typename UnprocessedConfigurationPolicyAssociationsT = Aws::Vector<UnprocessedConfigurationPolicyAssociation>>
+  void SetUnprocessedConfigurationPolicyAssociations(UnprocessedConfigurationPolicyAssociationsT&& value) {
+    m_unprocessedConfigurationPolicyAssociationsHasBeenSet = true;
+    m_unprocessedConfigurationPolicyAssociations = std::forward<UnprocessedConfigurationPolicyAssociationsT>(value);
+  }
+  template <typename UnprocessedConfigurationPolicyAssociationsT = Aws::Vector<UnprocessedConfigurationPolicyAssociation>>
+  BatchGetConfigurationPolicyAssociationsResult& WithUnprocessedConfigurationPolicyAssociations(
+      UnprocessedConfigurationPolicyAssociationsT&& value) {
+    SetUnprocessedConfigurationPolicyAssociations(std::forward<UnprocessedConfigurationPolicyAssociationsT>(value));
+    return *this;
+  }
+  template <typename UnprocessedConfigurationPolicyAssociationsT = UnprocessedConfigurationPolicyAssociation>
+  BatchGetConfigurationPolicyAssociationsResult& AddUnprocessedConfigurationPolicyAssociations(
+      UnprocessedConfigurationPolicyAssociationsT&& value) {
+    m_unprocessedConfigurationPolicyAssociationsHasBeenSet = true;
+    m_unprocessedConfigurationPolicyAssociations.emplace_back(std::forward<UnprocessedConfigurationPolicyAssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An array of configuration policy associations, one for each configuration
-     * policy association identifier, that was specified in the request but couldn’t be
-     * processed due to an error. </p>
-     */
-    inline const Aws::Vector<UnprocessedConfigurationPolicyAssociation>& GetUnprocessedConfigurationPolicyAssociations() const{ return m_unprocessedConfigurationPolicyAssociations; }
-    inline void SetUnprocessedConfigurationPolicyAssociations(const Aws::Vector<UnprocessedConfigurationPolicyAssociation>& value) { m_unprocessedConfigurationPolicyAssociations = value; }
-    inline void SetUnprocessedConfigurationPolicyAssociations(Aws::Vector<UnprocessedConfigurationPolicyAssociation>&& value) { m_unprocessedConfigurationPolicyAssociations = std::move(value); }
-    inline BatchGetConfigurationPolicyAssociationsResult& WithUnprocessedConfigurationPolicyAssociations(const Aws::Vector<UnprocessedConfigurationPolicyAssociation>& value) { SetUnprocessedConfigurationPolicyAssociations(value); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& WithUnprocessedConfigurationPolicyAssociations(Aws::Vector<UnprocessedConfigurationPolicyAssociation>&& value) { SetUnprocessedConfigurationPolicyAssociations(std::move(value)); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& AddUnprocessedConfigurationPolicyAssociations(const UnprocessedConfigurationPolicyAssociation& value) { m_unprocessedConfigurationPolicyAssociations.push_back(value); return *this; }
-    inline BatchGetConfigurationPolicyAssociationsResult& AddUnprocessedConfigurationPolicyAssociations(UnprocessedConfigurationPolicyAssociation&& value) { m_unprocessedConfigurationPolicyAssociations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetConfigurationPolicyAssociationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetConfigurationPolicyAssociationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetConfigurationPolicyAssociationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ConfigurationPolicyAssociationSummary> m_configurationPolicyAssociations;
+ private:
+  Aws::Vector<ConfigurationPolicyAssociationSummary> m_configurationPolicyAssociations;
 
-    Aws::Vector<UnprocessedConfigurationPolicyAssociation> m_unprocessedConfigurationPolicyAssociations;
+  Aws::Vector<UnprocessedConfigurationPolicyAssociation> m_unprocessedConfigurationPolicyAssociations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationPolicyAssociationsHasBeenSet = false;
+  bool m_unprocessedConfigurationPolicyAssociationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

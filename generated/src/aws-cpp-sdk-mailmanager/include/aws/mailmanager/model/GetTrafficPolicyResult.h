@@ -4,164 +4,218 @@
  */
 
 #pragma once
-#include <aws/mailmanager/MailManager_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/mailmanager/model/AcceptAction.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mailmanager/MailManager_EXPORTS.h>
+#include <aws/mailmanager/model/AcceptAction.h>
 #include <aws/mailmanager/model/PolicyStatement.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MailManager
-{
-namespace Model
-{
-  class GetTrafficPolicyResult
-  {
-  public:
-    AWS_MAILMANAGER_API GetTrafficPolicyResult();
-    AWS_MAILMANAGER_API GetTrafficPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAILMANAGER_API GetTrafficPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MailManager {
+namespace Model {
+class GetTrafficPolicyResult {
+ public:
+  AWS_MAILMANAGER_API GetTrafficPolicyResult() = default;
+  AWS_MAILMANAGER_API GetTrafficPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAILMANAGER_API GetTrafficPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A user-friendly name for the traffic policy resource.</p>
+   */
+  inline const Aws::String& GetTrafficPolicyName() const { return m_trafficPolicyName; }
+  template <typename TrafficPolicyNameT = Aws::String>
+  void SetTrafficPolicyName(TrafficPolicyNameT&& value) {
+    m_trafficPolicyNameHasBeenSet = true;
+    m_trafficPolicyName = std::forward<TrafficPolicyNameT>(value);
+  }
+  template <typename TrafficPolicyNameT = Aws::String>
+  GetTrafficPolicyResult& WithTrafficPolicyName(TrafficPolicyNameT&& value) {
+    SetTrafficPolicyName(std::forward<TrafficPolicyNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the traffic policy was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTimestamp() const{ return m_createdTimestamp; }
-    inline void SetCreatedTimestamp(const Aws::Utils::DateTime& value) { m_createdTimestamp = value; }
-    inline void SetCreatedTimestamp(Aws::Utils::DateTime&& value) { m_createdTimestamp = std::move(value); }
-    inline GetTrafficPolicyResult& WithCreatedTimestamp(const Aws::Utils::DateTime& value) { SetCreatedTimestamp(value); return *this;}
-    inline GetTrafficPolicyResult& WithCreatedTimestamp(Aws::Utils::DateTime&& value) { SetCreatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The identifier of the traffic policy resource.</p>
+   */
+  inline const Aws::String& GetTrafficPolicyId() const { return m_trafficPolicyId; }
+  template <typename TrafficPolicyIdT = Aws::String>
+  void SetTrafficPolicyId(TrafficPolicyIdT&& value) {
+    m_trafficPolicyIdHasBeenSet = true;
+    m_trafficPolicyId = std::forward<TrafficPolicyIdT>(value);
+  }
+  template <typename TrafficPolicyIdT = Aws::String>
+  GetTrafficPolicyResult& WithTrafficPolicyId(TrafficPolicyIdT&& value) {
+    SetTrafficPolicyId(std::forward<TrafficPolicyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The default action of the traffic policy.</p>
-     */
-    inline const AcceptAction& GetDefaultAction() const{ return m_defaultAction; }
-    inline void SetDefaultAction(const AcceptAction& value) { m_defaultAction = value; }
-    inline void SetDefaultAction(AcceptAction&& value) { m_defaultAction = std::move(value); }
-    inline GetTrafficPolicyResult& WithDefaultAction(const AcceptAction& value) { SetDefaultAction(value); return *this;}
-    inline GetTrafficPolicyResult& WithDefaultAction(AcceptAction&& value) { SetDefaultAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the traffic policy resource.</p>
+   */
+  inline const Aws::String& GetTrafficPolicyArn() const { return m_trafficPolicyArn; }
+  template <typename TrafficPolicyArnT = Aws::String>
+  void SetTrafficPolicyArn(TrafficPolicyArnT&& value) {
+    m_trafficPolicyArnHasBeenSet = true;
+    m_trafficPolicyArn = std::forward<TrafficPolicyArnT>(value);
+  }
+  template <typename TrafficPolicyArnT = Aws::String>
+  GetTrafficPolicyResult& WithTrafficPolicyArn(TrafficPolicyArnT&& value) {
+    SetTrafficPolicyArn(std::forward<TrafficPolicyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the traffic policy was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTimestamp() const{ return m_lastUpdatedTimestamp; }
-    inline void SetLastUpdatedTimestamp(const Aws::Utils::DateTime& value) { m_lastUpdatedTimestamp = value; }
-    inline void SetLastUpdatedTimestamp(Aws::Utils::DateTime&& value) { m_lastUpdatedTimestamp = std::move(value); }
-    inline GetTrafficPolicyResult& WithLastUpdatedTimestamp(const Aws::Utils::DateTime& value) { SetLastUpdatedTimestamp(value); return *this;}
-    inline GetTrafficPolicyResult& WithLastUpdatedTimestamp(Aws::Utils::DateTime&& value) { SetLastUpdatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of conditions which are in the traffic policy resource.</p>
+   */
+  inline const Aws::Vector<PolicyStatement>& GetPolicyStatements() const { return m_policyStatements; }
+  template <typename PolicyStatementsT = Aws::Vector<PolicyStatement>>
+  void SetPolicyStatements(PolicyStatementsT&& value) {
+    m_policyStatementsHasBeenSet = true;
+    m_policyStatements = std::forward<PolicyStatementsT>(value);
+  }
+  template <typename PolicyStatementsT = Aws::Vector<PolicyStatement>>
+  GetTrafficPolicyResult& WithPolicyStatements(PolicyStatementsT&& value) {
+    SetPolicyStatements(std::forward<PolicyStatementsT>(value));
+    return *this;
+  }
+  template <typename PolicyStatementsT = PolicyStatement>
+  GetTrafficPolicyResult& AddPolicyStatements(PolicyStatementsT&& value) {
+    m_policyStatementsHasBeenSet = true;
+    m_policyStatements.emplace_back(std::forward<PolicyStatementsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum message size in bytes of email which is allowed in by this
-     * traffic policy—anything larger will be blocked.</p>
-     */
-    inline int GetMaxMessageSizeBytes() const{ return m_maxMessageSizeBytes; }
-    inline void SetMaxMessageSizeBytes(int value) { m_maxMessageSizeBytes = value; }
-    inline GetTrafficPolicyResult& WithMaxMessageSizeBytes(int value) { SetMaxMessageSizeBytes(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum message size in bytes of email which is allowed in by this
+   * traffic policy—anything larger will be blocked.</p>
+   */
+  inline int GetMaxMessageSizeBytes() const { return m_maxMessageSizeBytes; }
+  inline void SetMaxMessageSizeBytes(int value) {
+    m_maxMessageSizeBytesHasBeenSet = true;
+    m_maxMessageSizeBytes = value;
+  }
+  inline GetTrafficPolicyResult& WithMaxMessageSizeBytes(int value) {
+    SetMaxMessageSizeBytes(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of conditions which are in the traffic policy resource.</p>
-     */
-    inline const Aws::Vector<PolicyStatement>& GetPolicyStatements() const{ return m_policyStatements; }
-    inline void SetPolicyStatements(const Aws::Vector<PolicyStatement>& value) { m_policyStatements = value; }
-    inline void SetPolicyStatements(Aws::Vector<PolicyStatement>&& value) { m_policyStatements = std::move(value); }
-    inline GetTrafficPolicyResult& WithPolicyStatements(const Aws::Vector<PolicyStatement>& value) { SetPolicyStatements(value); return *this;}
-    inline GetTrafficPolicyResult& WithPolicyStatements(Aws::Vector<PolicyStatement>&& value) { SetPolicyStatements(std::move(value)); return *this;}
-    inline GetTrafficPolicyResult& AddPolicyStatements(const PolicyStatement& value) { m_policyStatements.push_back(value); return *this; }
-    inline GetTrafficPolicyResult& AddPolicyStatements(PolicyStatement&& value) { m_policyStatements.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The default action of the traffic policy.</p>
+   */
+  inline AcceptAction GetDefaultAction() const { return m_defaultAction; }
+  inline void SetDefaultAction(AcceptAction value) {
+    m_defaultActionHasBeenSet = true;
+    m_defaultAction = value;
+  }
+  inline GetTrafficPolicyResult& WithDefaultAction(AcceptAction value) {
+    SetDefaultAction(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the traffic policy resource.</p>
-     */
-    inline const Aws::String& GetTrafficPolicyArn() const{ return m_trafficPolicyArn; }
-    inline void SetTrafficPolicyArn(const Aws::String& value) { m_trafficPolicyArn = value; }
-    inline void SetTrafficPolicyArn(Aws::String&& value) { m_trafficPolicyArn = std::move(value); }
-    inline void SetTrafficPolicyArn(const char* value) { m_trafficPolicyArn.assign(value); }
-    inline GetTrafficPolicyResult& WithTrafficPolicyArn(const Aws::String& value) { SetTrafficPolicyArn(value); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyArn(Aws::String&& value) { SetTrafficPolicyArn(std::move(value)); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyArn(const char* value) { SetTrafficPolicyArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the traffic policy was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTimestamp() const { return m_createdTimestamp; }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  void SetCreatedTimestamp(CreatedTimestampT&& value) {
+    m_createdTimestampHasBeenSet = true;
+    m_createdTimestamp = std::forward<CreatedTimestampT>(value);
+  }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  GetTrafficPolicyResult& WithCreatedTimestamp(CreatedTimestampT&& value) {
+    SetCreatedTimestamp(std::forward<CreatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the traffic policy resource.</p>
-     */
-    inline const Aws::String& GetTrafficPolicyId() const{ return m_trafficPolicyId; }
-    inline void SetTrafficPolicyId(const Aws::String& value) { m_trafficPolicyId = value; }
-    inline void SetTrafficPolicyId(Aws::String&& value) { m_trafficPolicyId = std::move(value); }
-    inline void SetTrafficPolicyId(const char* value) { m_trafficPolicyId.assign(value); }
-    inline GetTrafficPolicyResult& WithTrafficPolicyId(const Aws::String& value) { SetTrafficPolicyId(value); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyId(Aws::String&& value) { SetTrafficPolicyId(std::move(value)); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyId(const char* value) { SetTrafficPolicyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the traffic policy was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTimestamp() const { return m_lastUpdatedTimestamp; }
+  template <typename LastUpdatedTimestampT = Aws::Utils::DateTime>
+  void SetLastUpdatedTimestamp(LastUpdatedTimestampT&& value) {
+    m_lastUpdatedTimestampHasBeenSet = true;
+    m_lastUpdatedTimestamp = std::forward<LastUpdatedTimestampT>(value);
+  }
+  template <typename LastUpdatedTimestampT = Aws::Utils::DateTime>
+  GetTrafficPolicyResult& WithLastUpdatedTimestamp(LastUpdatedTimestampT&& value) {
+    SetLastUpdatedTimestamp(std::forward<LastUpdatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A user-friendly name for the traffic policy resource.</p>
-     */
-    inline const Aws::String& GetTrafficPolicyName() const{ return m_trafficPolicyName; }
-    inline void SetTrafficPolicyName(const Aws::String& value) { m_trafficPolicyName = value; }
-    inline void SetTrafficPolicyName(Aws::String&& value) { m_trafficPolicyName = std::move(value); }
-    inline void SetTrafficPolicyName(const char* value) { m_trafficPolicyName.assign(value); }
-    inline GetTrafficPolicyResult& WithTrafficPolicyName(const Aws::String& value) { SetTrafficPolicyName(value); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyName(Aws::String&& value) { SetTrafficPolicyName(std::move(value)); return *this;}
-    inline GetTrafficPolicyResult& WithTrafficPolicyName(const char* value) { SetTrafficPolicyName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTrafficPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTrafficPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTrafficPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTrafficPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Utils::DateTime m_createdTimestamp;
+ private:
+  Aws::String m_trafficPolicyName;
 
-    AcceptAction m_defaultAction;
+  Aws::String m_trafficPolicyId;
 
-    Aws::Utils::DateTime m_lastUpdatedTimestamp;
+  Aws::String m_trafficPolicyArn;
 
-    int m_maxMessageSizeBytes;
+  Aws::Vector<PolicyStatement> m_policyStatements;
 
-    Aws::Vector<PolicyStatement> m_policyStatements;
+  int m_maxMessageSizeBytes{0};
 
-    Aws::String m_trafficPolicyArn;
+  AcceptAction m_defaultAction{AcceptAction::NOT_SET};
 
-    Aws::String m_trafficPolicyId;
+  Aws::Utils::DateTime m_createdTimestamp{};
 
-    Aws::String m_trafficPolicyName;
+  Aws::Utils::DateTime m_lastUpdatedTimestamp{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trafficPolicyNameHasBeenSet = false;
+  bool m_trafficPolicyIdHasBeenSet = false;
+  bool m_trafficPolicyArnHasBeenSet = false;
+  bool m_policyStatementsHasBeenSet = false;
+  bool m_maxMessageSizeBytesHasBeenSet = false;
+  bool m_defaultActionHasBeenSet = false;
+  bool m_createdTimestampHasBeenSet = false;
+  bool m_lastUpdatedTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

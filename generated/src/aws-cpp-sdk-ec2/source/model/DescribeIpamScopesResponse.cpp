@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeIpamScopesResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DescribeIpamScopesResponse.h>
 
 #include <utility>
 
@@ -17,52 +17,43 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeIpamScopesResponse::DescribeIpamScopesResponse()
-{
-}
+DescribeIpamScopesResponse::DescribeIpamScopesResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeIpamScopesResponse::DescribeIpamScopesResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeIpamScopesResponse& DescribeIpamScopesResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeIpamScopesResponse& DescribeIpamScopesResponse::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeIpamScopesResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeIpamScopesResponse")) {
     resultNode = rootNode.FirstChild("DescribeIpamScopesResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode nextTokenNode = resultNode.FirstChild("nextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
     XmlNode ipamScopesNode = resultNode.FirstChild("ipamScopeSet");
-    if(!ipamScopesNode.IsNull())
-    {
+    if (!ipamScopesNode.IsNull()) {
       XmlNode ipamScopesMember = ipamScopesNode.FirstChild("item");
-      while(!ipamScopesMember.IsNull())
-      {
+      m_ipamScopesHasBeenSet = !ipamScopesMember.IsNull();
+      while (!ipamScopesMember.IsNull()) {
         m_ipamScopes.push_back(ipamScopesMember);
         ipamScopesMember = ipamScopesMember.NextNode("item");
       }
 
+      m_ipamScopesHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeIpamScopesResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeIpamScopesResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

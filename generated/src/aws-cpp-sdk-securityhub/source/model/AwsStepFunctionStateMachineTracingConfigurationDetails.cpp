@@ -3,58 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/securityhub/model/AwsStepFunctionStateMachineTracingConfigurationDetails.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/AwsStepFunctionStateMachineTracingConfigurationDetails.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
 
-AwsStepFunctionStateMachineTracingConfigurationDetails::AwsStepFunctionStateMachineTracingConfigurationDetails() : 
-    m_enabled(false),
-    m_enabledHasBeenSet(false)
-{
-}
-
-AwsStepFunctionStateMachineTracingConfigurationDetails::AwsStepFunctionStateMachineTracingConfigurationDetails(JsonView jsonValue)
-  : AwsStepFunctionStateMachineTracingConfigurationDetails()
-{
+AwsStepFunctionStateMachineTracingConfigurationDetails::AwsStepFunctionStateMachineTracingConfigurationDetails(JsonView jsonValue) {
   *this = jsonValue;
 }
 
-AwsStepFunctionStateMachineTracingConfigurationDetails& AwsStepFunctionStateMachineTracingConfigurationDetails::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Enabled"))
-  {
+AwsStepFunctionStateMachineTracingConfigurationDetails& AwsStepFunctionStateMachineTracingConfigurationDetails::operator=(
+    JsonView jsonValue) {
+  if (jsonValue.ValueExists("Enabled")) {
     m_enabled = jsonValue.GetBool("Enabled");
-
     m_enabledHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue AwsStepFunctionStateMachineTracingConfigurationDetails::Jsonize() const
-{
+JsonValue AwsStepFunctionStateMachineTracingConfigurationDetails::Jsonize() const {
   JsonValue payload;
 
-  if(m_enabledHasBeenSet)
-  {
-   payload.WithBool("Enabled", m_enabled);
-
+  if (m_enabledHasBeenSet) {
+    payload.WithBool("Enabled", m_enabled);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

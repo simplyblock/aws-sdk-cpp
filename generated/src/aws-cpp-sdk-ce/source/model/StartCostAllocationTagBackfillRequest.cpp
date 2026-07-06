@@ -12,32 +12,18 @@ using namespace Aws::CostExplorer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartCostAllocationTagBackfillRequest::StartCostAllocationTagBackfillRequest() : 
-    m_backfillFromHasBeenSet(false)
-{
-}
-
-Aws::String StartCostAllocationTagBackfillRequest::SerializePayload() const
-{
+Aws::String StartCostAllocationTagBackfillRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_backfillFromHasBeenSet)
-  {
-   payload.WithString("BackfillFrom", m_backfillFrom);
-
+  if (m_backfillFromHasBeenSet) {
+    payload.WithString("BackfillFrom", m_backfillFrom);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection StartCostAllocationTagBackfillRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StartCostAllocationTagBackfillRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSInsightsIndexService.StartCostAllocationTagBackfill"));
   return headers;
-
 }
-
-
-
-

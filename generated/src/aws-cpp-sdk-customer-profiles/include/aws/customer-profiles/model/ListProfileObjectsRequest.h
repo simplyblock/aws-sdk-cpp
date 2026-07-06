@@ -4,140 +4,162 @@
  */
 
 #pragma once
-#include <aws/customer-profiles/CustomerProfiles_EXPORTS.h>
-#include <aws/customer-profiles/CustomerProfilesRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/customer-profiles/CustomerProfilesRequest.h>
+#include <aws/customer-profiles/CustomerProfiles_EXPORTS.h>
 #include <aws/customer-profiles/model/ObjectFilter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace CustomerProfiles
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace CustomerProfiles {
+namespace Model {
 
+/**
+ */
+class ListProfileObjectsRequest : public CustomerProfilesRequest {
+ public:
+  AWS_CUSTOMERPROFILES_API ListProfileObjectsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListProfileObjects"; }
+
+  AWS_CUSTOMERPROFILES_API Aws::String SerializePayload() const override;
+
+  AWS_CUSTOMERPROFILES_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The pagination token from the previous call to ListProfileObjects.</p>
    */
-  class ListProfileObjectsRequest : public CustomerProfilesRequest
-  {
-  public:
-    AWS_CUSTOMERPROFILES_API ListProfileObjectsRequest();
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListProfileObjectsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListProfileObjects"; }
+  ///@{
+  /**
+   * <p>The maximum number of objects returned per page.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListProfileObjectsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_CUSTOMERPROFILES_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The unique name of the domain.</p>
+   */
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  ListProfileObjectsRequest& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CUSTOMERPROFILES_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The name of the profile object type.</p>
+   */
+  inline const Aws::String& GetObjectTypeName() const { return m_objectTypeName; }
+  inline bool ObjectTypeNameHasBeenSet() const { return m_objectTypeNameHasBeenSet; }
+  template <typename ObjectTypeNameT = Aws::String>
+  void SetObjectTypeName(ObjectTypeNameT&& value) {
+    m_objectTypeNameHasBeenSet = true;
+    m_objectTypeName = std::forward<ObjectTypeNameT>(value);
+  }
+  template <typename ObjectTypeNameT = Aws::String>
+  ListProfileObjectsRequest& WithObjectTypeName(ObjectTypeNameT&& value) {
+    SetObjectTypeName(std::forward<ObjectTypeNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of a customer profile.</p>
+   */
+  inline const Aws::String& GetProfileId() const { return m_profileId; }
+  inline bool ProfileIdHasBeenSet() const { return m_profileIdHasBeenSet; }
+  template <typename ProfileIdT = Aws::String>
+  void SetProfileId(ProfileIdT&& value) {
+    m_profileIdHasBeenSet = true;
+    m_profileId = std::forward<ProfileIdT>(value);
+  }
+  template <typename ProfileIdT = Aws::String>
+  ListProfileObjectsRequest& WithProfileId(ProfileIdT&& value) {
+    SetProfileId(std::forward<ProfileIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token from the previous call to ListProfileObjects.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListProfileObjectsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListProfileObjectsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListProfileObjectsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Applies a filter to the response to include profile objects with the
+   * specified index values.</p>
+   */
+  inline const ObjectFilter& GetObjectFilter() const { return m_objectFilter; }
+  inline bool ObjectFilterHasBeenSet() const { return m_objectFilterHasBeenSet; }
+  template <typename ObjectFilterT = ObjectFilter>
+  void SetObjectFilter(ObjectFilterT&& value) {
+    m_objectFilterHasBeenSet = true;
+    m_objectFilter = std::forward<ObjectFilterT>(value);
+  }
+  template <typename ObjectFilterT = ObjectFilter>
+  ListProfileObjectsRequest& WithObjectFilter(ObjectFilterT&& value) {
+    SetObjectFilter(std::forward<ObjectFilterT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The maximum number of objects returned per page.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListProfileObjectsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>The unique name of the domain.</p>
-     */
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
-    inline void SetDomainName(const Aws::String& value) { m_domainNameHasBeenSet = true; m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainNameHasBeenSet = true; m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainNameHasBeenSet = true; m_domainName.assign(value); }
-    inline ListProfileObjectsRequest& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline ListProfileObjectsRequest& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline ListProfileObjectsRequest& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
+  Aws::String m_domainName;
 
-    ///@{
-    /**
-     * <p>The name of the profile object type.</p>
-     */
-    inline const Aws::String& GetObjectTypeName() const{ return m_objectTypeName; }
-    inline bool ObjectTypeNameHasBeenSet() const { return m_objectTypeNameHasBeenSet; }
-    inline void SetObjectTypeName(const Aws::String& value) { m_objectTypeNameHasBeenSet = true; m_objectTypeName = value; }
-    inline void SetObjectTypeName(Aws::String&& value) { m_objectTypeNameHasBeenSet = true; m_objectTypeName = std::move(value); }
-    inline void SetObjectTypeName(const char* value) { m_objectTypeNameHasBeenSet = true; m_objectTypeName.assign(value); }
-    inline ListProfileObjectsRequest& WithObjectTypeName(const Aws::String& value) { SetObjectTypeName(value); return *this;}
-    inline ListProfileObjectsRequest& WithObjectTypeName(Aws::String&& value) { SetObjectTypeName(std::move(value)); return *this;}
-    inline ListProfileObjectsRequest& WithObjectTypeName(const char* value) { SetObjectTypeName(value); return *this;}
-    ///@}
+  Aws::String m_objectTypeName;
 
-    ///@{
-    /**
-     * <p>The unique identifier of a customer profile.</p>
-     */
-    inline const Aws::String& GetProfileId() const{ return m_profileId; }
-    inline bool ProfileIdHasBeenSet() const { return m_profileIdHasBeenSet; }
-    inline void SetProfileId(const Aws::String& value) { m_profileIdHasBeenSet = true; m_profileId = value; }
-    inline void SetProfileId(Aws::String&& value) { m_profileIdHasBeenSet = true; m_profileId = std::move(value); }
-    inline void SetProfileId(const char* value) { m_profileIdHasBeenSet = true; m_profileId.assign(value); }
-    inline ListProfileObjectsRequest& WithProfileId(const Aws::String& value) { SetProfileId(value); return *this;}
-    inline ListProfileObjectsRequest& WithProfileId(Aws::String&& value) { SetProfileId(std::move(value)); return *this;}
-    inline ListProfileObjectsRequest& WithProfileId(const char* value) { SetProfileId(value); return *this;}
-    ///@}
+  Aws::String m_profileId;
 
-    ///@{
-    /**
-     * <p>Applies a filter to the response to include profile objects with the
-     * specified index values.</p>
-     */
-    inline const ObjectFilter& GetObjectFilter() const{ return m_objectFilter; }
-    inline bool ObjectFilterHasBeenSet() const { return m_objectFilterHasBeenSet; }
-    inline void SetObjectFilter(const ObjectFilter& value) { m_objectFilterHasBeenSet = true; m_objectFilter = value; }
-    inline void SetObjectFilter(ObjectFilter&& value) { m_objectFilterHasBeenSet = true; m_objectFilter = std::move(value); }
-    inline ListProfileObjectsRequest& WithObjectFilter(const ObjectFilter& value) { SetObjectFilter(value); return *this;}
-    inline ListProfileObjectsRequest& WithObjectFilter(ObjectFilter&& value) { SetObjectFilter(std::move(value)); return *this;}
-    ///@}
-  private:
+  ObjectFilter m_objectFilter;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_domainNameHasBeenSet = false;
+  bool m_objectTypeNameHasBeenSet = false;
+  bool m_profileIdHasBeenSet = false;
+  bool m_objectFilterHasBeenSet = false;
+};
 
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_domainName;
-    bool m_domainNameHasBeenSet = false;
-
-    Aws::String m_objectTypeName;
-    bool m_objectTypeNameHasBeenSet = false;
-
-    Aws::String m_profileId;
-    bool m_profileIdHasBeenSet = false;
-
-    ObjectFilter m_objectFilter;
-    bool m_objectFilterHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CustomerProfiles
-} // namespace Aws
+}  // namespace Model
+}  // namespace CustomerProfiles
+}  // namespace Aws

@@ -5,74 +5,144 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
+#include <aws/bedrock-agent/model/KendraKnowledgeBaseConfiguration.h>
 #include <aws/bedrock-agent/model/KnowledgeBaseType.h>
+#include <aws/bedrock-agent/model/ManagedKnowledgeBaseConfiguration.h>
+#include <aws/bedrock-agent/model/SqlKnowledgeBaseConfiguration.h>
 #include <aws/bedrock-agent/model/VectorKnowledgeBaseConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
 
+/**
+ * <p>Contains details about the vector embeddings configuration of the knowledge
+ * base.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KnowledgeBaseConfiguration">AWS
+ * API Reference</a></p>
+ */
+class KnowledgeBaseConfiguration {
+ public:
+  AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration() = default;
+  AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains details about the vector embeddings configuration of the knowledge
-   * base.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KnowledgeBaseConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The type of data that the data source is converted into for the knowledge
+   * base. Choose <code>MANAGED</code> to create a managed knowledge base.</p>
    */
-  class KnowledgeBaseConfiguration
-  {
-  public:
-    AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration();
-    AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API KnowledgeBaseConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCKAGENT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline KnowledgeBaseType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(KnowledgeBaseType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline KnowledgeBaseConfiguration& WithType(KnowledgeBaseType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Contains details about the model that's used to convert the data source into
+   * vector embeddings.</p>
+   */
+  inline const VectorKnowledgeBaseConfiguration& GetVectorKnowledgeBaseConfiguration() const { return m_vectorKnowledgeBaseConfiguration; }
+  inline bool VectorKnowledgeBaseConfigurationHasBeenSet() const { return m_vectorKnowledgeBaseConfigurationHasBeenSet; }
+  template <typename VectorKnowledgeBaseConfigurationT = VectorKnowledgeBaseConfiguration>
+  void SetVectorKnowledgeBaseConfiguration(VectorKnowledgeBaseConfigurationT&& value) {
+    m_vectorKnowledgeBaseConfigurationHasBeenSet = true;
+    m_vectorKnowledgeBaseConfiguration = std::forward<VectorKnowledgeBaseConfigurationT>(value);
+  }
+  template <typename VectorKnowledgeBaseConfigurationT = VectorKnowledgeBaseConfiguration>
+  KnowledgeBaseConfiguration& WithVectorKnowledgeBaseConfiguration(VectorKnowledgeBaseConfigurationT&& value) {
+    SetVectorKnowledgeBaseConfiguration(std::forward<VectorKnowledgeBaseConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of data that the data source is converted into for the knowledge
-     * base.</p>
-     */
-    inline const KnowledgeBaseType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const KnowledgeBaseType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(KnowledgeBaseType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline KnowledgeBaseConfiguration& WithType(const KnowledgeBaseType& value) { SetType(value); return *this;}
-    inline KnowledgeBaseConfiguration& WithType(KnowledgeBaseType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Contains details about the model that's used to convert the data source into
-     * vector embeddings.</p>
-     */
-    inline const VectorKnowledgeBaseConfiguration& GetVectorKnowledgeBaseConfiguration() const{ return m_vectorKnowledgeBaseConfiguration; }
-    inline bool VectorKnowledgeBaseConfigurationHasBeenSet() const { return m_vectorKnowledgeBaseConfigurationHasBeenSet; }
-    inline void SetVectorKnowledgeBaseConfiguration(const VectorKnowledgeBaseConfiguration& value) { m_vectorKnowledgeBaseConfigurationHasBeenSet = true; m_vectorKnowledgeBaseConfiguration = value; }
-    inline void SetVectorKnowledgeBaseConfiguration(VectorKnowledgeBaseConfiguration&& value) { m_vectorKnowledgeBaseConfigurationHasBeenSet = true; m_vectorKnowledgeBaseConfiguration = std::move(value); }
-    inline KnowledgeBaseConfiguration& WithVectorKnowledgeBaseConfiguration(const VectorKnowledgeBaseConfiguration& value) { SetVectorKnowledgeBaseConfiguration(value); return *this;}
-    inline KnowledgeBaseConfiguration& WithVectorKnowledgeBaseConfiguration(VectorKnowledgeBaseConfiguration&& value) { SetVectorKnowledgeBaseConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ManagedKnowledgeBaseConfiguration& GetManagedKnowledgeBaseConfiguration() const {
+    return m_managedKnowledgeBaseConfiguration;
+  }
+  inline bool ManagedKnowledgeBaseConfigurationHasBeenSet() const { return m_managedKnowledgeBaseConfigurationHasBeenSet; }
+  template <typename ManagedKnowledgeBaseConfigurationT = ManagedKnowledgeBaseConfiguration>
+  void SetManagedKnowledgeBaseConfiguration(ManagedKnowledgeBaseConfigurationT&& value) {
+    m_managedKnowledgeBaseConfigurationHasBeenSet = true;
+    m_managedKnowledgeBaseConfiguration = std::forward<ManagedKnowledgeBaseConfigurationT>(value);
+  }
+  template <typename ManagedKnowledgeBaseConfigurationT = ManagedKnowledgeBaseConfiguration>
+  KnowledgeBaseConfiguration& WithManagedKnowledgeBaseConfiguration(ManagedKnowledgeBaseConfigurationT&& value) {
+    SetManagedKnowledgeBaseConfiguration(std::forward<ManagedKnowledgeBaseConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    KnowledgeBaseType m_type;
-    bool m_typeHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Settings for an Amazon Kendra knowledge base.</p>
+   */
+  inline const KendraKnowledgeBaseConfiguration& GetKendraKnowledgeBaseConfiguration() const { return m_kendraKnowledgeBaseConfiguration; }
+  inline bool KendraKnowledgeBaseConfigurationHasBeenSet() const { return m_kendraKnowledgeBaseConfigurationHasBeenSet; }
+  template <typename KendraKnowledgeBaseConfigurationT = KendraKnowledgeBaseConfiguration>
+  void SetKendraKnowledgeBaseConfiguration(KendraKnowledgeBaseConfigurationT&& value) {
+    m_kendraKnowledgeBaseConfigurationHasBeenSet = true;
+    m_kendraKnowledgeBaseConfiguration = std::forward<KendraKnowledgeBaseConfigurationT>(value);
+  }
+  template <typename KendraKnowledgeBaseConfigurationT = KendraKnowledgeBaseConfiguration>
+  KnowledgeBaseConfiguration& WithKendraKnowledgeBaseConfiguration(KendraKnowledgeBaseConfigurationT&& value) {
+    SetKendraKnowledgeBaseConfiguration(std::forward<KendraKnowledgeBaseConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    VectorKnowledgeBaseConfiguration m_vectorKnowledgeBaseConfiguration;
-    bool m_vectorKnowledgeBaseConfigurationHasBeenSet = false;
-  };
+  ///@{
+  /**
+   * <p>Specifies configurations for a knowledge base connected to an SQL
+   * database.</p>
+   */
+  inline const SqlKnowledgeBaseConfiguration& GetSqlKnowledgeBaseConfiguration() const { return m_sqlKnowledgeBaseConfiguration; }
+  inline bool SqlKnowledgeBaseConfigurationHasBeenSet() const { return m_sqlKnowledgeBaseConfigurationHasBeenSet; }
+  template <typename SqlKnowledgeBaseConfigurationT = SqlKnowledgeBaseConfiguration>
+  void SetSqlKnowledgeBaseConfiguration(SqlKnowledgeBaseConfigurationT&& value) {
+    m_sqlKnowledgeBaseConfigurationHasBeenSet = true;
+    m_sqlKnowledgeBaseConfiguration = std::forward<SqlKnowledgeBaseConfigurationT>(value);
+  }
+  template <typename SqlKnowledgeBaseConfigurationT = SqlKnowledgeBaseConfiguration>
+  KnowledgeBaseConfiguration& WithSqlKnowledgeBaseConfiguration(SqlKnowledgeBaseConfigurationT&& value) {
+    SetSqlKnowledgeBaseConfiguration(std::forward<SqlKnowledgeBaseConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  KnowledgeBaseType m_type{KnowledgeBaseType::NOT_SET};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+  VectorKnowledgeBaseConfiguration m_vectorKnowledgeBaseConfiguration;
+
+  ManagedKnowledgeBaseConfiguration m_managedKnowledgeBaseConfiguration;
+
+  KendraKnowledgeBaseConfiguration m_kendraKnowledgeBaseConfiguration;
+
+  SqlKnowledgeBaseConfiguration m_sqlKnowledgeBaseConfiguration;
+  bool m_typeHasBeenSet = false;
+  bool m_vectorKnowledgeBaseConfigurationHasBeenSet = false;
+  bool m_managedKnowledgeBaseConfigurationHasBeenSet = false;
+  bool m_kendraKnowledgeBaseConfigurationHasBeenSet = false;
+  bool m_sqlKnowledgeBaseConfigurationHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

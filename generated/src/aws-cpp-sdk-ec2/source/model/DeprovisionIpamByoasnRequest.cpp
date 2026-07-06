@@ -3,37 +3,25 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DeprovisionIpamByoasnRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DeprovisionIpamByoasnRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DeprovisionIpamByoasnRequest::DeprovisionIpamByoasnRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_ipamIdHasBeenSet(false),
-    m_asnHasBeenSet(false)
-{
-}
-
-Aws::String DeprovisionIpamByoasnRequest::SerializePayload() const
-{
+Aws::String DeprovisionIpamByoasnRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeprovisionIpamByoasn&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_ipamIdHasBeenSet)
-  {
+  if (m_ipamIdHasBeenSet) {
     ss << "IpamId=" << StringUtils::URLEncode(m_ipamId.c_str()) << "&";
   }
 
-  if(m_asnHasBeenSet)
-  {
+  if (m_asnHasBeenSet) {
     ss << "Asn=" << StringUtils::URLEncode(m_asn.c_str()) << "&";
   }
 
@@ -41,8 +29,4 @@ Aws::String DeprovisionIpamByoasnRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeprovisionIpamByoasnRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeprovisionIpamByoasnRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

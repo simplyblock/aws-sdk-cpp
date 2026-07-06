@@ -5,81 +5,99 @@
 
 #pragma once
 #include <aws/appsync/AppSync_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appsync/model/Resolver.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppSync
-{
-namespace Model
-{
-  class ListResolversByFunctionResult
-  {
-  public:
-    AWS_APPSYNC_API ListResolversByFunctionResult();
-    AWS_APPSYNC_API ListResolversByFunctionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSYNC_API ListResolversByFunctionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppSync {
+namespace Model {
+class ListResolversByFunctionResult {
+ public:
+  AWS_APPSYNC_API ListResolversByFunctionResult() = default;
+  AWS_APPSYNC_API ListResolversByFunctionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSYNC_API ListResolversByFunctionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of resolvers.</p>
+   */
+  inline const Aws::Vector<Resolver>& GetResolvers() const { return m_resolvers; }
+  template <typename ResolversT = Aws::Vector<Resolver>>
+  void SetResolvers(ResolversT&& value) {
+    m_resolversHasBeenSet = true;
+    m_resolvers = std::forward<ResolversT>(value);
+  }
+  template <typename ResolversT = Aws::Vector<Resolver>>
+  ListResolversByFunctionResult& WithResolvers(ResolversT&& value) {
+    SetResolvers(std::forward<ResolversT>(value));
+    return *this;
+  }
+  template <typename ResolversT = Resolver>
+  ListResolversByFunctionResult& AddResolvers(ResolversT&& value) {
+    m_resolversHasBeenSet = true;
+    m_resolvers.emplace_back(std::forward<ResolversT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of resolvers.</p>
-     */
-    inline const Aws::Vector<Resolver>& GetResolvers() const{ return m_resolvers; }
-    inline void SetResolvers(const Aws::Vector<Resolver>& value) { m_resolvers = value; }
-    inline void SetResolvers(Aws::Vector<Resolver>&& value) { m_resolvers = std::move(value); }
-    inline ListResolversByFunctionResult& WithResolvers(const Aws::Vector<Resolver>& value) { SetResolvers(value); return *this;}
-    inline ListResolversByFunctionResult& WithResolvers(Aws::Vector<Resolver>&& value) { SetResolvers(std::move(value)); return *this;}
-    inline ListResolversByFunctionResult& AddResolvers(const Resolver& value) { m_resolvers.push_back(value); return *this; }
-    inline ListResolversByFunctionResult& AddResolvers(Resolver&& value) { m_resolvers.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An identifier that you can use to return the next set of items in the
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListResolversByFunctionResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An identifier that you can use to return the next set of items in the
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListResolversByFunctionResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListResolversByFunctionResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListResolversByFunctionResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListResolversByFunctionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListResolversByFunctionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListResolversByFunctionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListResolversByFunctionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Resolver> m_resolvers;
+ private:
+  Aws::Vector<Resolver> m_resolvers;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resolversHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

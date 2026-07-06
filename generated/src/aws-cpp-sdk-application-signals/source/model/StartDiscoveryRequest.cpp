@@ -12,15 +12,4 @@ using namespace Aws::ApplicationSignals::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartDiscoveryRequest::StartDiscoveryRequest()
-{
-}
-
-Aws::String StartDiscoveryRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StartDiscoveryRequest::SerializePayload() const { return {}; }

@@ -9,99 +9,116 @@
 #include <aws/datazone/model/GroupPolicyGrantPrincipal.h>
 #include <aws/datazone/model/ProjectPolicyGrantPrincipal.h>
 #include <aws/datazone/model/UserPolicyGrantPrincipal.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DataZone {
+namespace Model {
 
+/**
+ * <p>The policy grant principal.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/PolicyGrantPrincipal">AWS
+ * API Reference</a></p>
+ */
+class PolicyGrantPrincipal {
+ public:
+  AWS_DATAZONE_API PolicyGrantPrincipal() = default;
+  AWS_DATAZONE_API PolicyGrantPrincipal(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API PolicyGrantPrincipal& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The policy grant principal.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/PolicyGrantPrincipal">AWS
-   * API Reference</a></p>
+   * <p>The user of the policy grant principal.</p>
    */
-  class PolicyGrantPrincipal
-  {
-  public:
-    AWS_DATAZONE_API PolicyGrantPrincipal();
-    AWS_DATAZONE_API PolicyGrantPrincipal(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API PolicyGrantPrincipal& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const UserPolicyGrantPrincipal& GetUser() const { return m_user; }
+  inline bool UserHasBeenSet() const { return m_userHasBeenSet; }
+  template <typename UserT = UserPolicyGrantPrincipal>
+  void SetUser(UserT&& value) {
+    m_userHasBeenSet = true;
+    m_user = std::forward<UserT>(value);
+  }
+  template <typename UserT = UserPolicyGrantPrincipal>
+  PolicyGrantPrincipal& WithUser(UserT&& value) {
+    SetUser(std::forward<UserT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The group of the policy grant principal.</p>
+   */
+  inline const GroupPolicyGrantPrincipal& GetGroup() const { return m_group; }
+  inline bool GroupHasBeenSet() const { return m_groupHasBeenSet; }
+  template <typename GroupT = GroupPolicyGrantPrincipal>
+  void SetGroup(GroupT&& value) {
+    m_groupHasBeenSet = true;
+    m_group = std::forward<GroupT>(value);
+  }
+  template <typename GroupT = GroupPolicyGrantPrincipal>
+  PolicyGrantPrincipal& WithGroup(GroupT&& value) {
+    SetGroup(std::forward<GroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The domain unit of the policy grant principal.</p>
-     */
-    inline const DomainUnitPolicyGrantPrincipal& GetDomainUnit() const{ return m_domainUnit; }
-    inline bool DomainUnitHasBeenSet() const { return m_domainUnitHasBeenSet; }
-    inline void SetDomainUnit(const DomainUnitPolicyGrantPrincipal& value) { m_domainUnitHasBeenSet = true; m_domainUnit = value; }
-    inline void SetDomainUnit(DomainUnitPolicyGrantPrincipal&& value) { m_domainUnitHasBeenSet = true; m_domainUnit = std::move(value); }
-    inline PolicyGrantPrincipal& WithDomainUnit(const DomainUnitPolicyGrantPrincipal& value) { SetDomainUnit(value); return *this;}
-    inline PolicyGrantPrincipal& WithDomainUnit(DomainUnitPolicyGrantPrincipal&& value) { SetDomainUnit(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The project of the policy grant principal.</p>
+   */
+  inline const ProjectPolicyGrantPrincipal& GetProject() const { return m_project; }
+  inline bool ProjectHasBeenSet() const { return m_projectHasBeenSet; }
+  template <typename ProjectT = ProjectPolicyGrantPrincipal>
+  void SetProject(ProjectT&& value) {
+    m_projectHasBeenSet = true;
+    m_project = std::forward<ProjectT>(value);
+  }
+  template <typename ProjectT = ProjectPolicyGrantPrincipal>
+  PolicyGrantPrincipal& WithProject(ProjectT&& value) {
+    SetProject(std::forward<ProjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The group of the policy grant principal.</p>
-     */
-    inline const GroupPolicyGrantPrincipal& GetGroup() const{ return m_group; }
-    inline bool GroupHasBeenSet() const { return m_groupHasBeenSet; }
-    inline void SetGroup(const GroupPolicyGrantPrincipal& value) { m_groupHasBeenSet = true; m_group = value; }
-    inline void SetGroup(GroupPolicyGrantPrincipal&& value) { m_groupHasBeenSet = true; m_group = std::move(value); }
-    inline PolicyGrantPrincipal& WithGroup(const GroupPolicyGrantPrincipal& value) { SetGroup(value); return *this;}
-    inline PolicyGrantPrincipal& WithGroup(GroupPolicyGrantPrincipal&& value) { SetGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The domain unit of the policy grant principal.</p>
+   */
+  inline const DomainUnitPolicyGrantPrincipal& GetDomainUnit() const { return m_domainUnit; }
+  inline bool DomainUnitHasBeenSet() const { return m_domainUnitHasBeenSet; }
+  template <typename DomainUnitT = DomainUnitPolicyGrantPrincipal>
+  void SetDomainUnit(DomainUnitT&& value) {
+    m_domainUnitHasBeenSet = true;
+    m_domainUnit = std::forward<DomainUnitT>(value);
+  }
+  template <typename DomainUnitT = DomainUnitPolicyGrantPrincipal>
+  PolicyGrantPrincipal& WithDomainUnit(DomainUnitT&& value) {
+    SetDomainUnit(std::forward<DomainUnitT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  UserPolicyGrantPrincipal m_user;
 
-    ///@{
-    /**
-     * <p>The project of the policy grant principal.</p>
-     */
-    inline const ProjectPolicyGrantPrincipal& GetProject() const{ return m_project; }
-    inline bool ProjectHasBeenSet() const { return m_projectHasBeenSet; }
-    inline void SetProject(const ProjectPolicyGrantPrincipal& value) { m_projectHasBeenSet = true; m_project = value; }
-    inline void SetProject(ProjectPolicyGrantPrincipal&& value) { m_projectHasBeenSet = true; m_project = std::move(value); }
-    inline PolicyGrantPrincipal& WithProject(const ProjectPolicyGrantPrincipal& value) { SetProject(value); return *this;}
-    inline PolicyGrantPrincipal& WithProject(ProjectPolicyGrantPrincipal&& value) { SetProject(std::move(value)); return *this;}
-    ///@}
+  GroupPolicyGrantPrincipal m_group;
 
-    ///@{
-    /**
-     * <p>The user of the policy grant principal.</p>
-     */
-    inline const UserPolicyGrantPrincipal& GetUser() const{ return m_user; }
-    inline bool UserHasBeenSet() const { return m_userHasBeenSet; }
-    inline void SetUser(const UserPolicyGrantPrincipal& value) { m_userHasBeenSet = true; m_user = value; }
-    inline void SetUser(UserPolicyGrantPrincipal&& value) { m_userHasBeenSet = true; m_user = std::move(value); }
-    inline PolicyGrantPrincipal& WithUser(const UserPolicyGrantPrincipal& value) { SetUser(value); return *this;}
-    inline PolicyGrantPrincipal& WithUser(UserPolicyGrantPrincipal&& value) { SetUser(std::move(value)); return *this;}
-    ///@}
-  private:
+  ProjectPolicyGrantPrincipal m_project;
 
-    DomainUnitPolicyGrantPrincipal m_domainUnit;
-    bool m_domainUnitHasBeenSet = false;
+  DomainUnitPolicyGrantPrincipal m_domainUnit;
+  bool m_userHasBeenSet = false;
+  bool m_groupHasBeenSet = false;
+  bool m_projectHasBeenSet = false;
+  bool m_domainUnitHasBeenSet = false;
+};
 
-    GroupPolicyGrantPrincipal m_group;
-    bool m_groupHasBeenSet = false;
-
-    ProjectPolicyGrantPrincipal m_project;
-    bool m_projectHasBeenSet = false;
-
-    UserPolicyGrantPrincipal m_user;
-    bool m_userHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

@@ -4,98 +4,111 @@
  */
 
 #pragma once
-#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/ConnectRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace Connect {
+namespace Model {
 
+/**
+ */
+class BatchGetAttachedFileMetadataRequest : public ConnectRequest {
+ public:
+  AWS_CONNECT_API BatchGetAttachedFileMetadataRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "BatchGetAttachedFileMetadata"; }
+
+  AWS_CONNECT_API Aws::String SerializePayload() const override;
+
+  AWS_CONNECT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The unique identifiers of the attached file resource.</p>
    */
-  class BatchGetAttachedFileMetadataRequest : public ConnectRequest
-  {
-  public:
-    AWS_CONNECT_API BatchGetAttachedFileMetadataRequest();
+  inline const Aws::Vector<Aws::String>& GetFileIds() const { return m_fileIds; }
+  inline bool FileIdsHasBeenSet() const { return m_fileIdsHasBeenSet; }
+  template <typename FileIdsT = Aws::Vector<Aws::String>>
+  void SetFileIds(FileIdsT&& value) {
+    m_fileIdsHasBeenSet = true;
+    m_fileIds = std::forward<FileIdsT>(value);
+  }
+  template <typename FileIdsT = Aws::Vector<Aws::String>>
+  BatchGetAttachedFileMetadataRequest& WithFileIds(FileIdsT&& value) {
+    SetFileIds(std::forward<FileIdsT>(value));
+    return *this;
+  }
+  template <typename FileIdsT = Aws::String>
+  BatchGetAttachedFileMetadataRequest& AddFileIds(FileIdsT&& value) {
+    m_fileIdsHasBeenSet = true;
+    m_fileIds.emplace_back(std::forward<FileIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "BatchGetAttachedFileMetadata"; }
+  ///@{
+  /**
+   * <p>The unique identifier of the Connect instance.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  BatchGetAttachedFileMetadataRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The resource to which the attached file is (being) uploaded to. The supported
+   * resources are <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/cases.html">Cases</a>
+   * and <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html">Email</a>.</p>
+   *  <p>This value must be a valid ARN.</p>
+   */
+  inline const Aws::String& GetAssociatedResourceArn() const { return m_associatedResourceArn; }
+  inline bool AssociatedResourceArnHasBeenSet() const { return m_associatedResourceArnHasBeenSet; }
+  template <typename AssociatedResourceArnT = Aws::String>
+  void SetAssociatedResourceArn(AssociatedResourceArnT&& value) {
+    m_associatedResourceArnHasBeenSet = true;
+    m_associatedResourceArn = std::forward<AssociatedResourceArnT>(value);
+  }
+  template <typename AssociatedResourceArnT = Aws::String>
+  BatchGetAttachedFileMetadataRequest& WithAssociatedResourceArn(AssociatedResourceArnT&& value) {
+    SetAssociatedResourceArn(std::forward<AssociatedResourceArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_fileIds;
 
-    AWS_CONNECT_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  Aws::String m_instanceId;
 
+  Aws::String m_associatedResourceArn;
+  bool m_fileIdsHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_associatedResourceArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The unique identifiers of the attached file resource.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetFileIds() const{ return m_fileIds; }
-    inline bool FileIdsHasBeenSet() const { return m_fileIdsHasBeenSet; }
-    inline void SetFileIds(const Aws::Vector<Aws::String>& value) { m_fileIdsHasBeenSet = true; m_fileIds = value; }
-    inline void SetFileIds(Aws::Vector<Aws::String>&& value) { m_fileIdsHasBeenSet = true; m_fileIds = std::move(value); }
-    inline BatchGetAttachedFileMetadataRequest& WithFileIds(const Aws::Vector<Aws::String>& value) { SetFileIds(value); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& WithFileIds(Aws::Vector<Aws::String>&& value) { SetFileIds(std::move(value)); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& AddFileIds(const Aws::String& value) { m_fileIdsHasBeenSet = true; m_fileIds.push_back(value); return *this; }
-    inline BatchGetAttachedFileMetadataRequest& AddFileIds(Aws::String&& value) { m_fileIdsHasBeenSet = true; m_fileIds.push_back(std::move(value)); return *this; }
-    inline BatchGetAttachedFileMetadataRequest& AddFileIds(const char* value) { m_fileIdsHasBeenSet = true; m_fileIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The unique identifier of the Connect instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline BatchGetAttachedFileMetadataRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The resource to which the attached file is (being) uploaded to. <a
-     * href="https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html">Cases</a>
-     * are the only current supported resource.</p>  <p>This value must be a
-     * valid ARN.</p> 
-     */
-    inline const Aws::String& GetAssociatedResourceArn() const{ return m_associatedResourceArn; }
-    inline bool AssociatedResourceArnHasBeenSet() const { return m_associatedResourceArnHasBeenSet; }
-    inline void SetAssociatedResourceArn(const Aws::String& value) { m_associatedResourceArnHasBeenSet = true; m_associatedResourceArn = value; }
-    inline void SetAssociatedResourceArn(Aws::String&& value) { m_associatedResourceArnHasBeenSet = true; m_associatedResourceArn = std::move(value); }
-    inline void SetAssociatedResourceArn(const char* value) { m_associatedResourceArnHasBeenSet = true; m_associatedResourceArn.assign(value); }
-    inline BatchGetAttachedFileMetadataRequest& WithAssociatedResourceArn(const Aws::String& value) { SetAssociatedResourceArn(value); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& WithAssociatedResourceArn(Aws::String&& value) { SetAssociatedResourceArn(std::move(value)); return *this;}
-    inline BatchGetAttachedFileMetadataRequest& WithAssociatedResourceArn(const char* value) { SetAssociatedResourceArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_fileIds;
-    bool m_fileIdsHasBeenSet = false;
-
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
-
-    Aws::String m_associatedResourceArn;
-    bool m_associatedResourceArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

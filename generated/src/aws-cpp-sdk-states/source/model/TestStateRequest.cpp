@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/states/model/TestStateRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/states/model/TestStateRequest.h>
 
 #include <utility>
 
@@ -12,61 +12,54 @@ using namespace Aws::SFN::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-TestStateRequest::TestStateRequest() : 
-    m_definitionHasBeenSet(false),
-    m_roleArnHasBeenSet(false),
-    m_inputHasBeenSet(false),
-    m_inspectionLevel(InspectionLevel::NOT_SET),
-    m_inspectionLevelHasBeenSet(false),
-    m_revealSecrets(false),
-    m_revealSecretsHasBeenSet(false)
-{
-}
-
-Aws::String TestStateRequest::SerializePayload() const
-{
+Aws::String TestStateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_definitionHasBeenSet)
-  {
-   payload.WithString("definition", m_definition);
-
+  if (m_definitionHasBeenSet) {
+    payload.WithString("definition", m_definition);
   }
 
-  if(m_roleArnHasBeenSet)
-  {
-   payload.WithString("roleArn", m_roleArn);
-
+  if (m_roleArnHasBeenSet) {
+    payload.WithString("roleArn", m_roleArn);
   }
 
-  if(m_inputHasBeenSet)
-  {
-   payload.WithString("input", m_input);
-
+  if (m_inputHasBeenSet) {
+    payload.WithString("input", m_input);
   }
 
-  if(m_inspectionLevelHasBeenSet)
-  {
-   payload.WithString("inspectionLevel", InspectionLevelMapper::GetNameForInspectionLevel(m_inspectionLevel));
+  if (m_inspectionLevelHasBeenSet) {
+    payload.WithString("inspectionLevel", InspectionLevelMapper::GetNameForInspectionLevel(m_inspectionLevel));
   }
 
-  if(m_revealSecretsHasBeenSet)
-  {
-   payload.WithBool("revealSecrets", m_revealSecrets);
+  if (m_revealSecretsHasBeenSet) {
+    payload.WithBool("revealSecrets", m_revealSecrets);
+  }
 
+  if (m_variablesHasBeenSet) {
+    payload.WithString("variables", m_variables);
+  }
+
+  if (m_stateNameHasBeenSet) {
+    payload.WithString("stateName", m_stateName);
+  }
+
+  if (m_mockHasBeenSet) {
+    payload.WithObject("mock", m_mock.Jsonize());
+  }
+
+  if (m_contextHasBeenSet) {
+    payload.WithString("context", m_context);
+  }
+
+  if (m_stateConfigurationHasBeenSet) {
+    payload.WithObject("stateConfiguration", m_stateConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection TestStateRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection TestStateRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSStepFunctions.TestState"));
   return headers;
-
 }
-
-
-
-

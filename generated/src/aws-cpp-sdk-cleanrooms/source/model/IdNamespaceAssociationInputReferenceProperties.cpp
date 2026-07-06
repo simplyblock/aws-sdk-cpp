@@ -11,71 +11,48 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
-IdNamespaceAssociationInputReferenceProperties::IdNamespaceAssociationInputReferenceProperties() : 
-    m_idNamespaceType(IdNamespaceType::NOT_SET),
-    m_idNamespaceTypeHasBeenSet(false),
-    m_idMappingWorkflowsSupportedHasBeenSet(false)
-{
-}
+IdNamespaceAssociationInputReferenceProperties::IdNamespaceAssociationInputReferenceProperties(JsonView jsonValue) { *this = jsonValue; }
 
-IdNamespaceAssociationInputReferenceProperties::IdNamespaceAssociationInputReferenceProperties(JsonView jsonValue)
-  : IdNamespaceAssociationInputReferenceProperties()
-{
-  *this = jsonValue;
-}
-
-IdNamespaceAssociationInputReferenceProperties& IdNamespaceAssociationInputReferenceProperties::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("idNamespaceType"))
-  {
+IdNamespaceAssociationInputReferenceProperties& IdNamespaceAssociationInputReferenceProperties::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("idNamespaceType")) {
     m_idNamespaceType = IdNamespaceTypeMapper::GetIdNamespaceTypeForName(jsonValue.GetString("idNamespaceType"));
-
     m_idNamespaceTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("idMappingWorkflowsSupported"))
-  {
+  if (jsonValue.ValueExists("idMappingWorkflowsSupported")) {
     Aws::Utils::Array<JsonView> idMappingWorkflowsSupportedJsonList = jsonValue.GetArray("idMappingWorkflowsSupported");
-    for(unsigned idMappingWorkflowsSupportedIndex = 0; idMappingWorkflowsSupportedIndex < idMappingWorkflowsSupportedJsonList.GetLength(); ++idMappingWorkflowsSupportedIndex)
-    {
+    for (unsigned idMappingWorkflowsSupportedIndex = 0; idMappingWorkflowsSupportedIndex < idMappingWorkflowsSupportedJsonList.GetLength();
+         ++idMappingWorkflowsSupportedIndex) {
       m_idMappingWorkflowsSupported.push_back(idMappingWorkflowsSupportedJsonList[idMappingWorkflowsSupportedIndex].AsObject());
     }
     m_idMappingWorkflowsSupportedHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue IdNamespaceAssociationInputReferenceProperties::Jsonize() const
-{
+JsonValue IdNamespaceAssociationInputReferenceProperties::Jsonize() const {
   JsonValue payload;
 
-  if(m_idNamespaceTypeHasBeenSet)
-  {
-   payload.WithString("idNamespaceType", IdNamespaceTypeMapper::GetNameForIdNamespaceType(m_idNamespaceType));
+  if (m_idNamespaceTypeHasBeenSet) {
+    payload.WithString("idNamespaceType", IdNamespaceTypeMapper::GetNameForIdNamespaceType(m_idNamespaceType));
   }
 
-  if(m_idMappingWorkflowsSupportedHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> idMappingWorkflowsSupportedJsonList(m_idMappingWorkflowsSupported.size());
-   for(unsigned idMappingWorkflowsSupportedIndex = 0; idMappingWorkflowsSupportedIndex < idMappingWorkflowsSupportedJsonList.GetLength(); ++idMappingWorkflowsSupportedIndex)
-   {
-     idMappingWorkflowsSupportedJsonList[idMappingWorkflowsSupportedIndex].AsObject(m_idMappingWorkflowsSupported[idMappingWorkflowsSupportedIndex].View());
-   }
-   payload.WithArray("idMappingWorkflowsSupported", std::move(idMappingWorkflowsSupportedJsonList));
-
+  if (m_idMappingWorkflowsSupportedHasBeenSet) {
+    Aws::Utils::Array<JsonValue> idMappingWorkflowsSupportedJsonList(m_idMappingWorkflowsSupported.size());
+    for (unsigned idMappingWorkflowsSupportedIndex = 0; idMappingWorkflowsSupportedIndex < idMappingWorkflowsSupportedJsonList.GetLength();
+         ++idMappingWorkflowsSupportedIndex) {
+      idMappingWorkflowsSupportedJsonList[idMappingWorkflowsSupportedIndex].AsObject(
+          m_idMappingWorkflowsSupported[idMappingWorkflowsSupportedIndex].View());
+    }
+    payload.WithArray("idMappingWorkflowsSupported", std::move(idMappingWorkflowsSupportedJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

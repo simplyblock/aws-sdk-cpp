@@ -3,213 +3,152 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/AssistantSummary.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qconnect/model/AssistantSummary.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace QConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace QConnect {
+namespace Model {
 
-AssistantSummary::AssistantSummary() : 
-    m_aiAgentConfigurationHasBeenSet(false),
-    m_assistantArnHasBeenSet(false),
-    m_assistantIdHasBeenSet(false),
-    m_capabilityConfigurationHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_integrationConfigurationHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_serverSideEncryptionConfigurationHasBeenSet(false),
-    m_status(AssistantStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_type(AssistantType::NOT_SET),
-    m_typeHasBeenSet(false)
-{
-}
+AssistantSummary::AssistantSummary(JsonView jsonValue) { *this = jsonValue; }
 
-AssistantSummary::AssistantSummary(JsonView jsonValue)
-  : AssistantSummary()
-{
-  *this = jsonValue;
-}
-
-AssistantSummary& AssistantSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("aiAgentConfiguration"))
-  {
-    Aws::Map<Aws::String, JsonView> aiAgentConfigurationJsonMap = jsonValue.GetObject("aiAgentConfiguration").GetAllObjects();
-    for(auto& aiAgentConfigurationItem : aiAgentConfigurationJsonMap)
-    {
-      m_aiAgentConfiguration[AIAgentTypeMapper::GetAIAgentTypeForName(aiAgentConfigurationItem.first)] = aiAgentConfigurationItem.second.AsObject();
-    }
-    m_aiAgentConfigurationHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("assistantArn"))
-  {
-    m_assistantArn = jsonValue.GetString("assistantArn");
-
-    m_assistantArnHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("assistantId"))
-  {
+AssistantSummary& AssistantSummary::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("assistantId")) {
     m_assistantId = jsonValue.GetString("assistantId");
-
     m_assistantIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("capabilityConfiguration"))
-  {
-    m_capabilityConfiguration = jsonValue.GetObject("capabilityConfiguration");
-
-    m_capabilityConfigurationHasBeenSet = true;
+  if (jsonValue.ValueExists("assistantArn")) {
+    m_assistantArn = jsonValue.GetString("assistantArn");
+    m_assistantArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("description"))
-  {
-    m_description = jsonValue.GetString("description");
-
-    m_descriptionHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("integrationConfiguration"))
-  {
-    m_integrationConfiguration = jsonValue.GetObject("integrationConfiguration");
-
-    m_integrationConfigurationHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("serverSideEncryptionConfiguration"))
-  {
-    m_serverSideEncryptionConfiguration = jsonValue.GetObject("serverSideEncryptionConfiguration");
-
-    m_serverSideEncryptionConfigurationHasBeenSet = true;
+  if (jsonValue.ValueExists("type")) {
+    m_type = AssistantTypeMapper::GetAssistantTypeForName(jsonValue.GetString("type"));
+    m_typeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("status"))
-  {
+  if (jsonValue.ValueExists("status")) {
     m_status = AssistantStatusMapper::GetAssistantStatusForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("tags"))
-  {
+  if (jsonValue.ValueExists("description")) {
+    m_description = jsonValue.GetString("description");
+    m_descriptionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("tags")) {
     Aws::Map<Aws::String, JsonView> tagsJsonMap = jsonValue.GetObject("tags").GetAllObjects();
-    for(auto& tagsItem : tagsJsonMap)
-    {
+    for (auto& tagsItem : tagsJsonMap) {
       m_tags[tagsItem.first] = tagsItem.second.AsString();
     }
     m_tagsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("type"))
-  {
-    m_type = AssistantTypeMapper::GetAssistantTypeForName(jsonValue.GetString("type"));
-
-    m_typeHasBeenSet = true;
+  if (jsonValue.ValueExists("serverSideEncryptionConfiguration")) {
+    m_serverSideEncryptionConfiguration = jsonValue.GetObject("serverSideEncryptionConfiguration");
+    m_serverSideEncryptionConfigurationHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("integrationConfiguration")) {
+    m_integrationConfiguration = jsonValue.GetObject("integrationConfiguration");
+    m_integrationConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("capabilityConfiguration")) {
+    m_capabilityConfiguration = jsonValue.GetObject("capabilityConfiguration");
+    m_capabilityConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("aiAgentConfiguration")) {
+    Aws::Map<Aws::String, JsonView> aiAgentConfigurationJsonMap = jsonValue.GetObject("aiAgentConfiguration").GetAllObjects();
+    for (auto& aiAgentConfigurationItem : aiAgentConfigurationJsonMap) {
+      m_aiAgentConfiguration[AIAgentTypeMapper::GetAIAgentTypeForName(aiAgentConfigurationItem.first)] =
+          aiAgentConfigurationItem.second.AsObject();
+    }
+    m_aiAgentConfigurationHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("orchestratorConfigurationList")) {
+    Aws::Utils::Array<JsonView> orchestratorConfigurationListJsonList = jsonValue.GetArray("orchestratorConfigurationList");
+    for (unsigned orchestratorConfigurationListIndex = 0;
+         orchestratorConfigurationListIndex < orchestratorConfigurationListJsonList.GetLength(); ++orchestratorConfigurationListIndex) {
+      m_orchestratorConfigurationList.push_back(orchestratorConfigurationListJsonList[orchestratorConfigurationListIndex].AsObject());
+    }
+    m_orchestratorConfigurationListHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue AssistantSummary::Jsonize() const
-{
+JsonValue AssistantSummary::Jsonize() const {
   JsonValue payload;
 
-  if(m_aiAgentConfigurationHasBeenSet)
-  {
-   JsonValue aiAgentConfigurationJsonMap;
-   for(auto& aiAgentConfigurationItem : m_aiAgentConfiguration)
-   {
-     aiAgentConfigurationJsonMap.WithObject(AIAgentTypeMapper::GetNameForAIAgentType(aiAgentConfigurationItem.first), aiAgentConfigurationItem.second.Jsonize());
-   }
-   payload.WithObject("aiAgentConfiguration", std::move(aiAgentConfigurationJsonMap));
-
+  if (m_assistantIdHasBeenSet) {
+    payload.WithString("assistantId", m_assistantId);
   }
 
-  if(m_assistantArnHasBeenSet)
-  {
-   payload.WithString("assistantArn", m_assistantArn);
-
+  if (m_assistantArnHasBeenSet) {
+    payload.WithString("assistantArn", m_assistantArn);
   }
 
-  if(m_assistantIdHasBeenSet)
-  {
-   payload.WithString("assistantId", m_assistantId);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_capabilityConfigurationHasBeenSet)
-  {
-   payload.WithObject("capabilityConfiguration", m_capabilityConfiguration.Jsonize());
-
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", AssistantTypeMapper::GetNameForAssistantType(m_type));
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", AssistantStatusMapper::GetNameForAssistantStatus(m_status));
   }
 
-  if(m_integrationConfigurationHasBeenSet)
-  {
-   payload.WithObject("integrationConfiguration", m_integrationConfiguration.Jsonize());
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
-  if(m_serverSideEncryptionConfigurationHasBeenSet)
-  {
-   payload.WithObject("serverSideEncryptionConfiguration", m_serverSideEncryptionConfiguration.Jsonize());
-
+  if (m_serverSideEncryptionConfigurationHasBeenSet) {
+    payload.WithObject("serverSideEncryptionConfiguration", m_serverSideEncryptionConfiguration.Jsonize());
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", AssistantStatusMapper::GetNameForAssistantStatus(m_status));
+  if (m_integrationConfigurationHasBeenSet) {
+    payload.WithObject("integrationConfiguration", m_integrationConfiguration.Jsonize());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
-
+  if (m_capabilityConfigurationHasBeenSet) {
+    payload.WithObject("capabilityConfiguration", m_capabilityConfiguration.Jsonize());
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", AssistantTypeMapper::GetNameForAssistantType(m_type));
+  if (m_aiAgentConfigurationHasBeenSet) {
+    JsonValue aiAgentConfigurationJsonMap;
+    for (auto& aiAgentConfigurationItem : m_aiAgentConfiguration) {
+      aiAgentConfigurationJsonMap.WithObject(AIAgentTypeMapper::GetNameForAIAgentType(aiAgentConfigurationItem.first),
+                                             aiAgentConfigurationItem.second.Jsonize());
+    }
+    payload.WithObject("aiAgentConfiguration", std::move(aiAgentConfigurationJsonMap));
+  }
+
+  if (m_orchestratorConfigurationListHasBeenSet) {
+    Aws::Utils::Array<JsonValue> orchestratorConfigurationListJsonList(m_orchestratorConfigurationList.size());
+    for (unsigned orchestratorConfigurationListIndex = 0;
+         orchestratorConfigurationListIndex < orchestratorConfigurationListJsonList.GetLength(); ++orchestratorConfigurationListIndex) {
+      orchestratorConfigurationListJsonList[orchestratorConfigurationListIndex].AsObject(
+          m_orchestratorConfigurationList[orchestratorConfigurationListIndex].Jsonize());
+    }
+    payload.WithArray("orchestratorConfigurationList", std::move(orchestratorConfigurationListJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

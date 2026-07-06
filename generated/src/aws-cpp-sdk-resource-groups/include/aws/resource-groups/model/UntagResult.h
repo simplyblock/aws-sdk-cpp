@@ -4,82 +4,99 @@
  */
 
 #pragma once
-#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/resource-groups/ResourceGroups_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResourceGroups
-{
-namespace Model
-{
-  class UntagResult
-  {
-  public:
-    AWS_RESOURCEGROUPS_API UntagResult();
-    AWS_RESOURCEGROUPS_API UntagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESOURCEGROUPS_API UntagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResourceGroups {
+namespace Model {
+class UntagResult {
+ public:
+  AWS_RESOURCEGROUPS_API UntagResult() = default;
+  AWS_RESOURCEGROUPS_API UntagResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESOURCEGROUPS_API UntagResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon resource name (ARN) of the resource group from which tags have
+   * been removed.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UntagResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon resource name (ARN) of the resource group from which tags have
-     * been removed.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UntagResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UntagResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UntagResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The keys of the tags that were removed.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetKeys() const { return m_keys; }
+  template <typename KeysT = Aws::Vector<Aws::String>>
+  void SetKeys(KeysT&& value) {
+    m_keysHasBeenSet = true;
+    m_keys = std::forward<KeysT>(value);
+  }
+  template <typename KeysT = Aws::Vector<Aws::String>>
+  UntagResult& WithKeys(KeysT&& value) {
+    SetKeys(std::forward<KeysT>(value));
+    return *this;
+  }
+  template <typename KeysT = Aws::String>
+  UntagResult& AddKeys(KeysT&& value) {
+    m_keysHasBeenSet = true;
+    m_keys.emplace_back(std::forward<KeysT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The keys of the tags that were removed.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetKeys() const{ return m_keys; }
-    inline void SetKeys(const Aws::Vector<Aws::String>& value) { m_keys = value; }
-    inline void SetKeys(Aws::Vector<Aws::String>&& value) { m_keys = std::move(value); }
-    inline UntagResult& WithKeys(const Aws::Vector<Aws::String>& value) { SetKeys(value); return *this;}
-    inline UntagResult& WithKeys(Aws::Vector<Aws::String>&& value) { SetKeys(std::move(value)); return *this;}
-    inline UntagResult& AddKeys(const Aws::String& value) { m_keys.push_back(value); return *this; }
-    inline UntagResult& AddKeys(Aws::String&& value) { m_keys.push_back(std::move(value)); return *this; }
-    inline UntagResult& AddKeys(const char* value) { m_keys.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UntagResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UntagResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UntagResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UntagResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Aws::String m_arn;
 
-    Aws::Vector<Aws::String> m_keys;
+  Aws::Vector<Aws::String> m_keys;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arnHasBeenSet = false;
+  bool m_keysHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResourceGroups
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResourceGroups
+}  // namespace Aws

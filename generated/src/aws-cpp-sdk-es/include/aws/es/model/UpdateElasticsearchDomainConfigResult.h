@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
-#include <aws/es/model/ElasticsearchDomainConfig.h>
-#include <aws/es/model/DryRunResults.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
+#include <aws/es/model/DryRunResults.h>
+#include <aws/es/model/ElasticsearchDomainConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ElasticsearchService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ElasticsearchService {
+namespace Model {
+/**
+ * <p>The result of an <code>UpdateElasticsearchDomain</code> request. Contains the
+ * status of the Elasticsearch domain being updated.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpdateElasticsearchDomainConfigResponse">AWS
+ * API Reference</a></p>
+ */
+class UpdateElasticsearchDomainConfigResult {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult() = default;
+  AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result of an <code>UpdateElasticsearchDomain</code> request. Contains the
-   * status of the Elasticsearch domain being updated.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpdateElasticsearchDomainConfigResponse">AWS
-   * API Reference</a></p>
+   * <p>The status of the updated Elasticsearch domain. </p>
    */
-  class UpdateElasticsearchDomainConfigResult
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult();
-    AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ELASTICSEARCHSERVICE_API UpdateElasticsearchDomainConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const ElasticsearchDomainConfig& GetDomainConfig() const { return m_domainConfig; }
+  template <typename DomainConfigT = ElasticsearchDomainConfig>
+  void SetDomainConfig(DomainConfigT&& value) {
+    m_domainConfigHasBeenSet = true;
+    m_domainConfig = std::forward<DomainConfigT>(value);
+  }
+  template <typename DomainConfigT = ElasticsearchDomainConfig>
+  UpdateElasticsearchDomainConfigResult& WithDomainConfig(DomainConfigT&& value) {
+    SetDomainConfig(std::forward<DomainConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Contains result of DryRun. </p>
+   */
+  inline const DryRunResults& GetDryRunResults() const { return m_dryRunResults; }
+  template <typename DryRunResultsT = DryRunResults>
+  void SetDryRunResults(DryRunResultsT&& value) {
+    m_dryRunResultsHasBeenSet = true;
+    m_dryRunResults = std::forward<DryRunResultsT>(value);
+  }
+  template <typename DryRunResultsT = DryRunResults>
+  UpdateElasticsearchDomainConfigResult& WithDryRunResults(DryRunResultsT&& value) {
+    SetDryRunResults(std::forward<DryRunResultsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the updated Elasticsearch domain. </p>
-     */
-    inline const ElasticsearchDomainConfig& GetDomainConfig() const{ return m_domainConfig; }
-    inline void SetDomainConfig(const ElasticsearchDomainConfig& value) { m_domainConfig = value; }
-    inline void SetDomainConfig(ElasticsearchDomainConfig&& value) { m_domainConfig = std::move(value); }
-    inline UpdateElasticsearchDomainConfigResult& WithDomainConfig(const ElasticsearchDomainConfig& value) { SetDomainConfig(value); return *this;}
-    inline UpdateElasticsearchDomainConfigResult& WithDomainConfig(ElasticsearchDomainConfig&& value) { SetDomainConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Contains result of DryRun. </p>
-     */
-    inline const DryRunResults& GetDryRunResults() const{ return m_dryRunResults; }
-    inline void SetDryRunResults(const DryRunResults& value) { m_dryRunResults = value; }
-    inline void SetDryRunResults(DryRunResults&& value) { m_dryRunResults = std::move(value); }
-    inline UpdateElasticsearchDomainConfigResult& WithDryRunResults(const DryRunResults& value) { SetDryRunResults(value); return *this;}
-    inline UpdateElasticsearchDomainConfigResult& WithDryRunResults(DryRunResults&& value) { SetDryRunResults(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateElasticsearchDomainConfigResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateElasticsearchDomainConfigResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateElasticsearchDomainConfigResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateElasticsearchDomainConfigResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  ElasticsearchDomainConfig m_domainConfig;
 
-    ElasticsearchDomainConfig m_domainConfig;
+  DryRunResults m_dryRunResults;
 
-    DryRunResults m_dryRunResults;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_domainConfigHasBeenSet = false;
+  bool m_dryRunResultsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

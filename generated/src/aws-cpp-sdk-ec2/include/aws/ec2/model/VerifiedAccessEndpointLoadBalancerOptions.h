@@ -4,110 +4,154 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/ec2/model/VerifiedAccessEndpointProtocol.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/VerifiedAccessEndpointPortRange.h>
+#include <aws/ec2/model/VerifiedAccessEndpointProtocol.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a load balancer when creating an Amazon Web Services Verified
+ * Access endpoint using the <code>load-balancer</code> type.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointLoadBalancerOptions">AWS
+ * API Reference</a></p>
+ */
+class VerifiedAccessEndpointLoadBalancerOptions {
+ public:
+  AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions() = default;
+  AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a load balancer when creating an Amazon Web Services Verified
-   * Access endpoint using the <code>load-balancer</code> type.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointLoadBalancerOptions">AWS
-   * API Reference</a></p>
+   * <p>The IP protocol.</p>
    */
-  class VerifiedAccessEndpointLoadBalancerOptions
-  {
-  public:
-    AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions();
-    AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API VerifiedAccessEndpointLoadBalancerOptions& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline VerifiedAccessEndpointProtocol GetProtocol() const { return m_protocol; }
+  inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
+  inline void SetProtocol(VerifiedAccessEndpointProtocol value) {
+    m_protocolHasBeenSet = true;
+    m_protocol = value;
+  }
+  inline VerifiedAccessEndpointLoadBalancerOptions& WithProtocol(VerifiedAccessEndpointProtocol value) {
+    SetProtocol(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The IP port number.</p>
+   */
+  inline int GetPort() const { return m_port; }
+  inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
+  inline void SetPort(int value) {
+    m_portHasBeenSet = true;
+    m_port = value;
+  }
+  inline VerifiedAccessEndpointLoadBalancerOptions& WithPort(int value) {
+    SetPort(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ARN of the load balancer.</p>
+   */
+  inline const Aws::String& GetLoadBalancerArn() const { return m_loadBalancerArn; }
+  inline bool LoadBalancerArnHasBeenSet() const { return m_loadBalancerArnHasBeenSet; }
+  template <typename LoadBalancerArnT = Aws::String>
+  void SetLoadBalancerArn(LoadBalancerArnT&& value) {
+    m_loadBalancerArnHasBeenSet = true;
+    m_loadBalancerArn = std::forward<LoadBalancerArnT>(value);
+  }
+  template <typename LoadBalancerArnT = Aws::String>
+  VerifiedAccessEndpointLoadBalancerOptions& WithLoadBalancerArn(LoadBalancerArnT&& value) {
+    SetLoadBalancerArn(std::forward<LoadBalancerArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP protocol.</p>
-     */
-    inline const VerifiedAccessEndpointProtocol& GetProtocol() const{ return m_protocol; }
-    inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
-    inline void SetProtocol(const VerifiedAccessEndpointProtocol& value) { m_protocolHasBeenSet = true; m_protocol = value; }
-    inline void SetProtocol(VerifiedAccessEndpointProtocol&& value) { m_protocolHasBeenSet = true; m_protocol = std::move(value); }
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithProtocol(const VerifiedAccessEndpointProtocol& value) { SetProtocol(value); return *this;}
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithProtocol(VerifiedAccessEndpointProtocol&& value) { SetProtocol(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IDs of the subnets.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSubnetIds() const { return m_subnetIds; }
+  inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  void SetSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds = std::forward<SubnetIdsT>(value);
+  }
+  template <typename SubnetIdsT = Aws::Vector<Aws::String>>
+  VerifiedAccessEndpointLoadBalancerOptions& WithSubnetIds(SubnetIdsT&& value) {
+    SetSubnetIds(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  template <typename SubnetIdsT = Aws::String>
+  VerifiedAccessEndpointLoadBalancerOptions& AddSubnetIds(SubnetIdsT&& value) {
+    m_subnetIdsHasBeenSet = true;
+    m_subnetIds.emplace_back(std::forward<SubnetIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP port number.</p>
-     */
-    inline int GetPort() const{ return m_port; }
-    inline bool PortHasBeenSet() const { return m_portHasBeenSet; }
-    inline void SetPort(int value) { m_portHasBeenSet = true; m_port = value; }
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithPort(int value) { SetPort(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The port ranges.</p>
+   */
+  inline const Aws::Vector<VerifiedAccessEndpointPortRange>& GetPortRanges() const { return m_portRanges; }
+  inline bool PortRangesHasBeenSet() const { return m_portRangesHasBeenSet; }
+  template <typename PortRangesT = Aws::Vector<VerifiedAccessEndpointPortRange>>
+  void SetPortRanges(PortRangesT&& value) {
+    m_portRangesHasBeenSet = true;
+    m_portRanges = std::forward<PortRangesT>(value);
+  }
+  template <typename PortRangesT = Aws::Vector<VerifiedAccessEndpointPortRange>>
+  VerifiedAccessEndpointLoadBalancerOptions& WithPortRanges(PortRangesT&& value) {
+    SetPortRanges(std::forward<PortRangesT>(value));
+    return *this;
+  }
+  template <typename PortRangesT = VerifiedAccessEndpointPortRange>
+  VerifiedAccessEndpointLoadBalancerOptions& AddPortRanges(PortRangesT&& value) {
+    m_portRangesHasBeenSet = true;
+    m_portRanges.emplace_back(std::forward<PortRangesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  VerifiedAccessEndpointProtocol m_protocol{VerifiedAccessEndpointProtocol::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The ARN of the load balancer.</p>
-     */
-    inline const Aws::String& GetLoadBalancerArn() const{ return m_loadBalancerArn; }
-    inline bool LoadBalancerArnHasBeenSet() const { return m_loadBalancerArnHasBeenSet; }
-    inline void SetLoadBalancerArn(const Aws::String& value) { m_loadBalancerArnHasBeenSet = true; m_loadBalancerArn = value; }
-    inline void SetLoadBalancerArn(Aws::String&& value) { m_loadBalancerArnHasBeenSet = true; m_loadBalancerArn = std::move(value); }
-    inline void SetLoadBalancerArn(const char* value) { m_loadBalancerArnHasBeenSet = true; m_loadBalancerArn.assign(value); }
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithLoadBalancerArn(const Aws::String& value) { SetLoadBalancerArn(value); return *this;}
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithLoadBalancerArn(Aws::String&& value) { SetLoadBalancerArn(std::move(value)); return *this;}
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithLoadBalancerArn(const char* value) { SetLoadBalancerArn(value); return *this;}
-    ///@}
+  int m_port{0};
 
-    ///@{
-    /**
-     * <p>The IDs of the subnets.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSubnetIds() const{ return m_subnetIds; }
-    inline bool SubnetIdsHasBeenSet() const { return m_subnetIdsHasBeenSet; }
-    inline void SetSubnetIds(const Aws::Vector<Aws::String>& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = value; }
-    inline void SetSubnetIds(Aws::Vector<Aws::String>&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds = std::move(value); }
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithSubnetIds(const Aws::Vector<Aws::String>& value) { SetSubnetIds(value); return *this;}
-    inline VerifiedAccessEndpointLoadBalancerOptions& WithSubnetIds(Aws::Vector<Aws::String>&& value) { SetSubnetIds(std::move(value)); return *this;}
-    inline VerifiedAccessEndpointLoadBalancerOptions& AddSubnetIds(const Aws::String& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    inline VerifiedAccessEndpointLoadBalancerOptions& AddSubnetIds(Aws::String&& value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(std::move(value)); return *this; }
-    inline VerifiedAccessEndpointLoadBalancerOptions& AddSubnetIds(const char* value) { m_subnetIdsHasBeenSet = true; m_subnetIds.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_loadBalancerArn;
 
-    VerifiedAccessEndpointProtocol m_protocol;
-    bool m_protocolHasBeenSet = false;
+  Aws::Vector<Aws::String> m_subnetIds;
 
-    int m_port;
-    bool m_portHasBeenSet = false;
+  Aws::Vector<VerifiedAccessEndpointPortRange> m_portRanges;
+  bool m_protocolHasBeenSet = false;
+  bool m_portHasBeenSet = false;
+  bool m_loadBalancerArnHasBeenSet = false;
+  bool m_subnetIdsHasBeenSet = false;
+  bool m_portRangesHasBeenSet = false;
+};
 
-    Aws::String m_loadBalancerArn;
-    bool m_loadBalancerArnHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_subnetIds;
-    bool m_subnetIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

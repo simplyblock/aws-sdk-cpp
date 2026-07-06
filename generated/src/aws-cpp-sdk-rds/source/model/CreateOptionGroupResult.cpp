@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/CreateOptionGroupResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/rds/model/CreateOptionGroupResult.h>
 
 #include <utility>
 
@@ -17,38 +17,30 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateOptionGroupResult::CreateOptionGroupResult()
-{
-}
+CreateOptionGroupResult::CreateOptionGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-CreateOptionGroupResult::CreateOptionGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-CreateOptionGroupResult& CreateOptionGroupResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateOptionGroupResult& CreateOptionGroupResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateOptionGroupResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateOptionGroupResult")) {
     resultNode = rootNode.FirstChild("CreateOptionGroupResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode optionGroupNode = resultNode.FirstChild("OptionGroup");
-    if(!optionGroupNode.IsNull())
-    {
+    if (!optionGroupNode.IsNull()) {
       m_optionGroup = optionGroupNode;
+      m_optionGroupHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::CreateOptionGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::CreateOptionGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
 #include <aws/mediaconnect/model/BridgeOutput.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
-  class AddBridgeOutputsResult
-  {
-  public:
-    AWS_MEDIACONNECT_API AddBridgeOutputsResult();
-    AWS_MEDIACONNECT_API AddBridgeOutputsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIACONNECT_API AddBridgeOutputsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
+class AddBridgeOutputsResult {
+ public:
+  AWS_MEDIACONNECT_API AddBridgeOutputsResult() = default;
+  AWS_MEDIACONNECT_API AddBridgeOutputsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIACONNECT_API AddBridgeOutputsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The ARN of the bridge that you added outputs to.</p>
+   */
+  inline const Aws::String& GetBridgeArn() const { return m_bridgeArn; }
+  template <typename BridgeArnT = Aws::String>
+  void SetBridgeArn(BridgeArnT&& value) {
+    m_bridgeArnHasBeenSet = true;
+    m_bridgeArn = std::forward<BridgeArnT>(value);
+  }
+  template <typename BridgeArnT = Aws::String>
+  AddBridgeOutputsResult& WithBridgeArn(BridgeArnT&& value) {
+    SetBridgeArn(std::forward<BridgeArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The Amazon Resource Number (ARN) of the bridge.
-     */
-    inline const Aws::String& GetBridgeArn() const{ return m_bridgeArn; }
-    inline void SetBridgeArn(const Aws::String& value) { m_bridgeArn = value; }
-    inline void SetBridgeArn(Aws::String&& value) { m_bridgeArn = std::move(value); }
-    inline void SetBridgeArn(const char* value) { m_bridgeArn.assign(value); }
-    inline AddBridgeOutputsResult& WithBridgeArn(const Aws::String& value) { SetBridgeArn(value); return *this;}
-    inline AddBridgeOutputsResult& WithBridgeArn(Aws::String&& value) { SetBridgeArn(std::move(value)); return *this;}
-    inline AddBridgeOutputsResult& WithBridgeArn(const char* value) { SetBridgeArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The outputs that you added to this bridge.</p>
+   */
+  inline const Aws::Vector<BridgeOutput>& GetOutputs() const { return m_outputs; }
+  template <typename OutputsT = Aws::Vector<BridgeOutput>>
+  void SetOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs = std::forward<OutputsT>(value);
+  }
+  template <typename OutputsT = Aws::Vector<BridgeOutput>>
+  AddBridgeOutputsResult& WithOutputs(OutputsT&& value) {
+    SetOutputs(std::forward<OutputsT>(value));
+    return *this;
+  }
+  template <typename OutputsT = BridgeOutput>
+  AddBridgeOutputsResult& AddOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs.emplace_back(std::forward<OutputsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The outputs that you added to this bridge.
-     */
-    inline const Aws::Vector<BridgeOutput>& GetOutputs() const{ return m_outputs; }
-    inline void SetOutputs(const Aws::Vector<BridgeOutput>& value) { m_outputs = value; }
-    inline void SetOutputs(Aws::Vector<BridgeOutput>&& value) { m_outputs = std::move(value); }
-    inline AddBridgeOutputsResult& WithOutputs(const Aws::Vector<BridgeOutput>& value) { SetOutputs(value); return *this;}
-    inline AddBridgeOutputsResult& WithOutputs(Aws::Vector<BridgeOutput>&& value) { SetOutputs(std::move(value)); return *this;}
-    inline AddBridgeOutputsResult& AddOutputs(const BridgeOutput& value) { m_outputs.push_back(value); return *this; }
-    inline AddBridgeOutputsResult& AddOutputs(BridgeOutput&& value) { m_outputs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AddBridgeOutputsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AddBridgeOutputsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AddBridgeOutputsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AddBridgeOutputsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_bridgeArn;
+ private:
+  Aws::String m_bridgeArn;
 
-    Aws::Vector<BridgeOutput> m_outputs;
+  Aws::Vector<BridgeOutput> m_outputs;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bridgeArnHasBeenSet = false;
+  bool m_outputsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

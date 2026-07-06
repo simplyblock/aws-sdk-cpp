@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/PoolInformation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
-  class DescribePoolsResult
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult();
-    AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
+class DescribePoolsResult {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult() = default;
+  AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINTSMSVOICEV2_API DescribePoolsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of PoolInformation objects that contain the details for the
+   * requested pools. </p>
+   */
+  inline const Aws::Vector<PoolInformation>& GetPools() const { return m_pools; }
+  template <typename PoolsT = Aws::Vector<PoolInformation>>
+  void SetPools(PoolsT&& value) {
+    m_poolsHasBeenSet = true;
+    m_pools = std::forward<PoolsT>(value);
+  }
+  template <typename PoolsT = Aws::Vector<PoolInformation>>
+  DescribePoolsResult& WithPools(PoolsT&& value) {
+    SetPools(std::forward<PoolsT>(value));
+    return *this;
+  }
+  template <typename PoolsT = PoolInformation>
+  DescribePoolsResult& AddPools(PoolsT&& value) {
+    m_poolsHasBeenSet = true;
+    m_pools.emplace_back(std::forward<PoolsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of PoolInformation objects that contain the details for the
-     * requested pools. </p>
-     */
-    inline const Aws::Vector<PoolInformation>& GetPools() const{ return m_pools; }
-    inline void SetPools(const Aws::Vector<PoolInformation>& value) { m_pools = value; }
-    inline void SetPools(Aws::Vector<PoolInformation>&& value) { m_pools = std::move(value); }
-    inline DescribePoolsResult& WithPools(const Aws::Vector<PoolInformation>& value) { SetPools(value); return *this;}
-    inline DescribePoolsResult& WithPools(Aws::Vector<PoolInformation>&& value) { SetPools(std::move(value)); return *this;}
-    inline DescribePoolsResult& AddPools(const PoolInformation& value) { m_pools.push_back(value); return *this; }
-    inline DescribePoolsResult& AddPools(PoolInformation&& value) { m_pools.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to be used for the next set of paginated results. If this field is
+   * empty then there are no more results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribePoolsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to be used for the next set of paginated results. If this field is
-     * empty then there are no more results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribePoolsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribePoolsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribePoolsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribePoolsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribePoolsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribePoolsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribePoolsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PoolInformation> m_pools;
+ private:
+  Aws::Vector<PoolInformation> m_pools;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_poolsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

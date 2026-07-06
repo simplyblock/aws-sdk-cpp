@@ -4,93 +4,104 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/workdocs/model/PrincipalType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
 #include <aws/workdocs/model/PermissionInfo.h>
+#include <aws/workdocs/model/PrincipalType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WorkDocs
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkDocs {
+namespace Model {
 
+/**
+ * <p>Describes a resource.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/Principal">AWS
+ * API Reference</a></p>
+ */
+class Principal {
+ public:
+  AWS_WORKDOCS_API Principal() = default;
+  AWS_WORKDOCS_API Principal(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKDOCS_API Principal& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WORKDOCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes a resource.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/workdocs-2016-05-01/Principal">AWS
-   * API Reference</a></p>
+   * <p>The ID of the resource.</p>
    */
-  class Principal
-  {
-  public:
-    AWS_WORKDOCS_API Principal();
-    AWS_WORKDOCS_API Principal(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKDOCS_API Principal& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WORKDOCS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  Principal& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The type of resource.</p>
+   */
+  inline PrincipalType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(PrincipalType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline Principal& WithType(PrincipalType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the resource.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline Principal& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline Principal& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline Principal& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The permission information for the resource.</p>
+   */
+  inline const Aws::Vector<PermissionInfo>& GetRoles() const { return m_roles; }
+  inline bool RolesHasBeenSet() const { return m_rolesHasBeenSet; }
+  template <typename RolesT = Aws::Vector<PermissionInfo>>
+  void SetRoles(RolesT&& value) {
+    m_rolesHasBeenSet = true;
+    m_roles = std::forward<RolesT>(value);
+  }
+  template <typename RolesT = Aws::Vector<PermissionInfo>>
+  Principal& WithRoles(RolesT&& value) {
+    SetRoles(std::forward<RolesT>(value));
+    return *this;
+  }
+  template <typename RolesT = PermissionInfo>
+  Principal& AddRoles(RolesT&& value) {
+    m_rolesHasBeenSet = true;
+    m_roles.emplace_back(std::forward<RolesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>The type of resource.</p>
-     */
-    inline const PrincipalType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const PrincipalType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(PrincipalType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline Principal& WithType(const PrincipalType& value) { SetType(value); return *this;}
-    inline Principal& WithType(PrincipalType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  PrincipalType m_type{PrincipalType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The permission information for the resource.</p>
-     */
-    inline const Aws::Vector<PermissionInfo>& GetRoles() const{ return m_roles; }
-    inline bool RolesHasBeenSet() const { return m_rolesHasBeenSet; }
-    inline void SetRoles(const Aws::Vector<PermissionInfo>& value) { m_rolesHasBeenSet = true; m_roles = value; }
-    inline void SetRoles(Aws::Vector<PermissionInfo>&& value) { m_rolesHasBeenSet = true; m_roles = std::move(value); }
-    inline Principal& WithRoles(const Aws::Vector<PermissionInfo>& value) { SetRoles(value); return *this;}
-    inline Principal& WithRoles(Aws::Vector<PermissionInfo>&& value) { SetRoles(std::move(value)); return *this;}
-    inline Principal& AddRoles(const PermissionInfo& value) { m_rolesHasBeenSet = true; m_roles.push_back(value); return *this; }
-    inline Principal& AddRoles(PermissionInfo&& value) { m_rolesHasBeenSet = true; m_roles.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<PermissionInfo> m_roles;
+  bool m_idHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_rolesHasBeenSet = false;
+};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    PrincipalType m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::Vector<PermissionInfo> m_roles;
-    bool m_rolesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/chime-sdk-identity/model/AppInstance.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
-  class DescribeAppInstanceResult
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult();
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKIdentity {
+namespace Model {
+class DescribeAppInstanceResult {
+ public:
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult() = default;
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN, metadata, created and last-updated timestamps, and the name of the
+   * <code>AppInstance</code>. All timestamps use epoch milliseconds.</p>
+   */
+  inline const AppInstance& GetAppInstance() const { return m_appInstance; }
+  template <typename AppInstanceT = AppInstance>
+  void SetAppInstance(AppInstanceT&& value) {
+    m_appInstanceHasBeenSet = true;
+    m_appInstance = std::forward<AppInstanceT>(value);
+  }
+  template <typename AppInstanceT = AppInstance>
+  DescribeAppInstanceResult& WithAppInstance(AppInstanceT&& value) {
+    SetAppInstance(std::forward<AppInstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN, metadata, created and last-updated timestamps, and the name of the
-     * <code>AppInstance</code>. All timestamps use epoch milliseconds.</p>
-     */
-    inline const AppInstance& GetAppInstance() const{ return m_appInstance; }
-    inline void SetAppInstance(const AppInstance& value) { m_appInstance = value; }
-    inline void SetAppInstance(AppInstance&& value) { m_appInstance = std::move(value); }
-    inline DescribeAppInstanceResult& WithAppInstance(const AppInstance& value) { SetAppInstance(value); return *this;}
-    inline DescribeAppInstanceResult& WithAppInstance(AppInstance&& value) { SetAppInstance(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAppInstanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAppInstanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAppInstanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAppInstanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppInstance m_appInstance;
+ private:
+  AppInstance m_appInstance;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appInstanceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

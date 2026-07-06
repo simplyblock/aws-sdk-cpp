@@ -4,94 +4,119 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/MemberIdArnPair.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
-  class ListFolderMembersResult
-  {
-  public:
-    AWS_QUICKSIGHT_API ListFolderMembersResult();
-    AWS_QUICKSIGHT_API ListFolderMembersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QUICKSIGHT_API ListFolderMembersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
+class ListFolderMembersResult {
+ public:
+  AWS_QUICKSIGHT_API ListFolderMembersResult() = default;
+  AWS_QUICKSIGHT_API ListFolderMembersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QUICKSIGHT_API ListFolderMembersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The HTTP status of the request.</p>
+   */
+  inline int GetStatus() const { return m_status; }
+  inline void SetStatus(int value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ListFolderMembersResult& WithStatus(int value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status of the request.</p>
-     */
-    inline int GetStatus() const{ return m_status; }
-    inline void SetStatus(int value) { m_status = value; }
-    inline ListFolderMembersResult& WithStatus(int value) { SetStatus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A structure that contains all of the folder members (dashboards, analyses,
+   * and datasets) in the folder.</p>
+   */
+  inline const Aws::Vector<MemberIdArnPair>& GetFolderMemberList() const { return m_folderMemberList; }
+  template <typename FolderMemberListT = Aws::Vector<MemberIdArnPair>>
+  void SetFolderMemberList(FolderMemberListT&& value) {
+    m_folderMemberListHasBeenSet = true;
+    m_folderMemberList = std::forward<FolderMemberListT>(value);
+  }
+  template <typename FolderMemberListT = Aws::Vector<MemberIdArnPair>>
+  ListFolderMembersResult& WithFolderMemberList(FolderMemberListT&& value) {
+    SetFolderMemberList(std::forward<FolderMemberListT>(value));
+    return *this;
+  }
+  template <typename FolderMemberListT = MemberIdArnPair>
+  ListFolderMembersResult& AddFolderMemberList(FolderMemberListT&& value) {
+    m_folderMemberListHasBeenSet = true;
+    m_folderMemberList.emplace_back(std::forward<FolderMemberListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains all of the folder members (dashboards, analyses,
-     * and datasets) in the folder.</p>
-     */
-    inline const Aws::Vector<MemberIdArnPair>& GetFolderMemberList() const{ return m_folderMemberList; }
-    inline void SetFolderMemberList(const Aws::Vector<MemberIdArnPair>& value) { m_folderMemberList = value; }
-    inline void SetFolderMemberList(Aws::Vector<MemberIdArnPair>&& value) { m_folderMemberList = std::move(value); }
-    inline ListFolderMembersResult& WithFolderMemberList(const Aws::Vector<MemberIdArnPair>& value) { SetFolderMemberList(value); return *this;}
-    inline ListFolderMembersResult& WithFolderMemberList(Aws::Vector<MemberIdArnPair>&& value) { SetFolderMemberList(std::move(value)); return *this;}
-    inline ListFolderMembersResult& AddFolderMemberList(const MemberIdArnPair& value) { m_folderMemberList.push_back(value); return *this; }
-    inline ListFolderMembersResult& AddFolderMemberList(MemberIdArnPair&& value) { m_folderMemberList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token for the next set of results, or null if there are no more
+   * results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFolderMembersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of results, or null if there are no more
-     * results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFolderMembersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFolderMembersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFolderMembersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFolderMembersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFolderMembersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFolderMembersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFolderMembersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    int m_status;
+ private:
+  int m_status{0};
 
-    Aws::Vector<MemberIdArnPair> m_folderMemberList;
+  Aws::Vector<MemberIdArnPair> m_folderMemberList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_folderMemberListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

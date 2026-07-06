@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/ds/DirectoryService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ds/DirectoryService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectoryService
-{
-namespace Model
-{
-  class UpdateSettingsResult
-  {
-  public:
-    AWS_DIRECTORYSERVICE_API UpdateSettingsResult();
-    AWS_DIRECTORYSERVICE_API UpdateSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTORYSERVICE_API UpdateSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectoryService {
+namespace Model {
+class UpdateSettingsResult {
+ public:
+  AWS_DIRECTORYSERVICE_API UpdateSettingsResult() = default;
+  AWS_DIRECTORYSERVICE_API UpdateSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTORYSERVICE_API UpdateSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the directory.</p>
+   */
+  inline const Aws::String& GetDirectoryId() const { return m_directoryId; }
+  template <typename DirectoryIdT = Aws::String>
+  void SetDirectoryId(DirectoryIdT&& value) {
+    m_directoryIdHasBeenSet = true;
+    m_directoryId = std::forward<DirectoryIdT>(value);
+  }
+  template <typename DirectoryIdT = Aws::String>
+  UpdateSettingsResult& WithDirectoryId(DirectoryIdT&& value) {
+    SetDirectoryId(std::forward<DirectoryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the directory.</p>
-     */
-    inline const Aws::String& GetDirectoryId() const{ return m_directoryId; }
-    inline void SetDirectoryId(const Aws::String& value) { m_directoryId = value; }
-    inline void SetDirectoryId(Aws::String&& value) { m_directoryId = std::move(value); }
-    inline void SetDirectoryId(const char* value) { m_directoryId.assign(value); }
-    inline UpdateSettingsResult& WithDirectoryId(const Aws::String& value) { SetDirectoryId(value); return *this;}
-    inline UpdateSettingsResult& WithDirectoryId(Aws::String&& value) { SetDirectoryId(std::move(value)); return *this;}
-    inline UpdateSettingsResult& WithDirectoryId(const char* value) { SetDirectoryId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSettingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSettingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSettingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSettingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_directoryId;
+ private:
+  Aws::String m_directoryId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_directoryIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

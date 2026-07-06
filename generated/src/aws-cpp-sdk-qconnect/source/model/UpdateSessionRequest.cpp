@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/qconnect/model/UpdateSessionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/qconnect/model/UpdateSessionRequest.h>
 
 #include <utility>
 
@@ -12,45 +12,39 @@ using namespace Aws::QConnect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateSessionRequest::UpdateSessionRequest() : 
-    m_aiAgentConfigurationHasBeenSet(false),
-    m_assistantIdHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_sessionIdHasBeenSet(false),
-    m_tagFilterHasBeenSet(false)
-{
-}
-
-Aws::String UpdateSessionRequest::SerializePayload() const
-{
+Aws::String UpdateSessionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_aiAgentConfigurationHasBeenSet)
-  {
-   JsonValue aiAgentConfigurationJsonMap;
-   for(auto& aiAgentConfigurationItem : m_aiAgentConfiguration)
-   {
-     aiAgentConfigurationJsonMap.WithObject(AIAgentTypeMapper::GetNameForAIAgentType(aiAgentConfigurationItem.first), aiAgentConfigurationItem.second.Jsonize());
-   }
-   payload.WithObject("aiAgentConfiguration", std::move(aiAgentConfigurationJsonMap));
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_tagFilterHasBeenSet) {
+    payload.WithObject("tagFilter", m_tagFilter.Jsonize());
   }
 
-  if(m_tagFilterHasBeenSet)
-  {
-   payload.WithObject("tagFilter", m_tagFilter.Jsonize());
+  if (m_aiAgentConfigurationHasBeenSet) {
+    JsonValue aiAgentConfigurationJsonMap;
+    for (auto& aiAgentConfigurationItem : m_aiAgentConfiguration) {
+      aiAgentConfigurationJsonMap.WithObject(AIAgentTypeMapper::GetNameForAIAgentType(aiAgentConfigurationItem.first),
+                                             aiAgentConfigurationItem.second.Jsonize());
+    }
+    payload.WithObject("aiAgentConfiguration", std::move(aiAgentConfigurationJsonMap));
+  }
 
+  if (m_orchestratorConfigurationListHasBeenSet) {
+    Aws::Utils::Array<JsonValue> orchestratorConfigurationListJsonList(m_orchestratorConfigurationList.size());
+    for (unsigned orchestratorConfigurationListIndex = 0;
+         orchestratorConfigurationListIndex < orchestratorConfigurationListJsonList.GetLength(); ++orchestratorConfigurationListIndex) {
+      orchestratorConfigurationListJsonList[orchestratorConfigurationListIndex].AsObject(
+          m_orchestratorConfigurationList[orchestratorConfigurationListIndex].Jsonize());
+    }
+    payload.WithArray("orchestratorConfigurationList", std::move(orchestratorConfigurationListJsonList));
+  }
+
+  if (m_removeOrchestratorConfigurationListHasBeenSet) {
+    payload.WithBool("removeOrchestratorConfigurationList", m_removeOrchestratorConfigurationList);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -12,26 +12,12 @@ using namespace Aws::AmplifyUIBuilder::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutMetadataFlagRequest::PutMetadataFlagRequest() : 
-    m_appIdHasBeenSet(false),
-    m_environmentNameHasBeenSet(false),
-    m_featureNameHasBeenSet(false),
-    m_bodyHasBeenSet(false)
-{
-}
-
-Aws::String PutMetadataFlagRequest::SerializePayload() const
-{
+Aws::String PutMetadataFlagRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_bodyHasBeenSet)
-  {
-   payload = m_body.Jsonize();
+  if (m_bodyHasBeenSet) {
+    payload = m_body.Jsonize();
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

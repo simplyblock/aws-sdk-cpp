@@ -4,103 +4,131 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/servicecatalog/model/ProductViewSummary.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
 #include <aws/servicecatalog/model/ProductViewAggregationValue.h>
+#include <aws/servicecatalog/model/ProductViewSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ServiceCatalog
-{
-namespace Model
-{
-  class SearchProductsResult
-  {
-  public:
-    AWS_SERVICECATALOG_API SearchProductsResult();
-    AWS_SERVICECATALOG_API SearchProductsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SERVICECATALOG_API SearchProductsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ServiceCatalog {
+namespace Model {
+class SearchProductsResult {
+ public:
+  AWS_SERVICECATALOG_API SearchProductsResult() = default;
+  AWS_SERVICECATALOG_API SearchProductsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SERVICECATALOG_API SearchProductsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the product views.</p>
+   */
+  inline const Aws::Vector<ProductViewSummary>& GetProductViewSummaries() const { return m_productViewSummaries; }
+  template <typename ProductViewSummariesT = Aws::Vector<ProductViewSummary>>
+  void SetProductViewSummaries(ProductViewSummariesT&& value) {
+    m_productViewSummariesHasBeenSet = true;
+    m_productViewSummaries = std::forward<ProductViewSummariesT>(value);
+  }
+  template <typename ProductViewSummariesT = Aws::Vector<ProductViewSummary>>
+  SearchProductsResult& WithProductViewSummaries(ProductViewSummariesT&& value) {
+    SetProductViewSummaries(std::forward<ProductViewSummariesT>(value));
+    return *this;
+  }
+  template <typename ProductViewSummariesT = ProductViewSummary>
+  SearchProductsResult& AddProductViewSummaries(ProductViewSummariesT&& value) {
+    m_productViewSummariesHasBeenSet = true;
+    m_productViewSummaries.emplace_back(std::forward<ProductViewSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the product views.</p>
-     */
-    inline const Aws::Vector<ProductViewSummary>& GetProductViewSummaries() const{ return m_productViewSummaries; }
-    inline void SetProductViewSummaries(const Aws::Vector<ProductViewSummary>& value) { m_productViewSummaries = value; }
-    inline void SetProductViewSummaries(Aws::Vector<ProductViewSummary>&& value) { m_productViewSummaries = std::move(value); }
-    inline SearchProductsResult& WithProductViewSummaries(const Aws::Vector<ProductViewSummary>& value) { SetProductViewSummaries(value); return *this;}
-    inline SearchProductsResult& WithProductViewSummaries(Aws::Vector<ProductViewSummary>&& value) { SetProductViewSummaries(std::move(value)); return *this;}
-    inline SearchProductsResult& AddProductViewSummaries(const ProductViewSummary& value) { m_productViewSummaries.push_back(value); return *this; }
-    inline SearchProductsResult& AddProductViewSummaries(ProductViewSummary&& value) { m_productViewSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The product view aggregations.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>& GetProductViewAggregations() const {
+    return m_productViewAggregations;
+  }
+  template <typename ProductViewAggregationsT = Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>>
+  void SetProductViewAggregations(ProductViewAggregationsT&& value) {
+    m_productViewAggregationsHasBeenSet = true;
+    m_productViewAggregations = std::forward<ProductViewAggregationsT>(value);
+  }
+  template <typename ProductViewAggregationsT = Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>>
+  SearchProductsResult& WithProductViewAggregations(ProductViewAggregationsT&& value) {
+    SetProductViewAggregations(std::forward<ProductViewAggregationsT>(value));
+    return *this;
+  }
+  template <typename ProductViewAggregationsKeyT = Aws::String,
+            typename ProductViewAggregationsValueT = Aws::Vector<ProductViewAggregationValue>>
+  SearchProductsResult& AddProductViewAggregations(ProductViewAggregationsKeyT&& key, ProductViewAggregationsValueT&& value) {
+    m_productViewAggregationsHasBeenSet = true;
+    m_productViewAggregations.emplace(std::forward<ProductViewAggregationsKeyT>(key), std::forward<ProductViewAggregationsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The product view aggregations.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>& GetProductViewAggregations() const{ return m_productViewAggregations; }
-    inline void SetProductViewAggregations(const Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>& value) { m_productViewAggregations = value; }
-    inline void SetProductViewAggregations(Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>&& value) { m_productViewAggregations = std::move(value); }
-    inline SearchProductsResult& WithProductViewAggregations(const Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>& value) { SetProductViewAggregations(value); return *this;}
-    inline SearchProductsResult& WithProductViewAggregations(Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>>&& value) { SetProductViewAggregations(std::move(value)); return *this;}
-    inline SearchProductsResult& AddProductViewAggregations(const Aws::String& key, const Aws::Vector<ProductViewAggregationValue>& value) { m_productViewAggregations.emplace(key, value); return *this; }
-    inline SearchProductsResult& AddProductViewAggregations(Aws::String&& key, const Aws::Vector<ProductViewAggregationValue>& value) { m_productViewAggregations.emplace(std::move(key), value); return *this; }
-    inline SearchProductsResult& AddProductViewAggregations(const Aws::String& key, Aws::Vector<ProductViewAggregationValue>&& value) { m_productViewAggregations.emplace(key, std::move(value)); return *this; }
-    inline SearchProductsResult& AddProductViewAggregations(Aws::String&& key, Aws::Vector<ProductViewAggregationValue>&& value) { m_productViewAggregations.emplace(std::move(key), std::move(value)); return *this; }
-    inline SearchProductsResult& AddProductViewAggregations(const char* key, Aws::Vector<ProductViewAggregationValue>&& value) { m_productViewAggregations.emplace(key, std::move(value)); return *this; }
-    inline SearchProductsResult& AddProductViewAggregations(const char* key, const Aws::Vector<ProductViewAggregationValue>& value) { m_productViewAggregations.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The page token to use to retrieve the next set of results. If there are no
+   * additional results, this value is null.</p>
+   */
+  inline const Aws::String& GetNextPageToken() const { return m_nextPageToken; }
+  template <typename NextPageTokenT = Aws::String>
+  void SetNextPageToken(NextPageTokenT&& value) {
+    m_nextPageTokenHasBeenSet = true;
+    m_nextPageToken = std::forward<NextPageTokenT>(value);
+  }
+  template <typename NextPageTokenT = Aws::String>
+  SearchProductsResult& WithNextPageToken(NextPageTokenT&& value) {
+    SetNextPageToken(std::forward<NextPageTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The page token to use to retrieve the next set of results. If there are no
-     * additional results, this value is null.</p>
-     */
-    inline const Aws::String& GetNextPageToken() const{ return m_nextPageToken; }
-    inline void SetNextPageToken(const Aws::String& value) { m_nextPageToken = value; }
-    inline void SetNextPageToken(Aws::String&& value) { m_nextPageToken = std::move(value); }
-    inline void SetNextPageToken(const char* value) { m_nextPageToken.assign(value); }
-    inline SearchProductsResult& WithNextPageToken(const Aws::String& value) { SetNextPageToken(value); return *this;}
-    inline SearchProductsResult& WithNextPageToken(Aws::String&& value) { SetNextPageToken(std::move(value)); return *this;}
-    inline SearchProductsResult& WithNextPageToken(const char* value) { SetNextPageToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SearchProductsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SearchProductsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SearchProductsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SearchProductsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ProductViewSummary> m_productViewSummaries;
+ private:
+  Aws::Vector<ProductViewSummary> m_productViewSummaries;
 
-    Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>> m_productViewAggregations;
+  Aws::Map<Aws::String, Aws::Vector<ProductViewAggregationValue>> m_productViewAggregations;
 
-    Aws::String m_nextPageToken;
+  Aws::String m_nextPageToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_productViewSummariesHasBeenSet = false;
+  bool m_productViewAggregationsHasBeenSet = false;
+  bool m_nextPageTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

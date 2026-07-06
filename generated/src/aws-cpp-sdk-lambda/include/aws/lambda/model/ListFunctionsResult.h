@@ -4,86 +4,104 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/lambda/model/FunctionConfiguration.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+/**
+ * <p>A list of Lambda functions.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListFunctionsResponse">AWS
+ * API Reference</a></p>
+ */
+class ListFunctionsResult {
+ public:
+  AWS_LAMBDA_API ListFunctionsResult() = default;
+  AWS_LAMBDA_API ListFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAMBDA_API ListFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>A list of Lambda functions.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListFunctionsResponse">AWS
-   * API Reference</a></p>
+   * <p>The pagination token that's included if more results are available.</p>
    */
-  class ListFunctionsResult
-  {
-  public:
-    AWS_LAMBDA_API ListFunctionsResult();
-    AWS_LAMBDA_API ListFunctionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAMBDA_API ListFunctionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetNextMarker() const { return m_nextMarker; }
+  template <typename NextMarkerT = Aws::String>
+  void SetNextMarker(NextMarkerT&& value) {
+    m_nextMarkerHasBeenSet = true;
+    m_nextMarker = std::forward<NextMarkerT>(value);
+  }
+  template <typename NextMarkerT = Aws::String>
+  ListFunctionsResult& WithNextMarker(NextMarkerT&& value) {
+    SetNextMarker(std::forward<NextMarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of Lambda functions.</p>
+   */
+  inline const Aws::Vector<FunctionConfiguration>& GetFunctions() const { return m_functions; }
+  template <typename FunctionsT = Aws::Vector<FunctionConfiguration>>
+  void SetFunctions(FunctionsT&& value) {
+    m_functionsHasBeenSet = true;
+    m_functions = std::forward<FunctionsT>(value);
+  }
+  template <typename FunctionsT = Aws::Vector<FunctionConfiguration>>
+  ListFunctionsResult& WithFunctions(FunctionsT&& value) {
+    SetFunctions(std::forward<FunctionsT>(value));
+    return *this;
+  }
+  template <typename FunctionsT = FunctionConfiguration>
+  ListFunctionsResult& AddFunctions(FunctionsT&& value) {
+    m_functionsHasBeenSet = true;
+    m_functions.emplace_back(std::forward<FunctionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that's included if more results are available.</p>
-     */
-    inline const Aws::String& GetNextMarker() const{ return m_nextMarker; }
-    inline void SetNextMarker(const Aws::String& value) { m_nextMarker = value; }
-    inline void SetNextMarker(Aws::String&& value) { m_nextMarker = std::move(value); }
-    inline void SetNextMarker(const char* value) { m_nextMarker.assign(value); }
-    inline ListFunctionsResult& WithNextMarker(const Aws::String& value) { SetNextMarker(value); return *this;}
-    inline ListFunctionsResult& WithNextMarker(Aws::String&& value) { SetNextMarker(std::move(value)); return *this;}
-    inline ListFunctionsResult& WithNextMarker(const char* value) { SetNextMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of Lambda functions.</p>
-     */
-    inline const Aws::Vector<FunctionConfiguration>& GetFunctions() const{ return m_functions; }
-    inline void SetFunctions(const Aws::Vector<FunctionConfiguration>& value) { m_functions = value; }
-    inline void SetFunctions(Aws::Vector<FunctionConfiguration>&& value) { m_functions = std::move(value); }
-    inline ListFunctionsResult& WithFunctions(const Aws::Vector<FunctionConfiguration>& value) { SetFunctions(value); return *this;}
-    inline ListFunctionsResult& WithFunctions(Aws::Vector<FunctionConfiguration>&& value) { SetFunctions(std::move(value)); return *this;}
-    inline ListFunctionsResult& AddFunctions(const FunctionConfiguration& value) { m_functions.push_back(value); return *this; }
-    inline ListFunctionsResult& AddFunctions(FunctionConfiguration&& value) { m_functions.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFunctionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFunctionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFunctionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFunctionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_nextMarker;
 
-    Aws::String m_nextMarker;
+  Aws::Vector<FunctionConfiguration> m_functions;
 
-    Aws::Vector<FunctionConfiguration> m_functions;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextMarkerHasBeenSet = false;
+  bool m_functionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

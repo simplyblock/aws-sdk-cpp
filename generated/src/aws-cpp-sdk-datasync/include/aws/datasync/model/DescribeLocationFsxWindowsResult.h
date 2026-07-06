@@ -4,147 +4,257 @@
  */
 
 #pragma once
-#include <aws/datasync/DataSync_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/datasync/DataSync_EXPORTS.h>
+#include <aws/datasync/model/CmkSecretConfig.h>
+#include <aws/datasync/model/CustomSecretConfig.h>
+#include <aws/datasync/model/ManagedSecretConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataSync
-{
-namespace Model
-{
-  class DescribeLocationFsxWindowsResult
-  {
-  public:
-    AWS_DATASYNC_API DescribeLocationFsxWindowsResult();
-    AWS_DATASYNC_API DescribeLocationFsxWindowsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATASYNC_API DescribeLocationFsxWindowsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataSync {
+namespace Model {
+class DescribeLocationFsxWindowsResult {
+ public:
+  AWS_DATASYNC_API DescribeLocationFsxWindowsResult() = default;
+  AWS_DATASYNC_API DescribeLocationFsxWindowsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATASYNC_API DescribeLocationFsxWindowsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the FSx for Windows File Server location.</p>
+   */
+  inline const Aws::String& GetLocationArn() const { return m_locationArn; }
+  template <typename LocationArnT = Aws::String>
+  void SetLocationArn(LocationArnT&& value) {
+    m_locationArnHasBeenSet = true;
+    m_locationArn = std::forward<LocationArnT>(value);
+  }
+  template <typename LocationArnT = Aws::String>
+  DescribeLocationFsxWindowsResult& WithLocationArn(LocationArnT&& value) {
+    SetLocationArn(std::forward<LocationArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the FSx for Windows File Server location.</p>
-     */
-    inline const Aws::String& GetLocationArn() const{ return m_locationArn; }
-    inline void SetLocationArn(const Aws::String& value) { m_locationArn = value; }
-    inline void SetLocationArn(Aws::String&& value) { m_locationArn = std::move(value); }
-    inline void SetLocationArn(const char* value) { m_locationArn.assign(value); }
-    inline DescribeLocationFsxWindowsResult& WithLocationArn(const Aws::String& value) { SetLocationArn(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithLocationArn(Aws::String&& value) { SetLocationArn(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithLocationArn(const char* value) { SetLocationArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The uniform resource identifier (URI) of the FSx for Windows File Server
+   * location.</p>
+   */
+  inline const Aws::String& GetLocationUri() const { return m_locationUri; }
+  template <typename LocationUriT = Aws::String>
+  void SetLocationUri(LocationUriT&& value) {
+    m_locationUriHasBeenSet = true;
+    m_locationUri = std::forward<LocationUriT>(value);
+  }
+  template <typename LocationUriT = Aws::String>
+  DescribeLocationFsxWindowsResult& WithLocationUri(LocationUriT&& value) {
+    SetLocationUri(std::forward<LocationUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The uniform resource identifier (URI) of the FSx for Windows File Server
-     * location.</p>
-     */
-    inline const Aws::String& GetLocationUri() const{ return m_locationUri; }
-    inline void SetLocationUri(const Aws::String& value) { m_locationUri = value; }
-    inline void SetLocationUri(Aws::String&& value) { m_locationUri = std::move(value); }
-    inline void SetLocationUri(const char* value) { m_locationUri.assign(value); }
-    inline DescribeLocationFsxWindowsResult& WithLocationUri(const Aws::String& value) { SetLocationUri(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithLocationUri(Aws::String&& value) { SetLocationUri(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithLocationUri(const char* value) { SetLocationUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARNs of the Amazon EC2 security groups that provide access to your file
+   * system's preferred subnet.</p> <p>For information about configuring security
+   * groups for file system access, see the <a
+   * href="https://docs.aws.amazon.com/fsx/latest/WindowsGuide/limit-access-security-groups.html">
+   * <i>Amazon FSx for Windows File Server User Guide</i> </a>.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupArns() const { return m_securityGroupArns; }
+  template <typename SecurityGroupArnsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupArns(SecurityGroupArnsT&& value) {
+    m_securityGroupArnsHasBeenSet = true;
+    m_securityGroupArns = std::forward<SecurityGroupArnsT>(value);
+  }
+  template <typename SecurityGroupArnsT = Aws::Vector<Aws::String>>
+  DescribeLocationFsxWindowsResult& WithSecurityGroupArns(SecurityGroupArnsT&& value) {
+    SetSecurityGroupArns(std::forward<SecurityGroupArnsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupArnsT = Aws::String>
+  DescribeLocationFsxWindowsResult& AddSecurityGroupArns(SecurityGroupArnsT&& value) {
+    m_securityGroupArnsHasBeenSet = true;
+    m_securityGroupArns.emplace_back(std::forward<SecurityGroupArnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARNs of the Amazon EC2 security groups that provide access to your file
-     * system's preferred subnet.</p> <p>For information about configuring security
-     * groups for file system access, see the <a
-     * href="https://docs.aws.amazon.com/fsx/latest/WindowsGuide/limit-access-security-groups.html">
-     * <i>Amazon FSx for Windows File Server User Guide</i> </a>.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupArns() const{ return m_securityGroupArns; }
-    inline void SetSecurityGroupArns(const Aws::Vector<Aws::String>& value) { m_securityGroupArns = value; }
-    inline void SetSecurityGroupArns(Aws::Vector<Aws::String>&& value) { m_securityGroupArns = std::move(value); }
-    inline DescribeLocationFsxWindowsResult& WithSecurityGroupArns(const Aws::Vector<Aws::String>& value) { SetSecurityGroupArns(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithSecurityGroupArns(Aws::Vector<Aws::String>&& value) { SetSecurityGroupArns(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& AddSecurityGroupArns(const Aws::String& value) { m_securityGroupArns.push_back(value); return *this; }
-    inline DescribeLocationFsxWindowsResult& AddSecurityGroupArns(Aws::String&& value) { m_securityGroupArns.push_back(std::move(value)); return *this; }
-    inline DescribeLocationFsxWindowsResult& AddSecurityGroupArns(const char* value) { m_securityGroupArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The time that the FSx for Windows File Server location was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeLocationFsxWindowsResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that the FSx for Windows File Server location was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeLocationFsxWindowsResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The user with the permissions to mount and access the FSx for Windows File
+   * Server file system.</p>
+   */
+  inline const Aws::String& GetUser() const { return m_user; }
+  template <typename UserT = Aws::String>
+  void SetUser(UserT&& value) {
+    m_userHasBeenSet = true;
+    m_user = std::forward<UserT>(value);
+  }
+  template <typename UserT = Aws::String>
+  DescribeLocationFsxWindowsResult& WithUser(UserT&& value) {
+    SetUser(std::forward<UserT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The user with the permissions to mount and access the FSx for Windows File
-     * Server file system.</p>
-     */
-    inline const Aws::String& GetUser() const{ return m_user; }
-    inline void SetUser(const Aws::String& value) { m_user = value; }
-    inline void SetUser(Aws::String&& value) { m_user = std::move(value); }
-    inline void SetUser(const char* value) { m_user.assign(value); }
-    inline DescribeLocationFsxWindowsResult& WithUser(const Aws::String& value) { SetUser(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithUser(Aws::String&& value) { SetUser(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithUser(const char* value) { SetUser(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the Microsoft Active Directory domain that the FSx for Windows
+   * File Server file system belongs to.</p>
+   */
+  inline const Aws::String& GetDomain() const { return m_domain; }
+  template <typename DomainT = Aws::String>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = Aws::String>
+  DescribeLocationFsxWindowsResult& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the Microsoft Active Directory domain that the FSx for Windows
-     * File Server file system belongs to.</p>
-     */
-    inline const Aws::String& GetDomain() const{ return m_domain; }
-    inline void SetDomain(const Aws::String& value) { m_domain = value; }
-    inline void SetDomain(Aws::String&& value) { m_domain = std::move(value); }
-    inline void SetDomain(const char* value) { m_domain.assign(value); }
-    inline DescribeLocationFsxWindowsResult& WithDomain(const Aws::String& value) { SetDomain(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithDomain(Aws::String&& value) { SetDomain(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithDomain(const char* value) { SetDomain(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes configuration information for a DataSync-managed secret, such as a
+   * <code>Password</code> that DataSync uses to access a specific storage location.
+   * DataSync uses the default Amazon Web Services-managed KMS key to encrypt this
+   * secret in Secrets Manager.</p>
+   */
+  inline const ManagedSecretConfig& GetManagedSecretConfig() const { return m_managedSecretConfig; }
+  template <typename ManagedSecretConfigT = ManagedSecretConfig>
+  void SetManagedSecretConfig(ManagedSecretConfigT&& value) {
+    m_managedSecretConfigHasBeenSet = true;
+    m_managedSecretConfig = std::forward<ManagedSecretConfigT>(value);
+  }
+  template <typename ManagedSecretConfigT = ManagedSecretConfig>
+  DescribeLocationFsxWindowsResult& WithManagedSecretConfig(ManagedSecretConfigT&& value) {
+    SetManagedSecretConfig(std::forward<ManagedSecretConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeLocationFsxWindowsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeLocationFsxWindowsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Describes configuration information for a DataSync-managed secret, such as a
+   * <code>Password</code> that DataSync uses to access a specific storage location,
+   * with a customer-managed KMS key.</p>
+   */
+  inline const CmkSecretConfig& GetCmkSecretConfig() const { return m_cmkSecretConfig; }
+  template <typename CmkSecretConfigT = CmkSecretConfig>
+  void SetCmkSecretConfig(CmkSecretConfigT&& value) {
+    m_cmkSecretConfigHasBeenSet = true;
+    m_cmkSecretConfig = std::forward<CmkSecretConfigT>(value);
+  }
+  template <typename CmkSecretConfigT = CmkSecretConfig>
+  DescribeLocationFsxWindowsResult& WithCmkSecretConfig(CmkSecretConfigT&& value) {
+    SetCmkSecretConfig(std::forward<CmkSecretConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_locationArn;
+  ///@{
+  /**
+   * <p>Describes configuration information for a customer-managed secret, such as a
+   * <code>Password</code> that DataSync uses to access a specific storage location,
+   * with a customer-managed Identity and Access Management (IAM) role that provides
+   * access to the secret.</p>
+   */
+  inline const CustomSecretConfig& GetCustomSecretConfig() const { return m_customSecretConfig; }
+  template <typename CustomSecretConfigT = CustomSecretConfig>
+  void SetCustomSecretConfig(CustomSecretConfigT&& value) {
+    m_customSecretConfigHasBeenSet = true;
+    m_customSecretConfig = std::forward<CustomSecretConfigT>(value);
+  }
+  template <typename CustomSecretConfigT = CustomSecretConfig>
+  DescribeLocationFsxWindowsResult& WithCustomSecretConfig(CustomSecretConfigT&& value) {
+    SetCustomSecretConfig(std::forward<CustomSecretConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_locationUri;
+  ///@{
 
-    Aws::Vector<Aws::String> m_securityGroupArns;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeLocationFsxWindowsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Utils::DateTime m_creationTime;
+ private:
+  Aws::String m_locationArn;
 
-    Aws::String m_user;
+  Aws::String m_locationUri;
 
-    Aws::String m_domain;
+  Aws::Vector<Aws::String> m_securityGroupArns;
 
-    Aws::String m_requestId;
-  };
+  Aws::Utils::DateTime m_creationTime{};
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+  Aws::String m_user;
+
+  Aws::String m_domain;
+
+  ManagedSecretConfig m_managedSecretConfig;
+
+  CmkSecretConfig m_cmkSecretConfig;
+
+  CustomSecretConfig m_customSecretConfig;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_locationArnHasBeenSet = false;
+  bool m_locationUriHasBeenSet = false;
+  bool m_securityGroupArnsHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_userHasBeenSet = false;
+  bool m_domainHasBeenSet = false;
+  bool m_managedSecretConfigHasBeenSet = false;
+  bool m_cmkSecretConfigHasBeenSet = false;
+  bool m_customSecretConfigHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

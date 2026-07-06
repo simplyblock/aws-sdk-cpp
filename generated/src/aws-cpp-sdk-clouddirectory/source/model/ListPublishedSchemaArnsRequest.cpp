@@ -12,39 +12,20 @@ using namespace Aws::CloudDirectory::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListPublishedSchemaArnsRequest::ListPublishedSchemaArnsRequest() : 
-    m_schemaArnHasBeenSet(false),
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String ListPublishedSchemaArnsRequest::SerializePayload() const
-{
+Aws::String ListPublishedSchemaArnsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_schemaArnHasBeenSet)
-  {
-   payload.WithString("SchemaArn", m_schemaArn);
-
+  if (m_schemaArnHasBeenSet) {
+    payload.WithString("SchemaArn", m_schemaArn);
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("NextToken", m_nextToken);
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("MaxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

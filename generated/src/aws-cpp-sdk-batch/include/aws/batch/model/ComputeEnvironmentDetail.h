@@ -5,349 +5,414 @@
 
 #pragma once
 #include <aws/batch/Batch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/batch/model/CEType.h>
 #include <aws/batch/model/CEState.h>
 #include <aws/batch/model/CEStatus.h>
+#include <aws/batch/model/CEType.h>
 #include <aws/batch/model/ComputeResource.h>
-#include <aws/batch/model/UpdatePolicy.h>
 #include <aws/batch/model/EksConfiguration.h>
 #include <aws/batch/model/OrchestrationType.h>
+#include <aws/batch/model/UpdatePolicy.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Batch
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Batch {
+namespace Model {
 
+/**
+ * <p>An object that represents an Batch compute environment.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ComputeEnvironmentDetail">AWS
+ * API Reference</a></p>
+ */
+class ComputeEnvironmentDetail {
+ public:
+  AWS_BATCH_API ComputeEnvironmentDetail() = default;
+  AWS_BATCH_API ComputeEnvironmentDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BATCH_API ComputeEnvironmentDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object that represents an Batch compute environment.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/ComputeEnvironmentDetail">AWS
-   * API Reference</a></p>
+   * <p>The name of the compute environment. It can be up to 128 characters long. It
+   * can contain uppercase and lowercase letters, numbers, hyphens (-), and
+   * underscores (_).</p>
    */
-  class ComputeEnvironmentDetail
-  {
-  public:
-    AWS_BATCH_API ComputeEnvironmentDetail();
-    AWS_BATCH_API ComputeEnvironmentDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BATCH_API ComputeEnvironmentDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetComputeEnvironmentName() const { return m_computeEnvironmentName; }
+  inline bool ComputeEnvironmentNameHasBeenSet() const { return m_computeEnvironmentNameHasBeenSet; }
+  template <typename ComputeEnvironmentNameT = Aws::String>
+  void SetComputeEnvironmentName(ComputeEnvironmentNameT&& value) {
+    m_computeEnvironmentNameHasBeenSet = true;
+    m_computeEnvironmentName = std::forward<ComputeEnvironmentNameT>(value);
+  }
+  template <typename ComputeEnvironmentNameT = Aws::String>
+  ComputeEnvironmentDetail& WithComputeEnvironmentName(ComputeEnvironmentNameT&& value) {
+    SetComputeEnvironmentName(std::forward<ComputeEnvironmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the compute environment.</p>
+   */
+  inline const Aws::String& GetComputeEnvironmentArn() const { return m_computeEnvironmentArn; }
+  inline bool ComputeEnvironmentArnHasBeenSet() const { return m_computeEnvironmentArnHasBeenSet; }
+  template <typename ComputeEnvironmentArnT = Aws::String>
+  void SetComputeEnvironmentArn(ComputeEnvironmentArnT&& value) {
+    m_computeEnvironmentArnHasBeenSet = true;
+    m_computeEnvironmentArn = std::forward<ComputeEnvironmentArnT>(value);
+  }
+  template <typename ComputeEnvironmentArnT = Aws::String>
+  ComputeEnvironmentDetail& WithComputeEnvironmentArn(ComputeEnvironmentArnT&& value) {
+    SetComputeEnvironmentArn(std::forward<ComputeEnvironmentArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the compute environment. It can be up to 128 characters long. It
-     * can contain uppercase and lowercase letters, numbers, hyphens (-), and
-     * underscores (_).</p>
-     */
-    inline const Aws::String& GetComputeEnvironmentName() const{ return m_computeEnvironmentName; }
-    inline bool ComputeEnvironmentNameHasBeenSet() const { return m_computeEnvironmentNameHasBeenSet; }
-    inline void SetComputeEnvironmentName(const Aws::String& value) { m_computeEnvironmentNameHasBeenSet = true; m_computeEnvironmentName = value; }
-    inline void SetComputeEnvironmentName(Aws::String&& value) { m_computeEnvironmentNameHasBeenSet = true; m_computeEnvironmentName = std::move(value); }
-    inline void SetComputeEnvironmentName(const char* value) { m_computeEnvironmentNameHasBeenSet = true; m_computeEnvironmentName.assign(value); }
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentName(const Aws::String& value) { SetComputeEnvironmentName(value); return *this;}
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentName(Aws::String&& value) { SetComputeEnvironmentName(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentName(const char* value) { SetComputeEnvironmentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum number of VCPUs expected to be used for an unmanaged compute
+   * environment.</p>
+   */
+  inline int GetUnmanagedvCpus() const { return m_unmanagedvCpus; }
+  inline bool UnmanagedvCpusHasBeenSet() const { return m_unmanagedvCpusHasBeenSet; }
+  inline void SetUnmanagedvCpus(int value) {
+    m_unmanagedvCpusHasBeenSet = true;
+    m_unmanagedvCpus = value;
+  }
+  inline ComputeEnvironmentDetail& WithUnmanagedvCpus(int value) {
+    SetUnmanagedvCpus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the compute environment.</p>
-     */
-    inline const Aws::String& GetComputeEnvironmentArn() const{ return m_computeEnvironmentArn; }
-    inline bool ComputeEnvironmentArnHasBeenSet() const { return m_computeEnvironmentArnHasBeenSet; }
-    inline void SetComputeEnvironmentArn(const Aws::String& value) { m_computeEnvironmentArnHasBeenSet = true; m_computeEnvironmentArn = value; }
-    inline void SetComputeEnvironmentArn(Aws::String&& value) { m_computeEnvironmentArnHasBeenSet = true; m_computeEnvironmentArn = std::move(value); }
-    inline void SetComputeEnvironmentArn(const char* value) { m_computeEnvironmentArnHasBeenSet = true; m_computeEnvironmentArn.assign(value); }
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentArn(const Aws::String& value) { SetComputeEnvironmentArn(value); return *this;}
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentArn(Aws::String&& value) { SetComputeEnvironmentArn(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithComputeEnvironmentArn(const char* value) { SetComputeEnvironmentArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the underlying Amazon ECS cluster that the
+   * compute environment uses.</p>
+   */
+  inline const Aws::String& GetEcsClusterArn() const { return m_ecsClusterArn; }
+  inline bool EcsClusterArnHasBeenSet() const { return m_ecsClusterArnHasBeenSet; }
+  template <typename EcsClusterArnT = Aws::String>
+  void SetEcsClusterArn(EcsClusterArnT&& value) {
+    m_ecsClusterArnHasBeenSet = true;
+    m_ecsClusterArn = std::forward<EcsClusterArnT>(value);
+  }
+  template <typename EcsClusterArnT = Aws::String>
+  ComputeEnvironmentDetail& WithEcsClusterArn(EcsClusterArnT&& value) {
+    SetEcsClusterArn(std::forward<EcsClusterArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum number of VCPUs expected to be used for an unmanaged compute
-     * environment.</p>
-     */
-    inline int GetUnmanagedvCpus() const{ return m_unmanagedvCpus; }
-    inline bool UnmanagedvCpusHasBeenSet() const { return m_unmanagedvCpusHasBeenSet; }
-    inline void SetUnmanagedvCpus(int value) { m_unmanagedvCpusHasBeenSet = true; m_unmanagedvCpus = value; }
-    inline ComputeEnvironmentDetail& WithUnmanagedvCpus(int value) { SetUnmanagedvCpus(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags applied to the compute environment.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  ComputeEnvironmentDetail& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  ComputeEnvironmentDetail& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the underlying Amazon ECS cluster that the
-     * compute environment uses.</p>
-     */
-    inline const Aws::String& GetEcsClusterArn() const{ return m_ecsClusterArn; }
-    inline bool EcsClusterArnHasBeenSet() const { return m_ecsClusterArnHasBeenSet; }
-    inline void SetEcsClusterArn(const Aws::String& value) { m_ecsClusterArnHasBeenSet = true; m_ecsClusterArn = value; }
-    inline void SetEcsClusterArn(Aws::String&& value) { m_ecsClusterArnHasBeenSet = true; m_ecsClusterArn = std::move(value); }
-    inline void SetEcsClusterArn(const char* value) { m_ecsClusterArnHasBeenSet = true; m_ecsClusterArn.assign(value); }
-    inline ComputeEnvironmentDetail& WithEcsClusterArn(const Aws::String& value) { SetEcsClusterArn(value); return *this;}
-    inline ComputeEnvironmentDetail& WithEcsClusterArn(Aws::String&& value) { SetEcsClusterArn(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithEcsClusterArn(const char* value) { SetEcsClusterArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the compute environment: <code>MANAGED</code> or
+   * <code>UNMANAGED</code>. For more information, see <a
+   * href="https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html">Compute
+   * environments</a> in the <i>Batch User Guide</i>.</p>
+   */
+  inline CEType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(CEType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline ComputeEnvironmentDetail& WithType(CEType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags applied to the compute environment.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ComputeEnvironmentDetail& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline ComputeEnvironmentDetail& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ComputeEnvironmentDetail& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the compute environment. The valid values are
+   * <code>ENABLED</code> or <code>DISABLED</code>.</p> <p>If the state is
+   * <code>ENABLED</code>, then the Batch scheduler can attempt to place jobs from an
+   * associated job queue on the compute resources within the environment. If the
+   * compute environment is managed, then it can scale its instances out or in
+   * automatically based on the job queue demand.</p> <p>If the state is
+   * <code>DISABLED</code>, then the Batch scheduler doesn't attempt to place jobs
+   * within the environment. Jobs in a <code>STARTING</code> or <code>RUNNING</code>
+   * state continue to progress normally. Managed compute environments in the
+   * <code>DISABLED</code> state don't scale out. </p>  <p>Compute environments
+   * in a <code>DISABLED</code> state may continue to incur billing charges, for
+   * example, if they have running instances due to jobs that are still executing or
+   * a non-zero <code>minvCpus</code> setting. To prevent additional charges, disable
+   * and delete the compute environment.</p>  <p>When an instance is idle, the
+   * instance scales down to the <code>minvCpus</code> value. However, the instance
+   * size doesn't change. For example, consider a <code>c5.8xlarge</code> instance
+   * with a <code>minvCpus</code> value of <code>4</code> and a
+   * <code>desiredvCpus</code> value of <code>36</code>. This instance doesn't scale
+   * down to a <code>c5.large</code> instance.</p>
+   */
+  inline CEState GetState() const { return m_state; }
+  inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
+  inline void SetState(CEState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline ComputeEnvironmentDetail& WithState(CEState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the compute environment: <code>MANAGED</code> or
-     * <code>UNMANAGED</code>. For more information, see <a
-     * href="https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html">Compute
-     * environments</a> in the <i>Batch User Guide</i>.</p>
-     */
-    inline const CEType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const CEType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(CEType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline ComputeEnvironmentDetail& WithType(const CEType& value) { SetType(value); return *this;}
-    inline ComputeEnvironmentDetail& WithType(CEType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the compute environment (for example,
+   * <code>CREATING</code> or <code>VALID</code>).</p>
+   */
+  inline CEStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(CEStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ComputeEnvironmentDetail& WithStatus(CEStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the compute environment. The valid values are
-     * <code>ENABLED</code> or <code>DISABLED</code>.</p> <p>If the state is
-     * <code>ENABLED</code>, then the Batch scheduler can attempt to place jobs from an
-     * associated job queue on the compute resources within the environment. If the
-     * compute environment is managed, then it can scale its instances out or in
-     * automatically based on the job queue demand.</p> <p>If the state is
-     * <code>DISABLED</code>, then the Batch scheduler doesn't attempt to place jobs
-     * within the environment. Jobs in a <code>STARTING</code> or <code>RUNNING</code>
-     * state continue to progress normally. Managed compute environments in the
-     * <code>DISABLED</code> state don't scale out. </p>  <p>Compute environments
-     * in a <code>DISABLED</code> state may continue to incur billing charges. To
-     * prevent additional charges, turn off and then delete the compute environment.
-     * For more information, see <a
-     * href="https://docs.aws.amazon.com/batch/latest/userguide/compute_environment_parameters.html#compute_environment_state">State</a>
-     * in the <i>Batch User Guide</i>.</p>  <p>When an instance is idle, the
-     * instance scales down to the <code>minvCpus</code> value. However, the instance
-     * size doesn't change. For example, consider a <code>c5.8xlarge</code> instance
-     * with a <code>minvCpus</code> value of <code>4</code> and a
-     * <code>desiredvCpus</code> value of <code>36</code>. This instance doesn't scale
-     * down to a <code>c5.large</code> instance.</p>
-     */
-    inline const CEState& GetState() const{ return m_state; }
-    inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
-    inline void SetState(const CEState& value) { m_stateHasBeenSet = true; m_state = value; }
-    inline void SetState(CEState&& value) { m_stateHasBeenSet = true; m_state = std::move(value); }
-    inline ComputeEnvironmentDetail& WithState(const CEState& value) { SetState(value); return *this;}
-    inline ComputeEnvironmentDetail& WithState(CEState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A short, human-readable string to provide additional details for the current
+   * status of the compute environment.</p>
+   */
+  inline const Aws::String& GetStatusReason() const { return m_statusReason; }
+  inline bool StatusReasonHasBeenSet() const { return m_statusReasonHasBeenSet; }
+  template <typename StatusReasonT = Aws::String>
+  void SetStatusReason(StatusReasonT&& value) {
+    m_statusReasonHasBeenSet = true;
+    m_statusReason = std::forward<StatusReasonT>(value);
+  }
+  template <typename StatusReasonT = Aws::String>
+  ComputeEnvironmentDetail& WithStatusReason(StatusReasonT&& value) {
+    SetStatusReason(std::forward<StatusReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the compute environment (for example,
-     * <code>CREATING</code> or <code>VALID</code>).</p>
-     */
-    inline const CEStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const CEStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(CEStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline ComputeEnvironmentDetail& WithStatus(const CEStatus& value) { SetStatus(value); return *this;}
-    inline ComputeEnvironmentDetail& WithStatus(CEStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The compute resources defined for the compute environment. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html">Compute
+   * environments</a> in the <i>Batch User Guide</i>.</p>
+   */
+  inline const ComputeResource& GetComputeResources() const { return m_computeResources; }
+  inline bool ComputeResourcesHasBeenSet() const { return m_computeResourcesHasBeenSet; }
+  template <typename ComputeResourcesT = ComputeResource>
+  void SetComputeResources(ComputeResourcesT&& value) {
+    m_computeResourcesHasBeenSet = true;
+    m_computeResources = std::forward<ComputeResourcesT>(value);
+  }
+  template <typename ComputeResourcesT = ComputeResource>
+  ComputeEnvironmentDetail& WithComputeResources(ComputeResourcesT&& value) {
+    SetComputeResources(std::forward<ComputeResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A short, human-readable string to provide additional details for the current
-     * status of the compute environment.</p>
-     */
-    inline const Aws::String& GetStatusReason() const{ return m_statusReason; }
-    inline bool StatusReasonHasBeenSet() const { return m_statusReasonHasBeenSet; }
-    inline void SetStatusReason(const Aws::String& value) { m_statusReasonHasBeenSet = true; m_statusReason = value; }
-    inline void SetStatusReason(Aws::String&& value) { m_statusReasonHasBeenSet = true; m_statusReason = std::move(value); }
-    inline void SetStatusReason(const char* value) { m_statusReasonHasBeenSet = true; m_statusReason.assign(value); }
-    inline ComputeEnvironmentDetail& WithStatusReason(const Aws::String& value) { SetStatusReason(value); return *this;}
-    inline ComputeEnvironmentDetail& WithStatusReason(Aws::String&& value) { SetStatusReason(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithStatusReason(const char* value) { SetStatusReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The service role that's associated with the compute environment that allows
+   * Batch to make calls to Amazon Web Services API operations on your behalf. For
+   * more information, see <a
+   * href="https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html">Batch
+   * service IAM role</a> in the <i>Batch User Guide</i>.</p>
+   */
+  inline const Aws::String& GetServiceRole() const { return m_serviceRole; }
+  inline bool ServiceRoleHasBeenSet() const { return m_serviceRoleHasBeenSet; }
+  template <typename ServiceRoleT = Aws::String>
+  void SetServiceRole(ServiceRoleT&& value) {
+    m_serviceRoleHasBeenSet = true;
+    m_serviceRole = std::forward<ServiceRoleT>(value);
+  }
+  template <typename ServiceRoleT = Aws::String>
+  ComputeEnvironmentDetail& WithServiceRole(ServiceRoleT&& value) {
+    SetServiceRole(std::forward<ServiceRoleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The compute resources defined for the compute environment. For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/batch/latest/userguide/compute_environments.html">Compute
-     * environments</a> in the <i>Batch User Guide</i>.</p>
-     */
-    inline const ComputeResource& GetComputeResources() const{ return m_computeResources; }
-    inline bool ComputeResourcesHasBeenSet() const { return m_computeResourcesHasBeenSet; }
-    inline void SetComputeResources(const ComputeResource& value) { m_computeResourcesHasBeenSet = true; m_computeResources = value; }
-    inline void SetComputeResources(ComputeResource&& value) { m_computeResourcesHasBeenSet = true; m_computeResources = std::move(value); }
-    inline ComputeEnvironmentDetail& WithComputeResources(const ComputeResource& value) { SetComputeResources(value); return *this;}
-    inline ComputeEnvironmentDetail& WithComputeResources(ComputeResource&& value) { SetComputeResources(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the infrastructure update policy for the compute environment. For
+   * more information about infrastructure updates, see <a
+   * href="https://docs.aws.amazon.com/batch/latest/userguide/updating-compute-environments.html">Updating
+   * compute environments</a> in the <i>Batch User Guide</i>.</p>
+   */
+  inline const UpdatePolicy& GetUpdatePolicy() const { return m_updatePolicy; }
+  inline bool UpdatePolicyHasBeenSet() const { return m_updatePolicyHasBeenSet; }
+  template <typename UpdatePolicyT = UpdatePolicy>
+  void SetUpdatePolicy(UpdatePolicyT&& value) {
+    m_updatePolicyHasBeenSet = true;
+    m_updatePolicy = std::forward<UpdatePolicyT>(value);
+  }
+  template <typename UpdatePolicyT = UpdatePolicy>
+  ComputeEnvironmentDetail& WithUpdatePolicy(UpdatePolicyT&& value) {
+    SetUpdatePolicy(std::forward<UpdatePolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The service role that's associated with the compute environment that allows
-     * Batch to make calls to Amazon Web Services API operations on your behalf. For
-     * more information, see <a
-     * href="https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html">Batch
-     * service IAM role</a> in the <i>Batch User Guide</i>.</p>
-     */
-    inline const Aws::String& GetServiceRole() const{ return m_serviceRole; }
-    inline bool ServiceRoleHasBeenSet() const { return m_serviceRoleHasBeenSet; }
-    inline void SetServiceRole(const Aws::String& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = value; }
-    inline void SetServiceRole(Aws::String&& value) { m_serviceRoleHasBeenSet = true; m_serviceRole = std::move(value); }
-    inline void SetServiceRole(const char* value) { m_serviceRoleHasBeenSet = true; m_serviceRole.assign(value); }
-    inline ComputeEnvironmentDetail& WithServiceRole(const Aws::String& value) { SetServiceRole(value); return *this;}
-    inline ComputeEnvironmentDetail& WithServiceRole(Aws::String&& value) { SetServiceRole(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithServiceRole(const char* value) { SetServiceRole(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration for the Amazon EKS cluster that supports the Batch compute
+   * environment. Only specify this parameter if the
+   * <code>containerOrchestrationType</code> is <code>EKS</code>.</p>
+   */
+  inline const EksConfiguration& GetEksConfiguration() const { return m_eksConfiguration; }
+  inline bool EksConfigurationHasBeenSet() const { return m_eksConfigurationHasBeenSet; }
+  template <typename EksConfigurationT = EksConfiguration>
+  void SetEksConfiguration(EksConfigurationT&& value) {
+    m_eksConfigurationHasBeenSet = true;
+    m_eksConfiguration = std::forward<EksConfigurationT>(value);
+  }
+  template <typename EksConfigurationT = EksConfiguration>
+  ComputeEnvironmentDetail& WithEksConfiguration(EksConfigurationT&& value) {
+    SetEksConfiguration(std::forward<EksConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the infrastructure update policy for the compute environment. For
-     * more information about infrastructure updates, see <a
-     * href="https://docs.aws.amazon.com/batch/latest/userguide/updating-compute-environments.html">Updating
-     * compute environments</a> in the <i>Batch User Guide</i>.</p>
-     */
-    inline const UpdatePolicy& GetUpdatePolicy() const{ return m_updatePolicy; }
-    inline bool UpdatePolicyHasBeenSet() const { return m_updatePolicyHasBeenSet; }
-    inline void SetUpdatePolicy(const UpdatePolicy& value) { m_updatePolicyHasBeenSet = true; m_updatePolicy = value; }
-    inline void SetUpdatePolicy(UpdatePolicy&& value) { m_updatePolicyHasBeenSet = true; m_updatePolicy = std::move(value); }
-    inline ComputeEnvironmentDetail& WithUpdatePolicy(const UpdatePolicy& value) { SetUpdatePolicy(value); return *this;}
-    inline ComputeEnvironmentDetail& WithUpdatePolicy(UpdatePolicy&& value) { SetUpdatePolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The orchestration type of the compute environment. The valid values are
+   * <code>ECS</code> (default) or <code>EKS</code>.</p>
+   */
+  inline OrchestrationType GetContainerOrchestrationType() const { return m_containerOrchestrationType; }
+  inline bool ContainerOrchestrationTypeHasBeenSet() const { return m_containerOrchestrationTypeHasBeenSet; }
+  inline void SetContainerOrchestrationType(OrchestrationType value) {
+    m_containerOrchestrationTypeHasBeenSet = true;
+    m_containerOrchestrationType = value;
+  }
+  inline ComputeEnvironmentDetail& WithContainerOrchestrationType(OrchestrationType value) {
+    SetContainerOrchestrationType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration for the Amazon EKS cluster that supports the Batch compute
-     * environment. Only specify this parameter if the
-     * <code>containerOrchestrationType</code> is <code>EKS</code>.</p>
-     */
-    inline const EksConfiguration& GetEksConfiguration() const{ return m_eksConfiguration; }
-    inline bool EksConfigurationHasBeenSet() const { return m_eksConfigurationHasBeenSet; }
-    inline void SetEksConfiguration(const EksConfiguration& value) { m_eksConfigurationHasBeenSet = true; m_eksConfiguration = value; }
-    inline void SetEksConfiguration(EksConfiguration&& value) { m_eksConfigurationHasBeenSet = true; m_eksConfiguration = std::move(value); }
-    inline ComputeEnvironmentDetail& WithEksConfiguration(const EksConfiguration& value) { SetEksConfiguration(value); return *this;}
-    inline ComputeEnvironmentDetail& WithEksConfiguration(EksConfiguration&& value) { SetEksConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique identifier for the compute environment.</p>
+   */
+  inline const Aws::String& GetUuid() const { return m_uuid; }
+  inline bool UuidHasBeenSet() const { return m_uuidHasBeenSet; }
+  template <typename UuidT = Aws::String>
+  void SetUuid(UuidT&& value) {
+    m_uuidHasBeenSet = true;
+    m_uuid = std::forward<UuidT>(value);
+  }
+  template <typename UuidT = Aws::String>
+  ComputeEnvironmentDetail& WithUuid(UuidT&& value) {
+    SetUuid(std::forward<UuidT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The orchestration type of the compute environment. The valid values are
-     * <code>ECS</code> (default) or <code>EKS</code>.</p>
-     */
-    inline const OrchestrationType& GetContainerOrchestrationType() const{ return m_containerOrchestrationType; }
-    inline bool ContainerOrchestrationTypeHasBeenSet() const { return m_containerOrchestrationTypeHasBeenSet; }
-    inline void SetContainerOrchestrationType(const OrchestrationType& value) { m_containerOrchestrationTypeHasBeenSet = true; m_containerOrchestrationType = value; }
-    inline void SetContainerOrchestrationType(OrchestrationType&& value) { m_containerOrchestrationTypeHasBeenSet = true; m_containerOrchestrationType = std::move(value); }
-    inline ComputeEnvironmentDetail& WithContainerOrchestrationType(const OrchestrationType& value) { SetContainerOrchestrationType(value); return *this;}
-    inline ComputeEnvironmentDetail& WithContainerOrchestrationType(OrchestrationType&& value) { SetContainerOrchestrationType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Reserved.</p>
+   */
+  inline const Aws::String& GetContext() const { return m_context; }
+  inline bool ContextHasBeenSet() const { return m_contextHasBeenSet; }
+  template <typename ContextT = Aws::String>
+  void SetContext(ContextT&& value) {
+    m_contextHasBeenSet = true;
+    m_context = std::forward<ContextT>(value);
+  }
+  template <typename ContextT = Aws::String>
+  ComputeEnvironmentDetail& WithContext(ContextT&& value) {
+    SetContext(std::forward<ContextT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_computeEnvironmentName;
 
-    ///@{
-    /**
-     * <p>Unique identifier for the compute environment.</p>
-     */
-    inline const Aws::String& GetUuid() const{ return m_uuid; }
-    inline bool UuidHasBeenSet() const { return m_uuidHasBeenSet; }
-    inline void SetUuid(const Aws::String& value) { m_uuidHasBeenSet = true; m_uuid = value; }
-    inline void SetUuid(Aws::String&& value) { m_uuidHasBeenSet = true; m_uuid = std::move(value); }
-    inline void SetUuid(const char* value) { m_uuidHasBeenSet = true; m_uuid.assign(value); }
-    inline ComputeEnvironmentDetail& WithUuid(const Aws::String& value) { SetUuid(value); return *this;}
-    inline ComputeEnvironmentDetail& WithUuid(Aws::String&& value) { SetUuid(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithUuid(const char* value) { SetUuid(value); return *this;}
-    ///@}
+  Aws::String m_computeEnvironmentArn;
 
-    ///@{
-    /**
-     * <p>Reserved.</p>
-     */
-    inline const Aws::String& GetContext() const{ return m_context; }
-    inline bool ContextHasBeenSet() const { return m_contextHasBeenSet; }
-    inline void SetContext(const Aws::String& value) { m_contextHasBeenSet = true; m_context = value; }
-    inline void SetContext(Aws::String&& value) { m_contextHasBeenSet = true; m_context = std::move(value); }
-    inline void SetContext(const char* value) { m_contextHasBeenSet = true; m_context.assign(value); }
-    inline ComputeEnvironmentDetail& WithContext(const Aws::String& value) { SetContext(value); return *this;}
-    inline ComputeEnvironmentDetail& WithContext(Aws::String&& value) { SetContext(std::move(value)); return *this;}
-    inline ComputeEnvironmentDetail& WithContext(const char* value) { SetContext(value); return *this;}
-    ///@}
-  private:
+  int m_unmanagedvCpus{0};
 
-    Aws::String m_computeEnvironmentName;
-    bool m_computeEnvironmentNameHasBeenSet = false;
+  Aws::String m_ecsClusterArn;
 
-    Aws::String m_computeEnvironmentArn;
-    bool m_computeEnvironmentArnHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    int m_unmanagedvCpus;
-    bool m_unmanagedvCpusHasBeenSet = false;
+  CEType m_type{CEType::NOT_SET};
 
-    Aws::String m_ecsClusterArn;
-    bool m_ecsClusterArnHasBeenSet = false;
+  CEState m_state{CEState::NOT_SET};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
+  CEStatus m_status{CEStatus::NOT_SET};
 
-    CEType m_type;
-    bool m_typeHasBeenSet = false;
+  Aws::String m_statusReason;
 
-    CEState m_state;
-    bool m_stateHasBeenSet = false;
+  ComputeResource m_computeResources;
 
-    CEStatus m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::String m_serviceRole;
 
-    Aws::String m_statusReason;
-    bool m_statusReasonHasBeenSet = false;
+  UpdatePolicy m_updatePolicy;
 
-    ComputeResource m_computeResources;
-    bool m_computeResourcesHasBeenSet = false;
+  EksConfiguration m_eksConfiguration;
 
-    Aws::String m_serviceRole;
-    bool m_serviceRoleHasBeenSet = false;
+  OrchestrationType m_containerOrchestrationType{OrchestrationType::NOT_SET};
 
-    UpdatePolicy m_updatePolicy;
-    bool m_updatePolicyHasBeenSet = false;
+  Aws::String m_uuid;
 
-    EksConfiguration m_eksConfiguration;
-    bool m_eksConfigurationHasBeenSet = false;
+  Aws::String m_context;
+  bool m_computeEnvironmentNameHasBeenSet = false;
+  bool m_computeEnvironmentArnHasBeenSet = false;
+  bool m_unmanagedvCpusHasBeenSet = false;
+  bool m_ecsClusterArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_statusReasonHasBeenSet = false;
+  bool m_computeResourcesHasBeenSet = false;
+  bool m_serviceRoleHasBeenSet = false;
+  bool m_updatePolicyHasBeenSet = false;
+  bool m_eksConfigurationHasBeenSet = false;
+  bool m_containerOrchestrationTypeHasBeenSet = false;
+  bool m_uuidHasBeenSet = false;
+  bool m_contextHasBeenSet = false;
+};
 
-    OrchestrationType m_containerOrchestrationType;
-    bool m_containerOrchestrationTypeHasBeenSet = false;
-
-    Aws::String m_uuid;
-    bool m_uuidHasBeenSet = false;
-
-    Aws::String m_context;
-    bool m_contextHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Batch
-} // namespace Aws
+}  // namespace Model
+}  // namespace Batch
+}  // namespace Aws

@@ -4,80 +4,94 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ram/RAM_EXPORTS.h>
 #include <aws/ram/model/ResourceSharePermissionSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RAM
-{
-namespace Model
-{
-  class PromotePermissionCreatedFromPolicyResult
-  {
-  public:
-    AWS_RAM_API PromotePermissionCreatedFromPolicyResult();
-    AWS_RAM_API PromotePermissionCreatedFromPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RAM_API PromotePermissionCreatedFromPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RAM {
+namespace Model {
+class PromotePermissionCreatedFromPolicyResult {
+ public:
+  AWS_RAM_API PromotePermissionCreatedFromPolicyResult() = default;
+  AWS_RAM_API PromotePermissionCreatedFromPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RAM_API PromotePermissionCreatedFromPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ResourceSharePermissionSummary& GetPermission() const{ return m_permission; }
-    inline void SetPermission(const ResourceSharePermissionSummary& value) { m_permission = value; }
-    inline void SetPermission(ResourceSharePermissionSummary&& value) { m_permission = std::move(value); }
-    inline PromotePermissionCreatedFromPolicyResult& WithPermission(const ResourceSharePermissionSummary& value) { SetPermission(value); return *this;}
-    inline PromotePermissionCreatedFromPolicyResult& WithPermission(ResourceSharePermissionSummary&& value) { SetPermission(std::move(value)); return *this;}
-    ///@}
+  inline const ResourceSharePermissionSummary& GetPermission() const { return m_permission; }
+  template <typename PermissionT = ResourceSharePermissionSummary>
+  void SetPermission(PermissionT&& value) {
+    m_permissionHasBeenSet = true;
+    m_permission = std::forward<PermissionT>(value);
+  }
+  template <typename PermissionT = ResourceSharePermissionSummary>
+  PromotePermissionCreatedFromPolicyResult& WithPermission(PermissionT&& value) {
+    SetPermission(std::forward<PermissionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The idempotency identifier associated with this request. If you want to
-     * repeat the same operation in an idempotent manner then you must include this
-     * value in the <code>clientToken</code> request parameter of that later call. All
-     * other parameters must also have the same values that you used in the first
-     * call.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline void SetClientToken(const Aws::String& value) { m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientToken.assign(value); }
-    inline PromotePermissionCreatedFromPolicyResult& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline PromotePermissionCreatedFromPolicyResult& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline PromotePermissionCreatedFromPolicyResult& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The idempotency identifier associated with this request. If you want to
+   * repeat the same operation in an idempotent manner then you must include this
+   * value in the <code>clientToken</code> request parameter of that later call. All
+   * other parameters must also have the same values that you used in the first
+   * call.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  PromotePermissionCreatedFromPolicyResult& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PromotePermissionCreatedFromPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PromotePermissionCreatedFromPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PromotePermissionCreatedFromPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ResourceSharePermissionSummary m_permission;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PromotePermissionCreatedFromPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_clientToken;
+ private:
+  ResourceSharePermissionSummary m_permission;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_clientToken;
 
-} // namespace Model
-} // namespace RAM
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_permissionHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace RAM
+}  // namespace Aws

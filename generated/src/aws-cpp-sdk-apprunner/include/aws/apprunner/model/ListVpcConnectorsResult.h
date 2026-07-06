@@ -5,82 +5,100 @@
 
 #pragma once
 #include <aws/apprunner/AppRunner_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/apprunner/model/VpcConnector.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppRunner
-{
-namespace Model
-{
-  class ListVpcConnectorsResult
-  {
-  public:
-    AWS_APPRUNNER_API ListVpcConnectorsResult();
-    AWS_APPRUNNER_API ListVpcConnectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPRUNNER_API ListVpcConnectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppRunner {
+namespace Model {
+class ListVpcConnectorsResult {
+ public:
+  AWS_APPRUNNER_API ListVpcConnectorsResult() = default;
+  AWS_APPRUNNER_API ListVpcConnectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPRUNNER_API ListVpcConnectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of information records for VPC connectors. In a paginated request, the
+   * request returns up to <code>MaxResults</code> records for each call.</p>
+   */
+  inline const Aws::Vector<VpcConnector>& GetVpcConnectors() const { return m_vpcConnectors; }
+  template <typename VpcConnectorsT = Aws::Vector<VpcConnector>>
+  void SetVpcConnectors(VpcConnectorsT&& value) {
+    m_vpcConnectorsHasBeenSet = true;
+    m_vpcConnectors = std::forward<VpcConnectorsT>(value);
+  }
+  template <typename VpcConnectorsT = Aws::Vector<VpcConnector>>
+  ListVpcConnectorsResult& WithVpcConnectors(VpcConnectorsT&& value) {
+    SetVpcConnectors(std::forward<VpcConnectorsT>(value));
+    return *this;
+  }
+  template <typename VpcConnectorsT = VpcConnector>
+  ListVpcConnectorsResult& AddVpcConnectors(VpcConnectorsT&& value) {
+    m_vpcConnectorsHasBeenSet = true;
+    m_vpcConnectors.emplace_back(std::forward<VpcConnectorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of information records for VPC connectors. In a paginated request, the
-     * request returns up to <code>MaxResults</code> records for each call.</p>
-     */
-    inline const Aws::Vector<VpcConnector>& GetVpcConnectors() const{ return m_vpcConnectors; }
-    inline void SetVpcConnectors(const Aws::Vector<VpcConnector>& value) { m_vpcConnectors = value; }
-    inline void SetVpcConnectors(Aws::Vector<VpcConnector>&& value) { m_vpcConnectors = std::move(value); }
-    inline ListVpcConnectorsResult& WithVpcConnectors(const Aws::Vector<VpcConnector>& value) { SetVpcConnectors(value); return *this;}
-    inline ListVpcConnectorsResult& WithVpcConnectors(Aws::Vector<VpcConnector>&& value) { SetVpcConnectors(std::move(value)); return *this;}
-    inline ListVpcConnectorsResult& AddVpcConnectors(const VpcConnector& value) { m_vpcConnectors.push_back(value); return *this; }
-    inline ListVpcConnectorsResult& AddVpcConnectors(VpcConnector&& value) { m_vpcConnectors.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token that you can pass in a subsequent request to get the next result
+   * page. It's returned in a paginated request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListVpcConnectorsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token that you can pass in a subsequent request to get the next result
-     * page. It's returned in a paginated request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListVpcConnectorsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListVpcConnectorsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListVpcConnectorsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListVpcConnectorsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListVpcConnectorsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListVpcConnectorsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListVpcConnectorsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<VpcConnector> m_vpcConnectors;
+ private:
+  Aws::Vector<VpcConnector> m_vpcConnectors;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcConnectorsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppRunner
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppRunner
+}  // namespace Aws

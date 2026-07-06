@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeletePromptRequest::DeletePromptRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_promptIdHasBeenSet(false)
-{
-}
-
-Aws::String DeletePromptRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeletePromptRequest::SerializePayload() const { return {}; }

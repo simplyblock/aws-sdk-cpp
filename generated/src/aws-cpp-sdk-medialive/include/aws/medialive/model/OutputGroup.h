@@ -4,92 +4,105 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/medialive/model/OutputGroupSettings.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/Output.h>
+#include <aws/medialive/model/OutputGroupSettings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
 
+/**
+ * Output groups for this Live Event. Output groups contain information about where
+ * streams should be distributed.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/OutputGroup">AWS
+ * API Reference</a></p>
+ */
+class OutputGroup {
+ public:
+  AWS_MEDIALIVE_API OutputGroup() = default;
+  AWS_MEDIALIVE_API OutputGroup(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API OutputGroup& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * Output groups for this Live Event. Output groups contain information about where
-   * streams should be distributed.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/OutputGroup">AWS
-   * API Reference</a></p>
+   * Custom output group name optionally defined by the user.
    */
-  class OutputGroup
-  {
-  public:
-    AWS_MEDIALIVE_API OutputGroup();
-    AWS_MEDIALIVE_API OutputGroup(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API OutputGroup& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  OutputGroup& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * Settings associated with the output group.
+   */
+  inline const OutputGroupSettings& GetOutputGroupSettings() const { return m_outputGroupSettings; }
+  inline bool OutputGroupSettingsHasBeenSet() const { return m_outputGroupSettingsHasBeenSet; }
+  template <typename OutputGroupSettingsT = OutputGroupSettings>
+  void SetOutputGroupSettings(OutputGroupSettingsT&& value) {
+    m_outputGroupSettingsHasBeenSet = true;
+    m_outputGroupSettings = std::forward<OutputGroupSettingsT>(value);
+  }
+  template <typename OutputGroupSettingsT = OutputGroupSettings>
+  OutputGroup& WithOutputGroupSettings(OutputGroupSettingsT&& value) {
+    SetOutputGroupSettings(std::forward<OutputGroupSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Custom output group name optionally defined by the user.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline OutputGroup& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline OutputGroup& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline OutputGroup& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * Settings associated with the output group.
-     */
-    inline const OutputGroupSettings& GetOutputGroupSettings() const{ return m_outputGroupSettings; }
-    inline bool OutputGroupSettingsHasBeenSet() const { return m_outputGroupSettingsHasBeenSet; }
-    inline void SetOutputGroupSettings(const OutputGroupSettings& value) { m_outputGroupSettingsHasBeenSet = true; m_outputGroupSettings = value; }
-    inline void SetOutputGroupSettings(OutputGroupSettings&& value) { m_outputGroupSettingsHasBeenSet = true; m_outputGroupSettings = std::move(value); }
-    inline OutputGroup& WithOutputGroupSettings(const OutputGroupSettings& value) { SetOutputGroupSettings(value); return *this;}
-    inline OutputGroup& WithOutputGroupSettings(OutputGroupSettings&& value) { SetOutputGroupSettings(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::Vector<Output>& GetOutputs() const { return m_outputs; }
+  inline bool OutputsHasBeenSet() const { return m_outputsHasBeenSet; }
+  template <typename OutputsT = Aws::Vector<Output>>
+  void SetOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs = std::forward<OutputsT>(value);
+  }
+  template <typename OutputsT = Aws::Vector<Output>>
+  OutputGroup& WithOutputs(OutputsT&& value) {
+    SetOutputs(std::forward<OutputsT>(value));
+    return *this;
+  }
+  template <typename OutputsT = Output>
+  OutputGroup& AddOutputs(OutputsT&& value) {
+    m_outputsHasBeenSet = true;
+    m_outputs.emplace_back(std::forward<OutputsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    
-    inline const Aws::Vector<Output>& GetOutputs() const{ return m_outputs; }
-    inline bool OutputsHasBeenSet() const { return m_outputsHasBeenSet; }
-    inline void SetOutputs(const Aws::Vector<Output>& value) { m_outputsHasBeenSet = true; m_outputs = value; }
-    inline void SetOutputs(Aws::Vector<Output>&& value) { m_outputsHasBeenSet = true; m_outputs = std::move(value); }
-    inline OutputGroup& WithOutputs(const Aws::Vector<Output>& value) { SetOutputs(value); return *this;}
-    inline OutputGroup& WithOutputs(Aws::Vector<Output>&& value) { SetOutputs(std::move(value)); return *this;}
-    inline OutputGroup& AddOutputs(const Output& value) { m_outputsHasBeenSet = true; m_outputs.push_back(value); return *this; }
-    inline OutputGroup& AddOutputs(Output&& value) { m_outputsHasBeenSet = true; m_outputs.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  OutputGroupSettings m_outputGroupSettings;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<Output> m_outputs;
+  bool m_nameHasBeenSet = false;
+  bool m_outputGroupSettingsHasBeenSet = false;
+  bool m_outputsHasBeenSet = false;
+};
 
-    OutputGroupSettings m_outputGroupSettings;
-    bool m_outputGroupSettingsHasBeenSet = false;
-
-    Aws::Vector<Output> m_outputs;
-    bool m_outputsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

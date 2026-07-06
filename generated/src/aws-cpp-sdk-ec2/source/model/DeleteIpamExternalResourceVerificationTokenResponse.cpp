@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DeleteIpamExternalResourceVerificationTokenResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DeleteIpamExternalResourceVerificationTokenResponse.h>
 
 #include <utility>
 
@@ -17,41 +17,37 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DeleteIpamExternalResourceVerificationTokenResponse::DeleteIpamExternalResourceVerificationTokenResponse()
-{
-}
-
-DeleteIpamExternalResourceVerificationTokenResponse::DeleteIpamExternalResourceVerificationTokenResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteIpamExternalResourceVerificationTokenResponse::DeleteIpamExternalResourceVerificationTokenResponse(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DeleteIpamExternalResourceVerificationTokenResponse& DeleteIpamExternalResourceVerificationTokenResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DeleteIpamExternalResourceVerificationTokenResponse& DeleteIpamExternalResourceVerificationTokenResponse::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteIpamExternalResourceVerificationTokenResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DeleteIpamExternalResourceVerificationTokenResponse")) {
     resultNode = rootNode.FirstChild("DeleteIpamExternalResourceVerificationTokenResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode ipamExternalResourceVerificationTokenNode = resultNode.FirstChild("ipamExternalResourceVerificationToken");
-    if(!ipamExternalResourceVerificationTokenNode.IsNull())
-    {
+    if (!ipamExternalResourceVerificationTokenNode.IsNull()) {
       m_ipamExternalResourceVerificationToken = ipamExternalResourceVerificationTokenNode;
+      m_ipamExternalResourceVerificationTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DeleteIpamExternalResourceVerificationTokenResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DeleteIpamExternalResourceVerificationTokenResponse",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

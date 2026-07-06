@@ -4,59 +4,56 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Details about a customer endpoint that was compared in an Inference
+ * Recommender job.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/EndpointInfo">AWS
+ * API Reference</a></p>
+ */
+class EndpointInfo {
+ public:
+  AWS_SAGEMAKER_API EndpointInfo() = default;
+  AWS_SAGEMAKER_API EndpointInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API EndpointInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details about a customer endpoint that was compared in an Inference
-   * Recommender job.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/EndpointInfo">AWS
-   * API Reference</a></p>
+   * <p>The name of a customer's endpoint.</p>
    */
-  class EndpointInfo
-  {
-  public:
-    AWS_SAGEMAKER_API EndpointInfo();
-    AWS_SAGEMAKER_API EndpointInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API EndpointInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetEndpointName() const { return m_endpointName; }
+  inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
+  template <typename EndpointNameT = Aws::String>
+  void SetEndpointName(EndpointNameT&& value) {
+    m_endpointNameHasBeenSet = true;
+    m_endpointName = std::forward<EndpointNameT>(value);
+  }
+  template <typename EndpointNameT = Aws::String>
+  EndpointInfo& WithEndpointName(EndpointNameT&& value) {
+    SetEndpointName(std::forward<EndpointNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endpointName;
+  bool m_endpointNameHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The name of a customer's endpoint.</p>
-     */
-    inline const Aws::String& GetEndpointName() const{ return m_endpointName; }
-    inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
-    inline void SetEndpointName(const Aws::String& value) { m_endpointNameHasBeenSet = true; m_endpointName = value; }
-    inline void SetEndpointName(Aws::String&& value) { m_endpointNameHasBeenSet = true; m_endpointName = std::move(value); }
-    inline void SetEndpointName(const char* value) { m_endpointNameHasBeenSet = true; m_endpointName.assign(value); }
-    inline EndpointInfo& WithEndpointName(const Aws::String& value) { SetEndpointName(value); return *this;}
-    inline EndpointInfo& WithEndpointName(Aws::String&& value) { SetEndpointName(std::move(value)); return *this;}
-    inline EndpointInfo& WithEndpointName(const char* value) { SetEndpointName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_endpointName;
-    bool m_endpointNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/DescribePartnersResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/redshift/model/DescribePartnersResult.h>
 
 #include <utility>
 
@@ -17,44 +17,36 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribePartnersResult::DescribePartnersResult()
-{
-}
+DescribePartnersResult::DescribePartnersResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribePartnersResult::DescribePartnersResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribePartnersResult& DescribePartnersResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribePartnersResult& DescribePartnersResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribePartnersResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribePartnersResult")) {
     resultNode = rootNode.FirstChild("DescribePartnersResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode partnerIntegrationInfoListNode = resultNode.FirstChild("PartnerIntegrationInfoList");
-    if(!partnerIntegrationInfoListNode.IsNull())
-    {
+    if (!partnerIntegrationInfoListNode.IsNull()) {
       XmlNode partnerIntegrationInfoListMember = partnerIntegrationInfoListNode.FirstChild("PartnerIntegrationInfo");
-      while(!partnerIntegrationInfoListMember.IsNull())
-      {
+      m_partnerIntegrationInfoListHasBeenSet = !partnerIntegrationInfoListMember.IsNull();
+      while (!partnerIntegrationInfoListMember.IsNull()) {
         m_partnerIntegrationInfoList.push_back(partnerIntegrationInfoListMember);
         partnerIntegrationInfoListMember = partnerIntegrationInfoListMember.NextNode("PartnerIntegrationInfo");
       }
 
+      m_partnerIntegrationInfoListHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::DescribePartnersResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::DescribePartnersResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

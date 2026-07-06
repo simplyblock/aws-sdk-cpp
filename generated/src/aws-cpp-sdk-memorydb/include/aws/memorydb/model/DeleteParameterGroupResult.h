@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/memorydb/MemoryDB_EXPORTS.h>
 #include <aws/memorydb/model/ParameterGroup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MemoryDB
-{
-namespace Model
-{
-  class DeleteParameterGroupResult
-  {
-  public:
-    AWS_MEMORYDB_API DeleteParameterGroupResult();
-    AWS_MEMORYDB_API DeleteParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEMORYDB_API DeleteParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MemoryDB {
+namespace Model {
+class DeleteParameterGroupResult {
+ public:
+  AWS_MEMORYDB_API DeleteParameterGroupResult() = default;
+  AWS_MEMORYDB_API DeleteParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEMORYDB_API DeleteParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The parameter group that has been deleted.</p>
+   */
+  inline const ParameterGroup& GetParameterGroup() const { return m_parameterGroup; }
+  template <typename ParameterGroupT = ParameterGroup>
+  void SetParameterGroup(ParameterGroupT&& value) {
+    m_parameterGroupHasBeenSet = true;
+    m_parameterGroup = std::forward<ParameterGroupT>(value);
+  }
+  template <typename ParameterGroupT = ParameterGroup>
+  DeleteParameterGroupResult& WithParameterGroup(ParameterGroupT&& value) {
+    SetParameterGroup(std::forward<ParameterGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The parameter group that has been deleted.</p>
-     */
-    inline const ParameterGroup& GetParameterGroup() const{ return m_parameterGroup; }
-    inline void SetParameterGroup(const ParameterGroup& value) { m_parameterGroup = value; }
-    inline void SetParameterGroup(ParameterGroup&& value) { m_parameterGroup = std::move(value); }
-    inline DeleteParameterGroupResult& WithParameterGroup(const ParameterGroup& value) { SetParameterGroup(value); return *this;}
-    inline DeleteParameterGroupResult& WithParameterGroup(ParameterGroup&& value) { SetParameterGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteParameterGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteParameterGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteParameterGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteParameterGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ParameterGroup m_parameterGroup;
+ private:
+  ParameterGroup m_parameterGroup;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_parameterGroupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

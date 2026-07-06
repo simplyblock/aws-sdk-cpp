@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ManagedPrefixList.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class RestoreManagedPrefixListVersionResponse
-  {
-  public:
-    AWS_EC2_API RestoreManagedPrefixListVersionResponse();
-    AWS_EC2_API RestoreManagedPrefixListVersionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API RestoreManagedPrefixListVersionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class RestoreManagedPrefixListVersionResponse {
+ public:
+  AWS_EC2_API RestoreManagedPrefixListVersionResponse() = default;
+  AWS_EC2_API RestoreManagedPrefixListVersionResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API RestoreManagedPrefixListVersionResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the prefix list.</p>
+   */
+  inline const ManagedPrefixList& GetPrefixList() const { return m_prefixList; }
+  template <typename PrefixListT = ManagedPrefixList>
+  void SetPrefixList(PrefixListT&& value) {
+    m_prefixListHasBeenSet = true;
+    m_prefixList = std::forward<PrefixListT>(value);
+  }
+  template <typename PrefixListT = ManagedPrefixList>
+  RestoreManagedPrefixListVersionResponse& WithPrefixList(PrefixListT&& value) {
+    SetPrefixList(std::forward<PrefixListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the prefix list.</p>
-     */
-    inline const ManagedPrefixList& GetPrefixList() const{ return m_prefixList; }
-    inline void SetPrefixList(const ManagedPrefixList& value) { m_prefixList = value; }
-    inline void SetPrefixList(ManagedPrefixList&& value) { m_prefixList = std::move(value); }
-    inline RestoreManagedPrefixListVersionResponse& WithPrefixList(const ManagedPrefixList& value) { SetPrefixList(value); return *this;}
-    inline RestoreManagedPrefixListVersionResponse& WithPrefixList(ManagedPrefixList&& value) { SetPrefixList(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline RestoreManagedPrefixListVersionResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline RestoreManagedPrefixListVersionResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  RestoreManagedPrefixListVersionResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ManagedPrefixList m_prefixList;
+ private:
+  ManagedPrefixList m_prefixList;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_prefixListHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

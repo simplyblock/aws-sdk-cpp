@@ -4,80 +4,99 @@
  */
 
 #pragma once
-#include <aws/wafv2/WAFV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/wafv2/WAFV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WAFV2
-{
-namespace Model
-{
-  class GetDecryptedAPIKeyResult
-  {
-  public:
-    AWS_WAFV2_API GetDecryptedAPIKeyResult();
-    AWS_WAFV2_API GetDecryptedAPIKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WAFV2_API GetDecryptedAPIKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WAFV2 {
+namespace Model {
+class GetDecryptedAPIKeyResult {
+ public:
+  AWS_WAFV2_API GetDecryptedAPIKeyResult() = default;
+  AWS_WAFV2_API GetDecryptedAPIKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WAFV2_API GetDecryptedAPIKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The token domains that are defined in this API key. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTokenDomains() const { return m_tokenDomains; }
+  template <typename TokenDomainsT = Aws::Vector<Aws::String>>
+  void SetTokenDomains(TokenDomainsT&& value) {
+    m_tokenDomainsHasBeenSet = true;
+    m_tokenDomains = std::forward<TokenDomainsT>(value);
+  }
+  template <typename TokenDomainsT = Aws::Vector<Aws::String>>
+  GetDecryptedAPIKeyResult& WithTokenDomains(TokenDomainsT&& value) {
+    SetTokenDomains(std::forward<TokenDomainsT>(value));
+    return *this;
+  }
+  template <typename TokenDomainsT = Aws::String>
+  GetDecryptedAPIKeyResult& AddTokenDomains(TokenDomainsT&& value) {
+    m_tokenDomainsHasBeenSet = true;
+    m_tokenDomains.emplace_back(std::forward<TokenDomainsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token domains that are defined in this API key. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTokenDomains() const{ return m_tokenDomains; }
-    inline void SetTokenDomains(const Aws::Vector<Aws::String>& value) { m_tokenDomains = value; }
-    inline void SetTokenDomains(Aws::Vector<Aws::String>&& value) { m_tokenDomains = std::move(value); }
-    inline GetDecryptedAPIKeyResult& WithTokenDomains(const Aws::Vector<Aws::String>& value) { SetTokenDomains(value); return *this;}
-    inline GetDecryptedAPIKeyResult& WithTokenDomains(Aws::Vector<Aws::String>&& value) { SetTokenDomains(std::move(value)); return *this;}
-    inline GetDecryptedAPIKeyResult& AddTokenDomains(const Aws::String& value) { m_tokenDomains.push_back(value); return *this; }
-    inline GetDecryptedAPIKeyResult& AddTokenDomains(Aws::String&& value) { m_tokenDomains.push_back(std::move(value)); return *this; }
-    inline GetDecryptedAPIKeyResult& AddTokenDomains(const char* value) { m_tokenDomains.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the key was created. </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTimestamp() const { return m_creationTimestamp; }
+  template <typename CreationTimestampT = Aws::Utils::DateTime>
+  void SetCreationTimestamp(CreationTimestampT&& value) {
+    m_creationTimestampHasBeenSet = true;
+    m_creationTimestamp = std::forward<CreationTimestampT>(value);
+  }
+  template <typename CreationTimestampT = Aws::Utils::DateTime>
+  GetDecryptedAPIKeyResult& WithCreationTimestamp(CreationTimestampT&& value) {
+    SetCreationTimestamp(std::forward<CreationTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the key was created. </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTimestamp() const{ return m_creationTimestamp; }
-    inline void SetCreationTimestamp(const Aws::Utils::DateTime& value) { m_creationTimestamp = value; }
-    inline void SetCreationTimestamp(Aws::Utils::DateTime&& value) { m_creationTimestamp = std::move(value); }
-    inline GetDecryptedAPIKeyResult& WithCreationTimestamp(const Aws::Utils::DateTime& value) { SetCreationTimestamp(value); return *this;}
-    inline GetDecryptedAPIKeyResult& WithCreationTimestamp(Aws::Utils::DateTime&& value) { SetCreationTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDecryptedAPIKeyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDecryptedAPIKeyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDecryptedAPIKeyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDecryptedAPIKeyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_tokenDomains;
+ private:
+  Aws::Vector<Aws::String> m_tokenDomains;
 
-    Aws::Utils::DateTime m_creationTimestamp;
+  Aws::Utils::DateTime m_creationTimestamp{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_tokenDomainsHasBeenSet = false;
+  bool m_creationTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WAFV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAFV2
+}  // namespace Aws

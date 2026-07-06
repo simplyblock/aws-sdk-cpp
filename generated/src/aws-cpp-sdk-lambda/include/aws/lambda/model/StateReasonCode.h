@@ -4,50 +4,60 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
 
-namespace Aws
-{
-namespace Lambda
-{
-namespace Model
-{
-  enum class StateReasonCode
-  {
-    NOT_SET,
-    Idle,
-    Creating,
-    Restoring,
-    EniLimitExceeded,
-    InsufficientRolePermissions,
-    InvalidConfiguration,
-    InternalError,
-    SubnetOutOfIPAddresses,
-    InvalidSubnet,
-    InvalidSecurityGroup,
-    ImageDeleted,
-    ImageAccessDenied,
-    InvalidImage,
-    KMSKeyAccessDenied,
-    KMSKeyNotFound,
-    InvalidStateKMSKey,
-    DisabledKMSKey,
-    EFSIOError,
-    EFSMountConnectivityError,
-    EFSMountFailure,
-    EFSMountTimeout,
-    InvalidRuntime,
-    InvalidZipFileException,
-    FunctionError
-  };
+namespace Aws {
+namespace Lambda {
+namespace Model {
+enum class StateReasonCode {
+  NOT_SET,
+  Idle,
+  Creating,
+  Restoring,
+  EniLimitExceeded,
+  InsufficientRolePermissions,
+  InvalidConfiguration,
+  InternalError,
+  SubnetOutOfIPAddresses,
+  InvalidSubnet,
+  InvalidSecurityGroup,
+  ImageDeleted,
+  ImageAccessDenied,
+  InvalidImage,
+  KMSKeyAccessDenied,
+  KMSKeyNotFound,
+  InvalidStateKMSKey,
+  DisabledKMSKey,
+  EFSIOError,
+  EFSMountConnectivityError,
+  EFSMountFailure,
+  EFSMountTimeout,
+  InvalidRuntime,
+  InvalidZipFileException,
+  FunctionError,
+  ServiceQuotaExceededException,
+  VcpuLimitExceeded,
+  CapacityProviderScalingLimitExceeded,
+  InsufficientCapacity,
+  EC2RequestLimitExceeded,
+  FunctionError_InitTimeout,
+  FunctionError_RuntimeInitError,
+  FunctionError_ExtensionInitError,
+  FunctionError_InvalidEntryPoint,
+  FunctionError_InvalidWorkingDirectory,
+  FunctionError_PermissionDenied,
+  FunctionError_TooManyExtensions,
+  FunctionError_InitResourceExhausted,
+  DisallowedByVpcEncryptionControl,
+  DrainingDurableExecutions
+};
 
-namespace StateReasonCodeMapper
-{
+namespace StateReasonCodeMapper {
 AWS_LAMBDA_API StateReasonCode GetStateReasonCodeForName(const Aws::String& name);
 
 AWS_LAMBDA_API Aws::String GetNameForStateReasonCode(StateReasonCode value);
-} // namespace StateReasonCodeMapper
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace StateReasonCodeMapper
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

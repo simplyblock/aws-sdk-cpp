@@ -6,61 +6,73 @@
 #pragma once
 #include <aws/appstream/AppStream_EXPORTS.h>
 #include <aws/appstream/model/AppBlockBuilderAppBlockAssociation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppStream
-{
-namespace Model
-{
-  class AssociateAppBlockBuilderAppBlockResult
-  {
-  public:
-    AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult();
-    AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppStream {
+namespace Model {
+class AssociateAppBlockBuilderAppBlockResult {
+ public:
+  AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult() = default;
+  AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSTREAM_API AssociateAppBlockBuilderAppBlockResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of app block builders associated with app blocks.</p>
+   */
+  inline const AppBlockBuilderAppBlockAssociation& GetAppBlockBuilderAppBlockAssociation() const {
+    return m_appBlockBuilderAppBlockAssociation;
+  }
+  template <typename AppBlockBuilderAppBlockAssociationT = AppBlockBuilderAppBlockAssociation>
+  void SetAppBlockBuilderAppBlockAssociation(AppBlockBuilderAppBlockAssociationT&& value) {
+    m_appBlockBuilderAppBlockAssociationHasBeenSet = true;
+    m_appBlockBuilderAppBlockAssociation = std::forward<AppBlockBuilderAppBlockAssociationT>(value);
+  }
+  template <typename AppBlockBuilderAppBlockAssociationT = AppBlockBuilderAppBlockAssociation>
+  AssociateAppBlockBuilderAppBlockResult& WithAppBlockBuilderAppBlockAssociation(AppBlockBuilderAppBlockAssociationT&& value) {
+    SetAppBlockBuilderAppBlockAssociation(std::forward<AppBlockBuilderAppBlockAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of app block builders associated with app blocks.</p>
-     */
-    inline const AppBlockBuilderAppBlockAssociation& GetAppBlockBuilderAppBlockAssociation() const{ return m_appBlockBuilderAppBlockAssociation; }
-    inline void SetAppBlockBuilderAppBlockAssociation(const AppBlockBuilderAppBlockAssociation& value) { m_appBlockBuilderAppBlockAssociation = value; }
-    inline void SetAppBlockBuilderAppBlockAssociation(AppBlockBuilderAppBlockAssociation&& value) { m_appBlockBuilderAppBlockAssociation = std::move(value); }
-    inline AssociateAppBlockBuilderAppBlockResult& WithAppBlockBuilderAppBlockAssociation(const AppBlockBuilderAppBlockAssociation& value) { SetAppBlockBuilderAppBlockAssociation(value); return *this;}
-    inline AssociateAppBlockBuilderAppBlockResult& WithAppBlockBuilderAppBlockAssociation(AppBlockBuilderAppBlockAssociation&& value) { SetAppBlockBuilderAppBlockAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateAppBlockBuilderAppBlockResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateAppBlockBuilderAppBlockResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateAppBlockBuilderAppBlockResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateAppBlockBuilderAppBlockResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppBlockBuilderAppBlockAssociation m_appBlockBuilderAppBlockAssociation;
+ private:
+  AppBlockBuilderAppBlockAssociation m_appBlockBuilderAppBlockAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appBlockBuilderAppBlockAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

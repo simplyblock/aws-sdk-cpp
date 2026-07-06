@@ -4,87 +4,108 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/elasticloadbalancing/model/LoadBalancerDescription.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the parameters for DescribeLoadBalancers.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeAccessPointsOutput">AWS
+ * API Reference</a></p>
+ */
+class DescribeLoadBalancersResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult() = default;
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the parameters for DescribeLoadBalancers.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DescribeAccessPointsOutput">AWS
-   * API Reference</a></p>
+   * <p>Information about the load balancers.</p>
    */
-  class DescribeLoadBalancersResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult();
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API DescribeLoadBalancersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<LoadBalancerDescription>& GetLoadBalancerDescriptions() const { return m_loadBalancerDescriptions; }
+  template <typename LoadBalancerDescriptionsT = Aws::Vector<LoadBalancerDescription>>
+  void SetLoadBalancerDescriptions(LoadBalancerDescriptionsT&& value) {
+    m_loadBalancerDescriptionsHasBeenSet = true;
+    m_loadBalancerDescriptions = std::forward<LoadBalancerDescriptionsT>(value);
+  }
+  template <typename LoadBalancerDescriptionsT = Aws::Vector<LoadBalancerDescription>>
+  DescribeLoadBalancersResult& WithLoadBalancerDescriptions(LoadBalancerDescriptionsT&& value) {
+    SetLoadBalancerDescriptions(std::forward<LoadBalancerDescriptionsT>(value));
+    return *this;
+  }
+  template <typename LoadBalancerDescriptionsT = LoadBalancerDescription>
+  DescribeLoadBalancersResult& AddLoadBalancerDescriptions(LoadBalancerDescriptionsT&& value) {
+    m_loadBalancerDescriptionsHasBeenSet = true;
+    m_loadBalancerDescriptions.emplace_back(std::forward<LoadBalancerDescriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The marker to use when requesting the next set of results. If there are no
+   * additional results, the string is empty.</p>
+   */
+  inline const Aws::String& GetNextMarker() const { return m_nextMarker; }
+  template <typename NextMarkerT = Aws::String>
+  void SetNextMarker(NextMarkerT&& value) {
+    m_nextMarkerHasBeenSet = true;
+    m_nextMarker = std::forward<NextMarkerT>(value);
+  }
+  template <typename NextMarkerT = Aws::String>
+  DescribeLoadBalancersResult& WithNextMarker(NextMarkerT&& value) {
+    SetNextMarker(std::forward<NextMarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the load balancers.</p>
-     */
-    inline const Aws::Vector<LoadBalancerDescription>& GetLoadBalancerDescriptions() const{ return m_loadBalancerDescriptions; }
-    inline void SetLoadBalancerDescriptions(const Aws::Vector<LoadBalancerDescription>& value) { m_loadBalancerDescriptions = value; }
-    inline void SetLoadBalancerDescriptions(Aws::Vector<LoadBalancerDescription>&& value) { m_loadBalancerDescriptions = std::move(value); }
-    inline DescribeLoadBalancersResult& WithLoadBalancerDescriptions(const Aws::Vector<LoadBalancerDescription>& value) { SetLoadBalancerDescriptions(value); return *this;}
-    inline DescribeLoadBalancersResult& WithLoadBalancerDescriptions(Aws::Vector<LoadBalancerDescription>&& value) { SetLoadBalancerDescriptions(std::move(value)); return *this;}
-    inline DescribeLoadBalancersResult& AddLoadBalancerDescriptions(const LoadBalancerDescription& value) { m_loadBalancerDescriptions.push_back(value); return *this; }
-    inline DescribeLoadBalancersResult& AddLoadBalancerDescriptions(LoadBalancerDescription&& value) { m_loadBalancerDescriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The marker to use when requesting the next set of results. If there are no
-     * additional results, the string is empty.</p>
-     */
-    inline const Aws::String& GetNextMarker() const{ return m_nextMarker; }
-    inline void SetNextMarker(const Aws::String& value) { m_nextMarker = value; }
-    inline void SetNextMarker(Aws::String&& value) { m_nextMarker = std::move(value); }
-    inline void SetNextMarker(const char* value) { m_nextMarker.assign(value); }
-    inline DescribeLoadBalancersResult& WithNextMarker(const Aws::String& value) { SetNextMarker(value); return *this;}
-    inline DescribeLoadBalancersResult& WithNextMarker(Aws::String&& value) { SetNextMarker(std::move(value)); return *this;}
-    inline DescribeLoadBalancersResult& WithNextMarker(const char* value) { SetNextMarker(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeLoadBalancersResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeLoadBalancersResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeLoadBalancersResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<LoadBalancerDescription> m_loadBalancerDescriptions;
 
-    Aws::Vector<LoadBalancerDescription> m_loadBalancerDescriptions;
+  Aws::String m_nextMarker;
 
-    Aws::String m_nextMarker;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_loadBalancerDescriptionsHasBeenSet = false;
+  bool m_nextMarkerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

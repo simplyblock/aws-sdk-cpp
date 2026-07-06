@@ -4,88 +4,109 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/LensReviewReport.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  /**
-   * <p>Output of a get lens review report call.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/GetLensReviewReportOutput">AWS
-   * API Reference</a></p>
-   */
-  class GetLensReviewReportResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API GetLensReviewReportResult();
-    AWS_WELLARCHITECTED_API GetLensReviewReportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API GetLensReviewReportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+/**
+ * <p>Output of a get lens review report call.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/GetLensReviewReportOutput">AWS
+ * API Reference</a></p>
+ */
+class GetLensReviewReportResult {
+ public:
+  AWS_WELLARCHITECTED_API GetLensReviewReportResult() = default;
+  AWS_WELLARCHITECTED_API GetLensReviewReportResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API GetLensReviewReportResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetWorkloadId() const{ return m_workloadId; }
-    inline void SetWorkloadId(const Aws::String& value) { m_workloadId = value; }
-    inline void SetWorkloadId(Aws::String&& value) { m_workloadId = std::move(value); }
-    inline void SetWorkloadId(const char* value) { m_workloadId.assign(value); }
-    inline GetLensReviewReportResult& WithWorkloadId(const Aws::String& value) { SetWorkloadId(value); return *this;}
-    inline GetLensReviewReportResult& WithWorkloadId(Aws::String&& value) { SetWorkloadId(std::move(value)); return *this;}
-    inline GetLensReviewReportResult& WithWorkloadId(const char* value) { SetWorkloadId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetWorkloadId() const { return m_workloadId; }
+  template <typename WorkloadIdT = Aws::String>
+  void SetWorkloadId(WorkloadIdT&& value) {
+    m_workloadIdHasBeenSet = true;
+    m_workloadId = std::forward<WorkloadIdT>(value);
+  }
+  template <typename WorkloadIdT = Aws::String>
+  GetLensReviewReportResult& WithWorkloadId(WorkloadIdT&& value) {
+    SetWorkloadId(std::forward<WorkloadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline int GetMilestoneNumber() const{ return m_milestoneNumber; }
-    inline void SetMilestoneNumber(int value) { m_milestoneNumber = value; }
-    inline GetLensReviewReportResult& WithMilestoneNumber(int value) { SetMilestoneNumber(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const LensReviewReport& GetLensReviewReport() const{ return m_lensReviewReport; }
-    inline void SetLensReviewReport(const LensReviewReport& value) { m_lensReviewReport = value; }
-    inline void SetLensReviewReport(LensReviewReport&& value) { m_lensReviewReport = std::move(value); }
-    inline GetLensReviewReportResult& WithLensReviewReport(const LensReviewReport& value) { SetLensReviewReport(value); return *this;}
-    inline GetLensReviewReportResult& WithLensReviewReport(LensReviewReport&& value) { SetLensReviewReport(std::move(value)); return *this;}
-    ///@}
+  inline int GetMilestoneNumber() const { return m_milestoneNumber; }
+  inline void SetMilestoneNumber(int value) {
+    m_milestoneNumberHasBeenSet = true;
+    m_milestoneNumber = value;
+  }
+  inline GetLensReviewReportResult& WithMilestoneNumber(int value) {
+    SetMilestoneNumber(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetLensReviewReportResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetLensReviewReportResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetLensReviewReportResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_workloadId;
+  inline const LensReviewReport& GetLensReviewReport() const { return m_lensReviewReport; }
+  template <typename LensReviewReportT = LensReviewReport>
+  void SetLensReviewReport(LensReviewReportT&& value) {
+    m_lensReviewReportHasBeenSet = true;
+    m_lensReviewReport = std::forward<LensReviewReportT>(value);
+  }
+  template <typename LensReviewReportT = LensReviewReport>
+  GetLensReviewReportResult& WithLensReviewReport(LensReviewReportT&& value) {
+    SetLensReviewReport(std::forward<LensReviewReportT>(value));
+    return *this;
+  }
+  ///@}
 
-    int m_milestoneNumber;
+  ///@{
 
-    LensReviewReport m_lensReviewReport;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetLensReviewReportResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_workloadId;
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+  int m_milestoneNumber{0};
+
+  LensReviewReport m_lensReviewReport;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workloadIdHasBeenSet = false;
+  bool m_milestoneNumberHasBeenSet = false;
+  bool m_lensReviewReportHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

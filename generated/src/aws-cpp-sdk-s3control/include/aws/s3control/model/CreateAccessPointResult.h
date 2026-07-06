@@ -4,80 +4,114 @@
  */
 
 #pragma once
-#include <aws/s3control/S3Control_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3control/S3Control_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Control
-{
-namespace Model
-{
-  class CreateAccessPointResult
-  {
-  public:
-    AWS_S3CONTROL_API CreateAccessPointResult();
-    AWS_S3CONTROL_API CreateAccessPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CONTROL_API CreateAccessPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Control {
+namespace Model {
+class CreateAccessPointResult {
+ public:
+  AWS_S3CONTROL_API CreateAccessPointResult() = default;
+  AWS_S3CONTROL_API CreateAccessPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CONTROL_API CreateAccessPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the access point.</p>  <p>This is only supported by Amazon
+   * S3 on Outposts.</p>
+   */
+  inline const Aws::String& GetAccessPointArn() const { return m_accessPointArn; }
+  template <typename AccessPointArnT = Aws::String>
+  void SetAccessPointArn(AccessPointArnT&& value) {
+    m_accessPointArnHasBeenSet = true;
+    m_accessPointArn = std::forward<AccessPointArnT>(value);
+  }
+  template <typename AccessPointArnT = Aws::String>
+  CreateAccessPointResult& WithAccessPointArn(AccessPointArnT&& value) {
+    SetAccessPointArn(std::forward<AccessPointArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the access point.</p>  <p>This is only supported by Amazon
-     * S3 on Outposts.</p> 
-     */
-    inline const Aws::String& GetAccessPointArn() const{ return m_accessPointArn; }
-    inline void SetAccessPointArn(const Aws::String& value) { m_accessPointArn = value; }
-    inline void SetAccessPointArn(Aws::String&& value) { m_accessPointArn = std::move(value); }
-    inline void SetAccessPointArn(const char* value) { m_accessPointArn.assign(value); }
-    inline CreateAccessPointResult& WithAccessPointArn(const Aws::String& value) { SetAccessPointArn(value); return *this;}
-    inline CreateAccessPointResult& WithAccessPointArn(Aws::String&& value) { SetAccessPointArn(std::move(value)); return *this;}
-    inline CreateAccessPointResult& WithAccessPointArn(const char* value) { SetAccessPointArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name or alias of the access point.</p>
+   */
+  inline const Aws::String& GetAlias() const { return m_alias; }
+  template <typename AliasT = Aws::String>
+  void SetAlias(AliasT&& value) {
+    m_aliasHasBeenSet = true;
+    m_alias = std::forward<AliasT>(value);
+  }
+  template <typename AliasT = Aws::String>
+  CreateAccessPointResult& WithAlias(AliasT&& value) {
+    SetAlias(std::forward<AliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name or alias of the access point.</p>
-     */
-    inline const Aws::String& GetAlias() const{ return m_alias; }
-    inline void SetAlias(const Aws::String& value) { m_alias = value; }
-    inline void SetAlias(Aws::String&& value) { m_alias = std::move(value); }
-    inline void SetAlias(const char* value) { m_alias.assign(value); }
-    inline CreateAccessPointResult& WithAlias(const Aws::String& value) { SetAlias(value); return *this;}
-    inline CreateAccessPointResult& WithAlias(Aws::String&& value) { SetAlias(std::move(value)); return *this;}
-    inline CreateAccessPointResult& WithAlias(const char* value) { SetAlias(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * AWS Request Id value
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAccessPointResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAccessPointResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAccessPointResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAccessPointResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * x-amz-id-2 header value, also known as Host Id
+   */
+  inline const Aws::String& GetHostId() const { return m_hostId; }
+  template <typename HostIdT = Aws::String>
+  void SetHostId(HostIdT&& value) {
+    m_hostIdHasBeenSet = true;
+    m_hostId = std::forward<HostIdT>(value);
+  }
+  template <typename HostIdT = Aws::String>
+  CreateAccessPointResult& WithHostId(HostIdT&& value) {
+    SetHostId(std::forward<HostIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_accessPointArn;
+ private:
+  Aws::String m_accessPointArn;
 
-    Aws::String m_alias;
+  Aws::String m_alias;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+  Aws::String m_hostId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessPointArnHasBeenSet = false;
+  bool m_aliasHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_hostIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

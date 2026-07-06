@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iot/model/DescribeCertificateRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iot/model/DescribeCertificateRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoT::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeCertificateRequest::DescribeCertificateRequest() : 
-    m_certificateIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeCertificateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeCertificateRequest::SerializePayload() const { return {}; }

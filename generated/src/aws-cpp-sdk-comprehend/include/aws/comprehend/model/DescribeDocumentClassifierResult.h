@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
 #include <aws/comprehend/model/DocumentClassifierProperties.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class DescribeDocumentClassifierResult
-  {
-  public:
-    AWS_COMPREHEND_API DescribeDocumentClassifierResult();
-    AWS_COMPREHEND_API DescribeDocumentClassifierResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API DescribeDocumentClassifierResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class DescribeDocumentClassifierResult {
+ public:
+  AWS_COMPREHEND_API DescribeDocumentClassifierResult() = default;
+  AWS_COMPREHEND_API DescribeDocumentClassifierResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API DescribeDocumentClassifierResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object that contains the properties associated with a document
+   * classifier.</p>
+   */
+  inline const DocumentClassifierProperties& GetDocumentClassifierProperties() const { return m_documentClassifierProperties; }
+  template <typename DocumentClassifierPropertiesT = DocumentClassifierProperties>
+  void SetDocumentClassifierProperties(DocumentClassifierPropertiesT&& value) {
+    m_documentClassifierPropertiesHasBeenSet = true;
+    m_documentClassifierProperties = std::forward<DocumentClassifierPropertiesT>(value);
+  }
+  template <typename DocumentClassifierPropertiesT = DocumentClassifierProperties>
+  DescribeDocumentClassifierResult& WithDocumentClassifierProperties(DocumentClassifierPropertiesT&& value) {
+    SetDocumentClassifierProperties(std::forward<DocumentClassifierPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that contains the properties associated with a document
-     * classifier.</p>
-     */
-    inline const DocumentClassifierProperties& GetDocumentClassifierProperties() const{ return m_documentClassifierProperties; }
-    inline void SetDocumentClassifierProperties(const DocumentClassifierProperties& value) { m_documentClassifierProperties = value; }
-    inline void SetDocumentClassifierProperties(DocumentClassifierProperties&& value) { m_documentClassifierProperties = std::move(value); }
-    inline DescribeDocumentClassifierResult& WithDocumentClassifierProperties(const DocumentClassifierProperties& value) { SetDocumentClassifierProperties(value); return *this;}
-    inline DescribeDocumentClassifierResult& WithDocumentClassifierProperties(DocumentClassifierProperties&& value) { SetDocumentClassifierProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeDocumentClassifierResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeDocumentClassifierResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeDocumentClassifierResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeDocumentClassifierResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DocumentClassifierProperties m_documentClassifierProperties;
+ private:
+  DocumentClassifierProperties m_documentClassifierProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_documentClassifierPropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

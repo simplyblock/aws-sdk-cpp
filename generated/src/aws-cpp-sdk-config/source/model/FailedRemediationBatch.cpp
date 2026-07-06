@@ -11,71 +11,45 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ConfigService
-{
-namespace Model
-{
+namespace Aws {
+namespace ConfigService {
+namespace Model {
 
-FailedRemediationBatch::FailedRemediationBatch() : 
-    m_failureMessageHasBeenSet(false),
-    m_failedItemsHasBeenSet(false)
-{
-}
+FailedRemediationBatch::FailedRemediationBatch(JsonView jsonValue) { *this = jsonValue; }
 
-FailedRemediationBatch::FailedRemediationBatch(JsonView jsonValue)
-  : FailedRemediationBatch()
-{
-  *this = jsonValue;
-}
-
-FailedRemediationBatch& FailedRemediationBatch::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("FailureMessage"))
-  {
+FailedRemediationBatch& FailedRemediationBatch::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("FailureMessage")) {
     m_failureMessage = jsonValue.GetString("FailureMessage");
-
     m_failureMessageHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("FailedItems"))
-  {
+  if (jsonValue.ValueExists("FailedItems")) {
     Aws::Utils::Array<JsonView> failedItemsJsonList = jsonValue.GetArray("FailedItems");
-    for(unsigned failedItemsIndex = 0; failedItemsIndex < failedItemsJsonList.GetLength(); ++failedItemsIndex)
-    {
+    for (unsigned failedItemsIndex = 0; failedItemsIndex < failedItemsJsonList.GetLength(); ++failedItemsIndex) {
       m_failedItems.push_back(failedItemsJsonList[failedItemsIndex].AsObject());
     }
     m_failedItemsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue FailedRemediationBatch::Jsonize() const
-{
+JsonValue FailedRemediationBatch::Jsonize() const {
   JsonValue payload;
 
-  if(m_failureMessageHasBeenSet)
-  {
-   payload.WithString("FailureMessage", m_failureMessage);
-
+  if (m_failureMessageHasBeenSet) {
+    payload.WithString("FailureMessage", m_failureMessage);
   }
 
-  if(m_failedItemsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> failedItemsJsonList(m_failedItems.size());
-   for(unsigned failedItemsIndex = 0; failedItemsIndex < failedItemsJsonList.GetLength(); ++failedItemsIndex)
-   {
-     failedItemsJsonList[failedItemsIndex].AsObject(m_failedItems[failedItemsIndex].Jsonize());
-   }
-   payload.WithArray("FailedItems", std::move(failedItemsJsonList));
-
+  if (m_failedItemsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> failedItemsJsonList(m_failedItems.size());
+    for (unsigned failedItemsIndex = 0; failedItemsIndex < failedItemsJsonList.GetLength(); ++failedItemsIndex) {
+      failedItemsJsonList[failedItemsIndex].AsObject(m_failedItems[failedItemsIndex].Jsonize());
+    }
+    payload.WithArray("FailedItems", std::move(failedItemsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

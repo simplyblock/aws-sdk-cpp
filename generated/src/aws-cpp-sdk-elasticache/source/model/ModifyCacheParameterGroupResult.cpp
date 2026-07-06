@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/ModifyCacheParameterGroupResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticache/model/ModifyCacheParameterGroupResult.h>
 
 #include <utility>
 
@@ -17,38 +17,31 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ModifyCacheParameterGroupResult::ModifyCacheParameterGroupResult()
-{
-}
+ModifyCacheParameterGroupResult::ModifyCacheParameterGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ModifyCacheParameterGroupResult::ModifyCacheParameterGroupResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ModifyCacheParameterGroupResult& ModifyCacheParameterGroupResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ModifyCacheParameterGroupResult& ModifyCacheParameterGroupResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyCacheParameterGroupResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "ModifyCacheParameterGroupResult")) {
     resultNode = rootNode.FirstChild("ModifyCacheParameterGroupResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode cacheParameterGroupNameNode = resultNode.FirstChild("CacheParameterGroupName");
-    if(!cacheParameterGroupNameNode.IsNull())
-    {
+    if (!cacheParameterGroupNameNode.IsNull()) {
       m_cacheParameterGroupName = Aws::Utils::Xml::DecodeEscapedXmlText(cacheParameterGroupNameNode.GetText());
+      m_cacheParameterGroupNameHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::ModifyCacheParameterGroupResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::ModifyCacheParameterGroupResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

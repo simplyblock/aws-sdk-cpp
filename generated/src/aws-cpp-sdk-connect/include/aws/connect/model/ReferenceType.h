@@ -7,29 +7,29 @@
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
-  enum class ReferenceType
-  {
-    NOT_SET,
-    URL,
-    ATTACHMENT,
-    NUMBER,
-    STRING,
-    DATE,
-    EMAIL
-  };
+namespace Aws {
+namespace Connect {
+namespace Model {
+enum class ReferenceType {
+  NOT_SET,
+  URL,
+  ATTACHMENT,
+  CONTACT_ANALYSIS,
+  NUMBER,
+  STRING,
+  DATE,
+  EMAIL,
+  EMAIL_MESSAGE,
+  EMAIL_MESSAGE_PLAIN_TEXT,
+  EMAIL_MESSAGE_PLAIN_TEXT_REDACTED,
+  EMAIL_MESSAGE_REDACTED
+};
 
-namespace ReferenceTypeMapper
-{
+namespace ReferenceTypeMapper {
 AWS_CONNECT_API ReferenceType GetReferenceTypeForName(const Aws::String& name);
 
 AWS_CONNECT_API Aws::String GetNameForReferenceType(ReferenceType value);
-} // namespace ReferenceTypeMapper
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace ReferenceTypeMapper
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

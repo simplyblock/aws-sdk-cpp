@@ -4,130 +4,146 @@
  */
 
 #pragma once
-#include <aws/finspace/Finspace_EXPORTS.h>
-#include <aws/finspace/FinspaceRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/finspace/FinspaceRequest.h>
+#include <aws/finspace/Finspace_EXPORTS.h>
 
-namespace Aws
-{
-namespace finspace
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace finspace {
+namespace Model {
+
+/**
+ */
+class CreateKxUserRequest : public FinspaceRequest {
+ public:
+  AWS_FINSPACE_API CreateKxUserRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateKxUser"; }
+
+  AWS_FINSPACE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique identifier for the kdb environment where you want to create a
+   * user.</p>
    */
-  class CreateKxUserRequest : public FinspaceRequest
-  {
-  public:
-    AWS_FINSPACE_API CreateKxUserRequest();
+  inline const Aws::String& GetEnvironmentId() const { return m_environmentId; }
+  inline bool EnvironmentIdHasBeenSet() const { return m_environmentIdHasBeenSet; }
+  template <typename EnvironmentIdT = Aws::String>
+  void SetEnvironmentId(EnvironmentIdT&& value) {
+    m_environmentIdHasBeenSet = true;
+    m_environmentId = std::forward<EnvironmentIdT>(value);
+  }
+  template <typename EnvironmentIdT = Aws::String>
+  CreateKxUserRequest& WithEnvironmentId(EnvironmentIdT&& value) {
+    SetEnvironmentId(std::forward<EnvironmentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateKxUser"; }
+  ///@{
+  /**
+   * <p>A unique identifier for the user.</p>
+   */
+  inline const Aws::String& GetUserName() const { return m_userName; }
+  inline bool UserNameHasBeenSet() const { return m_userNameHasBeenSet; }
+  template <typename UserNameT = Aws::String>
+  void SetUserName(UserNameT&& value) {
+    m_userNameHasBeenSet = true;
+    m_userName = std::forward<UserNameT>(value);
+  }
+  template <typename UserNameT = Aws::String>
+  CreateKxUserRequest& WithUserName(UserNameT&& value) {
+    SetUserName(std::forward<UserNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_FINSPACE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The IAM role ARN that will be associated with the user.</p>
+   */
+  inline const Aws::String& GetIamRole() const { return m_iamRole; }
+  inline bool IamRoleHasBeenSet() const { return m_iamRoleHasBeenSet; }
+  template <typename IamRoleT = Aws::String>
+  void SetIamRole(IamRoleT&& value) {
+    m_iamRoleHasBeenSet = true;
+    m_iamRole = std::forward<IamRoleT>(value);
+  }
+  template <typename IamRoleT = Aws::String>
+  CreateKxUserRequest& WithIamRole(IamRoleT&& value) {
+    SetIamRole(std::forward<IamRoleT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of key-value pairs to label the user. You can add up to 50 tags to a
+   * user.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateKxUserRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateKxUserRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the kdb environment where you want to create a
-     * user.</p>
-     */
-    inline const Aws::String& GetEnvironmentId() const{ return m_environmentId; }
-    inline bool EnvironmentIdHasBeenSet() const { return m_environmentIdHasBeenSet; }
-    inline void SetEnvironmentId(const Aws::String& value) { m_environmentIdHasBeenSet = true; m_environmentId = value; }
-    inline void SetEnvironmentId(Aws::String&& value) { m_environmentIdHasBeenSet = true; m_environmentId = std::move(value); }
-    inline void SetEnvironmentId(const char* value) { m_environmentIdHasBeenSet = true; m_environmentId.assign(value); }
-    inline CreateKxUserRequest& WithEnvironmentId(const Aws::String& value) { SetEnvironmentId(value); return *this;}
-    inline CreateKxUserRequest& WithEnvironmentId(Aws::String&& value) { SetEnvironmentId(std::move(value)); return *this;}
-    inline CreateKxUserRequest& WithEnvironmentId(const char* value) { SetEnvironmentId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A token that ensures idempotency. This token expires in 10 minutes.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateKxUserRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_environmentId;
 
-    ///@{
-    /**
-     * <p>A unique identifier for the user.</p>
-     */
-    inline const Aws::String& GetUserName() const{ return m_userName; }
-    inline bool UserNameHasBeenSet() const { return m_userNameHasBeenSet; }
-    inline void SetUserName(const Aws::String& value) { m_userNameHasBeenSet = true; m_userName = value; }
-    inline void SetUserName(Aws::String&& value) { m_userNameHasBeenSet = true; m_userName = std::move(value); }
-    inline void SetUserName(const char* value) { m_userNameHasBeenSet = true; m_userName.assign(value); }
-    inline CreateKxUserRequest& WithUserName(const Aws::String& value) { SetUserName(value); return *this;}
-    inline CreateKxUserRequest& WithUserName(Aws::String&& value) { SetUserName(std::move(value)); return *this;}
-    inline CreateKxUserRequest& WithUserName(const char* value) { SetUserName(value); return *this;}
-    ///@}
+  Aws::String m_userName;
 
-    ///@{
-    /**
-     * <p>The IAM role ARN that will be associated with the user.</p>
-     */
-    inline const Aws::String& GetIamRole() const{ return m_iamRole; }
-    inline bool IamRoleHasBeenSet() const { return m_iamRoleHasBeenSet; }
-    inline void SetIamRole(const Aws::String& value) { m_iamRoleHasBeenSet = true; m_iamRole = value; }
-    inline void SetIamRole(Aws::String&& value) { m_iamRoleHasBeenSet = true; m_iamRole = std::move(value); }
-    inline void SetIamRole(const char* value) { m_iamRoleHasBeenSet = true; m_iamRole.assign(value); }
-    inline CreateKxUserRequest& WithIamRole(const Aws::String& value) { SetIamRole(value); return *this;}
-    inline CreateKxUserRequest& WithIamRole(Aws::String&& value) { SetIamRole(std::move(value)); return *this;}
-    inline CreateKxUserRequest& WithIamRole(const char* value) { SetIamRole(value); return *this;}
-    ///@}
+  Aws::String m_iamRole;
 
-    ///@{
-    /**
-     * <p>A list of key-value pairs to label the user. You can add up to 50 tags to a
-     * user.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateKxUserRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateKxUserRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateKxUserRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateKxUserRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateKxUserRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateKxUserRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateKxUserRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateKxUserRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateKxUserRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    ///@{
-    /**
-     * <p>A token that ensures idempotency. This token expires in 10 minutes.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateKxUserRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateKxUserRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateKxUserRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_environmentIdHasBeenSet = false;
+  bool m_userNameHasBeenSet = false;
+  bool m_iamRoleHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_environmentId;
-    bool m_environmentIdHasBeenSet = false;
-
-    Aws::String m_userName;
-    bool m_userNameHasBeenSet = false;
-
-    Aws::String m_iamRole;
-    bool m_iamRoleHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace finspace
-} // namespace Aws
+}  // namespace Model
+}  // namespace finspace
+}  // namespace Aws

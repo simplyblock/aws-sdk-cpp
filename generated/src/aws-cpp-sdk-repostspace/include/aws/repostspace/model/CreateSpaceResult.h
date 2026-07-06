@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/repostspace/Repostspace_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/repostspace/Repostspace_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace repostspace
-{
-namespace Model
-{
-  class CreateSpaceResult
-  {
-  public:
-    AWS_REPOSTSPACE_API CreateSpaceResult();
-    AWS_REPOSTSPACE_API CreateSpaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REPOSTSPACE_API CreateSpaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace repostspace {
+namespace Model {
+class CreateSpaceResult {
+ public:
+  AWS_REPOSTSPACE_API CreateSpaceResult() = default;
+  AWS_REPOSTSPACE_API CreateSpaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REPOSTSPACE_API CreateSpaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique ID of the private re:Post.</p>
+   */
+  inline const Aws::String& GetSpaceId() const { return m_spaceId; }
+  template <typename SpaceIdT = Aws::String>
+  void SetSpaceId(SpaceIdT&& value) {
+    m_spaceIdHasBeenSet = true;
+    m_spaceId = std::forward<SpaceIdT>(value);
+  }
+  template <typename SpaceIdT = Aws::String>
+  CreateSpaceResult& WithSpaceId(SpaceIdT&& value) {
+    SetSpaceId(std::forward<SpaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique ID of the private re:Post.</p>
-     */
-    inline const Aws::String& GetSpaceId() const{ return m_spaceId; }
-    inline void SetSpaceId(const Aws::String& value) { m_spaceId = value; }
-    inline void SetSpaceId(Aws::String&& value) { m_spaceId = std::move(value); }
-    inline void SetSpaceId(const char* value) { m_spaceId.assign(value); }
-    inline CreateSpaceResult& WithSpaceId(const Aws::String& value) { SetSpaceId(value); return *this;}
-    inline CreateSpaceResult& WithSpaceId(Aws::String&& value) { SetSpaceId(std::move(value)); return *this;}
-    inline CreateSpaceResult& WithSpaceId(const char* value) { SetSpaceId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateSpaceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateSpaceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateSpaceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateSpaceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_spaceId;
+ private:
+  Aws::String m_spaceId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_spaceIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace repostspace
-} // namespace Aws
+}  // namespace Model
+}  // namespace repostspace
+}  // namespace Aws

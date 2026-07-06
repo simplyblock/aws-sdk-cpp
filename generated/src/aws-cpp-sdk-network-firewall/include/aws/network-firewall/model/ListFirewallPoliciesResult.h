@@ -4,87 +4,105 @@
  */
 
 #pragma once
-#include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/FirewallPolicyMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkFirewall
-{
-namespace Model
-{
-  class ListFirewallPoliciesResult
-  {
-  public:
-    AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult();
-    AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkFirewall {
+namespace Model {
+class ListFirewallPoliciesResult {
+ public:
+  AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult() = default;
+  AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKFIREWALL_API ListFirewallPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>When you request a list of objects with a <code>MaxResults</code> setting, if
+   * the number of objects that are still available for retrieval exceeds the maximum
+   * you requested, Network Firewall returns a <code>NextToken</code> value in the
+   * response. To retrieve the next batch of objects, use the token returned from the
+   * prior request in your next request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFirewallPoliciesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>When you request a list of objects with a <code>MaxResults</code> setting, if
-     * the number of objects that are still available for retrieval exceeds the maximum
-     * you requested, Network Firewall returns a <code>NextToken</code> value in the
-     * response. To retrieve the next batch of objects, use the token returned from the
-     * prior request in your next request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFirewallPoliciesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFirewallPoliciesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFirewallPoliciesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The metadata for the firewall policies. Depending on your setting for max
+   * results and the number of firewall policies that you have, this might not be the
+   * full list. </p>
+   */
+  inline const Aws::Vector<FirewallPolicyMetadata>& GetFirewallPolicies() const { return m_firewallPolicies; }
+  template <typename FirewallPoliciesT = Aws::Vector<FirewallPolicyMetadata>>
+  void SetFirewallPolicies(FirewallPoliciesT&& value) {
+    m_firewallPoliciesHasBeenSet = true;
+    m_firewallPolicies = std::forward<FirewallPoliciesT>(value);
+  }
+  template <typename FirewallPoliciesT = Aws::Vector<FirewallPolicyMetadata>>
+  ListFirewallPoliciesResult& WithFirewallPolicies(FirewallPoliciesT&& value) {
+    SetFirewallPolicies(std::forward<FirewallPoliciesT>(value));
+    return *this;
+  }
+  template <typename FirewallPoliciesT = FirewallPolicyMetadata>
+  ListFirewallPoliciesResult& AddFirewallPolicies(FirewallPoliciesT&& value) {
+    m_firewallPoliciesHasBeenSet = true;
+    m_firewallPolicies.emplace_back(std::forward<FirewallPoliciesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metadata for the firewall policies. Depending on your setting for max
-     * results and the number of firewall policies that you have, this might not be the
-     * full list. </p>
-     */
-    inline const Aws::Vector<FirewallPolicyMetadata>& GetFirewallPolicies() const{ return m_firewallPolicies; }
-    inline void SetFirewallPolicies(const Aws::Vector<FirewallPolicyMetadata>& value) { m_firewallPolicies = value; }
-    inline void SetFirewallPolicies(Aws::Vector<FirewallPolicyMetadata>&& value) { m_firewallPolicies = std::move(value); }
-    inline ListFirewallPoliciesResult& WithFirewallPolicies(const Aws::Vector<FirewallPolicyMetadata>& value) { SetFirewallPolicies(value); return *this;}
-    inline ListFirewallPoliciesResult& WithFirewallPolicies(Aws::Vector<FirewallPolicyMetadata>&& value) { SetFirewallPolicies(std::move(value)); return *this;}
-    inline ListFirewallPoliciesResult& AddFirewallPolicies(const FirewallPolicyMetadata& value) { m_firewallPolicies.push_back(value); return *this; }
-    inline ListFirewallPoliciesResult& AddFirewallPolicies(FirewallPolicyMetadata&& value) { m_firewallPolicies.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFirewallPoliciesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFirewallPoliciesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFirewallPoliciesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFirewallPoliciesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<FirewallPolicyMetadata> m_firewallPolicies;
+  Aws::Vector<FirewallPolicyMetadata> m_firewallPolicies;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_firewallPoliciesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkFirewall
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkFirewall
+}  // namespace Aws

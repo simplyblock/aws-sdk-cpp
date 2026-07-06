@@ -4,69 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ds/DirectoryService_EXPORTS.h>
 #include <aws/ds/model/Computer.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectoryService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectoryService {
+namespace Model {
+/**
+ * <p>Contains the results for the <a>CreateComputer</a> operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/CreateComputerResult">AWS
+ * API Reference</a></p>
+ */
+class CreateComputerResult {
+ public:
+  AWS_DIRECTORYSERVICE_API CreateComputerResult() = default;
+  AWS_DIRECTORYSERVICE_API CreateComputerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTORYSERVICE_API CreateComputerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Contains the results for the <a>CreateComputer</a> operation.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/CreateComputerResult">AWS
-   * API Reference</a></p>
+   * <p>A <a>Computer</a> object that represents the computer account.</p>
    */
-  class CreateComputerResult
-  {
-  public:
-    AWS_DIRECTORYSERVICE_API CreateComputerResult();
-    AWS_DIRECTORYSERVICE_API CreateComputerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTORYSERVICE_API CreateComputerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Computer& GetComputer() const { return m_computer; }
+  template <typename ComputerT = Computer>
+  void SetComputer(ComputerT&& value) {
+    m_computerHasBeenSet = true;
+    m_computer = std::forward<ComputerT>(value);
+  }
+  template <typename ComputerT = Computer>
+  CreateComputerResult& WithComputer(ComputerT&& value) {
+    SetComputer(std::forward<ComputerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A <a>Computer</a> object that represents the computer account.</p>
-     */
-    inline const Computer& GetComputer() const{ return m_computer; }
-    inline void SetComputer(const Computer& value) { m_computer = value; }
-    inline void SetComputer(Computer&& value) { m_computer = std::move(value); }
-    inline CreateComputerResult& WithComputer(const Computer& value) { SetComputer(value); return *this;}
-    inline CreateComputerResult& WithComputer(Computer&& value) { SetComputer(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateComputerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateComputerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateComputerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateComputerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Computer m_computer;
 
-    Computer m_computer;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_computerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

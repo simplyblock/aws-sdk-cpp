@@ -5,110 +5,123 @@
 
 #pragma once
 #include <aws/comprehendmedical/ComprehendMedical_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehendmedical/model/JobStatus.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ComprehendMedical
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComprehendMedical {
+namespace Model {
 
+/**
+ * <p>Provides information for filtering a list of detection jobs.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/comprehendmedical-2018-10-30/ComprehendMedicalAsyncJobFilter">AWS
+ * API Reference</a></p>
+ */
+class ComprehendMedicalAsyncJobFilter {
+ public:
+  AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter() = default;
+  AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPREHENDMEDICAL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>Provides information for filtering a list of detection jobs.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/comprehendmedical-2018-10-30/ComprehendMedicalAsyncJobFilter">AWS
-   * API Reference</a></p>
+   * <p>Filters on the name of the job.</p>
    */
-  class ComprehendMedicalAsyncJobFilter
-  {
-  public:
-    AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter();
-    AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPREHENDMEDICAL_API ComprehendMedicalAsyncJobFilter& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPREHENDMEDICAL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetJobName() const { return m_jobName; }
+  inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
+  template <typename JobNameT = Aws::String>
+  void SetJobName(JobNameT&& value) {
+    m_jobNameHasBeenSet = true;
+    m_jobName = std::forward<JobNameT>(value);
+  }
+  template <typename JobNameT = Aws::String>
+  ComprehendMedicalAsyncJobFilter& WithJobName(JobNameT&& value) {
+    SetJobName(std::forward<JobNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Filters the list of jobs based on job status. Returns only jobs with the
+   * specified status.</p>
+   */
+  inline JobStatus GetJobStatus() const { return m_jobStatus; }
+  inline bool JobStatusHasBeenSet() const { return m_jobStatusHasBeenSet; }
+  inline void SetJobStatus(JobStatus value) {
+    m_jobStatusHasBeenSet = true;
+    m_jobStatus = value;
+  }
+  inline ComprehendMedicalAsyncJobFilter& WithJobStatus(JobStatus value) {
+    SetJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Filters on the name of the job.</p>
-     */
-    inline const Aws::String& GetJobName() const{ return m_jobName; }
-    inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
-    inline void SetJobName(const Aws::String& value) { m_jobNameHasBeenSet = true; m_jobName = value; }
-    inline void SetJobName(Aws::String&& value) { m_jobNameHasBeenSet = true; m_jobName = std::move(value); }
-    inline void SetJobName(const char* value) { m_jobNameHasBeenSet = true; m_jobName.assign(value); }
-    inline ComprehendMedicalAsyncJobFilter& WithJobName(const Aws::String& value) { SetJobName(value); return *this;}
-    inline ComprehendMedicalAsyncJobFilter& WithJobName(Aws::String&& value) { SetJobName(std::move(value)); return *this;}
-    inline ComprehendMedicalAsyncJobFilter& WithJobName(const char* value) { SetJobName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Filters the list of jobs based on the time that the job was submitted for
+   * processing. Returns only jobs submitted before the specified time. Jobs are
+   * returned in ascending order, oldest to newest.</p>
+   */
+  inline const Aws::Utils::DateTime& GetSubmitTimeBefore() const { return m_submitTimeBefore; }
+  inline bool SubmitTimeBeforeHasBeenSet() const { return m_submitTimeBeforeHasBeenSet; }
+  template <typename SubmitTimeBeforeT = Aws::Utils::DateTime>
+  void SetSubmitTimeBefore(SubmitTimeBeforeT&& value) {
+    m_submitTimeBeforeHasBeenSet = true;
+    m_submitTimeBefore = std::forward<SubmitTimeBeforeT>(value);
+  }
+  template <typename SubmitTimeBeforeT = Aws::Utils::DateTime>
+  ComprehendMedicalAsyncJobFilter& WithSubmitTimeBefore(SubmitTimeBeforeT&& value) {
+    SetSubmitTimeBefore(std::forward<SubmitTimeBeforeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Filters the list of jobs based on job status. Returns only jobs with the
-     * specified status.</p>
-     */
-    inline const JobStatus& GetJobStatus() const{ return m_jobStatus; }
-    inline bool JobStatusHasBeenSet() const { return m_jobStatusHasBeenSet; }
-    inline void SetJobStatus(const JobStatus& value) { m_jobStatusHasBeenSet = true; m_jobStatus = value; }
-    inline void SetJobStatus(JobStatus&& value) { m_jobStatusHasBeenSet = true; m_jobStatus = std::move(value); }
-    inline ComprehendMedicalAsyncJobFilter& WithJobStatus(const JobStatus& value) { SetJobStatus(value); return *this;}
-    inline ComprehendMedicalAsyncJobFilter& WithJobStatus(JobStatus&& value) { SetJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Filters the list of jobs based on the time that the job was submitted for
+   * processing. Returns only jobs submitted after the specified time. Jobs are
+   * returned in descending order, newest to oldest.</p>
+   */
+  inline const Aws::Utils::DateTime& GetSubmitTimeAfter() const { return m_submitTimeAfter; }
+  inline bool SubmitTimeAfterHasBeenSet() const { return m_submitTimeAfterHasBeenSet; }
+  template <typename SubmitTimeAfterT = Aws::Utils::DateTime>
+  void SetSubmitTimeAfter(SubmitTimeAfterT&& value) {
+    m_submitTimeAfterHasBeenSet = true;
+    m_submitTimeAfter = std::forward<SubmitTimeAfterT>(value);
+  }
+  template <typename SubmitTimeAfterT = Aws::Utils::DateTime>
+  ComprehendMedicalAsyncJobFilter& WithSubmitTimeAfter(SubmitTimeAfterT&& value) {
+    SetSubmitTimeAfter(std::forward<SubmitTimeAfterT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobName;
 
-    ///@{
-    /**
-     * <p>Filters the list of jobs based on the time that the job was submitted for
-     * processing. Returns only jobs submitted before the specified time. Jobs are
-     * returned in ascending order, oldest to newest.</p>
-     */
-    inline const Aws::Utils::DateTime& GetSubmitTimeBefore() const{ return m_submitTimeBefore; }
-    inline bool SubmitTimeBeforeHasBeenSet() const { return m_submitTimeBeforeHasBeenSet; }
-    inline void SetSubmitTimeBefore(const Aws::Utils::DateTime& value) { m_submitTimeBeforeHasBeenSet = true; m_submitTimeBefore = value; }
-    inline void SetSubmitTimeBefore(Aws::Utils::DateTime&& value) { m_submitTimeBeforeHasBeenSet = true; m_submitTimeBefore = std::move(value); }
-    inline ComprehendMedicalAsyncJobFilter& WithSubmitTimeBefore(const Aws::Utils::DateTime& value) { SetSubmitTimeBefore(value); return *this;}
-    inline ComprehendMedicalAsyncJobFilter& WithSubmitTimeBefore(Aws::Utils::DateTime&& value) { SetSubmitTimeBefore(std::move(value)); return *this;}
-    ///@}
+  JobStatus m_jobStatus{JobStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Filters the list of jobs based on the time that the job was submitted for
-     * processing. Returns only jobs submitted after the specified time. Jobs are
-     * returned in descending order, newest to oldest.</p>
-     */
-    inline const Aws::Utils::DateTime& GetSubmitTimeAfter() const{ return m_submitTimeAfter; }
-    inline bool SubmitTimeAfterHasBeenSet() const { return m_submitTimeAfterHasBeenSet; }
-    inline void SetSubmitTimeAfter(const Aws::Utils::DateTime& value) { m_submitTimeAfterHasBeenSet = true; m_submitTimeAfter = value; }
-    inline void SetSubmitTimeAfter(Aws::Utils::DateTime&& value) { m_submitTimeAfterHasBeenSet = true; m_submitTimeAfter = std::move(value); }
-    inline ComprehendMedicalAsyncJobFilter& WithSubmitTimeAfter(const Aws::Utils::DateTime& value) { SetSubmitTimeAfter(value); return *this;}
-    inline ComprehendMedicalAsyncJobFilter& WithSubmitTimeAfter(Aws::Utils::DateTime&& value) { SetSubmitTimeAfter(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Utils::DateTime m_submitTimeBefore{};
 
-    Aws::String m_jobName;
-    bool m_jobNameHasBeenSet = false;
+  Aws::Utils::DateTime m_submitTimeAfter{};
+  bool m_jobNameHasBeenSet = false;
+  bool m_jobStatusHasBeenSet = false;
+  bool m_submitTimeBeforeHasBeenSet = false;
+  bool m_submitTimeAfterHasBeenSet = false;
+};
 
-    JobStatus m_jobStatus;
-    bool m_jobStatusHasBeenSet = false;
-
-    Aws::Utils::DateTime m_submitTimeBefore;
-    bool m_submitTimeBeforeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_submitTimeAfter;
-    bool m_submitTimeAfterHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ComprehendMedical
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComprehendMedical
+}  // namespace Aws

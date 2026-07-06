@@ -4,89 +4,107 @@
  */
 
 #pragma once
-#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
 #include <aws/devicefarm/model/Upload.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DeviceFarm
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DeviceFarm {
+namespace Model {
+/**
+ * <p>Represents the result of a list uploads request.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/ListUploadsResult">AWS
+ * API Reference</a></p>
+ */
+class ListUploadsResult {
+ public:
+  AWS_DEVICEFARM_API ListUploadsResult() = default;
+  AWS_DEVICEFARM_API ListUploadsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEVICEFARM_API ListUploadsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the result of a list uploads request.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/ListUploadsResult">AWS
-   * API Reference</a></p>
+   * <p>Information about the uploads.</p>
    */
-  class ListUploadsResult
-  {
-  public:
-    AWS_DEVICEFARM_API ListUploadsResult();
-    AWS_DEVICEFARM_API ListUploadsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEVICEFARM_API ListUploadsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<Upload>& GetUploads() const { return m_uploads; }
+  template <typename UploadsT = Aws::Vector<Upload>>
+  void SetUploads(UploadsT&& value) {
+    m_uploadsHasBeenSet = true;
+    m_uploads = std::forward<UploadsT>(value);
+  }
+  template <typename UploadsT = Aws::Vector<Upload>>
+  ListUploadsResult& WithUploads(UploadsT&& value) {
+    SetUploads(std::forward<UploadsT>(value));
+    return *this;
+  }
+  template <typename UploadsT = Upload>
+  ListUploadsResult& AddUploads(UploadsT&& value) {
+    m_uploadsHasBeenSet = true;
+    m_uploads.emplace_back(std::forward<UploadsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>If the number of items that are returned is significantly large, this is an
+   * identifier that is also returned. It can be used in a subsequent call to this
+   * operation to return the next set of items in the list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListUploadsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the uploads.</p>
-     */
-    inline const Aws::Vector<Upload>& GetUploads() const{ return m_uploads; }
-    inline void SetUploads(const Aws::Vector<Upload>& value) { m_uploads = value; }
-    inline void SetUploads(Aws::Vector<Upload>&& value) { m_uploads = std::move(value); }
-    inline ListUploadsResult& WithUploads(const Aws::Vector<Upload>& value) { SetUploads(value); return *this;}
-    inline ListUploadsResult& WithUploads(Aws::Vector<Upload>&& value) { SetUploads(std::move(value)); return *this;}
-    inline ListUploadsResult& AddUploads(const Upload& value) { m_uploads.push_back(value); return *this; }
-    inline ListUploadsResult& AddUploads(Upload&& value) { m_uploads.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>If the number of items that are returned is significantly large, this is an
-     * identifier that is also returned. It can be used in a subsequent call to this
-     * operation to return the next set of items in the list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListUploadsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListUploadsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListUploadsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListUploadsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListUploadsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListUploadsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListUploadsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Upload> m_uploads;
 
-    Aws::Vector<Upload> m_uploads;
+  Aws::String m_nextToken;
 
-    Aws::String m_nextToken;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_uploadsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

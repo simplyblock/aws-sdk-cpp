@@ -4,144 +4,165 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/redshift/RedshiftRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/redshift/RedshiftRequest.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Redshift {
+namespace Model {
 
+/**
+ */
+class DescribeEndpointAccessRequest : public RedshiftRequest {
+ public:
+  AWS_REDSHIFT_API DescribeEndpointAccessRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeEndpointAccess"; }
+
+  AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The cluster identifier associated with the described endpoint.</p>
    */
-  class DescribeEndpointAccessRequest : public RedshiftRequest
-  {
-  public:
-    AWS_REDSHIFT_API DescribeEndpointAccessRequest();
+  inline const Aws::String& GetClusterIdentifier() const { return m_clusterIdentifier; }
+  inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
+  template <typename ClusterIdentifierT = Aws::String>
+  void SetClusterIdentifier(ClusterIdentifierT&& value) {
+    m_clusterIdentifierHasBeenSet = true;
+    m_clusterIdentifier = std::forward<ClusterIdentifierT>(value);
+  }
+  template <typename ClusterIdentifierT = Aws::String>
+  DescribeEndpointAccessRequest& WithClusterIdentifier(ClusterIdentifierT&& value) {
+    SetClusterIdentifier(std::forward<ClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeEndpointAccess"; }
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID of the owner of the cluster.</p>
+   */
+  inline const Aws::String& GetResourceOwner() const { return m_resourceOwner; }
+  inline bool ResourceOwnerHasBeenSet() const { return m_resourceOwnerHasBeenSet; }
+  template <typename ResourceOwnerT = Aws::String>
+  void SetResourceOwner(ResourceOwnerT&& value) {
+    m_resourceOwnerHasBeenSet = true;
+    m_resourceOwner = std::forward<ResourceOwnerT>(value);
+  }
+  template <typename ResourceOwnerT = Aws::String>
+  DescribeEndpointAccessRequest& WithResourceOwner(ResourceOwnerT&& value) {
+    SetResourceOwner(std::forward<ResourceOwnerT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the endpoint to be described.</p>
+   */
+  inline const Aws::String& GetEndpointName() const { return m_endpointName; }
+  inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
+  template <typename EndpointNameT = Aws::String>
+  void SetEndpointName(EndpointNameT&& value) {
+    m_endpointNameHasBeenSet = true;
+    m_endpointName = std::forward<EndpointNameT>(value);
+  }
+  template <typename EndpointNameT = Aws::String>
+  DescribeEndpointAccessRequest& WithEndpointName(EndpointNameT&& value) {
+    SetEndpointName(std::forward<EndpointNameT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The virtual private cloud (VPC) identifier with access to the cluster.</p>
+   */
+  inline const Aws::String& GetVpcId() const { return m_vpcId; }
+  inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
+  template <typename VpcIdT = Aws::String>
+  void SetVpcId(VpcIdT&& value) {
+    m_vpcIdHasBeenSet = true;
+    m_vpcId = std::forward<VpcIdT>(value);
+  }
+  template <typename VpcIdT = Aws::String>
+  DescribeEndpointAccessRequest& WithVpcId(VpcIdT&& value) {
+    SetVpcId(std::forward<VpcIdT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The maximum number of records to include in the response. If more records
+   * exist than the specified <code>MaxRecords</code> value, a pagination token
+   * called a <code>Marker</code> is included in the response so that the remaining
+   * results can be retrieved.</p>
+   */
+  inline int GetMaxRecords() const { return m_maxRecords; }
+  inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
+  inline void SetMaxRecords(int value) {
+    m_maxRecordsHasBeenSet = true;
+    m_maxRecords = value;
+  }
+  inline DescribeEndpointAccessRequest& WithMaxRecords(int value) {
+    SetMaxRecords(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The cluster identifier associated with the described endpoint.</p>
-     */
-    inline const Aws::String& GetClusterIdentifier() const{ return m_clusterIdentifier; }
-    inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
-    inline void SetClusterIdentifier(const Aws::String& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = value; }
-    inline void SetClusterIdentifier(Aws::String&& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = std::move(value); }
-    inline void SetClusterIdentifier(const char* value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier.assign(value); }
-    inline DescribeEndpointAccessRequest& WithClusterIdentifier(const Aws::String& value) { SetClusterIdentifier(value); return *this;}
-    inline DescribeEndpointAccessRequest& WithClusterIdentifier(Aws::String&& value) { SetClusterIdentifier(std::move(value)); return *this;}
-    inline DescribeEndpointAccessRequest& WithClusterIdentifier(const char* value) { SetClusterIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An optional pagination token provided by a previous
+   * <code>DescribeEndpointAccess</code> request. If this parameter is specified, the
+   * response includes only records beyond the marker, up to the value specified by
+   * the <code>MaxRecords</code> parameter.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeEndpointAccessRequest& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterIdentifier;
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID of the owner of the cluster.</p>
-     */
-    inline const Aws::String& GetResourceOwner() const{ return m_resourceOwner; }
-    inline bool ResourceOwnerHasBeenSet() const { return m_resourceOwnerHasBeenSet; }
-    inline void SetResourceOwner(const Aws::String& value) { m_resourceOwnerHasBeenSet = true; m_resourceOwner = value; }
-    inline void SetResourceOwner(Aws::String&& value) { m_resourceOwnerHasBeenSet = true; m_resourceOwner = std::move(value); }
-    inline void SetResourceOwner(const char* value) { m_resourceOwnerHasBeenSet = true; m_resourceOwner.assign(value); }
-    inline DescribeEndpointAccessRequest& WithResourceOwner(const Aws::String& value) { SetResourceOwner(value); return *this;}
-    inline DescribeEndpointAccessRequest& WithResourceOwner(Aws::String&& value) { SetResourceOwner(std::move(value)); return *this;}
-    inline DescribeEndpointAccessRequest& WithResourceOwner(const char* value) { SetResourceOwner(value); return *this;}
-    ///@}
+  Aws::String m_resourceOwner;
 
-    ///@{
-    /**
-     * <p>The name of the endpoint to be described.</p>
-     */
-    inline const Aws::String& GetEndpointName() const{ return m_endpointName; }
-    inline bool EndpointNameHasBeenSet() const { return m_endpointNameHasBeenSet; }
-    inline void SetEndpointName(const Aws::String& value) { m_endpointNameHasBeenSet = true; m_endpointName = value; }
-    inline void SetEndpointName(Aws::String&& value) { m_endpointNameHasBeenSet = true; m_endpointName = std::move(value); }
-    inline void SetEndpointName(const char* value) { m_endpointNameHasBeenSet = true; m_endpointName.assign(value); }
-    inline DescribeEndpointAccessRequest& WithEndpointName(const Aws::String& value) { SetEndpointName(value); return *this;}
-    inline DescribeEndpointAccessRequest& WithEndpointName(Aws::String&& value) { SetEndpointName(std::move(value)); return *this;}
-    inline DescribeEndpointAccessRequest& WithEndpointName(const char* value) { SetEndpointName(value); return *this;}
-    ///@}
+  Aws::String m_endpointName;
 
-    ///@{
-    /**
-     * <p>The virtual private cloud (VPC) identifier with access to the cluster.</p>
-     */
-    inline const Aws::String& GetVpcId() const{ return m_vpcId; }
-    inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
-    inline void SetVpcId(const Aws::String& value) { m_vpcIdHasBeenSet = true; m_vpcId = value; }
-    inline void SetVpcId(Aws::String&& value) { m_vpcIdHasBeenSet = true; m_vpcId = std::move(value); }
-    inline void SetVpcId(const char* value) { m_vpcIdHasBeenSet = true; m_vpcId.assign(value); }
-    inline DescribeEndpointAccessRequest& WithVpcId(const Aws::String& value) { SetVpcId(value); return *this;}
-    inline DescribeEndpointAccessRequest& WithVpcId(Aws::String&& value) { SetVpcId(std::move(value)); return *this;}
-    inline DescribeEndpointAccessRequest& WithVpcId(const char* value) { SetVpcId(value); return *this;}
-    ///@}
+  Aws::String m_vpcId;
 
-    ///@{
-    /**
-     * <p>The maximum number of records to include in the response. If more records
-     * exist than the specified <code>MaxRecords</code> value, a pagination token
-     * called a <code>Marker</code> is included in the response so that the remaining
-     * results can be retrieved.</p>
-     */
-    inline int GetMaxRecords() const{ return m_maxRecords; }
-    inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
-    inline void SetMaxRecords(int value) { m_maxRecordsHasBeenSet = true; m_maxRecords = value; }
-    inline DescribeEndpointAccessRequest& WithMaxRecords(int value) { SetMaxRecords(value); return *this;}
-    ///@}
+  int m_maxRecords{0};
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous
-     * <code>DescribeEndpointAccess</code> request. If this parameter is specified, the
-     * response includes only records beyond the marker, up to the value specified by
-     * the <code>MaxRecords</code> parameter.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
-    inline void SetMarker(const Aws::String& value) { m_markerHasBeenSet = true; m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_markerHasBeenSet = true; m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_markerHasBeenSet = true; m_marker.assign(value); }
-    inline DescribeEndpointAccessRequest& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeEndpointAccessRequest& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeEndpointAccessRequest& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_marker;
+  bool m_clusterIdentifierHasBeenSet = false;
+  bool m_resourceOwnerHasBeenSet = false;
+  bool m_endpointNameHasBeenSet = false;
+  bool m_vpcIdHasBeenSet = false;
+  bool m_maxRecordsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+};
 
-    Aws::String m_clusterIdentifier;
-    bool m_clusterIdentifierHasBeenSet = false;
-
-    Aws::String m_resourceOwner;
-    bool m_resourceOwnerHasBeenSet = false;
-
-    Aws::String m_endpointName;
-    bool m_endpointNameHasBeenSet = false;
-
-    Aws::String m_vpcId;
-    bool m_vpcIdHasBeenSet = false;
-
-    int m_maxRecords;
-    bool m_maxRecordsHasBeenSet = false;
-
-    Aws::String m_marker;
-    bool m_markerHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

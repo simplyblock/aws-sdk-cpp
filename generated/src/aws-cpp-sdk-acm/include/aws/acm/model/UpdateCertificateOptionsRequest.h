@@ -4,77 +4,88 @@
  */
 
 #pragma once
-#include <aws/acm/ACM_EXPORTS.h>
 #include <aws/acm/ACMRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/acm/ACM_EXPORTS.h>
 #include <aws/acm/model/CertificateOptions.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ACM
-{
-namespace Model
-{
+namespace Aws {
+namespace ACM {
+namespace Model {
+
+/**
+ */
+class UpdateCertificateOptionsRequest : public ACMRequest {
+ public:
+  AWS_ACM_API UpdateCertificateOptionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateCertificateOptions"; }
+
+  AWS_ACM_API Aws::String SerializePayload() const override;
+
+  AWS_ACM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
   /**
+   * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
    */
-  class UpdateCertificateOptionsRequest : public ACMRequest
-  {
-  public:
-    AWS_ACM_API UpdateCertificateOptionsRequest();
+  AWS_ACM_API EndpointParameters GetEndpointContextParams() const override;
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateCertificateOptions"; }
+  ///@{
+  /**
+   * <p>ARN of the requested certificate to update. This must be of the form:</p> <p>
+   * <code>arn:aws:acm:us-east-1:<i>account</i>:certificate/<i>12345678-1234-1234-1234-123456789012</i>
+   * </code> </p>
+   */
+  inline const Aws::String& GetCertificateArn() const { return m_certificateArn; }
+  inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
+  template <typename CertificateArnT = Aws::String>
+  void SetCertificateArn(CertificateArnT&& value) {
+    m_certificateArnHasBeenSet = true;
+    m_certificateArn = std::forward<CertificateArnT>(value);
+  }
+  template <typename CertificateArnT = Aws::String>
+  UpdateCertificateOptionsRequest& WithCertificateArn(CertificateArnT&& value) {
+    SetCertificateArn(std::forward<CertificateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ACM_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Use to update the options for your certificate. Currently, you can specify
+   * whether to export your certificate. Certificate transparency logging opt-out is
+   * no longer available. All public certificates are recorded in a certificate
+   * transparency log. For more information, see <a
+   * href="https://docs.aws.amazon.com/acm/latest/userguide/acm-concepts.html#concept-transparency">Certificate
+   * Transparency Logging</a>.</p>
+   */
+  inline const CertificateOptions& GetOptions() const { return m_options; }
+  inline bool OptionsHasBeenSet() const { return m_optionsHasBeenSet; }
+  template <typename OptionsT = CertificateOptions>
+  void SetOptions(OptionsT&& value) {
+    m_optionsHasBeenSet = true;
+    m_options = std::forward<OptionsT>(value);
+  }
+  template <typename OptionsT = CertificateOptions>
+  UpdateCertificateOptionsRequest& WithOptions(OptionsT&& value) {
+    SetOptions(std::forward<OptionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateArn;
 
-    AWS_ACM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  CertificateOptions m_options;
+  bool m_certificateArnHasBeenSet = false;
+  bool m_optionsHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>ARN of the requested certificate to update. This must be of the form:</p> <p>
-     * <code>arn:aws:acm:us-east-1:<i>account</i>:certificate/<i>12345678-1234-1234-1234-123456789012</i>
-     * </code> </p>
-     */
-    inline const Aws::String& GetCertificateArn() const{ return m_certificateArn; }
-    inline bool CertificateArnHasBeenSet() const { return m_certificateArnHasBeenSet; }
-    inline void SetCertificateArn(const Aws::String& value) { m_certificateArnHasBeenSet = true; m_certificateArn = value; }
-    inline void SetCertificateArn(Aws::String&& value) { m_certificateArnHasBeenSet = true; m_certificateArn = std::move(value); }
-    inline void SetCertificateArn(const char* value) { m_certificateArnHasBeenSet = true; m_certificateArn.assign(value); }
-    inline UpdateCertificateOptionsRequest& WithCertificateArn(const Aws::String& value) { SetCertificateArn(value); return *this;}
-    inline UpdateCertificateOptionsRequest& WithCertificateArn(Aws::String&& value) { SetCertificateArn(std::move(value)); return *this;}
-    inline UpdateCertificateOptionsRequest& WithCertificateArn(const char* value) { SetCertificateArn(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Use to update the options for your certificate. Currently, you can specify
-     * whether to add your certificate to a transparency log. Certificate transparency
-     * makes it possible to detect SSL/TLS certificates that have been mistakenly or
-     * maliciously issued. Certificates that have not been logged typically produce an
-     * error message in a browser. </p>
-     */
-    inline const CertificateOptions& GetOptions() const{ return m_options; }
-    inline bool OptionsHasBeenSet() const { return m_optionsHasBeenSet; }
-    inline void SetOptions(const CertificateOptions& value) { m_optionsHasBeenSet = true; m_options = value; }
-    inline void SetOptions(CertificateOptions&& value) { m_optionsHasBeenSet = true; m_options = std::move(value); }
-    inline UpdateCertificateOptionsRequest& WithOptions(const CertificateOptions& value) { SetOptions(value); return *this;}
-    inline UpdateCertificateOptionsRequest& WithOptions(CertificateOptions&& value) { SetOptions(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateArn;
-    bool m_certificateArnHasBeenSet = false;
-
-    CertificateOptions m_options;
-    bool m_optionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ACM
-} // namespace Aws
+}  // namespace Model
+}  // namespace ACM
+}  // namespace Aws

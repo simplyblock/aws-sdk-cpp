@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/sagemaker-geospatial/model/ExportEarthObservationJobRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/sagemaker-geospatial/model/ExportEarthObservationJobRequest.h>
 
 #include <utility>
 
@@ -12,54 +12,28 @@ using namespace Aws::SageMakerGeospatial::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ExportEarthObservationJobRequest::ExportEarthObservationJobRequest() : 
-    m_arnHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_executionRoleArnHasBeenSet(false),
-    m_exportSourceImages(false),
-    m_exportSourceImagesHasBeenSet(false),
-    m_outputConfigHasBeenSet(false)
-{
-}
-
-Aws::String ExportEarthObservationJobRequest::SerializePayload() const
-{
+Aws::String ExportEarthObservationJobRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("Arn", m_arn);
-
+  if (m_arnHasBeenSet) {
+    payload.WithString("Arn", m_arn);
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("ClientToken", m_clientToken);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("ClientToken", m_clientToken);
   }
 
-  if(m_executionRoleArnHasBeenSet)
-  {
-   payload.WithString("ExecutionRoleArn", m_executionRoleArn);
-
+  if (m_executionRoleArnHasBeenSet) {
+    payload.WithString("ExecutionRoleArn", m_executionRoleArn);
   }
 
-  if(m_exportSourceImagesHasBeenSet)
-  {
-   payload.WithBool("ExportSourceImages", m_exportSourceImages);
-
+  if (m_exportSourceImagesHasBeenSet) {
+    payload.WithBool("ExportSourceImages", m_exportSourceImages);
   }
 
-  if(m_outputConfigHasBeenSet)
-  {
-   payload.WithObject("OutputConfig", m_outputConfig.Jsonize());
-
+  if (m_outputConfigHasBeenSet) {
+    payload.WithObject("OutputConfig", m_outputConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pca-connector-scep/model/GetChallengeMetadataRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pca-connector-scep/model/GetChallengeMetadataRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::PcaConnectorScep::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetChallengeMetadataRequest::GetChallengeMetadataRequest() : 
-    m_challengeArnHasBeenSet(false)
-{
-}
-
-Aws::String GetChallengeMetadataRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetChallengeMetadataRequest::SerializePayload() const { return {}; }

@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-KnowledgeBaseLookupInput::KnowledgeBaseLookupInput() : 
-    m_knowledgeBaseIdHasBeenSet(false),
-    m_textHasBeenSet(false)
-{
-}
+KnowledgeBaseLookupInput::KnowledgeBaseLookupInput(JsonView jsonValue) { *this = jsonValue; }
 
-KnowledgeBaseLookupInput::KnowledgeBaseLookupInput(JsonView jsonValue)
-  : KnowledgeBaseLookupInput()
-{
-  *this = jsonValue;
-}
-
-KnowledgeBaseLookupInput& KnowledgeBaseLookupInput::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("knowledgeBaseId"))
-  {
+KnowledgeBaseLookupInput& KnowledgeBaseLookupInput::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("knowledgeBaseId")) {
     m_knowledgeBaseId = jsonValue.GetString("knowledgeBaseId");
-
     m_knowledgeBaseIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("text"))
-  {
+  if (jsonValue.ValueExists("text")) {
     m_text = jsonValue.GetString("text");
-
     m_textHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue KnowledgeBaseLookupInput::Jsonize() const
-{
+JsonValue KnowledgeBaseLookupInput::Jsonize() const {
   JsonValue payload;
 
-  if(m_knowledgeBaseIdHasBeenSet)
-  {
-   payload.WithString("knowledgeBaseId", m_knowledgeBaseId);
-
+  if (m_knowledgeBaseIdHasBeenSet) {
+    payload.WithString("knowledgeBaseId", m_knowledgeBaseId);
   }
 
-  if(m_textHasBeenSet)
-  {
-   payload.WithString("text", m_text);
-
+  if (m_textHasBeenSet) {
+    payload.WithString("text", m_text);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

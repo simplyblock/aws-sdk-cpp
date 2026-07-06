@@ -11,71 +11,45 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeBuild {
+namespace Model {
 
-ProxyConfiguration::ProxyConfiguration() : 
-    m_defaultBehavior(FleetProxyRuleBehavior::NOT_SET),
-    m_defaultBehaviorHasBeenSet(false),
-    m_orderedProxyRulesHasBeenSet(false)
-{
-}
+ProxyConfiguration::ProxyConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-ProxyConfiguration::ProxyConfiguration(JsonView jsonValue)
-  : ProxyConfiguration()
-{
-  *this = jsonValue;
-}
-
-ProxyConfiguration& ProxyConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("defaultBehavior"))
-  {
+ProxyConfiguration& ProxyConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("defaultBehavior")) {
     m_defaultBehavior = FleetProxyRuleBehaviorMapper::GetFleetProxyRuleBehaviorForName(jsonValue.GetString("defaultBehavior"));
-
     m_defaultBehaviorHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("orderedProxyRules"))
-  {
+  if (jsonValue.ValueExists("orderedProxyRules")) {
     Aws::Utils::Array<JsonView> orderedProxyRulesJsonList = jsonValue.GetArray("orderedProxyRules");
-    for(unsigned orderedProxyRulesIndex = 0; orderedProxyRulesIndex < orderedProxyRulesJsonList.GetLength(); ++orderedProxyRulesIndex)
-    {
+    for (unsigned orderedProxyRulesIndex = 0; orderedProxyRulesIndex < orderedProxyRulesJsonList.GetLength(); ++orderedProxyRulesIndex) {
       m_orderedProxyRules.push_back(orderedProxyRulesJsonList[orderedProxyRulesIndex].AsObject());
     }
     m_orderedProxyRulesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ProxyConfiguration::Jsonize() const
-{
+JsonValue ProxyConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_defaultBehaviorHasBeenSet)
-  {
-   payload.WithString("defaultBehavior", FleetProxyRuleBehaviorMapper::GetNameForFleetProxyRuleBehavior(m_defaultBehavior));
+  if (m_defaultBehaviorHasBeenSet) {
+    payload.WithString("defaultBehavior", FleetProxyRuleBehaviorMapper::GetNameForFleetProxyRuleBehavior(m_defaultBehavior));
   }
 
-  if(m_orderedProxyRulesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> orderedProxyRulesJsonList(m_orderedProxyRules.size());
-   for(unsigned orderedProxyRulesIndex = 0; orderedProxyRulesIndex < orderedProxyRulesJsonList.GetLength(); ++orderedProxyRulesIndex)
-   {
-     orderedProxyRulesJsonList[orderedProxyRulesIndex].AsObject(m_orderedProxyRules[orderedProxyRulesIndex].Jsonize());
-   }
-   payload.WithArray("orderedProxyRules", std::move(orderedProxyRulesJsonList));
-
+  if (m_orderedProxyRulesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> orderedProxyRulesJsonList(m_orderedProxyRules.size());
+    for (unsigned orderedProxyRulesIndex = 0; orderedProxyRulesIndex < orderedProxyRulesJsonList.GetLength(); ++orderedProxyRulesIndex) {
+      orderedProxyRulesJsonList[orderedProxyRulesIndex].AsObject(m_orderedProxyRules[orderedProxyRulesIndex].Jsonize());
+    }
+    payload.WithArray("orderedProxyRules", std::move(orderedProxyRulesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

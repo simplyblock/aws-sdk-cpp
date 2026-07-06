@@ -4,178 +4,213 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/redshift/RedshiftRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/redshift/model/UsageLimitFeatureType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/RedshiftRequest.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+#include <aws/redshift/model/UsageLimitFeatureType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Redshift {
+namespace Model {
 
+/**
+ */
+class DescribeUsageLimitsRequest : public RedshiftRequest {
+ public:
+  AWS_REDSHIFT_API DescribeUsageLimitsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeUsageLimits"; }
+
+  AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The identifier of the usage limit to describe.</p>
    */
-  class DescribeUsageLimitsRequest : public RedshiftRequest
-  {
-  public:
-    AWS_REDSHIFT_API DescribeUsageLimitsRequest();
+  inline const Aws::String& GetUsageLimitId() const { return m_usageLimitId; }
+  inline bool UsageLimitIdHasBeenSet() const { return m_usageLimitIdHasBeenSet; }
+  template <typename UsageLimitIdT = Aws::String>
+  void SetUsageLimitId(UsageLimitIdT&& value) {
+    m_usageLimitIdHasBeenSet = true;
+    m_usageLimitId = std::forward<UsageLimitIdT>(value);
+  }
+  template <typename UsageLimitIdT = Aws::String>
+  DescribeUsageLimitsRequest& WithUsageLimitId(UsageLimitIdT&& value) {
+    SetUsageLimitId(std::forward<UsageLimitIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeUsageLimits"; }
+  ///@{
+  /**
+   * <p>The identifier of the cluster for which you want to describe usage
+   * limits.</p>
+   */
+  inline const Aws::String& GetClusterIdentifier() const { return m_clusterIdentifier; }
+  inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
+  template <typename ClusterIdentifierT = Aws::String>
+  void SetClusterIdentifier(ClusterIdentifierT&& value) {
+    m_clusterIdentifierHasBeenSet = true;
+    m_clusterIdentifier = std::forward<ClusterIdentifierT>(value);
+  }
+  template <typename ClusterIdentifierT = Aws::String>
+  DescribeUsageLimitsRequest& WithClusterIdentifier(ClusterIdentifierT&& value) {
+    SetClusterIdentifier(std::forward<ClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The feature type for which you want to describe usage limits.</p>
+   */
+  inline UsageLimitFeatureType GetFeatureType() const { return m_featureType; }
+  inline bool FeatureTypeHasBeenSet() const { return m_featureTypeHasBeenSet; }
+  inline void SetFeatureType(UsageLimitFeatureType value) {
+    m_featureTypeHasBeenSet = true;
+    m_featureType = value;
+  }
+  inline DescribeUsageLimitsRequest& WithFeatureType(UsageLimitFeatureType value) {
+    SetFeatureType(value);
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The maximum number of response records to return in each call. If the number
+   * of remaining response records exceeds the specified <code>MaxRecords</code>
+   * value, a value is returned in a <code>marker</code> field of the response. You
+   * can retrieve the next set of records by retrying the command with the returned
+   * marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20,
+   * maximum 100.</p>
+   */
+  inline int GetMaxRecords() const { return m_maxRecords; }
+  inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
+  inline void SetMaxRecords(int value) {
+    m_maxRecordsHasBeenSet = true;
+    m_maxRecords = value;
+  }
+  inline DescribeUsageLimitsRequest& WithMaxRecords(int value) {
+    SetMaxRecords(value);
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>An optional parameter that specifies the starting point to return a set of
+   * response records. When the results of a <a>DescribeUsageLimits</a> request
+   * exceed the value specified in <code>MaxRecords</code>, Amazon Web Services
+   * returns a value in the <code>Marker</code> field of the response. You can
+   * retrieve the next set of response records by providing the returned marker value
+   * in the <code>Marker</code> parameter and retrying the request. </p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeUsageLimitsRequest& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the usage limit to describe.</p>
-     */
-    inline const Aws::String& GetUsageLimitId() const{ return m_usageLimitId; }
-    inline bool UsageLimitIdHasBeenSet() const { return m_usageLimitIdHasBeenSet; }
-    inline void SetUsageLimitId(const Aws::String& value) { m_usageLimitIdHasBeenSet = true; m_usageLimitId = value; }
-    inline void SetUsageLimitId(Aws::String&& value) { m_usageLimitIdHasBeenSet = true; m_usageLimitId = std::move(value); }
-    inline void SetUsageLimitId(const char* value) { m_usageLimitIdHasBeenSet = true; m_usageLimitId.assign(value); }
-    inline DescribeUsageLimitsRequest& WithUsageLimitId(const Aws::String& value) { SetUsageLimitId(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithUsageLimitId(Aws::String&& value) { SetUsageLimitId(std::move(value)); return *this;}
-    inline DescribeUsageLimitsRequest& WithUsageLimitId(const char* value) { SetUsageLimitId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A tag key or keys for which you want to return all matching usage limit
+   * objects that are associated with the specified key or keys. For example, suppose
+   * that you have parameter groups that are tagged with keys called
+   * <code>owner</code> and <code>environment</code>. If you specify both of these
+   * tag keys in the request, Amazon Redshift returns a response with the usage limit
+   * objects have either or both of these tag keys associated with them.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTagKeys() const { return m_tagKeys; }
+  inline bool TagKeysHasBeenSet() const { return m_tagKeysHasBeenSet; }
+  template <typename TagKeysT = Aws::Vector<Aws::String>>
+  void SetTagKeys(TagKeysT&& value) {
+    m_tagKeysHasBeenSet = true;
+    m_tagKeys = std::forward<TagKeysT>(value);
+  }
+  template <typename TagKeysT = Aws::Vector<Aws::String>>
+  DescribeUsageLimitsRequest& WithTagKeys(TagKeysT&& value) {
+    SetTagKeys(std::forward<TagKeysT>(value));
+    return *this;
+  }
+  template <typename TagKeysT = Aws::String>
+  DescribeUsageLimitsRequest& AddTagKeys(TagKeysT&& value) {
+    m_tagKeysHasBeenSet = true;
+    m_tagKeys.emplace_back(std::forward<TagKeysT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the cluster for which you want to describe usage
-     * limits.</p>
-     */
-    inline const Aws::String& GetClusterIdentifier() const{ return m_clusterIdentifier; }
-    inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
-    inline void SetClusterIdentifier(const Aws::String& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = value; }
-    inline void SetClusterIdentifier(Aws::String&& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = std::move(value); }
-    inline void SetClusterIdentifier(const char* value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier.assign(value); }
-    inline DescribeUsageLimitsRequest& WithClusterIdentifier(const Aws::String& value) { SetClusterIdentifier(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithClusterIdentifier(Aws::String&& value) { SetClusterIdentifier(std::move(value)); return *this;}
-    inline DescribeUsageLimitsRequest& WithClusterIdentifier(const char* value) { SetClusterIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A tag value or values for which you want to return all matching usage limit
+   * objects that are associated with the specified tag value or values. For example,
+   * suppose that you have parameter groups that are tagged with values called
+   * <code>admin</code> and <code>test</code>. If you specify both of these tag
+   * values in the request, Amazon Redshift returns a response with the usage limit
+   * objects that have either or both of these tag values associated with them.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTagValues() const { return m_tagValues; }
+  inline bool TagValuesHasBeenSet() const { return m_tagValuesHasBeenSet; }
+  template <typename TagValuesT = Aws::Vector<Aws::String>>
+  void SetTagValues(TagValuesT&& value) {
+    m_tagValuesHasBeenSet = true;
+    m_tagValues = std::forward<TagValuesT>(value);
+  }
+  template <typename TagValuesT = Aws::Vector<Aws::String>>
+  DescribeUsageLimitsRequest& WithTagValues(TagValuesT&& value) {
+    SetTagValues(std::forward<TagValuesT>(value));
+    return *this;
+  }
+  template <typename TagValuesT = Aws::String>
+  DescribeUsageLimitsRequest& AddTagValues(TagValuesT&& value) {
+    m_tagValuesHasBeenSet = true;
+    m_tagValues.emplace_back(std::forward<TagValuesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_usageLimitId;
 
-    ///@{
-    /**
-     * <p>The feature type for which you want to describe usage limits.</p>
-     */
-    inline const UsageLimitFeatureType& GetFeatureType() const{ return m_featureType; }
-    inline bool FeatureTypeHasBeenSet() const { return m_featureTypeHasBeenSet; }
-    inline void SetFeatureType(const UsageLimitFeatureType& value) { m_featureTypeHasBeenSet = true; m_featureType = value; }
-    inline void SetFeatureType(UsageLimitFeatureType&& value) { m_featureTypeHasBeenSet = true; m_featureType = std::move(value); }
-    inline DescribeUsageLimitsRequest& WithFeatureType(const UsageLimitFeatureType& value) { SetFeatureType(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithFeatureType(UsageLimitFeatureType&& value) { SetFeatureType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_clusterIdentifier;
 
-    ///@{
-    /**
-     * <p>The maximum number of response records to return in each call. If the number
-     * of remaining response records exceeds the specified <code>MaxRecords</code>
-     * value, a value is returned in a <code>marker</code> field of the response. You
-     * can retrieve the next set of records by retrying the command with the returned
-     * marker value. </p> <p>Default: <code>100</code> </p> <p>Constraints: minimum 20,
-     * maximum 100.</p>
-     */
-    inline int GetMaxRecords() const{ return m_maxRecords; }
-    inline bool MaxRecordsHasBeenSet() const { return m_maxRecordsHasBeenSet; }
-    inline void SetMaxRecords(int value) { m_maxRecordsHasBeenSet = true; m_maxRecords = value; }
-    inline DescribeUsageLimitsRequest& WithMaxRecords(int value) { SetMaxRecords(value); return *this;}
-    ///@}
+  UsageLimitFeatureType m_featureType{UsageLimitFeatureType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>An optional parameter that specifies the starting point to return a set of
-     * response records. When the results of a <a>DescribeUsageLimits</a> request
-     * exceed the value specified in <code>MaxRecords</code>, Amazon Web Services
-     * returns a value in the <code>Marker</code> field of the response. You can
-     * retrieve the next set of response records by providing the returned marker value
-     * in the <code>Marker</code> parameter and retrying the request. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
-    inline void SetMarker(const Aws::String& value) { m_markerHasBeenSet = true; m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_markerHasBeenSet = true; m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_markerHasBeenSet = true; m_marker.assign(value); }
-    inline DescribeUsageLimitsRequest& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeUsageLimitsRequest& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  int m_maxRecords{0};
 
-    ///@{
-    /**
-     * <p>A tag key or keys for which you want to return all matching usage limit
-     * objects that are associated with the specified key or keys. For example, suppose
-     * that you have parameter groups that are tagged with keys called
-     * <code>owner</code> and <code>environment</code>. If you specify both of these
-     * tag keys in the request, Amazon Redshift returns a response with the usage limit
-     * objects have either or both of these tag keys associated with them.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTagKeys() const{ return m_tagKeys; }
-    inline bool TagKeysHasBeenSet() const { return m_tagKeysHasBeenSet; }
-    inline void SetTagKeys(const Aws::Vector<Aws::String>& value) { m_tagKeysHasBeenSet = true; m_tagKeys = value; }
-    inline void SetTagKeys(Aws::Vector<Aws::String>&& value) { m_tagKeysHasBeenSet = true; m_tagKeys = std::move(value); }
-    inline DescribeUsageLimitsRequest& WithTagKeys(const Aws::Vector<Aws::String>& value) { SetTagKeys(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithTagKeys(Aws::Vector<Aws::String>&& value) { SetTagKeys(std::move(value)); return *this;}
-    inline DescribeUsageLimitsRequest& AddTagKeys(const Aws::String& value) { m_tagKeysHasBeenSet = true; m_tagKeys.push_back(value); return *this; }
-    inline DescribeUsageLimitsRequest& AddTagKeys(Aws::String&& value) { m_tagKeysHasBeenSet = true; m_tagKeys.push_back(std::move(value)); return *this; }
-    inline DescribeUsageLimitsRequest& AddTagKeys(const char* value) { m_tagKeysHasBeenSet = true; m_tagKeys.push_back(value); return *this; }
-    ///@}
+  Aws::String m_marker;
 
-    ///@{
-    /**
-     * <p>A tag value or values for which you want to return all matching usage limit
-     * objects that are associated with the specified tag value or values. For example,
-     * suppose that you have parameter groups that are tagged with values called
-     * <code>admin</code> and <code>test</code>. If you specify both of these tag
-     * values in the request, Amazon Redshift returns a response with the usage limit
-     * objects that have either or both of these tag values associated with them.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTagValues() const{ return m_tagValues; }
-    inline bool TagValuesHasBeenSet() const { return m_tagValuesHasBeenSet; }
-    inline void SetTagValues(const Aws::Vector<Aws::String>& value) { m_tagValuesHasBeenSet = true; m_tagValues = value; }
-    inline void SetTagValues(Aws::Vector<Aws::String>&& value) { m_tagValuesHasBeenSet = true; m_tagValues = std::move(value); }
-    inline DescribeUsageLimitsRequest& WithTagValues(const Aws::Vector<Aws::String>& value) { SetTagValues(value); return *this;}
-    inline DescribeUsageLimitsRequest& WithTagValues(Aws::Vector<Aws::String>&& value) { SetTagValues(std::move(value)); return *this;}
-    inline DescribeUsageLimitsRequest& AddTagValues(const Aws::String& value) { m_tagValuesHasBeenSet = true; m_tagValues.push_back(value); return *this; }
-    inline DescribeUsageLimitsRequest& AddTagValues(Aws::String&& value) { m_tagValuesHasBeenSet = true; m_tagValues.push_back(std::move(value)); return *this; }
-    inline DescribeUsageLimitsRequest& AddTagValues(const char* value) { m_tagValuesHasBeenSet = true; m_tagValues.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::String> m_tagKeys;
 
-    Aws::String m_usageLimitId;
-    bool m_usageLimitIdHasBeenSet = false;
+  Aws::Vector<Aws::String> m_tagValues;
+  bool m_usageLimitIdHasBeenSet = false;
+  bool m_clusterIdentifierHasBeenSet = false;
+  bool m_featureTypeHasBeenSet = false;
+  bool m_maxRecordsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_tagKeysHasBeenSet = false;
+  bool m_tagValuesHasBeenSet = false;
+};
 
-    Aws::String m_clusterIdentifier;
-    bool m_clusterIdentifierHasBeenSet = false;
-
-    UsageLimitFeatureType m_featureType;
-    bool m_featureTypeHasBeenSet = false;
-
-    int m_maxRecords;
-    bool m_maxRecordsHasBeenSet = false;
-
-    Aws::String m_marker;
-    bool m_markerHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_tagKeys;
-    bool m_tagKeysHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_tagValues;
-    bool m_tagValuesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

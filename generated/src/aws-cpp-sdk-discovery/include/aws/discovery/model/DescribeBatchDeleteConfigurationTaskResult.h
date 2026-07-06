@@ -4,64 +4,75 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
 #include <aws/discovery/model/BatchDeleteConfigurationTask.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ApplicationDiscoveryService
-{
-namespace Model
-{
-  class DescribeBatchDeleteConfigurationTaskResult
-  {
-  public:
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult();
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ApplicationDiscoveryService {
+namespace Model {
+class DescribeBatchDeleteConfigurationTaskResult {
+ public:
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult() = default;
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPLICATIONDISCOVERYSERVICE_API DescribeBatchDeleteConfigurationTaskResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The <code>BatchDeleteConfigurationTask</code> that represents the deletion
+   * task being executed. </p>
+   */
+  inline const BatchDeleteConfigurationTask& GetTask() const { return m_task; }
+  template <typename TaskT = BatchDeleteConfigurationTask>
+  void SetTask(TaskT&& value) {
+    m_taskHasBeenSet = true;
+    m_task = std::forward<TaskT>(value);
+  }
+  template <typename TaskT = BatchDeleteConfigurationTask>
+  DescribeBatchDeleteConfigurationTaskResult& WithTask(TaskT&& value) {
+    SetTask(std::forward<TaskT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The <code>BatchDeleteConfigurationTask</code> that represents the deletion
-     * task being executed. </p>
-     */
-    inline const BatchDeleteConfigurationTask& GetTask() const{ return m_task; }
-    inline void SetTask(const BatchDeleteConfigurationTask& value) { m_task = value; }
-    inline void SetTask(BatchDeleteConfigurationTask&& value) { m_task = std::move(value); }
-    inline DescribeBatchDeleteConfigurationTaskResult& WithTask(const BatchDeleteConfigurationTask& value) { SetTask(value); return *this;}
-    inline DescribeBatchDeleteConfigurationTaskResult& WithTask(BatchDeleteConfigurationTask&& value) { SetTask(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeBatchDeleteConfigurationTaskResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeBatchDeleteConfigurationTaskResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeBatchDeleteConfigurationTaskResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeBatchDeleteConfigurationTaskResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    BatchDeleteConfigurationTask m_task;
+ private:
+  BatchDeleteConfigurationTask m_task;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_taskHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ApplicationDiscoveryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationDiscoveryService
+}  // namespace Aws

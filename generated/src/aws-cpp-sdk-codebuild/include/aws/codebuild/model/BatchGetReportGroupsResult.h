@@ -5,83 +5,106 @@
 
 #pragma once
 #include <aws/codebuild/CodeBuild_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/codebuild/model/ReportGroup.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeBuild
-{
-namespace Model
-{
-  class BatchGetReportGroupsResult
-  {
-  public:
-    AWS_CODEBUILD_API BatchGetReportGroupsResult();
-    AWS_CODEBUILD_API BatchGetReportGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEBUILD_API BatchGetReportGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeBuild {
+namespace Model {
+class BatchGetReportGroupsResult {
+ public:
+  AWS_CODEBUILD_API BatchGetReportGroupsResult() = default;
+  AWS_CODEBUILD_API BatchGetReportGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEBUILD_API BatchGetReportGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The array of report groups returned by <code>BatchGetReportGroups</code>.
+   * </p>
+   */
+  inline const Aws::Vector<ReportGroup>& GetReportGroups() const { return m_reportGroups; }
+  template <typename ReportGroupsT = Aws::Vector<ReportGroup>>
+  void SetReportGroups(ReportGroupsT&& value) {
+    m_reportGroupsHasBeenSet = true;
+    m_reportGroups = std::forward<ReportGroupsT>(value);
+  }
+  template <typename ReportGroupsT = Aws::Vector<ReportGroup>>
+  BatchGetReportGroupsResult& WithReportGroups(ReportGroupsT&& value) {
+    SetReportGroups(std::forward<ReportGroupsT>(value));
+    return *this;
+  }
+  template <typename ReportGroupsT = ReportGroup>
+  BatchGetReportGroupsResult& AddReportGroups(ReportGroupsT&& value) {
+    m_reportGroupsHasBeenSet = true;
+    m_reportGroups.emplace_back(std::forward<ReportGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The array of report groups returned by <code>BatchGetReportGroups</code>.
-     * </p>
-     */
-    inline const Aws::Vector<ReportGroup>& GetReportGroups() const{ return m_reportGroups; }
-    inline void SetReportGroups(const Aws::Vector<ReportGroup>& value) { m_reportGroups = value; }
-    inline void SetReportGroups(Aws::Vector<ReportGroup>&& value) { m_reportGroups = std::move(value); }
-    inline BatchGetReportGroupsResult& WithReportGroups(const Aws::Vector<ReportGroup>& value) { SetReportGroups(value); return *this;}
-    inline BatchGetReportGroupsResult& WithReportGroups(Aws::Vector<ReportGroup>&& value) { SetReportGroups(std::move(value)); return *this;}
-    inline BatchGetReportGroupsResult& AddReportGroups(const ReportGroup& value) { m_reportGroups.push_back(value); return *this; }
-    inline BatchGetReportGroupsResult& AddReportGroups(ReportGroup&& value) { m_reportGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> An array of ARNs passed to <code>BatchGetReportGroups</code> that are not
+   * associated with a <code>ReportGroup</code>. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetReportGroupsNotFound() const { return m_reportGroupsNotFound; }
+  template <typename ReportGroupsNotFoundT = Aws::Vector<Aws::String>>
+  void SetReportGroupsNotFound(ReportGroupsNotFoundT&& value) {
+    m_reportGroupsNotFoundHasBeenSet = true;
+    m_reportGroupsNotFound = std::forward<ReportGroupsNotFoundT>(value);
+  }
+  template <typename ReportGroupsNotFoundT = Aws::Vector<Aws::String>>
+  BatchGetReportGroupsResult& WithReportGroupsNotFound(ReportGroupsNotFoundT&& value) {
+    SetReportGroupsNotFound(std::forward<ReportGroupsNotFoundT>(value));
+    return *this;
+  }
+  template <typename ReportGroupsNotFoundT = Aws::String>
+  BatchGetReportGroupsResult& AddReportGroupsNotFound(ReportGroupsNotFoundT&& value) {
+    m_reportGroupsNotFoundHasBeenSet = true;
+    m_reportGroupsNotFound.emplace_back(std::forward<ReportGroupsNotFoundT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> An array of ARNs passed to <code>BatchGetReportGroups</code> that are not
-     * associated with a <code>ReportGroup</code>. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetReportGroupsNotFound() const{ return m_reportGroupsNotFound; }
-    inline void SetReportGroupsNotFound(const Aws::Vector<Aws::String>& value) { m_reportGroupsNotFound = value; }
-    inline void SetReportGroupsNotFound(Aws::Vector<Aws::String>&& value) { m_reportGroupsNotFound = std::move(value); }
-    inline BatchGetReportGroupsResult& WithReportGroupsNotFound(const Aws::Vector<Aws::String>& value) { SetReportGroupsNotFound(value); return *this;}
-    inline BatchGetReportGroupsResult& WithReportGroupsNotFound(Aws::Vector<Aws::String>&& value) { SetReportGroupsNotFound(std::move(value)); return *this;}
-    inline BatchGetReportGroupsResult& AddReportGroupsNotFound(const Aws::String& value) { m_reportGroupsNotFound.push_back(value); return *this; }
-    inline BatchGetReportGroupsResult& AddReportGroupsNotFound(Aws::String&& value) { m_reportGroupsNotFound.push_back(std::move(value)); return *this; }
-    inline BatchGetReportGroupsResult& AddReportGroupsNotFound(const char* value) { m_reportGroupsNotFound.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchGetReportGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchGetReportGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchGetReportGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchGetReportGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ReportGroup> m_reportGroups;
+ private:
+  Aws::Vector<ReportGroup> m_reportGroups;
 
-    Aws::Vector<Aws::String> m_reportGroupsNotFound;
+  Aws::Vector<Aws::String> m_reportGroupsNotFound;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_reportGroupsHasBeenSet = false;
+  bool m_reportGroupsNotFoundHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

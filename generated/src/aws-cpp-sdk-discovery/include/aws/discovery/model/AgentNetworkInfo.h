@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ApplicationDiscoveryService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ApplicationDiscoveryService {
+namespace Model {
 
+/**
+ * <p>Network details about the host where the agent/collector
+ * resides.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/discovery-2015-11-01/AgentNetworkInfo">AWS
+ * API Reference</a></p>
+ */
+class AgentNetworkInfo {
+ public:
+  AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo() = default;
+  AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPLICATIONDISCOVERYSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Network details about the host where the agent/collector
-   * resides.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/discovery-2015-11-01/AgentNetworkInfo">AWS
-   * API Reference</a></p>
+   * <p>The IP address for the host where the agent/collector resides.</p>
    */
-  class AgentNetworkInfo
-  {
-  public:
-    AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo();
-    AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPLICATIONDISCOVERYSERVICE_API AgentNetworkInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPLICATIONDISCOVERYSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetIpAddress() const { return m_ipAddress; }
+  inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
+  template <typename IpAddressT = Aws::String>
+  void SetIpAddress(IpAddressT&& value) {
+    m_ipAddressHasBeenSet = true;
+    m_ipAddress = std::forward<IpAddressT>(value);
+  }
+  template <typename IpAddressT = Aws::String>
+  AgentNetworkInfo& WithIpAddress(IpAddressT&& value) {
+    SetIpAddress(std::forward<IpAddressT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The MAC address for the host where the agent/collector resides.</p>
+   */
+  inline const Aws::String& GetMacAddress() const { return m_macAddress; }
+  inline bool MacAddressHasBeenSet() const { return m_macAddressHasBeenSet; }
+  template <typename MacAddressT = Aws::String>
+  void SetMacAddress(MacAddressT&& value) {
+    m_macAddressHasBeenSet = true;
+    m_macAddress = std::forward<MacAddressT>(value);
+  }
+  template <typename MacAddressT = Aws::String>
+  AgentNetworkInfo& WithMacAddress(MacAddressT&& value) {
+    SetMacAddress(std::forward<MacAddressT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_ipAddress;
 
-    ///@{
-    /**
-     * <p>The IP address for the host where the agent/collector resides.</p>
-     */
-    inline const Aws::String& GetIpAddress() const{ return m_ipAddress; }
-    inline bool IpAddressHasBeenSet() const { return m_ipAddressHasBeenSet; }
-    inline void SetIpAddress(const Aws::String& value) { m_ipAddressHasBeenSet = true; m_ipAddress = value; }
-    inline void SetIpAddress(Aws::String&& value) { m_ipAddressHasBeenSet = true; m_ipAddress = std::move(value); }
-    inline void SetIpAddress(const char* value) { m_ipAddressHasBeenSet = true; m_ipAddress.assign(value); }
-    inline AgentNetworkInfo& WithIpAddress(const Aws::String& value) { SetIpAddress(value); return *this;}
-    inline AgentNetworkInfo& WithIpAddress(Aws::String&& value) { SetIpAddress(std::move(value)); return *this;}
-    inline AgentNetworkInfo& WithIpAddress(const char* value) { SetIpAddress(value); return *this;}
-    ///@}
+  Aws::String m_macAddress;
+  bool m_ipAddressHasBeenSet = false;
+  bool m_macAddressHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The MAC address for the host where the agent/collector resides.</p>
-     */
-    inline const Aws::String& GetMacAddress() const{ return m_macAddress; }
-    inline bool MacAddressHasBeenSet() const { return m_macAddressHasBeenSet; }
-    inline void SetMacAddress(const Aws::String& value) { m_macAddressHasBeenSet = true; m_macAddress = value; }
-    inline void SetMacAddress(Aws::String&& value) { m_macAddressHasBeenSet = true; m_macAddress = std::move(value); }
-    inline void SetMacAddress(const char* value) { m_macAddressHasBeenSet = true; m_macAddress.assign(value); }
-    inline AgentNetworkInfo& WithMacAddress(const Aws::String& value) { SetMacAddress(value); return *this;}
-    inline AgentNetworkInfo& WithMacAddress(Aws::String&& value) { SetMacAddress(std::move(value)); return *this;}
-    inline AgentNetworkInfo& WithMacAddress(const char* value) { SetMacAddress(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_ipAddress;
-    bool m_ipAddressHasBeenSet = false;
-
-    Aws::String m_macAddress;
-    bool m_macAddressHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ApplicationDiscoveryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationDiscoveryService
+}  // namespace Aws

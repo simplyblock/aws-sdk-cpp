@@ -12,17 +12,4 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetUsagePlanKeyRequest::GetUsagePlanKeyRequest() : 
-    m_usagePlanIdHasBeenSet(false),
-    m_keyIdHasBeenSet(false)
-{
-}
-
-Aws::String GetUsagePlanKeyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetUsagePlanKeyRequest::SerializePayload() const { return {}; }

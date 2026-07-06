@@ -4,77 +4,94 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/route53-recovery-control-config/Route53RecoveryControlConfig_EXPORTS.h>
 #include <aws/route53-recovery-control-config/model/AssertionRule.h>
 #include <aws/route53-recovery-control-config/model/GatingRule.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Route53RecoveryControlConfig
-{
-namespace Model
-{
-  class CreateSafetyRuleResult
-  {
-  public:
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult();
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53RecoveryControlConfig {
+namespace Model {
+class CreateSafetyRuleResult {
+ public:
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult() = default;
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53RECOVERYCONTROLCONFIG_API CreateSafetyRuleResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The assertion rule created.</p>
+   */
+  inline const AssertionRule& GetAssertionRule() const { return m_assertionRule; }
+  template <typename AssertionRuleT = AssertionRule>
+  void SetAssertionRule(AssertionRuleT&& value) {
+    m_assertionRuleHasBeenSet = true;
+    m_assertionRule = std::forward<AssertionRuleT>(value);
+  }
+  template <typename AssertionRuleT = AssertionRule>
+  CreateSafetyRuleResult& WithAssertionRule(AssertionRuleT&& value) {
+    SetAssertionRule(std::forward<AssertionRuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The assertion rule created.</p>
-     */
-    inline const AssertionRule& GetAssertionRule() const{ return m_assertionRule; }
-    inline void SetAssertionRule(const AssertionRule& value) { m_assertionRule = value; }
-    inline void SetAssertionRule(AssertionRule&& value) { m_assertionRule = std::move(value); }
-    inline CreateSafetyRuleResult& WithAssertionRule(const AssertionRule& value) { SetAssertionRule(value); return *this;}
-    inline CreateSafetyRuleResult& WithAssertionRule(AssertionRule&& value) { SetAssertionRule(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The gating rule created.</p>
+   */
+  inline const GatingRule& GetGatingRule() const { return m_gatingRule; }
+  template <typename GatingRuleT = GatingRule>
+  void SetGatingRule(GatingRuleT&& value) {
+    m_gatingRuleHasBeenSet = true;
+    m_gatingRule = std::forward<GatingRuleT>(value);
+  }
+  template <typename GatingRuleT = GatingRule>
+  CreateSafetyRuleResult& WithGatingRule(GatingRuleT&& value) {
+    SetGatingRule(std::forward<GatingRuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The gating rule created.</p>
-     */
-    inline const GatingRule& GetGatingRule() const{ return m_gatingRule; }
-    inline void SetGatingRule(const GatingRule& value) { m_gatingRule = value; }
-    inline void SetGatingRule(GatingRule&& value) { m_gatingRule = std::move(value); }
-    inline CreateSafetyRuleResult& WithGatingRule(const GatingRule& value) { SetGatingRule(value); return *this;}
-    inline CreateSafetyRuleResult& WithGatingRule(GatingRule&& value) { SetGatingRule(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateSafetyRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateSafetyRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateSafetyRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateSafetyRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AssertionRule m_assertionRule;
+ private:
+  AssertionRule m_assertionRule;
 
-    GatingRule m_gatingRule;
+  GatingRule m_gatingRule;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_assertionRuleHasBeenSet = false;
+  bool m_gatingRuleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Route53RecoveryControlConfig
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53RecoveryControlConfig
+}  // namespace Aws

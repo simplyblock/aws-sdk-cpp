@@ -4,148 +4,171 @@
  */
 
 #pragma once
-#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
-#include <aws/sso-admin/SSOAdminRequest.h>
-#include <aws/sso-admin/model/ListAccountAssignmentsFilter.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sso-admin/SSOAdminRequest.h>
+#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
+#include <aws/sso-admin/model/ListAccountAssignmentsFilter.h>
 #include <aws/sso-admin/model/PrincipalType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SSOAdmin
-{
-namespace Model
-{
+namespace Aws {
+namespace SSOAdmin {
+namespace Model {
 
+/**
+ */
+class ListAccountAssignmentsForPrincipalRequest : public SSOAdminRequest {
+ public:
+  AWS_SSOADMIN_API ListAccountAssignmentsForPrincipalRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListAccountAssignmentsForPrincipal"; }
+
+  AWS_SSOADMIN_API Aws::String SerializePayload() const override;
+
+  AWS_SSOADMIN_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Specifies the ARN of the instance of IAM Identity Center that contains the
+   * principal.</p>
    */
-  class ListAccountAssignmentsForPrincipalRequest : public SSOAdminRequest
-  {
-  public:
-    AWS_SSOADMIN_API ListAccountAssignmentsForPrincipalRequest();
+  inline const Aws::String& GetInstanceArn() const { return m_instanceArn; }
+  inline bool InstanceArnHasBeenSet() const { return m_instanceArnHasBeenSet; }
+  template <typename InstanceArnT = Aws::String>
+  void SetInstanceArn(InstanceArnT&& value) {
+    m_instanceArnHasBeenSet = true;
+    m_instanceArn = std::forward<InstanceArnT>(value);
+  }
+  template <typename InstanceArnT = Aws::String>
+  ListAccountAssignmentsForPrincipalRequest& WithInstanceArn(InstanceArnT&& value) {
+    SetInstanceArn(std::forward<InstanceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListAccountAssignmentsForPrincipal"; }
+  ///@{
+  /**
+   * <p>Specifies the principal for which you want to retrieve the list of account
+   * assignments.</p>
+   */
+  inline const Aws::String& GetPrincipalId() const { return m_principalId; }
+  inline bool PrincipalIdHasBeenSet() const { return m_principalIdHasBeenSet; }
+  template <typename PrincipalIdT = Aws::String>
+  void SetPrincipalId(PrincipalIdT&& value) {
+    m_principalIdHasBeenSet = true;
+    m_principalId = std::forward<PrincipalIdT>(value);
+  }
+  template <typename PrincipalIdT = Aws::String>
+  ListAccountAssignmentsForPrincipalRequest& WithPrincipalId(PrincipalIdT&& value) {
+    SetPrincipalId(std::forward<PrincipalIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SSOADMIN_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Specifies the type of the principal.</p>
+   */
+  inline PrincipalType GetPrincipalType() const { return m_principalType; }
+  inline bool PrincipalTypeHasBeenSet() const { return m_principalTypeHasBeenSet; }
+  inline void SetPrincipalType(PrincipalType value) {
+    m_principalTypeHasBeenSet = true;
+    m_principalType = value;
+  }
+  inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalType(PrincipalType value) {
+    SetPrincipalType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SSOADMIN_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Specifies an Amazon Web Services account ID number. Results are filtered to
+   * only those that match this ID number.</p>
+   */
+  inline const ListAccountAssignmentsFilter& GetFilter() const { return m_filter; }
+  inline bool FilterHasBeenSet() const { return m_filterHasBeenSet; }
+  template <typename FilterT = ListAccountAssignmentsFilter>
+  void SetFilter(FilterT&& value) {
+    m_filterHasBeenSet = true;
+    m_filter = std::forward<FilterT>(value);
+  }
+  template <typename FilterT = ListAccountAssignmentsFilter>
+  ListAccountAssignmentsForPrincipalRequest& WithFilter(FilterT&& value) {
+    SetFilter(std::forward<FilterT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies that you want to receive the next page of results. Valid only if
+   * you received a <code>NextToken</code> response in the previous request. If you
+   * did, it indicates that more output is available. Set this parameter to the value
+   * provided by the previous call's <code>NextToken</code> response to request the
+   * next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAccountAssignmentsForPrincipalRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies an Amazon Web Services account ID number. Results are filtered to
-     * only those that match this ID number.</p>
-     */
-    inline const ListAccountAssignmentsFilter& GetFilter() const{ return m_filter; }
-    inline bool FilterHasBeenSet() const { return m_filterHasBeenSet; }
-    inline void SetFilter(const ListAccountAssignmentsFilter& value) { m_filterHasBeenSet = true; m_filter = value; }
-    inline void SetFilter(ListAccountAssignmentsFilter&& value) { m_filterHasBeenSet = true; m_filter = std::move(value); }
-    inline ListAccountAssignmentsForPrincipalRequest& WithFilter(const ListAccountAssignmentsFilter& value) { SetFilter(value); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithFilter(ListAccountAssignmentsFilter&& value) { SetFilter(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the total number of results that you want included in each
+   * response. If additional items exist beyond the number you specify, the
+   * <code>NextToken</code> response element is returned with a value (not null).
+   * Include the specified value as the <code>NextToken</code> request parameter in
+   * the next call to the operation to get the next set of results. Note that the
+   * service might return fewer results than the maximum even when there are more
+   * results available. You should check <code>NextToken</code> after every operation
+   * to ensure that you receive all of the results.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListAccountAssignmentsForPrincipalRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceArn;
 
-    ///@{
-    /**
-     * <p>Specifies the ARN of the instance of IAM Identity Center that contains the
-     * principal.</p>
-     */
-    inline const Aws::String& GetInstanceArn() const{ return m_instanceArn; }
-    inline bool InstanceArnHasBeenSet() const { return m_instanceArnHasBeenSet; }
-    inline void SetInstanceArn(const Aws::String& value) { m_instanceArnHasBeenSet = true; m_instanceArn = value; }
-    inline void SetInstanceArn(Aws::String&& value) { m_instanceArnHasBeenSet = true; m_instanceArn = std::move(value); }
-    inline void SetInstanceArn(const char* value) { m_instanceArnHasBeenSet = true; m_instanceArn.assign(value); }
-    inline ListAccountAssignmentsForPrincipalRequest& WithInstanceArn(const Aws::String& value) { SetInstanceArn(value); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithInstanceArn(Aws::String&& value) { SetInstanceArn(std::move(value)); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithInstanceArn(const char* value) { SetInstanceArn(value); return *this;}
-    ///@}
+  Aws::String m_principalId;
 
-    ///@{
-    /**
-     * <p>Specifies the total number of results that you want included in each
-     * response. If additional items exist beyond the number you specify, the
-     * <code>NextToken</code> response element is returned with a value (not null).
-     * Include the specified value as the <code>NextToken</code> request parameter in
-     * the next call to the operation to get the next set of results. Note that the
-     * service might return fewer results than the maximum even when there are more
-     * results available. You should check <code>NextToken</code> after every operation
-     * to ensure that you receive all of the results.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListAccountAssignmentsForPrincipalRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  PrincipalType m_principalType{PrincipalType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Specifies that you want to receive the next page of results. Valid only if
-     * you received a <code>NextToken</code> response in the previous request. If you
-     * did, it indicates that more output is available. Set this parameter to the value
-     * provided by the previous call's <code>NextToken</code> response to request the
-     * next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListAccountAssignmentsForPrincipalRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ListAccountAssignmentsFilter m_filter;
 
-    ///@{
-    /**
-     * <p>Specifies the principal for which you want to retrieve the list of account
-     * assignments.</p>
-     */
-    inline const Aws::String& GetPrincipalId() const{ return m_principalId; }
-    inline bool PrincipalIdHasBeenSet() const { return m_principalIdHasBeenSet; }
-    inline void SetPrincipalId(const Aws::String& value) { m_principalIdHasBeenSet = true; m_principalId = value; }
-    inline void SetPrincipalId(Aws::String&& value) { m_principalIdHasBeenSet = true; m_principalId = std::move(value); }
-    inline void SetPrincipalId(const char* value) { m_principalIdHasBeenSet = true; m_principalId.assign(value); }
-    inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalId(const Aws::String& value) { SetPrincipalId(value); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalId(Aws::String&& value) { SetPrincipalId(std::move(value)); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalId(const char* value) { SetPrincipalId(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>Specifies the type of the principal.</p>
-     */
-    inline const PrincipalType& GetPrincipalType() const{ return m_principalType; }
-    inline bool PrincipalTypeHasBeenSet() const { return m_principalTypeHasBeenSet; }
-    inline void SetPrincipalType(const PrincipalType& value) { m_principalTypeHasBeenSet = true; m_principalType = value; }
-    inline void SetPrincipalType(PrincipalType&& value) { m_principalTypeHasBeenSet = true; m_principalType = std::move(value); }
-    inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalType(const PrincipalType& value) { SetPrincipalType(value); return *this;}
-    inline ListAccountAssignmentsForPrincipalRequest& WithPrincipalType(PrincipalType&& value) { SetPrincipalType(std::move(value)); return *this;}
-    ///@}
-  private:
+  int m_maxResults{0};
+  bool m_instanceArnHasBeenSet = false;
+  bool m_principalIdHasBeenSet = false;
+  bool m_principalTypeHasBeenSet = false;
+  bool m_filterHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+};
 
-    ListAccountAssignmentsFilter m_filter;
-    bool m_filterHasBeenSet = false;
-
-    Aws::String m_instanceArn;
-    bool m_instanceArnHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    Aws::String m_principalId;
-    bool m_principalIdHasBeenSet = false;
-
-    PrincipalType m_principalType;
-    bool m_principalTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

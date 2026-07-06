@@ -4,77 +4,95 @@
  */
 
 #pragma once
-#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
 #include <aws/elasticbeanstalk/model/ApplicationResourceLifecycleConfig.h>
 #include <aws/elasticbeanstalk/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticBeanstalk
-{
-namespace Model
-{
-  class UpdateApplicationResourceLifecycleResult
-  {
-  public:
-    AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult();
-    AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticBeanstalk {
+namespace Model {
+class UpdateApplicationResourceLifecycleResult {
+ public:
+  AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult() = default;
+  AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICBEANSTALK_API UpdateApplicationResourceLifecycleResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The name of the application.</p>
+   */
+  inline const Aws::String& GetApplicationName() const { return m_applicationName; }
+  template <typename ApplicationNameT = Aws::String>
+  void SetApplicationName(ApplicationNameT&& value) {
+    m_applicationNameHasBeenSet = true;
+    m_applicationName = std::forward<ApplicationNameT>(value);
+  }
+  template <typename ApplicationNameT = Aws::String>
+  UpdateApplicationResourceLifecycleResult& WithApplicationName(ApplicationNameT&& value) {
+    SetApplicationName(std::forward<ApplicationNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the application.</p>
-     */
-    inline const Aws::String& GetApplicationName() const{ return m_applicationName; }
-    inline void SetApplicationName(const Aws::String& value) { m_applicationName = value; }
-    inline void SetApplicationName(Aws::String&& value) { m_applicationName = std::move(value); }
-    inline void SetApplicationName(const char* value) { m_applicationName.assign(value); }
-    inline UpdateApplicationResourceLifecycleResult& WithApplicationName(const Aws::String& value) { SetApplicationName(value); return *this;}
-    inline UpdateApplicationResourceLifecycleResult& WithApplicationName(Aws::String&& value) { SetApplicationName(std::move(value)); return *this;}
-    inline UpdateApplicationResourceLifecycleResult& WithApplicationName(const char* value) { SetApplicationName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The lifecycle configuration.</p>
+   */
+  inline const ApplicationResourceLifecycleConfig& GetResourceLifecycleConfig() const { return m_resourceLifecycleConfig; }
+  template <typename ResourceLifecycleConfigT = ApplicationResourceLifecycleConfig>
+  void SetResourceLifecycleConfig(ResourceLifecycleConfigT&& value) {
+    m_resourceLifecycleConfigHasBeenSet = true;
+    m_resourceLifecycleConfig = std::forward<ResourceLifecycleConfigT>(value);
+  }
+  template <typename ResourceLifecycleConfigT = ApplicationResourceLifecycleConfig>
+  UpdateApplicationResourceLifecycleResult& WithResourceLifecycleConfig(ResourceLifecycleConfigT&& value) {
+    SetResourceLifecycleConfig(std::forward<ResourceLifecycleConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The lifecycle configuration.</p>
-     */
-    inline const ApplicationResourceLifecycleConfig& GetResourceLifecycleConfig() const{ return m_resourceLifecycleConfig; }
-    inline void SetResourceLifecycleConfig(const ApplicationResourceLifecycleConfig& value) { m_resourceLifecycleConfig = value; }
-    inline void SetResourceLifecycleConfig(ApplicationResourceLifecycleConfig&& value) { m_resourceLifecycleConfig = std::move(value); }
-    inline UpdateApplicationResourceLifecycleResult& WithResourceLifecycleConfig(const ApplicationResourceLifecycleConfig& value) { SetResourceLifecycleConfig(value); return *this;}
-    inline UpdateApplicationResourceLifecycleResult& WithResourceLifecycleConfig(ApplicationResourceLifecycleConfig&& value) { SetResourceLifecycleConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline UpdateApplicationResourceLifecycleResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline UpdateApplicationResourceLifecycleResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  UpdateApplicationResourceLifecycleResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_applicationName;
+ private:
+  Aws::String m_applicationName;
 
-    ApplicationResourceLifecycleConfig m_resourceLifecycleConfig;
+  ApplicationResourceLifecycleConfig m_resourceLifecycleConfig;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationNameHasBeenSet = false;
+  bool m_resourceLifecycleConfigHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElasticBeanstalk
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticBeanstalk
+}  // namespace Aws

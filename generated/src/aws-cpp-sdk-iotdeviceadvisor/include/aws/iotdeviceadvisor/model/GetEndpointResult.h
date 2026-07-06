@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iotdeviceadvisor/IoTDeviceAdvisor_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoTDeviceAdvisor
-{
-namespace Model
-{
-  class GetEndpointResult
-  {
-  public:
-    AWS_IOTDEVICEADVISOR_API GetEndpointResult();
-    AWS_IOTDEVICEADVISOR_API GetEndpointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOTDEVICEADVISOR_API GetEndpointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoTDeviceAdvisor {
+namespace Model {
+class GetEndpointResult {
+ public:
+  AWS_IOTDEVICEADVISOR_API GetEndpointResult() = default;
+  AWS_IOTDEVICEADVISOR_API GetEndpointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOTDEVICEADVISOR_API GetEndpointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The response of an Device Advisor endpoint.</p>
+   */
+  inline const Aws::String& GetEndpoint() const { return m_endpoint; }
+  template <typename EndpointT = Aws::String>
+  void SetEndpoint(EndpointT&& value) {
+    m_endpointHasBeenSet = true;
+    m_endpoint = std::forward<EndpointT>(value);
+  }
+  template <typename EndpointT = Aws::String>
+  GetEndpointResult& WithEndpoint(EndpointT&& value) {
+    SetEndpoint(std::forward<EndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The response of an Device Advisor endpoint.</p>
-     */
-    inline const Aws::String& GetEndpoint() const{ return m_endpoint; }
-    inline void SetEndpoint(const Aws::String& value) { m_endpoint = value; }
-    inline void SetEndpoint(Aws::String&& value) { m_endpoint = std::move(value); }
-    inline void SetEndpoint(const char* value) { m_endpoint.assign(value); }
-    inline GetEndpointResult& WithEndpoint(const Aws::String& value) { SetEndpoint(value); return *this;}
-    inline GetEndpointResult& WithEndpoint(Aws::String&& value) { SetEndpoint(std::move(value)); return *this;}
-    inline GetEndpointResult& WithEndpoint(const char* value) { SetEndpoint(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEndpointResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEndpointResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEndpointResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEndpointResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_endpoint;
+ private:
+  Aws::String m_endpoint;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_endpointHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoTDeviceAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoTDeviceAdvisor
+}  // namespace Aws

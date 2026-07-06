@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/route53/model/ListCidrBlocksResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/route53/model/ListCidrBlocksResult.h>
 
 #include <utility>
 
@@ -16,45 +16,37 @@ using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ListCidrBlocksResult::ListCidrBlocksResult()
-{
-}
+ListCidrBlocksResult::ListCidrBlocksResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ListCidrBlocksResult::ListCidrBlocksResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ListCidrBlocksResult& ListCidrBlocksResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ListCidrBlocksResult& ListCidrBlocksResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode resultNode = xmlDocument.GetRootElement();
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode nextTokenNode = resultNode.FirstChild("NextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
     XmlNode cidrBlocksNode = resultNode.FirstChild("CidrBlocks");
-    if(!cidrBlocksNode.IsNull())
-    {
+    if (!cidrBlocksNode.IsNull()) {
       XmlNode cidrBlocksMember = cidrBlocksNode.FirstChild("member");
-      while(!cidrBlocksMember.IsNull())
-      {
+      m_cidrBlocksHasBeenSet = !cidrBlocksMember.IsNull();
+      while (!cidrBlocksMember.IsNull()) {
         m_cidrBlocks.push_back(cidrBlocksMember);
         cidrBlocksMember = cidrBlocksMember.NextNode("member");
       }
 
+      m_cidrBlocksHasBeenSet = true;
     }
   }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
 
   return *this;

@@ -4,89 +4,96 @@
  */
 
 #pragma once
-#include <aws/lexv2-runtime/LexRuntimeV2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/lexv2-runtime/model/MessageContentType.h>
+#include <aws/lexv2-runtime/LexRuntimeV2_EXPORTS.h>
 #include <aws/lexv2-runtime/model/ImageResponseCard.h>
+#include <aws/lexv2-runtime/model/MessageContentType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LexRuntimeV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LexRuntimeV2 {
+namespace Model {
 
+/**
+ * <p>Container for text that is returned to the customer..</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/runtime.lex.v2-2020-08-07/Message">AWS
+ * API Reference</a></p>
+ */
+class Message {
+ public:
+  AWS_LEXRUNTIMEV2_API Message() = default;
+  AWS_LEXRUNTIMEV2_API Message(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXRUNTIMEV2_API Message& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LEXRUNTIMEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Container for text that is returned to the customer..</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/runtime.lex.v2-2020-08-07/Message">AWS
-   * API Reference</a></p>
+   * <p>The text of the message.</p>
    */
-  class Message
-  {
-  public:
-    AWS_LEXRUNTIMEV2_API Message();
-    AWS_LEXRUNTIMEV2_API Message(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXRUNTIMEV2_API Message& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LEXRUNTIMEV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetContent() const { return m_content; }
+  inline bool ContentHasBeenSet() const { return m_contentHasBeenSet; }
+  template <typename ContentT = Aws::String>
+  void SetContent(ContentT&& value) {
+    m_contentHasBeenSet = true;
+    m_content = std::forward<ContentT>(value);
+  }
+  template <typename ContentT = Aws::String>
+  Message& WithContent(ContentT&& value) {
+    SetContent(std::forward<ContentT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Indicates the type of response.</p>
+   */
+  inline MessageContentType GetContentType() const { return m_contentType; }
+  inline bool ContentTypeHasBeenSet() const { return m_contentTypeHasBeenSet; }
+  inline void SetContentType(MessageContentType value) {
+    m_contentTypeHasBeenSet = true;
+    m_contentType = value;
+  }
+  inline Message& WithContentType(MessageContentType value) {
+    SetContentType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The text of the message.</p>
-     */
-    inline const Aws::String& GetContent() const{ return m_content; }
-    inline bool ContentHasBeenSet() const { return m_contentHasBeenSet; }
-    inline void SetContent(const Aws::String& value) { m_contentHasBeenSet = true; m_content = value; }
-    inline void SetContent(Aws::String&& value) { m_contentHasBeenSet = true; m_content = std::move(value); }
-    inline void SetContent(const char* value) { m_contentHasBeenSet = true; m_content.assign(value); }
-    inline Message& WithContent(const Aws::String& value) { SetContent(value); return *this;}
-    inline Message& WithContent(Aws::String&& value) { SetContent(std::move(value)); return *this;}
-    inline Message& WithContent(const char* value) { SetContent(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Indicates the type of response.</p>
-     */
-    inline const MessageContentType& GetContentType() const{ return m_contentType; }
-    inline bool ContentTypeHasBeenSet() const { return m_contentTypeHasBeenSet; }
-    inline void SetContentType(const MessageContentType& value) { m_contentTypeHasBeenSet = true; m_contentType = value; }
-    inline void SetContentType(MessageContentType&& value) { m_contentTypeHasBeenSet = true; m_contentType = std::move(value); }
-    inline Message& WithContentType(const MessageContentType& value) { SetContentType(value); return *this;}
-    inline Message& WithContentType(MessageContentType&& value) { SetContentType(std::move(value)); return *this;}
-    ///@}
+  inline const ImageResponseCard& GetImageResponseCard() const { return m_imageResponseCard; }
+  inline bool ImageResponseCardHasBeenSet() const { return m_imageResponseCardHasBeenSet; }
+  template <typename ImageResponseCardT = ImageResponseCard>
+  void SetImageResponseCard(ImageResponseCardT&& value) {
+    m_imageResponseCardHasBeenSet = true;
+    m_imageResponseCard = std::forward<ImageResponseCardT>(value);
+  }
+  template <typename ImageResponseCardT = ImageResponseCard>
+  Message& WithImageResponseCard(ImageResponseCardT&& value) {
+    SetImageResponseCard(std::forward<ImageResponseCardT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_content;
 
-    ///@{
-    
-    inline const ImageResponseCard& GetImageResponseCard() const{ return m_imageResponseCard; }
-    inline bool ImageResponseCardHasBeenSet() const { return m_imageResponseCardHasBeenSet; }
-    inline void SetImageResponseCard(const ImageResponseCard& value) { m_imageResponseCardHasBeenSet = true; m_imageResponseCard = value; }
-    inline void SetImageResponseCard(ImageResponseCard&& value) { m_imageResponseCardHasBeenSet = true; m_imageResponseCard = std::move(value); }
-    inline Message& WithImageResponseCard(const ImageResponseCard& value) { SetImageResponseCard(value); return *this;}
-    inline Message& WithImageResponseCard(ImageResponseCard&& value) { SetImageResponseCard(std::move(value)); return *this;}
-    ///@}
-  private:
+  MessageContentType m_contentType{MessageContentType::NOT_SET};
 
-    Aws::String m_content;
-    bool m_contentHasBeenSet = false;
+  ImageResponseCard m_imageResponseCard;
+  bool m_contentHasBeenSet = false;
+  bool m_contentTypeHasBeenSet = false;
+  bool m_imageResponseCardHasBeenSet = false;
+};
 
-    MessageContentType m_contentType;
-    bool m_contentTypeHasBeenSet = false;
-
-    ImageResponseCard m_imageResponseCard;
-    bool m_imageResponseCardHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexRuntimeV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexRuntimeV2
+}  // namespace Aws

@@ -4,161 +4,227 @@
  */
 
 #pragma once
-#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/geo-routes/model/GeometryFormat.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
+#include <aws/geo-routes/model/GeometryFormat.h>
 #include <aws/geo-routes/model/Isoline.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GeoRoutes
-{
-namespace Model
-{
-  class CalculateIsolinesResult
-  {
-  public:
-    AWS_GEOROUTES_API CalculateIsolinesResult();
-    AWS_GEOROUTES_API CalculateIsolinesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GEOROUTES_API CalculateIsolinesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GeoRoutes {
+namespace Model {
+class CalculateIsolinesResult {
+ public:
+  AWS_GEOROUTES_API CalculateIsolinesResult() = default;
+  AWS_GEOROUTES_API CalculateIsolinesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GEOROUTES_API CalculateIsolinesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Time of arrival at the destination, used for traffic calculations. This
+   * attribute is returned only if the <code>Destination</code> and
+   * <code>ArrivalTime</code> attributes were provided in the request.</p> <p>Time
+   * format: <code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code>
+   * </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p>
+   * <code>2020-04-22T17:57:24+02:00</code> </p>
+   */
+  inline const Aws::String& GetArrivalTime() const { return m_arrivalTime; }
+  template <typename ArrivalTimeT = Aws::String>
+  void SetArrivalTime(ArrivalTimeT&& value) {
+    m_arrivalTimeHasBeenSet = true;
+    m_arrivalTime = std::forward<ArrivalTimeT>(value);
+  }
+  template <typename ArrivalTimeT = Aws::String>
+  CalculateIsolinesResult& WithArrivalTime(ArrivalTimeT&& value) {
+    SetArrivalTime(std::forward<ArrivalTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Time of arrival at the destination. This parameter is returned only if the
-     * Destination parameters was provided in the request. </p> <p>Time
-     * format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code>
-     * </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p>
-     * <code>2020-04-22T17:57:24+02:00</code> </p>
-     */
-    inline const Aws::String& GetArrivalTime() const{ return m_arrivalTime; }
-    inline void SetArrivalTime(const Aws::String& value) { m_arrivalTime = value; }
-    inline void SetArrivalTime(Aws::String&& value) { m_arrivalTime = std::move(value); }
-    inline void SetArrivalTime(const char* value) { m_arrivalTime.assign(value); }
-    inline CalculateIsolinesResult& WithArrivalTime(const Aws::String& value) { SetArrivalTime(value); return *this;}
-    inline CalculateIsolinesResult& WithArrivalTime(Aws::String&& value) { SetArrivalTime(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& WithArrivalTime(const char* value) { SetArrivalTime(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Time of departure from the origin, used for traffic calculations. This
+   * attribute is returned when <code>Origin</code> was provided in the request and
+   * either a specific departure time was requested (<code>DepartureTime</code>) or
+   * <code>DepartNow</code> was set to true.</p> <p>Time format:
+   * <code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code> </p>
+   * <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p>
+   * <code>2020-04-22T17:57:24+02:00</code> </p>
+   */
+  inline const Aws::String& GetDepartureTime() const { return m_departureTime; }
+  template <typename DepartureTimeT = Aws::String>
+  void SetDepartureTime(DepartureTimeT&& value) {
+    m_departureTimeHasBeenSet = true;
+    m_departureTime = std::forward<DepartureTimeT>(value);
+  }
+  template <typename DepartureTimeT = Aws::String>
+  CalculateIsolinesResult& WithDepartureTime(DepartureTimeT&& value) {
+    SetDepartureTime(std::forward<DepartureTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Time of departure from thr origin.</p> <p>Time
-     * format:<code>YYYY-MM-DDThh:mm:ss.sssZ | YYYY-MM-DDThh:mm:ss.sss+hh:mm</code>
-     * </p> <p>Examples:</p> <p> <code>2020-04-22T17:57:24Z</code> </p> <p>
-     * <code>2020-04-22T17:57:24+02:00</code> </p>
-     */
-    inline const Aws::String& GetDepartureTime() const{ return m_departureTime; }
-    inline void SetDepartureTime(const Aws::String& value) { m_departureTime = value; }
-    inline void SetDepartureTime(Aws::String&& value) { m_departureTime = std::move(value); }
-    inline void SetDepartureTime(const char* value) { m_departureTime.assign(value); }
-    inline CalculateIsolinesResult& WithDepartureTime(const Aws::String& value) { SetDepartureTime(value); return *this;}
-    inline CalculateIsolinesResult& WithDepartureTime(Aws::String&& value) { SetDepartureTime(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& WithDepartureTime(const char* value) { SetDepartureTime(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The format of the returned geometries, matching the format specified in the
+   * request. Either <code> FlexiblePolyline</code> for compact encoding or
+   * <code>Simple</code> for GeoJSON-compatible coordinates.</p> <p>Default
+   * value:<code>FlexiblePolyline</code> </p>
+   */
+  inline GeometryFormat GetIsolineGeometryFormat() const { return m_isolineGeometryFormat; }
+  inline void SetIsolineGeometryFormat(GeometryFormat value) {
+    m_isolineGeometryFormatHasBeenSet = true;
+    m_isolineGeometryFormat = value;
+  }
+  inline CalculateIsolinesResult& WithIsolineGeometryFormat(GeometryFormat value) {
+    SetIsolineGeometryFormat(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The format of the returned IsolineGeometry. </p> <p>Default
-     * Value:<code>FlexiblePolyline</code> </p>
-     */
-    inline const GeometryFormat& GetIsolineGeometryFormat() const{ return m_isolineGeometryFormat; }
-    inline void SetIsolineGeometryFormat(const GeometryFormat& value) { m_isolineGeometryFormat = value; }
-    inline void SetIsolineGeometryFormat(GeometryFormat&& value) { m_isolineGeometryFormat = std::move(value); }
-    inline CalculateIsolinesResult& WithIsolineGeometryFormat(const GeometryFormat& value) { SetIsolineGeometryFormat(value); return *this;}
-    inline CalculateIsolinesResult& WithIsolineGeometryFormat(GeometryFormat&& value) { SetIsolineGeometryFormat(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Reachable areas, or isolines, for each threshold specified in the
+   * request.</p>
+   */
+  inline const Aws::Vector<Isoline>& GetIsolines() const { return m_isolines; }
+  template <typename IsolinesT = Aws::Vector<Isoline>>
+  void SetIsolines(IsolinesT&& value) {
+    m_isolinesHasBeenSet = true;
+    m_isolines = std::forward<IsolinesT>(value);
+  }
+  template <typename IsolinesT = Aws::Vector<Isoline>>
+  CalculateIsolinesResult& WithIsolines(IsolinesT&& value) {
+    SetIsolines(std::forward<IsolinesT>(value));
+    return *this;
+  }
+  template <typename IsolinesT = Isoline>
+  CalculateIsolinesResult& AddIsolines(IsolinesT&& value) {
+    m_isolinesHasBeenSet = true;
+    m_isolines.emplace_back(std::forward<IsolinesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Calculated isolines and associated properties.</p>
-     */
-    inline const Aws::Vector<Isoline>& GetIsolines() const{ return m_isolines; }
-    inline void SetIsolines(const Aws::Vector<Isoline>& value) { m_isolines = value; }
-    inline void SetIsolines(Aws::Vector<Isoline>&& value) { m_isolines = std::move(value); }
-    inline CalculateIsolinesResult& WithIsolines(const Aws::Vector<Isoline>& value) { SetIsolines(value); return *this;}
-    inline CalculateIsolinesResult& WithIsolines(Aws::Vector<Isoline>&& value) { SetIsolines(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& AddIsolines(const Isoline& value) { m_isolines.push_back(value); return *this; }
-    inline CalculateIsolinesResult& AddIsolines(Isoline&& value) { m_isolines.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pricing bucket applied to this calculation. Different buckets apply based
+   * on the travel mode and thresholds used.</p>
+   */
+  inline const Aws::String& GetPricingBucket() const { return m_pricingBucket; }
+  template <typename PricingBucketT = Aws::String>
+  void SetPricingBucket(PricingBucketT&& value) {
+    m_pricingBucketHasBeenSet = true;
+    m_pricingBucket = std::forward<PricingBucketT>(value);
+  }
+  template <typename PricingBucketT = Aws::String>
+  CalculateIsolinesResult& WithPricingBucket(PricingBucketT&& value) {
+    SetPricingBucket(std::forward<PricingBucketT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pricing bucket for which the query is charged at.</p>
-     */
-    inline const Aws::String& GetPricingBucket() const{ return m_pricingBucket; }
-    inline void SetPricingBucket(const Aws::String& value) { m_pricingBucket = value; }
-    inline void SetPricingBucket(Aws::String&& value) { m_pricingBucket = std::move(value); }
-    inline void SetPricingBucket(const char* value) { m_pricingBucket.assign(value); }
-    inline CalculateIsolinesResult& WithPricingBucket(const Aws::String& value) { SetPricingBucket(value); return *this;}
-    inline CalculateIsolinesResult& WithPricingBucket(Aws::String&& value) { SetPricingBucket(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& WithPricingBucket(const char* value) { SetPricingBucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The actual point on the road network used for calculations, which may differ
+   * from the requested destination if <code>Destination</code> was not directly on a
+   * road.</p>
+   */
+  inline const Aws::Vector<double>& GetSnappedDestination() const { return m_snappedDestination; }
+  template <typename SnappedDestinationT = Aws::Vector<double>>
+  void SetSnappedDestination(SnappedDestinationT&& value) {
+    m_snappedDestinationHasBeenSet = true;
+    m_snappedDestination = std::forward<SnappedDestinationT>(value);
+  }
+  template <typename SnappedDestinationT = Aws::Vector<double>>
+  CalculateIsolinesResult& WithSnappedDestination(SnappedDestinationT&& value) {
+    SetSnappedDestination(std::forward<SnappedDestinationT>(value));
+    return *this;
+  }
+  inline CalculateIsolinesResult& AddSnappedDestination(double value) {
+    m_snappedDestinationHasBeenSet = true;
+    m_snappedDestination.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Snapped destination that was used for the Isoline calculation.</p>
-     */
-    inline const Aws::Vector<double>& GetSnappedDestination() const{ return m_snappedDestination; }
-    inline void SetSnappedDestination(const Aws::Vector<double>& value) { m_snappedDestination = value; }
-    inline void SetSnappedDestination(Aws::Vector<double>&& value) { m_snappedDestination = std::move(value); }
-    inline CalculateIsolinesResult& WithSnappedDestination(const Aws::Vector<double>& value) { SetSnappedDestination(value); return *this;}
-    inline CalculateIsolinesResult& WithSnappedDestination(Aws::Vector<double>&& value) { SetSnappedDestination(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& AddSnappedDestination(double value) { m_snappedDestination.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The actual point on the road network used for calculations, which may differ
+   * from the requested origin if <code>Origin</code> was not directly on a road.</p>
+   */
+  inline const Aws::Vector<double>& GetSnappedOrigin() const { return m_snappedOrigin; }
+  template <typename SnappedOriginT = Aws::Vector<double>>
+  void SetSnappedOrigin(SnappedOriginT&& value) {
+    m_snappedOriginHasBeenSet = true;
+    m_snappedOrigin = std::forward<SnappedOriginT>(value);
+  }
+  template <typename SnappedOriginT = Aws::Vector<double>>
+  CalculateIsolinesResult& WithSnappedOrigin(SnappedOriginT&& value) {
+    SetSnappedOrigin(std::forward<SnappedOriginT>(value));
+    return *this;
+  }
+  inline CalculateIsolinesResult& AddSnappedOrigin(double value) {
+    m_snappedOriginHasBeenSet = true;
+    m_snappedOrigin.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Snapped origin that was used for the Isoline calculation.</p>
-     */
-    inline const Aws::Vector<double>& GetSnappedOrigin() const{ return m_snappedOrigin; }
-    inline void SetSnappedOrigin(const Aws::Vector<double>& value) { m_snappedOrigin = value; }
-    inline void SetSnappedOrigin(Aws::Vector<double>&& value) { m_snappedOrigin = std::move(value); }
-    inline CalculateIsolinesResult& WithSnappedOrigin(const Aws::Vector<double>& value) { SetSnappedOrigin(value); return *this;}
-    inline CalculateIsolinesResult& WithSnappedOrigin(Aws::Vector<double>&& value) { SetSnappedOrigin(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& AddSnappedOrigin(double value) { m_snappedOrigin.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CalculateIsolinesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CalculateIsolinesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CalculateIsolinesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CalculateIsolinesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arrivalTime;
+ private:
+  Aws::String m_arrivalTime;
 
-    Aws::String m_departureTime;
+  Aws::String m_departureTime;
 
-    GeometryFormat m_isolineGeometryFormat;
+  GeometryFormat m_isolineGeometryFormat{GeometryFormat::NOT_SET};
 
-    Aws::Vector<Isoline> m_isolines;
+  Aws::Vector<Isoline> m_isolines;
 
-    Aws::String m_pricingBucket;
+  Aws::String m_pricingBucket;
 
-    Aws::Vector<double> m_snappedDestination;
+  Aws::Vector<double> m_snappedDestination;
 
-    Aws::Vector<double> m_snappedOrigin;
+  Aws::Vector<double> m_snappedOrigin;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_arrivalTimeHasBeenSet = false;
+  bool m_departureTimeHasBeenSet = false;
+  bool m_isolineGeometryFormatHasBeenSet = false;
+  bool m_isolinesHasBeenSet = false;
+  bool m_pricingBucketHasBeenSet = false;
+  bool m_snappedDestinationHasBeenSet = false;
+  bool m_snappedOriginHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GeoRoutes
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoRoutes
+}  // namespace Aws

@@ -3,71 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/kafka/model/KafkaClusterSummary.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/kafka/model/KafkaClusterSummary.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Kafka {
+namespace Model {
 
-KafkaClusterSummary::KafkaClusterSummary() : 
-    m_amazonMskClusterHasBeenSet(false),
-    m_kafkaClusterAliasHasBeenSet(false)
-{
-}
+KafkaClusterSummary::KafkaClusterSummary(JsonView jsonValue) { *this = jsonValue; }
 
-KafkaClusterSummary::KafkaClusterSummary(JsonView jsonValue)
-  : KafkaClusterSummary()
-{
-  *this = jsonValue;
-}
-
-KafkaClusterSummary& KafkaClusterSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("amazonMskCluster"))
-  {
+KafkaClusterSummary& KafkaClusterSummary::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("amazonMskCluster")) {
     m_amazonMskCluster = jsonValue.GetObject("amazonMskCluster");
-
     m_amazonMskClusterHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("kafkaClusterAlias"))
-  {
+  if (jsonValue.ValueExists("apacheKafkaCluster")) {
+    m_apacheKafkaCluster = jsonValue.GetObject("apacheKafkaCluster");
+    m_apacheKafkaClusterHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("kafkaClusterAlias")) {
     m_kafkaClusterAlias = jsonValue.GetString("kafkaClusterAlias");
-
     m_kafkaClusterAliasHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue KafkaClusterSummary::Jsonize() const
-{
+JsonValue KafkaClusterSummary::Jsonize() const {
   JsonValue payload;
 
-  if(m_amazonMskClusterHasBeenSet)
-  {
-   payload.WithObject("amazonMskCluster", m_amazonMskCluster.Jsonize());
-
+  if (m_amazonMskClusterHasBeenSet) {
+    payload.WithObject("amazonMskCluster", m_amazonMskCluster.Jsonize());
   }
 
-  if(m_kafkaClusterAliasHasBeenSet)
-  {
-   payload.WithString("kafkaClusterAlias", m_kafkaClusterAlias);
+  if (m_apacheKafkaClusterHasBeenSet) {
+    payload.WithObject("apacheKafkaCluster", m_apacheKafkaCluster.Jsonize());
+  }
 
+  if (m_kafkaClusterAliasHasBeenSet) {
+    payload.WithString("kafkaClusterAlias", m_kafkaClusterAlias);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

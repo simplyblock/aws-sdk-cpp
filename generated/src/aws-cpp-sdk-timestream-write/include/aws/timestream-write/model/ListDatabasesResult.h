@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
 #include <aws/timestream-write/model/Database.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamWrite
-{
-namespace Model
-{
-  class ListDatabasesResult
-  {
-  public:
-    AWS_TIMESTREAMWRITE_API ListDatabasesResult();
-    AWS_TIMESTREAMWRITE_API ListDatabasesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TIMESTREAMWRITE_API ListDatabasesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamWrite {
+namespace Model {
+class ListDatabasesResult {
+ public:
+  AWS_TIMESTREAMWRITE_API ListDatabasesResult() = default;
+  AWS_TIMESTREAMWRITE_API ListDatabasesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TIMESTREAMWRITE_API ListDatabasesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of database names.</p>
+   */
+  inline const Aws::Vector<Database>& GetDatabases() const { return m_databases; }
+  template <typename DatabasesT = Aws::Vector<Database>>
+  void SetDatabases(DatabasesT&& value) {
+    m_databasesHasBeenSet = true;
+    m_databases = std::forward<DatabasesT>(value);
+  }
+  template <typename DatabasesT = Aws::Vector<Database>>
+  ListDatabasesResult& WithDatabases(DatabasesT&& value) {
+    SetDatabases(std::forward<DatabasesT>(value));
+    return *this;
+  }
+  template <typename DatabasesT = Database>
+  ListDatabasesResult& AddDatabases(DatabasesT&& value) {
+    m_databasesHasBeenSet = true;
+    m_databases.emplace_back(std::forward<DatabasesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of database names.</p>
-     */
-    inline const Aws::Vector<Database>& GetDatabases() const{ return m_databases; }
-    inline void SetDatabases(const Aws::Vector<Database>& value) { m_databases = value; }
-    inline void SetDatabases(Aws::Vector<Database>&& value) { m_databases = std::move(value); }
-    inline ListDatabasesResult& WithDatabases(const Aws::Vector<Database>& value) { SetDatabases(value); return *this;}
-    inline ListDatabasesResult& WithDatabases(Aws::Vector<Database>&& value) { SetDatabases(std::move(value)); return *this;}
-    inline ListDatabasesResult& AddDatabases(const Database& value) { m_databases.push_back(value); return *this; }
-    inline ListDatabasesResult& AddDatabases(Database&& value) { m_databases.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token. This parameter is returned when the response is
+   * truncated.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDatabasesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token. This parameter is returned when the response is
-     * truncated.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDatabasesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDatabasesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDatabasesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDatabasesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDatabasesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDatabasesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDatabasesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Database> m_databases;
+ private:
+  Aws::Vector<Database> m_databases;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_databasesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TimestreamWrite
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamWrite
+}  // namespace Aws

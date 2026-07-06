@@ -12,26 +12,12 @@ using namespace Aws::AppIntegrationsService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateDataIntegrationAssociationRequest::UpdateDataIntegrationAssociationRequest() : 
-    m_dataIntegrationIdentifierHasBeenSet(false),
-    m_dataIntegrationAssociationIdentifierHasBeenSet(false),
-    m_executionConfigurationHasBeenSet(false)
-{
-}
-
-Aws::String UpdateDataIntegrationAssociationRequest::SerializePayload() const
-{
+Aws::String UpdateDataIntegrationAssociationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_executionConfigurationHasBeenSet)
-  {
-   payload.WithObject("ExecutionConfiguration", m_executionConfiguration.Jsonize());
-
+  if (m_executionConfigurationHasBeenSet) {
+    payload.WithObject("ExecutionConfiguration", m_executionConfiguration.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

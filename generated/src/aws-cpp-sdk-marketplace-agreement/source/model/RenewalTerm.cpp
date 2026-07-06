@@ -3,71 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/marketplace-agreement/model/RenewalTerm.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/marketplace-agreement/model/RenewalTerm.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AgreementService
-{
-namespace Model
-{
+namespace Aws {
+namespace AgreementService {
+namespace Model {
 
-RenewalTerm::RenewalTerm() : 
-    m_configurationHasBeenSet(false),
-    m_typeHasBeenSet(false)
-{
-}
+RenewalTerm::RenewalTerm(JsonView jsonValue) { *this = jsonValue; }
 
-RenewalTerm::RenewalTerm(JsonView jsonValue)
-  : RenewalTerm()
-{
-  *this = jsonValue;
-}
-
-RenewalTerm& RenewalTerm::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("configuration"))
-  {
-    m_configuration = jsonValue.GetObject("configuration");
-
-    m_configurationHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("type"))
-  {
+RenewalTerm& RenewalTerm::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("type")) {
     m_type = jsonValue.GetString("type");
-
     m_typeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("id")) {
+    m_id = jsonValue.GetString("id");
+    m_idHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("configuration")) {
+    m_configuration = jsonValue.GetObject("configuration");
+    m_configurationHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue RenewalTerm::Jsonize() const
-{
+JsonValue RenewalTerm::Jsonize() const {
   JsonValue payload;
 
-  if(m_configurationHasBeenSet)
-  {
-   payload.WithObject("configuration", m_configuration.Jsonize());
-
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", m_type);
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", m_type);
+  if (m_idHasBeenSet) {
+    payload.WithString("id", m_id);
+  }
 
+  if (m_configurationHasBeenSet) {
+    payload.WithObject("configuration", m_configuration.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AgreementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AgreementService
+}  // namespace Aws

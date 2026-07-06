@@ -6,74 +6,75 @@
 #pragma once
 #include <aws/codebuild/CodeBuild_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeBuild {
+namespace Model {
 
+/**
+ * <p>Contains the unmodified data for the report. For more information, see
+ * .</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ReportWithRawData">AWS
+ * API Reference</a></p>
+ */
+class ReportWithRawData {
+ public:
+  AWS_CODEBUILD_API ReportWithRawData() = default;
+  AWS_CODEBUILD_API ReportWithRawData(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEBUILD_API ReportWithRawData& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEBUILD_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains the unmodified data for the report. For more information, see
-   * .</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ReportWithRawData">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the report.</p>
    */
-  class ReportWithRawData
-  {
-  public:
-    AWS_CODEBUILD_API ReportWithRawData();
-    AWS_CODEBUILD_API ReportWithRawData(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEBUILD_API ReportWithRawData& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEBUILD_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetReportArn() const { return m_reportArn; }
+  inline bool ReportArnHasBeenSet() const { return m_reportArnHasBeenSet; }
+  template <typename ReportArnT = Aws::String>
+  void SetReportArn(ReportArnT&& value) {
+    m_reportArnHasBeenSet = true;
+    m_reportArn = std::forward<ReportArnT>(value);
+  }
+  template <typename ReportArnT = Aws::String>
+  ReportWithRawData& WithReportArn(ReportArnT&& value) {
+    SetReportArn(std::forward<ReportArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The value of the requested data field from the report.</p>
+   */
+  inline const Aws::String& GetData() const { return m_data; }
+  inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
+  template <typename DataT = Aws::String>
+  void SetData(DataT&& value) {
+    m_dataHasBeenSet = true;
+    m_data = std::forward<DataT>(value);
+  }
+  template <typename DataT = Aws::String>
+  ReportWithRawData& WithData(DataT&& value) {
+    SetData(std::forward<DataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_reportArn;
 
-    ///@{
-    /**
-     * <p>The ARN of the report.</p>
-     */
-    inline const Aws::String& GetReportArn() const{ return m_reportArn; }
-    inline bool ReportArnHasBeenSet() const { return m_reportArnHasBeenSet; }
-    inline void SetReportArn(const Aws::String& value) { m_reportArnHasBeenSet = true; m_reportArn = value; }
-    inline void SetReportArn(Aws::String&& value) { m_reportArnHasBeenSet = true; m_reportArn = std::move(value); }
-    inline void SetReportArn(const char* value) { m_reportArnHasBeenSet = true; m_reportArn.assign(value); }
-    inline ReportWithRawData& WithReportArn(const Aws::String& value) { SetReportArn(value); return *this;}
-    inline ReportWithRawData& WithReportArn(Aws::String&& value) { SetReportArn(std::move(value)); return *this;}
-    inline ReportWithRawData& WithReportArn(const char* value) { SetReportArn(value); return *this;}
-    ///@}
+  Aws::String m_data;
+  bool m_reportArnHasBeenSet = false;
+  bool m_dataHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The value of the requested data field from the report.</p>
-     */
-    inline const Aws::String& GetData() const{ return m_data; }
-    inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
-    inline void SetData(const Aws::String& value) { m_dataHasBeenSet = true; m_data = value; }
-    inline void SetData(Aws::String&& value) { m_dataHasBeenSet = true; m_data = std::move(value); }
-    inline void SetData(const char* value) { m_dataHasBeenSet = true; m_data.assign(value); }
-    inline ReportWithRawData& WithData(const Aws::String& value) { SetData(value); return *this;}
-    inline ReportWithRawData& WithData(Aws::String&& value) { SetData(std::move(value)); return *this;}
-    inline ReportWithRawData& WithData(const char* value) { SetData(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_reportArn;
-    bool m_reportArnHasBeenSet = false;
-
-    Aws::String m_data;
-    bool m_dataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

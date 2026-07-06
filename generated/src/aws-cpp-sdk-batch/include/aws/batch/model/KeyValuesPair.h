@@ -7,76 +7,83 @@
 #include <aws/batch/Batch_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Batch
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Batch {
+namespace Model {
 
+/**
+ * <p>A filter name and value pair that's used to return a more specific list of
+ * results from a <code>ListJobs</code> or
+ * <code>ListJobsByConsumableResource</code> API operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/KeyValuesPair">AWS
+ * API Reference</a></p>
+ */
+class KeyValuesPair {
+ public:
+  AWS_BATCH_API KeyValuesPair() = default;
+  AWS_BATCH_API KeyValuesPair(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BATCH_API KeyValuesPair& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A filter name and value pair that's used to return a more specific list of
-   * results from a <code>ListJobs</code> API operation.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/KeyValuesPair">AWS
-   * API Reference</a></p>
+   * <p>The name of the filter. Filter names are case sensitive.</p>
    */
-  class KeyValuesPair
-  {
-  public:
-    AWS_BATCH_API KeyValuesPair();
-    AWS_BATCH_API KeyValuesPair(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BATCH_API KeyValuesPair& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BATCH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  KeyValuesPair& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The filter values.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetValues() const { return m_values; }
+  inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
+  template <typename ValuesT = Aws::Vector<Aws::String>>
+  void SetValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values = std::forward<ValuesT>(value);
+  }
+  template <typename ValuesT = Aws::Vector<Aws::String>>
+  KeyValuesPair& WithValues(ValuesT&& value) {
+    SetValues(std::forward<ValuesT>(value));
+    return *this;
+  }
+  template <typename ValuesT = Aws::String>
+  KeyValuesPair& AddValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values.emplace_back(std::forward<ValuesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the filter. Filter names are case sensitive.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline KeyValuesPair& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline KeyValuesPair& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline KeyValuesPair& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_values;
+  bool m_nameHasBeenSet = false;
+  bool m_valuesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The filter values.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetValues() const{ return m_values; }
-    inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
-    inline void SetValues(const Aws::Vector<Aws::String>& value) { m_valuesHasBeenSet = true; m_values = value; }
-    inline void SetValues(Aws::Vector<Aws::String>&& value) { m_valuesHasBeenSet = true; m_values = std::move(value); }
-    inline KeyValuesPair& WithValues(const Aws::Vector<Aws::String>& value) { SetValues(value); return *this;}
-    inline KeyValuesPair& WithValues(Aws::Vector<Aws::String>&& value) { SetValues(std::move(value)); return *this;}
-    inline KeyValuesPair& AddValues(const Aws::String& value) { m_valuesHasBeenSet = true; m_values.push_back(value); return *this; }
-    inline KeyValuesPair& AddValues(Aws::String&& value) { m_valuesHasBeenSet = true; m_values.push_back(std::move(value)); return *this; }
-    inline KeyValuesPair& AddValues(const char* value) { m_valuesHasBeenSet = true; m_values.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_values;
-    bool m_valuesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Batch
-} // namespace Aws
+}  // namespace Model
+}  // namespace Batch
+}  // namespace Aws

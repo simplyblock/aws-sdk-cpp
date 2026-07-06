@@ -4,55 +4,54 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/SageMakerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMakerRequest.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
+/**
+ */
+class DeleteEdgeDeploymentPlanRequest : public SageMakerRequest {
+ public:
+  AWS_SAGEMAKER_API DeleteEdgeDeploymentPlanRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteEdgeDeploymentPlan"; }
+
+  AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+
+  AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the edge deployment plan to delete.</p>
    */
-  class DeleteEdgeDeploymentPlanRequest : public SageMakerRequest
-  {
-  public:
-    AWS_SAGEMAKER_API DeleteEdgeDeploymentPlanRequest();
+  inline const Aws::String& GetEdgeDeploymentPlanName() const { return m_edgeDeploymentPlanName; }
+  inline bool EdgeDeploymentPlanNameHasBeenSet() const { return m_edgeDeploymentPlanNameHasBeenSet; }
+  template <typename EdgeDeploymentPlanNameT = Aws::String>
+  void SetEdgeDeploymentPlanName(EdgeDeploymentPlanNameT&& value) {
+    m_edgeDeploymentPlanNameHasBeenSet = true;
+    m_edgeDeploymentPlanName = std::forward<EdgeDeploymentPlanNameT>(value);
+  }
+  template <typename EdgeDeploymentPlanNameT = Aws::String>
+  DeleteEdgeDeploymentPlanRequest& WithEdgeDeploymentPlanName(EdgeDeploymentPlanNameT&& value) {
+    SetEdgeDeploymentPlanName(std::forward<EdgeDeploymentPlanNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_edgeDeploymentPlanName;
+  bool m_edgeDeploymentPlanNameHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteEdgeDeploymentPlan"; }
-
-    AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
-
-    AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the edge deployment plan to delete.</p>
-     */
-    inline const Aws::String& GetEdgeDeploymentPlanName() const{ return m_edgeDeploymentPlanName; }
-    inline bool EdgeDeploymentPlanNameHasBeenSet() const { return m_edgeDeploymentPlanNameHasBeenSet; }
-    inline void SetEdgeDeploymentPlanName(const Aws::String& value) { m_edgeDeploymentPlanNameHasBeenSet = true; m_edgeDeploymentPlanName = value; }
-    inline void SetEdgeDeploymentPlanName(Aws::String&& value) { m_edgeDeploymentPlanNameHasBeenSet = true; m_edgeDeploymentPlanName = std::move(value); }
-    inline void SetEdgeDeploymentPlanName(const char* value) { m_edgeDeploymentPlanNameHasBeenSet = true; m_edgeDeploymentPlanName.assign(value); }
-    inline DeleteEdgeDeploymentPlanRequest& WithEdgeDeploymentPlanName(const Aws::String& value) { SetEdgeDeploymentPlanName(value); return *this;}
-    inline DeleteEdgeDeploymentPlanRequest& WithEdgeDeploymentPlanName(Aws::String&& value) { SetEdgeDeploymentPlanName(std::move(value)); return *this;}
-    inline DeleteEdgeDeploymentPlanRequest& WithEdgeDeploymentPlanName(const char* value) { SetEdgeDeploymentPlanName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_edgeDeploymentPlanName;
-    bool m_edgeDeploymentPlanNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

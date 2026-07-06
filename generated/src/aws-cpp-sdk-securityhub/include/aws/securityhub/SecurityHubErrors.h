@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/securityhub/SecurityHub_EXPORTS.h>
 
-namespace Aws
-{
-namespace SecurityHub
-{
-enum class SecurityHubErrors
-{
-  //From Core//
+namespace Aws {
+namespace SecurityHub {
+enum class SecurityHubErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class SecurityHubErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,17 +44,21 @@ enum class SecurityHubErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  INTERNAL= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  CONFLICT = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  INTERNAL,
+  INTERNAL_SERVER,
   INVALID_ACCESS,
   INVALID_INPUT,
   LIMIT_EXCEEDED,
+  ORGANIZATIONAL_UNIT_NOT_FOUND,
+  ORGANIZATION_NOT_FOUND,
   RESOURCE_CONFLICT,
-  RESOURCE_IN_USE
+  RESOURCE_IN_USE,
+  SERVICE_QUOTA_EXCEEDED
 };
 
-class AWS_SECURITYHUB_API SecurityHubError : public Aws::Client::AWSError<SecurityHubErrors>
-{
-public:
+class AWS_SECURITYHUB_API SecurityHubError : public Aws::Client::AWSError<SecurityHubErrors> {
+ public:
   SecurityHubError() {}
   SecurityHubError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<SecurityHubErrors>(rhs) {}
   SecurityHubError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<SecurityHubErrors>(rhs) {}
@@ -68,10 +69,9 @@ public:
   T GetModeledError();
 };
 
-namespace SecurityHubErrorMapper
-{
-  AWS_SECURITYHUB_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace SecurityHubErrorMapper {
+AWS_SECURITYHUB_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace SecurityHub
+}  // namespace Aws

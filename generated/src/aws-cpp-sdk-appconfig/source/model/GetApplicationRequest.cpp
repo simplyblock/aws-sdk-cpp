@@ -12,16 +12,4 @@ using namespace Aws::AppConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetApplicationRequest::GetApplicationRequest() : 
-    m_applicationIdHasBeenSet(false)
-{
-}
-
-Aws::String GetApplicationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetApplicationRequest::SerializePayload() const { return {}; }

@@ -4,454 +4,704 @@
  */
 
 #pragma once
-#include <aws/directconnect/DirectConnect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/directconnect/model/AddressFamily.h>
-#include <aws/directconnect/model/VirtualInterfaceState.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/directconnect/model/RouteFilterPrefix.h>
+#include <aws/directconnect/DirectConnect_EXPORTS.h>
+#include <aws/directconnect/model/AddressFamily.h>
 #include <aws/directconnect/model/BGPPeer.h>
+#include <aws/directconnect/model/RouteFilterPrefix.h>
 #include <aws/directconnect/model/Tag.h>
+#include <aws/directconnect/model/VirtualInterfaceState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectConnect
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectConnect {
+namespace Model {
+/**
+ * <p>Information about a virtual interface.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/directconnect-2012-10-25/VirtualInterface">AWS
+ * API Reference</a></p>
+ */
+class AllocatePrivateVirtualInterfaceResult {
+ public:
+  AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult() = default;
+  AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Information about a virtual interface.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/directconnect-2012-10-25/VirtualInterface">AWS
-   * API Reference</a></p>
+   * <p>The ID of the Amazon Web Services account that owns the virtual
+   * interface.</p>
    */
-  class AllocatePrivateVirtualInterfaceResult
-  {
-  public:
-    AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult();
-    AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTCONNECT_API AllocatePrivateVirtualInterfaceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetOwnerAccount() const { return m_ownerAccount; }
+  template <typename OwnerAccountT = Aws::String>
+  void SetOwnerAccount(OwnerAccountT&& value) {
+    m_ownerAccountHasBeenSet = true;
+    m_ownerAccount = std::forward<OwnerAccountT>(value);
+  }
+  template <typename OwnerAccountT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithOwnerAccount(OwnerAccountT&& value) {
+    SetOwnerAccount(std::forward<OwnerAccountT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the virtual interface.</p>
+   */
+  inline const Aws::String& GetVirtualInterfaceId() const { return m_virtualInterfaceId; }
+  template <typename VirtualInterfaceIdT = Aws::String>
+  void SetVirtualInterfaceId(VirtualInterfaceIdT&& value) {
+    m_virtualInterfaceIdHasBeenSet = true;
+    m_virtualInterfaceId = std::forward<VirtualInterfaceIdT>(value);
+  }
+  template <typename VirtualInterfaceIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceId(VirtualInterfaceIdT&& value) {
+    SetVirtualInterfaceId(std::forward<VirtualInterfaceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon Web Services account that owns the virtual
-     * interface.</p>
-     */
-    inline const Aws::String& GetOwnerAccount() const{ return m_ownerAccount; }
-    inline void SetOwnerAccount(const Aws::String& value) { m_ownerAccount = value; }
-    inline void SetOwnerAccount(Aws::String&& value) { m_ownerAccount = std::move(value); }
-    inline void SetOwnerAccount(const char* value) { m_ownerAccount.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithOwnerAccount(const Aws::String& value) { SetOwnerAccount(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithOwnerAccount(Aws::String&& value) { SetOwnerAccount(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithOwnerAccount(const char* value) { SetOwnerAccount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The location of the connection.</p>
+   */
+  inline const Aws::String& GetLocation() const { return m_location; }
+  template <typename LocationT = Aws::String>
+  void SetLocation(LocationT&& value) {
+    m_locationHasBeenSet = true;
+    m_location = std::forward<LocationT>(value);
+  }
+  template <typename LocationT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithLocation(LocationT&& value) {
+    SetLocation(std::forward<LocationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the virtual interface.</p>
-     */
-    inline const Aws::String& GetVirtualInterfaceId() const{ return m_virtualInterfaceId; }
-    inline void SetVirtualInterfaceId(const Aws::String& value) { m_virtualInterfaceId = value; }
-    inline void SetVirtualInterfaceId(Aws::String&& value) { m_virtualInterfaceId = std::move(value); }
-    inline void SetVirtualInterfaceId(const char* value) { m_virtualInterfaceId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceId(const Aws::String& value) { SetVirtualInterfaceId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceId(Aws::String&& value) { SetVirtualInterfaceId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceId(const char* value) { SetVirtualInterfaceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the connection.</p>
+   */
+  inline const Aws::String& GetConnectionId() const { return m_connectionId; }
+  template <typename ConnectionIdT = Aws::String>
+  void SetConnectionId(ConnectionIdT&& value) {
+    m_connectionIdHasBeenSet = true;
+    m_connectionId = std::forward<ConnectionIdT>(value);
+  }
+  template <typename ConnectionIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithConnectionId(ConnectionIdT&& value) {
+    SetConnectionId(std::forward<ConnectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The location of the connection.</p>
-     */
-    inline const Aws::String& GetLocation() const{ return m_location; }
-    inline void SetLocation(const Aws::String& value) { m_location = value; }
-    inline void SetLocation(Aws::String&& value) { m_location = std::move(value); }
-    inline void SetLocation(const char* value) { m_location.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithLocation(const Aws::String& value) { SetLocation(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithLocation(Aws::String&& value) { SetLocation(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithLocation(const char* value) { SetLocation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of virtual interface. The possible values are <code>private</code>,
+   * <code>public</code> and <code>transit</code>.</p>
+   */
+  inline const Aws::String& GetVirtualInterfaceType() const { return m_virtualInterfaceType; }
+  template <typename VirtualInterfaceTypeT = Aws::String>
+  void SetVirtualInterfaceType(VirtualInterfaceTypeT&& value) {
+    m_virtualInterfaceTypeHasBeenSet = true;
+    m_virtualInterfaceType = std::forward<VirtualInterfaceTypeT>(value);
+  }
+  template <typename VirtualInterfaceTypeT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceType(VirtualInterfaceTypeT&& value) {
+    SetVirtualInterfaceType(std::forward<VirtualInterfaceTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the connection.</p>
-     */
-    inline const Aws::String& GetConnectionId() const{ return m_connectionId; }
-    inline void SetConnectionId(const Aws::String& value) { m_connectionId = value; }
-    inline void SetConnectionId(Aws::String&& value) { m_connectionId = std::move(value); }
-    inline void SetConnectionId(const char* value) { m_connectionId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithConnectionId(const Aws::String& value) { SetConnectionId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithConnectionId(Aws::String&& value) { SetConnectionId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithConnectionId(const char* value) { SetConnectionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the virtual interface assigned by the customer network. The name
+   * has a maximum of 100 characters. The following are valid characters: a-z, 0-9
+   * and a hyphen (-).</p>
+   */
+  inline const Aws::String& GetVirtualInterfaceName() const { return m_virtualInterfaceName; }
+  template <typename VirtualInterfaceNameT = Aws::String>
+  void SetVirtualInterfaceName(VirtualInterfaceNameT&& value) {
+    m_virtualInterfaceNameHasBeenSet = true;
+    m_virtualInterfaceName = std::forward<VirtualInterfaceNameT>(value);
+  }
+  template <typename VirtualInterfaceNameT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceName(VirtualInterfaceNameT&& value) {
+    SetVirtualInterfaceName(std::forward<VirtualInterfaceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of virtual interface. The possible values are <code>private</code>,
-     * <code>public</code> and <code>transit</code>.</p>
-     */
-    inline const Aws::String& GetVirtualInterfaceType() const{ return m_virtualInterfaceType; }
-    inline void SetVirtualInterfaceType(const Aws::String& value) { m_virtualInterfaceType = value; }
-    inline void SetVirtualInterfaceType(Aws::String&& value) { m_virtualInterfaceType = std::move(value); }
-    inline void SetVirtualInterfaceType(const char* value) { m_virtualInterfaceType.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceType(const Aws::String& value) { SetVirtualInterfaceType(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceType(Aws::String&& value) { SetVirtualInterfaceType(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceType(const char* value) { SetVirtualInterfaceType(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the VLAN.</p>
+   */
+  inline int GetVlan() const { return m_vlan; }
+  inline void SetVlan(int value) {
+    m_vlanHasBeenSet = true;
+    m_vlan = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithVlan(int value) {
+    SetVlan(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the virtual interface assigned by the customer network. The name
-     * has a maximum of 100 characters. The following are valid characters: a-z, 0-9
-     * and a hyphen (-).</p>
-     */
-    inline const Aws::String& GetVirtualInterfaceName() const{ return m_virtualInterfaceName; }
-    inline void SetVirtualInterfaceName(const Aws::String& value) { m_virtualInterfaceName = value; }
-    inline void SetVirtualInterfaceName(Aws::String&& value) { m_virtualInterfaceName = std::move(value); }
-    inline void SetVirtualInterfaceName(const char* value) { m_virtualInterfaceName.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceName(const Aws::String& value) { SetVirtualInterfaceName(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceName(Aws::String&& value) { SetVirtualInterfaceName(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceName(const char* value) { SetVirtualInterfaceName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The autonomous system number (ASN). The valid range is from 1 to 2147483646
+   * for Border Gateway Protocol (BGP) configuration. If you provide a number greater
+   * than the maximum, an error is returned. Use <code>asnLong</code> instead.</p>
+   * <ul> <li> <p>You can use <code>asnLong</code> or <code>asn</code>, but not both.
+   * We recommend using <code>asnLong</code> as it supports a greater pool of
+   * numbers. </p> </li> <li> <p>If you provide a value in the same API call for both
+   * <code>asn</code> and <code>asnLong</code>, the API will only accept the value
+   * for <code>asnLong</code>. </p> </li> <li> <p>If you enter a 4-byte ASN for the
+   * <code>asn</code> parameter, the API returns an error. </p> </li> <li> <p>If you
+   * are using a 2-byte ASN, the API response will include the 2-byte value for both
+   * the <code>asn</code> and <code>asnLong</code> fields.</p> </li> </ul>
+   */
+  inline int GetAsn() const { return m_asn; }
+  inline void SetAsn(int value) {
+    m_asnHasBeenSet = true;
+    m_asn = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithAsn(int value) {
+    SetAsn(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the VLAN.</p>
-     */
-    inline int GetVlan() const{ return m_vlan; }
-    inline void SetVlan(int value) { m_vlan = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithVlan(int value) { SetVlan(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The long ASN for the virtual interface. The valid range is from 1 to
+   * 4294967294 for BGP configuration.</p> <p>Note the following limitations when
+   * using <code>asnLong</code>:</p> <ul> <li> <p>You can use <code>asnLong</code> or
+   * <code>asn</code>, but not both. We recommend using <code>asnLong</code> as it
+   * supports a greater pool of numbers. </p> </li> <li> <p> <code>asnLong</code>
+   * accepts any valid ASN value, regardless if it's 2-byte or 4-byte. </p> </li>
+   * <li> <p>When using a 4-byte <code>asnLong</code>, the API response returns
+   * <code>0</code> for the legacy <code>asn</code> attribute since 4-byte ASN values
+   * exceed the maximum supported value of 2,147,483,647.</p> </li> <li> <p>If you
+   * are using a 2-byte ASN, the API response will include the 2-byte value for both
+   * the <code>asn</code> and <code>asnLong</code> fields.</p> </li> <li> <p>If you
+   * provide a value in the same API call for both <code>asn</code> and
+   * <code>asnLong</code>, the API will only accept the value for
+   * <code>asnLong</code>.</p> </li> </ul>
+   */
+  inline long long GetAsnLong() const { return m_asnLong; }
+  inline void SetAsnLong(long long value) {
+    m_asnLongHasBeenSet = true;
+    m_asnLong = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithAsnLong(long long value) {
+    SetAsnLong(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The autonomous system (AS) number for Border Gateway Protocol (BGP)
-     * configuration.</p> <p>The valid values are 1-2147483647.</p>
-     */
-    inline int GetAsn() const{ return m_asn; }
-    inline void SetAsn(int value) { m_asn = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithAsn(int value) { SetAsn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The autonomous system number (AS) for the Amazon side of the connection.</p>
+   */
+  inline long long GetAmazonSideAsn() const { return m_amazonSideAsn; }
+  inline void SetAmazonSideAsn(long long value) {
+    m_amazonSideAsnHasBeenSet = true;
+    m_amazonSideAsn = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithAmazonSideAsn(long long value) {
+    SetAmazonSideAsn(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The autonomous system number (ASN) for the Amazon side of the connection.</p>
-     */
-    inline long long GetAmazonSideAsn() const{ return m_amazonSideAsn; }
-    inline void SetAmazonSideAsn(long long value) { m_amazonSideAsn = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithAmazonSideAsn(long long value) { SetAmazonSideAsn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The authentication key for BGP configuration. This string has a minimum
+   * length of 6 characters and and a maximun lenth of 80 characters.</p>
+   */
+  inline const Aws::String& GetAuthKey() const { return m_authKey; }
+  template <typename AuthKeyT = Aws::String>
+  void SetAuthKey(AuthKeyT&& value) {
+    m_authKeyHasBeenSet = true;
+    m_authKey = std::forward<AuthKeyT>(value);
+  }
+  template <typename AuthKeyT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithAuthKey(AuthKeyT&& value) {
+    SetAuthKey(std::forward<AuthKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The authentication key for BGP configuration. This string has a minimum
-     * length of 6 characters and and a maximun lenth of 80 characters.</p>
-     */
-    inline const Aws::String& GetAuthKey() const{ return m_authKey; }
-    inline void SetAuthKey(const Aws::String& value) { m_authKey = value; }
-    inline void SetAuthKey(Aws::String&& value) { m_authKey = std::move(value); }
-    inline void SetAuthKey(const char* value) { m_authKey.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithAuthKey(const Aws::String& value) { SetAuthKey(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAuthKey(Aws::String&& value) { SetAuthKey(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAuthKey(const char* value) { SetAuthKey(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP address assigned to the Amazon interface.</p>
+   */
+  inline const Aws::String& GetAmazonAddress() const { return m_amazonAddress; }
+  template <typename AmazonAddressT = Aws::String>
+  void SetAmazonAddress(AmazonAddressT&& value) {
+    m_amazonAddressHasBeenSet = true;
+    m_amazonAddress = std::forward<AmazonAddressT>(value);
+  }
+  template <typename AmazonAddressT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithAmazonAddress(AmazonAddressT&& value) {
+    SetAmazonAddress(std::forward<AmazonAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP address assigned to the Amazon interface.</p>
-     */
-    inline const Aws::String& GetAmazonAddress() const{ return m_amazonAddress; }
-    inline void SetAmazonAddress(const Aws::String& value) { m_amazonAddress = value; }
-    inline void SetAmazonAddress(Aws::String&& value) { m_amazonAddress = std::move(value); }
-    inline void SetAmazonAddress(const char* value) { m_amazonAddress.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithAmazonAddress(const Aws::String& value) { SetAmazonAddress(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAmazonAddress(Aws::String&& value) { SetAmazonAddress(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAmazonAddress(const char* value) { SetAmazonAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP address assigned to the customer interface.</p>
+   */
+  inline const Aws::String& GetCustomerAddress() const { return m_customerAddress; }
+  template <typename CustomerAddressT = Aws::String>
+  void SetCustomerAddress(CustomerAddressT&& value) {
+    m_customerAddressHasBeenSet = true;
+    m_customerAddress = std::forward<CustomerAddressT>(value);
+  }
+  template <typename CustomerAddressT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithCustomerAddress(CustomerAddressT&& value) {
+    SetCustomerAddress(std::forward<CustomerAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP address assigned to the customer interface.</p>
-     */
-    inline const Aws::String& GetCustomerAddress() const{ return m_customerAddress; }
-    inline void SetCustomerAddress(const Aws::String& value) { m_customerAddress = value; }
-    inline void SetCustomerAddress(Aws::String&& value) { m_customerAddress = std::move(value); }
-    inline void SetCustomerAddress(const char* value) { m_customerAddress.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerAddress(const Aws::String& value) { SetCustomerAddress(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerAddress(Aws::String&& value) { SetCustomerAddress(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerAddress(const char* value) { SetCustomerAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The address family for the BGP peer.</p>
+   */
+  inline AddressFamily GetAddressFamily() const { return m_addressFamily; }
+  inline void SetAddressFamily(AddressFamily value) {
+    m_addressFamilyHasBeenSet = true;
+    m_addressFamily = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithAddressFamily(AddressFamily value) {
+    SetAddressFamily(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The address family for the BGP peer.</p>
-     */
-    inline const AddressFamily& GetAddressFamily() const{ return m_addressFamily; }
-    inline void SetAddressFamily(const AddressFamily& value) { m_addressFamily = value; }
-    inline void SetAddressFamily(AddressFamily&& value) { m_addressFamily = std::move(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithAddressFamily(const AddressFamily& value) { SetAddressFamily(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAddressFamily(AddressFamily&& value) { SetAddressFamily(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The state of the virtual interface. The following are the possible
+   * values:</p> <ul> <li> <p> <code>confirming</code>: The creation of the virtual
+   * interface is pending confirmation from the virtual interface owner. If the owner
+   * of the virtual interface is different from the owner of the connection on which
+   * it is provisioned, then the virtual interface will remain in this state until it
+   * is confirmed by the virtual interface owner.</p> </li> <li> <p>
+   * <code>verifying</code>: This state only applies to public virtual interfaces.
+   * Each public virtual interface needs validation before the virtual interface can
+   * be created.</p> </li> <li> <p> <code>pending</code>: A virtual interface is in
+   * this state from the time that it is created until the virtual interface is ready
+   * to forward traffic.</p> </li> <li> <p> <code>available</code>: A virtual
+   * interface that is able to forward traffic.</p> </li> <li> <p> <code>down</code>:
+   * A virtual interface that is BGP down.</p> </li> <li> <p> <code>testing</code>: A
+   * virtual interface is in this state immediately after calling
+   * <a>StartBgpFailoverTest</a> and remains in this state during the duration of the
+   * test.</p> </li> <li> <p> <code>deleting</code>: A virtual interface is in this
+   * state immediately after calling <a>DeleteVirtualInterface</a> until it can no
+   * longer forward traffic.</p> </li> <li> <p> <code>deleted</code>: A virtual
+   * interface that cannot forward traffic.</p> </li> <li> <p> <code>rejected</code>:
+   * The virtual interface owner has declined creation of the virtual interface. If a
+   * virtual interface in the <code>Confirming</code> state is deleted by the virtual
+   * interface owner, the virtual interface enters the <code>Rejected</code>
+   * state.</p> </li> <li> <p> <code>unknown</code>: The state of the virtual
+   * interface is not available.</p> </li> </ul>
+   */
+  inline VirtualInterfaceState GetVirtualInterfaceState() const { return m_virtualInterfaceState; }
+  inline void SetVirtualInterfaceState(VirtualInterfaceState value) {
+    m_virtualInterfaceStateHasBeenSet = true;
+    m_virtualInterfaceState = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceState(VirtualInterfaceState value) {
+    SetVirtualInterfaceState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The state of the virtual interface. The following are the possible
-     * values:</p> <ul> <li> <p> <code>confirming</code>: The creation of the virtual
-     * interface is pending confirmation from the virtual interface owner. If the owner
-     * of the virtual interface is different from the owner of the connection on which
-     * it is provisioned, then the virtual interface will remain in this state until it
-     * is confirmed by the virtual interface owner.</p> </li> <li> <p>
-     * <code>verifying</code>: This state only applies to public virtual interfaces.
-     * Each public virtual interface needs validation before the virtual interface can
-     * be created.</p> </li> <li> <p> <code>pending</code>: A virtual interface is in
-     * this state from the time that it is created until the virtual interface is ready
-     * to forward traffic.</p> </li> <li> <p> <code>available</code>: A virtual
-     * interface that is able to forward traffic.</p> </li> <li> <p> <code>down</code>:
-     * A virtual interface that is BGP down.</p> </li> <li> <p> <code>deleting</code>:
-     * A virtual interface is in this state immediately after calling
-     * <a>DeleteVirtualInterface</a> until it can no longer forward traffic.</p> </li>
-     * <li> <p> <code>deleted</code>: A virtual interface that cannot forward
-     * traffic.</p> </li> <li> <p> <code>rejected</code>: The virtual interface owner
-     * has declined creation of the virtual interface. If a virtual interface in the
-     * <code>Confirming</code> state is deleted by the virtual interface owner, the
-     * virtual interface enters the <code>Rejected</code> state.</p> </li> <li> <p>
-     * <code>unknown</code>: The state of the virtual interface is not available.</p>
-     * </li> </ul>
-     */
-    inline const VirtualInterfaceState& GetVirtualInterfaceState() const{ return m_virtualInterfaceState; }
-    inline void SetVirtualInterfaceState(const VirtualInterfaceState& value) { m_virtualInterfaceState = value; }
-    inline void SetVirtualInterfaceState(VirtualInterfaceState&& value) { m_virtualInterfaceState = std::move(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceState(const VirtualInterfaceState& value) { SetVirtualInterfaceState(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualInterfaceState(VirtualInterfaceState&& value) { SetVirtualInterfaceState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The customer router configuration.</p>
+   */
+  inline const Aws::String& GetCustomerRouterConfig() const { return m_customerRouterConfig; }
+  template <typename CustomerRouterConfigT = Aws::String>
+  void SetCustomerRouterConfig(CustomerRouterConfigT&& value) {
+    m_customerRouterConfigHasBeenSet = true;
+    m_customerRouterConfig = std::forward<CustomerRouterConfigT>(value);
+  }
+  template <typename CustomerRouterConfigT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithCustomerRouterConfig(CustomerRouterConfigT&& value) {
+    SetCustomerRouterConfig(std::forward<CustomerRouterConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The customer router configuration.</p>
-     */
-    inline const Aws::String& GetCustomerRouterConfig() const{ return m_customerRouterConfig; }
-    inline void SetCustomerRouterConfig(const Aws::String& value) { m_customerRouterConfig = value; }
-    inline void SetCustomerRouterConfig(Aws::String&& value) { m_customerRouterConfig = std::move(value); }
-    inline void SetCustomerRouterConfig(const char* value) { m_customerRouterConfig.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerRouterConfig(const Aws::String& value) { SetCustomerRouterConfig(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerRouterConfig(Aws::String&& value) { SetCustomerRouterConfig(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithCustomerRouterConfig(const char* value) { SetCustomerRouterConfig(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500
+   * and 8500. The default value is 1500</p>
+   */
+  inline int GetMtu() const { return m_mtu; }
+  inline void SetMtu(int value) {
+    m_mtuHasBeenSet = true;
+    m_mtu = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithMtu(int value) {
+    SetMtu(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The maximum transmission unit (MTU), in bytes. The supported values are 1500
-     * and 8500. The default value is 1500</p>
-     */
-    inline int GetMtu() const{ return m_mtu; }
-    inline void SetMtu(int value) { m_mtu = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithMtu(int value) { SetMtu(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether jumbo frames are supported.</p>
+   */
+  inline bool GetJumboFrameCapable() const { return m_jumboFrameCapable; }
+  inline void SetJumboFrameCapable(bool value) {
+    m_jumboFrameCapableHasBeenSet = true;
+    m_jumboFrameCapable = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithJumboFrameCapable(bool value) {
+    SetJumboFrameCapable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether jumbo frames are supported.</p>
-     */
-    inline bool GetJumboFrameCapable() const{ return m_jumboFrameCapable; }
-    inline void SetJumboFrameCapable(bool value) { m_jumboFrameCapable = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithJumboFrameCapable(bool value) { SetJumboFrameCapable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the virtual private gateway. Applies only to private virtual
+   * interfaces.</p>
+   */
+  inline const Aws::String& GetVirtualGatewayId() const { return m_virtualGatewayId; }
+  template <typename VirtualGatewayIdT = Aws::String>
+  void SetVirtualGatewayId(VirtualGatewayIdT&& value) {
+    m_virtualGatewayIdHasBeenSet = true;
+    m_virtualGatewayId = std::forward<VirtualGatewayIdT>(value);
+  }
+  template <typename VirtualGatewayIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithVirtualGatewayId(VirtualGatewayIdT&& value) {
+    SetVirtualGatewayId(std::forward<VirtualGatewayIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the virtual private gateway. Applies only to private virtual
-     * interfaces.</p>
-     */
-    inline const Aws::String& GetVirtualGatewayId() const{ return m_virtualGatewayId; }
-    inline void SetVirtualGatewayId(const Aws::String& value) { m_virtualGatewayId = value; }
-    inline void SetVirtualGatewayId(Aws::String&& value) { m_virtualGatewayId = std::move(value); }
-    inline void SetVirtualGatewayId(const char* value) { m_virtualGatewayId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualGatewayId(const Aws::String& value) { SetVirtualGatewayId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualGatewayId(Aws::String&& value) { SetVirtualGatewayId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithVirtualGatewayId(const char* value) { SetVirtualGatewayId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the Direct Connect gateway.</p>
+   */
+  inline const Aws::String& GetDirectConnectGatewayId() const { return m_directConnectGatewayId; }
+  template <typename DirectConnectGatewayIdT = Aws::String>
+  void SetDirectConnectGatewayId(DirectConnectGatewayIdT&& value) {
+    m_directConnectGatewayIdHasBeenSet = true;
+    m_directConnectGatewayId = std::forward<DirectConnectGatewayIdT>(value);
+  }
+  template <typename DirectConnectGatewayIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithDirectConnectGatewayId(DirectConnectGatewayIdT&& value) {
+    SetDirectConnectGatewayId(std::forward<DirectConnectGatewayIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Direct Connect gateway.</p>
-     */
-    inline const Aws::String& GetDirectConnectGatewayId() const{ return m_directConnectGatewayId; }
-    inline void SetDirectConnectGatewayId(const Aws::String& value) { m_directConnectGatewayId = value; }
-    inline void SetDirectConnectGatewayId(Aws::String&& value) { m_directConnectGatewayId = std::move(value); }
-    inline void SetDirectConnectGatewayId(const char* value) { m_directConnectGatewayId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithDirectConnectGatewayId(const Aws::String& value) { SetDirectConnectGatewayId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithDirectConnectGatewayId(Aws::String&& value) { SetDirectConnectGatewayId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithDirectConnectGatewayId(const char* value) { SetDirectConnectGatewayId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The routes to be advertised to the Amazon Web Services network in this
+   * Region. Applies to public virtual interfaces.</p>
+   */
+  inline const Aws::Vector<RouteFilterPrefix>& GetRouteFilterPrefixes() const { return m_routeFilterPrefixes; }
+  template <typename RouteFilterPrefixesT = Aws::Vector<RouteFilterPrefix>>
+  void SetRouteFilterPrefixes(RouteFilterPrefixesT&& value) {
+    m_routeFilterPrefixesHasBeenSet = true;
+    m_routeFilterPrefixes = std::forward<RouteFilterPrefixesT>(value);
+  }
+  template <typename RouteFilterPrefixesT = Aws::Vector<RouteFilterPrefix>>
+  AllocatePrivateVirtualInterfaceResult& WithRouteFilterPrefixes(RouteFilterPrefixesT&& value) {
+    SetRouteFilterPrefixes(std::forward<RouteFilterPrefixesT>(value));
+    return *this;
+  }
+  template <typename RouteFilterPrefixesT = RouteFilterPrefix>
+  AllocatePrivateVirtualInterfaceResult& AddRouteFilterPrefixes(RouteFilterPrefixesT&& value) {
+    m_routeFilterPrefixesHasBeenSet = true;
+    m_routeFilterPrefixes.emplace_back(std::forward<RouteFilterPrefixesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The routes to be advertised to the Amazon Web Services network in this
-     * Region. Applies to public virtual interfaces.</p>
-     */
-    inline const Aws::Vector<RouteFilterPrefix>& GetRouteFilterPrefixes() const{ return m_routeFilterPrefixes; }
-    inline void SetRouteFilterPrefixes(const Aws::Vector<RouteFilterPrefix>& value) { m_routeFilterPrefixes = value; }
-    inline void SetRouteFilterPrefixes(Aws::Vector<RouteFilterPrefix>&& value) { m_routeFilterPrefixes = std::move(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithRouteFilterPrefixes(const Aws::Vector<RouteFilterPrefix>& value) { SetRouteFilterPrefixes(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithRouteFilterPrefixes(Aws::Vector<RouteFilterPrefix>&& value) { SetRouteFilterPrefixes(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& AddRouteFilterPrefixes(const RouteFilterPrefix& value) { m_routeFilterPrefixes.push_back(value); return *this; }
-    inline AllocatePrivateVirtualInterfaceResult& AddRouteFilterPrefixes(RouteFilterPrefix&& value) { m_routeFilterPrefixes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The BGP peers configured on this virtual interface.</p>
+   */
+  inline const Aws::Vector<BGPPeer>& GetBgpPeers() const { return m_bgpPeers; }
+  template <typename BgpPeersT = Aws::Vector<BGPPeer>>
+  void SetBgpPeers(BgpPeersT&& value) {
+    m_bgpPeersHasBeenSet = true;
+    m_bgpPeers = std::forward<BgpPeersT>(value);
+  }
+  template <typename BgpPeersT = Aws::Vector<BGPPeer>>
+  AllocatePrivateVirtualInterfaceResult& WithBgpPeers(BgpPeersT&& value) {
+    SetBgpPeers(std::forward<BgpPeersT>(value));
+    return *this;
+  }
+  template <typename BgpPeersT = BGPPeer>
+  AllocatePrivateVirtualInterfaceResult& AddBgpPeers(BgpPeersT&& value) {
+    m_bgpPeersHasBeenSet = true;
+    m_bgpPeers.emplace_back(std::forward<BgpPeersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The BGP peers configured on this virtual interface.</p>
-     */
-    inline const Aws::Vector<BGPPeer>& GetBgpPeers() const{ return m_bgpPeers; }
-    inline void SetBgpPeers(const Aws::Vector<BGPPeer>& value) { m_bgpPeers = value; }
-    inline void SetBgpPeers(Aws::Vector<BGPPeer>&& value) { m_bgpPeers = std::move(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithBgpPeers(const Aws::Vector<BGPPeer>& value) { SetBgpPeers(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithBgpPeers(Aws::Vector<BGPPeer>&& value) { SetBgpPeers(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& AddBgpPeers(const BGPPeer& value) { m_bgpPeers.push_back(value); return *this; }
-    inline AllocatePrivateVirtualInterfaceResult& AddBgpPeers(BGPPeer&& value) { m_bgpPeers.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services Region where the virtual interface is located.</p>
+   */
+  inline const Aws::String& GetRegion() const { return m_region; }
+  template <typename RegionT = Aws::String>
+  void SetRegion(RegionT&& value) {
+    m_regionHasBeenSet = true;
+    m_region = std::forward<RegionT>(value);
+  }
+  template <typename RegionT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithRegion(RegionT&& value) {
+    SetRegion(std::forward<RegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services Region where the virtual interface is located.</p>
-     */
-    inline const Aws::String& GetRegion() const{ return m_region; }
-    inline void SetRegion(const Aws::String& value) { m_region = value; }
-    inline void SetRegion(Aws::String&& value) { m_region = std::move(value); }
-    inline void SetRegion(const char* value) { m_region.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithRegion(const Aws::String& value) { SetRegion(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithRegion(Aws::String&& value) { SetRegion(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithRegion(const char* value) { SetRegion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Direct Connect endpoint that terminates the physical connection.</p>
+   */
+  inline const Aws::String& GetAwsDeviceV2() const { return m_awsDeviceV2; }
+  template <typename AwsDeviceV2T = Aws::String>
+  void SetAwsDeviceV2(AwsDeviceV2T&& value) {
+    m_awsDeviceV2HasBeenSet = true;
+    m_awsDeviceV2 = std::forward<AwsDeviceV2T>(value);
+  }
+  template <typename AwsDeviceV2T = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithAwsDeviceV2(AwsDeviceV2T&& value) {
+    SetAwsDeviceV2(std::forward<AwsDeviceV2T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Direct Connect endpoint that terminates the physical connection.</p>
-     */
-    inline const Aws::String& GetAwsDeviceV2() const{ return m_awsDeviceV2; }
-    inline void SetAwsDeviceV2(const Aws::String& value) { m_awsDeviceV2 = value; }
-    inline void SetAwsDeviceV2(Aws::String&& value) { m_awsDeviceV2 = std::move(value); }
-    inline void SetAwsDeviceV2(const char* value) { m_awsDeviceV2.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsDeviceV2(const Aws::String& value) { SetAwsDeviceV2(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsDeviceV2(Aws::String&& value) { SetAwsDeviceV2(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsDeviceV2(const char* value) { SetAwsDeviceV2(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Direct Connect endpoint that terminates the logical connection. This
+   * device might be different than the device that terminates the physical
+   * connection.</p>
+   */
+  inline const Aws::String& GetAwsLogicalDeviceId() const { return m_awsLogicalDeviceId; }
+  template <typename AwsLogicalDeviceIdT = Aws::String>
+  void SetAwsLogicalDeviceId(AwsLogicalDeviceIdT&& value) {
+    m_awsLogicalDeviceIdHasBeenSet = true;
+    m_awsLogicalDeviceId = std::forward<AwsLogicalDeviceIdT>(value);
+  }
+  template <typename AwsLogicalDeviceIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithAwsLogicalDeviceId(AwsLogicalDeviceIdT&& value) {
+    SetAwsLogicalDeviceId(std::forward<AwsLogicalDeviceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Direct Connect endpoint that terminates the logical connection. This
-     * device might be different than the device that terminates the physical
-     * connection.</p>
-     */
-    inline const Aws::String& GetAwsLogicalDeviceId() const{ return m_awsLogicalDeviceId; }
-    inline void SetAwsLogicalDeviceId(const Aws::String& value) { m_awsLogicalDeviceId = value; }
-    inline void SetAwsLogicalDeviceId(Aws::String&& value) { m_awsLogicalDeviceId = std::move(value); }
-    inline void SetAwsLogicalDeviceId(const char* value) { m_awsLogicalDeviceId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsLogicalDeviceId(const Aws::String& value) { SetAwsLogicalDeviceId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsLogicalDeviceId(Aws::String&& value) { SetAwsLogicalDeviceId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithAwsLogicalDeviceId(const char* value) { SetAwsLogicalDeviceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags associated with the virtual interface.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  AllocatePrivateVirtualInterfaceResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  AllocatePrivateVirtualInterfaceResult& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags associated with the virtual interface.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tags = std::move(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& AddTags(const Tag& value) { m_tags.push_back(value); return *this; }
-    inline AllocatePrivateVirtualInterfaceResult& AddTags(Tag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether SiteLink is enabled.</p>
+   */
+  inline bool GetSiteLinkEnabled() const { return m_siteLinkEnabled; }
+  inline void SetSiteLinkEnabled(bool value) {
+    m_siteLinkEnabledHasBeenSet = true;
+    m_siteLinkEnabled = value;
+  }
+  inline AllocatePrivateVirtualInterfaceResult& WithSiteLinkEnabled(bool value) {
+    SetSiteLinkEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether SiteLink is enabled.</p>
-     */
-    inline bool GetSiteLinkEnabled() const{ return m_siteLinkEnabled; }
-    inline void SetSiteLinkEnabled(bool value) { m_siteLinkEnabled = value; }
-    inline AllocatePrivateVirtualInterfaceResult& WithSiteLinkEnabled(bool value) { SetSiteLinkEnabled(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The rate limit (bandwidth allocation) applied to the virtual interface. The
+   * value must be one of the supported bandwidth values and cannot exceed the
+   * bandwidth of the parent connection or LAG. Supported values:
+   * <code>50Mbps</code>, <code>100Mbps</code>, <code>200Mbps</code>,
+   * <code>300Mbps</code>, <code>400Mbps</code>, <code>500Mbps</code>,
+   * <code>600Mbps</code>, <code>700Mbps</code>, <code>800Mbps</code>,
+   * <code>900Mbps</code>, <code>1Gbps</code>, <code>1.2Gbps</code>,
+   * <code>1.5Gbps</code>, <code>1.8Gbps</code>, <code>2Gbps</code>,
+   * <code>2.1Gbps</code>, <code>2.4Gbps</code>, <code>2.7Gbps</code>,
+   * <code>3Gbps</code>, <code>3.2Gbps</code>, <code>3.6Gbps</code>,
+   * <code>4Gbps</code>, <code>5Gbps</code>, <code>6Gbps</code>, <code>7Gbps</code>,
+   * <code>8Gbps</code>, <code>9Gbps</code>, <code>10Gbps</code>,
+   * <code>12Gbps</code>, <code>15Gbps</code>, <code>18Gbps</code>,
+   * <code>20Gbps</code>, <code>21Gbps</code>, <code>24Gbps</code>,
+   * <code>27Gbps</code>, <code>30Gbps</code>, <code>32Gbps</code>,
+   * <code>36Gbps</code>, <code>40Gbps</code>, <code>50Gbps</code>,
+   * <code>60Gbps</code>, <code>70Gbps</code>, <code>80Gbps</code>,
+   * <code>100Gbps</code>, <code>120Gbps</code>, <code>150Gbps</code>,
+   * <code>180Gbps</code>, <code>200Gbps</code>, <code>210Gbps</code>,
+   * <code>240Gbps</code>, <code>270Gbps</code>, <code>300Gbps</code>,
+   * <code>320Gbps</code>, <code>360Gbps</code>, <code>400Gbps</code>,
+   * <code>450Gbps</code>, <code>480Gbps</code>, <code>500Gbps</code>,
+   * <code>540Gbps</code>, <code>600Gbps</code>, <code>700Gbps</code>,
+   * <code>800Gbps</code>, <code>900Gbps</code>, <code>1Tbps</code>,
+   * <code>1.1Tbps</code>, <code>1.2Tbps</code>, <code>1.3Tbps</code>,
+   * <code>1.4Tbps</code>, <code>1.5Tbps</code>, <code>1.6Tbps</code>.</p>
+   */
+  inline const Aws::String& GetRateLimit() const { return m_rateLimit; }
+  template <typename RateLimitT = Aws::String>
+  void SetRateLimit(RateLimitT&& value) {
+    m_rateLimitHasBeenSet = true;
+    m_rateLimit = std::forward<RateLimitT>(value);
+  }
+  template <typename RateLimitT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithRateLimit(RateLimitT&& value) {
+    SetRateLimit(std::forward<RateLimitT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AllocatePrivateVirtualInterfaceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AllocatePrivateVirtualInterfaceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_ownerAccount;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AllocatePrivateVirtualInterfaceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_virtualInterfaceId;
+ private:
+  Aws::String m_ownerAccount;
 
-    Aws::String m_location;
+  Aws::String m_virtualInterfaceId;
 
-    Aws::String m_connectionId;
+  Aws::String m_location;
 
-    Aws::String m_virtualInterfaceType;
+  Aws::String m_connectionId;
 
-    Aws::String m_virtualInterfaceName;
+  Aws::String m_virtualInterfaceType;
 
-    int m_vlan;
+  Aws::String m_virtualInterfaceName;
 
-    int m_asn;
+  int m_vlan{0};
 
-    long long m_amazonSideAsn;
+  int m_asn{0};
 
-    Aws::String m_authKey;
+  long long m_asnLong{0};
 
-    Aws::String m_amazonAddress;
+  long long m_amazonSideAsn{0};
 
-    Aws::String m_customerAddress;
+  Aws::String m_authKey;
 
-    AddressFamily m_addressFamily;
+  Aws::String m_amazonAddress;
 
-    VirtualInterfaceState m_virtualInterfaceState;
+  Aws::String m_customerAddress;
 
-    Aws::String m_customerRouterConfig;
+  AddressFamily m_addressFamily{AddressFamily::NOT_SET};
 
-    int m_mtu;
+  VirtualInterfaceState m_virtualInterfaceState{VirtualInterfaceState::NOT_SET};
 
-    bool m_jumboFrameCapable;
+  Aws::String m_customerRouterConfig;
 
-    Aws::String m_virtualGatewayId;
+  int m_mtu{0};
 
-    Aws::String m_directConnectGatewayId;
+  bool m_jumboFrameCapable{false};
 
-    Aws::Vector<RouteFilterPrefix> m_routeFilterPrefixes;
+  Aws::String m_virtualGatewayId;
 
-    Aws::Vector<BGPPeer> m_bgpPeers;
+  Aws::String m_directConnectGatewayId;
 
-    Aws::String m_region;
+  Aws::Vector<RouteFilterPrefix> m_routeFilterPrefixes;
 
-    Aws::String m_awsDeviceV2;
+  Aws::Vector<BGPPeer> m_bgpPeers;
 
-    Aws::String m_awsLogicalDeviceId;
+  Aws::String m_region;
 
-    Aws::Vector<Tag> m_tags;
+  Aws::String m_awsDeviceV2;
 
-    bool m_siteLinkEnabled;
+  Aws::String m_awsLogicalDeviceId;
 
-    Aws::String m_requestId;
-  };
+  Aws::Vector<Tag> m_tags;
 
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+  bool m_siteLinkEnabled{false};
+
+  Aws::String m_rateLimit;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ownerAccountHasBeenSet = false;
+  bool m_virtualInterfaceIdHasBeenSet = false;
+  bool m_locationHasBeenSet = false;
+  bool m_connectionIdHasBeenSet = false;
+  bool m_virtualInterfaceTypeHasBeenSet = false;
+  bool m_virtualInterfaceNameHasBeenSet = false;
+  bool m_vlanHasBeenSet = false;
+  bool m_asnHasBeenSet = false;
+  bool m_asnLongHasBeenSet = false;
+  bool m_amazonSideAsnHasBeenSet = false;
+  bool m_authKeyHasBeenSet = false;
+  bool m_amazonAddressHasBeenSet = false;
+  bool m_customerAddressHasBeenSet = false;
+  bool m_addressFamilyHasBeenSet = false;
+  bool m_virtualInterfaceStateHasBeenSet = false;
+  bool m_customerRouterConfigHasBeenSet = false;
+  bool m_mtuHasBeenSet = false;
+  bool m_jumboFrameCapableHasBeenSet = false;
+  bool m_virtualGatewayIdHasBeenSet = false;
+  bool m_directConnectGatewayIdHasBeenSet = false;
+  bool m_routeFilterPrefixesHasBeenSet = false;
+  bool m_bgpPeersHasBeenSet = false;
+  bool m_regionHasBeenSet = false;
+  bool m_awsDeviceV2HasBeenSet = false;
+  bool m_awsLogicalDeviceIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_siteLinkEnabledHasBeenSet = false;
+  bool m_rateLimitHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

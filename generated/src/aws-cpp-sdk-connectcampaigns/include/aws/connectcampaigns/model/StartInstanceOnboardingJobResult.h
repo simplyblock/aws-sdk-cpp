@@ -6,65 +6,75 @@
 #pragma once
 #include <aws/connectcampaigns/ConnectCampaigns_EXPORTS.h>
 #include <aws/connectcampaigns/model/InstanceOnboardingJobStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectCampaigns
-{
-namespace Model
-{
-  /**
-   * <p>The response for StartInstanceOnboardingJob API.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connectcampaigns-2021-01-30/StartInstanceOnboardingJobResponse">AWS
-   * API Reference</a></p>
-   */
-  class StartInstanceOnboardingJobResult
-  {
-  public:
-    AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult();
-    AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectCampaigns {
+namespace Model {
+/**
+ * <p>The response for StartInstanceOnboardingJob API.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connectcampaigns-2021-01-30/StartInstanceOnboardingJobResponse">AWS
+ * API Reference</a></p>
+ */
+class StartInstanceOnboardingJobResult {
+ public:
+  AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult() = default;
+  AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTCAMPAIGNS_API StartInstanceOnboardingJobResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const InstanceOnboardingJobStatus& GetConnectInstanceOnboardingJobStatus() const{ return m_connectInstanceOnboardingJobStatus; }
-    inline void SetConnectInstanceOnboardingJobStatus(const InstanceOnboardingJobStatus& value) { m_connectInstanceOnboardingJobStatus = value; }
-    inline void SetConnectInstanceOnboardingJobStatus(InstanceOnboardingJobStatus&& value) { m_connectInstanceOnboardingJobStatus = std::move(value); }
-    inline StartInstanceOnboardingJobResult& WithConnectInstanceOnboardingJobStatus(const InstanceOnboardingJobStatus& value) { SetConnectInstanceOnboardingJobStatus(value); return *this;}
-    inline StartInstanceOnboardingJobResult& WithConnectInstanceOnboardingJobStatus(InstanceOnboardingJobStatus&& value) { SetConnectInstanceOnboardingJobStatus(std::move(value)); return *this;}
-    ///@}
+  inline const InstanceOnboardingJobStatus& GetConnectInstanceOnboardingJobStatus() const { return m_connectInstanceOnboardingJobStatus; }
+  template <typename ConnectInstanceOnboardingJobStatusT = InstanceOnboardingJobStatus>
+  void SetConnectInstanceOnboardingJobStatus(ConnectInstanceOnboardingJobStatusT&& value) {
+    m_connectInstanceOnboardingJobStatusHasBeenSet = true;
+    m_connectInstanceOnboardingJobStatus = std::forward<ConnectInstanceOnboardingJobStatusT>(value);
+  }
+  template <typename ConnectInstanceOnboardingJobStatusT = InstanceOnboardingJobStatus>
+  StartInstanceOnboardingJobResult& WithConnectInstanceOnboardingJobStatus(ConnectInstanceOnboardingJobStatusT&& value) {
+    SetConnectInstanceOnboardingJobStatus(std::forward<ConnectInstanceOnboardingJobStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartInstanceOnboardingJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartInstanceOnboardingJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartInstanceOnboardingJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    InstanceOnboardingJobStatus m_connectInstanceOnboardingJobStatus;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartInstanceOnboardingJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  InstanceOnboardingJobStatus m_connectInstanceOnboardingJobStatus;
 
-} // namespace Model
-} // namespace ConnectCampaigns
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_connectInstanceOnboardingJobStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ConnectCampaigns
+}  // namespace Aws

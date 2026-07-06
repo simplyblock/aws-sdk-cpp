@@ -4,89 +4,155 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/SageMakerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/InferenceComponentSpecification.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMakerRequest.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/InferenceComponentDeploymentConfig.h>
 #include <aws/sagemaker/model/InferenceComponentRuntimeConfig.h>
+#include <aws/sagemaker/model/InferenceComponentSpecification.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
+/**
+ */
+class UpdateInferenceComponentRequest : public SageMakerRequest {
+ public:
+  AWS_SAGEMAKER_API UpdateInferenceComponentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateInferenceComponent"; }
+
+  AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+
+  AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the inference component.</p>
    */
-  class UpdateInferenceComponentRequest : public SageMakerRequest
-  {
-  public:
-    AWS_SAGEMAKER_API UpdateInferenceComponentRequest();
+  inline const Aws::String& GetInferenceComponentName() const { return m_inferenceComponentName; }
+  inline bool InferenceComponentNameHasBeenSet() const { return m_inferenceComponentNameHasBeenSet; }
+  template <typename InferenceComponentNameT = Aws::String>
+  void SetInferenceComponentName(InferenceComponentNameT&& value) {
+    m_inferenceComponentNameHasBeenSet = true;
+    m_inferenceComponentName = std::forward<InferenceComponentNameT>(value);
+  }
+  template <typename InferenceComponentNameT = Aws::String>
+  UpdateInferenceComponentRequest& WithInferenceComponentName(InferenceComponentNameT&& value) {
+    SetInferenceComponentName(std::forward<InferenceComponentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateInferenceComponent"; }
+  ///@{
+  /**
+   * <p>Details about the resources to deploy with this inference component,
+   * including the model, container, and compute resources.</p>
+   */
+  inline const InferenceComponentSpecification& GetSpecification() const { return m_specification; }
+  inline bool SpecificationHasBeenSet() const { return m_specificationHasBeenSet; }
+  template <typename SpecificationT = InferenceComponentSpecification>
+  void SetSpecification(SpecificationT&& value) {
+    m_specificationHasBeenSet = true;
+    m_specification = std::forward<SpecificationT>(value);
+  }
+  template <typename SpecificationT = InferenceComponentSpecification>
+  UpdateInferenceComponentRequest& WithSpecification(SpecificationT&& value) {
+    SetSpecification(std::forward<SpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A list of specification objects for the inference component, one per instance
+   * type. Use this parameter when you want to specify different model or resource
+   * configurations for the inference component on each instance type. You can use
+   * either this parameter or the singular <code>Specification</code> parameter, but
+   * not both.</p>
+   */
+  inline const Aws::Vector<InferenceComponentSpecification>& GetSpecifications() const { return m_specifications; }
+  inline bool SpecificationsHasBeenSet() const { return m_specificationsHasBeenSet; }
+  template <typename SpecificationsT = Aws::Vector<InferenceComponentSpecification>>
+  void SetSpecifications(SpecificationsT&& value) {
+    m_specificationsHasBeenSet = true;
+    m_specifications = std::forward<SpecificationsT>(value);
+  }
+  template <typename SpecificationsT = Aws::Vector<InferenceComponentSpecification>>
+  UpdateInferenceComponentRequest& WithSpecifications(SpecificationsT&& value) {
+    SetSpecifications(std::forward<SpecificationsT>(value));
+    return *this;
+  }
+  template <typename SpecificationsT = InferenceComponentSpecification>
+  UpdateInferenceComponentRequest& AddSpecifications(SpecificationsT&& value) {
+    m_specificationsHasBeenSet = true;
+    m_specifications.emplace_back(std::forward<SpecificationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Runtime settings for a model that is deployed with an inference
+   * component.</p>
+   */
+  inline const InferenceComponentRuntimeConfig& GetRuntimeConfig() const { return m_runtimeConfig; }
+  inline bool RuntimeConfigHasBeenSet() const { return m_runtimeConfigHasBeenSet; }
+  template <typename RuntimeConfigT = InferenceComponentRuntimeConfig>
+  void SetRuntimeConfig(RuntimeConfigT&& value) {
+    m_runtimeConfigHasBeenSet = true;
+    m_runtimeConfig = std::forward<RuntimeConfigT>(value);
+  }
+  template <typename RuntimeConfigT = InferenceComponentRuntimeConfig>
+  UpdateInferenceComponentRequest& WithRuntimeConfig(RuntimeConfigT&& value) {
+    SetRuntimeConfig(std::forward<RuntimeConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The deployment configuration for the inference component. The configuration
+   * contains the desired deployment strategy and rollback settings.</p>
+   */
+  inline const InferenceComponentDeploymentConfig& GetDeploymentConfig() const { return m_deploymentConfig; }
+  inline bool DeploymentConfigHasBeenSet() const { return m_deploymentConfigHasBeenSet; }
+  template <typename DeploymentConfigT = InferenceComponentDeploymentConfig>
+  void SetDeploymentConfig(DeploymentConfigT&& value) {
+    m_deploymentConfigHasBeenSet = true;
+    m_deploymentConfig = std::forward<DeploymentConfigT>(value);
+  }
+  template <typename DeploymentConfigT = InferenceComponentDeploymentConfig>
+  UpdateInferenceComponentRequest& WithDeploymentConfig(DeploymentConfigT&& value) {
+    SetDeploymentConfig(std::forward<DeploymentConfigT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_inferenceComponentName;
 
-    ///@{
-    /**
-     * <p>The name of the inference component.</p>
-     */
-    inline const Aws::String& GetInferenceComponentName() const{ return m_inferenceComponentName; }
-    inline bool InferenceComponentNameHasBeenSet() const { return m_inferenceComponentNameHasBeenSet; }
-    inline void SetInferenceComponentName(const Aws::String& value) { m_inferenceComponentNameHasBeenSet = true; m_inferenceComponentName = value; }
-    inline void SetInferenceComponentName(Aws::String&& value) { m_inferenceComponentNameHasBeenSet = true; m_inferenceComponentName = std::move(value); }
-    inline void SetInferenceComponentName(const char* value) { m_inferenceComponentNameHasBeenSet = true; m_inferenceComponentName.assign(value); }
-    inline UpdateInferenceComponentRequest& WithInferenceComponentName(const Aws::String& value) { SetInferenceComponentName(value); return *this;}
-    inline UpdateInferenceComponentRequest& WithInferenceComponentName(Aws::String&& value) { SetInferenceComponentName(std::move(value)); return *this;}
-    inline UpdateInferenceComponentRequest& WithInferenceComponentName(const char* value) { SetInferenceComponentName(value); return *this;}
-    ///@}
+  InferenceComponentSpecification m_specification;
 
-    ///@{
-    /**
-     * <p>Details about the resources to deploy with this inference component,
-     * including the model, container, and compute resources.</p>
-     */
-    inline const InferenceComponentSpecification& GetSpecification() const{ return m_specification; }
-    inline bool SpecificationHasBeenSet() const { return m_specificationHasBeenSet; }
-    inline void SetSpecification(const InferenceComponentSpecification& value) { m_specificationHasBeenSet = true; m_specification = value; }
-    inline void SetSpecification(InferenceComponentSpecification&& value) { m_specificationHasBeenSet = true; m_specification = std::move(value); }
-    inline UpdateInferenceComponentRequest& WithSpecification(const InferenceComponentSpecification& value) { SetSpecification(value); return *this;}
-    inline UpdateInferenceComponentRequest& WithSpecification(InferenceComponentSpecification&& value) { SetSpecification(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<InferenceComponentSpecification> m_specifications;
 
-    ///@{
-    /**
-     * <p>Runtime settings for a model that is deployed with an inference
-     * component.</p>
-     */
-    inline const InferenceComponentRuntimeConfig& GetRuntimeConfig() const{ return m_runtimeConfig; }
-    inline bool RuntimeConfigHasBeenSet() const { return m_runtimeConfigHasBeenSet; }
-    inline void SetRuntimeConfig(const InferenceComponentRuntimeConfig& value) { m_runtimeConfigHasBeenSet = true; m_runtimeConfig = value; }
-    inline void SetRuntimeConfig(InferenceComponentRuntimeConfig&& value) { m_runtimeConfigHasBeenSet = true; m_runtimeConfig = std::move(value); }
-    inline UpdateInferenceComponentRequest& WithRuntimeConfig(const InferenceComponentRuntimeConfig& value) { SetRuntimeConfig(value); return *this;}
-    inline UpdateInferenceComponentRequest& WithRuntimeConfig(InferenceComponentRuntimeConfig&& value) { SetRuntimeConfig(std::move(value)); return *this;}
-    ///@}
-  private:
+  InferenceComponentRuntimeConfig m_runtimeConfig;
 
-    Aws::String m_inferenceComponentName;
-    bool m_inferenceComponentNameHasBeenSet = false;
+  InferenceComponentDeploymentConfig m_deploymentConfig;
+  bool m_inferenceComponentNameHasBeenSet = false;
+  bool m_specificationHasBeenSet = false;
+  bool m_specificationsHasBeenSet = false;
+  bool m_runtimeConfigHasBeenSet = false;
+  bool m_deploymentConfigHasBeenSet = false;
+};
 
-    InferenceComponentSpecification m_specification;
-    bool m_specificationHasBeenSet = false;
-
-    InferenceComponentRuntimeConfig m_runtimeConfig;
-    bool m_runtimeConfigHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

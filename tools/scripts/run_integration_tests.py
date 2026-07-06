@@ -17,9 +17,11 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser(description="AWSNativeSDK Run all Integration Tests")
     parser.add_argument("--testDir", action="store")
+    parser.add_argument("--serviceId", action="store")
 
     args = vars(parser.parse_args())
     arg_map["testDir"] = args["testDir"] or "./build"
+    arg_map["serviceId"] = args["serviceId"] or ""
 
     return arg_map
 
@@ -35,26 +37,45 @@ def main():
     test_has_parent_dir = platform.system() != "Windows"
     exe_extension = ".exe" if platform.system() == "Windows" else ""
 
-    test_list = [
+    all_tests = [
+        "aws-cpp-sdk-core-integration-tests",
         "aws-cpp-sdk-transcribestreaming-integ-tests",
         "aws-cpp-sdk-dynamodb-unit-tests",
         "aws-cpp-sdk-dynamodb-integration-tests",
         "aws-cpp-sdk-sqs-integration-tests",
+        "aws-cpp-sdk-sqs-unit-tests",
+        "aws-cpp-sdk-sns-integration-tests",
         "aws-cpp-sdk-s3-integration-tests",
         "aws-cpp-sdk-s3-unit-tests",
         "aws-cpp-sdk-s3-crt-integration-tests",
         #"aws-cpp-sdk-s3control-integration-tests",
-        # "aws-cpp-sdk-lambda-integration-tests",
+        "aws-cpp-sdk-lambda-integration-tests",
         "aws-cpp-sdk-cognitoidentity-integration-tests",
         #"aws-cpp-sdk-transfer-tests",
-        #"aws-cpp-sdk-s3-encryption-integration-tests",
+        "aws-cpp-sdk-s3-encryption-integration-tests",
         "aws-cpp-sdk-kinesis-integration-tests",
         "aws-cpp-sdk-logs-integration-tests",
         "aws-cpp-sdk-monitoring-integration-tests",
         "aws-cpp-sdk-elasticfilesystem-integration-tests",
         "aws-cpp-sdk-rds-integration-tests",
         "aws-cpp-sdk-ec2-integration-tests",
-        "aws-cpp-sdk-timestream-query-integration-tests"]
+        "aws-cpp-sdk-bedrock-runtime-integration-tests"
+    ]
+
+    if arguments["serviceId"]:
+        service_ids = arguments["serviceId"].split(",")
+        test_list = []
+        for test in all_tests:
+            service = test.replace('aws-cpp-sdk-', '').replace('-integration-tests', '').replace('-unit-tests', '').replace('-tests', '')
+            if service != "core":
+                for service_id in service_ids:
+                    if service_id == service:
+                        test_list.append(test)
+                        break
+            else:
+                test_list.append(test)
+    else:
+        test_list = all_tests.copy()
 
     # check for existence of these binaries before adding them to tests
     # as they will not always be present

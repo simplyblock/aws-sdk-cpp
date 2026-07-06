@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/iot/model/GroupNameAndArn.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class ListBillingGroupsResult
-  {
-  public:
-    AWS_IOT_API ListBillingGroupsResult();
-    AWS_IOT_API ListBillingGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API ListBillingGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class ListBillingGroupsResult {
+ public:
+  AWS_IOT_API ListBillingGroupsResult() = default;
+  AWS_IOT_API ListBillingGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API ListBillingGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of billing groups.</p>
+   */
+  inline const Aws::Vector<GroupNameAndArn>& GetBillingGroups() const { return m_billingGroups; }
+  template <typename BillingGroupsT = Aws::Vector<GroupNameAndArn>>
+  void SetBillingGroups(BillingGroupsT&& value) {
+    m_billingGroupsHasBeenSet = true;
+    m_billingGroups = std::forward<BillingGroupsT>(value);
+  }
+  template <typename BillingGroupsT = Aws::Vector<GroupNameAndArn>>
+  ListBillingGroupsResult& WithBillingGroups(BillingGroupsT&& value) {
+    SetBillingGroups(std::forward<BillingGroupsT>(value));
+    return *this;
+  }
+  template <typename BillingGroupsT = GroupNameAndArn>
+  ListBillingGroupsResult& AddBillingGroups(BillingGroupsT&& value) {
+    m_billingGroupsHasBeenSet = true;
+    m_billingGroups.emplace_back(std::forward<BillingGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of billing groups.</p>
-     */
-    inline const Aws::Vector<GroupNameAndArn>& GetBillingGroups() const{ return m_billingGroups; }
-    inline void SetBillingGroups(const Aws::Vector<GroupNameAndArn>& value) { m_billingGroups = value; }
-    inline void SetBillingGroups(Aws::Vector<GroupNameAndArn>&& value) { m_billingGroups = std::move(value); }
-    inline ListBillingGroupsResult& WithBillingGroups(const Aws::Vector<GroupNameAndArn>& value) { SetBillingGroups(value); return *this;}
-    inline ListBillingGroupsResult& WithBillingGroups(Aws::Vector<GroupNameAndArn>&& value) { SetBillingGroups(std::move(value)); return *this;}
-    inline ListBillingGroupsResult& AddBillingGroups(const GroupNameAndArn& value) { m_billingGroups.push_back(value); return *this; }
-    inline ListBillingGroupsResult& AddBillingGroups(GroupNameAndArn&& value) { m_billingGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to get the next set of results, or <b>null</b> if there are
+   * no additional results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListBillingGroupsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to get the next set of results, or <b>null</b> if there are
-     * no additional results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListBillingGroupsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListBillingGroupsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListBillingGroupsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListBillingGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListBillingGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListBillingGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListBillingGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<GroupNameAndArn> m_billingGroups;
+ private:
+  Aws::Vector<GroupNameAndArn> m_billingGroups;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_billingGroupsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

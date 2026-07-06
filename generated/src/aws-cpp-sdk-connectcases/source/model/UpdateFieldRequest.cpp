@@ -12,33 +12,20 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateFieldRequest::UpdateFieldRequest() : 
-    m_descriptionHasBeenSet(false),
-    m_domainIdHasBeenSet(false),
-    m_fieldIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String UpdateFieldRequest::SerializePayload() const
-{
+Aws::String UpdateFieldRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
+  }
 
+  if (m_attributesHasBeenSet) {
+    payload.WithObject("attributes", m_attributes.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

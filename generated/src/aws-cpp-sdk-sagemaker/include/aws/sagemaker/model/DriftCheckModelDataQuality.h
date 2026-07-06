@@ -6,70 +6,75 @@
 #pragma once
 #include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/MetricsSource.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Represents the drift check data quality baselines that can be used when the
+ * model monitor is set using the model package. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DriftCheckModelDataQuality">AWS
+ * API Reference</a></p>
+ */
+class DriftCheckModelDataQuality {
+ public:
+  AWS_SAGEMAKER_API DriftCheckModelDataQuality() = default;
+  AWS_SAGEMAKER_API DriftCheckModelDataQuality(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API DriftCheckModelDataQuality& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Represents the drift check data quality baselines that can be used when the
-   * model monitor is set using the model package. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DriftCheckModelDataQuality">AWS
-   * API Reference</a></p>
+   * <p>The drift check model data quality statistics.</p>
    */
-  class DriftCheckModelDataQuality
-  {
-  public:
-    AWS_SAGEMAKER_API DriftCheckModelDataQuality();
-    AWS_SAGEMAKER_API DriftCheckModelDataQuality(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API DriftCheckModelDataQuality& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const MetricsSource& GetStatistics() const { return m_statistics; }
+  inline bool StatisticsHasBeenSet() const { return m_statisticsHasBeenSet; }
+  template <typename StatisticsT = MetricsSource>
+  void SetStatistics(StatisticsT&& value) {
+    m_statisticsHasBeenSet = true;
+    m_statistics = std::forward<StatisticsT>(value);
+  }
+  template <typename StatisticsT = MetricsSource>
+  DriftCheckModelDataQuality& WithStatistics(StatisticsT&& value) {
+    SetStatistics(std::forward<StatisticsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The drift check model data quality constraints.</p>
+   */
+  inline const MetricsSource& GetConstraints() const { return m_constraints; }
+  inline bool ConstraintsHasBeenSet() const { return m_constraintsHasBeenSet; }
+  template <typename ConstraintsT = MetricsSource>
+  void SetConstraints(ConstraintsT&& value) {
+    m_constraintsHasBeenSet = true;
+    m_constraints = std::forward<ConstraintsT>(value);
+  }
+  template <typename ConstraintsT = MetricsSource>
+  DriftCheckModelDataQuality& WithConstraints(ConstraintsT&& value) {
+    SetConstraints(std::forward<ConstraintsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  MetricsSource m_statistics;
 
-    ///@{
-    /**
-     * <p>The drift check model data quality statistics.</p>
-     */
-    inline const MetricsSource& GetStatistics() const{ return m_statistics; }
-    inline bool StatisticsHasBeenSet() const { return m_statisticsHasBeenSet; }
-    inline void SetStatistics(const MetricsSource& value) { m_statisticsHasBeenSet = true; m_statistics = value; }
-    inline void SetStatistics(MetricsSource&& value) { m_statisticsHasBeenSet = true; m_statistics = std::move(value); }
-    inline DriftCheckModelDataQuality& WithStatistics(const MetricsSource& value) { SetStatistics(value); return *this;}
-    inline DriftCheckModelDataQuality& WithStatistics(MetricsSource&& value) { SetStatistics(std::move(value)); return *this;}
-    ///@}
+  MetricsSource m_constraints;
+  bool m_statisticsHasBeenSet = false;
+  bool m_constraintsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The drift check model data quality constraints.</p>
-     */
-    inline const MetricsSource& GetConstraints() const{ return m_constraints; }
-    inline bool ConstraintsHasBeenSet() const { return m_constraintsHasBeenSet; }
-    inline void SetConstraints(const MetricsSource& value) { m_constraintsHasBeenSet = true; m_constraints = value; }
-    inline void SetConstraints(MetricsSource&& value) { m_constraintsHasBeenSet = true; m_constraints = std::move(value); }
-    inline DriftCheckModelDataQuality& WithConstraints(const MetricsSource& value) { SetConstraints(value); return *this;}
-    inline DriftCheckModelDataQuality& WithConstraints(MetricsSource&& value) { SetConstraints(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    MetricsSource m_statistics;
-    bool m_statisticsHasBeenSet = false;
-
-    MetricsSource m_constraints;
-    bool m_constraintsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

@@ -4,90 +4,103 @@
  */
 
 #pragma once
-#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/ConnectRequest.h>
+#include <aws/connect/Connect_EXPORTS.h>
+#include <aws/connect/model/UserProficiencyDisassociate.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/connect/model/UserProficiencyDisassociate.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
+/**
+ */
+class DisassociateUserProficienciesRequest : public ConnectRequest {
+ public:
+  AWS_CONNECT_API DisassociateUserProficienciesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DisassociateUserProficiencies"; }
+
+  AWS_CONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the Connect Customer instance. You can find the instance ID
+   * in the Amazon Resource Name (ARN) of the instance.</p>
    */
-  class DisassociateUserProficienciesRequest : public ConnectRequest
-  {
-  public:
-    AWS_CONNECT_API DisassociateUserProficienciesRequest();
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  DisassociateUserProficienciesRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DisassociateUserProficiencies"; }
+  ///@{
+  /**
+   * <p>The identifier of the user account.</p>
+   */
+  inline const Aws::String& GetUserId() const { return m_userId; }
+  inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
+  template <typename UserIdT = Aws::String>
+  void SetUserId(UserIdT&& value) {
+    m_userIdHasBeenSet = true;
+    m_userId = std::forward<UserIdT>(value);
+  }
+  template <typename UserIdT = Aws::String>
+  DisassociateUserProficienciesRequest& WithUserId(UserIdT&& value) {
+    SetUserId(std::forward<UserIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The proficiencies to disassociate from the user.</p>
+   */
+  inline const Aws::Vector<UserProficiencyDisassociate>& GetUserProficiencies() const { return m_userProficiencies; }
+  inline bool UserProficienciesHasBeenSet() const { return m_userProficienciesHasBeenSet; }
+  template <typename UserProficienciesT = Aws::Vector<UserProficiencyDisassociate>>
+  void SetUserProficiencies(UserProficienciesT&& value) {
+    m_userProficienciesHasBeenSet = true;
+    m_userProficiencies = std::forward<UserProficienciesT>(value);
+  }
+  template <typename UserProficienciesT = Aws::Vector<UserProficiencyDisassociate>>
+  DisassociateUserProficienciesRequest& WithUserProficiencies(UserProficienciesT&& value) {
+    SetUserProficiencies(std::forward<UserProficienciesT>(value));
+    return *this;
+  }
+  template <typename UserProficienciesT = UserProficiencyDisassociate>
+  DisassociateUserProficienciesRequest& AddUserProficiencies(UserProficienciesT&& value) {
+    m_userProficienciesHasBeenSet = true;
+    m_userProficiencies.emplace_back(std::forward<UserProficienciesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceId;
 
+  Aws::String m_userId;
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Connect instance. You can find the instance ID
-     * in the Amazon Resource Name (ARN) of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline DisassociateUserProficienciesRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline DisassociateUserProficienciesRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline DisassociateUserProficienciesRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  Aws::Vector<UserProficiencyDisassociate> m_userProficiencies;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_userIdHasBeenSet = false;
+  bool m_userProficienciesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier of the user account.</p>
-     */
-    inline const Aws::String& GetUserId() const{ return m_userId; }
-    inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
-    inline void SetUserId(const Aws::String& value) { m_userIdHasBeenSet = true; m_userId = value; }
-    inline void SetUserId(Aws::String&& value) { m_userIdHasBeenSet = true; m_userId = std::move(value); }
-    inline void SetUserId(const char* value) { m_userIdHasBeenSet = true; m_userId.assign(value); }
-    inline DisassociateUserProficienciesRequest& WithUserId(const Aws::String& value) { SetUserId(value); return *this;}
-    inline DisassociateUserProficienciesRequest& WithUserId(Aws::String&& value) { SetUserId(std::move(value)); return *this;}
-    inline DisassociateUserProficienciesRequest& WithUserId(const char* value) { SetUserId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The proficiencies to disassociate from the user.</p>
-     */
-    inline const Aws::Vector<UserProficiencyDisassociate>& GetUserProficiencies() const{ return m_userProficiencies; }
-    inline bool UserProficienciesHasBeenSet() const { return m_userProficienciesHasBeenSet; }
-    inline void SetUserProficiencies(const Aws::Vector<UserProficiencyDisassociate>& value) { m_userProficienciesHasBeenSet = true; m_userProficiencies = value; }
-    inline void SetUserProficiencies(Aws::Vector<UserProficiencyDisassociate>&& value) { m_userProficienciesHasBeenSet = true; m_userProficiencies = std::move(value); }
-    inline DisassociateUserProficienciesRequest& WithUserProficiencies(const Aws::Vector<UserProficiencyDisassociate>& value) { SetUserProficiencies(value); return *this;}
-    inline DisassociateUserProficienciesRequest& WithUserProficiencies(Aws::Vector<UserProficiencyDisassociate>&& value) { SetUserProficiencies(std::move(value)); return *this;}
-    inline DisassociateUserProficienciesRequest& AddUserProficiencies(const UserProficiencyDisassociate& value) { m_userProficienciesHasBeenSet = true; m_userProficiencies.push_back(value); return *this; }
-    inline DisassociateUserProficienciesRequest& AddUserProficiencies(UserProficiencyDisassociate&& value) { m_userProficienciesHasBeenSet = true; m_userProficiencies.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
-
-    Aws::String m_userId;
-    bool m_userIdHasBeenSet = false;
-
-    Aws::Vector<UserProficiencyDisassociate> m_userProficiencies;
-    bool m_userProficienciesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

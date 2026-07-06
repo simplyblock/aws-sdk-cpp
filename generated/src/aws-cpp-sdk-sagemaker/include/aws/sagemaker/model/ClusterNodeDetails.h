@@ -4,224 +4,565 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/ClusterInstanceStatusDetails.h>
-#include <aws/sagemaker/model/ClusterInstanceType.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/ClusterLifeCycleConfig.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/ClusterCapacityType.h>
+#include <aws/sagemaker/model/ClusterImageVersionStatus.h>
 #include <aws/sagemaker/model/ClusterInstancePlacement.h>
+#include <aws/sagemaker/model/ClusterInstanceStatusDetails.h>
 #include <aws/sagemaker/model/ClusterInstanceStorageConfig.h>
+#include <aws/sagemaker/model/ClusterInstanceType.h>
+#include <aws/sagemaker/model/ClusterKubernetesConfigNodeDetails.h>
+#include <aws/sagemaker/model/ClusterLifeCycleConfig.h>
+#include <aws/sagemaker/model/ClusterNetworkInterfaceDetails.h>
+#include <aws/sagemaker/model/UltraServerInfo.h>
+#include <aws/sagemaker/model/VpcConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>Details of an instance (also called a <i>node</i> interchangeably) in a
+ * SageMaker HyperPod cluster.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterNodeDetails">AWS
+ * API Reference</a></p>
+ */
+class ClusterNodeDetails {
+ public:
+  AWS_SAGEMAKER_API ClusterNodeDetails() = default;
+  AWS_SAGEMAKER_API ClusterNodeDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API ClusterNodeDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Details of an instance (also called a <i>node</i> interchangeably) in a
-   * SageMaker HyperPod cluster.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterNodeDetails">AWS
-   * API Reference</a></p>
+   * <p>The instance group name in which the instance is.</p>
    */
-  class ClusterNodeDetails
-  {
-  public:
-    AWS_SAGEMAKER_API ClusterNodeDetails();
-    AWS_SAGEMAKER_API ClusterNodeDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API ClusterNodeDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetInstanceGroupName() const { return m_instanceGroupName; }
+  inline bool InstanceGroupNameHasBeenSet() const { return m_instanceGroupNameHasBeenSet; }
+  template <typename InstanceGroupNameT = Aws::String>
+  void SetInstanceGroupName(InstanceGroupNameT&& value) {
+    m_instanceGroupNameHasBeenSet = true;
+    m_instanceGroupName = std::forward<InstanceGroupNameT>(value);
+  }
+  template <typename InstanceGroupNameT = Aws::String>
+  ClusterNodeDetails& WithInstanceGroupName(InstanceGroupNameT&& value) {
+    SetInstanceGroupName(std::forward<InstanceGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the instance.</p>
+   */
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  ClusterNodeDetails& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The instance group name in which the instance is.</p>
-     */
-    inline const Aws::String& GetInstanceGroupName() const{ return m_instanceGroupName; }
-    inline bool InstanceGroupNameHasBeenSet() const { return m_instanceGroupNameHasBeenSet; }
-    inline void SetInstanceGroupName(const Aws::String& value) { m_instanceGroupNameHasBeenSet = true; m_instanceGroupName = value; }
-    inline void SetInstanceGroupName(Aws::String&& value) { m_instanceGroupNameHasBeenSet = true; m_instanceGroupName = std::move(value); }
-    inline void SetInstanceGroupName(const char* value) { m_instanceGroupNameHasBeenSet = true; m_instanceGroupName.assign(value); }
-    inline ClusterNodeDetails& WithInstanceGroupName(const Aws::String& value) { SetInstanceGroupName(value); return *this;}
-    inline ClusterNodeDetails& WithInstanceGroupName(Aws::String&& value) { SetInstanceGroupName(std::move(value)); return *this;}
-    inline ClusterNodeDetails& WithInstanceGroupName(const char* value) { SetInstanceGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique identifier for the node that persists throughout its lifecycle, from
+   * provisioning request to termination. This identifier can be used to track the
+   * node even before it has an assigned <code>InstanceId</code>.</p>
+   */
+  inline const Aws::String& GetNodeLogicalId() const { return m_nodeLogicalId; }
+  inline bool NodeLogicalIdHasBeenSet() const { return m_nodeLogicalIdHasBeenSet; }
+  template <typename NodeLogicalIdT = Aws::String>
+  void SetNodeLogicalId(NodeLogicalIdT&& value) {
+    m_nodeLogicalIdHasBeenSet = true;
+    m_nodeLogicalId = std::forward<NodeLogicalIdT>(value);
+  }
+  template <typename NodeLogicalIdT = Aws::String>
+  ClusterNodeDetails& WithNodeLogicalId(NodeLogicalIdT&& value) {
+    SetNodeLogicalId(std::forward<NodeLogicalIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline ClusterNodeDetails& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline ClusterNodeDetails& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline ClusterNodeDetails& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the instance.</p>
+   */
+  inline const ClusterInstanceStatusDetails& GetInstanceStatus() const { return m_instanceStatus; }
+  inline bool InstanceStatusHasBeenSet() const { return m_instanceStatusHasBeenSet; }
+  template <typename InstanceStatusT = ClusterInstanceStatusDetails>
+  void SetInstanceStatus(InstanceStatusT&& value) {
+    m_instanceStatusHasBeenSet = true;
+    m_instanceStatus = std::forward<InstanceStatusT>(value);
+  }
+  template <typename InstanceStatusT = ClusterInstanceStatusDetails>
+  ClusterNodeDetails& WithInstanceStatus(InstanceStatusT&& value) {
+    SetInstanceStatus(std::forward<InstanceStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the instance.</p>
-     */
-    inline const ClusterInstanceStatusDetails& GetInstanceStatus() const{ return m_instanceStatus; }
-    inline bool InstanceStatusHasBeenSet() const { return m_instanceStatusHasBeenSet; }
-    inline void SetInstanceStatus(const ClusterInstanceStatusDetails& value) { m_instanceStatusHasBeenSet = true; m_instanceStatus = value; }
-    inline void SetInstanceStatus(ClusterInstanceStatusDetails&& value) { m_instanceStatusHasBeenSet = true; m_instanceStatus = std::move(value); }
-    inline ClusterNodeDetails& WithInstanceStatus(const ClusterInstanceStatusDetails& value) { SetInstanceStatus(value); return *this;}
-    inline ClusterNodeDetails& WithInstanceStatus(ClusterInstanceStatusDetails&& value) { SetInstanceStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the instance.</p>
+   */
+  inline ClusterInstanceType GetInstanceType() const { return m_instanceType; }
+  inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
+  inline void SetInstanceType(ClusterInstanceType value) {
+    m_instanceTypeHasBeenSet = true;
+    m_instanceType = value;
+  }
+  inline ClusterNodeDetails& WithInstanceType(ClusterInstanceType value) {
+    SetInstanceType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the instance.</p>
-     */
-    inline const ClusterInstanceType& GetInstanceType() const{ return m_instanceType; }
-    inline bool InstanceTypeHasBeenSet() const { return m_instanceTypeHasBeenSet; }
-    inline void SetInstanceType(const ClusterInstanceType& value) { m_instanceTypeHasBeenSet = true; m_instanceType = value; }
-    inline void SetInstanceType(ClusterInstanceType&& value) { m_instanceTypeHasBeenSet = true; m_instanceType = std::move(value); }
-    inline ClusterNodeDetails& WithInstanceType(const ClusterInstanceType& value) { SetInstanceType(value); return *this;}
-    inline ClusterNodeDetails& WithInstanceType(ClusterInstanceType&& value) { SetInstanceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the instance is launched.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLaunchTime() const { return m_launchTime; }
+  inline bool LaunchTimeHasBeenSet() const { return m_launchTimeHasBeenSet; }
+  template <typename LaunchTimeT = Aws::Utils::DateTime>
+  void SetLaunchTime(LaunchTimeT&& value) {
+    m_launchTimeHasBeenSet = true;
+    m_launchTime = std::forward<LaunchTimeT>(value);
+  }
+  template <typename LaunchTimeT = Aws::Utils::DateTime>
+  ClusterNodeDetails& WithLaunchTime(LaunchTimeT&& value) {
+    SetLaunchTime(std::forward<LaunchTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the instance is launched.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLaunchTime() const{ return m_launchTime; }
-    inline bool LaunchTimeHasBeenSet() const { return m_launchTimeHasBeenSet; }
-    inline void SetLaunchTime(const Aws::Utils::DateTime& value) { m_launchTimeHasBeenSet = true; m_launchTime = value; }
-    inline void SetLaunchTime(Aws::Utils::DateTime&& value) { m_launchTimeHasBeenSet = true; m_launchTime = std::move(value); }
-    inline ClusterNodeDetails& WithLaunchTime(const Aws::Utils::DateTime& value) { SetLaunchTime(value); return *this;}
-    inline ClusterNodeDetails& WithLaunchTime(Aws::Utils::DateTime&& value) { SetLaunchTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the cluster was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastSoftwareUpdateTime() const { return m_lastSoftwareUpdateTime; }
+  inline bool LastSoftwareUpdateTimeHasBeenSet() const { return m_lastSoftwareUpdateTimeHasBeenSet; }
+  template <typename LastSoftwareUpdateTimeT = Aws::Utils::DateTime>
+  void SetLastSoftwareUpdateTime(LastSoftwareUpdateTimeT&& value) {
+    m_lastSoftwareUpdateTimeHasBeenSet = true;
+    m_lastSoftwareUpdateTime = std::forward<LastSoftwareUpdateTimeT>(value);
+  }
+  template <typename LastSoftwareUpdateTimeT = Aws::Utils::DateTime>
+  ClusterNodeDetails& WithLastSoftwareUpdateTime(LastSoftwareUpdateTimeT&& value) {
+    SetLastSoftwareUpdateTime(std::forward<LastSoftwareUpdateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The LifeCycle configuration applied to the instance.</p>
-     */
-    inline const ClusterLifeCycleConfig& GetLifeCycleConfig() const{ return m_lifeCycleConfig; }
-    inline bool LifeCycleConfigHasBeenSet() const { return m_lifeCycleConfigHasBeenSet; }
-    inline void SetLifeCycleConfig(const ClusterLifeCycleConfig& value) { m_lifeCycleConfigHasBeenSet = true; m_lifeCycleConfig = value; }
-    inline void SetLifeCycleConfig(ClusterLifeCycleConfig&& value) { m_lifeCycleConfigHasBeenSet = true; m_lifeCycleConfig = std::move(value); }
-    inline ClusterNodeDetails& WithLifeCycleConfig(const ClusterLifeCycleConfig& value) { SetLifeCycleConfig(value); return *this;}
-    inline ClusterNodeDetails& WithLifeCycleConfig(ClusterLifeCycleConfig&& value) { SetLifeCycleConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The LifeCycle configuration applied to the instance.</p>
+   */
+  inline const ClusterLifeCycleConfig& GetLifeCycleConfig() const { return m_lifeCycleConfig; }
+  inline bool LifeCycleConfigHasBeenSet() const { return m_lifeCycleConfigHasBeenSet; }
+  template <typename LifeCycleConfigT = ClusterLifeCycleConfig>
+  void SetLifeCycleConfig(LifeCycleConfigT&& value) {
+    m_lifeCycleConfigHasBeenSet = true;
+    m_lifeCycleConfig = std::forward<LifeCycleConfigT>(value);
+  }
+  template <typename LifeCycleConfigT = ClusterLifeCycleConfig>
+  ClusterNodeDetails& WithLifeCycleConfig(LifeCycleConfigT&& value) {
+    SetLifeCycleConfig(std::forward<LifeCycleConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of threads per CPU core you specified under
-     * <code>CreateCluster</code>.</p>
-     */
-    inline int GetThreadsPerCore() const{ return m_threadsPerCore; }
-    inline bool ThreadsPerCoreHasBeenSet() const { return m_threadsPerCoreHasBeenSet; }
-    inline void SetThreadsPerCore(int value) { m_threadsPerCoreHasBeenSet = true; m_threadsPerCore = value; }
-    inline ClusterNodeDetails& WithThreadsPerCore(int value) { SetThreadsPerCore(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The customized Amazon VPC configuration at the instance group level that
+   * overrides the default Amazon VPC configuration of the SageMaker HyperPod
+   * cluster.</p>
+   */
+  inline const VpcConfig& GetOverrideVpcConfig() const { return m_overrideVpcConfig; }
+  inline bool OverrideVpcConfigHasBeenSet() const { return m_overrideVpcConfigHasBeenSet; }
+  template <typename OverrideVpcConfigT = VpcConfig>
+  void SetOverrideVpcConfig(OverrideVpcConfigT&& value) {
+    m_overrideVpcConfigHasBeenSet = true;
+    m_overrideVpcConfig = std::forward<OverrideVpcConfigT>(value);
+  }
+  template <typename OverrideVpcConfigT = VpcConfig>
+  ClusterNodeDetails& WithOverrideVpcConfig(OverrideVpcConfigT&& value) {
+    SetOverrideVpcConfig(std::forward<OverrideVpcConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configurations of additional storage specified to the instance group
-     * where the instance (node) is launched.</p>
-     */
-    inline const Aws::Vector<ClusterInstanceStorageConfig>& GetInstanceStorageConfigs() const{ return m_instanceStorageConfigs; }
-    inline bool InstanceStorageConfigsHasBeenSet() const { return m_instanceStorageConfigsHasBeenSet; }
-    inline void SetInstanceStorageConfigs(const Aws::Vector<ClusterInstanceStorageConfig>& value) { m_instanceStorageConfigsHasBeenSet = true; m_instanceStorageConfigs = value; }
-    inline void SetInstanceStorageConfigs(Aws::Vector<ClusterInstanceStorageConfig>&& value) { m_instanceStorageConfigsHasBeenSet = true; m_instanceStorageConfigs = std::move(value); }
-    inline ClusterNodeDetails& WithInstanceStorageConfigs(const Aws::Vector<ClusterInstanceStorageConfig>& value) { SetInstanceStorageConfigs(value); return *this;}
-    inline ClusterNodeDetails& WithInstanceStorageConfigs(Aws::Vector<ClusterInstanceStorageConfig>&& value) { SetInstanceStorageConfigs(std::move(value)); return *this;}
-    inline ClusterNodeDetails& AddInstanceStorageConfigs(const ClusterInstanceStorageConfig& value) { m_instanceStorageConfigsHasBeenSet = true; m_instanceStorageConfigs.push_back(value); return *this; }
-    inline ClusterNodeDetails& AddInstanceStorageConfigs(ClusterInstanceStorageConfig&& value) { m_instanceStorageConfigsHasBeenSet = true; m_instanceStorageConfigs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The number of threads per CPU core you specified under
+   * <code>CreateCluster</code>.</p>
+   */
+  inline int GetThreadsPerCore() const { return m_threadsPerCore; }
+  inline bool ThreadsPerCoreHasBeenSet() const { return m_threadsPerCoreHasBeenSet; }
+  inline void SetThreadsPerCore(int value) {
+    m_threadsPerCoreHasBeenSet = true;
+    m_threadsPerCore = value;
+  }
+  inline ClusterNodeDetails& WithThreadsPerCore(int value) {
+    SetThreadsPerCore(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The private primary IP address of the SageMaker HyperPod cluster node.</p>
-     */
-    inline const Aws::String& GetPrivatePrimaryIp() const{ return m_privatePrimaryIp; }
-    inline bool PrivatePrimaryIpHasBeenSet() const { return m_privatePrimaryIpHasBeenSet; }
-    inline void SetPrivatePrimaryIp(const Aws::String& value) { m_privatePrimaryIpHasBeenSet = true; m_privatePrimaryIp = value; }
-    inline void SetPrivatePrimaryIp(Aws::String&& value) { m_privatePrimaryIpHasBeenSet = true; m_privatePrimaryIp = std::move(value); }
-    inline void SetPrivatePrimaryIp(const char* value) { m_privatePrimaryIpHasBeenSet = true; m_privatePrimaryIp.assign(value); }
-    inline ClusterNodeDetails& WithPrivatePrimaryIp(const Aws::String& value) { SetPrivatePrimaryIp(value); return *this;}
-    inline ClusterNodeDetails& WithPrivatePrimaryIp(Aws::String&& value) { SetPrivatePrimaryIp(std::move(value)); return *this;}
-    inline ClusterNodeDetails& WithPrivatePrimaryIp(const char* value) { SetPrivatePrimaryIp(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configurations of additional storage specified to the instance group
+   * where the instance (node) is launched.</p>
+   */
+  inline const Aws::Vector<ClusterInstanceStorageConfig>& GetInstanceStorageConfigs() const { return m_instanceStorageConfigs; }
+  inline bool InstanceStorageConfigsHasBeenSet() const { return m_instanceStorageConfigsHasBeenSet; }
+  template <typename InstanceStorageConfigsT = Aws::Vector<ClusterInstanceStorageConfig>>
+  void SetInstanceStorageConfigs(InstanceStorageConfigsT&& value) {
+    m_instanceStorageConfigsHasBeenSet = true;
+    m_instanceStorageConfigs = std::forward<InstanceStorageConfigsT>(value);
+  }
+  template <typename InstanceStorageConfigsT = Aws::Vector<ClusterInstanceStorageConfig>>
+  ClusterNodeDetails& WithInstanceStorageConfigs(InstanceStorageConfigsT&& value) {
+    SetInstanceStorageConfigs(std::forward<InstanceStorageConfigsT>(value));
+    return *this;
+  }
+  template <typename InstanceStorageConfigsT = ClusterInstanceStorageConfig>
+  ClusterNodeDetails& AddInstanceStorageConfigs(InstanceStorageConfigsT&& value) {
+    m_instanceStorageConfigsHasBeenSet = true;
+    m_instanceStorageConfigs.emplace_back(std::forward<InstanceStorageConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The private DNS hostname of the SageMaker HyperPod cluster node.</p>
-     */
-    inline const Aws::String& GetPrivateDnsHostname() const{ return m_privateDnsHostname; }
-    inline bool PrivateDnsHostnameHasBeenSet() const { return m_privateDnsHostnameHasBeenSet; }
-    inline void SetPrivateDnsHostname(const Aws::String& value) { m_privateDnsHostnameHasBeenSet = true; m_privateDnsHostname = value; }
-    inline void SetPrivateDnsHostname(Aws::String&& value) { m_privateDnsHostnameHasBeenSet = true; m_privateDnsHostname = std::move(value); }
-    inline void SetPrivateDnsHostname(const char* value) { m_privateDnsHostnameHasBeenSet = true; m_privateDnsHostname.assign(value); }
-    inline ClusterNodeDetails& WithPrivateDnsHostname(const Aws::String& value) { SetPrivateDnsHostname(value); return *this;}
-    inline ClusterNodeDetails& WithPrivateDnsHostname(Aws::String&& value) { SetPrivateDnsHostname(std::move(value)); return *this;}
-    inline ClusterNodeDetails& WithPrivateDnsHostname(const char* value) { SetPrivateDnsHostname(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The private primary IP address of the SageMaker HyperPod cluster node.</p>
+   */
+  inline const Aws::String& GetPrivatePrimaryIp() const { return m_privatePrimaryIp; }
+  inline bool PrivatePrimaryIpHasBeenSet() const { return m_privatePrimaryIpHasBeenSet; }
+  template <typename PrivatePrimaryIpT = Aws::String>
+  void SetPrivatePrimaryIp(PrivatePrimaryIpT&& value) {
+    m_privatePrimaryIpHasBeenSet = true;
+    m_privatePrimaryIp = std::forward<PrivatePrimaryIpT>(value);
+  }
+  template <typename PrivatePrimaryIpT = Aws::String>
+  ClusterNodeDetails& WithPrivatePrimaryIp(PrivatePrimaryIpT&& value) {
+    SetPrivatePrimaryIp(std::forward<PrivatePrimaryIpT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The placement details of the SageMaker HyperPod cluster node.</p>
-     */
-    inline const ClusterInstancePlacement& GetPlacement() const{ return m_placement; }
-    inline bool PlacementHasBeenSet() const { return m_placementHasBeenSet; }
-    inline void SetPlacement(const ClusterInstancePlacement& value) { m_placementHasBeenSet = true; m_placement = value; }
-    inline void SetPlacement(ClusterInstancePlacement&& value) { m_placementHasBeenSet = true; m_placement = std::move(value); }
-    inline ClusterNodeDetails& WithPlacement(const ClusterInstancePlacement& value) { SetPlacement(value); return *this;}
-    inline ClusterNodeDetails& WithPlacement(ClusterInstancePlacement&& value) { SetPlacement(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The private primary IPv6 address of the SageMaker HyperPod cluster node when
+   * configured with an Amazon VPC that supports IPv6 and includes subnets with IPv6
+   * addressing enabled in either the cluster Amazon VPC configuration or the
+   * instance group Amazon VPC configuration.</p>
+   */
+  inline const Aws::String& GetPrivatePrimaryIpv6() const { return m_privatePrimaryIpv6; }
+  inline bool PrivatePrimaryIpv6HasBeenSet() const { return m_privatePrimaryIpv6HasBeenSet; }
+  template <typename PrivatePrimaryIpv6T = Aws::String>
+  void SetPrivatePrimaryIpv6(PrivatePrimaryIpv6T&& value) {
+    m_privatePrimaryIpv6HasBeenSet = true;
+    m_privatePrimaryIpv6 = std::forward<PrivatePrimaryIpv6T>(value);
+  }
+  template <typename PrivatePrimaryIpv6T = Aws::String>
+  ClusterNodeDetails& WithPrivatePrimaryIpv6(PrivatePrimaryIpv6T&& value) {
+    SetPrivatePrimaryIpv6(std::forward<PrivatePrimaryIpv6T>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_instanceGroupName;
-    bool m_instanceGroupNameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The private DNS hostname of the SageMaker HyperPod cluster node.</p>
+   */
+  inline const Aws::String& GetPrivateDnsHostname() const { return m_privateDnsHostname; }
+  inline bool PrivateDnsHostnameHasBeenSet() const { return m_privateDnsHostnameHasBeenSet; }
+  template <typename PrivateDnsHostnameT = Aws::String>
+  void SetPrivateDnsHostname(PrivateDnsHostnameT&& value) {
+    m_privateDnsHostnameHasBeenSet = true;
+    m_privateDnsHostname = std::forward<PrivateDnsHostnameT>(value);
+  }
+  template <typename PrivateDnsHostnameT = Aws::String>
+  ClusterNodeDetails& WithPrivateDnsHostname(PrivateDnsHostnameT&& value) {
+    SetPrivateDnsHostname(std::forward<PrivateDnsHostnameT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The placement details of the SageMaker HyperPod cluster node.</p>
+   */
+  inline const ClusterInstancePlacement& GetPlacement() const { return m_placement; }
+  inline bool PlacementHasBeenSet() const { return m_placementHasBeenSet; }
+  template <typename PlacementT = ClusterInstancePlacement>
+  void SetPlacement(PlacementT&& value) {
+    m_placementHasBeenSet = true;
+    m_placement = std::forward<PlacementT>(value);
+  }
+  template <typename PlacementT = ClusterInstancePlacement>
+  ClusterNodeDetails& WithPlacement(PlacementT&& value) {
+    SetPlacement(std::forward<PlacementT>(value));
+    return *this;
+  }
+  ///@}
 
-    ClusterInstanceStatusDetails m_instanceStatus;
-    bool m_instanceStatusHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The ID of the Amazon Machine Image (AMI) currently in use by the node.</p>
+   */
+  inline const Aws::String& GetCurrentImageId() const { return m_currentImageId; }
+  inline bool CurrentImageIdHasBeenSet() const { return m_currentImageIdHasBeenSet; }
+  template <typename CurrentImageIdT = Aws::String>
+  void SetCurrentImageId(CurrentImageIdT&& value) {
+    m_currentImageIdHasBeenSet = true;
+    m_currentImageId = std::forward<CurrentImageIdT>(value);
+  }
+  template <typename CurrentImageIdT = Aws::String>
+  ClusterNodeDetails& WithCurrentImageId(CurrentImageIdT&& value) {
+    SetCurrentImageId(std::forward<CurrentImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ClusterInstanceType m_instanceType;
-    bool m_instanceTypeHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The ID of the Amazon Machine Image (AMI) desired for the node.</p>
+   */
+  inline const Aws::String& GetDesiredImageId() const { return m_desiredImageId; }
+  inline bool DesiredImageIdHasBeenSet() const { return m_desiredImageIdHasBeenSet; }
+  template <typename DesiredImageIdT = Aws::String>
+  void SetDesiredImageId(DesiredImageIdT&& value) {
+    m_desiredImageIdHasBeenSet = true;
+    m_desiredImageId = std::forward<DesiredImageIdT>(value);
+  }
+  template <typename DesiredImageIdT = Aws::String>
+  ClusterNodeDetails& WithDesiredImageId(DesiredImageIdT&& value) {
+    SetDesiredImageId(std::forward<DesiredImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Utils::DateTime m_launchTime;
-    bool m_launchTimeHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The version of the HyperPod-managed AMI currently running on the node.</p>
+   */
+  inline const Aws::String& GetCurrentImageReleaseVersion() const { return m_currentImageReleaseVersion; }
+  inline bool CurrentImageReleaseVersionHasBeenSet() const { return m_currentImageReleaseVersionHasBeenSet; }
+  template <typename CurrentImageReleaseVersionT = Aws::String>
+  void SetCurrentImageReleaseVersion(CurrentImageReleaseVersionT&& value) {
+    m_currentImageReleaseVersionHasBeenSet = true;
+    m_currentImageReleaseVersion = std::forward<CurrentImageReleaseVersionT>(value);
+  }
+  template <typename CurrentImageReleaseVersionT = Aws::String>
+  ClusterNodeDetails& WithCurrentImageReleaseVersion(CurrentImageReleaseVersionT&& value) {
+    SetCurrentImageReleaseVersion(std::forward<CurrentImageReleaseVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ClusterLifeCycleConfig m_lifeCycleConfig;
-    bool m_lifeCycleConfigHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The desired version of the HyperPod-managed AMI for the node. This may differ
+   * from the current version when an update is pending.</p>
+   */
+  inline const Aws::String& GetDesiredImageReleaseVersion() const { return m_desiredImageReleaseVersion; }
+  inline bool DesiredImageReleaseVersionHasBeenSet() const { return m_desiredImageReleaseVersionHasBeenSet; }
+  template <typename DesiredImageReleaseVersionT = Aws::String>
+  void SetDesiredImageReleaseVersion(DesiredImageReleaseVersionT&& value) {
+    m_desiredImageReleaseVersionHasBeenSet = true;
+    m_desiredImageReleaseVersion = std::forward<DesiredImageReleaseVersionT>(value);
+  }
+  template <typename DesiredImageReleaseVersionT = Aws::String>
+  ClusterNodeDetails& WithDesiredImageReleaseVersion(DesiredImageReleaseVersionT&& value) {
+    SetDesiredImageReleaseVersion(std::forward<DesiredImageReleaseVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    int m_threadsPerCore;
-    bool m_threadsPerCoreHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The status of the image version for the cluster node.</p>
+   */
+  inline ClusterImageVersionStatus GetImageVersionStatus() const { return m_imageVersionStatus; }
+  inline bool ImageVersionStatusHasBeenSet() const { return m_imageVersionStatusHasBeenSet; }
+  inline void SetImageVersionStatus(ClusterImageVersionStatus value) {
+    m_imageVersionStatusHasBeenSet = true;
+    m_imageVersionStatus = value;
+  }
+  inline ClusterNodeDetails& WithImageVersionStatus(ClusterImageVersionStatus value) {
+    SetImageVersionStatus(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<ClusterInstanceStorageConfig> m_instanceStorageConfigs;
-    bool m_instanceStorageConfigsHasBeenSet = false;
+  ///@{
+  /**
+   * <p>Contains information about the UltraServer.</p>
+   */
+  inline const UltraServerInfo& GetUltraServerInfo() const { return m_ultraServerInfo; }
+  inline bool UltraServerInfoHasBeenSet() const { return m_ultraServerInfoHasBeenSet; }
+  template <typename UltraServerInfoT = UltraServerInfo>
+  void SetUltraServerInfo(UltraServerInfoT&& value) {
+    m_ultraServerInfoHasBeenSet = true;
+    m_ultraServerInfo = std::forward<UltraServerInfoT>(value);
+  }
+  template <typename UltraServerInfoT = UltraServerInfo>
+  ClusterNodeDetails& WithUltraServerInfo(UltraServerInfoT&& value) {
+    SetUltraServerInfo(std::forward<UltraServerInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_privatePrimaryIp;
-    bool m_privatePrimaryIpHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The Kubernetes configuration applied to this node, showing both the current
+   * and desired state of labels and taints. The cluster works to reconcile the
+   * actual state with the declared state. </p>
+   */
+  inline const ClusterKubernetesConfigNodeDetails& GetKubernetesConfig() const { return m_kubernetesConfig; }
+  inline bool KubernetesConfigHasBeenSet() const { return m_kubernetesConfigHasBeenSet; }
+  template <typename KubernetesConfigT = ClusterKubernetesConfigNodeDetails>
+  void SetKubernetesConfig(KubernetesConfigT&& value) {
+    m_kubernetesConfigHasBeenSet = true;
+    m_kubernetesConfig = std::forward<KubernetesConfigT>(value);
+  }
+  template <typename KubernetesConfigT = ClusterKubernetesConfigNodeDetails>
+  ClusterNodeDetails& WithKubernetesConfig(KubernetesConfigT&& value) {
+    SetKubernetesConfig(std::forward<KubernetesConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_privateDnsHostname;
-    bool m_privateDnsHostnameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>The capacity type of the node. Valid values are <code>OnDemand</code> and
+   * <code>Spot</code>. When set to <code>OnDemand</code>, the node is launched as an
+   * On-Demand instance. When set to <code>Spot</code>, the node is launched as a
+   * Spot instance. </p>
+   */
+  inline ClusterCapacityType GetCapacityType() const { return m_capacityType; }
+  inline bool CapacityTypeHasBeenSet() const { return m_capacityTypeHasBeenSet; }
+  inline void SetCapacityType(ClusterCapacityType value) {
+    m_capacityTypeHasBeenSet = true;
+    m_capacityType = value;
+  }
+  inline ClusterNodeDetails& WithCapacityType(ClusterCapacityType value) {
+    SetCapacityType(value);
+    return *this;
+  }
+  ///@}
 
-    ClusterInstancePlacement m_placement;
-    bool m_placementHasBeenSet = false;
-  };
+  ///@{
+  /**
+   * <p>The network interface configuration for the cluster node.</p>
+   */
+  inline const ClusterNetworkInterfaceDetails& GetNetworkInterface() const { return m_networkInterface; }
+  inline bool NetworkInterfaceHasBeenSet() const { return m_networkInterfaceHasBeenSet; }
+  template <typename NetworkInterfaceT = ClusterNetworkInterfaceDetails>
+  void SetNetworkInterface(NetworkInterfaceT&& value) {
+    m_networkInterfaceHasBeenSet = true;
+    m_networkInterface = std::forward<NetworkInterfaceT>(value);
+  }
+  template <typename NetworkInterfaceT = ClusterNetworkInterfaceDetails>
+  ClusterNodeDetails& WithNetworkInterface(NetworkInterfaceT&& value) {
+    SetNetworkInterface(std::forward<NetworkInterfaceT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceGroupName;
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+  Aws::String m_instanceId;
+
+  Aws::String m_nodeLogicalId;
+
+  ClusterInstanceStatusDetails m_instanceStatus;
+
+  ClusterInstanceType m_instanceType{ClusterInstanceType::NOT_SET};
+
+  Aws::Utils::DateTime m_launchTime{};
+
+  Aws::Utils::DateTime m_lastSoftwareUpdateTime{};
+
+  ClusterLifeCycleConfig m_lifeCycleConfig;
+
+  VpcConfig m_overrideVpcConfig;
+
+  int m_threadsPerCore{0};
+
+  Aws::Vector<ClusterInstanceStorageConfig> m_instanceStorageConfigs;
+
+  Aws::String m_privatePrimaryIp;
+
+  Aws::String m_privatePrimaryIpv6;
+
+  Aws::String m_privateDnsHostname;
+
+  ClusterInstancePlacement m_placement;
+
+  Aws::String m_currentImageId;
+
+  Aws::String m_desiredImageId;
+
+  Aws::String m_currentImageReleaseVersion;
+
+  Aws::String m_desiredImageReleaseVersion;
+
+  ClusterImageVersionStatus m_imageVersionStatus{ClusterImageVersionStatus::NOT_SET};
+
+  UltraServerInfo m_ultraServerInfo;
+
+  ClusterKubernetesConfigNodeDetails m_kubernetesConfig;
+
+  ClusterCapacityType m_capacityType{ClusterCapacityType::NOT_SET};
+
+  ClusterNetworkInterfaceDetails m_networkInterface;
+  bool m_instanceGroupNameHasBeenSet = false;
+  bool m_instanceIdHasBeenSet = false;
+  bool m_nodeLogicalIdHasBeenSet = false;
+  bool m_instanceStatusHasBeenSet = false;
+  bool m_instanceTypeHasBeenSet = false;
+  bool m_launchTimeHasBeenSet = false;
+  bool m_lastSoftwareUpdateTimeHasBeenSet = false;
+  bool m_lifeCycleConfigHasBeenSet = false;
+  bool m_overrideVpcConfigHasBeenSet = false;
+  bool m_threadsPerCoreHasBeenSet = false;
+  bool m_instanceStorageConfigsHasBeenSet = false;
+  bool m_privatePrimaryIpHasBeenSet = false;
+  bool m_privatePrimaryIpv6HasBeenSet = false;
+  bool m_privateDnsHostnameHasBeenSet = false;
+  bool m_placementHasBeenSet = false;
+  bool m_currentImageIdHasBeenSet = false;
+  bool m_desiredImageIdHasBeenSet = false;
+  bool m_currentImageReleaseVersionHasBeenSet = false;
+  bool m_desiredImageReleaseVersionHasBeenSet = false;
+  bool m_imageVersionStatusHasBeenSet = false;
+  bool m_ultraServerInfoHasBeenSet = false;
+  bool m_kubernetesConfigHasBeenSet = false;
+  bool m_capacityTypeHasBeenSet = false;
+  bool m_networkInterfaceHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

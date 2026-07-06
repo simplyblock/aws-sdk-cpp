@@ -4,65 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/healthlake/HealthLake_EXPORTS.h>
 #include <aws/healthlake/model/DatastoreProperties.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace HealthLake
-{
-namespace Model
-{
-  class DescribeFHIRDatastoreResult
-  {
-  public:
-    AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult();
-    AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace HealthLake {
+namespace Model {
+class DescribeFHIRDatastoreResult {
+ public:
+  AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult() = default;
+  AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_HEALTHLAKE_API DescribeFHIRDatastoreResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The data store properties.</p>
+   */
+  inline const DatastoreProperties& GetDatastoreProperties() const { return m_datastoreProperties; }
+  template <typename DatastorePropertiesT = DatastoreProperties>
+  void SetDatastoreProperties(DatastorePropertiesT&& value) {
+    m_datastorePropertiesHasBeenSet = true;
+    m_datastoreProperties = std::forward<DatastorePropertiesT>(value);
+  }
+  template <typename DatastorePropertiesT = DatastoreProperties>
+  DescribeFHIRDatastoreResult& WithDatastoreProperties(DatastorePropertiesT&& value) {
+    SetDatastoreProperties(std::forward<DatastorePropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>All properties associated with a data store, including the data store ID,
-     * data store ARN, data store name, data store status, when the data store was
-     * created, data store type version, and the data store's endpoint.</p>
-     */
-    inline const DatastoreProperties& GetDatastoreProperties() const{ return m_datastoreProperties; }
-    inline void SetDatastoreProperties(const DatastoreProperties& value) { m_datastoreProperties = value; }
-    inline void SetDatastoreProperties(DatastoreProperties&& value) { m_datastoreProperties = std::move(value); }
-    inline DescribeFHIRDatastoreResult& WithDatastoreProperties(const DatastoreProperties& value) { SetDatastoreProperties(value); return *this;}
-    inline DescribeFHIRDatastoreResult& WithDatastoreProperties(DatastoreProperties&& value) { SetDatastoreProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeFHIRDatastoreResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeFHIRDatastoreResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeFHIRDatastoreResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeFHIRDatastoreResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DatastoreProperties m_datastoreProperties;
+ private:
+  DatastoreProperties m_datastoreProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_datastorePropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace HealthLake
-} // namespace Aws
+}  // namespace Model
+}  // namespace HealthLake
+}  // namespace Aws

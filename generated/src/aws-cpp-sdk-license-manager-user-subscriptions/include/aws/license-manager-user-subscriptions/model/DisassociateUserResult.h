@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/license-manager-user-subscriptions/LicenseManagerUserSubscriptions_EXPORTS.h>
 #include <aws/license-manager-user-subscriptions/model/InstanceUserSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManagerUserSubscriptions
-{
-namespace Model
-{
-  class DisassociateUserResult
-  {
-  public:
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult();
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManagerUserSubscriptions {
+namespace Model {
+class DisassociateUserResult {
+ public:
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult() = default;
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API DisassociateUserResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Metadata that describes the associate user operation.</p>
+   */
+  inline const InstanceUserSummary& GetInstanceUserSummary() const { return m_instanceUserSummary; }
+  template <typename InstanceUserSummaryT = InstanceUserSummary>
+  void SetInstanceUserSummary(InstanceUserSummaryT&& value) {
+    m_instanceUserSummaryHasBeenSet = true;
+    m_instanceUserSummary = std::forward<InstanceUserSummaryT>(value);
+  }
+  template <typename InstanceUserSummaryT = InstanceUserSummary>
+  DisassociateUserResult& WithInstanceUserSummary(InstanceUserSummaryT&& value) {
+    SetInstanceUserSummary(std::forward<InstanceUserSummaryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Metadata that describes the associate user operation.</p>
-     */
-    inline const InstanceUserSummary& GetInstanceUserSummary() const{ return m_instanceUserSummary; }
-    inline void SetInstanceUserSummary(const InstanceUserSummary& value) { m_instanceUserSummary = value; }
-    inline void SetInstanceUserSummary(InstanceUserSummary&& value) { m_instanceUserSummary = std::move(value); }
-    inline DisassociateUserResult& WithInstanceUserSummary(const InstanceUserSummary& value) { SetInstanceUserSummary(value); return *this;}
-    inline DisassociateUserResult& WithInstanceUserSummary(InstanceUserSummary&& value) { SetInstanceUserSummary(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DisassociateUserResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DisassociateUserResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DisassociateUserResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DisassociateUserResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    InstanceUserSummary m_instanceUserSummary;
+ private:
+  InstanceUserSummary m_instanceUserSummary;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceUserSummaryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManagerUserSubscriptions
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManagerUserSubscriptions
+}  // namespace Aws

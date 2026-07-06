@@ -11,50 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace BillingConductor {
+namespace Model {
 
-ListCustomLineItemFlatChargeDetails::ListCustomLineItemFlatChargeDetails() : 
-    m_chargeValue(0.0),
-    m_chargeValueHasBeenSet(false)
-{
-}
+ListCustomLineItemFlatChargeDetails::ListCustomLineItemFlatChargeDetails(JsonView jsonValue) { *this = jsonValue; }
 
-ListCustomLineItemFlatChargeDetails::ListCustomLineItemFlatChargeDetails(JsonView jsonValue)
-  : ListCustomLineItemFlatChargeDetails()
-{
-  *this = jsonValue;
-}
-
-ListCustomLineItemFlatChargeDetails& ListCustomLineItemFlatChargeDetails::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("ChargeValue"))
-  {
+ListCustomLineItemFlatChargeDetails& ListCustomLineItemFlatChargeDetails::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("ChargeValue")) {
     m_chargeValue = jsonValue.GetDouble("ChargeValue");
-
     m_chargeValueHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ListCustomLineItemFlatChargeDetails::Jsonize() const
-{
+JsonValue ListCustomLineItemFlatChargeDetails::Jsonize() const {
   JsonValue payload;
 
-  if(m_chargeValueHasBeenSet)
-  {
-   payload.WithDouble("ChargeValue", m_chargeValue);
-
+  if (m_chargeValueHasBeenSet) {
+    payload.WithDouble("ChargeValue", m_chargeValue);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

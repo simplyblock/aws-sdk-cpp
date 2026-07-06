@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/EndpointGroup.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class ListEndpointGroupsResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult();
-    AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class ListEndpointGroupsResult {
+ public:
+  AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult() = default;
+  AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API ListEndpointGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of the endpoint groups associated with a listener.</p>
+   */
+  inline const Aws::Vector<EndpointGroup>& GetEndpointGroups() const { return m_endpointGroups; }
+  template <typename EndpointGroupsT = Aws::Vector<EndpointGroup>>
+  void SetEndpointGroups(EndpointGroupsT&& value) {
+    m_endpointGroupsHasBeenSet = true;
+    m_endpointGroups = std::forward<EndpointGroupsT>(value);
+  }
+  template <typename EndpointGroupsT = Aws::Vector<EndpointGroup>>
+  ListEndpointGroupsResult& WithEndpointGroups(EndpointGroupsT&& value) {
+    SetEndpointGroups(std::forward<EndpointGroupsT>(value));
+    return *this;
+  }
+  template <typename EndpointGroupsT = EndpointGroup>
+  ListEndpointGroupsResult& AddEndpointGroups(EndpointGroupsT&& value) {
+    m_endpointGroupsHasBeenSet = true;
+    m_endpointGroups.emplace_back(std::forward<EndpointGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of the endpoint groups associated with a listener.</p>
-     */
-    inline const Aws::Vector<EndpointGroup>& GetEndpointGroups() const{ return m_endpointGroups; }
-    inline void SetEndpointGroups(const Aws::Vector<EndpointGroup>& value) { m_endpointGroups = value; }
-    inline void SetEndpointGroups(Aws::Vector<EndpointGroup>&& value) { m_endpointGroups = std::move(value); }
-    inline ListEndpointGroupsResult& WithEndpointGroups(const Aws::Vector<EndpointGroup>& value) { SetEndpointGroups(value); return *this;}
-    inline ListEndpointGroupsResult& WithEndpointGroups(Aws::Vector<EndpointGroup>&& value) { SetEndpointGroups(std::move(value)); return *this;}
-    inline ListEndpointGroupsResult& AddEndpointGroups(const EndpointGroup& value) { m_endpointGroups.push_back(value); return *this; }
-    inline ListEndpointGroupsResult& AddEndpointGroups(EndpointGroup&& value) { m_endpointGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token for the next set of results. You receive this token from a previous
+   * call.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListEndpointGroupsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of results. You receive this token from a previous
-     * call.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListEndpointGroupsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListEndpointGroupsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListEndpointGroupsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListEndpointGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListEndpointGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListEndpointGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListEndpointGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<EndpointGroup> m_endpointGroups;
+ private:
+  Aws::Vector<EndpointGroup> m_endpointGroups;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_endpointGroupsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

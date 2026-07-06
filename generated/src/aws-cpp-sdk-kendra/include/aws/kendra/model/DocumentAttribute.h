@@ -4,77 +4,80 @@
  */
 
 #pragma once
-#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/kendra/model/DocumentAttributeValue.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace kendra
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace kendra {
+namespace Model {
 
+/**
+ * <p>A document attribute or metadata field. To create custom document attributes,
+ * see <a
+ * href="https://docs.aws.amazon.com/kendra/latest/dg/custom-attributes.html">Custom
+ * attributes</a>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/DocumentAttribute">AWS
+ * API Reference</a></p>
+ */
+class DocumentAttribute {
+ public:
+  AWS_KENDRA_API DocumentAttribute() = default;
+  AWS_KENDRA_API DocumentAttribute(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API DocumentAttribute& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A document attribute or metadata field. To create custom document attributes,
-   * see <a
-   * href="https://docs.aws.amazon.com/kendra/latest/dg/custom-attributes.html">Custom
-   * attributes</a>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/DocumentAttribute">AWS
-   * API Reference</a></p>
+   * <p>The identifier for the attribute.</p>
    */
-  class DocumentAttribute
-  {
-  public:
-    AWS_KENDRA_API DocumentAttribute();
-    AWS_KENDRA_API DocumentAttribute(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API DocumentAttribute& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetKey() const { return m_key; }
+  inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
+  template <typename KeyT = Aws::String>
+  void SetKey(KeyT&& value) {
+    m_keyHasBeenSet = true;
+    m_key = std::forward<KeyT>(value);
+  }
+  template <typename KeyT = Aws::String>
+  DocumentAttribute& WithKey(KeyT&& value) {
+    SetKey(std::forward<KeyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The value of the attribute.</p>
+   */
+  inline const DocumentAttributeValue& GetValue() const { return m_value; }
+  inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
+  template <typename ValueT = DocumentAttributeValue>
+  void SetValue(ValueT&& value) {
+    m_valueHasBeenSet = true;
+    m_value = std::forward<ValueT>(value);
+  }
+  template <typename ValueT = DocumentAttributeValue>
+  DocumentAttribute& WithValue(ValueT&& value) {
+    SetValue(std::forward<ValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_key;
 
-    ///@{
-    /**
-     * <p>The identifier for the attribute.</p>
-     */
-    inline const Aws::String& GetKey() const{ return m_key; }
-    inline bool KeyHasBeenSet() const { return m_keyHasBeenSet; }
-    inline void SetKey(const Aws::String& value) { m_keyHasBeenSet = true; m_key = value; }
-    inline void SetKey(Aws::String&& value) { m_keyHasBeenSet = true; m_key = std::move(value); }
-    inline void SetKey(const char* value) { m_keyHasBeenSet = true; m_key.assign(value); }
-    inline DocumentAttribute& WithKey(const Aws::String& value) { SetKey(value); return *this;}
-    inline DocumentAttribute& WithKey(Aws::String&& value) { SetKey(std::move(value)); return *this;}
-    inline DocumentAttribute& WithKey(const char* value) { SetKey(value); return *this;}
-    ///@}
+  DocumentAttributeValue m_value;
+  bool m_keyHasBeenSet = false;
+  bool m_valueHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The value of the attribute.</p>
-     */
-    inline const DocumentAttributeValue& GetValue() const{ return m_value; }
-    inline bool ValueHasBeenSet() const { return m_valueHasBeenSet; }
-    inline void SetValue(const DocumentAttributeValue& value) { m_valueHasBeenSet = true; m_value = value; }
-    inline void SetValue(DocumentAttributeValue&& value) { m_valueHasBeenSet = true; m_value = std::move(value); }
-    inline DocumentAttribute& WithValue(const DocumentAttributeValue& value) { SetValue(value); return *this;}
-    inline DocumentAttribute& WithValue(DocumentAttributeValue&& value) { SetValue(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_key;
-    bool m_keyHasBeenSet = false;
-
-    DocumentAttributeValue m_value;
-    bool m_valueHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

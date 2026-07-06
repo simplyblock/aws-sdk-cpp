@@ -4,149 +4,227 @@
  */
 
 #pragma once
-#include <aws/entityresolution/EntityResolution_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/entityresolution/model/ErrorDetails.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/entityresolution/model/IdMappingJobMetrics.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/entityresolution/model/JobStatus.h>
+#include <aws/entityresolution/EntityResolution_EXPORTS.h>
+#include <aws/entityresolution/model/ErrorDetails.h>
+#include <aws/entityresolution/model/IdMappingJobMetrics.h>
 #include <aws/entityresolution/model/IdMappingJobOutputSource.h>
+#include <aws/entityresolution/model/JobStatus.h>
+#include <aws/entityresolution/model/JobType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EntityResolution
-{
-namespace Model
-{
-  class GetIdMappingJobResult
-  {
-  public:
-    AWS_ENTITYRESOLUTION_API GetIdMappingJobResult();
-    AWS_ENTITYRESOLUTION_API GetIdMappingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ENTITYRESOLUTION_API GetIdMappingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EntityResolution {
+namespace Model {
+class GetIdMappingJobResult {
+ public:
+  AWS_ENTITYRESOLUTION_API GetIdMappingJobResult() = default;
+  AWS_ENTITYRESOLUTION_API GetIdMappingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ENTITYRESOLUTION_API GetIdMappingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the job.</p>
+   */
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  GetIdMappingJobResult& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the job has finished.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTime = std::move(value); }
-    inline GetIdMappingJobResult& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline GetIdMappingJobResult& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the job.</p>
+   */
+  inline JobStatus GetStatus() const { return m_status; }
+  inline void SetStatus(JobStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetIdMappingJobResult& WithStatus(JobStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ErrorDetails& GetErrorDetails() const{ return m_errorDetails; }
-    inline void SetErrorDetails(const ErrorDetails& value) { m_errorDetails = value; }
-    inline void SetErrorDetails(ErrorDetails&& value) { m_errorDetails = std::move(value); }
-    inline GetIdMappingJobResult& WithErrorDetails(const ErrorDetails& value) { SetErrorDetails(value); return *this;}
-    inline GetIdMappingJobResult& WithErrorDetails(ErrorDetails&& value) { SetErrorDetails(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the job was started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  GetIdMappingJobResult& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the job.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline void SetJobId(const Aws::String& value) { m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobId.assign(value); }
-    inline GetIdMappingJobResult& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline GetIdMappingJobResult& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline GetIdMappingJobResult& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the job has finished.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  GetIdMappingJobResult& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Metrics associated with the execution, specifically total records processed,
-     * unique IDs generated, and records the execution skipped.</p>
-     */
-    inline const IdMappingJobMetrics& GetMetrics() const{ return m_metrics; }
-    inline void SetMetrics(const IdMappingJobMetrics& value) { m_metrics = value; }
-    inline void SetMetrics(IdMappingJobMetrics&& value) { m_metrics = std::move(value); }
-    inline GetIdMappingJobResult& WithMetrics(const IdMappingJobMetrics& value) { SetMetrics(value); return *this;}
-    inline GetIdMappingJobResult& WithMetrics(IdMappingJobMetrics&& value) { SetMetrics(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Metrics associated with the execution, specifically total records processed,
+   * unique IDs generated, and records the execution skipped.</p>
+   */
+  inline const IdMappingJobMetrics& GetMetrics() const { return m_metrics; }
+  template <typename MetricsT = IdMappingJobMetrics>
+  void SetMetrics(MetricsT&& value) {
+    m_metricsHasBeenSet = true;
+    m_metrics = std::forward<MetricsT>(value);
+  }
+  template <typename MetricsT = IdMappingJobMetrics>
+  GetIdMappingJobResult& WithMetrics(MetricsT&& value) {
+    SetMetrics(std::forward<MetricsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code>OutputSource</code> objects.</p>
-     */
-    inline const Aws::Vector<IdMappingJobOutputSource>& GetOutputSourceConfig() const{ return m_outputSourceConfig; }
-    inline void SetOutputSourceConfig(const Aws::Vector<IdMappingJobOutputSource>& value) { m_outputSourceConfig = value; }
-    inline void SetOutputSourceConfig(Aws::Vector<IdMappingJobOutputSource>&& value) { m_outputSourceConfig = std::move(value); }
-    inline GetIdMappingJobResult& WithOutputSourceConfig(const Aws::Vector<IdMappingJobOutputSource>& value) { SetOutputSourceConfig(value); return *this;}
-    inline GetIdMappingJobResult& WithOutputSourceConfig(Aws::Vector<IdMappingJobOutputSource>&& value) { SetOutputSourceConfig(std::move(value)); return *this;}
-    inline GetIdMappingJobResult& AddOutputSourceConfig(const IdMappingJobOutputSource& value) { m_outputSourceConfig.push_back(value); return *this; }
-    inline GetIdMappingJobResult& AddOutputSourceConfig(IdMappingJobOutputSource&& value) { m_outputSourceConfig.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The time at which the job was started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTime = std::move(value); }
-    inline GetIdMappingJobResult& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline GetIdMappingJobResult& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  inline const ErrorDetails& GetErrorDetails() const { return m_errorDetails; }
+  template <typename ErrorDetailsT = ErrorDetails>
+  void SetErrorDetails(ErrorDetailsT&& value) {
+    m_errorDetailsHasBeenSet = true;
+    m_errorDetails = std::forward<ErrorDetailsT>(value);
+  }
+  template <typename ErrorDetailsT = ErrorDetails>
+  GetIdMappingJobResult& WithErrorDetails(ErrorDetailsT&& value) {
+    SetErrorDetails(std::forward<ErrorDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the job.</p>
-     */
-    inline const JobStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const JobStatus& value) { m_status = value; }
-    inline void SetStatus(JobStatus&& value) { m_status = std::move(value); }
-    inline GetIdMappingJobResult& WithStatus(const JobStatus& value) { SetStatus(value); return *this;}
-    inline GetIdMappingJobResult& WithStatus(JobStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of <code>OutputSource</code> objects.</p>
+   */
+  inline const Aws::Vector<IdMappingJobOutputSource>& GetOutputSourceConfig() const { return m_outputSourceConfig; }
+  template <typename OutputSourceConfigT = Aws::Vector<IdMappingJobOutputSource>>
+  void SetOutputSourceConfig(OutputSourceConfigT&& value) {
+    m_outputSourceConfigHasBeenSet = true;
+    m_outputSourceConfig = std::forward<OutputSourceConfigT>(value);
+  }
+  template <typename OutputSourceConfigT = Aws::Vector<IdMappingJobOutputSource>>
+  GetIdMappingJobResult& WithOutputSourceConfig(OutputSourceConfigT&& value) {
+    SetOutputSourceConfig(std::forward<OutputSourceConfigT>(value));
+    return *this;
+  }
+  template <typename OutputSourceConfigT = IdMappingJobOutputSource>
+  GetIdMappingJobResult& AddOutputSourceConfig(OutputSourceConfigT&& value) {
+    m_outputSourceConfigHasBeenSet = true;
+    m_outputSourceConfig.emplace_back(std::forward<OutputSourceConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetIdMappingJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetIdMappingJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetIdMappingJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p> The job type of the ID mapping job.</p> <p>A value of
+   * <code>INCREMENTAL</code> indicates that only new or changed data was processed
+   * since the last job run. This is the default job type if the workflow was created
+   * with an <code>incrementalRunConfig</code>.</p> <p>A value of <code>BATCH</code>
+   * indicates that all data was processed from the input source, regardless of
+   * previous job runs. This is the default job type if the workflow wasn't created
+   * with an <code>incrementalRunConfig</code>.</p> <p>A value of
+   * <code>DELETE_ONLY</code> indicates that only deletion requests from
+   * <code>BatchDeleteUniqueIds</code> were processed.</p>
+   */
+  inline JobType GetJobType() const { return m_jobType; }
+  inline void SetJobType(JobType value) {
+    m_jobTypeHasBeenSet = true;
+    m_jobType = value;
+  }
+  inline GetIdMappingJobResult& WithJobType(JobType value) {
+    SetJobType(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::Utils::DateTime m_endTime;
+  ///@{
 
-    ErrorDetails m_errorDetails;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetIdMappingJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_jobId;
+ private:
+  Aws::String m_jobId;
 
-    IdMappingJobMetrics m_metrics;
+  JobStatus m_status{JobStatus::NOT_SET};
 
-    Aws::Vector<IdMappingJobOutputSource> m_outputSourceConfig;
+  Aws::Utils::DateTime m_startTime{};
 
-    Aws::Utils::DateTime m_startTime;
+  Aws::Utils::DateTime m_endTime{};
 
-    JobStatus m_status;
+  IdMappingJobMetrics m_metrics;
 
-    Aws::String m_requestId;
-  };
+  ErrorDetails m_errorDetails;
 
-} // namespace Model
-} // namespace EntityResolution
-} // namespace Aws
+  Aws::Vector<IdMappingJobOutputSource> m_outputSourceConfig;
+
+  JobType m_jobType{JobType::NOT_SET};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+  bool m_metricsHasBeenSet = false;
+  bool m_errorDetailsHasBeenSet = false;
+  bool m_outputSourceConfigHasBeenSet = false;
+  bool m_jobTypeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace EntityResolution
+}  // namespace Aws

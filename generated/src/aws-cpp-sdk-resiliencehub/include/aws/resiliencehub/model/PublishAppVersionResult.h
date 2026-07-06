@@ -4,111 +4,135 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class PublishAppVersionResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API PublishAppVersionResult();
-    AWS_RESILIENCEHUB_API PublishAppVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API PublishAppVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class PublishAppVersionResult {
+ public:
+  AWS_RESILIENCEHUB_API PublishAppVersionResult() = default;
+  AWS_RESILIENCEHUB_API PublishAppVersionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API PublishAppVersionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
+   * this ARN is:
+   * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
+   * For more information about ARNs, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
+   * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
+   * Reference</i> guide.</p>
+   */
+  inline const Aws::String& GetAppArn() const { return m_appArn; }
+  template <typename AppArnT = Aws::String>
+  void SetAppArn(AppArnT&& value) {
+    m_appArnHasBeenSet = true;
+    m_appArn = std::forward<AppArnT>(value);
+  }
+  template <typename AppArnT = Aws::String>
+  PublishAppVersionResult& WithAppArn(AppArnT&& value) {
+    SetAppArn(std::forward<AppArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
-     * this ARN is:
-     * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
-     * For more information about ARNs, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
-     * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
-     * Reference</i> guide.</p>
-     */
-    inline const Aws::String& GetAppArn() const{ return m_appArn; }
-    inline void SetAppArn(const Aws::String& value) { m_appArn = value; }
-    inline void SetAppArn(Aws::String&& value) { m_appArn = std::move(value); }
-    inline void SetAppArn(const char* value) { m_appArn.assign(value); }
-    inline PublishAppVersionResult& WithAppArn(const Aws::String& value) { SetAppArn(value); return *this;}
-    inline PublishAppVersionResult& WithAppArn(Aws::String&& value) { SetAppArn(std::move(value)); return *this;}
-    inline PublishAppVersionResult& WithAppArn(const char* value) { SetAppArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the application.</p>
+   */
+  inline const Aws::String& GetAppVersion() const { return m_appVersion; }
+  template <typename AppVersionT = Aws::String>
+  void SetAppVersion(AppVersionT&& value) {
+    m_appVersionHasBeenSet = true;
+    m_appVersion = std::forward<AppVersionT>(value);
+  }
+  template <typename AppVersionT = Aws::String>
+  PublishAppVersionResult& WithAppVersion(AppVersionT&& value) {
+    SetAppVersion(std::forward<AppVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the application.</p>
-     */
-    inline const Aws::String& GetAppVersion() const{ return m_appVersion; }
-    inline void SetAppVersion(const Aws::String& value) { m_appVersion = value; }
-    inline void SetAppVersion(Aws::String&& value) { m_appVersion = std::move(value); }
-    inline void SetAppVersion(const char* value) { m_appVersion.assign(value); }
-    inline PublishAppVersionResult& WithAppVersion(const Aws::String& value) { SetAppVersion(value); return *this;}
-    inline PublishAppVersionResult& WithAppVersion(Aws::String&& value) { SetAppVersion(std::move(value)); return *this;}
-    inline PublishAppVersionResult& WithAppVersion(const char* value) { SetAppVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Identifier of the application version.</p>
+   */
+  inline long long GetIdentifier() const { return m_identifier; }
+  inline void SetIdentifier(long long value) {
+    m_identifierHasBeenSet = true;
+    m_identifier = value;
+  }
+  inline PublishAppVersionResult& WithIdentifier(long long value) {
+    SetIdentifier(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Identifier of the application version.</p>
-     */
-    inline long long GetIdentifier() const{ return m_identifier; }
-    inline void SetIdentifier(long long value) { m_identifier = value; }
-    inline PublishAppVersionResult& WithIdentifier(long long value) { SetIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Name of the application version.</p>
+   */
+  inline const Aws::String& GetVersionName() const { return m_versionName; }
+  template <typename VersionNameT = Aws::String>
+  void SetVersionName(VersionNameT&& value) {
+    m_versionNameHasBeenSet = true;
+    m_versionName = std::forward<VersionNameT>(value);
+  }
+  template <typename VersionNameT = Aws::String>
+  PublishAppVersionResult& WithVersionName(VersionNameT&& value) {
+    SetVersionName(std::forward<VersionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the application version.</p>
-     */
-    inline const Aws::String& GetVersionName() const{ return m_versionName; }
-    inline void SetVersionName(const Aws::String& value) { m_versionName = value; }
-    inline void SetVersionName(Aws::String&& value) { m_versionName = std::move(value); }
-    inline void SetVersionName(const char* value) { m_versionName.assign(value); }
-    inline PublishAppVersionResult& WithVersionName(const Aws::String& value) { SetVersionName(value); return *this;}
-    inline PublishAppVersionResult& WithVersionName(Aws::String&& value) { SetVersionName(std::move(value)); return *this;}
-    inline PublishAppVersionResult& WithVersionName(const char* value) { SetVersionName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PublishAppVersionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PublishAppVersionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PublishAppVersionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PublishAppVersionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appArn;
+ private:
+  Aws::String m_appArn;
 
-    Aws::String m_appVersion;
+  Aws::String m_appVersion;
 
-    long long m_identifier;
+  long long m_identifier{0};
 
-    Aws::String m_versionName;
+  Aws::String m_versionName;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appArnHasBeenSet = false;
+  bool m_appVersionHasBeenSet = false;
+  bool m_identifierHasBeenSet = false;
+  bool m_versionNameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

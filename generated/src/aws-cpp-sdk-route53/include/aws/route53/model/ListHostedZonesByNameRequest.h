@@ -4,117 +4,123 @@
  */
 
 #pragma once
-#include <aws/route53/Route53_EXPORTS.h>
-#include <aws/route53/Route53Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/route53/Route53Request.h>
+#include <aws/route53/Route53_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace Route53
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace Route53 {
+namespace Model {
 
+/**
+ * <p>Retrieves a list of the public and private hosted zones that are associated
+ * with the current Amazon Web Services account in ASCII order by domain name.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/route53-2013-04-01/ListHostedZonesByNameRequest">AWS
+ * API Reference</a></p>
+ */
+class ListHostedZonesByNameRequest : public Route53Request {
+ public:
+  AWS_ROUTE53_API ListHostedZonesByNameRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListHostedZonesByName"; }
+
+  AWS_ROUTE53_API Aws::String SerializePayload() const override;
+
+  AWS_ROUTE53_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
-   * <p>Retrieves a list of the public and private hosted zones that are associated
-   * with the current Amazon Web Services account in ASCII order by domain name.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/route53-2013-04-01/ListHostedZonesByNameRequest">AWS
-   * API Reference</a></p>
+   * <p>(Optional) For your first request to <code>ListHostedZonesByName</code>,
+   * include the <code>dnsname</code> parameter only if you want to specify the name
+   * of the first hosted zone in the response. If you don't include the
+   * <code>dnsname</code> parameter, Amazon Route 53 returns all of the hosted zones
+   * that were created by the current Amazon Web Services account, in ASCII order.
+   * For subsequent requests, include both <code>dnsname</code> and
+   * <code>hostedzoneid</code> parameters. For <code>dnsname</code>, specify the
+   * value of <code>NextDNSName</code> from the previous response.</p>
    */
-  class ListHostedZonesByNameRequest : public Route53Request
-  {
-  public:
-    AWS_ROUTE53_API ListHostedZonesByNameRequest();
+  inline const Aws::String& GetDNSName() const { return m_dNSName; }
+  inline bool DNSNameHasBeenSet() const { return m_dNSNameHasBeenSet; }
+  template <typename DNSNameT = Aws::String>
+  void SetDNSName(DNSNameT&& value) {
+    m_dNSNameHasBeenSet = true;
+    m_dNSName = std::forward<DNSNameT>(value);
+  }
+  template <typename DNSNameT = Aws::String>
+  ListHostedZonesByNameRequest& WithDNSName(DNSNameT&& value) {
+    SetDNSName(std::forward<DNSNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListHostedZonesByName"; }
+  ///@{
+  /**
+   * <p>(Optional) For your first request to <code>ListHostedZonesByName</code>, do
+   * not include the <code>hostedzoneid</code> parameter.</p> <p>If you have more
+   * hosted zones than the value of <code>maxitems</code>,
+   * <code>ListHostedZonesByName</code> returns only the first <code>maxitems</code>
+   * hosted zones. To get the next group of <code>maxitems</code> hosted zones,
+   * submit another request to <code>ListHostedZonesByName</code> and include both
+   * <code>dnsname</code> and <code>hostedzoneid</code> parameters. For the value of
+   * <code>hostedzoneid</code>, specify the value of the
+   * <code>NextHostedZoneId</code> element from the previous response.</p>
+   */
+  inline const Aws::String& GetHostedZoneId() const { return m_hostedZoneId; }
+  inline bool HostedZoneIdHasBeenSet() const { return m_hostedZoneIdHasBeenSet; }
+  template <typename HostedZoneIdT = Aws::String>
+  void SetHostedZoneId(HostedZoneIdT&& value) {
+    m_hostedZoneIdHasBeenSet = true;
+    m_hostedZoneId = std::forward<HostedZoneIdT>(value);
+  }
+  template <typename HostedZoneIdT = Aws::String>
+  ListHostedZonesByNameRequest& WithHostedZoneId(HostedZoneIdT&& value) {
+    SetHostedZoneId(std::forward<HostedZoneIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ROUTE53_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of hosted zones to be included in the response body for
+   * this request. If you have more than <code>maxitems</code> hosted zones, then the
+   * value of the <code>IsTruncated</code> element in the response is true, and the
+   * values of <code>NextDNSName</code> and <code>NextHostedZoneId</code> specify the
+   * first hosted zone in the next group of <code>maxitems</code> hosted zones. </p>
+   */
+  inline const Aws::String& GetMaxItems() const { return m_maxItems; }
+  inline bool MaxItemsHasBeenSet() const { return m_maxItemsHasBeenSet; }
+  template <typename MaxItemsT = Aws::String>
+  void SetMaxItems(MaxItemsT&& value) {
+    m_maxItemsHasBeenSet = true;
+    m_maxItems = std::forward<MaxItemsT>(value);
+  }
+  template <typename MaxItemsT = Aws::String>
+  ListHostedZonesByNameRequest& WithMaxItems(MaxItemsT&& value) {
+    SetMaxItems(std::forward<MaxItemsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_dNSName;
 
-    AWS_ROUTE53_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  Aws::String m_hostedZoneId;
 
+  Aws::String m_maxItems;
+  bool m_dNSNameHasBeenSet = false;
+  bool m_hostedZoneIdHasBeenSet = false;
+  bool m_maxItemsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>(Optional) For your first request to <code>ListHostedZonesByName</code>,
-     * include the <code>dnsname</code> parameter only if you want to specify the name
-     * of the first hosted zone in the response. If you don't include the
-     * <code>dnsname</code> parameter, Amazon Route 53 returns all of the hosted zones
-     * that were created by the current Amazon Web Services account, in ASCII order.
-     * For subsequent requests, include both <code>dnsname</code> and
-     * <code>hostedzoneid</code> parameters. For <code>dnsname</code>, specify the
-     * value of <code>NextDNSName</code> from the previous response.</p>
-     */
-    inline const Aws::String& GetDNSName() const{ return m_dNSName; }
-    inline bool DNSNameHasBeenSet() const { return m_dNSNameHasBeenSet; }
-    inline void SetDNSName(const Aws::String& value) { m_dNSNameHasBeenSet = true; m_dNSName = value; }
-    inline void SetDNSName(Aws::String&& value) { m_dNSNameHasBeenSet = true; m_dNSName = std::move(value); }
-    inline void SetDNSName(const char* value) { m_dNSNameHasBeenSet = true; m_dNSName.assign(value); }
-    inline ListHostedZonesByNameRequest& WithDNSName(const Aws::String& value) { SetDNSName(value); return *this;}
-    inline ListHostedZonesByNameRequest& WithDNSName(Aws::String&& value) { SetDNSName(std::move(value)); return *this;}
-    inline ListHostedZonesByNameRequest& WithDNSName(const char* value) { SetDNSName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>(Optional) For your first request to <code>ListHostedZonesByName</code>, do
-     * not include the <code>hostedzoneid</code> parameter.</p> <p>If you have more
-     * hosted zones than the value of <code>maxitems</code>,
-     * <code>ListHostedZonesByName</code> returns only the first <code>maxitems</code>
-     * hosted zones. To get the next group of <code>maxitems</code> hosted zones,
-     * submit another request to <code>ListHostedZonesByName</code> and include both
-     * <code>dnsname</code> and <code>hostedzoneid</code> parameters. For the value of
-     * <code>hostedzoneid</code>, specify the value of the
-     * <code>NextHostedZoneId</code> element from the previous response.</p>
-     */
-    inline const Aws::String& GetHostedZoneId() const{ return m_hostedZoneId; }
-    inline bool HostedZoneIdHasBeenSet() const { return m_hostedZoneIdHasBeenSet; }
-    inline void SetHostedZoneId(const Aws::String& value) { m_hostedZoneIdHasBeenSet = true; m_hostedZoneId = value; }
-    inline void SetHostedZoneId(Aws::String&& value) { m_hostedZoneIdHasBeenSet = true; m_hostedZoneId = std::move(value); }
-    inline void SetHostedZoneId(const char* value) { m_hostedZoneIdHasBeenSet = true; m_hostedZoneId.assign(value); }
-    inline ListHostedZonesByNameRequest& WithHostedZoneId(const Aws::String& value) { SetHostedZoneId(value); return *this;}
-    inline ListHostedZonesByNameRequest& WithHostedZoneId(Aws::String&& value) { SetHostedZoneId(std::move(value)); return *this;}
-    inline ListHostedZonesByNameRequest& WithHostedZoneId(const char* value) { SetHostedZoneId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of hosted zones to be included in the response body for
-     * this request. If you have more than <code>maxitems</code> hosted zones, then the
-     * value of the <code>IsTruncated</code> element in the response is true, and the
-     * values of <code>NextDNSName</code> and <code>NextHostedZoneId</code> specify the
-     * first hosted zone in the next group of <code>maxitems</code> hosted zones. </p>
-     */
-    inline const Aws::String& GetMaxItems() const{ return m_maxItems; }
-    inline bool MaxItemsHasBeenSet() const { return m_maxItemsHasBeenSet; }
-    inline void SetMaxItems(const Aws::String& value) { m_maxItemsHasBeenSet = true; m_maxItems = value; }
-    inline void SetMaxItems(Aws::String&& value) { m_maxItemsHasBeenSet = true; m_maxItems = std::move(value); }
-    inline void SetMaxItems(const char* value) { m_maxItemsHasBeenSet = true; m_maxItems.assign(value); }
-    inline ListHostedZonesByNameRequest& WithMaxItems(const Aws::String& value) { SetMaxItems(value); return *this;}
-    inline ListHostedZonesByNameRequest& WithMaxItems(Aws::String&& value) { SetMaxItems(std::move(value)); return *this;}
-    inline ListHostedZonesByNameRequest& WithMaxItems(const char* value) { SetMaxItems(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_dNSName;
-    bool m_dNSNameHasBeenSet = false;
-
-    Aws::String m_hostedZoneId;
-    bool m_hostedZoneIdHasBeenSet = false;
-
-    Aws::String m_maxItems;
-    bool m_maxItemsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Route53
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53
+}  // namespace Aws

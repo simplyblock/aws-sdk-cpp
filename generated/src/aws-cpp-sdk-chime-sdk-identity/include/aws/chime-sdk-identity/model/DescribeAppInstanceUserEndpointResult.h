@@ -6,64 +6,74 @@
 #pragma once
 #include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/chime-sdk-identity/model/AppInstanceUserEndpoint.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
-  class DescribeAppInstanceUserEndpointResult
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult();
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKIdentity {
+namespace Model {
+class DescribeAppInstanceUserEndpointResult {
+ public:
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult() = default;
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKIDENTITY_API DescribeAppInstanceUserEndpointResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The full details of an <code>AppInstanceUserEndpoint</code>: the
+   * <code>AppInstanceUserArn</code>, ID, name, type, resource ARN, attributes, allow
+   * messages, state, and created and last updated timestamps. All timestamps use
+   * epoch milliseconds.</p>
+   */
+  inline const AppInstanceUserEndpoint& GetAppInstanceUserEndpoint() const { return m_appInstanceUserEndpoint; }
+  template <typename AppInstanceUserEndpointT = AppInstanceUserEndpoint>
+  void SetAppInstanceUserEndpoint(AppInstanceUserEndpointT&& value) {
+    m_appInstanceUserEndpointHasBeenSet = true;
+    m_appInstanceUserEndpoint = std::forward<AppInstanceUserEndpointT>(value);
+  }
+  template <typename AppInstanceUserEndpointT = AppInstanceUserEndpoint>
+  DescribeAppInstanceUserEndpointResult& WithAppInstanceUserEndpoint(AppInstanceUserEndpointT&& value) {
+    SetAppInstanceUserEndpoint(std::forward<AppInstanceUserEndpointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The full details of an <code>AppInstanceUserEndpoint</code>: the
-     * <code>AppInstanceUserArn</code>, ID, name, type, resource ARN, attributes, allow
-     * messages, state, and created and last updated timestamps. All timestamps use
-     * epoch milliseconds.</p>
-     */
-    inline const AppInstanceUserEndpoint& GetAppInstanceUserEndpoint() const{ return m_appInstanceUserEndpoint; }
-    inline void SetAppInstanceUserEndpoint(const AppInstanceUserEndpoint& value) { m_appInstanceUserEndpoint = value; }
-    inline void SetAppInstanceUserEndpoint(AppInstanceUserEndpoint&& value) { m_appInstanceUserEndpoint = std::move(value); }
-    inline DescribeAppInstanceUserEndpointResult& WithAppInstanceUserEndpoint(const AppInstanceUserEndpoint& value) { SetAppInstanceUserEndpoint(value); return *this;}
-    inline DescribeAppInstanceUserEndpointResult& WithAppInstanceUserEndpoint(AppInstanceUserEndpoint&& value) { SetAppInstanceUserEndpoint(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAppInstanceUserEndpointResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAppInstanceUserEndpointResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAppInstanceUserEndpointResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAppInstanceUserEndpointResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppInstanceUserEndpoint m_appInstanceUserEndpoint;
+ private:
+  AppInstanceUserEndpoint m_appInstanceUserEndpoint;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appInstanceUserEndpointHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

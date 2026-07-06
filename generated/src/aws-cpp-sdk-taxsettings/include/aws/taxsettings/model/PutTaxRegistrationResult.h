@@ -4,65 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/taxsettings/TaxSettings_EXPORTS.h>
 #include <aws/taxsettings/model/TaxRegistrationStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
-  class PutTaxRegistrationResult
-  {
-  public:
-    AWS_TAXSETTINGS_API PutTaxRegistrationResult();
-    AWS_TAXSETTINGS_API PutTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TAXSETTINGS_API PutTaxRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
+class PutTaxRegistrationResult {
+ public:
+  AWS_TAXSETTINGS_API PutTaxRegistrationResult() = default;
+  AWS_TAXSETTINGS_API PutTaxRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TAXSETTINGS_API PutTaxRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The status of your TRN stored in the system after processing. Based on the
+   * validation occurring on the TRN, the status can be <code>Verified</code>,
+   * <code>Pending</code> or <code>Rejected</code>. </p>
+   */
+  inline TaxRegistrationStatus GetStatus() const { return m_status; }
+  inline void SetStatus(TaxRegistrationStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline PutTaxRegistrationResult& WithStatus(TaxRegistrationStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of your TRN stored in the system after processing. Based on the
-     * validation occurring on the TRN, the status can be <code>Verified</code>,
-     * <code>Pending</code> or <code>Rejected</code>. </p>
-     */
-    inline const TaxRegistrationStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const TaxRegistrationStatus& value) { m_status = value; }
-    inline void SetStatus(TaxRegistrationStatus&& value) { m_status = std::move(value); }
-    inline PutTaxRegistrationResult& WithStatus(const TaxRegistrationStatus& value) { SetStatus(value); return *this;}
-    inline PutTaxRegistrationResult& WithStatus(TaxRegistrationStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutTaxRegistrationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutTaxRegistrationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutTaxRegistrationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutTaxRegistrationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TaxRegistrationStatus m_status;
+ private:
+  TaxRegistrationStatus m_status{TaxRegistrationStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

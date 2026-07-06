@@ -4,92 +4,101 @@
  */
 
 #pragma once
-#include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/cloudfront/CloudFrontRequest.h>
+#include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/cloudfront/model/DistributionConfig.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudFront
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudFront {
+namespace Model {
 
+/**
+ * <p>The request to update a distribution.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateDistributionRequest">AWS
+ * API Reference</a></p>
+ */
+class UpdateDistribution2020_05_31Request : public CloudFrontRequest {
+ public:
+  AWS_CLOUDFRONT_API UpdateDistribution2020_05_31Request() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateDistribution"; }
+
+  AWS_CLOUDFRONT_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUDFRONT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>The request to update a distribution.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateDistributionRequest">AWS
-   * API Reference</a></p>
+   * <p>The distribution's configuration information.</p>
    */
-  class UpdateDistribution2020_05_31Request : public CloudFrontRequest
-  {
-  public:
-    AWS_CLOUDFRONT_API UpdateDistribution2020_05_31Request();
+  inline const DistributionConfig& GetDistributionConfig() const { return m_distributionConfig; }
+  inline bool DistributionConfigHasBeenSet() const { return m_distributionConfigHasBeenSet; }
+  template <typename DistributionConfigT = DistributionConfig>
+  void SetDistributionConfig(DistributionConfigT&& value) {
+    m_distributionConfigHasBeenSet = true;
+    m_distributionConfig = std::forward<DistributionConfigT>(value);
+  }
+  template <typename DistributionConfigT = DistributionConfig>
+  UpdateDistribution2020_05_31Request& WithDistributionConfig(DistributionConfigT&& value) {
+    SetDistributionConfig(std::forward<DistributionConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateDistribution"; }
+  ///@{
+  /**
+   * <p>The distribution's id.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateDistribution2020_05_31Request& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDFRONT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The value of the <code>ETag</code> header that you received when retrieving
+   * the distribution's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>
+   */
+  inline const Aws::String& GetIfMatch() const { return m_ifMatch; }
+  inline bool IfMatchHasBeenSet() const { return m_ifMatchHasBeenSet; }
+  template <typename IfMatchT = Aws::String>
+  void SetIfMatch(IfMatchT&& value) {
+    m_ifMatchHasBeenSet = true;
+    m_ifMatch = std::forward<IfMatchT>(value);
+  }
+  template <typename IfMatchT = Aws::String>
+  UpdateDistribution2020_05_31Request& WithIfMatch(IfMatchT&& value) {
+    SetIfMatch(std::forward<IfMatchT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  DistributionConfig m_distributionConfig;
 
-    AWS_CLOUDFRONT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_id;
 
+  Aws::String m_ifMatch;
+  bool m_distributionConfigHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_ifMatchHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The distribution's configuration information.</p>
-     */
-    inline const DistributionConfig& GetDistributionConfig() const{ return m_distributionConfig; }
-    inline bool DistributionConfigHasBeenSet() const { return m_distributionConfigHasBeenSet; }
-    inline void SetDistributionConfig(const DistributionConfig& value) { m_distributionConfigHasBeenSet = true; m_distributionConfig = value; }
-    inline void SetDistributionConfig(DistributionConfig&& value) { m_distributionConfigHasBeenSet = true; m_distributionConfig = std::move(value); }
-    inline UpdateDistribution2020_05_31Request& WithDistributionConfig(const DistributionConfig& value) { SetDistributionConfig(value); return *this;}
-    inline UpdateDistribution2020_05_31Request& WithDistributionConfig(DistributionConfig&& value) { SetDistributionConfig(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The distribution's id.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline UpdateDistribution2020_05_31Request& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateDistribution2020_05_31Request& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateDistribution2020_05_31Request& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The value of the <code>ETag</code> header that you received when retrieving
-     * the distribution's configuration. For example: <code>E2QWRUHAPOMQZL</code>.</p>
-     */
-    inline const Aws::String& GetIfMatch() const{ return m_ifMatch; }
-    inline bool IfMatchHasBeenSet() const { return m_ifMatchHasBeenSet; }
-    inline void SetIfMatch(const Aws::String& value) { m_ifMatchHasBeenSet = true; m_ifMatch = value; }
-    inline void SetIfMatch(Aws::String&& value) { m_ifMatchHasBeenSet = true; m_ifMatch = std::move(value); }
-    inline void SetIfMatch(const char* value) { m_ifMatchHasBeenSet = true; m_ifMatch.assign(value); }
-    inline UpdateDistribution2020_05_31Request& WithIfMatch(const Aws::String& value) { SetIfMatch(value); return *this;}
-    inline UpdateDistribution2020_05_31Request& WithIfMatch(Aws::String&& value) { SetIfMatch(std::move(value)); return *this;}
-    inline UpdateDistribution2020_05_31Request& WithIfMatch(const char* value) { SetIfMatch(value); return *this;}
-    ///@}
-  private:
-
-    DistributionConfig m_distributionConfig;
-    bool m_distributionConfigHasBeenSet = false;
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    Aws::String m_ifMatch;
-    bool m_ifMatchHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

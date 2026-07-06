@@ -4,86 +4,105 @@
  */
 
 #pragma once
-#include <aws/organizations/Organizations_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/organizations/Organizations_EXPORTS.h>
 #include <aws/organizations/model/Handshake.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Organizations
-{
-namespace Model
-{
-  class ListHandshakesForOrganizationResult
-  {
-  public:
-    AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult();
-    AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Organizations {
+namespace Model {
+class ListHandshakesForOrganizationResult {
+ public:
+  AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult() = default;
+  AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ORGANIZATIONS_API ListHandshakesForOrganizationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of <code>Handshake</code>objects. Contains details for a
+   * handshake.</p>
+   */
+  inline const Aws::Vector<Handshake>& GetHandshakes() const { return m_handshakes; }
+  template <typename HandshakesT = Aws::Vector<Handshake>>
+  void SetHandshakes(HandshakesT&& value) {
+    m_handshakesHasBeenSet = true;
+    m_handshakes = std::forward<HandshakesT>(value);
+  }
+  template <typename HandshakesT = Aws::Vector<Handshake>>
+  ListHandshakesForOrganizationResult& WithHandshakes(HandshakesT&& value) {
+    SetHandshakes(std::forward<HandshakesT>(value));
+    return *this;
+  }
+  template <typename HandshakesT = Handshake>
+  ListHandshakesForOrganizationResult& AddHandshakes(HandshakesT&& value) {
+    m_handshakesHasBeenSet = true;
+    m_handshakes.emplace_back(std::forward<HandshakesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <a>Handshake</a> objects with details about each of the handshakes
-     * that are associated with an organization.</p>
-     */
-    inline const Aws::Vector<Handshake>& GetHandshakes() const{ return m_handshakes; }
-    inline void SetHandshakes(const Aws::Vector<Handshake>& value) { m_handshakes = value; }
-    inline void SetHandshakes(Aws::Vector<Handshake>&& value) { m_handshakes = std::move(value); }
-    inline ListHandshakesForOrganizationResult& WithHandshakes(const Aws::Vector<Handshake>& value) { SetHandshakes(value); return *this;}
-    inline ListHandshakesForOrganizationResult& WithHandshakes(Aws::Vector<Handshake>&& value) { SetHandshakes(std::move(value)); return *this;}
-    inline ListHandshakesForOrganizationResult& AddHandshakes(const Handshake& value) { m_handshakes.push_back(value); return *this; }
-    inline ListHandshakesForOrganizationResult& AddHandshakes(Handshake&& value) { m_handshakes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If present, indicates that more output is available than is included in the
+   * current response. Use this value in the <code>NextToken</code> request parameter
+   * in a subsequent call to the operation to get the next part of the output. You
+   * should repeat this until the <code>NextToken</code> response element comes back
+   * as <code>null</code>.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListHandshakesForOrganizationResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If present, indicates that more output is available than is included in the
-     * current response. Use this value in the <code>NextToken</code> request parameter
-     * in a subsequent call to the operation to get the next part of the output. You
-     * should repeat this until the <code>NextToken</code> response element comes back
-     * as <code>null</code>.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListHandshakesForOrganizationResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListHandshakesForOrganizationResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListHandshakesForOrganizationResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListHandshakesForOrganizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListHandshakesForOrganizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListHandshakesForOrganizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListHandshakesForOrganizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Handshake> m_handshakes;
+ private:
+  Aws::Vector<Handshake> m_handshakes;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_handshakesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Organizations
-} // namespace Aws
+}  // namespace Model
+}  // namespace Organizations
+}  // namespace Aws

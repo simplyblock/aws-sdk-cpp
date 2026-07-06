@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fsx/FSx_EXPORTS.h>
 #include <aws/fsx/model/FileCacheCreating.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FSx
-{
-namespace Model
-{
-  class CreateFileCacheResult
-  {
-  public:
-    AWS_FSX_API CreateFileCacheResult();
-    AWS_FSX_API CreateFileCacheResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FSX_API CreateFileCacheResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FSx {
+namespace Model {
+class CreateFileCacheResult {
+ public:
+  AWS_FSX_API CreateFileCacheResult() = default;
+  AWS_FSX_API CreateFileCacheResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FSX_API CreateFileCacheResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A description of the cache that was created.</p>
+   */
+  inline const FileCacheCreating& GetFileCache() const { return m_fileCache; }
+  template <typename FileCacheT = FileCacheCreating>
+  void SetFileCache(FileCacheT&& value) {
+    m_fileCacheHasBeenSet = true;
+    m_fileCache = std::forward<FileCacheT>(value);
+  }
+  template <typename FileCacheT = FileCacheCreating>
+  CreateFileCacheResult& WithFileCache(FileCacheT&& value) {
+    SetFileCache(std::forward<FileCacheT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description of the cache that was created.</p>
-     */
-    inline const FileCacheCreating& GetFileCache() const{ return m_fileCache; }
-    inline void SetFileCache(const FileCacheCreating& value) { m_fileCache = value; }
-    inline void SetFileCache(FileCacheCreating&& value) { m_fileCache = std::move(value); }
-    inline CreateFileCacheResult& WithFileCache(const FileCacheCreating& value) { SetFileCache(value); return *this;}
-    inline CreateFileCacheResult& WithFileCache(FileCacheCreating&& value) { SetFileCache(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateFileCacheResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateFileCacheResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateFileCacheResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateFileCacheResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    FileCacheCreating m_fileCache;
+ private:
+  FileCacheCreating m_fileCache;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_fileCacheHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

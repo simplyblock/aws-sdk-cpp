@@ -6,70 +6,79 @@
 #pragma once
 #include <aws/cognito-sync/CognitoSync_EXPORTS.h>
 #include <aws/cognito-sync/model/Dataset.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoSync
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoSync {
+namespace Model {
+/**
+ * Response to a successful DeleteDataset request.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-sync-2014-06-30/DeleteDatasetResponse">AWS
+ * API Reference</a></p>
+ */
+class DeleteDatasetResult {
+ public:
+  AWS_COGNITOSYNC_API DeleteDatasetResult() = default;
+  AWS_COGNITOSYNC_API DeleteDatasetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOSYNC_API DeleteDatasetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * Response to a successful DeleteDataset request.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-sync-2014-06-30/DeleteDatasetResponse">AWS
-   * API Reference</a></p>
+   * A collection of data for an identity pool. An identity pool can have multiple
+   * datasets. A dataset is per identity and can be general or associated with a
+   * particular entity in an application (like a saved game). Datasets are
+   * automatically created if they don't exist. Data is synced by dataset, and a
+   * dataset can hold up to 1MB of key-value pairs.
    */
-  class DeleteDatasetResult
-  {
-  public:
-    AWS_COGNITOSYNC_API DeleteDatasetResult();
-    AWS_COGNITOSYNC_API DeleteDatasetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOSYNC_API DeleteDatasetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Dataset& GetDataset() const { return m_dataset; }
+  template <typename DatasetT = Dataset>
+  void SetDataset(DatasetT&& value) {
+    m_datasetHasBeenSet = true;
+    m_dataset = std::forward<DatasetT>(value);
+  }
+  template <typename DatasetT = Dataset>
+  DeleteDatasetResult& WithDataset(DatasetT&& value) {
+    SetDataset(std::forward<DatasetT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * A collection of data for an identity pool. An identity pool can have multiple
-     * datasets. A dataset is per identity and can be general or associated with a
-     * particular entity in an application (like a saved game). Datasets are
-     * automatically created if they don't exist. Data is synced by dataset, and a
-     * dataset can hold up to 1MB of key-value pairs.
-     */
-    inline const Dataset& GetDataset() const{ return m_dataset; }
-    inline void SetDataset(const Dataset& value) { m_dataset = value; }
-    inline void SetDataset(Dataset&& value) { m_dataset = std::move(value); }
-    inline DeleteDatasetResult& WithDataset(const Dataset& value) { SetDataset(value); return *this;}
-    inline DeleteDatasetResult& WithDataset(Dataset&& value) { SetDataset(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDatasetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDatasetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDatasetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDatasetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Dataset m_dataset;
 
-    Dataset m_dataset;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_datasetHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CognitoSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoSync
+}  // namespace Aws

@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/swf/SWF_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/swf/SWF_EXPORTS.h>
 #include <aws/swf/model/ResourceTag.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SWF
-{
-namespace Model
-{
-  class ListTagsForResourceResult
-  {
-  public:
-    AWS_SWF_API ListTagsForResourceResult();
-    AWS_SWF_API ListTagsForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SWF_API ListTagsForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SWF {
+namespace Model {
+class ListTagsForResourceResult {
+ public:
+  AWS_SWF_API ListTagsForResourceResult() = default;
+  AWS_SWF_API ListTagsForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SWF_API ListTagsForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of tags associated with the domain.</p>
+   */
+  inline const Aws::Vector<ResourceTag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<ResourceTag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<ResourceTag>>
+  ListTagsForResourceResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = ResourceTag>
+  ListTagsForResourceResult& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of tags associated with the domain.</p>
-     */
-    inline const Aws::Vector<ResourceTag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<ResourceTag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<ResourceTag>&& value) { m_tags = std::move(value); }
-    inline ListTagsForResourceResult& WithTags(const Aws::Vector<ResourceTag>& value) { SetTags(value); return *this;}
-    inline ListTagsForResourceResult& WithTags(Aws::Vector<ResourceTag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ListTagsForResourceResult& AddTags(const ResourceTag& value) { m_tags.push_back(value); return *this; }
-    inline ListTagsForResourceResult& AddTags(ResourceTag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTagsForResourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTagsForResourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTagsForResourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTagsForResourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ResourceTag> m_tags;
+ private:
+  Aws::Vector<ResourceTag> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SWF
-} // namespace Aws
+}  // namespace Model
+}  // namespace SWF
+}  // namespace Aws

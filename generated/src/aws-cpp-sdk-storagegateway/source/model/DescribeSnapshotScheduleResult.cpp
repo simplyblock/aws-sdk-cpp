@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/storagegateway/model/DescribeSnapshotScheduleResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/storagegateway/model/DescribeSnapshotScheduleResult.h>
 
 #include <utility>
 
@@ -17,68 +17,45 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeSnapshotScheduleResult::DescribeSnapshotScheduleResult() : 
-    m_startAt(0),
-    m_recurrenceInHours(0)
-{
-}
+DescribeSnapshotScheduleResult::DescribeSnapshotScheduleResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-DescribeSnapshotScheduleResult::DescribeSnapshotScheduleResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : DescribeSnapshotScheduleResult()
-{
-  *this = result;
-}
-
-DescribeSnapshotScheduleResult& DescribeSnapshotScheduleResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+DescribeSnapshotScheduleResult& DescribeSnapshotScheduleResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("VolumeARN"))
-  {
+  if (jsonValue.ValueExists("VolumeARN")) {
     m_volumeARN = jsonValue.GetString("VolumeARN");
-
+    m_volumeARNHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("StartAt"))
-  {
+  if (jsonValue.ValueExists("StartAt")) {
     m_startAt = jsonValue.GetInteger("StartAt");
-
+    m_startAtHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RecurrenceInHours"))
-  {
+  if (jsonValue.ValueExists("RecurrenceInHours")) {
     m_recurrenceInHours = jsonValue.GetInteger("RecurrenceInHours");
-
+    m_recurrenceInHoursHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Description"))
-  {
+  if (jsonValue.ValueExists("Description")) {
     m_description = jsonValue.GetString("Description");
-
+    m_descriptionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Timezone"))
-  {
+  if (jsonValue.ValueExists("Timezone")) {
     m_timezone = jsonValue.GetString("Timezone");
-
+    m_timezoneHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Tags"))
-  {
+  if (jsonValue.ValueExists("Tags")) {
     Aws::Utils::Array<JsonView> tagsJsonList = jsonValue.GetArray("Tags");
-    for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-    {
+    for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
       m_tags.push_back(tagsJsonList[tagsIndex].AsObject());
     }
+    m_tagsHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

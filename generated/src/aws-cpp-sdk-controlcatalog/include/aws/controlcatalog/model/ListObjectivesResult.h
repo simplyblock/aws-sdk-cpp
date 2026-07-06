@@ -5,80 +5,98 @@
 
 #pragma once
 #include <aws/controlcatalog/ControlCatalog_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/controlcatalog/model/ObjectiveSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ControlCatalog
-{
-namespace Model
-{
-  class ListObjectivesResult
-  {
-  public:
-    AWS_CONTROLCATALOG_API ListObjectivesResult();
-    AWS_CONTROLCATALOG_API ListObjectivesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONTROLCATALOG_API ListObjectivesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ControlCatalog {
+namespace Model {
+class ListObjectivesResult {
+ public:
+  AWS_CONTROLCATALOG_API ListObjectivesResult() = default;
+  AWS_CONTROLCATALOG_API ListObjectivesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONTROLCATALOG_API ListObjectivesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of objectives that the <code>ListObjectives</code> API returns.</p>
+   */
+  inline const Aws::Vector<ObjectiveSummary>& GetObjectives() const { return m_objectives; }
+  template <typename ObjectivesT = Aws::Vector<ObjectiveSummary>>
+  void SetObjectives(ObjectivesT&& value) {
+    m_objectivesHasBeenSet = true;
+    m_objectives = std::forward<ObjectivesT>(value);
+  }
+  template <typename ObjectivesT = Aws::Vector<ObjectiveSummary>>
+  ListObjectivesResult& WithObjectives(ObjectivesT&& value) {
+    SetObjectives(std::forward<ObjectivesT>(value));
+    return *this;
+  }
+  template <typename ObjectivesT = ObjectiveSummary>
+  ListObjectivesResult& AddObjectives(ObjectivesT&& value) {
+    m_objectivesHasBeenSet = true;
+    m_objectives.emplace_back(std::forward<ObjectivesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of objectives that the <code>ListObjectives</code> API returns.</p>
-     */
-    inline const Aws::Vector<ObjectiveSummary>& GetObjectives() const{ return m_objectives; }
-    inline void SetObjectives(const Aws::Vector<ObjectiveSummary>& value) { m_objectives = value; }
-    inline void SetObjectives(Aws::Vector<ObjectiveSummary>&& value) { m_objectives = std::move(value); }
-    inline ListObjectivesResult& WithObjectives(const Aws::Vector<ObjectiveSummary>& value) { SetObjectives(value); return *this;}
-    inline ListObjectivesResult& WithObjectives(Aws::Vector<ObjectiveSummary>&& value) { SetObjectives(std::move(value)); return *this;}
-    inline ListObjectivesResult& AddObjectives(const ObjectiveSummary& value) { m_objectives.push_back(value); return *this; }
-    inline ListObjectivesResult& AddObjectives(ObjectiveSummary&& value) { m_objectives.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that's used to fetch the next set of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListObjectivesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that's used to fetch the next set of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListObjectivesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListObjectivesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListObjectivesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListObjectivesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListObjectivesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListObjectivesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListObjectivesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ObjectiveSummary> m_objectives;
+ private:
+  Aws::Vector<ObjectiveSummary> m_objectives;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_objectivesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ControlCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ControlCatalog
+}  // namespace Aws

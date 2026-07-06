@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/mailmanager/MailManager_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mailmanager/MailManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MailManager
-{
-namespace Model
-{
-  class CreateRuleSetResult
-  {
-  public:
-    AWS_MAILMANAGER_API CreateRuleSetResult();
-    AWS_MAILMANAGER_API CreateRuleSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAILMANAGER_API CreateRuleSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MailManager {
+namespace Model {
+class CreateRuleSetResult {
+ public:
+  AWS_MAILMANAGER_API CreateRuleSetResult() = default;
+  AWS_MAILMANAGER_API CreateRuleSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAILMANAGER_API CreateRuleSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the created rule set.</p>
+   */
+  inline const Aws::String& GetRuleSetId() const { return m_ruleSetId; }
+  template <typename RuleSetIdT = Aws::String>
+  void SetRuleSetId(RuleSetIdT&& value) {
+    m_ruleSetIdHasBeenSet = true;
+    m_ruleSetId = std::forward<RuleSetIdT>(value);
+  }
+  template <typename RuleSetIdT = Aws::String>
+  CreateRuleSetResult& WithRuleSetId(RuleSetIdT&& value) {
+    SetRuleSetId(std::forward<RuleSetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the created rule set.</p>
-     */
-    inline const Aws::String& GetRuleSetId() const{ return m_ruleSetId; }
-    inline void SetRuleSetId(const Aws::String& value) { m_ruleSetId = value; }
-    inline void SetRuleSetId(Aws::String&& value) { m_ruleSetId = std::move(value); }
-    inline void SetRuleSetId(const char* value) { m_ruleSetId.assign(value); }
-    inline CreateRuleSetResult& WithRuleSetId(const Aws::String& value) { SetRuleSetId(value); return *this;}
-    inline CreateRuleSetResult& WithRuleSetId(Aws::String&& value) { SetRuleSetId(std::move(value)); return *this;}
-    inline CreateRuleSetResult& WithRuleSetId(const char* value) { SetRuleSetId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateRuleSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateRuleSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateRuleSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateRuleSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_ruleSetId;
+ private:
+  Aws::String m_ruleSetId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ruleSetIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

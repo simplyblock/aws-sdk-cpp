@@ -5,92 +5,299 @@
 
 #pragma once
 #include <aws/controlcatalog/ControlCatalog_EXPORTS.h>
+#include <aws/controlcatalog/model/ControlBehavior.h>
+#include <aws/controlcatalog/model/ControlSeverity.h>
+#include <aws/controlcatalog/model/ImplementationSummary.h>
+#include <aws/controlcatalog/model/ParameterRequirementSummary.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ControlCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ControlCatalog {
+namespace Model {
 
+/**
+ * <p>Overview of information about a control.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ControlSummary">AWS
+ * API Reference</a></p>
+ */
+class ControlSummary {
+ public:
+  AWS_CONTROLCATALOG_API ControlSummary() = default;
+  AWS_CONTROLCATALOG_API ControlSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONTROLCATALOG_API ControlSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONTROLCATALOG_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Overview of information about a control.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/ControlSummary">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) of the control.</p>
    */
-  class ControlSummary
-  {
-  public:
-    AWS_CONTROLCATALOG_API ControlSummary();
-    AWS_CONTROLCATALOG_API ControlSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONTROLCATALOG_API ControlSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONTROLCATALOG_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  ControlSummary& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of alternative identifiers for the control. These are human-readable
+   * designators, such as <code>SH.S3.1</code>. Several aliases can refer to the same
+   * control across different Amazon Web Services services or compliance
+   * frameworks.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAliases() const { return m_aliases; }
+  inline bool AliasesHasBeenSet() const { return m_aliasesHasBeenSet; }
+  template <typename AliasesT = Aws::Vector<Aws::String>>
+  void SetAliases(AliasesT&& value) {
+    m_aliasesHasBeenSet = true;
+    m_aliases = std::forward<AliasesT>(value);
+  }
+  template <typename AliasesT = Aws::Vector<Aws::String>>
+  ControlSummary& WithAliases(AliasesT&& value) {
+    SetAliases(std::forward<AliasesT>(value));
+    return *this;
+  }
+  template <typename AliasesT = Aws::String>
+  ControlSummary& AddAliases(AliasesT&& value) {
+    m_aliasesHasBeenSet = true;
+    m_aliases.emplace_back(std::forward<AliasesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the control.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline ControlSummary& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline ControlSummary& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline ControlSummary& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The display name of the control.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ControlSummary& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The display name of the control.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ControlSummary& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ControlSummary& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ControlSummary& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A description of the control, as it may appear in the console. Describes the
+   * functionality of the control.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  ControlSummary& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description of the control, as it may appear in the console. Describes the
-     * functionality of the control.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline ControlSummary& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline ControlSummary& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline ControlSummary& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>An enumerated type, with the following possible values:</p>
+   */
+  inline ControlBehavior GetBehavior() const { return m_behavior; }
+  inline bool BehaviorHasBeenSet() const { return m_behaviorHasBeenSet; }
+  inline void SetBehavior(ControlBehavior value) {
+    m_behaviorHasBeenSet = true;
+    m_behavior = value;
+  }
+  inline ControlSummary& WithBehavior(ControlBehavior value) {
+    SetBehavior(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  ///@{
+  /**
+   * <p>An enumerated type, with the following possible values:</p>
+   */
+  inline ControlSeverity GetSeverity() const { return m_severity; }
+  inline bool SeverityHasBeenSet() const { return m_severityHasBeenSet; }
+  inline void SetSeverity(ControlSeverity value) {
+    m_severityHasBeenSet = true;
+    m_severity = value;
+  }
+  inline ControlSummary& WithSeverity(ControlSeverity value) {
+    SetSeverity(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  ///@{
+  /**
+   * <p>A summary that indicates whether the control requires parameters, accepts
+   * optional parameters, or does not support parameters. Use this field to determine
+   * whether you need to supply parameter values when you enable the control.</p>
+   */
+  inline ParameterRequirementSummary GetParameterRequirementSummary() const { return m_parameterRequirementSummary; }
+  inline bool ParameterRequirementSummaryHasBeenSet() const { return m_parameterRequirementSummaryHasBeenSet; }
+  inline void SetParameterRequirementSummary(ParameterRequirementSummary value) {
+    m_parameterRequirementSummaryHasBeenSet = true;
+    m_parameterRequirementSummary = value;
+  }
+  inline ControlSummary& WithParameterRequirementSummary(ParameterRequirementSummary value) {
+    SetParameterRequirementSummary(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
+  ///@{
+  /**
+   * <p>An object of type <code>ImplementationSummary</code> that describes how the
+   * control is implemented.</p>
+   */
+  inline const ImplementationSummary& GetImplementation() const { return m_implementation; }
+  inline bool ImplementationHasBeenSet() const { return m_implementationHasBeenSet; }
+  template <typename ImplementationT = ImplementationSummary>
+  void SetImplementation(ImplementationT&& value) {
+    m_implementationHasBeenSet = true;
+    m_implementation = std::forward<ImplementationT>(value);
+  }
+  template <typename ImplementationT = ImplementationSummary>
+  ControlSummary& WithImplementation(ImplementationT&& value) {
+    SetImplementation(std::forward<ImplementationT>(value));
+    return *this;
+  }
+  ///@}
 
-} // namespace Model
-} // namespace ControlCatalog
-} // namespace Aws
+  ///@{
+  /**
+   * <p>A timestamp that notes the time when the control was released (start of its
+   * life) as a governance capability in Amazon Web Services.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateTime() const { return m_createTime; }
+  inline bool CreateTimeHasBeenSet() const { return m_createTimeHasBeenSet; }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  void SetCreateTime(CreateTimeT&& value) {
+    m_createTimeHasBeenSet = true;
+    m_createTime = std::forward<CreateTimeT>(value);
+  }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  ControlSummary& WithCreateTime(CreateTimeT&& value) {
+    SetCreateTime(std::forward<CreateTimeT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A list of resource types that are governed by this control. This information
+   * helps you understand which controls can govern certain types of resources, and
+   * conversely, which resources are affected when the control is implemented. For
+   * Amazon Web Services controls, the resources are represented as CloudFormation
+   * resource types. For non-Amazon Web Services controls, the resources are
+   * represented in a provider-specific format. If <code>GovernedResources</code>
+   * cannot be represented by available resource types, it’s returned as an empty
+   * list.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetGovernedResources() const { return m_governedResources; }
+  inline bool GovernedResourcesHasBeenSet() const { return m_governedResourcesHasBeenSet; }
+  template <typename GovernedResourcesT = Aws::Vector<Aws::String>>
+  void SetGovernedResources(GovernedResourcesT&& value) {
+    m_governedResourcesHasBeenSet = true;
+    m_governedResources = std::forward<GovernedResourcesT>(value);
+  }
+  template <typename GovernedResourcesT = Aws::Vector<Aws::String>>
+  ControlSummary& WithGovernedResources(GovernedResourcesT&& value) {
+    SetGovernedResources(std::forward<GovernedResourcesT>(value));
+    return *this;
+  }
+  template <typename GovernedResourcesT = Aws::String>
+  ControlSummary& AddGovernedResources(GovernedResourcesT&& value) {
+    m_governedResourcesHasBeenSet = true;
+    m_governedResources.emplace_back(std::forward<GovernedResourcesT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
+  /**
+   * <p>A list of providers whose resources are governed by this control. For
+   * example, a value of <code>AWS</code> indicates that the control governs Amazon
+   * Web Services resources.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetGovernedProviders() const { return m_governedProviders; }
+  inline bool GovernedProvidersHasBeenSet() const { return m_governedProvidersHasBeenSet; }
+  template <typename GovernedProvidersT = Aws::Vector<Aws::String>>
+  void SetGovernedProviders(GovernedProvidersT&& value) {
+    m_governedProvidersHasBeenSet = true;
+    m_governedProviders = std::forward<GovernedProvidersT>(value);
+  }
+  template <typename GovernedProvidersT = Aws::Vector<Aws::String>>
+  ControlSummary& WithGovernedProviders(GovernedProvidersT&& value) {
+    SetGovernedProviders(std::forward<GovernedProvidersT>(value));
+    return *this;
+  }
+  template <typename GovernedProvidersT = Aws::String>
+  ControlSummary& AddGovernedProviders(GovernedProvidersT&& value) {
+    m_governedProvidersHasBeenSet = true;
+    m_governedProviders.emplace_back(std::forward<GovernedProvidersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
+
+  Aws::Vector<Aws::String> m_aliases;
+
+  Aws::String m_name;
+
+  Aws::String m_description;
+
+  ControlBehavior m_behavior{ControlBehavior::NOT_SET};
+
+  ControlSeverity m_severity{ControlSeverity::NOT_SET};
+
+  ParameterRequirementSummary m_parameterRequirementSummary{ParameterRequirementSummary::NOT_SET};
+
+  ImplementationSummary m_implementation;
+
+  Aws::Utils::DateTime m_createTime{};
+
+  Aws::Vector<Aws::String> m_governedResources;
+
+  Aws::Vector<Aws::String> m_governedProviders;
+  bool m_arnHasBeenSet = false;
+  bool m_aliasesHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_behaviorHasBeenSet = false;
+  bool m_severityHasBeenSet = false;
+  bool m_parameterRequirementSummaryHasBeenSet = false;
+  bool m_implementationHasBeenSet = false;
+  bool m_createTimeHasBeenSet = false;
+  bool m_governedResourcesHasBeenSet = false;
+  bool m_governedProvidersHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ControlCatalog
+}  // namespace Aws

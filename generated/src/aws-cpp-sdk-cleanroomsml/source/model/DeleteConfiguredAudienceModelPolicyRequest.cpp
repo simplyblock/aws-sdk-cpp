@@ -12,16 +12,4 @@ using namespace Aws::CleanRoomsML::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteConfiguredAudienceModelPolicyRequest::DeleteConfiguredAudienceModelPolicyRequest() : 
-    m_configuredAudienceModelArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteConfiguredAudienceModelPolicyRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteConfiguredAudienceModelPolicyRequest::SerializePayload() const { return {}; }

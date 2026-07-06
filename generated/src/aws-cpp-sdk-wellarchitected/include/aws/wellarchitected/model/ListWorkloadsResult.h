@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/WorkloadSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  /**
-   * <p>Output of a list workloads call.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ListWorkloadsOutput">AWS
-   * API Reference</a></p>
-   */
-  class ListWorkloadsResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API ListWorkloadsResult();
-    AWS_WELLARCHITECTED_API ListWorkloadsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API ListWorkloadsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+/**
+ * <p>Output of a list workloads call.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ListWorkloadsOutput">AWS
+ * API Reference</a></p>
+ */
+class ListWorkloadsResult {
+ public:
+  AWS_WELLARCHITECTED_API ListWorkloadsResult() = default;
+  AWS_WELLARCHITECTED_API ListWorkloadsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API ListWorkloadsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::Vector<WorkloadSummary>& GetWorkloadSummaries() const{ return m_workloadSummaries; }
-    inline void SetWorkloadSummaries(const Aws::Vector<WorkloadSummary>& value) { m_workloadSummaries = value; }
-    inline void SetWorkloadSummaries(Aws::Vector<WorkloadSummary>&& value) { m_workloadSummaries = std::move(value); }
-    inline ListWorkloadsResult& WithWorkloadSummaries(const Aws::Vector<WorkloadSummary>& value) { SetWorkloadSummaries(value); return *this;}
-    inline ListWorkloadsResult& WithWorkloadSummaries(Aws::Vector<WorkloadSummary>&& value) { SetWorkloadSummaries(std::move(value)); return *this;}
-    inline ListWorkloadsResult& AddWorkloadSummaries(const WorkloadSummary& value) { m_workloadSummaries.push_back(value); return *this; }
-    inline ListWorkloadsResult& AddWorkloadSummaries(WorkloadSummary&& value) { m_workloadSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::Vector<WorkloadSummary>& GetWorkloadSummaries() const { return m_workloadSummaries; }
+  template <typename WorkloadSummariesT = Aws::Vector<WorkloadSummary>>
+  void SetWorkloadSummaries(WorkloadSummariesT&& value) {
+    m_workloadSummariesHasBeenSet = true;
+    m_workloadSummaries = std::forward<WorkloadSummariesT>(value);
+  }
+  template <typename WorkloadSummariesT = Aws::Vector<WorkloadSummary>>
+  ListWorkloadsResult& WithWorkloadSummaries(WorkloadSummariesT&& value) {
+    SetWorkloadSummaries(std::forward<WorkloadSummariesT>(value));
+    return *this;
+  }
+  template <typename WorkloadSummariesT = WorkloadSummary>
+  ListWorkloadsResult& AddWorkloadSummaries(WorkloadSummariesT&& value) {
+    m_workloadSummariesHasBeenSet = true;
+    m_workloadSummaries.emplace_back(std::forward<WorkloadSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListWorkloadsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListWorkloadsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListWorkloadsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListWorkloadsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListWorkloadsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListWorkloadsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListWorkloadsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<WorkloadSummary> m_workloadSummaries;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListWorkloadsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::Vector<WorkloadSummary> m_workloadSummaries;
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_workloadSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

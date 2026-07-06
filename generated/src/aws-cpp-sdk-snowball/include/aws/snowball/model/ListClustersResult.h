@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/snowball/Snowball_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/snowball/model/ClusterListEntry.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Snowball
-{
-namespace Model
-{
-  class ListClustersResult
-  {
-  public:
-    AWS_SNOWBALL_API ListClustersResult();
-    AWS_SNOWBALL_API ListClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SNOWBALL_API ListClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace Snowball {
+namespace Model {
+class ListClustersResult {
+ public:
+  AWS_SNOWBALL_API ListClustersResult() = default;
+  AWS_SNOWBALL_API ListClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_SNOWBALL_API ListClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>Each <code>ClusterListEntry</code> object contains a cluster's state, a
+   * cluster's ID, and other important status information.</p>
+   */
+  inline const Aws::Vector<ClusterListEntry>& GetClusterListEntries() const { return m_clusterListEntries; }
+  template <typename ClusterListEntriesT = Aws::Vector<ClusterListEntry>>
+  void SetClusterListEntries(ClusterListEntriesT&& value) {
+    m_clusterListEntriesHasBeenSet = true;
+    m_clusterListEntries = std::forward<ClusterListEntriesT>(value);
+  }
+  template <typename ClusterListEntriesT = Aws::Vector<ClusterListEntry>>
+  ListClustersResult& WithClusterListEntries(ClusterListEntriesT&& value) {
+    SetClusterListEntries(std::forward<ClusterListEntriesT>(value));
+    return *this;
+  }
+  template <typename ClusterListEntriesT = ClusterListEntry>
+  ListClustersResult& AddClusterListEntries(ClusterListEntriesT&& value) {
+    m_clusterListEntriesHasBeenSet = true;
+    m_clusterListEntries.emplace_back(std::forward<ClusterListEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Each <code>ClusterListEntry</code> object contains a cluster's state, a
-     * cluster's ID, and other important status information.</p>
-     */
-    inline const Aws::Vector<ClusterListEntry>& GetClusterListEntries() const{ return m_clusterListEntries; }
-    inline void SetClusterListEntries(const Aws::Vector<ClusterListEntry>& value) { m_clusterListEntries = value; }
-    inline void SetClusterListEntries(Aws::Vector<ClusterListEntry>&& value) { m_clusterListEntries = std::move(value); }
-    inline ListClustersResult& WithClusterListEntries(const Aws::Vector<ClusterListEntry>& value) { SetClusterListEntries(value); return *this;}
-    inline ListClustersResult& WithClusterListEntries(Aws::Vector<ClusterListEntry>&& value) { SetClusterListEntries(std::move(value)); return *this;}
-    inline ListClustersResult& AddClusterListEntries(const ClusterListEntry& value) { m_clusterListEntries.push_back(value); return *this; }
-    inline ListClustersResult& AddClusterListEntries(ClusterListEntry&& value) { m_clusterListEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>HTTP requests are stateless. If you use the automatically generated
+   * <code>NextToken</code> value in your next <code>ClusterListEntry</code> call,
+   * your list of returned clusters will start from this point in the array.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListClustersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>HTTP requests are stateless. If you use the automatically generated
-     * <code>NextToken</code> value in your next <code>ClusterListEntry</code> call,
-     * your list of returned clusters will start from this point in the array.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListClustersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListClustersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListClustersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListClustersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListClustersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListClustersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListClustersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ClusterListEntry> m_clusterListEntries;
+ private:
+  Aws::Vector<ClusterListEntry> m_clusterListEntries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_clusterListEntriesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Model
+}  // namespace Snowball
+}  // namespace Aws

@@ -4,129 +4,152 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
-#include <aws/personalize/PersonalizeRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/personalize/model/DataSource.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/personalize/PersonalizeRequest.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+#include <aws/personalize/model/DataSource.h>
 #include <aws/personalize/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Personalize
-{
-namespace Model
-{
+namespace Aws {
+namespace Personalize {
+namespace Model {
 
+/**
+ */
+class CreateDataDeletionJobRequest : public PersonalizeRequest {
+ public:
+  AWS_PERSONALIZE_API CreateDataDeletionJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateDataDeletionJob"; }
+
+  AWS_PERSONALIZE_API Aws::String SerializePayload() const override;
+
+  AWS_PERSONALIZE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name for the data deletion job.</p>
    */
-  class CreateDataDeletionJobRequest : public PersonalizeRequest
-  {
-  public:
-    AWS_PERSONALIZE_API CreateDataDeletionJobRequest();
+  inline const Aws::String& GetJobName() const { return m_jobName; }
+  inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
+  template <typename JobNameT = Aws::String>
+  void SetJobName(JobNameT&& value) {
+    m_jobNameHasBeenSet = true;
+    m_jobName = std::forward<JobNameT>(value);
+  }
+  template <typename JobNameT = Aws::String>
+  CreateDataDeletionJobRequest& WithJobName(JobNameT&& value) {
+    SetJobName(std::forward<JobNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateDataDeletionJob"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the dataset group that has the datasets you
+   * want to delete records from.</p>
+   */
+  inline const Aws::String& GetDatasetGroupArn() const { return m_datasetGroupArn; }
+  inline bool DatasetGroupArnHasBeenSet() const { return m_datasetGroupArnHasBeenSet; }
+  template <typename DatasetGroupArnT = Aws::String>
+  void SetDatasetGroupArn(DatasetGroupArnT&& value) {
+    m_datasetGroupArnHasBeenSet = true;
+    m_datasetGroupArn = std::forward<DatasetGroupArnT>(value);
+  }
+  template <typename DatasetGroupArnT = Aws::String>
+  CreateDataDeletionJobRequest& WithDatasetGroupArn(DatasetGroupArnT&& value) {
+    SetDatasetGroupArn(std::forward<DatasetGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PERSONALIZE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The Amazon S3 bucket that contains the list of userIds of the users to
+   * delete.</p>
+   */
+  inline const DataSource& GetDataSource() const { return m_dataSource; }
+  inline bool DataSourceHasBeenSet() const { return m_dataSourceHasBeenSet; }
+  template <typename DataSourceT = DataSource>
+  void SetDataSource(DataSourceT&& value) {
+    m_dataSourceHasBeenSet = true;
+    m_dataSource = std::forward<DataSourceT>(value);
+  }
+  template <typename DataSourceT = DataSource>
+  CreateDataDeletionJobRequest& WithDataSource(DataSourceT&& value) {
+    SetDataSource(std::forward<DataSourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PERSONALIZE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the IAM role that has permissions to read
+   * from the Amazon S3 data source.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  CreateDataDeletionJobRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of <a
+   * href="https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html">tags</a>
+   * to apply to the data deletion job.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateDataDeletionJobRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateDataDeletionJobRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobName;
 
-    ///@{
-    /**
-     * <p>The name for the data deletion job.</p>
-     */
-    inline const Aws::String& GetJobName() const{ return m_jobName; }
-    inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
-    inline void SetJobName(const Aws::String& value) { m_jobNameHasBeenSet = true; m_jobName = value; }
-    inline void SetJobName(Aws::String&& value) { m_jobNameHasBeenSet = true; m_jobName = std::move(value); }
-    inline void SetJobName(const char* value) { m_jobNameHasBeenSet = true; m_jobName.assign(value); }
-    inline CreateDataDeletionJobRequest& WithJobName(const Aws::String& value) { SetJobName(value); return *this;}
-    inline CreateDataDeletionJobRequest& WithJobName(Aws::String&& value) { SetJobName(std::move(value)); return *this;}
-    inline CreateDataDeletionJobRequest& WithJobName(const char* value) { SetJobName(value); return *this;}
-    ///@}
+  Aws::String m_datasetGroupArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the dataset group that has the datasets you
-     * want to delete records from.</p>
-     */
-    inline const Aws::String& GetDatasetGroupArn() const{ return m_datasetGroupArn; }
-    inline bool DatasetGroupArnHasBeenSet() const { return m_datasetGroupArnHasBeenSet; }
-    inline void SetDatasetGroupArn(const Aws::String& value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn = value; }
-    inline void SetDatasetGroupArn(Aws::String&& value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn = std::move(value); }
-    inline void SetDatasetGroupArn(const char* value) { m_datasetGroupArnHasBeenSet = true; m_datasetGroupArn.assign(value); }
-    inline CreateDataDeletionJobRequest& WithDatasetGroupArn(const Aws::String& value) { SetDatasetGroupArn(value); return *this;}
-    inline CreateDataDeletionJobRequest& WithDatasetGroupArn(Aws::String&& value) { SetDatasetGroupArn(std::move(value)); return *this;}
-    inline CreateDataDeletionJobRequest& WithDatasetGroupArn(const char* value) { SetDatasetGroupArn(value); return *this;}
-    ///@}
+  DataSource m_dataSource;
 
-    ///@{
-    /**
-     * <p>The Amazon S3 bucket that contains the list of userIds of the users to
-     * delete.</p>
-     */
-    inline const DataSource& GetDataSource() const{ return m_dataSource; }
-    inline bool DataSourceHasBeenSet() const { return m_dataSourceHasBeenSet; }
-    inline void SetDataSource(const DataSource& value) { m_dataSourceHasBeenSet = true; m_dataSource = value; }
-    inline void SetDataSource(DataSource&& value) { m_dataSourceHasBeenSet = true; m_dataSource = std::move(value); }
-    inline CreateDataDeletionJobRequest& WithDataSource(const DataSource& value) { SetDataSource(value); return *this;}
-    inline CreateDataDeletionJobRequest& WithDataSource(DataSource&& value) { SetDataSource(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_roleArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the IAM role that has permissions to read
-     * from the Amazon S3 data source.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline CreateDataDeletionJobRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline CreateDataDeletionJobRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline CreateDataDeletionJobRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_jobNameHasBeenSet = false;
+  bool m_datasetGroupArnHasBeenSet = false;
+  bool m_dataSourceHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A list of <a
-     * href="https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html">tags</a>
-     * to apply to the data deletion job.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateDataDeletionJobRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateDataDeletionJobRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateDataDeletionJobRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateDataDeletionJobRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_jobName;
-    bool m_jobNameHasBeenSet = false;
-
-    Aws::String m_datasetGroupArn;
-    bool m_datasetGroupArnHasBeenSet = false;
-
-    DataSource m_dataSource;
-    bool m_dataSourceHasBeenSet = false;
-
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

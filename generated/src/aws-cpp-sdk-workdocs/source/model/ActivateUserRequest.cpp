@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/workdocs/model/ActivateUserRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/workdocs/model/ActivateUserRequest.h>
 
 #include <utility>
 
@@ -13,32 +13,16 @@ using namespace Aws::WorkDocs::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ActivateUserRequest::ActivateUserRequest() : 
-    m_userIdHasBeenSet(false),
-    m_authenticationTokenHasBeenSet(false)
-{
-}
+Aws::String ActivateUserRequest::SerializePayload() const { return {}; }
 
-Aws::String ActivateUserRequest::SerializePayload() const
-{
-  return {};
-}
-
-Aws::Http::HeaderValueCollection ActivateUserRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ActivateUserRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   Aws::StringStream ss;
-  if(m_authenticationTokenHasBeenSet)
-  {
+  if (m_authenticationTokenHasBeenSet) {
     ss << m_authenticationToken;
-    headers.emplace("authentication",  ss.str());
+    headers.emplace("authentication", ss.str());
     ss.str("");
   }
 
   return headers;
-
 }
-
-
-
-

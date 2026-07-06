@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKMeetings::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetMeetingRequest::GetMeetingRequest() : 
-    m_meetingIdHasBeenSet(false)
-{
-}
-
-Aws::String GetMeetingRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetMeetingRequest::SerializePayload() const { return {}; }

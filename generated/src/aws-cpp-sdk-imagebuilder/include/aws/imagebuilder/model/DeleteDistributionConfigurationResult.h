@@ -4,67 +4,75 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
-  class DeleteDistributionConfigurationResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult();
-    AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+class DeleteDistributionConfigurationResult {
+ public:
+  AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult() = default;
+  AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API DeleteDistributionConfigurationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The request ID that uniquely identifies this request.</p>
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDistributionConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The request ID that uniquely identifies this request.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDistributionConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDistributionConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDistributionConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the distribution configuration that was
+   * deleted.</p>
+   */
+  inline const Aws::String& GetDistributionConfigurationArn() const { return m_distributionConfigurationArn; }
+  template <typename DistributionConfigurationArnT = Aws::String>
+  void SetDistributionConfigurationArn(DistributionConfigurationArnT&& value) {
+    m_distributionConfigurationArnHasBeenSet = true;
+    m_distributionConfigurationArn = std::forward<DistributionConfigurationArnT>(value);
+  }
+  template <typename DistributionConfigurationArnT = Aws::String>
+  DeleteDistributionConfigurationResult& WithDistributionConfigurationArn(DistributionConfigurationArnT&& value) {
+    SetDistributionConfigurationArn(std::forward<DistributionConfigurationArnT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the distribution configuration that was
-     * deleted.</p>
-     */
-    inline const Aws::String& GetDistributionConfigurationArn() const{ return m_distributionConfigurationArn; }
-    inline void SetDistributionConfigurationArn(const Aws::String& value) { m_distributionConfigurationArn = value; }
-    inline void SetDistributionConfigurationArn(Aws::String&& value) { m_distributionConfigurationArn = std::move(value); }
-    inline void SetDistributionConfigurationArn(const char* value) { m_distributionConfigurationArn.assign(value); }
-    inline DeleteDistributionConfigurationResult& WithDistributionConfigurationArn(const Aws::String& value) { SetDistributionConfigurationArn(value); return *this;}
-    inline DeleteDistributionConfigurationResult& WithDistributionConfigurationArn(Aws::String&& value) { SetDistributionConfigurationArn(std::move(value)); return *this;}
-    inline DeleteDistributionConfigurationResult& WithDistributionConfigurationArn(const char* value) { SetDistributionConfigurationArn(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_requestId;
 
-    Aws::String m_requestId;
+  Aws::String m_distributionConfigurationArn;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_distributionConfigurationArnHasBeenSet = false;
+};
 
-    Aws::String m_distributionConfigurationArn;
-  };
-
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

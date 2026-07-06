@@ -5,63 +5,70 @@
 
 #pragma once
 #include <aws/athena/Athena_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Athena
-{
-namespace Model
-{
-  class GetCalculationExecutionCodeResult
-  {
-  public:
-    AWS_ATHENA_API GetCalculationExecutionCodeResult();
-    AWS_ATHENA_API GetCalculationExecutionCodeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ATHENA_API GetCalculationExecutionCodeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Athena {
+namespace Model {
+class GetCalculationExecutionCodeResult {
+ public:
+  AWS_ATHENA_API GetCalculationExecutionCodeResult() = default;
+  AWS_ATHENA_API GetCalculationExecutionCodeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ATHENA_API GetCalculationExecutionCodeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unencrypted code that was executed for the calculation.</p>
+   */
+  inline const Aws::String& GetCodeBlock() const { return m_codeBlock; }
+  template <typename CodeBlockT = Aws::String>
+  void SetCodeBlock(CodeBlockT&& value) {
+    m_codeBlockHasBeenSet = true;
+    m_codeBlock = std::forward<CodeBlockT>(value);
+  }
+  template <typename CodeBlockT = Aws::String>
+  GetCalculationExecutionCodeResult& WithCodeBlock(CodeBlockT&& value) {
+    SetCodeBlock(std::forward<CodeBlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unencrypted code that was executed for the calculation.</p>
-     */
-    inline const Aws::String& GetCodeBlock() const{ return m_codeBlock; }
-    inline void SetCodeBlock(const Aws::String& value) { m_codeBlock = value; }
-    inline void SetCodeBlock(Aws::String&& value) { m_codeBlock = std::move(value); }
-    inline void SetCodeBlock(const char* value) { m_codeBlock.assign(value); }
-    inline GetCalculationExecutionCodeResult& WithCodeBlock(const Aws::String& value) { SetCodeBlock(value); return *this;}
-    inline GetCalculationExecutionCodeResult& WithCodeBlock(Aws::String&& value) { SetCodeBlock(std::move(value)); return *this;}
-    inline GetCalculationExecutionCodeResult& WithCodeBlock(const char* value) { SetCodeBlock(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCalculationExecutionCodeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCalculationExecutionCodeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCalculationExecutionCodeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCalculationExecutionCodeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_codeBlock;
+ private:
+  Aws::String m_codeBlock;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_codeBlockHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeDhcpOptionsResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DescribeDhcpOptionsResponse.h>
 
 #include <utility>
 
@@ -17,52 +17,43 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeDhcpOptionsResponse::DescribeDhcpOptionsResponse()
-{
-}
+DescribeDhcpOptionsResponse::DescribeDhcpOptionsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeDhcpOptionsResponse::DescribeDhcpOptionsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeDhcpOptionsResponse& DescribeDhcpOptionsResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeDhcpOptionsResponse& DescribeDhcpOptionsResponse::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeDhcpOptionsResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeDhcpOptionsResponse")) {
     resultNode = rootNode.FirstChild("DescribeDhcpOptionsResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode nextTokenNode = resultNode.FirstChild("nextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
     XmlNode dhcpOptionsNode = resultNode.FirstChild("dhcpOptionsSet");
-    if(!dhcpOptionsNode.IsNull())
-    {
+    if (!dhcpOptionsNode.IsNull()) {
       XmlNode dhcpOptionsMember = dhcpOptionsNode.FirstChild("item");
-      while(!dhcpOptionsMember.IsNull())
-      {
+      m_dhcpOptionsHasBeenSet = !dhcpOptionsMember.IsNull();
+      while (!dhcpOptionsMember.IsNull()) {
         m_dhcpOptions.push_back(dhcpOptionsMember);
         dhcpOptionsMember = dhcpOptionsMember.NextNode("item");
       }
 
+      m_dhcpOptionsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeDhcpOptionsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeDhcpOptionsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

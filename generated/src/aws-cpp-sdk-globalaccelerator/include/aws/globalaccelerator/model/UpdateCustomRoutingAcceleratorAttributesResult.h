@@ -4,63 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/CustomRoutingAcceleratorAttributes.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class UpdateCustomRoutingAcceleratorAttributesResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult();
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class UpdateCustomRoutingAcceleratorAttributesResult {
+ public:
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult() = default;
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingAcceleratorAttributesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Updated custom routing accelerator.</p>
+   */
+  inline const CustomRoutingAcceleratorAttributes& GetAcceleratorAttributes() const { return m_acceleratorAttributes; }
+  template <typename AcceleratorAttributesT = CustomRoutingAcceleratorAttributes>
+  void SetAcceleratorAttributes(AcceleratorAttributesT&& value) {
+    m_acceleratorAttributesHasBeenSet = true;
+    m_acceleratorAttributes = std::forward<AcceleratorAttributesT>(value);
+  }
+  template <typename AcceleratorAttributesT = CustomRoutingAcceleratorAttributes>
+  UpdateCustomRoutingAcceleratorAttributesResult& WithAcceleratorAttributes(AcceleratorAttributesT&& value) {
+    SetAcceleratorAttributes(std::forward<AcceleratorAttributesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Updated custom routing accelerator.</p>
-     */
-    inline const CustomRoutingAcceleratorAttributes& GetAcceleratorAttributes() const{ return m_acceleratorAttributes; }
-    inline void SetAcceleratorAttributes(const CustomRoutingAcceleratorAttributes& value) { m_acceleratorAttributes = value; }
-    inline void SetAcceleratorAttributes(CustomRoutingAcceleratorAttributes&& value) { m_acceleratorAttributes = std::move(value); }
-    inline UpdateCustomRoutingAcceleratorAttributesResult& WithAcceleratorAttributes(const CustomRoutingAcceleratorAttributes& value) { SetAcceleratorAttributes(value); return *this;}
-    inline UpdateCustomRoutingAcceleratorAttributesResult& WithAcceleratorAttributes(CustomRoutingAcceleratorAttributes&& value) { SetAcceleratorAttributes(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateCustomRoutingAcceleratorAttributesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateCustomRoutingAcceleratorAttributesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateCustomRoutingAcceleratorAttributesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateCustomRoutingAcceleratorAttributesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CustomRoutingAcceleratorAttributes m_acceleratorAttributes;
+ private:
+  CustomRoutingAcceleratorAttributes m_acceleratorAttributes;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_acceleratorAttributesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

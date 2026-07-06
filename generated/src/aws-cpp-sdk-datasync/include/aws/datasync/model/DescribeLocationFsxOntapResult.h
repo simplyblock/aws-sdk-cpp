@@ -4,155 +4,201 @@
  */
 
 #pragma once
-#include <aws/datasync/DataSync_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/datasync/model/FsxProtocol.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/datasync/DataSync_EXPORTS.h>
+#include <aws/datasync/model/FsxProtocol.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataSync
-{
-namespace Model
-{
-  class DescribeLocationFsxOntapResult
-  {
-  public:
-    AWS_DATASYNC_API DescribeLocationFsxOntapResult();
-    AWS_DATASYNC_API DescribeLocationFsxOntapResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATASYNC_API DescribeLocationFsxOntapResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataSync {
+namespace Model {
+class DescribeLocationFsxOntapResult {
+ public:
+  AWS_DATASYNC_API DescribeLocationFsxOntapResult() = default;
+  AWS_DATASYNC_API DescribeLocationFsxOntapResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATASYNC_API DescribeLocationFsxOntapResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The time that the location was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeLocationFsxOntapResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that the location was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeLocationFsxOntapResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the FSx for ONTAP file system location.</p>
+   */
+  inline const Aws::String& GetLocationArn() const { return m_locationArn; }
+  template <typename LocationArnT = Aws::String>
+  void SetLocationArn(LocationArnT&& value) {
+    m_locationArnHasBeenSet = true;
+    m_locationArn = std::forward<LocationArnT>(value);
+  }
+  template <typename LocationArnT = Aws::String>
+  DescribeLocationFsxOntapResult& WithLocationArn(LocationArnT&& value) {
+    SetLocationArn(std::forward<LocationArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the FSx for ONTAP file system location.</p>
-     */
-    inline const Aws::String& GetLocationArn() const{ return m_locationArn; }
-    inline void SetLocationArn(const Aws::String& value) { m_locationArn = value; }
-    inline void SetLocationArn(Aws::String&& value) { m_locationArn = std::move(value); }
-    inline void SetLocationArn(const char* value) { m_locationArn.assign(value); }
-    inline DescribeLocationFsxOntapResult& WithLocationArn(const Aws::String& value) { SetLocationArn(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithLocationArn(Aws::String&& value) { SetLocationArn(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& WithLocationArn(const char* value) { SetLocationArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The uniform resource identifier (URI) of the FSx for ONTAP file system
+   * location.</p>
+   */
+  inline const Aws::String& GetLocationUri() const { return m_locationUri; }
+  template <typename LocationUriT = Aws::String>
+  void SetLocationUri(LocationUriT&& value) {
+    m_locationUriHasBeenSet = true;
+    m_locationUri = std::forward<LocationUriT>(value);
+  }
+  template <typename LocationUriT = Aws::String>
+  DescribeLocationFsxOntapResult& WithLocationUri(LocationUriT&& value) {
+    SetLocationUri(std::forward<LocationUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The uniform resource identifier (URI) of the FSx for ONTAP file system
-     * location.</p>
-     */
-    inline const Aws::String& GetLocationUri() const{ return m_locationUri; }
-    inline void SetLocationUri(const Aws::String& value) { m_locationUri = value; }
-    inline void SetLocationUri(Aws::String&& value) { m_locationUri = std::move(value); }
-    inline void SetLocationUri(const char* value) { m_locationUri.assign(value); }
-    inline DescribeLocationFsxOntapResult& WithLocationUri(const Aws::String& value) { SetLocationUri(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithLocationUri(Aws::String&& value) { SetLocationUri(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& WithLocationUri(const char* value) { SetLocationUri(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const FsxProtocol& GetProtocol() const{ return m_protocol; }
-    inline void SetProtocol(const FsxProtocol& value) { m_protocol = value; }
-    inline void SetProtocol(FsxProtocol&& value) { m_protocol = std::move(value); }
-    inline DescribeLocationFsxOntapResult& WithProtocol(const FsxProtocol& value) { SetProtocol(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithProtocol(FsxProtocol&& value) { SetProtocol(std::move(value)); return *this;}
-    ///@}
+  inline const FsxProtocol& GetProtocol() const { return m_protocol; }
+  template <typename ProtocolT = FsxProtocol>
+  void SetProtocol(ProtocolT&& value) {
+    m_protocolHasBeenSet = true;
+    m_protocol = std::forward<ProtocolT>(value);
+  }
+  template <typename ProtocolT = FsxProtocol>
+  DescribeLocationFsxOntapResult& WithProtocol(ProtocolT&& value) {
+    SetProtocol(std::forward<ProtocolT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The security groups that DataSync uses to access your FSx for ONTAP file
-     * system.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSecurityGroupArns() const{ return m_securityGroupArns; }
-    inline void SetSecurityGroupArns(const Aws::Vector<Aws::String>& value) { m_securityGroupArns = value; }
-    inline void SetSecurityGroupArns(Aws::Vector<Aws::String>&& value) { m_securityGroupArns = std::move(value); }
-    inline DescribeLocationFsxOntapResult& WithSecurityGroupArns(const Aws::Vector<Aws::String>& value) { SetSecurityGroupArns(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithSecurityGroupArns(Aws::Vector<Aws::String>&& value) { SetSecurityGroupArns(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& AddSecurityGroupArns(const Aws::String& value) { m_securityGroupArns.push_back(value); return *this; }
-    inline DescribeLocationFsxOntapResult& AddSecurityGroupArns(Aws::String&& value) { m_securityGroupArns.push_back(std::move(value)); return *this; }
-    inline DescribeLocationFsxOntapResult& AddSecurityGroupArns(const char* value) { m_securityGroupArns.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The security groups that DataSync uses to access your FSx for ONTAP file
+   * system.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSecurityGroupArns() const { return m_securityGroupArns; }
+  template <typename SecurityGroupArnsT = Aws::Vector<Aws::String>>
+  void SetSecurityGroupArns(SecurityGroupArnsT&& value) {
+    m_securityGroupArnsHasBeenSet = true;
+    m_securityGroupArns = std::forward<SecurityGroupArnsT>(value);
+  }
+  template <typename SecurityGroupArnsT = Aws::Vector<Aws::String>>
+  DescribeLocationFsxOntapResult& WithSecurityGroupArns(SecurityGroupArnsT&& value) {
+    SetSecurityGroupArns(std::forward<SecurityGroupArnsT>(value));
+    return *this;
+  }
+  template <typename SecurityGroupArnsT = Aws::String>
+  DescribeLocationFsxOntapResult& AddSecurityGroupArns(SecurityGroupArnsT&& value) {
+    m_securityGroupArnsHasBeenSet = true;
+    m_securityGroupArns.emplace_back(std::forward<SecurityGroupArnsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the storage virtual machine (SVM) on your FSx for ONTAP file
-     * system where you're copying data to or from.</p>
-     */
-    inline const Aws::String& GetStorageVirtualMachineArn() const{ return m_storageVirtualMachineArn; }
-    inline void SetStorageVirtualMachineArn(const Aws::String& value) { m_storageVirtualMachineArn = value; }
-    inline void SetStorageVirtualMachineArn(Aws::String&& value) { m_storageVirtualMachineArn = std::move(value); }
-    inline void SetStorageVirtualMachineArn(const char* value) { m_storageVirtualMachineArn.assign(value); }
-    inline DescribeLocationFsxOntapResult& WithStorageVirtualMachineArn(const Aws::String& value) { SetStorageVirtualMachineArn(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithStorageVirtualMachineArn(Aws::String&& value) { SetStorageVirtualMachineArn(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& WithStorageVirtualMachineArn(const char* value) { SetStorageVirtualMachineArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the storage virtual machine (SVM) on your FSx for ONTAP file
+   * system where you're copying data to or from.</p>
+   */
+  inline const Aws::String& GetStorageVirtualMachineArn() const { return m_storageVirtualMachineArn; }
+  template <typename StorageVirtualMachineArnT = Aws::String>
+  void SetStorageVirtualMachineArn(StorageVirtualMachineArnT&& value) {
+    m_storageVirtualMachineArnHasBeenSet = true;
+    m_storageVirtualMachineArn = std::forward<StorageVirtualMachineArnT>(value);
+  }
+  template <typename StorageVirtualMachineArnT = Aws::String>
+  DescribeLocationFsxOntapResult& WithStorageVirtualMachineArn(StorageVirtualMachineArnT&& value) {
+    SetStorageVirtualMachineArn(std::forward<StorageVirtualMachineArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the FSx for ONTAP file system.</p>
-     */
-    inline const Aws::String& GetFsxFilesystemArn() const{ return m_fsxFilesystemArn; }
-    inline void SetFsxFilesystemArn(const Aws::String& value) { m_fsxFilesystemArn = value; }
-    inline void SetFsxFilesystemArn(Aws::String&& value) { m_fsxFilesystemArn = std::move(value); }
-    inline void SetFsxFilesystemArn(const char* value) { m_fsxFilesystemArn.assign(value); }
-    inline DescribeLocationFsxOntapResult& WithFsxFilesystemArn(const Aws::String& value) { SetFsxFilesystemArn(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithFsxFilesystemArn(Aws::String&& value) { SetFsxFilesystemArn(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& WithFsxFilesystemArn(const char* value) { SetFsxFilesystemArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the FSx for ONTAP file system.</p>
+   */
+  inline const Aws::String& GetFsxFilesystemArn() const { return m_fsxFilesystemArn; }
+  template <typename FsxFilesystemArnT = Aws::String>
+  void SetFsxFilesystemArn(FsxFilesystemArnT&& value) {
+    m_fsxFilesystemArnHasBeenSet = true;
+    m_fsxFilesystemArn = std::forward<FsxFilesystemArnT>(value);
+  }
+  template <typename FsxFilesystemArnT = Aws::String>
+  DescribeLocationFsxOntapResult& WithFsxFilesystemArn(FsxFilesystemArnT&& value) {
+    SetFsxFilesystemArn(std::forward<FsxFilesystemArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeLocationFsxOntapResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeLocationFsxOntapResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeLocationFsxOntapResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Utils::DateTime m_creationTime;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeLocationFsxOntapResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_locationArn;
+ private:
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::String m_locationUri;
+  Aws::String m_locationArn;
 
-    FsxProtocol m_protocol;
+  Aws::String m_locationUri;
 
-    Aws::Vector<Aws::String> m_securityGroupArns;
+  FsxProtocol m_protocol;
 
-    Aws::String m_storageVirtualMachineArn;
+  Aws::Vector<Aws::String> m_securityGroupArns;
 
-    Aws::String m_fsxFilesystemArn;
+  Aws::String m_storageVirtualMachineArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_fsxFilesystemArn;
 
-} // namespace Model
-} // namespace DataSync
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_locationArnHasBeenSet = false;
+  bool m_locationUriHasBeenSet = false;
+  bool m_protocolHasBeenSet = false;
+  bool m_securityGroupArnsHasBeenSet = false;
+  bool m_storageVirtualMachineArnHasBeenSet = false;
+  bool m_fsxFilesystemArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DataSync
+}  // namespace Aws

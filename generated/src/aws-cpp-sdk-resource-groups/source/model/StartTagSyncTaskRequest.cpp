@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/resource-groups/model/StartTagSyncTaskRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/resource-groups/model/StartTagSyncTaskRequest.h>
 
 #include <utility>
 
@@ -12,45 +12,28 @@ using namespace Aws::ResourceGroups::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartTagSyncTaskRequest::StartTagSyncTaskRequest() : 
-    m_groupHasBeenSet(false),
-    m_tagKeyHasBeenSet(false),
-    m_tagValueHasBeenSet(false),
-    m_roleArnHasBeenSet(false)
-{
-}
-
-Aws::String StartTagSyncTaskRequest::SerializePayload() const
-{
+Aws::String StartTagSyncTaskRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_groupHasBeenSet)
-  {
-   payload.WithString("Group", m_group);
-
+  if (m_groupHasBeenSet) {
+    payload.WithString("Group", m_group);
   }
 
-  if(m_tagKeyHasBeenSet)
-  {
-   payload.WithString("TagKey", m_tagKey);
-
+  if (m_tagKeyHasBeenSet) {
+    payload.WithString("TagKey", m_tagKey);
   }
 
-  if(m_tagValueHasBeenSet)
-  {
-   payload.WithString("TagValue", m_tagValue);
-
+  if (m_tagValueHasBeenSet) {
+    payload.WithString("TagValue", m_tagValue);
   }
 
-  if(m_roleArnHasBeenSet)
-  {
-   payload.WithString("RoleArn", m_roleArn);
+  if (m_resourceQueryHasBeenSet) {
+    payload.WithObject("ResourceQuery", m_resourceQuery.Jsonize());
+  }
 
+  if (m_roleArnHasBeenSet) {
+    payload.WithString("RoleArn", m_roleArn);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

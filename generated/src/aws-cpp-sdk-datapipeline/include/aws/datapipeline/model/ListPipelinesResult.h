@@ -4,102 +4,127 @@
  */
 
 #pragma once
-#include <aws/datapipeline/DataPipeline_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/datapipeline/DataPipeline_EXPORTS.h>
 #include <aws/datapipeline/model/PipelineIdName.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DataPipeline
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DataPipeline {
+namespace Model {
+/**
+ * <p>Contains the output of ListPipelines.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/datapipeline-2012-10-29/ListPipelinesOutput">AWS
+ * API Reference</a></p>
+ */
+class ListPipelinesResult {
+ public:
+  AWS_DATAPIPELINE_API ListPipelinesResult() = default;
+  AWS_DATAPIPELINE_API ListPipelinesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATAPIPELINE_API ListPipelinesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of ListPipelines.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/datapipeline-2012-10-29/ListPipelinesOutput">AWS
-   * API Reference</a></p>
+   * <p>The pipeline identifiers. If you require additional information about the
+   * pipelines, you can use these identifiers to call <a>DescribePipelines</a> and
+   * <a>GetPipelineDefinition</a>.</p>
    */
-  class ListPipelinesResult
-  {
-  public:
-    AWS_DATAPIPELINE_API ListPipelinesResult();
-    AWS_DATAPIPELINE_API ListPipelinesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATAPIPELINE_API ListPipelinesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<PipelineIdName>& GetPipelineIdList() const { return m_pipelineIdList; }
+  template <typename PipelineIdListT = Aws::Vector<PipelineIdName>>
+  void SetPipelineIdList(PipelineIdListT&& value) {
+    m_pipelineIdListHasBeenSet = true;
+    m_pipelineIdList = std::forward<PipelineIdListT>(value);
+  }
+  template <typename PipelineIdListT = Aws::Vector<PipelineIdName>>
+  ListPipelinesResult& WithPipelineIdList(PipelineIdListT&& value) {
+    SetPipelineIdList(std::forward<PipelineIdListT>(value));
+    return *this;
+  }
+  template <typename PipelineIdListT = PipelineIdName>
+  ListPipelinesResult& AddPipelineIdList(PipelineIdListT&& value) {
+    m_pipelineIdListHasBeenSet = true;
+    m_pipelineIdList.emplace_back(std::forward<PipelineIdListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The starting point for the next page of results. To view the next page of
+   * results, call <code>ListPipelinesOutput</code> again with this marker value. If
+   * the value is null, there are no more results.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  ListPipelinesResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pipeline identifiers. If you require additional information about the
-     * pipelines, you can use these identifiers to call <a>DescribePipelines</a> and
-     * <a>GetPipelineDefinition</a>.</p>
-     */
-    inline const Aws::Vector<PipelineIdName>& GetPipelineIdList() const{ return m_pipelineIdList; }
-    inline void SetPipelineIdList(const Aws::Vector<PipelineIdName>& value) { m_pipelineIdList = value; }
-    inline void SetPipelineIdList(Aws::Vector<PipelineIdName>&& value) { m_pipelineIdList = std::move(value); }
-    inline ListPipelinesResult& WithPipelineIdList(const Aws::Vector<PipelineIdName>& value) { SetPipelineIdList(value); return *this;}
-    inline ListPipelinesResult& WithPipelineIdList(Aws::Vector<PipelineIdName>&& value) { SetPipelineIdList(std::move(value)); return *this;}
-    inline ListPipelinesResult& AddPipelineIdList(const PipelineIdName& value) { m_pipelineIdList.push_back(value); return *this; }
-    inline ListPipelinesResult& AddPipelineIdList(PipelineIdName&& value) { m_pipelineIdList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether there are more results that can be obtained by a subsequent
+   * call.</p>
+   */
+  inline bool GetHasMoreResults() const { return m_hasMoreResults; }
+  inline void SetHasMoreResults(bool value) {
+    m_hasMoreResultsHasBeenSet = true;
+    m_hasMoreResults = value;
+  }
+  inline ListPipelinesResult& WithHasMoreResults(bool value) {
+    SetHasMoreResults(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The starting point for the next page of results. To view the next page of
-     * results, call <code>ListPipelinesOutput</code> again with this marker value. If
-     * the value is null, there are no more results.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline ListPipelinesResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline ListPipelinesResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline ListPipelinesResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Indicates whether there are more results that can be obtained by a subsequent
-     * call.</p>
-     */
-    inline bool GetHasMoreResults() const{ return m_hasMoreResults; }
-    inline void SetHasMoreResults(bool value) { m_hasMoreResults = value; }
-    inline ListPipelinesResult& WithHasMoreResults(bool value) { SetHasMoreResults(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListPipelinesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListPipelinesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListPipelinesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListPipelinesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<PipelineIdName> m_pipelineIdList;
 
-    Aws::Vector<PipelineIdName> m_pipelineIdList;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  bool m_hasMoreResults{false};
 
-    bool m_hasMoreResults;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_pipelineIdListHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_hasMoreResultsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DataPipeline
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataPipeline
+}  // namespace Aws

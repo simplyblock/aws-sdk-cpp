@@ -18,7 +18,13 @@ import com.amazonaws.util.awsclientgenerator.generators.ClientGenerator;
 import com.amazonaws.util.awsclientgenerator.generators.exceptions.SourceGenerationFailedException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -39,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -57,6 +64,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
         velocityEngine.setProperty("resource.loader.classpath.class", ClasspathResourceLoader.class.getName());
         velocityEngine.addProperty(RuntimeConstants.RUNTIME_LOG_INSTANCE, new NOPLoggerFactory().getLogger(""));
         velocityEngine.setProperty("context.scope_control.template", true);
+        velocityEngine.setProperty("context.scope_control.macro", true);
         // Migration from 1.7 to 2.3:: https://velocity.apache.org/engine/2.3/upgrading.html
         // # Use backward compatible space gobbling
         velocityEngine.setProperty(RuntimeConstants.SPACE_GOBBLING, RuntimeConstants.SpaceGobbling.BC.toString());
@@ -80,8 +88,11 @@ public abstract class CppClientGenerator implements ClientGenerator {
         addEventStreamInitialResponse(serviceModel);
         addRequestIdToResults(serviceModel);
         List<SdkFileEntry> fileList = new ArrayList<>();
-        fileList.addAll(generateModelHeaderFiles(serviceModel));
-        fileList.addAll(generateModelSourceFiles(serviceModel));
+        final Map<String, CppShapeInformation> shapeInformationCache = serviceModel.getShapes().values().stream()
+            .map(shape -> Pair.of(shape.getName(), new CppShapeInformation(shape, serviceModel)))
+            .collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+        fileList.addAll(generateModelHeaderFiles(serviceModel, shapeInformationCache));
+        fileList.addAll(generateModelSourceFiles(serviceModel, shapeInformationCache));
         fileList.add(generateClientHeaderFile(serviceModel));
         fileList.add(generateServiceClientModelInclude(serviceModel));
 
@@ -208,6 +219,43 @@ public abstract class CppClientGenerator implements ClientGenerator {
                 });
     }
 
+    private static Set<String> servicesMissingMultiAuthMRAPTrait = ImmutableSet.of(
+            "S3",
+            "S3-CRT",
+            "CloudFront KeyValueStore",
+            "SESv2",
+            "EventBridge");
+
+    private void CheckAndEnableSigV4A(final ServiceModel serviceModel, VelocityContext context) {
+        List<String> c2jAuthList = serviceModel.getMetadata().getAuth();
+        String serviceId = serviceModel.getMetadata().getServiceId();
+        if (c2jAuthList != null && c2jAuthList.contains("aws.auth#sigv4a") ||
+             servicesMissingMultiAuthMRAPTrait.contains(serviceId)) {
+            context.put("multiRegionAccessPointSupported", true);
+        }
+        // todo: remove these checks later
+        if (!context.containsKey("multiRegionAccessPointSupported")) {
+            boolean hasSigV4AOperation = serviceModel.getOperations().values().stream()
+                    .anyMatch(op -> op.getAuth() != null && op.getAuth().contains("aws.auth#sigv4a"));
+
+            if (serviceModel.getEndpointRules() != null &&
+                    (serviceModel.getEndpointRules().contains("\"sigv4a\"") || hasSigV4AOperation)) {
+                throw new RuntimeException("Endpoint rules or operation reference sigv4a auth scheme but c2j model " + serviceId +
+                        " does not list aws.auth#sigv4a as a supported auth!");
+            }
+        }
+
+        if (c2jAuthList != null) {
+            boolean hasSigV4AndBearer = c2jAuthList.contains("smithy.api#httpBearerAuth") &&
+                    (c2jAuthList.contains("aws.auth#sigv4a") || c2jAuthList.contains("aws.auth#sigv4"));
+            /*TODO: re-enable after smithy identity migration is complete
+            if (!serviceModel.isUseSmithyClient() && hasSigV4AndBearer) {
+                throw new RuntimeException("SDK Clients cannot mix AWS and Bearer Credentials without enabling Smithy Identity!");
+            }
+            */
+        }
+    }
+
     protected final VelocityContext createContext(final ServiceModel serviceModel) {
         VelocityContext context = new VelocityContext();
         context.put("nl", System.lineSeparator());
@@ -216,22 +264,23 @@ public abstract class CppClientGenerator implements ClientGenerator {
         context.put("output.encoding", StandardCharsets.UTF_8.name());
         context.put("nullChar", '\0');
 
-        if (serviceModel.getEndpointRules().contains("\"sigv4a\"")) {
-            context.put("multiRegionAccessPointSupported", true);
-        }
+        CheckAndEnableSigV4A(serviceModel, context);
+
         return context;
     }
 
-    protected List<SdkFileEntry> generateModelHeaderFiles(final ServiceModel serviceModel) throws Exception {
+    protected List<SdkFileEntry> generateModelHeaderFiles(final ServiceModel serviceModel,
+                                                          final Map<String, CppShapeInformation> shapeInformationCache)
+    {
         List<SdkFileEntry> sdkFileEntries = new ArrayList<>();
 
         for (Map.Entry<String, Shape> shapeEntry : serviceModel.getShapes().entrySet()) {
-            SdkFileEntry sdkFileEntry = generateModelHeaderFile(serviceModel, shapeEntry);
+            SdkFileEntry sdkFileEntry = generateModelHeaderFile(serviceModel, shapeEntry, shapeInformationCache);
             if (sdkFileEntry != null) {
                 sdkFileEntries.add(sdkFileEntry);
             }
 
-            sdkFileEntry = generateEventStreamHandlerHeaderFile(serviceModel, shapeEntry);
+            sdkFileEntry = generateEventStreamHandlerHeaderFile(serviceModel, shapeEntry, shapeInformationCache);
             if (sdkFileEntry != null) {
                 sdkFileEntries.add(sdkFileEntry);
             }
@@ -240,7 +289,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
         return sdkFileEntries;
     }
 
-    protected SdkFileEntry generateModelHeaderFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry) throws Exception {
+    protected SdkFileEntry generateModelHeaderFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry, Map<String, CppShapeInformation> shapeInformationCache) {
         Shape shape = shapeEntry.getValue();
         if (!(shape.isRequest() || shape.isEnum() || shape.hasEventPayloadMembers() && shape.hasBlobMembers())) {
             return null;
@@ -254,9 +303,14 @@ public abstract class CppClientGenerator implements ClientGenerator {
             for (Map.Entry<String, Operation> opEntry : serviceModel.getOperations().entrySet()) {
                 String key = opEntry.getKey();
                 Operation op = opEntry.getValue();
-                if (op.getRequest() != null && op.getRequest().getShape().getName() == shape.getName()) {
+                if (op.getRequest() != null && op.getRequest().getShape().getName() == shape.getName())
+                {
                     context.put("operation", op);
                     context.put("operationName", key);
+                    if((op.getResult() != null) && op.getResult().getShape().hasEventStreamMembers())
+                    {
+                        context.put("hasEventStreamResponse", true);
+                    }
                     break;
                 }
             }
@@ -271,7 +325,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
             shape.getMembers().entrySet().stream().filter(memberEntry -> memberEntry.getKey().equals(shape.getEventPayloadMemberName())).forEach(blobMemberEntry -> context.put("blobMember", blobMemberEntry));
         }
         context.put("shape", shape);
-        context.put("typeInfo", new CppShapeInformation(shape, serviceModel));
+        context.put("typeInfo", shapeInformationCache.get(shape.getName()));
         context.put("CppViewHelper", CppViewHelper.class);
 
         String fileName = String.format("include/aws/%s/model/%s.h", serviceModel.getMetadata().getProjectName(),
@@ -279,7 +333,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
         return makeFile(template, context, fileName, true);
     }
 
-    protected SdkFileEntry generateEventStreamHandlerHeaderFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry) throws Exception {
+    protected SdkFileEntry generateEventStreamHandlerHeaderFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry, Map<String, CppShapeInformation> shapeInformationCache) {
         Shape shape = shapeEntry.getValue();
         if (shape.isRequest()) {
             Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/RequestEventStreamHandlerHeader.vm", StandardCharsets.UTF_8.name());
@@ -298,7 +352,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
                                 context.put("eventStreamShape", shapeMemberEntry.getValue().getShape());
                                 context.put("operation", op);
                                 context.put("shape", shape);
-                                context.put("typeInfo", new CppShapeInformation(shape, serviceModel));
+                                context.put("typeInfo", shapeInformationCache.get(shape.getName()));
                                 context.put("CppViewHelper", CppViewHelper.class);
 
                                 String fileName = String.format("include/aws/%s/model/%sHandler.h", serviceModel.getMetadata().getProjectName(), key);
@@ -313,11 +367,12 @@ public abstract class CppClientGenerator implements ClientGenerator {
         return null;
     }
 
-    protected List<SdkFileEntry> generateModelSourceFiles(final ServiceModel serviceModel) {
+    protected List<SdkFileEntry> generateModelSourceFiles(final ServiceModel serviceModel, final Map<String, CppShapeInformation> shapeInformationCache) {
 
         return serviceModel.getShapes().entrySet().stream()
                 .filter(entry -> Objects.nonNull(entry.getValue()))
-                .map(entry -> Collections.unmodifiableList(Arrays.asList(generateModelSourceFile(serviceModel, entry), generateEventStreamHandlerSourceFile(serviceModel, entry))))
+                .map(entry -> Collections.unmodifiableList(Arrays.asList(generateModelSourceFile(serviceModel, entry, shapeInformationCache),
+                        generateEventStreamHandlerSourceFile(serviceModel, entry, shapeInformationCache))))
                 .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
@@ -343,7 +398,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
 
     protected abstract List<SdkFileEntry> generateClientSourceFile(final List<ServiceModel> serviceModels) throws Exception;
 
-    protected SdkFileEntry generateModelSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry) {
+    protected SdkFileEntry generateModelSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry, final Map<String, CppShapeInformation> shapeInformationCache) {
         Shape shape = shapeEntry.getValue();
         Template template;
         VelocityContext context = createContext(serviceModel);
@@ -354,7 +409,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
             context.put("enumModel", enumModel);
 
             context.put("shape", shape);
-            context.put("typeInfo", new CppShapeInformation(shape, serviceModel));
+            context.put("typeInfo", shapeInformationCache.get(shape.getName()));
             context.put("CppViewHelper", CppViewHelper.class);
 
             String fileName = String.format("source/model/%s.cpp", shapeEntry.getKey());
@@ -368,7 +423,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
         return null;
     }
 
-    protected SdkFileEntry generateEventStreamHandlerSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry) {
+    protected SdkFileEntry generateEventStreamHandlerSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry, final Map<String, CppShapeInformation> shapeInformationCache) {
         Shape shape = shapeEntry.getValue();
         if (shape.isRequest()) {
             Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/xml/XmlRequestEventStreamHandlerSource.vm", StandardCharsets.UTF_8.name());
@@ -384,7 +439,7 @@ public abstract class CppClientGenerator implements ClientGenerator {
                                 context.put("eventStreamShape", shapeMemberEntry.getValue().getShape());
                                 context.put("operation", op);
                                 context.put("shape", shape);
-                                context.put("typeInfo", new CppShapeInformation(shape, serviceModel));
+                                context.put("typeInfo", shapeInformationCache.get(shape.getName()));
                                 context.put("CppViewHelper", CppViewHelper.class);
 
                                 String fileName = String.format("source/model/%sHandler.cpp", key);
@@ -672,8 +727,9 @@ public abstract class CppClientGenerator implements ClientGenerator {
         VelocityContext context = createContext(serviceModel);
         context.put("CppViewHelper", CppViewHelper.class);
         context.put("RequestlessOperations", requestlessOperations);
-        context.put("AuthSchemeResolver", "SigV4AuthSchemeResolver");
-        context.put("AuthSchemeVariants", serviceModel.getAuthSchemes().stream().map(this::mapAuthSchemes).collect(Collectors.joining(",")));
+        selectAuthschemeResolver(serviceModel, context);
+        List<String> allAuthSchemes =  getUpdatedAuthSchemesFromOperations(serviceModel);
+        context.put("AuthSchemeVariants", allAuthSchemes.stream().map(this::mapAuthSchemes).filter(scheme -> !scheme.isEmpty()).collect(Collectors.joining(",")));
 
         String fileName = String.format("include/aws/%s/%sClient.h", serviceModel.getMetadata().getProjectName(),
                 serviceModel.getMetadata().getClassNamePrefix());
@@ -681,32 +737,74 @@ public abstract class CppClientGenerator implements ClientGenerator {
         return makeFile(template, context, fileName, true);
     }
 
-    protected List<SdkFileEntry> generateSmithyClientSourceFile(final List<ServiceModel> serviceModels) {
-        List<SdkFileEntry> sourceFiles = new ArrayList<>();
-        for (int i = 0; i < serviceModels.size(); i++) {
-            Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyClientSource.vm", StandardCharsets.UTF_8.name());
-
-            VelocityContext context = createContext(serviceModels.get(i));
-            context.put("CppViewHelper", CppViewHelper.class);
-            context.put("AuthSchemeResolver", "SigV4AuthSchemeResolver");
-            context.put("AuthSchemeMapEntries", createAuthSchemeMapEntries(serviceModels.get(i)));
-
-            final String fileName;
-            if (i == 0) {
-                context.put("onlyGeneratedOperations", false);
-                fileName = String.format("source/%sClient.cpp", serviceModels.get(i).getMetadata().getClassNamePrefix());
-            } else {
-                context.put("onlyGeneratedOperations", true);
-                fileName = String.format("source/%sClient%d.cpp", serviceModels.get(i).getMetadata().getClassNamePrefix(), i);
-            }
-            sourceFiles.add(makeFile(template, context, fileName, true));
+    private void selectAuthschemeResolver(final ServiceModel serviceModel, VelocityContext context)
+    {
+        //Ensure we support this auth
+        Optional<String> firstAuthScheme = serviceModel.getAuthSchemes().stream().filter(entry->ResolverMapping.containsKey(entry)).findFirst();
+        if(firstAuthScheme.isPresent())
+        {
+            context.put("AuthSchemeResolver", ResolverMapping.get(firstAuthScheme.get()));
         }
-        return sourceFiles;
+        else
+        {
+            throw new RuntimeException(String.format("authSchemes '%s'",serviceModel.getAuthSchemes().stream().collect(Collectors.toList())));
+        }
+    }
+
+    protected SdkFileEntry GenerateSmithyClientSourceFile(final ServiceModel serviceModel, int i, Optional<String> templateFile) {
+
+        String templatePath = templateFile.orElse("/com/amazonaws/util/awsclientgenerator/velocity/cpp/smithy/SmithyClientSource.vm");
+        Template template = velocityEngine.getTemplate(templatePath, StandardCharsets.UTF_8.name());
+
+        VelocityContext context = createContext(serviceModel);
+        context.put("CppViewHelper", CppViewHelper.class);
+        selectAuthschemeResolver(serviceModel, context);
+        context.put("AuthSchemeOptions", serviceModel.getAuthSchemes().stream().map(this::mapAuthSchemeOptions).filter(scheme -> !scheme.isEmpty()).collect(Collectors.joining(",")));
+
+        //We want to make sure the authSchemeMapEntries includes all possible auths, even the ones supported in specific operations
+        List<String> allAuthSchemes =  getUpdatedAuthSchemesFromOperations(serviceModel);
+        context.put("AuthSchemeVariants", allAuthSchemes.stream().map(this::mapAuthSchemes).filter(scheme -> !scheme.isEmpty()).collect(Collectors.joining(",")));
+        context.put("AuthSchemeMapEntries", createAuthSchemeMapEntries(allAuthSchemes));
+        context.put("AuthSchemes", getSupportedAuthSchemes(serviceModel));
+
+        final String fileName;
+        if (i == 0) {
+            context.put("onlyGeneratedOperations", false);
+            fileName = String.format("source/%sClient.cpp", serviceModel.getMetadata().getClassNamePrefix());
+        } else {
+            context.put("onlyGeneratedOperations", true);
+            fileName = String.format("source/%sClient%d.cpp", serviceModel.getMetadata().getClassNamePrefix(), i);
+        }
+        return makeFile(template, context, fileName, true);
+    }
+
+    protected SdkFileEntry GenerateLegacyClientSourceFile(final ServiceModel serviceModel, int i){
+
+        Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/json/JsonServiceClientSource.vm", StandardCharsets.UTF_8.name());
+
+        VelocityContext context = createContext(serviceModel);
+        context.put("CppViewHelper", CppViewHelper.class);
+
+        final String fileName;
+        if (i == 0) {
+            context.put("onlyGeneratedOperations", false);
+            fileName = String.format("source/%sClient.cpp", serviceModel.getMetadata().getClassNamePrefix());
+        } else {
+            context.put("onlyGeneratedOperations", true);
+            fileName = String.format("source/%sClient%d.cpp", serviceModel.getMetadata().getClassNamePrefix(), i);
+        }
+        return makeFile(template, context, fileName, true);
     }
 
     private static final Map<String, String> AuthSchemeMapping = ImmutableMap.of(
             "aws.auth#sigv4", "smithy::SigV4AuthScheme",
-            "aws.auth#sigv4a", "smithy::SigV4aAuthScheme"
+            "aws.auth#sigv4a", "smithy::SigV4aAuthScheme",
+            "smithy.api#httpBearerAuth", "smithy::BearerTokenAuthScheme",
+            "smithy.api#noAuth", "smithy::NoAuthScheme",
+            "bearer", "smithy::BearerTokenAuthScheme",
+            "v4","smithy::SigV4AuthScheme",
+            "sigv4-s3express","S3ExpressSigV4AuthScheme",
+            "v2","smithy::SigV4AuthScheme"
     );
 
     protected String mapAuthSchemes(final String authSchemeName) {
@@ -716,15 +814,52 @@ public abstract class CppClientGenerator implements ClientGenerator {
         throw new RuntimeException(String.format("Unsupported authScheme '%s'", authSchemeName));
     }
 
+    protected String mapAuthSchemeOptions(final String authSchemeName) {
+        if (SchemeIdMapping.containsKey(authSchemeName)) {
+            return SchemeIdMapping.get(authSchemeName);
+        }
+        throw new RuntimeException(String.format("Unsupported authScheme '%s'", authSchemeName));
+    }
+
 
     private static final Map<String, String> SchemeIdMapping = ImmutableMap.of(
             "aws.auth#sigv4", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption",
-            "aws.auth#sigv4a", "smithy::SigV4AuthSchemeOption::sigV4aAuthSchemeOption"
+            "aws.auth#sigv4a", "smithy::SigV4aAuthSchemeOption::sigV4aAuthSchemeOption",
+            "smithy.api#httpBearerAuth", "smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption",
+            "smithy.api#noAuth", "smithy::NoAuthSchemeOption::noAuthSchemeOption",
+            "bearer", "smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption",
+            "v4", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption",
+            "sigv4-s3express", "S3ExpressSigV4AuthSchemeOption::s3ExpressSigV4AuthSchemeOption",
+            "v2", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption"
     );
+
+    protected static final Map<String, String> ResolverMapping = ImmutableMap.of(
+            "aws.auth#sigv4", "GenericAuthSchemeResolver",
+            "aws.auth#sigv4a", "GenericAuthSchemeResolver",
+            "smithy.api#httpBearerAuth", "GenericAuthSchemeResolver",
+            "bearer", "GenericAuthSchemeResolver",
+            "v4", "GenericAuthSchemeResolver",
+            "v2", "GenericAuthSchemeResolver"
+    );
+
+
     private static final String SchemeMapFormat = "%s.schemeId, %s";
-    private List<String> createAuthSchemeMapEntries(final ServiceModel serviceModel) {
-        return serviceModel.getAuthSchemes().stream()
+    protected List<String> createAuthSchemeMapEntries(final ServiceModel serviceModel) {
+        return  getSupportedAuthSchemes(serviceModel).stream()
+                .filter(authScheme -> !SchemeIdMapping.get(authScheme).isEmpty())
                 .map(authScheme -> String.format(SchemeMapFormat, SchemeIdMapping.get(authScheme), AuthSchemeMapping.get(authScheme)))
+                .collect(Collectors.toList());
+    }
+
+    protected List<String> createAuthSchemeMapEntries(final List<String> authSchemes) {
+        return  authSchemes.stream()
+                .filter(authScheme -> !SchemeIdMapping.get(authScheme).isEmpty())
+                .map(authScheme -> String.format(SchemeMapFormat, SchemeIdMapping.get(authScheme), AuthSchemeMapping.get(authScheme)))
+                .collect(Collectors.toList());
+    }
+
+    protected List<String> getSupportedAuthSchemes(final ServiceModel serviceModel) {
+        return serviceModel.getAuthSchemes().stream()
                 .collect(Collectors.toList());
     }
 
@@ -743,10 +878,109 @@ public abstract class CppClientGenerator implements ClientGenerator {
                                 .enumValues(ImmutableList.of())
                                 .build();
                         serviceModel.getShapes().put(requestShape.getName(), requestShape);
-                        operation.addRequest(ShapeMember.builder().shape(requestShape).build());
+                        operation.addPhonyRequest(ShapeMember.builder().shape(requestShape).build());
                     }
                     operation.setRequestlessDefault(true);
                     requestlessOperations.add(operation.getName());
                 });
     }
+
+    //dfs
+    protected static void findNestedField(JsonElement element, String targetField, List<JsonElement> results) {
+        if (element == null || element.isJsonNull()) {
+            return;
+        }
+
+        if (element.isJsonObject()) {
+            JsonObject obj = element.getAsJsonObject();
+
+            if (obj.has(targetField)) {
+                JsonElement targetElement = obj.get(targetField);
+
+                results.add(targetElement);
+                //assumption is target field wont contain internal target fields
+                return;
+            }
+
+            //recurse
+            obj.entrySet().stream().forEach(entry -> {
+                findNestedField(entry.getValue(), targetField, results);
+            });
+
+        } else if (element.isJsonArray()) {
+            element.getAsJsonArray().forEach(entry ->
+            {
+                findNestedField(entry, targetField, results);
+            });
+        }
+    }
+
+    protected void updateAuthSchemesFromEndpointRules(ServiceModel serviceModel, String rawjson)
+    {
+        if(rawjson == null || rawjson.isEmpty())
+        {
+            return;
+        }
+
+        List<String> authschemes =  new ArrayList<>(serviceModel.getAuthSchemes());
+        Set<String> authSchemeSet = new HashSet<>(authschemes);
+
+        // parse the JSON into a JsonElement tree
+        JsonElement jsonElement = JsonParser.parseString(rawjson);
+
+        // search for the "authSchemes" field in endpoint rules recursively to get all authschemes
+        List<JsonElement> authSchemes = new ArrayList<>();
+        findNestedField(jsonElement, "authSchemes", authSchemes);
+        // Extract authschemes
+        authSchemes.stream()
+            .filter(entry -> entry.isJsonArray()) // Check if the element is a JsonArray
+            .map(JsonElement::getAsJsonArray) // Convert to JsonArray
+            .forEach(arrelem -> {
+                arrelem.forEach(entry -> { // Iterate over each element in the JsonArray
+                    // Array element with key "name" has the auth scheme name as value
+                    if (entry.isJsonObject() && entry.getAsJsonObject().has("name")) {
+                        JsonElement elem = entry.getAsJsonObject().get("name");
+                        if (elem.isJsonPrimitive() && elem.getAsJsonPrimitive().isString()) {
+                            String authscheme = elem.getAsJsonPrimitive().getAsString();
+                            if (AuthSchemeNameMapping.containsKey(authscheme)) {
+                                authscheme = AuthSchemeNameMapping.get(authscheme);
+                            }
+                            if (!authSchemeSet.contains(authscheme)) {
+                                authschemes.add(authscheme);
+                                authSchemeSet.add(authscheme);
+                            }
+                        }
+                    }
+                });
+            });
+        serviceModel.setAuthSchemes(authschemes);
+    }
+
+
+    protected List<String> getUpdatedAuthSchemesFromOperations(ServiceModel serviceModel)
+    {
+        Set<String> authSchemeSet = new HashSet<>(serviceModel.getAuthSchemes());
+
+        serviceModel.getOperations().values().forEach(operation -> {
+            if (operation.getAuth() == null) {
+                return;
+            }
+            operation.getAuth().forEach(authScheme -> {
+                if(AuthSchemeNameMapping.containsKey(authScheme)) {
+                    authScheme = AuthSchemeNameMapping.get(authScheme);
+                }
+                // only add if it's not already present in the authSchemeSet
+                if (!authSchemeSet.contains(authScheme)) {
+                    authSchemeSet.add(authScheme);
+                }
+            });
+        });
+        return new ArrayList<>(authSchemeSet);
+    }
+    //auth schemes can be named differently in endpoints/operations, this is a mapping
+    private static final Map<String, String> AuthSchemeNameMapping = ImmutableMap.of(
+        "v4", "aws.auth#sigv4",
+        "sigv4", "aws.auth#sigv4",
+        "sigv4a","aws.auth#sigv4a"
+    );
 }

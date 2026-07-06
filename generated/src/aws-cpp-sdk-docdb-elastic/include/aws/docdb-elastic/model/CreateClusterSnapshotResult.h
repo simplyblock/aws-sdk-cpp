@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/docdb-elastic/DocDBElastic_EXPORTS.h>
 #include <aws/docdb-elastic/model/ClusterSnapshot.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DocDBElastic
-{
-namespace Model
-{
-  class CreateClusterSnapshotResult
-  {
-  public:
-    AWS_DOCDBELASTIC_API CreateClusterSnapshotResult();
-    AWS_DOCDBELASTIC_API CreateClusterSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DOCDBELASTIC_API CreateClusterSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DocDBElastic {
+namespace Model {
+class CreateClusterSnapshotResult {
+ public:
+  AWS_DOCDBELASTIC_API CreateClusterSnapshotResult() = default;
+  AWS_DOCDBELASTIC_API CreateClusterSnapshotResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DOCDBELASTIC_API CreateClusterSnapshotResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns information about the new elastic cluster snapshot.</p>
+   */
+  inline const ClusterSnapshot& GetSnapshot() const { return m_snapshot; }
+  template <typename SnapshotT = ClusterSnapshot>
+  void SetSnapshot(SnapshotT&& value) {
+    m_snapshotHasBeenSet = true;
+    m_snapshot = std::forward<SnapshotT>(value);
+  }
+  template <typename SnapshotT = ClusterSnapshot>
+  CreateClusterSnapshotResult& WithSnapshot(SnapshotT&& value) {
+    SetSnapshot(std::forward<SnapshotT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns information about the new elastic cluster snapshot.</p>
-     */
-    inline const ClusterSnapshot& GetSnapshot() const{ return m_snapshot; }
-    inline void SetSnapshot(const ClusterSnapshot& value) { m_snapshot = value; }
-    inline void SetSnapshot(ClusterSnapshot&& value) { m_snapshot = std::move(value); }
-    inline CreateClusterSnapshotResult& WithSnapshot(const ClusterSnapshot& value) { SetSnapshot(value); return *this;}
-    inline CreateClusterSnapshotResult& WithSnapshot(ClusterSnapshot&& value) { SetSnapshot(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateClusterSnapshotResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateClusterSnapshotResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateClusterSnapshotResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateClusterSnapshotResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ClusterSnapshot m_snapshot;
+ private:
+  ClusterSnapshot m_snapshot;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_snapshotHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DocDBElastic
-} // namespace Aws
+}  // namespace Model
+}  // namespace DocDBElastic
+}  // namespace Aws

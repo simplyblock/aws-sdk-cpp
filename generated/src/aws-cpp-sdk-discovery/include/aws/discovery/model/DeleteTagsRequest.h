@@ -4,77 +4,91 @@
  */
 
 #pragma once
-#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
-#include <aws/discovery/ApplicationDiscoveryServiceRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/discovery/ApplicationDiscoveryServiceRequest.h>
+#include <aws/discovery/ApplicationDiscoveryService_EXPORTS.h>
 #include <aws/discovery/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ApplicationDiscoveryService
-{
-namespace Model
-{
+namespace Aws {
+namespace ApplicationDiscoveryService {
+namespace Model {
 
+/**
+ */
+class DeleteTagsRequest : public ApplicationDiscoveryServiceRequest {
+ public:
+  AWS_APPLICATIONDISCOVERYSERVICE_API DeleteTagsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteTags"; }
+
+  AWS_APPLICATIONDISCOVERYSERVICE_API Aws::String SerializePayload() const override;
+
+  AWS_APPLICATIONDISCOVERYSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>A list of configuration items with tags that you want to delete.</p>
    */
-  class DeleteTagsRequest : public ApplicationDiscoveryServiceRequest
-  {
-  public:
-    AWS_APPLICATIONDISCOVERYSERVICE_API DeleteTagsRequest();
+  inline const Aws::Vector<Aws::String>& GetConfigurationIds() const { return m_configurationIds; }
+  inline bool ConfigurationIdsHasBeenSet() const { return m_configurationIdsHasBeenSet; }
+  template <typename ConfigurationIdsT = Aws::Vector<Aws::String>>
+  void SetConfigurationIds(ConfigurationIdsT&& value) {
+    m_configurationIdsHasBeenSet = true;
+    m_configurationIds = std::forward<ConfigurationIdsT>(value);
+  }
+  template <typename ConfigurationIdsT = Aws::Vector<Aws::String>>
+  DeleteTagsRequest& WithConfigurationIds(ConfigurationIdsT&& value) {
+    SetConfigurationIds(std::forward<ConfigurationIdsT>(value));
+    return *this;
+  }
+  template <typename ConfigurationIdsT = Aws::String>
+  DeleteTagsRequest& AddConfigurationIds(ConfigurationIdsT&& value) {
+    m_configurationIdsHasBeenSet = true;
+    m_configurationIds.emplace_back(std::forward<ConfigurationIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteTags"; }
+  ///@{
+  /**
+   * <p>Tags that you want to delete from one or more configuration items. Specify
+   * the tags that you want to delete in a <i>key</i>-<i>value</i> format. For
+   * example:</p> <p> <code>{"key": "serverType", "value": "webServer"}</code> </p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  DeleteTagsRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  DeleteTagsRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_configurationIds;
 
-    AWS_APPLICATIONDISCOVERYSERVICE_API Aws::String SerializePayload() const override;
+  Aws::Vector<Tag> m_tags;
+  bool m_configurationIdsHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    AWS_APPLICATIONDISCOVERYSERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>A list of configuration items with tags that you want to delete.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetConfigurationIds() const{ return m_configurationIds; }
-    inline bool ConfigurationIdsHasBeenSet() const { return m_configurationIdsHasBeenSet; }
-    inline void SetConfigurationIds(const Aws::Vector<Aws::String>& value) { m_configurationIdsHasBeenSet = true; m_configurationIds = value; }
-    inline void SetConfigurationIds(Aws::Vector<Aws::String>&& value) { m_configurationIdsHasBeenSet = true; m_configurationIds = std::move(value); }
-    inline DeleteTagsRequest& WithConfigurationIds(const Aws::Vector<Aws::String>& value) { SetConfigurationIds(value); return *this;}
-    inline DeleteTagsRequest& WithConfigurationIds(Aws::Vector<Aws::String>&& value) { SetConfigurationIds(std::move(value)); return *this;}
-    inline DeleteTagsRequest& AddConfigurationIds(const Aws::String& value) { m_configurationIdsHasBeenSet = true; m_configurationIds.push_back(value); return *this; }
-    inline DeleteTagsRequest& AddConfigurationIds(Aws::String&& value) { m_configurationIdsHasBeenSet = true; m_configurationIds.push_back(std::move(value)); return *this; }
-    inline DeleteTagsRequest& AddConfigurationIds(const char* value) { m_configurationIdsHasBeenSet = true; m_configurationIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>Tags that you want to delete from one or more configuration items. Specify
-     * the tags that you want to delete in a <i>key</i>-<i>value</i> format. For
-     * example:</p> <p> <code>{"key": "serverType", "value": "webServer"}</code> </p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline DeleteTagsRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline DeleteTagsRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline DeleteTagsRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline DeleteTagsRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<Aws::String> m_configurationIds;
-    bool m_configurationIdsHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ApplicationDiscoveryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationDiscoveryService
+}  // namespace Aws

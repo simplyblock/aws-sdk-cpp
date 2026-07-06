@@ -3,37 +3,25 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DisassociateSecurityGroupVpcRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DisassociateSecurityGroupVpcRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DisassociateSecurityGroupVpcRequest::DisassociateSecurityGroupVpcRequest() : 
-    m_groupIdHasBeenSet(false),
-    m_vpcIdHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String DisassociateSecurityGroupVpcRequest::SerializePayload() const
-{
+Aws::String DisassociateSecurityGroupVpcRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DisassociateSecurityGroupVpc&";
-  if(m_groupIdHasBeenSet)
-  {
+  if (m_groupIdHasBeenSet) {
     ss << "GroupId=" << StringUtils::URLEncode(m_groupId.c_str()) << "&";
   }
 
-  if(m_vpcIdHasBeenSet)
-  {
+  if (m_vpcIdHasBeenSet) {
     ss << "VpcId=" << StringUtils::URLEncode(m_vpcId.c_str()) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -41,8 +29,4 @@ Aws::String DisassociateSecurityGroupVpcRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DisassociateSecurityGroupVpcRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DisassociateSecurityGroupVpcRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

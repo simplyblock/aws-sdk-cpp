@@ -4,125 +4,138 @@
  */
 
 #pragma once
-#include <aws/route53-recovery-cluster/Route53RecoveryCluster_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/route53-recovery-cluster/Route53RecoveryCluster_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Route53RecoveryCluster
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53RecoveryCluster {
+namespace Model {
 
+/**
+ * <p>The request can't update that many routing control states at the same time.
+ * Try again with fewer routing control states.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/ServiceLimitExceededException">AWS
+ * API Reference</a></p>
+ */
+class ServiceLimitExceededException {
+ public:
+  AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException() = default;
+  AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ROUTE53RECOVERYCLUSTER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ServiceLimitExceededException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>The request can't update that many routing control states at the same time.
-   * Try again with fewer routing control states.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/ServiceLimitExceededException">AWS
-   * API Reference</a></p>
+   * <p>The resource identifier of the limit that was exceeded.</p>
    */
-  class ServiceLimitExceededException
-  {
-  public:
-    AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException();
-    AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ROUTE53RECOVERYCLUSTER_API ServiceLimitExceededException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ROUTE53RECOVERYCLUSTER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetResourceId() const { return m_resourceId; }
+  inline bool ResourceIdHasBeenSet() const { return m_resourceIdHasBeenSet; }
+  template <typename ResourceIdT = Aws::String>
+  void SetResourceId(ResourceIdT&& value) {
+    m_resourceIdHasBeenSet = true;
+    m_resourceId = std::forward<ResourceIdT>(value);
+  }
+  template <typename ResourceIdT = Aws::String>
+  ServiceLimitExceededException& WithResourceId(ResourceIdT&& value) {
+    SetResourceId(std::forward<ResourceIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The resource type of the limit that was exceeded.</p>
+   */
+  inline const Aws::String& GetResourceType() const { return m_resourceType; }
+  inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
+  template <typename ResourceTypeT = Aws::String>
+  void SetResourceType(ResourceTypeT&& value) {
+    m_resourceTypeHasBeenSet = true;
+    m_resourceType = std::forward<ResourceTypeT>(value);
+  }
+  template <typename ResourceTypeT = Aws::String>
+  ServiceLimitExceededException& WithResourceType(ResourceTypeT&& value) {
+    SetResourceType(std::forward<ResourceTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ServiceLimitExceededException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ServiceLimitExceededException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ServiceLimitExceededException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The code of the limit that was exceeded.</p>
+   */
+  inline const Aws::String& GetLimitCode() const { return m_limitCode; }
+  inline bool LimitCodeHasBeenSet() const { return m_limitCodeHasBeenSet; }
+  template <typename LimitCodeT = Aws::String>
+  void SetLimitCode(LimitCodeT&& value) {
+    m_limitCodeHasBeenSet = true;
+    m_limitCode = std::forward<LimitCodeT>(value);
+  }
+  template <typename LimitCodeT = Aws::String>
+  ServiceLimitExceededException& WithLimitCode(LimitCodeT&& value) {
+    SetLimitCode(std::forward<LimitCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource identifier of the limit that was exceeded.</p>
-     */
-    inline const Aws::String& GetResourceId() const{ return m_resourceId; }
-    inline bool ResourceIdHasBeenSet() const { return m_resourceIdHasBeenSet; }
-    inline void SetResourceId(const Aws::String& value) { m_resourceIdHasBeenSet = true; m_resourceId = value; }
-    inline void SetResourceId(Aws::String&& value) { m_resourceIdHasBeenSet = true; m_resourceId = std::move(value); }
-    inline void SetResourceId(const char* value) { m_resourceIdHasBeenSet = true; m_resourceId.assign(value); }
-    inline ServiceLimitExceededException& WithResourceId(const Aws::String& value) { SetResourceId(value); return *this;}
-    inline ServiceLimitExceededException& WithResourceId(Aws::String&& value) { SetResourceId(std::move(value)); return *this;}
-    inline ServiceLimitExceededException& WithResourceId(const char* value) { SetResourceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The service code of the limit that was exceeded.</p>
+   */
+  inline const Aws::String& GetServiceCode() const { return m_serviceCode; }
+  inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
+  template <typename ServiceCodeT = Aws::String>
+  void SetServiceCode(ServiceCodeT&& value) {
+    m_serviceCodeHasBeenSet = true;
+    m_serviceCode = std::forward<ServiceCodeT>(value);
+  }
+  template <typename ServiceCodeT = Aws::String>
+  ServiceLimitExceededException& WithServiceCode(ServiceCodeT&& value) {
+    SetServiceCode(std::forward<ServiceCodeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_message;
 
-    ///@{
-    /**
-     * <p>The resource type of the limit that was exceeded.</p>
-     */
-    inline const Aws::String& GetResourceType() const{ return m_resourceType; }
-    inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
-    inline void SetResourceType(const Aws::String& value) { m_resourceTypeHasBeenSet = true; m_resourceType = value; }
-    inline void SetResourceType(Aws::String&& value) { m_resourceTypeHasBeenSet = true; m_resourceType = std::move(value); }
-    inline void SetResourceType(const char* value) { m_resourceTypeHasBeenSet = true; m_resourceType.assign(value); }
-    inline ServiceLimitExceededException& WithResourceType(const Aws::String& value) { SetResourceType(value); return *this;}
-    inline ServiceLimitExceededException& WithResourceType(Aws::String&& value) { SetResourceType(std::move(value)); return *this;}
-    inline ServiceLimitExceededException& WithResourceType(const char* value) { SetResourceType(value); return *this;}
-    ///@}
+  Aws::String m_resourceId;
 
-    ///@{
-    /**
-     * <p>The code of the limit that was exceeded.</p>
-     */
-    inline const Aws::String& GetLimitCode() const{ return m_limitCode; }
-    inline bool LimitCodeHasBeenSet() const { return m_limitCodeHasBeenSet; }
-    inline void SetLimitCode(const Aws::String& value) { m_limitCodeHasBeenSet = true; m_limitCode = value; }
-    inline void SetLimitCode(Aws::String&& value) { m_limitCodeHasBeenSet = true; m_limitCode = std::move(value); }
-    inline void SetLimitCode(const char* value) { m_limitCodeHasBeenSet = true; m_limitCode.assign(value); }
-    inline ServiceLimitExceededException& WithLimitCode(const Aws::String& value) { SetLimitCode(value); return *this;}
-    inline ServiceLimitExceededException& WithLimitCode(Aws::String&& value) { SetLimitCode(std::move(value)); return *this;}
-    inline ServiceLimitExceededException& WithLimitCode(const char* value) { SetLimitCode(value); return *this;}
-    ///@}
+  Aws::String m_resourceType;
 
-    ///@{
-    /**
-     * <p>The service code of the limit that was exceeded.</p>
-     */
-    inline const Aws::String& GetServiceCode() const{ return m_serviceCode; }
-    inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
-    inline void SetServiceCode(const Aws::String& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = value; }
-    inline void SetServiceCode(Aws::String&& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = std::move(value); }
-    inline void SetServiceCode(const char* value) { m_serviceCodeHasBeenSet = true; m_serviceCode.assign(value); }
-    inline ServiceLimitExceededException& WithServiceCode(const Aws::String& value) { SetServiceCode(value); return *this;}
-    inline ServiceLimitExceededException& WithServiceCode(Aws::String&& value) { SetServiceCode(std::move(value)); return *this;}
-    inline ServiceLimitExceededException& WithServiceCode(const char* value) { SetServiceCode(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_limitCode;
 
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
+  Aws::String m_serviceCode;
+  bool m_messageHasBeenSet = false;
+  bool m_resourceIdHasBeenSet = false;
+  bool m_resourceTypeHasBeenSet = false;
+  bool m_limitCodeHasBeenSet = false;
+  bool m_serviceCodeHasBeenSet = false;
+};
 
-    Aws::String m_resourceId;
-    bool m_resourceIdHasBeenSet = false;
-
-    Aws::String m_resourceType;
-    bool m_resourceTypeHasBeenSet = false;
-
-    Aws::String m_limitCode;
-    bool m_limitCodeHasBeenSet = false;
-
-    Aws::String m_serviceCode;
-    bool m_serviceCodeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Route53RecoveryCluster
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53RecoveryCluster
+}  // namespace Aws

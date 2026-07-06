@@ -4,280 +4,426 @@
  */
 
 #pragma once
-#include <aws/mgn/Mgn_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mgn/Mgn_EXPORTS.h>
 #include <aws/mgn/model/BootMode.h>
-#include <aws/mgn/model/LaunchTemplateDiskConf.h>
 #include <aws/mgn/model/LaunchDisposition.h>
+#include <aws/mgn/model/LaunchTemplateDiskConf.h>
 #include <aws/mgn/model/Licensing.h>
 #include <aws/mgn/model/PostLaunchActions.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/mgn/model/TargetInstanceTypeRightSizingMethod.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mgn
-{
-namespace Model
-{
-  class UpdateLaunchConfigurationTemplateResult
-  {
-  public:
-    AWS_MGN_API UpdateLaunchConfigurationTemplateResult();
-    AWS_MGN_API UpdateLaunchConfigurationTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MGN_API UpdateLaunchConfigurationTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mgn {
+namespace Model {
+class UpdateLaunchConfigurationTemplateResult {
+ public:
+  AWS_MGN_API UpdateLaunchConfigurationTemplateResult() = default;
+  AWS_MGN_API UpdateLaunchConfigurationTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MGN_API UpdateLaunchConfigurationTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>ID of the Launch Configuration Template.</p>
+   */
+  inline const Aws::String& GetLaunchConfigurationTemplateID() const { return m_launchConfigurationTemplateID; }
+  template <typename LaunchConfigurationTemplateIDT = Aws::String>
+  void SetLaunchConfigurationTemplateID(LaunchConfigurationTemplateIDT&& value) {
+    m_launchConfigurationTemplateIDHasBeenSet = true;
+    m_launchConfigurationTemplateID = std::forward<LaunchConfigurationTemplateIDT>(value);
+  }
+  template <typename LaunchConfigurationTemplateIDT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithLaunchConfigurationTemplateID(LaunchConfigurationTemplateIDT&& value) {
+    SetLaunchConfigurationTemplateID(std::forward<LaunchConfigurationTemplateIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>ARN of the Launch Configuration Template.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>ARN of the Launch Configuration Template.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Associate public Ip address.</p>
-     */
-    inline bool GetAssociatePublicIpAddress() const{ return m_associatePublicIpAddress; }
-    inline void SetAssociatePublicIpAddress(bool value) { m_associatePublicIpAddress = value; }
-    inline UpdateLaunchConfigurationTemplateResult& WithAssociatePublicIpAddress(bool value) { SetAssociatePublicIpAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Post Launch Actions of the Launch Configuration Template.</p>
+   */
+  inline const PostLaunchActions& GetPostLaunchActions() const { return m_postLaunchActions; }
+  template <typename PostLaunchActionsT = PostLaunchActions>
+  void SetPostLaunchActions(PostLaunchActionsT&& value) {
+    m_postLaunchActionsHasBeenSet = true;
+    m_postLaunchActions = std::forward<PostLaunchActionsT>(value);
+  }
+  template <typename PostLaunchActionsT = PostLaunchActions>
+  UpdateLaunchConfigurationTemplateResult& WithPostLaunchActions(PostLaunchActionsT&& value) {
+    SetPostLaunchActions(std::forward<PostLaunchActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Launch configuration template boot mode.</p>
-     */
-    inline const BootMode& GetBootMode() const{ return m_bootMode; }
-    inline void SetBootMode(const BootMode& value) { m_bootMode = value; }
-    inline void SetBootMode(BootMode&& value) { m_bootMode = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithBootMode(const BootMode& value) { SetBootMode(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithBootMode(BootMode&& value) { SetBootMode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Enable map auto tagging.</p>
+   */
+  inline bool GetEnableMapAutoTagging() const { return m_enableMapAutoTagging; }
+  inline void SetEnableMapAutoTagging(bool value) {
+    m_enableMapAutoTaggingHasBeenSet = true;
+    m_enableMapAutoTagging = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithEnableMapAutoTagging(bool value) {
+    SetEnableMapAutoTagging(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Copy private Ip.</p>
-     */
-    inline bool GetCopyPrivateIp() const{ return m_copyPrivateIp; }
-    inline void SetCopyPrivateIp(bool value) { m_copyPrivateIp = value; }
-    inline UpdateLaunchConfigurationTemplateResult& WithCopyPrivateIp(bool value) { SetCopyPrivateIp(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Launch configuration template map auto tagging MPE ID.</p>
+   */
+  inline const Aws::String& GetMapAutoTaggingMpeID() const { return m_mapAutoTaggingMpeID; }
+  template <typename MapAutoTaggingMpeIDT = Aws::String>
+  void SetMapAutoTaggingMpeID(MapAutoTaggingMpeIDT&& value) {
+    m_mapAutoTaggingMpeIDHasBeenSet = true;
+    m_mapAutoTaggingMpeID = std::forward<MapAutoTaggingMpeIDT>(value);
+  }
+  template <typename MapAutoTaggingMpeIDT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithMapAutoTaggingMpeID(MapAutoTaggingMpeIDT&& value) {
+    SetMapAutoTaggingMpeID(std::forward<MapAutoTaggingMpeIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Copy tags.</p>
-     */
-    inline bool GetCopyTags() const{ return m_copyTags; }
-    inline void SetCopyTags(bool value) { m_copyTags = value; }
-    inline UpdateLaunchConfigurationTemplateResult& WithCopyTags(bool value) { SetCopyTags(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Tags of the Launch Configuration Template.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  UpdateLaunchConfigurationTemplateResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>EC2 launch template ID.</p>
-     */
-    inline const Aws::String& GetEc2LaunchTemplateID() const{ return m_ec2LaunchTemplateID; }
-    inline void SetEc2LaunchTemplateID(const Aws::String& value) { m_ec2LaunchTemplateID = value; }
-    inline void SetEc2LaunchTemplateID(Aws::String&& value) { m_ec2LaunchTemplateID = std::move(value); }
-    inline void SetEc2LaunchTemplateID(const char* value) { m_ec2LaunchTemplateID.assign(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithEc2LaunchTemplateID(const Aws::String& value) { SetEc2LaunchTemplateID(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithEc2LaunchTemplateID(Aws::String&& value) { SetEc2LaunchTemplateID(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithEc2LaunchTemplateID(const char* value) { SetEc2LaunchTemplateID(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>EC2 launch template ID.</p>
+   */
+  inline const Aws::String& GetEc2LaunchTemplateID() const { return m_ec2LaunchTemplateID; }
+  template <typename Ec2LaunchTemplateIDT = Aws::String>
+  void SetEc2LaunchTemplateID(Ec2LaunchTemplateIDT&& value) {
+    m_ec2LaunchTemplateIDHasBeenSet = true;
+    m_ec2LaunchTemplateID = std::forward<Ec2LaunchTemplateIDT>(value);
+  }
+  template <typename Ec2LaunchTemplateIDT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithEc2LaunchTemplateID(Ec2LaunchTemplateIDT&& value) {
+    SetEc2LaunchTemplateID(std::forward<Ec2LaunchTemplateIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Enable map auto tagging.</p>
-     */
-    inline bool GetEnableMapAutoTagging() const{ return m_enableMapAutoTagging; }
-    inline void SetEnableMapAutoTagging(bool value) { m_enableMapAutoTagging = value; }
-    inline UpdateLaunchConfigurationTemplateResult& WithEnableMapAutoTagging(bool value) { SetEnableMapAutoTagging(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Launch disposition.</p>
+   */
+  inline LaunchDisposition GetLaunchDisposition() const { return m_launchDisposition; }
+  inline void SetLaunchDisposition(LaunchDisposition value) {
+    m_launchDispositionHasBeenSet = true;
+    m_launchDisposition = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithLaunchDisposition(LaunchDisposition value) {
+    SetLaunchDisposition(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Large volume config.</p>
-     */
-    inline const LaunchTemplateDiskConf& GetLargeVolumeConf() const{ return m_largeVolumeConf; }
-    inline void SetLargeVolumeConf(const LaunchTemplateDiskConf& value) { m_largeVolumeConf = value; }
-    inline void SetLargeVolumeConf(LaunchTemplateDiskConf&& value) { m_largeVolumeConf = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithLargeVolumeConf(const LaunchTemplateDiskConf& value) { SetLargeVolumeConf(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithLargeVolumeConf(LaunchTemplateDiskConf&& value) { SetLargeVolumeConf(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Target instance type right-sizing method.</p>
+   */
+  inline TargetInstanceTypeRightSizingMethod GetTargetInstanceTypeRightSizingMethod() const {
+    return m_targetInstanceTypeRightSizingMethod;
+  }
+  inline void SetTargetInstanceTypeRightSizingMethod(TargetInstanceTypeRightSizingMethod value) {
+    m_targetInstanceTypeRightSizingMethodHasBeenSet = true;
+    m_targetInstanceTypeRightSizingMethod = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithTargetInstanceTypeRightSizingMethod(TargetInstanceTypeRightSizingMethod value) {
+    SetTargetInstanceTypeRightSizingMethod(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>ID of the Launch Configuration Template.</p>
-     */
-    inline const Aws::String& GetLaunchConfigurationTemplateID() const{ return m_launchConfigurationTemplateID; }
-    inline void SetLaunchConfigurationTemplateID(const Aws::String& value) { m_launchConfigurationTemplateID = value; }
-    inline void SetLaunchConfigurationTemplateID(Aws::String&& value) { m_launchConfigurationTemplateID = std::move(value); }
-    inline void SetLaunchConfigurationTemplateID(const char* value) { m_launchConfigurationTemplateID.assign(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithLaunchConfigurationTemplateID(const Aws::String& value) { SetLaunchConfigurationTemplateID(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithLaunchConfigurationTemplateID(Aws::String&& value) { SetLaunchConfigurationTemplateID(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithLaunchConfigurationTemplateID(const char* value) { SetLaunchConfigurationTemplateID(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Copy private Ip.</p>
+   */
+  inline bool GetCopyPrivateIp() const { return m_copyPrivateIp; }
+  inline void SetCopyPrivateIp(bool value) {
+    m_copyPrivateIpHasBeenSet = true;
+    m_copyPrivateIp = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithCopyPrivateIp(bool value) {
+    SetCopyPrivateIp(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Launch disposition.</p>
-     */
-    inline const LaunchDisposition& GetLaunchDisposition() const{ return m_launchDisposition; }
-    inline void SetLaunchDisposition(const LaunchDisposition& value) { m_launchDisposition = value; }
-    inline void SetLaunchDisposition(LaunchDisposition&& value) { m_launchDisposition = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithLaunchDisposition(const LaunchDisposition& value) { SetLaunchDisposition(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithLaunchDisposition(LaunchDisposition&& value) { SetLaunchDisposition(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Associate public Ip address.</p>
+   */
+  inline bool GetAssociatePublicIpAddress() const { return m_associatePublicIpAddress; }
+  inline void SetAssociatePublicIpAddress(bool value) {
+    m_associatePublicIpAddressHasBeenSet = true;
+    m_associatePublicIpAddress = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithAssociatePublicIpAddress(bool value) {
+    SetAssociatePublicIpAddress(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Licensing& GetLicensing() const{ return m_licensing; }
-    inline void SetLicensing(const Licensing& value) { m_licensing = value; }
-    inline void SetLicensing(Licensing&& value) { m_licensing = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithLicensing(const Licensing& value) { SetLicensing(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithLicensing(Licensing&& value) { SetLicensing(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Copy tags.</p>
+   */
+  inline bool GetCopyTags() const { return m_copyTags; }
+  inline void SetCopyTags(bool value) {
+    m_copyTagsHasBeenSet = true;
+    m_copyTags = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithCopyTags(bool value) {
+    SetCopyTags(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Launch configuration template map auto tagging MPE ID.</p>
-     */
-    inline const Aws::String& GetMapAutoTaggingMpeID() const{ return m_mapAutoTaggingMpeID; }
-    inline void SetMapAutoTaggingMpeID(const Aws::String& value) { m_mapAutoTaggingMpeID = value; }
-    inline void SetMapAutoTaggingMpeID(Aws::String&& value) { m_mapAutoTaggingMpeID = std::move(value); }
-    inline void SetMapAutoTaggingMpeID(const char* value) { m_mapAutoTaggingMpeID.assign(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithMapAutoTaggingMpeID(const Aws::String& value) { SetMapAutoTaggingMpeID(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithMapAutoTaggingMpeID(Aws::String&& value) { SetMapAutoTaggingMpeID(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithMapAutoTaggingMpeID(const char* value) { SetMapAutoTaggingMpeID(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Post Launch Actions of the Launch Configuration Template.</p>
-     */
-    inline const PostLaunchActions& GetPostLaunchActions() const{ return m_postLaunchActions; }
-    inline void SetPostLaunchActions(const PostLaunchActions& value) { m_postLaunchActions = value; }
-    inline void SetPostLaunchActions(PostLaunchActions&& value) { m_postLaunchActions = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithPostLaunchActions(const PostLaunchActions& value) { SetPostLaunchActions(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithPostLaunchActions(PostLaunchActions&& value) { SetPostLaunchActions(std::move(value)); return *this;}
-    ///@}
+  inline const Licensing& GetLicensing() const { return m_licensing; }
+  template <typename LicensingT = Licensing>
+  void SetLicensing(LicensingT&& value) {
+    m_licensingHasBeenSet = true;
+    m_licensing = std::forward<LicensingT>(value);
+  }
+  template <typename LicensingT = Licensing>
+  UpdateLaunchConfigurationTemplateResult& WithLicensing(LicensingT&& value) {
+    SetLicensing(std::forward<LicensingT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Small volume config.</p>
-     */
-    inline const LaunchTemplateDiskConf& GetSmallVolumeConf() const{ return m_smallVolumeConf; }
-    inline void SetSmallVolumeConf(const LaunchTemplateDiskConf& value) { m_smallVolumeConf = value; }
-    inline void SetSmallVolumeConf(LaunchTemplateDiskConf&& value) { m_smallVolumeConf = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithSmallVolumeConf(const LaunchTemplateDiskConf& value) { SetSmallVolumeConf(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithSmallVolumeConf(LaunchTemplateDiskConf&& value) { SetSmallVolumeConf(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Launch configuration template boot mode.</p>
+   */
+  inline BootMode GetBootMode() const { return m_bootMode; }
+  inline void SetBootMode(BootMode value) {
+    m_bootModeHasBeenSet = true;
+    m_bootMode = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithBootMode(BootMode value) {
+    SetBootMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Small volume maximum size.</p>
-     */
-    inline long long GetSmallVolumeMaxSize() const{ return m_smallVolumeMaxSize; }
-    inline void SetSmallVolumeMaxSize(long long value) { m_smallVolumeMaxSize = value; }
-    inline UpdateLaunchConfigurationTemplateResult& WithSmallVolumeMaxSize(long long value) { SetSmallVolumeMaxSize(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Small volume maximum size.</p>
+   */
+  inline long long GetSmallVolumeMaxSize() const { return m_smallVolumeMaxSize; }
+  inline void SetSmallVolumeMaxSize(long long value) {
+    m_smallVolumeMaxSizeHasBeenSet = true;
+    m_smallVolumeMaxSize = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithSmallVolumeMaxSize(long long value) {
+    SetSmallVolumeMaxSize(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Tags of the Launch Configuration Template.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateLaunchConfigurationTemplateResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Small volume config.</p>
+   */
+  inline const LaunchTemplateDiskConf& GetSmallVolumeConf() const { return m_smallVolumeConf; }
+  template <typename SmallVolumeConfT = LaunchTemplateDiskConf>
+  void SetSmallVolumeConf(SmallVolumeConfT&& value) {
+    m_smallVolumeConfHasBeenSet = true;
+    m_smallVolumeConf = std::forward<SmallVolumeConfT>(value);
+  }
+  template <typename SmallVolumeConfT = LaunchTemplateDiskConf>
+  UpdateLaunchConfigurationTemplateResult& WithSmallVolumeConf(SmallVolumeConfT&& value) {
+    SetSmallVolumeConf(std::forward<SmallVolumeConfT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Target instance type right-sizing method.</p>
-     */
-    inline const TargetInstanceTypeRightSizingMethod& GetTargetInstanceTypeRightSizingMethod() const{ return m_targetInstanceTypeRightSizingMethod; }
-    inline void SetTargetInstanceTypeRightSizingMethod(const TargetInstanceTypeRightSizingMethod& value) { m_targetInstanceTypeRightSizingMethod = value; }
-    inline void SetTargetInstanceTypeRightSizingMethod(TargetInstanceTypeRightSizingMethod&& value) { m_targetInstanceTypeRightSizingMethod = std::move(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithTargetInstanceTypeRightSizingMethod(const TargetInstanceTypeRightSizingMethod& value) { SetTargetInstanceTypeRightSizingMethod(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithTargetInstanceTypeRightSizingMethod(TargetInstanceTypeRightSizingMethod&& value) { SetTargetInstanceTypeRightSizingMethod(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Large volume config.</p>
+   */
+  inline const LaunchTemplateDiskConf& GetLargeVolumeConf() const { return m_largeVolumeConf; }
+  template <typename LargeVolumeConfT = LaunchTemplateDiskConf>
+  void SetLargeVolumeConf(LargeVolumeConfT&& value) {
+    m_largeVolumeConfHasBeenSet = true;
+    m_largeVolumeConf = std::forward<LargeVolumeConfT>(value);
+  }
+  template <typename LargeVolumeConfT = LaunchTemplateDiskConf>
+  UpdateLaunchConfigurationTemplateResult& WithLargeVolumeConf(LargeVolumeConfT&& value) {
+    SetLargeVolumeConf(std::forward<LargeVolumeConfT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateLaunchConfigurationTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateLaunchConfigurationTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Enable parameters encryption.</p>
+   */
+  inline bool GetEnableParametersEncryption() const { return m_enableParametersEncryption; }
+  inline void SetEnableParametersEncryption(bool value) {
+    m_enableParametersEncryptionHasBeenSet = true;
+    m_enableParametersEncryption = value;
+  }
+  inline UpdateLaunchConfigurationTemplateResult& WithEnableParametersEncryption(bool value) {
+    SetEnableParametersEncryption(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_arn;
+  ///@{
+  /**
+   * <p>Parameters encryption key.</p>
+   */
+  inline const Aws::String& GetParametersEncryptionKey() const { return m_parametersEncryptionKey; }
+  template <typename ParametersEncryptionKeyT = Aws::String>
+  void SetParametersEncryptionKey(ParametersEncryptionKeyT&& value) {
+    m_parametersEncryptionKeyHasBeenSet = true;
+    m_parametersEncryptionKey = std::forward<ParametersEncryptionKeyT>(value);
+  }
+  template <typename ParametersEncryptionKeyT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithParametersEncryptionKey(ParametersEncryptionKeyT&& value) {
+    SetParametersEncryptionKey(std::forward<ParametersEncryptionKeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    bool m_associatePublicIpAddress;
+  ///@{
 
-    BootMode m_bootMode;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateLaunchConfigurationTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    bool m_copyPrivateIp;
+ private:
+  Aws::String m_launchConfigurationTemplateID;
 
-    bool m_copyTags;
+  Aws::String m_arn;
 
-    Aws::String m_ec2LaunchTemplateID;
+  PostLaunchActions m_postLaunchActions;
 
-    bool m_enableMapAutoTagging;
+  bool m_enableMapAutoTagging{false};
 
-    LaunchTemplateDiskConf m_largeVolumeConf;
+  Aws::String m_mapAutoTaggingMpeID;
 
-    Aws::String m_launchConfigurationTemplateID;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    LaunchDisposition m_launchDisposition;
+  Aws::String m_ec2LaunchTemplateID;
 
-    Licensing m_licensing;
+  LaunchDisposition m_launchDisposition{LaunchDisposition::NOT_SET};
 
-    Aws::String m_mapAutoTaggingMpeID;
+  TargetInstanceTypeRightSizingMethod m_targetInstanceTypeRightSizingMethod{TargetInstanceTypeRightSizingMethod::NOT_SET};
 
-    PostLaunchActions m_postLaunchActions;
+  bool m_copyPrivateIp{false};
 
-    LaunchTemplateDiskConf m_smallVolumeConf;
+  bool m_associatePublicIpAddress{false};
 
-    long long m_smallVolumeMaxSize;
+  bool m_copyTags{false};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Licensing m_licensing;
 
-    TargetInstanceTypeRightSizingMethod m_targetInstanceTypeRightSizingMethod;
+  BootMode m_bootMode{BootMode::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  long long m_smallVolumeMaxSize{0};
 
-} // namespace Model
-} // namespace mgn
-} // namespace Aws
+  LaunchTemplateDiskConf m_smallVolumeConf;
+
+  LaunchTemplateDiskConf m_largeVolumeConf;
+
+  bool m_enableParametersEncryption{false};
+
+  Aws::String m_parametersEncryptionKey;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_launchConfigurationTemplateIDHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_postLaunchActionsHasBeenSet = false;
+  bool m_enableMapAutoTaggingHasBeenSet = false;
+  bool m_mapAutoTaggingMpeIDHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_ec2LaunchTemplateIDHasBeenSet = false;
+  bool m_launchDispositionHasBeenSet = false;
+  bool m_targetInstanceTypeRightSizingMethodHasBeenSet = false;
+  bool m_copyPrivateIpHasBeenSet = false;
+  bool m_associatePublicIpAddressHasBeenSet = false;
+  bool m_copyTagsHasBeenSet = false;
+  bool m_licensingHasBeenSet = false;
+  bool m_bootModeHasBeenSet = false;
+  bool m_smallVolumeMaxSizeHasBeenSet = false;
+  bool m_smallVolumeConfHasBeenSet = false;
+  bool m_largeVolumeConfHasBeenSet = false;
+  bool m_enableParametersEncryptionHasBeenSet = false;
+  bool m_parametersEncryptionKeyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace mgn
+}  // namespace Aws

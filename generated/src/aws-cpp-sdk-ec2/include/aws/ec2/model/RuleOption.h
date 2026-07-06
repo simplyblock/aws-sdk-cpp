@@ -4,79 +4,85 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes additional settings for a stateful rule.</p><p><h3>See Also:</h3>
+ * <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RuleOption">AWS
+ * API Reference</a></p>
+ */
+class RuleOption {
+ public:
+  AWS_EC2_API RuleOption() = default;
+  AWS_EC2_API RuleOption(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API RuleOption& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes additional settings for a stateful rule.</p><p><h3>See Also:</h3>  
-   * <a href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RuleOption">AWS
-   * API Reference</a></p>
+   * <p>The Suricata keyword.</p>
    */
-  class RuleOption
-  {
-  public:
-    AWS_EC2_API RuleOption();
-    AWS_EC2_API RuleOption(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API RuleOption& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetKeyword() const { return m_keyword; }
+  inline bool KeywordHasBeenSet() const { return m_keywordHasBeenSet; }
+  template <typename KeywordT = Aws::String>
+  void SetKeyword(KeywordT&& value) {
+    m_keywordHasBeenSet = true;
+    m_keyword = std::forward<KeywordT>(value);
+  }
+  template <typename KeywordT = Aws::String>
+  RuleOption& WithKeyword(KeywordT&& value) {
+    SetKeyword(std::forward<KeywordT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The settings for the keyword.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSettings() const { return m_settings; }
+  inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
+  template <typename SettingsT = Aws::Vector<Aws::String>>
+  void SetSettings(SettingsT&& value) {
+    m_settingsHasBeenSet = true;
+    m_settings = std::forward<SettingsT>(value);
+  }
+  template <typename SettingsT = Aws::Vector<Aws::String>>
+  RuleOption& WithSettings(SettingsT&& value) {
+    SetSettings(std::forward<SettingsT>(value));
+    return *this;
+  }
+  template <typename SettingsT = Aws::String>
+  RuleOption& AddSettings(SettingsT&& value) {
+    m_settingsHasBeenSet = true;
+    m_settings.emplace_back(std::forward<SettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_keyword;
 
+  Aws::Vector<Aws::String> m_settings;
+  bool m_keywordHasBeenSet = false;
+  bool m_settingsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The Suricata keyword.</p>
-     */
-    inline const Aws::String& GetKeyword() const{ return m_keyword; }
-    inline bool KeywordHasBeenSet() const { return m_keywordHasBeenSet; }
-    inline void SetKeyword(const Aws::String& value) { m_keywordHasBeenSet = true; m_keyword = value; }
-    inline void SetKeyword(Aws::String&& value) { m_keywordHasBeenSet = true; m_keyword = std::move(value); }
-    inline void SetKeyword(const char* value) { m_keywordHasBeenSet = true; m_keyword.assign(value); }
-    inline RuleOption& WithKeyword(const Aws::String& value) { SetKeyword(value); return *this;}
-    inline RuleOption& WithKeyword(Aws::String&& value) { SetKeyword(std::move(value)); return *this;}
-    inline RuleOption& WithKeyword(const char* value) { SetKeyword(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The settings for the keyword.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSettings() const{ return m_settings; }
-    inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
-    inline void SetSettings(const Aws::Vector<Aws::String>& value) { m_settingsHasBeenSet = true; m_settings = value; }
-    inline void SetSettings(Aws::Vector<Aws::String>&& value) { m_settingsHasBeenSet = true; m_settings = std::move(value); }
-    inline RuleOption& WithSettings(const Aws::Vector<Aws::String>& value) { SetSettings(value); return *this;}
-    inline RuleOption& WithSettings(Aws::Vector<Aws::String>&& value) { SetSettings(std::move(value)); return *this;}
-    inline RuleOption& AddSettings(const Aws::String& value) { m_settingsHasBeenSet = true; m_settings.push_back(value); return *this; }
-    inline RuleOption& AddSettings(Aws::String&& value) { m_settingsHasBeenSet = true; m_settings.push_back(std::move(value)); return *this; }
-    inline RuleOption& AddSettings(const char* value) { m_settingsHasBeenSet = true; m_settings.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_keyword;
-    bool m_keywordHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_settings;
-    bool m_settingsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

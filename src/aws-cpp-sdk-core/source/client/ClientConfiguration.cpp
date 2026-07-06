@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/core/client/ClientConfiguration.h>
-#include <aws/core/config/defaults/ClientConfigurationDefaults.h>
+#include <aws/core/Version.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
-#include <aws/core/client/DefaultRetryStrategy.h>
 #include <aws/core/client/AdaptiveRetryStrategy.h>
+#include <aws/core/client/ClientConfiguration.h>
+#include <aws/core/client/DefaultRetryStrategy.h>
+#include <aws/core/config/AWSProfileConfigLoader.h>
+#include <aws/core/config/defaults/ClientConfigurationDefaults.h>
 #include <aws/core/platform/Environment.h>
 #include <aws/core/platform/OSVersionInfo.h>
-#include <aws/core/utils/memory/AWSMemory.h>
 #include <aws/core/utils/StringUtils.h>
-#include <aws/core/utils/threading/Executor.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
-#include <aws/core/Version.h>
-#include <aws/core/config/AWSProfileConfigLoader.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/memory/AWSMemory.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/threading/Executor.h>
+#include <aws/crt/Config.h>
 #include <smithy/tracing/NoopTelemetryProvider.h>
 
-#include <aws/crt/Config.h>
-
+#include <array>
 
 namespace Aws
 {
@@ -39,6 +39,46 @@ static const char* REQUEST_MIN_COMPRESSION_SIZE_BYTES_CONFIG_VAR = "request_min_
 static const char* AWS_EXECUTION_ENV = "AWS_EXECUTION_ENV";
 static const char* DISABLE_IMDSV1_CONFIG_VAR = "AWS_EC2_METADATA_V1_DISABLED";
 static const char* DISABLE_IMDSV1_ENV_VAR = "ec2_metadata_v1_disabled";
+static const char* AWS_ACCOUNT_ID_ENDPOINT_MODE_ENVIRONMENT_VARIABLE = "AWS_ACCOUNT_ID_ENDPOINT_MODE";
+static const char* AWS_ACCOUNT_ID_ENDPOINT_MODE_CONFIG_FILE_OPTION = "account_id_endpoint_mode";
+static const char* AWS_METADATA_SERVICE_TIMEOUT_ENV_VAR = "AWS_METADATA_SERVICE_TIMEOUT";
+static const char* AWS_METADATA_SERVICE_TIMEOUT_CONFIG_VAR = "metadata_service_timeout";
+static const char* AWS_METADATA_SERVICE_NUM_ATTEMPTS_ENV_VAR = "AWS_METADATA_SERVICE_NUM_ATTEMPTS";
+static const char* AWS_METADATA_SERVICE_NUM_ATTEMPTS_CONFIG_VAR = "metadata_service_num_attempts";
+static const char* AWS_IAM_ROLE_ARN_ENV_VAR = "AWS_ROLE_ARN";
+static const char* AWS_IAM_ROLE_ARN_ENV_VAR_COMPAT = "AWS_IAM_ROLE_ARN";
+static const char* AWS_IAM_ROLE_ARN_CONFIG_FILE_OPTION = "role_arn";
+static const char* AWS_IAM_ROLE_SESSION_NAME_ENV_VAR = "AWS_ROLE_SESSION_NAME";
+static const char* AWS_IAM_ROLE_SESSION_NAME_ENV_VAR_COMPAT = "AWS_IAM_ROLE_SESSION_NAME";
+static const char* AWS_IAM_ROLE_SESSION_NAME_CONFIG_FILE_OPTION = "role_session_name";
+static const char* AWS_WEB_IDENTITY_TOKEN_FILE_ENV_VAR = "AWS_WEB_IDENTITY_TOKEN_FILE";
+static const char* AWS_WEB_IDENTITY_TOKEN_FILE_CONFIG_FILE_OPTION = "web_identity_token_file";
+static const char* AWS_LOGIN_SESSION_FILE_OPTION = "login_session";
+static const char* AWS_LOGIN_CACHE_DIRECTORY_ENV_VAR = "AWS_LOGIN_CACHE_DIRECTORY";
+static const char* AWS_AUTH_SCHEME_PREFERENCE = "AWS_AUTH_SCHEME_PREFERENCE";
+static const char* AWS_SIGV4A_SIGNING_REGION_SET_ENV_VAR = "AWS_SIGV4A_SIGNING_REGION_SET";
+static const char* AWS_SIGV4A_SIGNING_REGION_SET_CONFIG_VAR = "sigv4a_signing_region_set";
+
+using RequestChecksumConfigurationEnumMapping = std::pair<const char*, RequestChecksumCalculation>;
+static const std::array<RequestChecksumConfigurationEnumMapping, 2> REQUEST_CHECKSUM_CONFIG_MAPPING = {{
+    {"when_supported", RequestChecksumCalculation::WHEN_SUPPORTED},
+    {"when_required", RequestChecksumCalculation::WHEN_REQUIRED},
+}};
+
+using ResponseChecksumConfigurationEnumMapping = std::pair<const char*, ResponseChecksumValidation>;
+static const std::array<ResponseChecksumConfigurationEnumMapping, 2> RESPONSE_CHECKSUM_CONFIG_MAPPING = {
+    {{"when_supported", ResponseChecksumValidation::WHEN_SUPPORTED}, {"when_required", ResponseChecksumValidation::WHEN_REQUIRED}}};
+
+template <typename T, size_t N>
+static T LoadEnumFromString(const std::array<std::pair<const char*, T>, N>& mappings, const char* value, const T& defaultValue) {
+  static_assert(std::is_enum<T>::value, "enum type is required");
+  const auto mapping = std::find_if(std::begin(mappings), std::end(mappings),
+                                    [&value](const std::pair<const char*, T>& entry) -> bool { return strcmp(entry.first, value) == 0; });
+  if (mapping == std::end(mappings)) {
+    return defaultValue;
+  }
+  return mapping->second;
+}
 
 ClientConfiguration::ProviderFactories ClientConfiguration::ProviderFactories::defaultFactories = []()
 {
@@ -131,6 +171,61 @@ Aws::String ComputeUserAgentString(ClientConfiguration const * const pConfig)
   return ss.str();
 }
 
+Aws::String calculateRegion() {
+  // Automatically determine the AWS region from environment variables, configuration file and EC2 metadata.
+  auto region = Aws::Environment::GetEnv("AWS_DEFAULT_REGION");
+  if (!region.empty())
+  {
+    return region;
+  }
+
+  region = Aws::Environment::GetEnv("AWS_REGION");
+  if (!region.empty())
+  {
+    return region;
+  }
+
+  region = Aws::Config::GetCachedConfigValue("region");
+  if (!region.empty())
+  {
+    return region;
+  }
+  return "";
+}
+
+
+Aws::Vector<Aws::String> calculateAuthPreferences() {
+  // Automatically determine the auth scheme preferences, based on environment vars.
+  Aws::Vector<Aws::String> res;
+  auto prefs = Aws::Environment::GetEnv(AWS_AUTH_SCHEME_PREFERENCE);
+  Aws::Vector<Aws::String> prefsList  = Aws::Utils::StringUtils::Split(prefs, ',');
+  res.reserve(prefsList.size());  // avoid repeated allocations
+  for (auto& pref : prefsList) {
+    res.emplace_back(Aws::Utils::StringUtils::Trim(pref.c_str()));
+  }
+  return res;
+}
+
+Aws::Vector<Aws::String> calculateSigV4aSigningRegionSet(const Aws::String& profileName) {
+  Aws::Vector<Aws::String> res;
+  Aws::String regionSetStr = Aws::Environment::GetEnv(AWS_SIGV4A_SIGNING_REGION_SET_ENV_VAR);
+  if (regionSetStr.empty()) {
+    regionSetStr = Aws::Config::GetCachedConfigValue(profileName, AWS_SIGV4A_SIGNING_REGION_SET_CONFIG_VAR);
+  }
+  if (regionSetStr.empty()) {
+    return res;
+  }
+  Aws::Vector<Aws::String> regionsList = Aws::Utils::StringUtils::Split(regionSetStr, ',');
+  res.reserve(regionsList.size());
+  for (const auto& region : regionsList) {
+    Aws::String trimmed = Aws::Utils::StringUtils::Trim(region.c_str());
+    if (!trimmed.empty()) {
+      res.emplace_back(trimmed);
+    }
+  }
+  return res;
+}
+
 void setLegacyClientConfigurationParameters(ClientConfiguration& clientConfig)
 {
     clientConfig.scheme = Aws::Http::Scheme::HTTPS;
@@ -149,6 +244,7 @@ void setLegacyClientConfigurationParameters(ClientConfiguration& clientConfig)
     clientConfig.writeRateLimiter = nullptr;
     clientConfig.readRateLimiter = nullptr;
     clientConfig.httpLibOverride = Aws::Http::TransferLibType::DEFAULT_CLIENT;
+    clientConfig.httpClientChunkedMode = HttpClientChunkedMode::CLIENT_IMPLEMENTATION;
     clientConfig.followRedirects = FollowRedirectsPolicy::DEFAULT;
     clientConfig.disableExpectHeader = false;
     clientConfig.enableClockSkewAdjustment = true;
@@ -192,24 +288,10 @@ void setLegacyClientConfigurationParameters(ClientConfiguration& clientConfig)
 
     AWS_LOGSTREAM_DEBUG(CLIENT_CONFIG_TAG, "ClientConfiguration will use SDK Auto Resolved profile: [" << clientConfig.profileName << "] if not specified by users.");
 
-    // Automatically determine the AWS region from environment variables, configuration file and EC2 metadata.
-    clientConfig.region = Aws::Environment::GetEnv("AWS_DEFAULT_REGION");
-    if (!clientConfig.region.empty())
-    {
-        return;
-    }
-
-    clientConfig.region = Aws::Environment::GetEnv("AWS_REGION");
-    if (!clientConfig.region.empty())
-    {
-        return;
-    }
-
-    clientConfig.region = Aws::Config::GetCachedConfigValue("region");
-    if (!clientConfig.region.empty())
-    {
-        return;
-    }
+    clientConfig.region = calculateRegion();
+    clientConfig.credentialProviderConfig.region = clientConfig.region;
+    clientConfig.authPreferences = calculateAuthPreferences();
+    clientConfig.sigV4aSigningRegionSet = calculateSigV4aSigningRegionSet(clientConfig.profileName);
 
     // Set the endpoint to interact with EC2 instance's metadata service
     Aws::String ec2MetadataServiceEndpoint = Aws::Environment::GetEnv("AWS_EC2_METADATA_SERVICE_ENDPOINT");
@@ -219,17 +301,27 @@ void setLegacyClientConfigurationParameters(ClientConfiguration& clientConfig)
         auto client = Aws::Internal::GetEC2MetadataClient();
         if (client != nullptr)
         {
-            client->SetEndpoint(ec2MetadataServiceEndpoint);
+          client->SetEndpoint(ec2MetadataServiceEndpoint);
         }
     }
 
-    clientConfig.appId = clientConfig.LoadConfigFromEnvOrProfile(
-            "AWS_SDK_UA_APP_ID",
-            clientConfig.profileName,
-            "sdk_ua_app_id",
-            {},
-            ""
-    );
+    clientConfig.appId = clientConfig.LoadConfigFromEnvOrProfile("AWS_SDK_UA_APP_ID", clientConfig.profileName, "sdk_ua_app_id", {}, "");
+
+    clientConfig.checksumConfig.requestChecksumCalculation =
+        LoadEnumFromString(REQUEST_CHECKSUM_CONFIG_MAPPING,
+                           ClientConfiguration::LoadConfigFromEnvOrProfile("AWS_REQUEST_CHECKSUM_CALCULATION", clientConfig.profileName,
+                                                                           "request_checksum_calculation",
+                                                                           {"when_supported", "when_required"}, "when_supported")
+                               .c_str(),
+                           RequestChecksumCalculation::WHEN_SUPPORTED);
+
+    clientConfig.checksumConfig.responseChecksumValidation =
+        LoadEnumFromString(RESPONSE_CHECKSUM_CONFIG_MAPPING,
+                           ClientConfiguration::LoadConfigFromEnvOrProfile("AWS_RESPONSE_CHECKSUM_VALIDATION", clientConfig.profileName,
+                                                                           "response_checksum_validation",
+                                                                           {"when_supported", "when_required"}, "when_supported")
+                               .c_str(),
+                           ResponseChecksumValidation::WHEN_SUPPORTED);
 }
 
 void setConfigFromEnvOrProfile(ClientConfiguration &config)
@@ -241,13 +333,86 @@ void setConfigFromEnvOrProfile(ClientConfiguration &config)
         "false");
     if (disableIMDSv1 == "true") {
         config.disableImdsV1 = true;
+        config.credentialProviderConfig.imdsConfig.disableImdsV1 = true;
     }
+
+    // accountId is intentionally not set here: AWS_ACCOUNT_ID env variable may not match the provided credentials.
+    // it must be set by an auth provider / identity resolver or by an SDK user.
+    config.accountIdEndpointMode = ClientConfiguration::LoadConfigFromEnvOrProfile(AWS_ACCOUNT_ID_ENDPOINT_MODE_ENVIRONMENT_VARIABLE,
+        config.profileName,
+        AWS_ACCOUNT_ID_ENDPOINT_MODE_CONFIG_FILE_OPTION,
+        {"required", "disabled", "preferred"}, /* allowed values */
+        "preferred" /* default value */);
+    
+    // Load IMDS configuration from environment variables and config file
+    Aws::String timeoutStr = ClientConfiguration::LoadConfigFromEnvOrProfile(AWS_METADATA_SERVICE_TIMEOUT_ENV_VAR,
+        config.profileName,
+        AWS_METADATA_SERVICE_TIMEOUT_CONFIG_VAR,
+        {}, /* allowed values */
+        "1" /* default value */);
+
+    // Load IMDS configuration from environment variables and config file
+    Aws::String numAttemptsStr = ClientConfiguration::LoadConfigFromEnvOrProfile(AWS_METADATA_SERVICE_NUM_ATTEMPTS_ENV_VAR,
+        config.profileName,
+        AWS_METADATA_SERVICE_NUM_ATTEMPTS_CONFIG_VAR,
+        {}, /* allowed values */
+        "1" /* default value */);
+
+    // Parse and set IMDS timeout
+    long timeout = static_cast<long>(Aws::Utils::StringUtils::ConvertToInt32(timeoutStr.c_str()));
+    config.credentialProviderConfig.imdsConfig.metadataServiceTimeout = timeout;
+
+    // Parse and set IMDS num attempts
+    long attempts = static_cast<long>(Aws::Utils::StringUtils::ConvertToInt32(numAttemptsStr.c_str()));
+    config.credentialProviderConfig.imdsConfig.metadataServiceNumAttempts = attempts;
+
+    // Initialize IMDS-specific retry strategy with configured number of attempts
+    // Uses default retry mode with the specified max attempts from metadata_service_num_attempts
+    config.credentialProviderConfig.imdsConfig.imdsRetryStrategy = InitRetryStrategy(attempts, "");
+
+    config.credentialProviderConfig.stsCredentialsProviderConfig.roleArn = ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(
+        AWS_IAM_ROLE_ARN_ENV_VAR_COMPAT, config.profileName, AWS_IAM_ROLE_ARN_CONFIG_FILE_OPTION, {}, /* allowed values */
+        "" /* default value */, [](const Aws::String& envValue) -> Aws::String { return envValue; });
+
+    // there was a typo in the original environment variable, this exists for backwards compatibility
+    if (config.credentialProviderConfig.stsCredentialsProviderConfig.roleArn.empty()) {
+      config.credentialProviderConfig.stsCredentialsProviderConfig.roleArn = ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(
+          AWS_IAM_ROLE_ARN_ENV_VAR, config.profileName, AWS_IAM_ROLE_ARN_CONFIG_FILE_OPTION, {}, /* allowed values */
+          "" /* default value */, [](const Aws::String& envValue) -> Aws::String { return envValue; });
+    }
+
+    config.credentialProviderConfig.stsCredentialsProviderConfig.sessionName = ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(
+        AWS_IAM_ROLE_SESSION_NAME_ENV_VAR_COMPAT, config.profileName, AWS_IAM_ROLE_SESSION_NAME_CONFIG_FILE_OPTION, {}, /* allowed values */
+        "" /* default value */, [](const Aws::String& envValue) -> Aws::String { return envValue; });
+
+    // there was a typo in the original environment variable, this exists for backwards compatibility
+    if (config.credentialProviderConfig.stsCredentialsProviderConfig.sessionName.empty()) {
+      config.credentialProviderConfig.stsCredentialsProviderConfig.sessionName =
+          ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(
+              AWS_IAM_ROLE_SESSION_NAME_ENV_VAR, config.profileName, AWS_IAM_ROLE_SESSION_NAME_CONFIG_FILE_OPTION, {}, /* allowed values */
+              "" /* default value */, [](const Aws::String& envValue) -> Aws::String { return envValue; });
+    }
+
+    config.credentialProviderConfig.stsCredentialsProviderConfig.tokenFilePath =
+        ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(
+            AWS_WEB_IDENTITY_TOKEN_FILE_ENV_VAR, config.profileName, AWS_WEB_IDENTITY_TOKEN_FILE_CONFIG_FILE_OPTION,
+            {}, /* allowed values */
+            "" /* default value */, [](const Aws::String& envValue) -> Aws::String { return envValue; });
+
+    config.credentialProviderConfig.loginCredentialProviderConfig.loginSession =
+        Aws::Config::GetCachedConfigValue(config.profileName, AWS_LOGIN_SESSION_FILE_OPTION);
+
+    config.credentialProviderConfig.loginCredentialProviderConfig.loginCacheOverride =
+        Aws::Environment::GetEnv(AWS_LOGIN_CACHE_DIRECTORY_ENV_VAR);
 }
 
 ClientConfiguration::ClientConfiguration()
 {
     this->disableIMDS = false;
+    this->credentialProviderConfig.imdsConfig.disableImds = false;
     setLegacyClientConfigurationParameters(*this);
+    setConfigFromEnvOrProfile(*this);
+    this->credentialProviderConfig.profile = this->profileName;
 
     if (!this->disableIMDS &&
         region.empty() &&
@@ -257,6 +422,7 @@ ClientConfiguration::ClientConfiguration()
         if (client)
         {
             region = client->GetCurrentRegion();
+            this->credentialProviderConfig.region = region;
         }
     }
     if (!region.empty())
@@ -264,13 +430,16 @@ ClientConfiguration::ClientConfiguration()
         return;
     }
     region = Aws::String(Aws::Region::US_EAST_1);
-    setConfigFromEnvOrProfile(*this);
+    this->credentialProviderConfig.region = region;
 }
 
 ClientConfiguration::ClientConfiguration(const ClientConfigurationInitValues &configuration)
 {
     this->disableIMDS = configuration.shouldDisableIMDS;
+    this->credentialProviderConfig.imdsConfig.disableImds = configuration.shouldDisableIMDS;
     setLegacyClientConfigurationParameters(*this);
+    setConfigFromEnvOrProfile(*this);
+    this->credentialProviderConfig.profile = this->profileName;
 
     if (!this->disableIMDS &&
         region.empty() &&
@@ -280,6 +449,7 @@ ClientConfiguration::ClientConfiguration(const ClientConfigurationInitValues &co
         if (client)
         {
             region = client->GetCurrentRegion();
+            this->credentialProviderConfig.region = region;
         }
     }
     if (!region.empty())
@@ -287,16 +457,19 @@ ClientConfiguration::ClientConfiguration(const ClientConfigurationInitValues &co
         return;
     }
     region = Aws::String(Aws::Region::US_EAST_1);
-    setConfigFromEnvOrProfile(*this);
+    this->credentialProviderConfig.region = region;
 }
 
 ClientConfiguration::ClientConfiguration(const char* profile, bool shouldDisableIMDS)
 {
     this->disableIMDS = shouldDisableIMDS;
+    this->credentialProviderConfig.imdsConfig.disableImds = shouldDisableIMDS;
     if (profile && Aws::Config::HasCachedConfigProfile(profile)) {
         this->profileName = Aws::String(profile);
     }
+    this->credentialProviderConfig.profile = this->profileName;
     setLegacyClientConfigurationParameters(*this);
+    setConfigFromEnvOrProfile(*this);
     // Call EC2 Instance Metadata service only once
     Aws::String ec2MetadataRegion;
     bool hasEc2MetadataRegion = false;
@@ -309,12 +482,14 @@ ClientConfiguration::ClientConfiguration(const char* profile, bool shouldDisable
             ec2MetadataRegion = client->GetCurrentRegion();
             hasEc2MetadataRegion = true;
             region = ec2MetadataRegion;
+            this->credentialProviderConfig.region = region;
         }
     }
 
     if(region.empty())
     {
         region = Aws::String(Aws::Region::US_EAST_1);
+        this->credentialProviderConfig.region = region;
     }
 
     if (profile && Aws::Config::HasCachedConfigProfile(profile)) {
@@ -323,6 +498,7 @@ ClientConfiguration::ClientConfiguration(const char* profile, bool shouldDisable
         auto tmpRegion = Aws::Config::GetCachedConfigProfile(this->profileName).GetRegion();
         if (!tmpRegion.empty()) {
             region = tmpRegion;
+            this->credentialProviderConfig.region = region;
         }
 
         Aws::String profileDefaultsMode = Aws::Config::GetCachedConfigProfile(this->profileName).GetDefaultsMode();
@@ -332,13 +508,15 @@ ClientConfiguration::ClientConfiguration(const char* profile, bool shouldDisable
     }
 
     AWS_LOGSTREAM_WARN(CLIENT_CONFIG_TAG, "User specified profile: [" << profile << "] is not found, will use the SDK resolved one.");
-    setConfigFromEnvOrProfile(*this);
 }
 
 ClientConfiguration::ClientConfiguration(bool /*useSmartDefaults*/, const char* defaultMode, bool shouldDisableIMDS)
 {
     this->disableIMDS = shouldDisableIMDS;
+    this->credentialProviderConfig.imdsConfig.disableImds = shouldDisableIMDS;
     setLegacyClientConfigurationParameters(*this);
+    setConfigFromEnvOrProfile(*this);
+    this->credentialProviderConfig.profile = this->profileName;
 
     // Call EC2 Instance Metadata service only once
     Aws::String ec2MetadataRegion;
@@ -353,40 +531,19 @@ ClientConfiguration::ClientConfiguration(bool /*useSmartDefaults*/, const char* 
             ec2MetadataRegion = client->GetCurrentRegion();
             hasEc2MetadataRegion = true;
             region = ec2MetadataRegion;
+            this->credentialProviderConfig.region = region;
         }
     }
     if (region.empty())
     {
         region = Aws::String(Aws::Region::US_EAST_1);
+        this->credentialProviderConfig.region = region;
     }
 
     Aws::Config::Defaults::SetSmartDefaultsConfigurationParameters(*this, defaultMode, hasEc2MetadataRegion, ec2MetadataRegion);
-    setConfigFromEnvOrProfile(*this);
 }
 
-std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode)
-{
-    int maxAttempts = 0;
-    Aws::String maxAttemptsString = Aws::Environment::GetEnv("AWS_MAX_ATTEMPTS");
-    if (maxAttemptsString.empty())
-    {
-        maxAttemptsString = Aws::Config::GetCachedConfigValue("max_attempts");
-    }
-    // In case users specify 0 explicitly to disable retry.
-    if (maxAttemptsString == "0")
-    {
-        maxAttempts = 0;
-    }
-    else
-    {
-        maxAttempts = static_cast<int>(Aws::Utils::StringUtils::ConvertToInt32(maxAttemptsString.c_str()));
-        if (maxAttempts == 0)
-        {
-            AWS_LOGSTREAM_INFO(CLIENT_CONFIG_TAG, "Retry Strategy will use the default max attempts.");
-            maxAttempts = -1;
-        }
-    }
-
+static Aws::String ResolveRetryMode(Aws::String retryMode) {
     if (retryMode.empty())
     {
         retryMode = Aws::Environment::GetEnv("AWS_RETRY_MODE");
@@ -395,6 +552,15 @@ std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode)
     {
         retryMode = Aws::Config::GetCachedConfigValue("retry_mode");
     }
+    if (Aws::Utils::StringUtils::ToLower(Aws::Environment::GetEnv("AWS_NEW_RETRIES_2026").c_str()) == "true" && retryMode.empty())
+    {
+        retryMode = "standard";
+    }
+    return retryMode;
+}
+
+std::shared_ptr<RetryStrategy> InitRetryStrategy(int maxAttempts, Aws::String retryMode) {
+    retryMode = ResolveRetryMode(retryMode);
 
     std::shared_ptr<RetryStrategy> retryStrategy;
     if (retryMode == "standard")
@@ -423,10 +589,68 @@ std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode)
     }
     else
     {
-        retryStrategy = Aws::MakeShared<DefaultRetryStrategy>(CLIENT_CONFIG_TAG);
+        if (Aws::Utils::StringUtils::ToLower(Aws::Environment::GetEnv("AWS_NEW_RETRIES_2026").c_str()) != "true")
+        {
+            if (maxAttempts < 0)
+            {
+                retryStrategy = Aws::MakeShared<StandardRetryStrategy>(CLIENT_CONFIG_TAG);
+            }
+            else
+            {
+                retryStrategy = Aws::MakeShared<StandardRetryStrategy>(CLIENT_CONFIG_TAG, maxAttempts);
+            }
+        }
+        else
+        {
+            retryStrategy = Aws::MakeShared<DefaultRetryStrategy>(CLIENT_CONFIG_TAG);
+        }
     }
 
     return retryStrategy;
+}
+
+std::shared_ptr<RetryStrategy> InitRetryStrategy(int maxAttempts, Aws::String retryMode, double transientBackoffBaseSec) {
+    if (Aws::Utils::StringUtils::ToLower(Aws::Environment::GetEnv("AWS_NEW_RETRIES_2026").c_str()) != "true")
+    {
+        // Gate is off: ignore service-specific tuning, use default behavior
+        return InitRetryStrategy(retryMode);
+    }
+
+    // Only standard mode honors a service-specific backoff base; other modes are unaffected,
+    // so they go through the default-base path.
+    if (ResolveRetryMode(retryMode) != "standard")
+    {
+        return InitRetryStrategy(maxAttempts, retryMode);
+    }
+
+    long attempts = static_cast<long>(maxAttempts);
+    return Aws::MakeShared<StandardRetryStrategy>(CLIENT_CONFIG_TAG, attempts, transientBackoffBaseSec);
+}
+
+std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode)
+{
+    int maxAttempts = 0;
+    Aws::String maxAttemptsString = Aws::Environment::GetEnv("AWS_MAX_ATTEMPTS");
+    if (maxAttemptsString.empty())
+    {
+        maxAttemptsString = Aws::Config::GetCachedConfigValue("max_attempts");
+    }
+    // In case users specify 0 explicitly to disable retry.
+    if (maxAttemptsString == "0")
+    {
+        maxAttempts = 0;
+    }
+    else
+    {
+        maxAttempts = static_cast<int>(Aws::Utils::StringUtils::ConvertToInt32(maxAttemptsString.c_str()));
+        if (maxAttempts == 0)
+        {
+            AWS_LOGSTREAM_INFO(CLIENT_CONFIG_TAG, "Retry Strategy will use the default max attempts.");
+            maxAttempts = -1;
+        }
+    }
+
+    return InitRetryStrategy(maxAttempts, retryMode);
 }
 
 Aws::String ClientConfiguration::LoadConfigFromEnvOrProfile(const Aws::String& envKey,
@@ -435,29 +659,45 @@ Aws::String ClientConfiguration::LoadConfigFromEnvOrProfile(const Aws::String& e
                                                             const Aws::Vector<Aws::String>& allowedValues,
                                                             const Aws::String& defaultValue)
 {
-    Aws::String option = Aws::Environment::GetEnv(envKey.c_str());
-    if (option.empty()) {
-        option = Aws::Config::GetCachedConfigValue(profile, profileProperty);
-    }
-    option = Aws::Utils::StringUtils::ToLower(option.c_str());
-    if (option.empty()) {
-        return defaultValue;
-    }
+  return LoadConfigFromEnvOrProfileCaseSensitive(envKey, profile, profileProperty, allowedValues, defaultValue);
+}
+Aws::String ClientConfiguration::LoadConfigFromEnvOrProfileCaseSensitive(const Aws::String& envKey, const Aws::String& profile,
+                                                                         const Aws::String& profileProperty,
+                                                                         const Aws::Vector<Aws::String>& allowedValues,
+                                                                         const Aws::String& defaultValue,
+                                                                         const std::function<Aws::String(const char*)>& envValueMapping) {
+  Aws::String option = Aws::Environment::GetEnv(envKey.c_str());
+  if (option.empty()) {
+    option = Aws::Config::GetCachedConfigValue(profile, profileProperty);
+  }
+  option = envValueMapping(option.c_str());
+  if (option.empty()) {
+    return defaultValue;
+  }
 
-    if (!allowedValues.empty() && std::find(allowedValues.cbegin(), allowedValues.cend(), option) == allowedValues.cend()) {
-        Aws::OStringStream expectedStr;
-        expectedStr << "[";
-        for(const auto& allowed : allowedValues) {
-            expectedStr << allowed << ";";
-        }
-        expectedStr << "]";
-
-        AWS_LOGSTREAM_WARN(CLIENT_CONFIG_TAG, "Unrecognised value for " << envKey << ": " << option <<
-                                              ". Using default instead: " << defaultValue <<
-                                              ". Expected empty or one of: " << expectedStr.str());
-        option = defaultValue;
+  if (!allowedValues.empty() && std::find(allowedValues.cbegin(), allowedValues.cend(), option) == allowedValues.cend()) {
+    Aws::OStringStream expectedStr;
+    expectedStr << "[";
+    for (const auto& allowed : allowedValues) {
+      expectedStr << allowed << ";";
     }
-    return option;
+    expectedStr << "]";
+
+    AWS_LOGSTREAM_WARN(CLIENT_CONFIG_TAG, "Unrecognised value for " << envKey << ": " << option << ". Using default instead: "
+                                                                    << defaultValue << ". Expected empty or one of: " << expectedStr.str());
+    option = defaultValue;
+  }
+  return option;
+}
+
+ClientConfiguration::CredentialProviderConfiguration ClientConfiguration::ResolveCredentialProviderConfig() const
+{
+    auto resolved = credentialProviderConfig;
+    resolved.region = region;
+    resolved.profile = profileName;
+    resolved.imdsConfig.disableImds = disableIMDS;
+    resolved.allowSystemProxy = allowSystemProxy;
+    return resolved;
 }
 
 } // namespace Client

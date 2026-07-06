@@ -4,207 +4,421 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
-#include <aws/medialive/MediaLiveRequest.h>
-#include <aws/medialive/model/CdiInputSpecification.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLiveRequest.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/medialive/model/AnywhereSettings.h>
+#include <aws/medialive/model/CdiInputSpecification.h>
+#include <aws/medialive/model/ChannelEngineVersionRequest.h>
 #include <aws/medialive/model/EncoderSettings.h>
+#include <aws/medialive/model/InferenceSettings.h>
+#include <aws/medialive/model/InputAttachment.h>
 #include <aws/medialive/model/InputSpecification.h>
+#include <aws/medialive/model/LinkedChannelSettings.h>
 #include <aws/medialive/model/LogLevel.h>
 #include <aws/medialive/model/MaintenanceUpdateSettings.h>
 #include <aws/medialive/model/OutputDestination.h>
-#include <aws/medialive/model/InputAttachment.h>
+#include <aws/medialive/model/SpecialRouterSettings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace MediaLive {
+namespace Model {
 
+/**
+ * A request to update a channel.<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelRequest">AWS
+ * API Reference</a></p>
+ */
+class UpdateChannelRequest : public MediaLiveRequest {
+ public:
+  AWS_MEDIALIVE_API UpdateChannelRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateChannel"; }
+
+  AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * A request to update a channel.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/UpdateChannelRequest">AWS
-   * API Reference</a></p>
+   * Specification of CDI inputs for this channel
    */
-  class UpdateChannelRequest : public MediaLiveRequest
-  {
-  public:
-    AWS_MEDIALIVE_API UpdateChannelRequest();
+  inline const CdiInputSpecification& GetCdiInputSpecification() const { return m_cdiInputSpecification; }
+  inline bool CdiInputSpecificationHasBeenSet() const { return m_cdiInputSpecificationHasBeenSet; }
+  template <typename CdiInputSpecificationT = CdiInputSpecification>
+  void SetCdiInputSpecification(CdiInputSpecificationT&& value) {
+    m_cdiInputSpecificationHasBeenSet = true;
+    m_cdiInputSpecification = std::forward<CdiInputSpecificationT>(value);
+  }
+  template <typename CdiInputSpecificationT = CdiInputSpecification>
+  UpdateChannelRequest& WithCdiInputSpecification(CdiInputSpecificationT&& value) {
+    SetCdiInputSpecification(std::forward<CdiInputSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateChannel"; }
+  ///@{
+  /**
+   * channel ID
+   */
+  inline const Aws::String& GetChannelId() const { return m_channelId; }
+  inline bool ChannelIdHasBeenSet() const { return m_channelIdHasBeenSet; }
+  template <typename ChannelIdT = Aws::String>
+  void SetChannelId(ChannelIdT&& value) {
+    m_channelIdHasBeenSet = true;
+    m_channelId = std::forward<ChannelIdT>(value);
+  }
+  template <typename ChannelIdT = Aws::String>
+  UpdateChannelRequest& WithChannelId(ChannelIdT&& value) {
+    SetChannelId(std::forward<ChannelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEDIALIVE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * A list of output destinations for this channel.
+   */
+  inline const Aws::Vector<OutputDestination>& GetDestinations() const { return m_destinations; }
+  inline bool DestinationsHasBeenSet() const { return m_destinationsHasBeenSet; }
+  template <typename DestinationsT = Aws::Vector<OutputDestination>>
+  void SetDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations = std::forward<DestinationsT>(value);
+  }
+  template <typename DestinationsT = Aws::Vector<OutputDestination>>
+  UpdateChannelRequest& WithDestinations(DestinationsT&& value) {
+    SetDestinations(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  template <typename DestinationsT = OutputDestination>
+  UpdateChannelRequest& AddDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations.emplace_back(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * The encoder settings for this channel.
+   */
+  inline const EncoderSettings& GetEncoderSettings() const { return m_encoderSettings; }
+  inline bool EncoderSettingsHasBeenSet() const { return m_encoderSettingsHasBeenSet; }
+  template <typename EncoderSettingsT = EncoderSettings>
+  void SetEncoderSettings(EncoderSettingsT&& value) {
+    m_encoderSettingsHasBeenSet = true;
+    m_encoderSettings = std::forward<EncoderSettingsT>(value);
+  }
+  template <typename EncoderSettingsT = EncoderSettings>
+  UpdateChannelRequest& WithEncoderSettings(EncoderSettingsT&& value) {
+    SetEncoderSettings(std::forward<EncoderSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Specification of CDI inputs for this channel
-     */
-    inline const CdiInputSpecification& GetCdiInputSpecification() const{ return m_cdiInputSpecification; }
-    inline bool CdiInputSpecificationHasBeenSet() const { return m_cdiInputSpecificationHasBeenSet; }
-    inline void SetCdiInputSpecification(const CdiInputSpecification& value) { m_cdiInputSpecificationHasBeenSet = true; m_cdiInputSpecification = value; }
-    inline void SetCdiInputSpecification(CdiInputSpecification&& value) { m_cdiInputSpecificationHasBeenSet = true; m_cdiInputSpecification = std::move(value); }
-    inline UpdateChannelRequest& WithCdiInputSpecification(const CdiInputSpecification& value) { SetCdiInputSpecification(value); return *this;}
-    inline UpdateChannelRequest& WithCdiInputSpecification(CdiInputSpecification&& value) { SetCdiInputSpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * channel ID
-     */
-    inline const Aws::String& GetChannelId() const{ return m_channelId; }
-    inline bool ChannelIdHasBeenSet() const { return m_channelIdHasBeenSet; }
-    inline void SetChannelId(const Aws::String& value) { m_channelIdHasBeenSet = true; m_channelId = value; }
-    inline void SetChannelId(Aws::String&& value) { m_channelIdHasBeenSet = true; m_channelId = std::move(value); }
-    inline void SetChannelId(const char* value) { m_channelIdHasBeenSet = true; m_channelId.assign(value); }
-    inline UpdateChannelRequest& WithChannelId(const Aws::String& value) { SetChannelId(value); return *this;}
-    inline UpdateChannelRequest& WithChannelId(Aws::String&& value) { SetChannelId(std::move(value)); return *this;}
-    inline UpdateChannelRequest& WithChannelId(const char* value) { SetChannelId(value); return *this;}
-    ///@}
+  inline const Aws::Vector<InputAttachment>& GetInputAttachments() const { return m_inputAttachments; }
+  inline bool InputAttachmentsHasBeenSet() const { return m_inputAttachmentsHasBeenSet; }
+  template <typename InputAttachmentsT = Aws::Vector<InputAttachment>>
+  void SetInputAttachments(InputAttachmentsT&& value) {
+    m_inputAttachmentsHasBeenSet = true;
+    m_inputAttachments = std::forward<InputAttachmentsT>(value);
+  }
+  template <typename InputAttachmentsT = Aws::Vector<InputAttachment>>
+  UpdateChannelRequest& WithInputAttachments(InputAttachmentsT&& value) {
+    SetInputAttachments(std::forward<InputAttachmentsT>(value));
+    return *this;
+  }
+  template <typename InputAttachmentsT = InputAttachment>
+  UpdateChannelRequest& AddInputAttachments(InputAttachmentsT&& value) {
+    m_inputAttachmentsHasBeenSet = true;
+    m_inputAttachments.emplace_back(std::forward<InputAttachmentsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * A list of output destinations for this channel.
-     */
-    inline const Aws::Vector<OutputDestination>& GetDestinations() const{ return m_destinations; }
-    inline bool DestinationsHasBeenSet() const { return m_destinationsHasBeenSet; }
-    inline void SetDestinations(const Aws::Vector<OutputDestination>& value) { m_destinationsHasBeenSet = true; m_destinations = value; }
-    inline void SetDestinations(Aws::Vector<OutputDestination>&& value) { m_destinationsHasBeenSet = true; m_destinations = std::move(value); }
-    inline UpdateChannelRequest& WithDestinations(const Aws::Vector<OutputDestination>& value) { SetDestinations(value); return *this;}
-    inline UpdateChannelRequest& WithDestinations(Aws::Vector<OutputDestination>&& value) { SetDestinations(std::move(value)); return *this;}
-    inline UpdateChannelRequest& AddDestinations(const OutputDestination& value) { m_destinationsHasBeenSet = true; m_destinations.push_back(value); return *this; }
-    inline UpdateChannelRequest& AddDestinations(OutputDestination&& value) { m_destinationsHasBeenSet = true; m_destinations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * Specification of network and file inputs for this channel
+   */
+  inline const InputSpecification& GetInputSpecification() const { return m_inputSpecification; }
+  inline bool InputSpecificationHasBeenSet() const { return m_inputSpecificationHasBeenSet; }
+  template <typename InputSpecificationT = InputSpecification>
+  void SetInputSpecification(InputSpecificationT&& value) {
+    m_inputSpecificationHasBeenSet = true;
+    m_inputSpecification = std::forward<InputSpecificationT>(value);
+  }
+  template <typename InputSpecificationT = InputSpecification>
+  UpdateChannelRequest& WithInputSpecification(InputSpecificationT&& value) {
+    SetInputSpecification(std::forward<InputSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The encoder settings for this channel.
-     */
-    inline const EncoderSettings& GetEncoderSettings() const{ return m_encoderSettings; }
-    inline bool EncoderSettingsHasBeenSet() const { return m_encoderSettingsHasBeenSet; }
-    inline void SetEncoderSettings(const EncoderSettings& value) { m_encoderSettingsHasBeenSet = true; m_encoderSettings = value; }
-    inline void SetEncoderSettings(EncoderSettings&& value) { m_encoderSettingsHasBeenSet = true; m_encoderSettings = std::move(value); }
-    inline UpdateChannelRequest& WithEncoderSettings(const EncoderSettings& value) { SetEncoderSettings(value); return *this;}
-    inline UpdateChannelRequest& WithEncoderSettings(EncoderSettings&& value) { SetEncoderSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The log level to write to CloudWatch Logs.
+   */
+  inline LogLevel GetLogLevel() const { return m_logLevel; }
+  inline bool LogLevelHasBeenSet() const { return m_logLevelHasBeenSet; }
+  inline void SetLogLevel(LogLevel value) {
+    m_logLevelHasBeenSet = true;
+    m_logLevel = value;
+  }
+  inline UpdateChannelRequest& WithLogLevel(LogLevel value) {
+    SetLogLevel(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<InputAttachment>& GetInputAttachments() const{ return m_inputAttachments; }
-    inline bool InputAttachmentsHasBeenSet() const { return m_inputAttachmentsHasBeenSet; }
-    inline void SetInputAttachments(const Aws::Vector<InputAttachment>& value) { m_inputAttachmentsHasBeenSet = true; m_inputAttachments = value; }
-    inline void SetInputAttachments(Aws::Vector<InputAttachment>&& value) { m_inputAttachmentsHasBeenSet = true; m_inputAttachments = std::move(value); }
-    inline UpdateChannelRequest& WithInputAttachments(const Aws::Vector<InputAttachment>& value) { SetInputAttachments(value); return *this;}
-    inline UpdateChannelRequest& WithInputAttachments(Aws::Vector<InputAttachment>&& value) { SetInputAttachments(std::move(value)); return *this;}
-    inline UpdateChannelRequest& AddInputAttachments(const InputAttachment& value) { m_inputAttachmentsHasBeenSet = true; m_inputAttachments.push_back(value); return *this; }
-    inline UpdateChannelRequest& AddInputAttachments(InputAttachment&& value) { m_inputAttachmentsHasBeenSet = true; m_inputAttachments.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * Maintenance settings for this channel.
+   */
+  inline const MaintenanceUpdateSettings& GetMaintenance() const { return m_maintenance; }
+  inline bool MaintenanceHasBeenSet() const { return m_maintenanceHasBeenSet; }
+  template <typename MaintenanceT = MaintenanceUpdateSettings>
+  void SetMaintenance(MaintenanceT&& value) {
+    m_maintenanceHasBeenSet = true;
+    m_maintenance = std::forward<MaintenanceT>(value);
+  }
+  template <typename MaintenanceT = MaintenanceUpdateSettings>
+  UpdateChannelRequest& WithMaintenance(MaintenanceT&& value) {
+    SetMaintenance(std::forward<MaintenanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Specification of network and file inputs for this channel
-     */
-    inline const InputSpecification& GetInputSpecification() const{ return m_inputSpecification; }
-    inline bool InputSpecificationHasBeenSet() const { return m_inputSpecificationHasBeenSet; }
-    inline void SetInputSpecification(const InputSpecification& value) { m_inputSpecificationHasBeenSet = true; m_inputSpecification = value; }
-    inline void SetInputSpecification(InputSpecification&& value) { m_inputSpecificationHasBeenSet = true; m_inputSpecification = std::move(value); }
-    inline UpdateChannelRequest& WithInputSpecification(const InputSpecification& value) { SetInputSpecification(value); return *this;}
-    inline UpdateChannelRequest& WithInputSpecification(InputSpecification&& value) { SetInputSpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The name of the channel.
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateChannelRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The log level to write to CloudWatch Logs.
-     */
-    inline const LogLevel& GetLogLevel() const{ return m_logLevel; }
-    inline bool LogLevelHasBeenSet() const { return m_logLevelHasBeenSet; }
-    inline void SetLogLevel(const LogLevel& value) { m_logLevelHasBeenSet = true; m_logLevel = value; }
-    inline void SetLogLevel(LogLevel&& value) { m_logLevelHasBeenSet = true; m_logLevel = std::move(value); }
-    inline UpdateChannelRequest& WithLogLevel(const LogLevel& value) { SetLogLevel(value); return *this;}
-    inline UpdateChannelRequest& WithLogLevel(LogLevel&& value) { SetLogLevel(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * An optional Amazon Resource Name (ARN) of the role to assume when running the
+   * Channel. If you do not specify this on an update call but the role was
+   * previously set that role will be removed.
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  UpdateChannelRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Maintenance settings for this channel.
-     */
-    inline const MaintenanceUpdateSettings& GetMaintenance() const{ return m_maintenance; }
-    inline bool MaintenanceHasBeenSet() const { return m_maintenanceHasBeenSet; }
-    inline void SetMaintenance(const MaintenanceUpdateSettings& value) { m_maintenanceHasBeenSet = true; m_maintenance = value; }
-    inline void SetMaintenance(MaintenanceUpdateSettings&& value) { m_maintenanceHasBeenSet = true; m_maintenance = std::move(value); }
-    inline UpdateChannelRequest& WithMaintenance(const MaintenanceUpdateSettings& value) { SetMaintenance(value); return *this;}
-    inline UpdateChannelRequest& WithMaintenance(MaintenanceUpdateSettings&& value) { SetMaintenance(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Channel engine version for this channel
+   */
+  inline const ChannelEngineVersionRequest& GetChannelEngineVersion() const { return m_channelEngineVersion; }
+  inline bool ChannelEngineVersionHasBeenSet() const { return m_channelEngineVersionHasBeenSet; }
+  template <typename ChannelEngineVersionT = ChannelEngineVersionRequest>
+  void SetChannelEngineVersion(ChannelEngineVersionT&& value) {
+    m_channelEngineVersionHasBeenSet = true;
+    m_channelEngineVersion = std::forward<ChannelEngineVersionT>(value);
+  }
+  template <typename ChannelEngineVersionT = ChannelEngineVersionRequest>
+  UpdateChannelRequest& WithChannelEngineVersion(ChannelEngineVersionT&& value) {
+    SetChannelEngineVersion(std::forward<ChannelEngineVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the channel.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateChannelRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateChannelRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateChannelRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * An optional Amazon Resource Name (ARN) of the role to assume when running the
-     * Channel. If you do not specify this on an update call but the role was
-     * previously set that role will be removed.
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline UpdateChannelRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline UpdateChannelRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline UpdateChannelRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
-  private:
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline UpdateChannelRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    CdiInputSpecification m_cdiInputSpecification;
-    bool m_cdiInputSpecificationHasBeenSet = false;
+  ///@{
+  /**
+   * The Elemental Anywhere settings for this channel.
+   */
+  inline const AnywhereSettings& GetAnywhereSettings() const { return m_anywhereSettings; }
+  inline bool AnywhereSettingsHasBeenSet() const { return m_anywhereSettingsHasBeenSet; }
+  template <typename AnywhereSettingsT = AnywhereSettings>
+  void SetAnywhereSettings(AnywhereSettingsT&& value) {
+    m_anywhereSettingsHasBeenSet = true;
+    m_anywhereSettings = std::forward<AnywhereSettingsT>(value);
+  }
+  template <typename AnywhereSettingsT = AnywhereSettings>
+  UpdateChannelRequest& WithAnywhereSettings(AnywhereSettingsT&& value) {
+    SetAnywhereSettings(std::forward<AnywhereSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_channelId;
-    bool m_channelIdHasBeenSet = false;
+  ///@{
+  /**
+   * The linked channel settings for the channel.
+   */
+  inline const LinkedChannelSettings& GetLinkedChannelSettings() const { return m_linkedChannelSettings; }
+  inline bool LinkedChannelSettingsHasBeenSet() const { return m_linkedChannelSettingsHasBeenSet; }
+  template <typename LinkedChannelSettingsT = LinkedChannelSettings>
+  void SetLinkedChannelSettings(LinkedChannelSettingsT&& value) {
+    m_linkedChannelSettingsHasBeenSet = true;
+    m_linkedChannelSettings = std::forward<LinkedChannelSettingsT>(value);
+  }
+  template <typename LinkedChannelSettingsT = LinkedChannelSettings>
+  UpdateChannelRequest& WithLinkedChannelSettings(LinkedChannelSettingsT&& value) {
+    SetLinkedChannelSettings(std::forward<LinkedChannelSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<OutputDestination> m_destinations;
-    bool m_destinationsHasBeenSet = false;
+  ///@{
+  /**
+   * A list of IDs for all the Input Security Groups attached to the channel.
+   */
+  inline const Aws::Vector<Aws::String>& GetChannelSecurityGroups() const { return m_channelSecurityGroups; }
+  inline bool ChannelSecurityGroupsHasBeenSet() const { return m_channelSecurityGroupsHasBeenSet; }
+  template <typename ChannelSecurityGroupsT = Aws::Vector<Aws::String>>
+  void SetChannelSecurityGroups(ChannelSecurityGroupsT&& value) {
+    m_channelSecurityGroupsHasBeenSet = true;
+    m_channelSecurityGroups = std::forward<ChannelSecurityGroupsT>(value);
+  }
+  template <typename ChannelSecurityGroupsT = Aws::Vector<Aws::String>>
+  UpdateChannelRequest& WithChannelSecurityGroups(ChannelSecurityGroupsT&& value) {
+    SetChannelSecurityGroups(std::forward<ChannelSecurityGroupsT>(value));
+    return *this;
+  }
+  template <typename ChannelSecurityGroupsT = Aws::String>
+  UpdateChannelRequest& AddChannelSecurityGroups(ChannelSecurityGroupsT&& value) {
+    m_channelSecurityGroupsHasBeenSet = true;
+    m_channelSecurityGroups.emplace_back(std::forward<ChannelSecurityGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    EncoderSettings m_encoderSettings;
-    bool m_encoderSettingsHasBeenSet = false;
+  ///@{
+  /**
+   * Include this setting to include Elemental Inference features in this channel.
+   */
+  inline const InferenceSettings& GetInferenceSettings() const { return m_inferenceSettings; }
+  inline bool InferenceSettingsHasBeenSet() const { return m_inferenceSettingsHasBeenSet; }
+  template <typename InferenceSettingsT = InferenceSettings>
+  void SetInferenceSettings(InferenceSettingsT&& value) {
+    m_inferenceSettingsHasBeenSet = true;
+    m_inferenceSettings = std::forward<InferenceSettingsT>(value);
+  }
+  template <typename InferenceSettingsT = InferenceSettings>
+  UpdateChannelRequest& WithInferenceSettings(InferenceSettingsT&& value) {
+    SetInferenceSettings(std::forward<InferenceSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<InputAttachment> m_inputAttachments;
-    bool m_inputAttachmentsHasBeenSet = false;
+  ///@{
+  /**
+   * When using MediaConnect Router as the source of a MediaLive input there's a
+   * special handoff that occurs when a router output
+is created. This group of
+   * settings is set on your behalf by the MediaConnect Router service using this set
+   * of settings. This
+setting object can only by used by that service.
+   */
+  inline const SpecialRouterSettings& GetSpecialRouterSettings() const { return m_specialRouterSettings; }
+  inline bool SpecialRouterSettingsHasBeenSet() const { return m_specialRouterSettingsHasBeenSet; }
+  template <typename SpecialRouterSettingsT = SpecialRouterSettings>
+  void SetSpecialRouterSettings(SpecialRouterSettingsT&& value) {
+    m_specialRouterSettingsHasBeenSet = true;
+    m_specialRouterSettings = std::forward<SpecialRouterSettingsT>(value);
+  }
+  template <typename SpecialRouterSettingsT = SpecialRouterSettings>
+  UpdateChannelRequest& WithSpecialRouterSettings(SpecialRouterSettingsT&& value) {
+    SetSpecialRouterSettings(std::forward<SpecialRouterSettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  CdiInputSpecification m_cdiInputSpecification;
 
-    InputSpecification m_inputSpecification;
-    bool m_inputSpecificationHasBeenSet = false;
+  Aws::String m_channelId;
 
-    LogLevel m_logLevel;
-    bool m_logLevelHasBeenSet = false;
+  Aws::Vector<OutputDestination> m_destinations;
 
-    MaintenanceUpdateSettings m_maintenance;
-    bool m_maintenanceHasBeenSet = false;
+  EncoderSettings m_encoderSettings;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<InputAttachment> m_inputAttachments;
 
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-  };
+  InputSpecification m_inputSpecification;
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+  LogLevel m_logLevel{LogLevel::NOT_SET};
+
+  MaintenanceUpdateSettings m_maintenance;
+
+  Aws::String m_name;
+
+  Aws::String m_roleArn;
+
+  ChannelEngineVersionRequest m_channelEngineVersion;
+
+  bool m_dryRun{false};
+
+  AnywhereSettings m_anywhereSettings;
+
+  LinkedChannelSettings m_linkedChannelSettings;
+
+  Aws::Vector<Aws::String> m_channelSecurityGroups;
+
+  InferenceSettings m_inferenceSettings;
+
+  SpecialRouterSettings m_specialRouterSettings;
+  bool m_cdiInputSpecificationHasBeenSet = false;
+  bool m_channelIdHasBeenSet = false;
+  bool m_destinationsHasBeenSet = false;
+  bool m_encoderSettingsHasBeenSet = false;
+  bool m_inputAttachmentsHasBeenSet = false;
+  bool m_inputSpecificationHasBeenSet = false;
+  bool m_logLevelHasBeenSet = false;
+  bool m_maintenanceHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_channelEngineVersionHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+  bool m_anywhereSettingsHasBeenSet = false;
+  bool m_linkedChannelSettingsHasBeenSet = false;
+  bool m_channelSecurityGroupsHasBeenSet = false;
+  bool m_inferenceSettingsHasBeenSet = false;
+  bool m_specialRouterSettingsHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

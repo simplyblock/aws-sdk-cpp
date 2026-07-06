@@ -4,104 +4,119 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
 #include <aws/servicecatalog/model/AccessLevelFilter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
 
+/**
+ */
+class ScanProvisionedProductsRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API ScanProvisionedProductsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ScanProvisionedProducts"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class ScanProvisionedProductsRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API ScanProvisionedProductsRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  ScanProvisionedProductsRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ScanProvisionedProducts"; }
+  ///@{
+  /**
+   * <p>The access level to use to obtain results. The default is
+   * <code>User</code>.</p>
+   */
+  inline const AccessLevelFilter& GetAccessLevelFilter() const { return m_accessLevelFilter; }
+  inline bool AccessLevelFilterHasBeenSet() const { return m_accessLevelFilterHasBeenSet; }
+  template <typename AccessLevelFilterT = AccessLevelFilter>
+  void SetAccessLevelFilter(AccessLevelFilterT&& value) {
+    m_accessLevelFilterHasBeenSet = true;
+    m_accessLevelFilter = std::forward<AccessLevelFilterT>(value);
+  }
+  template <typename AccessLevelFilterT = AccessLevelFilter>
+  ScanProvisionedProductsRequest& WithAccessLevelFilter(AccessLevelFilterT&& value) {
+    SetAccessLevelFilter(std::forward<AccessLevelFilterT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of items to return with this call.</p>
+   */
+  inline int GetPageSize() const { return m_pageSize; }
+  inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
+  inline void SetPageSize(int value) {
+    m_pageSizeHasBeenSet = true;
+    m_pageSize = value;
+  }
+  inline ScanProvisionedProductsRequest& WithPageSize(int value) {
+    SetPageSize(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The page token for the next set of results. To retrieve the first set of
+   * results, use null.</p>
+   */
+  inline const Aws::String& GetPageToken() const { return m_pageToken; }
+  inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
+  template <typename PageTokenT = Aws::String>
+  void SetPageToken(PageTokenT&& value) {
+    m_pageTokenHasBeenSet = true;
+    m_pageToken = std::forward<PageTokenT>(value);
+  }
+  template <typename PageTokenT = Aws::String>
+  ScanProvisionedProductsRequest& WithPageToken(PageTokenT&& value) {
+    SetPageToken(std::forward<PageTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
+  AccessLevelFilter m_accessLevelFilter;
 
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline ScanProvisionedProductsRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline ScanProvisionedProductsRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline ScanProvisionedProductsRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
+  int m_pageSize{0};
 
-    ///@{
-    /**
-     * <p>The access level to use to obtain results. The default is
-     * <code>User</code>.</p>
-     */
-    inline const AccessLevelFilter& GetAccessLevelFilter() const{ return m_accessLevelFilter; }
-    inline bool AccessLevelFilterHasBeenSet() const { return m_accessLevelFilterHasBeenSet; }
-    inline void SetAccessLevelFilter(const AccessLevelFilter& value) { m_accessLevelFilterHasBeenSet = true; m_accessLevelFilter = value; }
-    inline void SetAccessLevelFilter(AccessLevelFilter&& value) { m_accessLevelFilterHasBeenSet = true; m_accessLevelFilter = std::move(value); }
-    inline ScanProvisionedProductsRequest& WithAccessLevelFilter(const AccessLevelFilter& value) { SetAccessLevelFilter(value); return *this;}
-    inline ScanProvisionedProductsRequest& WithAccessLevelFilter(AccessLevelFilter&& value) { SetAccessLevelFilter(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_pageToken;
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_accessLevelFilterHasBeenSet = false;
+  bool m_pageSizeHasBeenSet = false;
+  bool m_pageTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The maximum number of items to return with this call.</p>
-     */
-    inline int GetPageSize() const{ return m_pageSize; }
-    inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
-    inline void SetPageSize(int value) { m_pageSizeHasBeenSet = true; m_pageSize = value; }
-    inline ScanProvisionedProductsRequest& WithPageSize(int value) { SetPageSize(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The page token for the next set of results. To retrieve the first set of
-     * results, use null.</p>
-     */
-    inline const Aws::String& GetPageToken() const{ return m_pageToken; }
-    inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
-    inline void SetPageToken(const Aws::String& value) { m_pageTokenHasBeenSet = true; m_pageToken = value; }
-    inline void SetPageToken(Aws::String&& value) { m_pageTokenHasBeenSet = true; m_pageToken = std::move(value); }
-    inline void SetPageToken(const char* value) { m_pageTokenHasBeenSet = true; m_pageToken.assign(value); }
-    inline ScanProvisionedProductsRequest& WithPageToken(const Aws::String& value) { SetPageToken(value); return *this;}
-    inline ScanProvisionedProductsRequest& WithPageToken(Aws::String&& value) { SetPageToken(std::move(value)); return *this;}
-    inline ScanProvisionedProductsRequest& WithPageToken(const char* value) { SetPageToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
-
-    AccessLevelFilter m_accessLevelFilter;
-    bool m_accessLevelFilterHasBeenSet = false;
-
-    int m_pageSize;
-    bool m_pageSizeHasBeenSet = false;
-
-    Aws::String m_pageToken;
-    bool m_pageTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

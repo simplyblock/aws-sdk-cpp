@@ -3,43 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/DescribeReservedNodeExchangeStatusRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/redshift/model/DescribeReservedNodeExchangeStatusRequest.h>
 
 using namespace Aws::Redshift::Model;
 using namespace Aws::Utils;
 
-DescribeReservedNodeExchangeStatusRequest::DescribeReservedNodeExchangeStatusRequest() : 
-    m_reservedNodeIdHasBeenSet(false),
-    m_reservedNodeExchangeRequestIdHasBeenSet(false),
-    m_maxRecords(0),
-    m_maxRecordsHasBeenSet(false),
-    m_markerHasBeenSet(false)
-{
-}
-
-Aws::String DescribeReservedNodeExchangeStatusRequest::SerializePayload() const
-{
+Aws::String DescribeReservedNodeExchangeStatusRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeReservedNodeExchangeStatus&";
-  if(m_reservedNodeIdHasBeenSet)
-  {
+  if (m_reservedNodeIdHasBeenSet) {
     ss << "ReservedNodeId=" << StringUtils::URLEncode(m_reservedNodeId.c_str()) << "&";
   }
 
-  if(m_reservedNodeExchangeRequestIdHasBeenSet)
-  {
+  if (m_reservedNodeExchangeRequestIdHasBeenSet) {
     ss << "ReservedNodeExchangeRequestId=" << StringUtils::URLEncode(m_reservedNodeExchangeRequestId.c_str()) << "&";
   }
 
-  if(m_maxRecordsHasBeenSet)
-  {
+  if (m_maxRecordsHasBeenSet) {
     ss << "MaxRecords=" << m_maxRecords << "&";
   }
 
-  if(m_markerHasBeenSet)
-  {
+  if (m_markerHasBeenSet) {
     ss << "Marker=" << StringUtils::URLEncode(m_marker.c_str()) << "&";
   }
 
@@ -47,8 +33,4 @@ Aws::String DescribeReservedNodeExchangeStatusRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeReservedNodeExchangeStatusRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeReservedNodeExchangeStatusRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

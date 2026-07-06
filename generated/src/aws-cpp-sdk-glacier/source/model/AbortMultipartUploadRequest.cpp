@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/glacier/model/AbortMultipartUploadRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/glacier/model/AbortMultipartUploadRequest.h>
 
 #include <utility>
 
@@ -12,18 +12,4 @@ using namespace Aws::Glacier::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-AbortMultipartUploadRequest::AbortMultipartUploadRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_vaultNameHasBeenSet(false),
-    m_uploadIdHasBeenSet(false)
-{
-}
-
-Aws::String AbortMultipartUploadRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String AbortMultipartUploadRequest::SerializePayload() const { return {}; }

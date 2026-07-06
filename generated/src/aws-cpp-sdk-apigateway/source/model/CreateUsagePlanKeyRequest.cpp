@@ -12,32 +12,16 @@ using namespace Aws::APIGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateUsagePlanKeyRequest::CreateUsagePlanKeyRequest() : 
-    m_usagePlanIdHasBeenSet(false),
-    m_keyIdHasBeenSet(false),
-    m_keyTypeHasBeenSet(false)
-{
-}
-
-Aws::String CreateUsagePlanKeyRequest::SerializePayload() const
-{
+Aws::String CreateUsagePlanKeyRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_keyIdHasBeenSet)
-  {
-   payload.WithString("keyId", m_keyId);
-
+  if (m_keyIdHasBeenSet) {
+    payload.WithString("keyId", m_keyId);
   }
 
-  if(m_keyTypeHasBeenSet)
-  {
-   payload.WithString("keyType", m_keyType);
-
+  if (m_keyTypeHasBeenSet) {
+    payload.WithString("keyType", m_keyType);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-
