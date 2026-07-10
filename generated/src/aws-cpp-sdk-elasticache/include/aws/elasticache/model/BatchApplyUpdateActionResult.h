@@ -4,80 +4,106 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticache/model/ResponseMetadata.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/elasticache/model/ProcessedUpdateAction.h>
+#include <aws/elasticache/model/ResponseMetadata.h>
 #include <aws/elasticache/model/UnprocessedUpdateAction.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
-  class BatchApplyUpdateActionResult
-  {
-  public:
-    AWS_ELASTICACHE_API BatchApplyUpdateActionResult();
-    AWS_ELASTICACHE_API BatchApplyUpdateActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API BatchApplyUpdateActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+class BatchApplyUpdateActionResult {
+ public:
+  AWS_ELASTICACHE_API BatchApplyUpdateActionResult() = default;
+  AWS_ELASTICACHE_API BatchApplyUpdateActionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API BatchApplyUpdateActionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Update actions that have been processed successfully</p>
+   */
+  inline const Aws::Vector<ProcessedUpdateAction>& GetProcessedUpdateActions() const { return m_processedUpdateActions; }
+  template <typename ProcessedUpdateActionsT = Aws::Vector<ProcessedUpdateAction>>
+  void SetProcessedUpdateActions(ProcessedUpdateActionsT&& value) {
+    m_processedUpdateActionsHasBeenSet = true;
+    m_processedUpdateActions = std::forward<ProcessedUpdateActionsT>(value);
+  }
+  template <typename ProcessedUpdateActionsT = Aws::Vector<ProcessedUpdateAction>>
+  BatchApplyUpdateActionResult& WithProcessedUpdateActions(ProcessedUpdateActionsT&& value) {
+    SetProcessedUpdateActions(std::forward<ProcessedUpdateActionsT>(value));
+    return *this;
+  }
+  template <typename ProcessedUpdateActionsT = ProcessedUpdateAction>
+  BatchApplyUpdateActionResult& AddProcessedUpdateActions(ProcessedUpdateActionsT&& value) {
+    m_processedUpdateActionsHasBeenSet = true;
+    m_processedUpdateActions.emplace_back(std::forward<ProcessedUpdateActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Update actions that have been processed successfully</p>
-     */
-    inline const Aws::Vector<ProcessedUpdateAction>& GetProcessedUpdateActions() const{ return m_processedUpdateActions; }
-    inline void SetProcessedUpdateActions(const Aws::Vector<ProcessedUpdateAction>& value) { m_processedUpdateActions = value; }
-    inline void SetProcessedUpdateActions(Aws::Vector<ProcessedUpdateAction>&& value) { m_processedUpdateActions = std::move(value); }
-    inline BatchApplyUpdateActionResult& WithProcessedUpdateActions(const Aws::Vector<ProcessedUpdateAction>& value) { SetProcessedUpdateActions(value); return *this;}
-    inline BatchApplyUpdateActionResult& WithProcessedUpdateActions(Aws::Vector<ProcessedUpdateAction>&& value) { SetProcessedUpdateActions(std::move(value)); return *this;}
-    inline BatchApplyUpdateActionResult& AddProcessedUpdateActions(const ProcessedUpdateAction& value) { m_processedUpdateActions.push_back(value); return *this; }
-    inline BatchApplyUpdateActionResult& AddProcessedUpdateActions(ProcessedUpdateAction&& value) { m_processedUpdateActions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Update actions that haven't been processed successfully</p>
+   */
+  inline const Aws::Vector<UnprocessedUpdateAction>& GetUnprocessedUpdateActions() const { return m_unprocessedUpdateActions; }
+  template <typename UnprocessedUpdateActionsT = Aws::Vector<UnprocessedUpdateAction>>
+  void SetUnprocessedUpdateActions(UnprocessedUpdateActionsT&& value) {
+    m_unprocessedUpdateActionsHasBeenSet = true;
+    m_unprocessedUpdateActions = std::forward<UnprocessedUpdateActionsT>(value);
+  }
+  template <typename UnprocessedUpdateActionsT = Aws::Vector<UnprocessedUpdateAction>>
+  BatchApplyUpdateActionResult& WithUnprocessedUpdateActions(UnprocessedUpdateActionsT&& value) {
+    SetUnprocessedUpdateActions(std::forward<UnprocessedUpdateActionsT>(value));
+    return *this;
+  }
+  template <typename UnprocessedUpdateActionsT = UnprocessedUpdateAction>
+  BatchApplyUpdateActionResult& AddUnprocessedUpdateActions(UnprocessedUpdateActionsT&& value) {
+    m_unprocessedUpdateActionsHasBeenSet = true;
+    m_unprocessedUpdateActions.emplace_back(std::forward<UnprocessedUpdateActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Update actions that haven't been processed successfully</p>
-     */
-    inline const Aws::Vector<UnprocessedUpdateAction>& GetUnprocessedUpdateActions() const{ return m_unprocessedUpdateActions; }
-    inline void SetUnprocessedUpdateActions(const Aws::Vector<UnprocessedUpdateAction>& value) { m_unprocessedUpdateActions = value; }
-    inline void SetUnprocessedUpdateActions(Aws::Vector<UnprocessedUpdateAction>&& value) { m_unprocessedUpdateActions = std::move(value); }
-    inline BatchApplyUpdateActionResult& WithUnprocessedUpdateActions(const Aws::Vector<UnprocessedUpdateAction>& value) { SetUnprocessedUpdateActions(value); return *this;}
-    inline BatchApplyUpdateActionResult& WithUnprocessedUpdateActions(Aws::Vector<UnprocessedUpdateAction>&& value) { SetUnprocessedUpdateActions(std::move(value)); return *this;}
-    inline BatchApplyUpdateActionResult& AddUnprocessedUpdateActions(const UnprocessedUpdateAction& value) { m_unprocessedUpdateActions.push_back(value); return *this; }
-    inline BatchApplyUpdateActionResult& AddUnprocessedUpdateActions(UnprocessedUpdateAction&& value) { m_unprocessedUpdateActions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline BatchApplyUpdateActionResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline BatchApplyUpdateActionResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  BatchApplyUpdateActionResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ProcessedUpdateAction> m_processedUpdateActions;
+ private:
+  Aws::Vector<ProcessedUpdateAction> m_processedUpdateActions;
 
-    Aws::Vector<UnprocessedUpdateAction> m_unprocessedUpdateActions;
+  Aws::Vector<UnprocessedUpdateAction> m_unprocessedUpdateActions;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_processedUpdateActionsHasBeenSet = false;
+  bool m_unprocessedUpdateActionsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

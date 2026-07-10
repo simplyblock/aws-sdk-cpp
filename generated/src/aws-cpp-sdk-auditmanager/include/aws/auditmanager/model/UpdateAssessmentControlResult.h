@@ -6,62 +6,71 @@
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
 #include <aws/auditmanager/model/AssessmentControl.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AuditManager
-{
-namespace Model
-{
-  class UpdateAssessmentControlResult
-  {
-  public:
-    AWS_AUDITMANAGER_API UpdateAssessmentControlResult();
-    AWS_AUDITMANAGER_API UpdateAssessmentControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUDITMANAGER_API UpdateAssessmentControlResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AuditManager {
+namespace Model {
+class UpdateAssessmentControlResult {
+ public:
+  AWS_AUDITMANAGER_API UpdateAssessmentControlResult() = default;
+  AWS_AUDITMANAGER_API UpdateAssessmentControlResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUDITMANAGER_API UpdateAssessmentControlResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The name of the updated control set that the
+   * <code>UpdateAssessmentControl</code> API returned. </p>
+   */
+  inline const AssessmentControl& GetControl() const { return m_control; }
+  template <typename ControlT = AssessmentControl>
+  void SetControl(ControlT&& value) {
+    m_controlHasBeenSet = true;
+    m_control = std::forward<ControlT>(value);
+  }
+  template <typename ControlT = AssessmentControl>
+  UpdateAssessmentControlResult& WithControl(ControlT&& value) {
+    SetControl(std::forward<ControlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The name of the updated control set that the
-     * <code>UpdateAssessmentControl</code> API returned. </p>
-     */
-    inline const AssessmentControl& GetControl() const{ return m_control; }
-    inline void SetControl(const AssessmentControl& value) { m_control = value; }
-    inline void SetControl(AssessmentControl&& value) { m_control = std::move(value); }
-    inline UpdateAssessmentControlResult& WithControl(const AssessmentControl& value) { SetControl(value); return *this;}
-    inline UpdateAssessmentControlResult& WithControl(AssessmentControl&& value) { SetControl(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateAssessmentControlResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateAssessmentControlResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateAssessmentControlResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateAssessmentControlResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AssessmentControl m_control;
+ private:
+  AssessmentControl m_control;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_controlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace AuditManager
+}  // namespace Aws

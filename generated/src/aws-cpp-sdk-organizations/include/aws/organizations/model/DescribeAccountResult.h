@@ -4,63 +4,79 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/organizations/Organizations_EXPORTS.h>
 #include <aws/organizations/model/Account.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Organizations
-{
-namespace Model
-{
-  class DescribeAccountResult
-  {
-  public:
-    AWS_ORGANIZATIONS_API DescribeAccountResult();
-    AWS_ORGANIZATIONS_API DescribeAccountResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ORGANIZATIONS_API DescribeAccountResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Organizations {
+namespace Model {
+class DescribeAccountResult {
+ public:
+  AWS_ORGANIZATIONS_API DescribeAccountResult() = default;
+  AWS_ORGANIZATIONS_API DescribeAccountResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ORGANIZATIONS_API DescribeAccountResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure that contains information about the requested account.</p>
+   *  <p>The <code>Status</code> parameter in the API response will be
+   * retired on September 9, 2026. Although both the account <code>State</code> and
+   * account <code>Status</code> parameters are currently available in the
+   * Organizations APIs (<code>DescribeAccount</code>, <code>ListAccounts</code>,
+   * <code>ListAccountsForParent</code>), we recommend that you update your scripts
+   * or other code to use the <code>State</code> parameter instead of
+   * <code>Status</code> before September 9, 2026.</p>
+   */
+  inline const Account& GetAccount() const { return m_account; }
+  template <typename AccountT = Account>
+  void SetAccount(AccountT&& value) {
+    m_accountHasBeenSet = true;
+    m_account = std::forward<AccountT>(value);
+  }
+  template <typename AccountT = Account>
+  DescribeAccountResult& WithAccount(AccountT&& value) {
+    SetAccount(std::forward<AccountT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains information about the requested account.</p>
-     */
-    inline const Account& GetAccount() const{ return m_account; }
-    inline void SetAccount(const Account& value) { m_account = value; }
-    inline void SetAccount(Account&& value) { m_account = std::move(value); }
-    inline DescribeAccountResult& WithAccount(const Account& value) { SetAccount(value); return *this;}
-    inline DescribeAccountResult& WithAccount(Account&& value) { SetAccount(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAccountResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAccountResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAccountResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAccountResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Account m_account;
+ private:
+  Account m_account;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Organizations
-} // namespace Aws
+}  // namespace Model
+}  // namespace Organizations
+}  // namespace Aws

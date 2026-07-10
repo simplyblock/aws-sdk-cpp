@@ -5,63 +5,70 @@
 
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class CreateEntityRecognizerResult
-  {
-  public:
-    AWS_COMPREHEND_API CreateEntityRecognizerResult();
-    AWS_COMPREHEND_API CreateEntityRecognizerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API CreateEntityRecognizerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class CreateEntityRecognizerResult {
+ public:
+  AWS_COMPREHEND_API CreateEntityRecognizerResult() = default;
+  AWS_COMPREHEND_API CreateEntityRecognizerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API CreateEntityRecognizerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) that identifies the entity recognizer.</p>
+   */
+  inline const Aws::String& GetEntityRecognizerArn() const { return m_entityRecognizerArn; }
+  template <typename EntityRecognizerArnT = Aws::String>
+  void SetEntityRecognizerArn(EntityRecognizerArnT&& value) {
+    m_entityRecognizerArnHasBeenSet = true;
+    m_entityRecognizerArn = std::forward<EntityRecognizerArnT>(value);
+  }
+  template <typename EntityRecognizerArnT = Aws::String>
+  CreateEntityRecognizerResult& WithEntityRecognizerArn(EntityRecognizerArnT&& value) {
+    SetEntityRecognizerArn(std::forward<EntityRecognizerArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) that identifies the entity recognizer.</p>
-     */
-    inline const Aws::String& GetEntityRecognizerArn() const{ return m_entityRecognizerArn; }
-    inline void SetEntityRecognizerArn(const Aws::String& value) { m_entityRecognizerArn = value; }
-    inline void SetEntityRecognizerArn(Aws::String&& value) { m_entityRecognizerArn = std::move(value); }
-    inline void SetEntityRecognizerArn(const char* value) { m_entityRecognizerArn.assign(value); }
-    inline CreateEntityRecognizerResult& WithEntityRecognizerArn(const Aws::String& value) { SetEntityRecognizerArn(value); return *this;}
-    inline CreateEntityRecognizerResult& WithEntityRecognizerArn(Aws::String&& value) { SetEntityRecognizerArn(std::move(value)); return *this;}
-    inline CreateEntityRecognizerResult& WithEntityRecognizerArn(const char* value) { SetEntityRecognizerArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateEntityRecognizerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateEntityRecognizerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateEntityRecognizerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateEntityRecognizerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_entityRecognizerArn;
+ private:
+  Aws::String m_entityRecognizerArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entityRecognizerArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

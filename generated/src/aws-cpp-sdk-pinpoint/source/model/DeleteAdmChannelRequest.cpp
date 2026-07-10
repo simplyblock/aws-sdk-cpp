@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pinpoint/model/DeleteAdmChannelRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pinpoint/model/DeleteAdmChannelRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Pinpoint::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAdmChannelRequest::DeleteAdmChannelRequest() : 
-    m_applicationIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAdmChannelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAdmChannelRequest::SerializePayload() const { return {}; }

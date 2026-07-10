@@ -4,104 +4,153 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/monitoring/model/ResponseMetadata.h>
-#include <aws/monitoring/model/MetricDataResult.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/MessageData.h>
-#include <utility>
+#include <aws/monitoring/model/MetricDataResult.h>
+#include <aws/monitoring/model/ResponseMetadata.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
-  class GetMetricDataResult
-  {
-  public:
-    AWS_CLOUDWATCH_API GetMetricDataResult();
-    AWS_CLOUDWATCH_API GetMetricDataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDWATCH_API GetMetricDataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
+class GetMetricDataResult {
+ public:
+  AWS_CLOUDWATCH_API GetMetricDataResult() = default;
+  AWS_CLOUDWATCH_API GetMetricDataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_CLOUDWATCH_API GetMetricDataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The metrics that are returned, including the metric name, namespace, and
+   * dimensions.</p>
+   */
+  inline const Aws::Vector<MetricDataResult>& GetMetricDataResults() const { return m_metricDataResults; }
+  template <typename MetricDataResultsT = Aws::Vector<MetricDataResult>>
+  void SetMetricDataResults(MetricDataResultsT&& value) {
+    m_metricDataResultsHasBeenSet = true;
+    m_metricDataResults = std::forward<MetricDataResultsT>(value);
+  }
+  template <typename MetricDataResultsT = Aws::Vector<MetricDataResult>>
+  GetMetricDataResult& WithMetricDataResults(MetricDataResultsT&& value) {
+    SetMetricDataResults(std::forward<MetricDataResultsT>(value));
+    return *this;
+  }
+  template <typename MetricDataResultsT = MetricDataResult>
+  GetMetricDataResult& AddMetricDataResults(MetricDataResultsT&& value) {
+    m_metricDataResultsHasBeenSet = true;
+    m_metricDataResults.emplace_back(std::forward<MetricDataResultsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The metrics that are returned, including the metric name, namespace, and
-     * dimensions.</p>
-     */
-    inline const Aws::Vector<MetricDataResult>& GetMetricDataResults() const{ return m_metricDataResults; }
-    inline void SetMetricDataResults(const Aws::Vector<MetricDataResult>& value) { m_metricDataResults = value; }
-    inline void SetMetricDataResults(Aws::Vector<MetricDataResult>&& value) { m_metricDataResults = std::move(value); }
-    inline GetMetricDataResult& WithMetricDataResults(const Aws::Vector<MetricDataResult>& value) { SetMetricDataResults(value); return *this;}
-    inline GetMetricDataResult& WithMetricDataResults(Aws::Vector<MetricDataResult>&& value) { SetMetricDataResults(std::move(value)); return *this;}
-    inline GetMetricDataResult& AddMetricDataResults(const MetricDataResult& value) { m_metricDataResults.push_back(value); return *this; }
-    inline GetMetricDataResult& AddMetricDataResults(MetricDataResult&& value) { m_metricDataResults.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that marks the next batch of returned results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetMetricDataResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that marks the next batch of returned results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetMetricDataResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetMetricDataResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetMetricDataResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains a message about this <code>GetMetricData</code> operation, if the
+   * operation results in such a message. An example of a message that might be
+   * returned is <code>Maximum number of allowed metrics exceeded</code>. If there is
+   * a message, as much of the operation as possible is still executed.</p> <p>A
+   * message appears here only if it is related to the global
+   * <code>GetMetricData</code> operation. Any message about a specific metric
+   * returned by the operation appears in the <code>MetricDataResult</code> object
+   * returned for that metric.</p>
+   */
+  inline const Aws::Vector<MessageData>& GetMessages() const { return m_messages; }
+  template <typename MessagesT = Aws::Vector<MessageData>>
+  void SetMessages(MessagesT&& value) {
+    m_messagesHasBeenSet = true;
+    m_messages = std::forward<MessagesT>(value);
+  }
+  template <typename MessagesT = Aws::Vector<MessageData>>
+  GetMetricDataResult& WithMessages(MessagesT&& value) {
+    SetMessages(std::forward<MessagesT>(value));
+    return *this;
+  }
+  template <typename MessagesT = MessageData>
+  GetMetricDataResult& AddMessages(MessagesT&& value) {
+    m_messagesHasBeenSet = true;
+    m_messages.emplace_back(std::forward<MessagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains a message about this <code>GetMetricData</code> operation, if the
-     * operation results in such a message. An example of a message that might be
-     * returned is <code>Maximum number of allowed metrics exceeded</code>. If there is
-     * a message, as much of the operation as possible is still executed.</p> <p>A
-     * message appears here only if it is related to the global
-     * <code>GetMetricData</code> operation. Any message about a specific metric
-     * returned by the operation appears in the <code>MetricDataResult</code> object
-     * returned for that metric.</p>
-     */
-    inline const Aws::Vector<MessageData>& GetMessages() const{ return m_messages; }
-    inline void SetMessages(const Aws::Vector<MessageData>& value) { m_messages = value; }
-    inline void SetMessages(Aws::Vector<MessageData>&& value) { m_messages = std::move(value); }
-    inline GetMetricDataResult& WithMessages(const Aws::Vector<MessageData>& value) { SetMessages(value); return *this;}
-    inline GetMetricDataResult& WithMessages(Aws::Vector<MessageData>&& value) { SetMessages(std::move(value)); return *this;}
-    inline GetMetricDataResult& AddMessages(const MessageData& value) { m_messages.push_back(value); return *this; }
-    inline GetMetricDataResult& AddMessages(MessageData&& value) { m_messages.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetMetricDataResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetMetricDataResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMetricDataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<MetricDataResult> m_metricDataResults;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetMetricDataResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MessageData> m_messages;
+ private:
+  Aws::Vector<MetricDataResult> m_metricDataResults;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  Aws::String m_nextToken;
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+  Aws::Vector<MessageData> m_messages;
+
+  Aws::String m_requestId;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_metricDataResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_messagesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

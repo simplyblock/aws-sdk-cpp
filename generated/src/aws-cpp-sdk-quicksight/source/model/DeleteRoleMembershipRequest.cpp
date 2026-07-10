@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/quicksight/model/DeleteRoleMembershipRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/quicksight/model/DeleteRoleMembershipRequest.h>
 
 #include <utility>
 
@@ -12,20 +12,4 @@ using namespace Aws::QuickSight::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteRoleMembershipRequest::DeleteRoleMembershipRequest() : 
-    m_memberNameHasBeenSet(false),
-    m_role(Role::NOT_SET),
-    m_roleHasBeenSet(false),
-    m_awsAccountIdHasBeenSet(false),
-    m_namespaceHasBeenSet(false)
-{
-}
-
-Aws::String DeleteRoleMembershipRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteRoleMembershipRequest::SerializePayload() const { return {}; }

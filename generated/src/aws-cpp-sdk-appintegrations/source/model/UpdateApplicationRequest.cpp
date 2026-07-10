@@ -12,51 +12,44 @@ using namespace Aws::AppIntegrationsService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateApplicationRequest::UpdateApplicationRequest() : 
-    m_arnHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_applicationSourceConfigHasBeenSet(false),
-    m_permissionsHasBeenSet(false)
-{
-}
-
-Aws::String UpdateApplicationRequest::SerializePayload() const
-{
+Aws::String UpdateApplicationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("Description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("Description", m_description);
   }
 
-  if(m_applicationSourceConfigHasBeenSet)
-  {
-   payload.WithObject("ApplicationSourceConfig", m_applicationSourceConfig.Jsonize());
-
+  if (m_applicationSourceConfigHasBeenSet) {
+    payload.WithObject("ApplicationSourceConfig", m_applicationSourceConfig.Jsonize());
   }
 
-  if(m_permissionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> permissionsJsonList(m_permissions.size());
-   for(unsigned permissionsIndex = 0; permissionsIndex < permissionsJsonList.GetLength(); ++permissionsIndex)
-   {
-     permissionsJsonList[permissionsIndex].AsString(m_permissions[permissionsIndex]);
-   }
-   payload.WithArray("Permissions", std::move(permissionsJsonList));
+  if (m_permissionsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> permissionsJsonList(m_permissions.size());
+    for (unsigned permissionsIndex = 0; permissionsIndex < permissionsJsonList.GetLength(); ++permissionsIndex) {
+      permissionsJsonList[permissionsIndex].AsString(m_permissions[permissionsIndex]);
+    }
+    payload.WithArray("Permissions", std::move(permissionsJsonList));
+  }
 
+  if (m_initializationTimeoutHasBeenSet) {
+    payload.WithInteger("InitializationTimeout", m_initializationTimeout);
+  }
+
+  if (m_applicationConfigHasBeenSet) {
+    payload.WithObject("ApplicationConfig", m_applicationConfig.Jsonize());
+  }
+
+  if (m_iframeConfigHasBeenSet) {
+    payload.WithObject("IframeConfig", m_iframeConfig.Jsonize());
+  }
+
+  if (m_applicationTypeHasBeenSet) {
+    payload.WithString("ApplicationType", ApplicationTypeMapper::GetNameForApplicationType(m_applicationType));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

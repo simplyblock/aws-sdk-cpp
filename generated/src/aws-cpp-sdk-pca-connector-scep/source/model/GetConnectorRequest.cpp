@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pca-connector-scep/model/GetConnectorRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pca-connector-scep/model/GetConnectorRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::PcaConnectorScep::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetConnectorRequest::GetConnectorRequest() : 
-    m_connectorArnHasBeenSet(false)
-{
-}
-
-Aws::String GetConnectorRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetConnectorRequest::SerializePayload() const { return {}; }

@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRestoreTestingPlanRequest::GetRestoreTestingPlanRequest() : 
-    m_restoreTestingPlanNameHasBeenSet(false)
-{
-}
-
-Aws::String GetRestoreTestingPlanRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRestoreTestingPlanRequest::SerializePayload() const { return {}; }

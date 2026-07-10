@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotsitewise/model/DeleteGatewayRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotsitewise/model/DeleteGatewayRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::IoTSiteWise::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteGatewayRequest::DeleteGatewayRequest() : 
-    m_gatewayIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteGatewayRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteGatewayRequest::SerializePayload() const { return {}; }

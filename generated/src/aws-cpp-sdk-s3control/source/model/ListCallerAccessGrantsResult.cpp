@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/s3control/model/ListCallerAccessGrantsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/s3control/model/ListCallerAccessGrantsResult.h>
 
 #include <utility>
 
@@ -16,45 +16,43 @@ using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 using namespace Aws;
 
-ListCallerAccessGrantsResult::ListCallerAccessGrantsResult()
-{
-}
+ListCallerAccessGrantsResult::ListCallerAccessGrantsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-ListCallerAccessGrantsResult::ListCallerAccessGrantsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-ListCallerAccessGrantsResult& ListCallerAccessGrantsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+ListCallerAccessGrantsResult& ListCallerAccessGrantsResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode resultNode = xmlDocument.GetRootElement();
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode nextTokenNode = resultNode.FirstChild("NextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
     XmlNode callerAccessGrantsListNode = resultNode.FirstChild("CallerAccessGrantsList");
-    if(!callerAccessGrantsListNode.IsNull())
-    {
+    if (!callerAccessGrantsListNode.IsNull()) {
       XmlNode callerAccessGrantsListMember = callerAccessGrantsListNode.FirstChild("AccessGrant");
-      while(!callerAccessGrantsListMember.IsNull())
-      {
+      m_callerAccessGrantsListHasBeenSet = !callerAccessGrantsListMember.IsNull();
+      while (!callerAccessGrantsListMember.IsNull()) {
         m_callerAccessGrantsList.push_back(callerAccessGrantsListMember);
         callerAccessGrantsListMember = callerAccessGrantsListMember.NextNode("AccessGrant");
       }
 
+      m_callerAccessGrantsListHasBeenSet = true;
     }
   }
 
   const auto& headers = result.GetHeaderValueCollection();
-  const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  const auto& requestIdIter = headers.find("x-amz-request-id");
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
+  }
+
+  const auto& hostIdIter = headers.find("x-amz-id-2");
+  if (hostIdIter != headers.end()) {
+    m_hostId = hostIdIter->second;
+    m_hostIdHasBeenSet = true;
   }
 
   return *this;

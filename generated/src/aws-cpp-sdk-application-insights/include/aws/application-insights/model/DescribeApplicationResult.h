@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/application-insights/ApplicationInsights_EXPORTS.h>
 #include <aws/application-insights/model/ApplicationInfo.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ApplicationInsights
-{
-namespace Model
-{
-  class DescribeApplicationResult
-  {
-  public:
-    AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult();
-    AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ApplicationInsights {
+namespace Model {
+class DescribeApplicationResult {
+ public:
+  AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult() = default;
+  AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPLICATIONINSIGHTS_API DescribeApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the application.</p>
+   */
+  inline const ApplicationInfo& GetApplicationInfo() const { return m_applicationInfo; }
+  template <typename ApplicationInfoT = ApplicationInfo>
+  void SetApplicationInfo(ApplicationInfoT&& value) {
+    m_applicationInfoHasBeenSet = true;
+    m_applicationInfo = std::forward<ApplicationInfoT>(value);
+  }
+  template <typename ApplicationInfoT = ApplicationInfo>
+  DescribeApplicationResult& WithApplicationInfo(ApplicationInfoT&& value) {
+    SetApplicationInfo(std::forward<ApplicationInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the application.</p>
-     */
-    inline const ApplicationInfo& GetApplicationInfo() const{ return m_applicationInfo; }
-    inline void SetApplicationInfo(const ApplicationInfo& value) { m_applicationInfo = value; }
-    inline void SetApplicationInfo(ApplicationInfo&& value) { m_applicationInfo = std::move(value); }
-    inline DescribeApplicationResult& WithApplicationInfo(const ApplicationInfo& value) { SetApplicationInfo(value); return *this;}
-    inline DescribeApplicationResult& WithApplicationInfo(ApplicationInfo&& value) { SetApplicationInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ApplicationInfo m_applicationInfo;
+ private:
+  ApplicationInfo m_applicationInfo;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_applicationInfoHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ApplicationInsights
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationInsights
+}  // namespace Aws

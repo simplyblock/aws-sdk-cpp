@@ -4,258 +4,321 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/TrafficDirection.h>
-#include <aws/ec2/model/TrafficMirrorRuleAction.h>
-#include <aws/ec2/model/TrafficMirrorPortRangeRequest.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/TagSpecification.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/ec2/model/TagSpecification.h>
+#include <aws/ec2/model/TrafficDirection.h>
+#include <aws/ec2/model/TrafficMirrorPortRangeRequest.h>
+#include <aws/ec2/model/TrafficMirrorRuleAction.h>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace EC2 {
+namespace Model {
+
+/**
+ */
+class CreateTrafficMirrorFilterRuleRequest : public EC2Request {
+ public:
+  AWS_EC2_API CreateTrafficMirrorFilterRuleRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateTrafficMirrorFilterRule"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The ID of the filter that this rule is associated with.</p>
    */
-  class CreateTrafficMirrorFilterRuleRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API CreateTrafficMirrorFilterRuleRequest();
+  inline const Aws::String& GetTrafficMirrorFilterId() const { return m_trafficMirrorFilterId; }
+  inline bool TrafficMirrorFilterIdHasBeenSet() const { return m_trafficMirrorFilterIdHasBeenSet; }
+  template <typename TrafficMirrorFilterIdT = Aws::String>
+  void SetTrafficMirrorFilterId(TrafficMirrorFilterIdT&& value) {
+    m_trafficMirrorFilterIdHasBeenSet = true;
+    m_trafficMirrorFilterId = std::forward<TrafficMirrorFilterIdT>(value);
+  }
+  template <typename TrafficMirrorFilterIdT = Aws::String>
+  CreateTrafficMirrorFilterRuleRequest& WithTrafficMirrorFilterId(TrafficMirrorFilterIdT&& value) {
+    SetTrafficMirrorFilterId(std::forward<TrafficMirrorFilterIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateTrafficMirrorFilterRule"; }
+  ///@{
+  /**
+   * <p>The type of traffic.</p>
+   */
+  inline TrafficDirection GetTrafficDirection() const { return m_trafficDirection; }
+  inline bool TrafficDirectionHasBeenSet() const { return m_trafficDirectionHasBeenSet; }
+  inline void SetTrafficDirection(TrafficDirection value) {
+    m_trafficDirectionHasBeenSet = true;
+    m_trafficDirection = value;
+  }
+  inline CreateTrafficMirrorFilterRuleRequest& WithTrafficDirection(TrafficDirection value) {
+    SetTrafficDirection(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The number of the Traffic Mirror rule. This number must be unique for each
+   * Traffic Mirror rule in a given direction. The rules are processed in ascending
+   * order by rule number.</p>
+   */
+  inline int GetRuleNumber() const { return m_ruleNumber; }
+  inline bool RuleNumberHasBeenSet() const { return m_ruleNumberHasBeenSet; }
+  inline void SetRuleNumber(int value) {
+    m_ruleNumberHasBeenSet = true;
+    m_ruleNumber = value;
+  }
+  inline CreateTrafficMirrorFilterRuleRequest& WithRuleNumber(int value) {
+    SetRuleNumber(value);
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The action to take on the filtered traffic.</p>
+   */
+  inline TrafficMirrorRuleAction GetRuleAction() const { return m_ruleAction; }
+  inline bool RuleActionHasBeenSet() const { return m_ruleActionHasBeenSet; }
+  inline void SetRuleAction(TrafficMirrorRuleAction value) {
+    m_ruleActionHasBeenSet = true;
+    m_ruleAction = value;
+  }
+  inline CreateTrafficMirrorFilterRuleRequest& WithRuleAction(TrafficMirrorRuleAction value) {
+    SetRuleAction(value);
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The destination port range.</p>
+   */
+  inline const TrafficMirrorPortRangeRequest& GetDestinationPortRange() const { return m_destinationPortRange; }
+  inline bool DestinationPortRangeHasBeenSet() const { return m_destinationPortRangeHasBeenSet; }
+  template <typename DestinationPortRangeT = TrafficMirrorPortRangeRequest>
+  void SetDestinationPortRange(DestinationPortRangeT&& value) {
+    m_destinationPortRangeHasBeenSet = true;
+    m_destinationPortRange = std::forward<DestinationPortRangeT>(value);
+  }
+  template <typename DestinationPortRangeT = TrafficMirrorPortRangeRequest>
+  CreateTrafficMirrorFilterRuleRequest& WithDestinationPortRange(DestinationPortRangeT&& value) {
+    SetDestinationPortRange(std::forward<DestinationPortRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the filter that this rule is associated with.</p>
-     */
-    inline const Aws::String& GetTrafficMirrorFilterId() const{ return m_trafficMirrorFilterId; }
-    inline bool TrafficMirrorFilterIdHasBeenSet() const { return m_trafficMirrorFilterIdHasBeenSet; }
-    inline void SetTrafficMirrorFilterId(const Aws::String& value) { m_trafficMirrorFilterIdHasBeenSet = true; m_trafficMirrorFilterId = value; }
-    inline void SetTrafficMirrorFilterId(Aws::String&& value) { m_trafficMirrorFilterIdHasBeenSet = true; m_trafficMirrorFilterId = std::move(value); }
-    inline void SetTrafficMirrorFilterId(const char* value) { m_trafficMirrorFilterIdHasBeenSet = true; m_trafficMirrorFilterId.assign(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithTrafficMirrorFilterId(const Aws::String& value) { SetTrafficMirrorFilterId(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithTrafficMirrorFilterId(Aws::String&& value) { SetTrafficMirrorFilterId(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithTrafficMirrorFilterId(const char* value) { SetTrafficMirrorFilterId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The source port range.</p>
+   */
+  inline const TrafficMirrorPortRangeRequest& GetSourcePortRange() const { return m_sourcePortRange; }
+  inline bool SourcePortRangeHasBeenSet() const { return m_sourcePortRangeHasBeenSet; }
+  template <typename SourcePortRangeT = TrafficMirrorPortRangeRequest>
+  void SetSourcePortRange(SourcePortRangeT&& value) {
+    m_sourcePortRangeHasBeenSet = true;
+    m_sourcePortRange = std::forward<SourcePortRangeT>(value);
+  }
+  template <typename SourcePortRangeT = TrafficMirrorPortRangeRequest>
+  CreateTrafficMirrorFilterRuleRequest& WithSourcePortRange(SourcePortRangeT&& value) {
+    SetSourcePortRange(std::forward<SourcePortRangeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of traffic.</p>
-     */
-    inline const TrafficDirection& GetTrafficDirection() const{ return m_trafficDirection; }
-    inline bool TrafficDirectionHasBeenSet() const { return m_trafficDirectionHasBeenSet; }
-    inline void SetTrafficDirection(const TrafficDirection& value) { m_trafficDirectionHasBeenSet = true; m_trafficDirection = value; }
-    inline void SetTrafficDirection(TrafficDirection&& value) { m_trafficDirectionHasBeenSet = true; m_trafficDirection = std::move(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithTrafficDirection(const TrafficDirection& value) { SetTrafficDirection(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithTrafficDirection(TrafficDirection&& value) { SetTrafficDirection(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The protocol, for example UDP, to assign to the Traffic Mirror rule.</p>
+   * <p>For information about the protocol value, see <a
+   * href="https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml">Protocol
+   * Numbers</a> on the Internet Assigned Numbers Authority (IANA) website.</p>
+   */
+  inline int GetProtocol() const { return m_protocol; }
+  inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
+  inline void SetProtocol(int value) {
+    m_protocolHasBeenSet = true;
+    m_protocol = value;
+  }
+  inline CreateTrafficMirrorFilterRuleRequest& WithProtocol(int value) {
+    SetProtocol(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of the Traffic Mirror rule. This number must be unique for each
-     * Traffic Mirror rule in a given direction. The rules are processed in ascending
-     * order by rule number.</p>
-     */
-    inline int GetRuleNumber() const{ return m_ruleNumber; }
-    inline bool RuleNumberHasBeenSet() const { return m_ruleNumberHasBeenSet; }
-    inline void SetRuleNumber(int value) { m_ruleNumberHasBeenSet = true; m_ruleNumber = value; }
-    inline CreateTrafficMirrorFilterRuleRequest& WithRuleNumber(int value) { SetRuleNumber(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The destination CIDR block to assign to the Traffic Mirror rule.</p>
+   */
+  inline const Aws::String& GetDestinationCidrBlock() const { return m_destinationCidrBlock; }
+  inline bool DestinationCidrBlockHasBeenSet() const { return m_destinationCidrBlockHasBeenSet; }
+  template <typename DestinationCidrBlockT = Aws::String>
+  void SetDestinationCidrBlock(DestinationCidrBlockT&& value) {
+    m_destinationCidrBlockHasBeenSet = true;
+    m_destinationCidrBlock = std::forward<DestinationCidrBlockT>(value);
+  }
+  template <typename DestinationCidrBlockT = Aws::String>
+  CreateTrafficMirrorFilterRuleRequest& WithDestinationCidrBlock(DestinationCidrBlockT&& value) {
+    SetDestinationCidrBlock(std::forward<DestinationCidrBlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The action to take on the filtered traffic.</p>
-     */
-    inline const TrafficMirrorRuleAction& GetRuleAction() const{ return m_ruleAction; }
-    inline bool RuleActionHasBeenSet() const { return m_ruleActionHasBeenSet; }
-    inline void SetRuleAction(const TrafficMirrorRuleAction& value) { m_ruleActionHasBeenSet = true; m_ruleAction = value; }
-    inline void SetRuleAction(TrafficMirrorRuleAction&& value) { m_ruleActionHasBeenSet = true; m_ruleAction = std::move(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithRuleAction(const TrafficMirrorRuleAction& value) { SetRuleAction(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithRuleAction(TrafficMirrorRuleAction&& value) { SetRuleAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The source CIDR block to assign to the Traffic Mirror rule.</p>
+   */
+  inline const Aws::String& GetSourceCidrBlock() const { return m_sourceCidrBlock; }
+  inline bool SourceCidrBlockHasBeenSet() const { return m_sourceCidrBlockHasBeenSet; }
+  template <typename SourceCidrBlockT = Aws::String>
+  void SetSourceCidrBlock(SourceCidrBlockT&& value) {
+    m_sourceCidrBlockHasBeenSet = true;
+    m_sourceCidrBlock = std::forward<SourceCidrBlockT>(value);
+  }
+  template <typename SourceCidrBlockT = Aws::String>
+  CreateTrafficMirrorFilterRuleRequest& WithSourceCidrBlock(SourceCidrBlockT&& value) {
+    SetSourceCidrBlock(std::forward<SourceCidrBlockT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destination port range.</p>
-     */
-    inline const TrafficMirrorPortRangeRequest& GetDestinationPortRange() const{ return m_destinationPortRange; }
-    inline bool DestinationPortRangeHasBeenSet() const { return m_destinationPortRangeHasBeenSet; }
-    inline void SetDestinationPortRange(const TrafficMirrorPortRangeRequest& value) { m_destinationPortRangeHasBeenSet = true; m_destinationPortRange = value; }
-    inline void SetDestinationPortRange(TrafficMirrorPortRangeRequest&& value) { m_destinationPortRangeHasBeenSet = true; m_destinationPortRange = std::move(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithDestinationPortRange(const TrafficMirrorPortRangeRequest& value) { SetDestinationPortRange(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithDestinationPortRange(TrafficMirrorPortRangeRequest&& value) { SetDestinationPortRange(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The description of the Traffic Mirror rule.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateTrafficMirrorFilterRuleRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The source port range.</p>
-     */
-    inline const TrafficMirrorPortRangeRequest& GetSourcePortRange() const{ return m_sourcePortRange; }
-    inline bool SourcePortRangeHasBeenSet() const { return m_sourcePortRangeHasBeenSet; }
-    inline void SetSourcePortRange(const TrafficMirrorPortRangeRequest& value) { m_sourcePortRangeHasBeenSet = true; m_sourcePortRange = value; }
-    inline void SetSourcePortRange(TrafficMirrorPortRangeRequest&& value) { m_sourcePortRangeHasBeenSet = true; m_sourcePortRange = std::move(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithSourcePortRange(const TrafficMirrorPortRangeRequest& value) { SetSourcePortRange(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithSourcePortRange(TrafficMirrorPortRangeRequest&& value) { SetSourcePortRange(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Checks whether you have the required permissions for the action, without
+   * actually making the request, and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CreateTrafficMirrorFilterRuleRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The protocol, for example UDP, to assign to the Traffic Mirror rule.</p>
-     * <p>For information about the protocol value, see <a
-     * href="https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml">Protocol
-     * Numbers</a> on the Internet Assigned Numbers Authority (IANA) website.</p>
-     */
-    inline int GetProtocol() const{ return m_protocol; }
-    inline bool ProtocolHasBeenSet() const { return m_protocolHasBeenSet; }
-    inline void SetProtocol(int value) { m_protocolHasBeenSet = true; m_protocol = value; }
-    inline CreateTrafficMirrorFilterRuleRequest& WithProtocol(int value) { SetProtocol(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
+   * of the request. For more information, see <a
+   * href="https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html">How
+   * to ensure idempotency</a>.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateTrafficMirrorFilterRuleRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destination CIDR block to assign to the Traffic Mirror rule.</p>
-     */
-    inline const Aws::String& GetDestinationCidrBlock() const{ return m_destinationCidrBlock; }
-    inline bool DestinationCidrBlockHasBeenSet() const { return m_destinationCidrBlockHasBeenSet; }
-    inline void SetDestinationCidrBlock(const Aws::String& value) { m_destinationCidrBlockHasBeenSet = true; m_destinationCidrBlock = value; }
-    inline void SetDestinationCidrBlock(Aws::String&& value) { m_destinationCidrBlockHasBeenSet = true; m_destinationCidrBlock = std::move(value); }
-    inline void SetDestinationCidrBlock(const char* value) { m_destinationCidrBlockHasBeenSet = true; m_destinationCidrBlock.assign(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithDestinationCidrBlock(const Aws::String& value) { SetDestinationCidrBlock(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithDestinationCidrBlock(Aws::String&& value) { SetDestinationCidrBlock(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithDestinationCidrBlock(const char* value) { SetDestinationCidrBlock(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Traffic Mirroring tags specifications.</p>
+   */
+  inline const Aws::Vector<TagSpecification>& GetTagSpecifications() const { return m_tagSpecifications; }
+  inline bool TagSpecificationsHasBeenSet() const { return m_tagSpecificationsHasBeenSet; }
+  template <typename TagSpecificationsT = Aws::Vector<TagSpecification>>
+  void SetTagSpecifications(TagSpecificationsT&& value) {
+    m_tagSpecificationsHasBeenSet = true;
+    m_tagSpecifications = std::forward<TagSpecificationsT>(value);
+  }
+  template <typename TagSpecificationsT = Aws::Vector<TagSpecification>>
+  CreateTrafficMirrorFilterRuleRequest& WithTagSpecifications(TagSpecificationsT&& value) {
+    SetTagSpecifications(std::forward<TagSpecificationsT>(value));
+    return *this;
+  }
+  template <typename TagSpecificationsT = TagSpecification>
+  CreateTrafficMirrorFilterRuleRequest& AddTagSpecifications(TagSpecificationsT&& value) {
+    m_tagSpecificationsHasBeenSet = true;
+    m_tagSpecifications.emplace_back(std::forward<TagSpecificationsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_trafficMirrorFilterId;
 
-    ///@{
-    /**
-     * <p>The source CIDR block to assign to the Traffic Mirror rule.</p>
-     */
-    inline const Aws::String& GetSourceCidrBlock() const{ return m_sourceCidrBlock; }
-    inline bool SourceCidrBlockHasBeenSet() const { return m_sourceCidrBlockHasBeenSet; }
-    inline void SetSourceCidrBlock(const Aws::String& value) { m_sourceCidrBlockHasBeenSet = true; m_sourceCidrBlock = value; }
-    inline void SetSourceCidrBlock(Aws::String&& value) { m_sourceCidrBlockHasBeenSet = true; m_sourceCidrBlock = std::move(value); }
-    inline void SetSourceCidrBlock(const char* value) { m_sourceCidrBlockHasBeenSet = true; m_sourceCidrBlock.assign(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithSourceCidrBlock(const Aws::String& value) { SetSourceCidrBlock(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithSourceCidrBlock(Aws::String&& value) { SetSourceCidrBlock(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithSourceCidrBlock(const char* value) { SetSourceCidrBlock(value); return *this;}
-    ///@}
+  TrafficDirection m_trafficDirection{TrafficDirection::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The description of the Traffic Mirror rule.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  int m_ruleNumber{0};
 
-    ///@{
-    /**
-     * <p>Checks whether you have the required permissions for the action, without
-     * actually making the request, and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline CreateTrafficMirrorFilterRuleRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
+  TrafficMirrorRuleAction m_ruleAction{TrafficMirrorRuleAction::NOT_SET};
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
-     * of the request. For more information, see <a
-     * href="https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html">How
-     * to ensure idempotency</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  TrafficMirrorPortRangeRequest m_destinationPortRange;
 
-    ///@{
-    /**
-     * <p>Traffic Mirroring tags specifications.</p>
-     */
-    inline const Aws::Vector<TagSpecification>& GetTagSpecifications() const{ return m_tagSpecifications; }
-    inline bool TagSpecificationsHasBeenSet() const { return m_tagSpecificationsHasBeenSet; }
-    inline void SetTagSpecifications(const Aws::Vector<TagSpecification>& value) { m_tagSpecificationsHasBeenSet = true; m_tagSpecifications = value; }
-    inline void SetTagSpecifications(Aws::Vector<TagSpecification>&& value) { m_tagSpecificationsHasBeenSet = true; m_tagSpecifications = std::move(value); }
-    inline CreateTrafficMirrorFilterRuleRequest& WithTagSpecifications(const Aws::Vector<TagSpecification>& value) { SetTagSpecifications(value); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& WithTagSpecifications(Aws::Vector<TagSpecification>&& value) { SetTagSpecifications(std::move(value)); return *this;}
-    inline CreateTrafficMirrorFilterRuleRequest& AddTagSpecifications(const TagSpecification& value) { m_tagSpecificationsHasBeenSet = true; m_tagSpecifications.push_back(value); return *this; }
-    inline CreateTrafficMirrorFilterRuleRequest& AddTagSpecifications(TagSpecification&& value) { m_tagSpecificationsHasBeenSet = true; m_tagSpecifications.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  TrafficMirrorPortRangeRequest m_sourcePortRange;
 
-    Aws::String m_trafficMirrorFilterId;
-    bool m_trafficMirrorFilterIdHasBeenSet = false;
+  int m_protocol{0};
 
-    TrafficDirection m_trafficDirection;
-    bool m_trafficDirectionHasBeenSet = false;
+  Aws::String m_destinationCidrBlock;
 
-    int m_ruleNumber;
-    bool m_ruleNumberHasBeenSet = false;
+  Aws::String m_sourceCidrBlock;
 
-    TrafficMirrorRuleAction m_ruleAction;
-    bool m_ruleActionHasBeenSet = false;
+  Aws::String m_description;
 
-    TrafficMirrorPortRangeRequest m_destinationPortRange;
-    bool m_destinationPortRangeHasBeenSet = false;
+  bool m_dryRun{false};
 
-    TrafficMirrorPortRangeRequest m_sourcePortRange;
-    bool m_sourcePortRangeHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    int m_protocol;
-    bool m_protocolHasBeenSet = false;
+  Aws::Vector<TagSpecification> m_tagSpecifications;
+  bool m_trafficMirrorFilterIdHasBeenSet = false;
+  bool m_trafficDirectionHasBeenSet = false;
+  bool m_ruleNumberHasBeenSet = false;
+  bool m_ruleActionHasBeenSet = false;
+  bool m_destinationPortRangeHasBeenSet = false;
+  bool m_sourcePortRangeHasBeenSet = false;
+  bool m_protocolHasBeenSet = false;
+  bool m_destinationCidrBlockHasBeenSet = false;
+  bool m_sourceCidrBlockHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_tagSpecificationsHasBeenSet = false;
+};
 
-    Aws::String m_destinationCidrBlock;
-    bool m_destinationCidrBlockHasBeenSet = false;
-
-    Aws::String m_sourceCidrBlock;
-    bool m_sourceCidrBlockHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Aws::Vector<TagSpecification> m_tagSpecifications;
-    bool m_tagSpecificationsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

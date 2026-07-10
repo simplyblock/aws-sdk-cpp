@@ -4,81 +4,99 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/lambda/model/FunctionEventInvokeConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
-  class ListFunctionEventInvokeConfigsResult
-  {
-  public:
-    AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult();
-    AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+class ListFunctionEventInvokeConfigsResult {
+ public:
+  AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult() = default;
+  AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAMBDA_API ListFunctionEventInvokeConfigsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of configurations.</p>
+   */
+  inline const Aws::Vector<FunctionEventInvokeConfig>& GetFunctionEventInvokeConfigs() const { return m_functionEventInvokeConfigs; }
+  template <typename FunctionEventInvokeConfigsT = Aws::Vector<FunctionEventInvokeConfig>>
+  void SetFunctionEventInvokeConfigs(FunctionEventInvokeConfigsT&& value) {
+    m_functionEventInvokeConfigsHasBeenSet = true;
+    m_functionEventInvokeConfigs = std::forward<FunctionEventInvokeConfigsT>(value);
+  }
+  template <typename FunctionEventInvokeConfigsT = Aws::Vector<FunctionEventInvokeConfig>>
+  ListFunctionEventInvokeConfigsResult& WithFunctionEventInvokeConfigs(FunctionEventInvokeConfigsT&& value) {
+    SetFunctionEventInvokeConfigs(std::forward<FunctionEventInvokeConfigsT>(value));
+    return *this;
+  }
+  template <typename FunctionEventInvokeConfigsT = FunctionEventInvokeConfig>
+  ListFunctionEventInvokeConfigsResult& AddFunctionEventInvokeConfigs(FunctionEventInvokeConfigsT&& value) {
+    m_functionEventInvokeConfigsHasBeenSet = true;
+    m_functionEventInvokeConfigs.emplace_back(std::forward<FunctionEventInvokeConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of configurations.</p>
-     */
-    inline const Aws::Vector<FunctionEventInvokeConfig>& GetFunctionEventInvokeConfigs() const{ return m_functionEventInvokeConfigs; }
-    inline void SetFunctionEventInvokeConfigs(const Aws::Vector<FunctionEventInvokeConfig>& value) { m_functionEventInvokeConfigs = value; }
-    inline void SetFunctionEventInvokeConfigs(Aws::Vector<FunctionEventInvokeConfig>&& value) { m_functionEventInvokeConfigs = std::move(value); }
-    inline ListFunctionEventInvokeConfigsResult& WithFunctionEventInvokeConfigs(const Aws::Vector<FunctionEventInvokeConfig>& value) { SetFunctionEventInvokeConfigs(value); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& WithFunctionEventInvokeConfigs(Aws::Vector<FunctionEventInvokeConfig>&& value) { SetFunctionEventInvokeConfigs(std::move(value)); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& AddFunctionEventInvokeConfigs(const FunctionEventInvokeConfig& value) { m_functionEventInvokeConfigs.push_back(value); return *this; }
-    inline ListFunctionEventInvokeConfigsResult& AddFunctionEventInvokeConfigs(FunctionEventInvokeConfig&& value) { m_functionEventInvokeConfigs.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that's included if more results are available.</p>
+   */
+  inline const Aws::String& GetNextMarker() const { return m_nextMarker; }
+  template <typename NextMarkerT = Aws::String>
+  void SetNextMarker(NextMarkerT&& value) {
+    m_nextMarkerHasBeenSet = true;
+    m_nextMarker = std::forward<NextMarkerT>(value);
+  }
+  template <typename NextMarkerT = Aws::String>
+  ListFunctionEventInvokeConfigsResult& WithNextMarker(NextMarkerT&& value) {
+    SetNextMarker(std::forward<NextMarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that's included if more results are available.</p>
-     */
-    inline const Aws::String& GetNextMarker() const{ return m_nextMarker; }
-    inline void SetNextMarker(const Aws::String& value) { m_nextMarker = value; }
-    inline void SetNextMarker(Aws::String&& value) { m_nextMarker = std::move(value); }
-    inline void SetNextMarker(const char* value) { m_nextMarker.assign(value); }
-    inline ListFunctionEventInvokeConfigsResult& WithNextMarker(const Aws::String& value) { SetNextMarker(value); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& WithNextMarker(Aws::String&& value) { SetNextMarker(std::move(value)); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& WithNextMarker(const char* value) { SetNextMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFunctionEventInvokeConfigsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFunctionEventInvokeConfigsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFunctionEventInvokeConfigsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FunctionEventInvokeConfig> m_functionEventInvokeConfigs;
+ private:
+  Aws::Vector<FunctionEventInvokeConfig> m_functionEventInvokeConfigs;
 
-    Aws::String m_nextMarker;
+  Aws::String m_nextMarker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_functionEventInvokeConfigsHasBeenSet = false;
+  bool m_nextMarkerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/DeliveryDestination.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class PutDeliveryDestinationResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult();
-    AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class PutDeliveryDestinationResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult() = default;
+  AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API PutDeliveryDestinationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A structure containing information about the delivery destination that you
+   * just created or updated.</p>
+   */
+  inline const DeliveryDestination& GetDeliveryDestination() const { return m_deliveryDestination; }
+  template <typename DeliveryDestinationT = DeliveryDestination>
+  void SetDeliveryDestination(DeliveryDestinationT&& value) {
+    m_deliveryDestinationHasBeenSet = true;
+    m_deliveryDestination = std::forward<DeliveryDestinationT>(value);
+  }
+  template <typename DeliveryDestinationT = DeliveryDestination>
+  PutDeliveryDestinationResult& WithDeliveryDestination(DeliveryDestinationT&& value) {
+    SetDeliveryDestination(std::forward<DeliveryDestinationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure containing information about the delivery destination that you
-     * just created or updated.</p>
-     */
-    inline const DeliveryDestination& GetDeliveryDestination() const{ return m_deliveryDestination; }
-    inline void SetDeliveryDestination(const DeliveryDestination& value) { m_deliveryDestination = value; }
-    inline void SetDeliveryDestination(DeliveryDestination&& value) { m_deliveryDestination = std::move(value); }
-    inline PutDeliveryDestinationResult& WithDeliveryDestination(const DeliveryDestination& value) { SetDeliveryDestination(value); return *this;}
-    inline PutDeliveryDestinationResult& WithDeliveryDestination(DeliveryDestination&& value) { SetDeliveryDestination(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutDeliveryDestinationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutDeliveryDestinationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutDeliveryDestinationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutDeliveryDestinationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DeliveryDestination m_deliveryDestination;
+ private:
+  DeliveryDestination m_deliveryDestination;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deliveryDestinationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

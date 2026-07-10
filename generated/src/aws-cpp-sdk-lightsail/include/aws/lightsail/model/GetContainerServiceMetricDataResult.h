@@ -4,80 +4,98 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/ContainerServiceMetricName.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/lightsail/model/MetricDatapoint.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
-  class GetContainerServiceMetricDataResult
-  {
-  public:
-    AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult();
-    AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
+class GetContainerServiceMetricDataResult {
+ public:
+  AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult() = default;
+  AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LIGHTSAIL_API GetContainerServiceMetricDataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name of the metric returned. </p>
+   */
+  inline ContainerServiceMetricName GetMetricName() const { return m_metricName; }
+  inline void SetMetricName(ContainerServiceMetricName value) {
+    m_metricNameHasBeenSet = true;
+    m_metricName = value;
+  }
+  inline GetContainerServiceMetricDataResult& WithMetricName(ContainerServiceMetricName value) {
+    SetMetricName(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the metric returned. </p>
-     */
-    inline const ContainerServiceMetricName& GetMetricName() const{ return m_metricName; }
-    inline void SetMetricName(const ContainerServiceMetricName& value) { m_metricName = value; }
-    inline void SetMetricName(ContainerServiceMetricName&& value) { m_metricName = std::move(value); }
-    inline GetContainerServiceMetricDataResult& WithMetricName(const ContainerServiceMetricName& value) { SetMetricName(value); return *this;}
-    inline GetContainerServiceMetricDataResult& WithMetricName(ContainerServiceMetricName&& value) { SetMetricName(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of objects that describe the metric data returned.</p>
+   */
+  inline const Aws::Vector<MetricDatapoint>& GetMetricData() const { return m_metricData; }
+  template <typename MetricDataT = Aws::Vector<MetricDatapoint>>
+  void SetMetricData(MetricDataT&& value) {
+    m_metricDataHasBeenSet = true;
+    m_metricData = std::forward<MetricDataT>(value);
+  }
+  template <typename MetricDataT = Aws::Vector<MetricDatapoint>>
+  GetContainerServiceMetricDataResult& WithMetricData(MetricDataT&& value) {
+    SetMetricData(std::forward<MetricDataT>(value));
+    return *this;
+  }
+  template <typename MetricDataT = MetricDatapoint>
+  GetContainerServiceMetricDataResult& AddMetricData(MetricDataT&& value) {
+    m_metricDataHasBeenSet = true;
+    m_metricData.emplace_back(std::forward<MetricDataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects that describe the metric data returned.</p>
-     */
-    inline const Aws::Vector<MetricDatapoint>& GetMetricData() const{ return m_metricData; }
-    inline void SetMetricData(const Aws::Vector<MetricDatapoint>& value) { m_metricData = value; }
-    inline void SetMetricData(Aws::Vector<MetricDatapoint>&& value) { m_metricData = std::move(value); }
-    inline GetContainerServiceMetricDataResult& WithMetricData(const Aws::Vector<MetricDatapoint>& value) { SetMetricData(value); return *this;}
-    inline GetContainerServiceMetricDataResult& WithMetricData(Aws::Vector<MetricDatapoint>&& value) { SetMetricData(std::move(value)); return *this;}
-    inline GetContainerServiceMetricDataResult& AddMetricData(const MetricDatapoint& value) { m_metricData.push_back(value); return *this; }
-    inline GetContainerServiceMetricDataResult& AddMetricData(MetricDatapoint&& value) { m_metricData.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetContainerServiceMetricDataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetContainerServiceMetricDataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetContainerServiceMetricDataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetContainerServiceMetricDataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContainerServiceMetricName m_metricName;
+ private:
+  ContainerServiceMetricName m_metricName{ContainerServiceMetricName::NOT_SET};
 
-    Aws::Vector<MetricDatapoint> m_metricData;
+  Aws::Vector<MetricDatapoint> m_metricData;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_metricNameHasBeenSet = false;
+  bool m_metricDataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

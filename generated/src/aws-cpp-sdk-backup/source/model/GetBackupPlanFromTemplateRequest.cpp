@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetBackupPlanFromTemplateRequest::GetBackupPlanFromTemplateRequest() : 
-    m_backupPlanTemplateIdHasBeenSet(false)
-{
-}
-
-Aws::String GetBackupPlanFromTemplateRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetBackupPlanFromTemplateRequest::SerializePayload() const { return {}; }

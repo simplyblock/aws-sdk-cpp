@@ -127,6 +127,194 @@
                 "aws.protocols#awsJson1_0": {},
                 "smithy.api#documentation": "<p>For more information about Amazon Web Services Cloud Control API, see the <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html\">Amazon Web Services Cloud Control API User\n        Guide</a>.</p>",
                 "smithy.api#title": "AWS Cloud Control API",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://cloudcontrolapi-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://cloudcontrolapi-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://cloudcontrolapi.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://cloudcontrolapi.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -134,27 +322,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -169,7 +357,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -212,7 +399,8 @@
                                     },
                                     "type": "endpoint"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [
@@ -225,7 +413,6 @@
                                     ]
                                 }
                             ],
-                            "type": "tree",
                             "rules": [
                                 {
                                     "conditions": [
@@ -239,7 +426,6 @@
                                             "assign": "PartitionResult"
                                         }
                                     ],
-                                    "type": "tree",
                                     "rules": [
                                         {
                                             "conditions": [
@@ -262,7 +448,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -297,7 +482,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -308,14 +492,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -329,14 +515,12 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
                                                         {
                                                             "fn": "booleanEquals",
                                                             "argv": [
-                                                                true,
                                                                 {
                                                                     "fn": "getAttr",
                                                                     "argv": [
@@ -345,11 +529,11 @@
                                                                         },
                                                                         "supportsFIPS"
                                                                     ]
-                                                                }
+                                                                },
+                                                                true
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -360,14 +544,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "FIPS is enabled but this partition does not support FIPS",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [
@@ -381,7 +567,6 @@
                                                     ]
                                                 }
                                             ],
-                                            "type": "tree",
                                             "rules": [
                                                 {
                                                     "conditions": [
@@ -401,7 +586,6 @@
                                                             ]
                                                         }
                                                     ],
-                                                    "type": "tree",
                                                     "rules": [
                                                         {
                                                             "conditions": [],
@@ -412,14 +596,16 @@
                                                             },
                                                             "type": "endpoint"
                                                         }
-                                                    ]
+                                                    ],
+                                                    "type": "tree"
                                                 },
                                                 {
                                                     "conditions": [],
                                                     "error": "DualStack is enabled but this partition does not support DualStack",
                                                     "type": "error"
                                                 }
-                                            ]
+                                            ],
+                                            "type": "tree"
                                         },
                                         {
                                             "conditions": [],
@@ -430,9 +616,11 @@
                                             },
                                             "type": "endpoint"
                                         }
-                                    ]
+                                    ],
+                                    "type": "tree"
                                 }
-                            ]
+                            ],
+                            "type": "tree"
                         },
                         {
                             "conditions": [],
@@ -964,17 +1152,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -985,17 +1162,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1012,17 +1178,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1033,17 +1188,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1400,7 +1544,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 1024
+                    "max": 2048
                 },
                 "smithy.api#pattern": "^.+$"
             }
@@ -1607,6 +1751,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>Represents the current status of the resource operation request.</p>"
                     }
+                },
+                "HooksProgressEvent": {
+                    "target": "com.amazonaws.cloudcontrol#HooksProgressEvent",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Lists Hook invocations for the specified target in the request. This is a list since the same target can invoke multiple Hooks.</p>"
+                    }
                 }
             }
         },
@@ -1625,6 +1775,10 @@
                     {
                         "value": "AccessDenied",
                         "name": "ACCESS_DENIED"
+                    },
+                    {
+                        "value": "UnauthorizedTaggingOperation",
+                        "name": "UNAUTHORIZED_TAGGING_OPERATION"
                     },
                     {
                         "value": "InvalidCredentials",
@@ -1716,9 +1870,111 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 2048
+                    "max": 4096
                 },
                 "smithy.api#pattern": "^.+$"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HookFailureMode": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 128
+                },
+                "smithy.api#pattern": "^[-A-Za-z_]+$"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HookInvocationPoint": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 128
+                },
+                "smithy.api#pattern": "^[-A-Za-z_]+$"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HookProgressEvent": {
+            "type": "structure",
+            "members": {
+                "HookTypeName": {
+                    "target": "com.amazonaws.cloudcontrol#TypeName",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type name of the Hook being invoked.</p>"
+                    }
+                },
+                "HookTypeVersionId": {
+                    "target": "com.amazonaws.cloudcontrol#TypeVersionId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type version of the Hook being invoked.</p>"
+                    }
+                },
+                "HookTypeArn": {
+                    "target": "com.amazonaws.cloudcontrol#HookTypeArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The ARN of the Hook being invoked.</p>"
+                    }
+                },
+                "InvocationPoint": {
+                    "target": "com.amazonaws.cloudcontrol#HookInvocationPoint",
+                    "traits": {
+                        "smithy.api#documentation": "<p>States whether the Hook is invoked before or after resource provisioning.</p>"
+                    }
+                },
+                "HookStatus": {
+                    "target": "com.amazonaws.cloudcontrol#HookStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The status of the Hook invocation. The following are potential statuses:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>HOOK_PENDING</code>: The Hook was added to the invocation plan, but not yet invoked.</p>\n            </li>\n            <li>\n               <p>\n                  <code>HOOK_IN_PROGRESS</code>: The Hook was invoked, but hasn't completed.</p>\n            </li>\n            <li>\n               <p>\n                  <code>HOOK_COMPLETE_SUCCEEDED</code>: The Hook invocation is complete with a successful result.</p>\n            </li>\n            <li>\n               <p>\n                  <code>HOOK_COMPLETE_FAILED</code>: The Hook invocation is complete with a failed result.</p>\n            </li>\n            <li>\n               <p>\n                  <code>HOOK_FAILED</code>: The Hook invocation didn't complete successfully.</p>\n            </li>\n         </ul>"
+                    }
+                },
+                "HookEventTime": {
+                    "target": "com.amazonaws.cloudcontrol#Timestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The time that the Hook invocation request initiated.</p>"
+                    }
+                },
+                "HookStatusMessage": {
+                    "target": "com.amazonaws.cloudcontrol#StatusMessage",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The message explaining the current Hook status.</p>"
+                    }
+                },
+                "FailureMode": {
+                    "target": "com.amazonaws.cloudcontrol#HookFailureMode",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The failure mode of the invocation. The following are the potential statuses:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>FAIL</code>: This will fail the Hook invocation and the request associated with it.</p>\n            </li>\n            <li>\n               <p>\n                  <code>WARN</code>: This will fail the Hook invocation, but not the request associated with it.</p>\n            </li>\n         </ul>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Represents the current status of applicable Hooks for a resource operation request. It contains list of \n      Hook invocation information for the resource specified in the request since the same target can invoke multiple Hooks. \n      For more information, see <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/userguide/resource-operations-manage-requests.html\">Managing resource operation requests with Amazon Web Services Cloud Control API\n    </a>.</p>"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HookStatus": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 128
+                },
+                "smithy.api#pattern": "^[-A-Za-z_]+$"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HookTypeArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 2048
+                },
+                "smithy.api#pattern": "^arn:aws.*:.+:.*:.*:.+$"
+            }
+        },
+        "com.amazonaws.cloudcontrol#HooksProgressEvent": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.cloudcontrol#HookProgressEvent"
             }
         },
         "com.amazonaws.cloudcontrol#Identifier": {
@@ -2100,9 +2356,10 @@
         "com.amazonaws.cloudcontrol#PatchDocument": {
             "type": "string",
             "traits": {
+                "smithy.api#documentation": "Allow up to 256K length of Resource properties",
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 65536
+                    "max": 262144
                 },
                 "smithy.api#pattern": "^[\\s\\S]*$",
                 "smithy.api#sensitive": {}
@@ -2144,6 +2401,12 @@
                     "target": "com.amazonaws.cloudcontrol#RequestToken",
                     "traits": {
                         "smithy.api#documentation": "<p>The unique token representing this resource operation request.</p>\n         <p>Use the <code>RequestToken</code> with <a href=\"https://docs.aws.amazon.com/cloudcontrolapi/latest/APIReference/API_GetResourceRequestStatus.html\">GetResourceRequestStatus</a> to return the current status of a resource operation\n      request.</p>"
+                    }
+                },
+                "HooksRequestToken": {
+                    "target": "com.amazonaws.cloudcontrol#RequestToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The unique token representing the Hooks operation for the request.</p>"
                     }
                 },
                 "Operation": {
@@ -2196,9 +2459,10 @@
         "com.amazonaws.cloudcontrol#Properties": {
             "type": "string",
             "traits": {
+                "smithy.api#documentation": "Allow up to 256K length of Resource properties",
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 65536
+                    "max": 262144
                 },
                 "smithy.api#pattern": "^[\\s\\S]*$",
                 "smithy.api#sensitive": {}
@@ -2366,7 +2630,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 1024
+                    "max": 2048
                 },
                 "smithy.api#pattern": "^[\\s\\S]*$"
             }

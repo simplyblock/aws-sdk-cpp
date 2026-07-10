@@ -6,56 +6,53 @@
 #pragma once
 #include <aws/qbusiness/QBusiness_EXPORTS.h>
 #include <aws/qbusiness/model/AttachmentsControlMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QBusiness
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QBusiness {
+namespace Model {
 
+/**
+ * <p>Configuration information about the file upload during chat feature for your
+ * application.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AppliedAttachmentsConfiguration">AWS
+ * API Reference</a></p>
+ */
+class AppliedAttachmentsConfiguration {
+ public:
+  AWS_QBUSINESS_API AppliedAttachmentsConfiguration() = default;
+  AWS_QBUSINESS_API AppliedAttachmentsConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QBUSINESS_API AppliedAttachmentsConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QBUSINESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Configuration information about the file upload during chat feature for your
-   * application.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AppliedAttachmentsConfiguration">AWS
-   * API Reference</a></p>
+   * <p>Information about whether file upload during chat functionality is activated
+   * for your application.</p>
    */
-  class AppliedAttachmentsConfiguration
-  {
-  public:
-    AWS_QBUSINESS_API AppliedAttachmentsConfiguration();
-    AWS_QBUSINESS_API AppliedAttachmentsConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QBUSINESS_API AppliedAttachmentsConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QBUSINESS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline AttachmentsControlMode GetAttachmentsControlMode() const { return m_attachmentsControlMode; }
+  inline bool AttachmentsControlModeHasBeenSet() const { return m_attachmentsControlModeHasBeenSet; }
+  inline void SetAttachmentsControlMode(AttachmentsControlMode value) {
+    m_attachmentsControlModeHasBeenSet = true;
+    m_attachmentsControlMode = value;
+  }
+  inline AppliedAttachmentsConfiguration& WithAttachmentsControlMode(AttachmentsControlMode value) {
+    SetAttachmentsControlMode(value);
+    return *this;
+  }
+  ///@}
+ private:
+  AttachmentsControlMode m_attachmentsControlMode{AttachmentsControlMode::NOT_SET};
+  bool m_attachmentsControlModeHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>Information about whether file upload during chat functionality is activated
-     * for your application.</p>
-     */
-    inline const AttachmentsControlMode& GetAttachmentsControlMode() const{ return m_attachmentsControlMode; }
-    inline bool AttachmentsControlModeHasBeenSet() const { return m_attachmentsControlModeHasBeenSet; }
-    inline void SetAttachmentsControlMode(const AttachmentsControlMode& value) { m_attachmentsControlModeHasBeenSet = true; m_attachmentsControlMode = value; }
-    inline void SetAttachmentsControlMode(AttachmentsControlMode&& value) { m_attachmentsControlModeHasBeenSet = true; m_attachmentsControlMode = std::move(value); }
-    inline AppliedAttachmentsConfiguration& WithAttachmentsControlMode(const AttachmentsControlMode& value) { SetAttachmentsControlMode(value); return *this;}
-    inline AppliedAttachmentsConfiguration& WithAttachmentsControlMode(AttachmentsControlMode&& value) { SetAttachmentsControlMode(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    AttachmentsControlMode m_attachmentsControlMode;
-    bool m_attachmentsControlModeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QBusiness
-} // namespace Aws
+}  // namespace Model
+}  // namespace QBusiness
+}  // namespace Aws

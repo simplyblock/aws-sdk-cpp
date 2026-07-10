@@ -12,31 +12,16 @@ using namespace Aws::Account::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartPrimaryEmailUpdateRequest::StartPrimaryEmailUpdateRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_primaryEmailHasBeenSet(false)
-{
-}
-
-Aws::String StartPrimaryEmailUpdateRequest::SerializePayload() const
-{
+Aws::String StartPrimaryEmailUpdateRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("AccountId", m_accountId);
-
+  if (m_accountIdHasBeenSet) {
+    payload.WithString("AccountId", m_accountId);
   }
 
-  if(m_primaryEmailHasBeenSet)
-  {
-   payload.WithString("PrimaryEmail", m_primaryEmail);
-
+  if (m_primaryEmailHasBeenSet) {
+    payload.WithString("PrimaryEmail", m_primaryEmail);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

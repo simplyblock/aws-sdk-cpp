@@ -4,56 +4,55 @@
  */
 
 #pragma once
-#include <aws/transcribe/TranscribeService_EXPORTS.h>
-#include <aws/transcribe/TranscribeServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/transcribe/TranscribeServiceRequest.h>
+#include <aws/transcribe/TranscribeService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace TranscribeService
-{
-namespace Model
-{
+namespace Aws {
+namespace TranscribeService {
+namespace Model {
 
+/**
+ */
+class DeleteLanguageModelRequest : public TranscribeServiceRequest {
+ public:
+  AWS_TRANSCRIBESERVICE_API DeleteLanguageModelRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteLanguageModel"; }
+
+  AWS_TRANSCRIBESERVICE_API Aws::String SerializePayload() const override;
+
+  AWS_TRANSCRIBESERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the custom language model you want to delete. Model names are
+   * case sensitive.</p>
    */
-  class DeleteLanguageModelRequest : public TranscribeServiceRequest
-  {
-  public:
-    AWS_TRANSCRIBESERVICE_API DeleteLanguageModelRequest();
+  inline const Aws::String& GetModelName() const { return m_modelName; }
+  inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
+  template <typename ModelNameT = Aws::String>
+  void SetModelName(ModelNameT&& value) {
+    m_modelNameHasBeenSet = true;
+    m_modelName = std::forward<ModelNameT>(value);
+  }
+  template <typename ModelNameT = Aws::String>
+  DeleteLanguageModelRequest& WithModelName(ModelNameT&& value) {
+    SetModelName(std::forward<ModelNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_modelName;
+  bool m_modelNameHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteLanguageModel"; }
-
-    AWS_TRANSCRIBESERVICE_API Aws::String SerializePayload() const override;
-
-    AWS_TRANSCRIBESERVICE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the custom language model you want to delete. Model names are
-     * case sensitive.</p>
-     */
-    inline const Aws::String& GetModelName() const{ return m_modelName; }
-    inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
-    inline void SetModelName(const Aws::String& value) { m_modelNameHasBeenSet = true; m_modelName = value; }
-    inline void SetModelName(Aws::String&& value) { m_modelNameHasBeenSet = true; m_modelName = std::move(value); }
-    inline void SetModelName(const char* value) { m_modelNameHasBeenSet = true; m_modelName.assign(value); }
-    inline DeleteLanguageModelRequest& WithModelName(const Aws::String& value) { SetModelName(value); return *this;}
-    inline DeleteLanguageModelRequest& WithModelName(Aws::String&& value) { SetModelName(std::move(value)); return *this;}
-    inline DeleteLanguageModelRequest& WithModelName(const char* value) { SetModelName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_modelName;
-    bool m_modelNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace TranscribeService
+}  // namespace Aws

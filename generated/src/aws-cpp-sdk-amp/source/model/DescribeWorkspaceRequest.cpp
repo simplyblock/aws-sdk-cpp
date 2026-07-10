@@ -12,16 +12,4 @@ using namespace Aws::PrometheusService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeWorkspaceRequest::DescribeWorkspaceRequest() : 
-    m_workspaceIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeWorkspaceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeWorkspaceRequest::SerializePayload() const { return {}; }

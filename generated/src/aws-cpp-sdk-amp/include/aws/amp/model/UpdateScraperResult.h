@@ -5,113 +5,138 @@
 
 #pragma once
 #include <aws/amp/PrometheusService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/amp/model/ScraperStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PrometheusService
-{
-namespace Model
-{
-  class UpdateScraperResult
-  {
-  public:
-    AWS_PROMETHEUSSERVICE_API UpdateScraperResult();
-    AWS_PROMETHEUSSERVICE_API UpdateScraperResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PROMETHEUSSERVICE_API UpdateScraperResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PrometheusService {
+namespace Model {
+class UpdateScraperResult {
+ public:
+  AWS_PROMETHEUSSERVICE_API UpdateScraperResult() = default;
+  AWS_PROMETHEUSSERVICE_API UpdateScraperResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PROMETHEUSSERVICE_API UpdateScraperResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the updated scraper.</p>
+   */
+  inline const Aws::String& GetScraperId() const { return m_scraperId; }
+  template <typename ScraperIdT = Aws::String>
+  void SetScraperId(ScraperIdT&& value) {
+    m_scraperIdHasBeenSet = true;
+    m_scraperId = std::forward<ScraperIdT>(value);
+  }
+  template <typename ScraperIdT = Aws::String>
+  UpdateScraperResult& WithScraperId(ScraperIdT&& value) {
+    SetScraperId(std::forward<ScraperIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the updated scraper.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline UpdateScraperResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline UpdateScraperResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline UpdateScraperResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the updated scraper.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  UpdateScraperResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the updated scraper.</p>
-     */
-    inline const Aws::String& GetScraperId() const{ return m_scraperId; }
-    inline void SetScraperId(const Aws::String& value) { m_scraperId = value; }
-    inline void SetScraperId(Aws::String&& value) { m_scraperId = std::move(value); }
-    inline void SetScraperId(const char* value) { m_scraperId.assign(value); }
-    inline UpdateScraperResult& WithScraperId(const Aws::String& value) { SetScraperId(value); return *this;}
-    inline UpdateScraperResult& WithScraperId(Aws::String&& value) { SetScraperId(std::move(value)); return *this;}
-    inline UpdateScraperResult& WithScraperId(const char* value) { SetScraperId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A structure that displays the current status of the scraper.</p>
+   */
+  inline const ScraperStatus& GetStatus() const { return m_status; }
+  template <typename StatusT = ScraperStatus>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = ScraperStatus>
+  UpdateScraperResult& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that displays the current status of the scraper.</p>
-     */
-    inline const ScraperStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const ScraperStatus& value) { m_status = value; }
-    inline void SetStatus(ScraperStatus&& value) { m_status = std::move(value); }
-    inline UpdateScraperResult& WithStatus(const ScraperStatus& value) { SetStatus(value); return *this;}
-    inline UpdateScraperResult& WithStatus(ScraperStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of tag keys and values that are associated with the scraper.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  UpdateScraperResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  UpdateScraperResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of tag keys and values that are associated with the scraper.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline UpdateScraperResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline UpdateScraperResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline UpdateScraperResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline UpdateScraperResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateScraperResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateScraperResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateScraperResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline UpdateScraperResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline UpdateScraperResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateScraperResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateScraperResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateScraperResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateScraperResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_arn;
+ private:
+  Aws::String m_scraperId;
 
-    Aws::String m_scraperId;
+  Aws::String m_arn;
 
-    ScraperStatus m_status;
+  ScraperStatus m_status;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_scraperIdHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PrometheusService
-} // namespace Aws
+}  // namespace Model
+}  // namespace PrometheusService
+}  // namespace Aws

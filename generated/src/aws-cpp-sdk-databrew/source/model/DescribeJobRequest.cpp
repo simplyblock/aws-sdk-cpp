@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/databrew/model/DescribeJobRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/databrew/model/DescribeJobRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::GlueDataBrew::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeJobRequest::DescribeJobRequest() : 
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String DescribeJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeJobRequest::SerializePayload() const { return {}; }

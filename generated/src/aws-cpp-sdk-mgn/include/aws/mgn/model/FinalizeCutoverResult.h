@@ -4,255 +4,340 @@
  */
 
 #pragma once
-#include <aws/mgn/Mgn_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/mgn/model/SourceServerConnectorAction.h>
+#include <aws/mgn/Mgn_EXPORTS.h>
 #include <aws/mgn/model/DataReplicationInfo.h>
 #include <aws/mgn/model/LaunchedInstance.h>
 #include <aws/mgn/model/LifeCycle.h>
 #include <aws/mgn/model/ReplicationType.h>
 #include <aws/mgn/model/SourceProperties.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/mgn/model/SourceServerConnectorAction.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mgn
-{
-namespace Model
-{
-  class FinalizeCutoverResult
-  {
-  public:
-    AWS_MGN_API FinalizeCutoverResult();
-    AWS_MGN_API FinalizeCutoverResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MGN_API FinalizeCutoverResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mgn {
+namespace Model {
+class FinalizeCutoverResult {
+ public:
+  AWS_MGN_API FinalizeCutoverResult() = default;
+  AWS_MGN_API FinalizeCutoverResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MGN_API FinalizeCutoverResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Source server ID.</p>
+   */
+  inline const Aws::String& GetSourceServerID() const { return m_sourceServerID; }
+  template <typename SourceServerIDT = Aws::String>
+  void SetSourceServerID(SourceServerIDT&& value) {
+    m_sourceServerIDHasBeenSet = true;
+    m_sourceServerID = std::forward<SourceServerIDT>(value);
+  }
+  template <typename SourceServerIDT = Aws::String>
+  FinalizeCutoverResult& WithSourceServerID(SourceServerIDT&& value) {
+    SetSourceServerID(std::forward<SourceServerIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server application ID.</p>
-     */
-    inline const Aws::String& GetApplicationID() const{ return m_applicationID; }
-    inline void SetApplicationID(const Aws::String& value) { m_applicationID = value; }
-    inline void SetApplicationID(Aws::String&& value) { m_applicationID = std::move(value); }
-    inline void SetApplicationID(const char* value) { m_applicationID.assign(value); }
-    inline FinalizeCutoverResult& WithApplicationID(const Aws::String& value) { SetApplicationID(value); return *this;}
-    inline FinalizeCutoverResult& WithApplicationID(Aws::String&& value) { SetApplicationID(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithApplicationID(const char* value) { SetApplicationID(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server ARN.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  FinalizeCutoverResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server ARN.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline FinalizeCutoverResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline FinalizeCutoverResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server archived status.</p>
+   */
+  inline bool GetIsArchived() const { return m_isArchived; }
+  inline void SetIsArchived(bool value) {
+    m_isArchivedHasBeenSet = true;
+    m_isArchived = value;
+  }
+  inline FinalizeCutoverResult& WithIsArchived(bool value) {
+    SetIsArchived(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source Server connector action.</p>
-     */
-    inline const SourceServerConnectorAction& GetConnectorAction() const{ return m_connectorAction; }
-    inline void SetConnectorAction(const SourceServerConnectorAction& value) { m_connectorAction = value; }
-    inline void SetConnectorAction(SourceServerConnectorAction&& value) { m_connectorAction = std::move(value); }
-    inline FinalizeCutoverResult& WithConnectorAction(const SourceServerConnectorAction& value) { SetConnectorAction(value); return *this;}
-    inline FinalizeCutoverResult& WithConnectorAction(SourceServerConnectorAction&& value) { SetConnectorAction(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server Tags.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  FinalizeCutoverResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  FinalizeCutoverResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server data replication info.</p>
-     */
-    inline const DataReplicationInfo& GetDataReplicationInfo() const{ return m_dataReplicationInfo; }
-    inline void SetDataReplicationInfo(const DataReplicationInfo& value) { m_dataReplicationInfo = value; }
-    inline void SetDataReplicationInfo(DataReplicationInfo&& value) { m_dataReplicationInfo = std::move(value); }
-    inline FinalizeCutoverResult& WithDataReplicationInfo(const DataReplicationInfo& value) { SetDataReplicationInfo(value); return *this;}
-    inline FinalizeCutoverResult& WithDataReplicationInfo(DataReplicationInfo&& value) { SetDataReplicationInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server launched instance.</p>
+   */
+  inline const LaunchedInstance& GetLaunchedInstance() const { return m_launchedInstance; }
+  template <typename LaunchedInstanceT = LaunchedInstance>
+  void SetLaunchedInstance(LaunchedInstanceT&& value) {
+    m_launchedInstanceHasBeenSet = true;
+    m_launchedInstance = std::forward<LaunchedInstanceT>(value);
+  }
+  template <typename LaunchedInstanceT = LaunchedInstance>
+  FinalizeCutoverResult& WithLaunchedInstance(LaunchedInstanceT&& value) {
+    SetLaunchedInstance(std::forward<LaunchedInstanceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server fqdn for action framework.</p>
-     */
-    inline const Aws::String& GetFqdnForActionFramework() const{ return m_fqdnForActionFramework; }
-    inline void SetFqdnForActionFramework(const Aws::String& value) { m_fqdnForActionFramework = value; }
-    inline void SetFqdnForActionFramework(Aws::String&& value) { m_fqdnForActionFramework = std::move(value); }
-    inline void SetFqdnForActionFramework(const char* value) { m_fqdnForActionFramework.assign(value); }
-    inline FinalizeCutoverResult& WithFqdnForActionFramework(const Aws::String& value) { SetFqdnForActionFramework(value); return *this;}
-    inline FinalizeCutoverResult& WithFqdnForActionFramework(Aws::String&& value) { SetFqdnForActionFramework(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithFqdnForActionFramework(const char* value) { SetFqdnForActionFramework(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server data replication info.</p>
+   */
+  inline const DataReplicationInfo& GetDataReplicationInfo() const { return m_dataReplicationInfo; }
+  template <typename DataReplicationInfoT = DataReplicationInfo>
+  void SetDataReplicationInfo(DataReplicationInfoT&& value) {
+    m_dataReplicationInfoHasBeenSet = true;
+    m_dataReplicationInfo = std::forward<DataReplicationInfoT>(value);
+  }
+  template <typename DataReplicationInfoT = DataReplicationInfo>
+  FinalizeCutoverResult& WithDataReplicationInfo(DataReplicationInfoT&& value) {
+    SetDataReplicationInfo(std::forward<DataReplicationInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server archived status.</p>
-     */
-    inline bool GetIsArchived() const{ return m_isArchived; }
-    inline void SetIsArchived(bool value) { m_isArchived = value; }
-    inline FinalizeCutoverResult& WithIsArchived(bool value) { SetIsArchived(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server lifecycle state.</p>
+   */
+  inline const LifeCycle& GetLifeCycle() const { return m_lifeCycle; }
+  template <typename LifeCycleT = LifeCycle>
+  void SetLifeCycle(LifeCycleT&& value) {
+    m_lifeCycleHasBeenSet = true;
+    m_lifeCycle = std::forward<LifeCycleT>(value);
+  }
+  template <typename LifeCycleT = LifeCycle>
+  FinalizeCutoverResult& WithLifeCycle(LifeCycleT&& value) {
+    SetLifeCycle(std::forward<LifeCycleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server launched instance.</p>
-     */
-    inline const LaunchedInstance& GetLaunchedInstance() const{ return m_launchedInstance; }
-    inline void SetLaunchedInstance(const LaunchedInstance& value) { m_launchedInstance = value; }
-    inline void SetLaunchedInstance(LaunchedInstance&& value) { m_launchedInstance = std::move(value); }
-    inline FinalizeCutoverResult& WithLaunchedInstance(const LaunchedInstance& value) { SetLaunchedInstance(value); return *this;}
-    inline FinalizeCutoverResult& WithLaunchedInstance(LaunchedInstance&& value) { SetLaunchedInstance(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server properties.</p>
+   */
+  inline const SourceProperties& GetSourceProperties() const { return m_sourceProperties; }
+  template <typename SourcePropertiesT = SourceProperties>
+  void SetSourceProperties(SourcePropertiesT&& value) {
+    m_sourcePropertiesHasBeenSet = true;
+    m_sourceProperties = std::forward<SourcePropertiesT>(value);
+  }
+  template <typename SourcePropertiesT = SourceProperties>
+  FinalizeCutoverResult& WithSourceProperties(SourcePropertiesT&& value) {
+    SetSourceProperties(std::forward<SourcePropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server lifecycle state.</p>
-     */
-    inline const LifeCycle& GetLifeCycle() const{ return m_lifeCycle; }
-    inline void SetLifeCycle(const LifeCycle& value) { m_lifeCycle = value; }
-    inline void SetLifeCycle(LifeCycle&& value) { m_lifeCycle = std::move(value); }
-    inline FinalizeCutoverResult& WithLifeCycle(const LifeCycle& value) { SetLifeCycle(value); return *this;}
-    inline FinalizeCutoverResult& WithLifeCycle(LifeCycle&& value) { SetLifeCycle(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server replication type.</p>
+   */
+  inline ReplicationType GetReplicationType() const { return m_replicationType; }
+  inline void SetReplicationType(ReplicationType value) {
+    m_replicationTypeHasBeenSet = true;
+    m_replicationType = value;
+  }
+  inline FinalizeCutoverResult& WithReplicationType(ReplicationType value) {
+    SetReplicationType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server replication type.</p>
-     */
-    inline const ReplicationType& GetReplicationType() const{ return m_replicationType; }
-    inline void SetReplicationType(const ReplicationType& value) { m_replicationType = value; }
-    inline void SetReplicationType(ReplicationType&& value) { m_replicationType = std::move(value); }
-    inline FinalizeCutoverResult& WithReplicationType(const ReplicationType& value) { SetReplicationType(value); return *this;}
-    inline FinalizeCutoverResult& WithReplicationType(ReplicationType&& value) { SetReplicationType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server vCenter client id.</p>
+   */
+  inline const Aws::String& GetVcenterClientID() const { return m_vcenterClientID; }
+  template <typename VcenterClientIDT = Aws::String>
+  void SetVcenterClientID(VcenterClientIDT&& value) {
+    m_vcenterClientIDHasBeenSet = true;
+    m_vcenterClientID = std::forward<VcenterClientIDT>(value);
+  }
+  template <typename VcenterClientIDT = Aws::String>
+  FinalizeCutoverResult& WithVcenterClientID(VcenterClientIDT&& value) {
+    SetVcenterClientID(std::forward<VcenterClientIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server properties.</p>
-     */
-    inline const SourceProperties& GetSourceProperties() const{ return m_sourceProperties; }
-    inline void SetSourceProperties(const SourceProperties& value) { m_sourceProperties = value; }
-    inline void SetSourceProperties(SourceProperties&& value) { m_sourceProperties = std::move(value); }
-    inline FinalizeCutoverResult& WithSourceProperties(const SourceProperties& value) { SetSourceProperties(value); return *this;}
-    inline FinalizeCutoverResult& WithSourceProperties(SourceProperties&& value) { SetSourceProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server application ID.</p>
+   */
+  inline const Aws::String& GetApplicationID() const { return m_applicationID; }
+  template <typename ApplicationIDT = Aws::String>
+  void SetApplicationID(ApplicationIDT&& value) {
+    m_applicationIDHasBeenSet = true;
+    m_applicationID = std::forward<ApplicationIDT>(value);
+  }
+  template <typename ApplicationIDT = Aws::String>
+  FinalizeCutoverResult& WithApplicationID(ApplicationIDT&& value) {
+    SetApplicationID(std::forward<ApplicationIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server ID.</p>
-     */
-    inline const Aws::String& GetSourceServerID() const{ return m_sourceServerID; }
-    inline void SetSourceServerID(const Aws::String& value) { m_sourceServerID = value; }
-    inline void SetSourceServerID(Aws::String&& value) { m_sourceServerID = std::move(value); }
-    inline void SetSourceServerID(const char* value) { m_sourceServerID.assign(value); }
-    inline FinalizeCutoverResult& WithSourceServerID(const Aws::String& value) { SetSourceServerID(value); return *this;}
-    inline FinalizeCutoverResult& WithSourceServerID(Aws::String&& value) { SetSourceServerID(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithSourceServerID(const char* value) { SetSourceServerID(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source server user provided ID.</p>
+   */
+  inline const Aws::String& GetUserProvidedID() const { return m_userProvidedID; }
+  template <typename UserProvidedIDT = Aws::String>
+  void SetUserProvidedID(UserProvidedIDT&& value) {
+    m_userProvidedIDHasBeenSet = true;
+    m_userProvidedID = std::forward<UserProvidedIDT>(value);
+  }
+  template <typename UserProvidedIDT = Aws::String>
+  FinalizeCutoverResult& WithUserProvidedID(UserProvidedIDT&& value) {
+    SetUserProvidedID(std::forward<UserProvidedIDT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server Tags.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline FinalizeCutoverResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline FinalizeCutoverResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline FinalizeCutoverResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline FinalizeCutoverResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline FinalizeCutoverResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline FinalizeCutoverResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline FinalizeCutoverResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline FinalizeCutoverResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Source server fqdn for action framework.</p>
+   */
+  inline const Aws::String& GetFqdnForActionFramework() const { return m_fqdnForActionFramework; }
+  template <typename FqdnForActionFrameworkT = Aws::String>
+  void SetFqdnForActionFramework(FqdnForActionFrameworkT&& value) {
+    m_fqdnForActionFrameworkHasBeenSet = true;
+    m_fqdnForActionFramework = std::forward<FqdnForActionFrameworkT>(value);
+  }
+  template <typename FqdnForActionFrameworkT = Aws::String>
+  FinalizeCutoverResult& WithFqdnForActionFramework(FqdnForActionFrameworkT&& value) {
+    SetFqdnForActionFramework(std::forward<FqdnForActionFrameworkT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server user provided ID.</p>
-     */
-    inline const Aws::String& GetUserProvidedID() const{ return m_userProvidedID; }
-    inline void SetUserProvidedID(const Aws::String& value) { m_userProvidedID = value; }
-    inline void SetUserProvidedID(Aws::String&& value) { m_userProvidedID = std::move(value); }
-    inline void SetUserProvidedID(const char* value) { m_userProvidedID.assign(value); }
-    inline FinalizeCutoverResult& WithUserProvidedID(const Aws::String& value) { SetUserProvidedID(value); return *this;}
-    inline FinalizeCutoverResult& WithUserProvidedID(Aws::String&& value) { SetUserProvidedID(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithUserProvidedID(const char* value) { SetUserProvidedID(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Source Server connector action.</p>
+   */
+  inline const SourceServerConnectorAction& GetConnectorAction() const { return m_connectorAction; }
+  template <typename ConnectorActionT = SourceServerConnectorAction>
+  void SetConnectorAction(ConnectorActionT&& value) {
+    m_connectorActionHasBeenSet = true;
+    m_connectorAction = std::forward<ConnectorActionT>(value);
+  }
+  template <typename ConnectorActionT = SourceServerConnectorAction>
+  FinalizeCutoverResult& WithConnectorAction(ConnectorActionT&& value) {
+    SetConnectorAction(std::forward<ConnectorActionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Source server vCenter client id.</p>
-     */
-    inline const Aws::String& GetVcenterClientID() const{ return m_vcenterClientID; }
-    inline void SetVcenterClientID(const Aws::String& value) { m_vcenterClientID = value; }
-    inline void SetVcenterClientID(Aws::String&& value) { m_vcenterClientID = std::move(value); }
-    inline void SetVcenterClientID(const char* value) { m_vcenterClientID.assign(value); }
-    inline FinalizeCutoverResult& WithVcenterClientID(const Aws::String& value) { SetVcenterClientID(value); return *this;}
-    inline FinalizeCutoverResult& WithVcenterClientID(Aws::String&& value) { SetVcenterClientID(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithVcenterClientID(const char* value) { SetVcenterClientID(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline FinalizeCutoverResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline FinalizeCutoverResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline FinalizeCutoverResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  FinalizeCutoverResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_applicationID;
+ private:
+  Aws::String m_sourceServerID;
 
-    Aws::String m_arn;
+  Aws::String m_arn;
 
-    SourceServerConnectorAction m_connectorAction;
+  bool m_isArchived{false};
 
-    DataReplicationInfo m_dataReplicationInfo;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_fqdnForActionFramework;
+  LaunchedInstance m_launchedInstance;
 
-    bool m_isArchived;
+  DataReplicationInfo m_dataReplicationInfo;
 
-    LaunchedInstance m_launchedInstance;
+  LifeCycle m_lifeCycle;
 
-    LifeCycle m_lifeCycle;
+  SourceProperties m_sourceProperties;
 
-    ReplicationType m_replicationType;
+  ReplicationType m_replicationType{ReplicationType::NOT_SET};
 
-    SourceProperties m_sourceProperties;
+  Aws::String m_vcenterClientID;
 
-    Aws::String m_sourceServerID;
+  Aws::String m_applicationID;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::String m_userProvidedID;
 
-    Aws::String m_userProvidedID;
+  Aws::String m_fqdnForActionFramework;
 
-    Aws::String m_vcenterClientID;
+  SourceServerConnectorAction m_connectorAction;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sourceServerIDHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_isArchivedHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_launchedInstanceHasBeenSet = false;
+  bool m_dataReplicationInfoHasBeenSet = false;
+  bool m_lifeCycleHasBeenSet = false;
+  bool m_sourcePropertiesHasBeenSet = false;
+  bool m_replicationTypeHasBeenSet = false;
+  bool m_vcenterClientIDHasBeenSet = false;
+  bool m_applicationIDHasBeenSet = false;
+  bool m_userProvidedIDHasBeenSet = false;
+  bool m_fqdnForActionFrameworkHasBeenSet = false;
+  bool m_connectorActionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace mgn
-} // namespace Aws
+}  // namespace Model
+}  // namespace mgn
+}  // namespace Aws

@@ -7,76 +7,78 @@
 #include <aws/appstream/AppStream_EXPORTS.h>
 #include <aws/appstream/model/AccessEndpointType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AppStream
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AppStream {
+namespace Model {
 
+/**
+ * <p>Describes an interface VPC endpoint (interface endpoint) that lets you create
+ * a private connection between the virtual private cloud (VPC) that you specify
+ * and WorkSpaces Applications. When you specify an interface endpoint for a stack,
+ * users of the stack can connect to WorkSpaces Applications only through that
+ * endpoint. When you specify an interface endpoint for an image builder,
+ * administrators can connect to the image builder only through that
+ * endpoint.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appstream-2016-12-01/AccessEndpoint">AWS
+ * API Reference</a></p>
+ */
+class AccessEndpoint {
+ public:
+  AWS_APPSTREAM_API AccessEndpoint() = default;
+  AWS_APPSTREAM_API AccessEndpoint(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPSTREAM_API AccessEndpoint& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPSTREAM_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes an interface VPC endpoint (interface endpoint) that lets you create
-   * a private connection between the virtual private cloud (VPC) that you specify
-   * and AppStream 2.0. When you specify an interface endpoint for a stack, users of
-   * the stack can connect to AppStream 2.0 only through that endpoint. When you
-   * specify an interface endpoint for an image builder, administrators can connect
-   * to the image builder only through that endpoint.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appstream-2016-12-01/AccessEndpoint">AWS
-   * API Reference</a></p>
+   * <p>The type of interface endpoint.</p>
    */
-  class AccessEndpoint
-  {
-  public:
-    AWS_APPSTREAM_API AccessEndpoint();
-    AWS_APPSTREAM_API AccessEndpoint(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPSTREAM_API AccessEndpoint& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPSTREAM_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline AccessEndpointType GetEndpointType() const { return m_endpointType; }
+  inline bool EndpointTypeHasBeenSet() const { return m_endpointTypeHasBeenSet; }
+  inline void SetEndpointType(AccessEndpointType value) {
+    m_endpointTypeHasBeenSet = true;
+    m_endpointType = value;
+  }
+  inline AccessEndpoint& WithEndpointType(AccessEndpointType value) {
+    SetEndpointType(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The identifier (ID) of the VPC in which the interface endpoint is used.</p>
+   */
+  inline const Aws::String& GetVpceId() const { return m_vpceId; }
+  inline bool VpceIdHasBeenSet() const { return m_vpceIdHasBeenSet; }
+  template <typename VpceIdT = Aws::String>
+  void SetVpceId(VpceIdT&& value) {
+    m_vpceIdHasBeenSet = true;
+    m_vpceId = std::forward<VpceIdT>(value);
+  }
+  template <typename VpceIdT = Aws::String>
+  AccessEndpoint& WithVpceId(VpceIdT&& value) {
+    SetVpceId(std::forward<VpceIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  AccessEndpointType m_endpointType{AccessEndpointType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The type of interface endpoint.</p>
-     */
-    inline const AccessEndpointType& GetEndpointType() const{ return m_endpointType; }
-    inline bool EndpointTypeHasBeenSet() const { return m_endpointTypeHasBeenSet; }
-    inline void SetEndpointType(const AccessEndpointType& value) { m_endpointTypeHasBeenSet = true; m_endpointType = value; }
-    inline void SetEndpointType(AccessEndpointType&& value) { m_endpointTypeHasBeenSet = true; m_endpointType = std::move(value); }
-    inline AccessEndpoint& WithEndpointType(const AccessEndpointType& value) { SetEndpointType(value); return *this;}
-    inline AccessEndpoint& WithEndpointType(AccessEndpointType&& value) { SetEndpointType(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_vpceId;
+  bool m_endpointTypeHasBeenSet = false;
+  bool m_vpceIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier (ID) of the VPC in which the interface endpoint is used.</p>
-     */
-    inline const Aws::String& GetVpceId() const{ return m_vpceId; }
-    inline bool VpceIdHasBeenSet() const { return m_vpceIdHasBeenSet; }
-    inline void SetVpceId(const Aws::String& value) { m_vpceIdHasBeenSet = true; m_vpceId = value; }
-    inline void SetVpceId(Aws::String&& value) { m_vpceIdHasBeenSet = true; m_vpceId = std::move(value); }
-    inline void SetVpceId(const char* value) { m_vpceIdHasBeenSet = true; m_vpceId.assign(value); }
-    inline AccessEndpoint& WithVpceId(const Aws::String& value) { SetVpceId(value); return *this;}
-    inline AccessEndpoint& WithVpceId(Aws::String&& value) { SetVpceId(std::move(value)); return *this;}
-    inline AccessEndpoint& WithVpceId(const char* value) { SetVpceId(value); return *this;}
-    ///@}
-  private:
-
-    AccessEndpointType m_endpointType;
-    bool m_endpointTypeHasBeenSet = false;
-
-    Aws::String m_vpceId;
-    bool m_vpceIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AppStream
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppStream
+}  // namespace Aws

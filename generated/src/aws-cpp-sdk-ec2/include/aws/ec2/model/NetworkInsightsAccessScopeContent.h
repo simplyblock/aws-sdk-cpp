@@ -4,96 +4,113 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/AccessScopePath.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes the Network Access Scope content.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInsightsAccessScopeContent">AWS
+ * API Reference</a></p>
+ */
+class NetworkInsightsAccessScopeContent {
+ public:
+  AWS_EC2_API NetworkInsightsAccessScopeContent() = default;
+  AWS_EC2_API NetworkInsightsAccessScopeContent(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API NetworkInsightsAccessScopeContent& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes the Network Access Scope content.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInsightsAccessScopeContent">AWS
-   * API Reference</a></p>
+   * <p>The ID of the Network Access Scope.</p>
    */
-  class NetworkInsightsAccessScopeContent
-  {
-  public:
-    AWS_EC2_API NetworkInsightsAccessScopeContent();
-    AWS_EC2_API NetworkInsightsAccessScopeContent(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API NetworkInsightsAccessScopeContent& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetNetworkInsightsAccessScopeId() const { return m_networkInsightsAccessScopeId; }
+  inline bool NetworkInsightsAccessScopeIdHasBeenSet() const { return m_networkInsightsAccessScopeIdHasBeenSet; }
+  template <typename NetworkInsightsAccessScopeIdT = Aws::String>
+  void SetNetworkInsightsAccessScopeId(NetworkInsightsAccessScopeIdT&& value) {
+    m_networkInsightsAccessScopeIdHasBeenSet = true;
+    m_networkInsightsAccessScopeId = std::forward<NetworkInsightsAccessScopeIdT>(value);
+  }
+  template <typename NetworkInsightsAccessScopeIdT = Aws::String>
+  NetworkInsightsAccessScopeContent& WithNetworkInsightsAccessScopeId(NetworkInsightsAccessScopeIdT&& value) {
+    SetNetworkInsightsAccessScopeId(std::forward<NetworkInsightsAccessScopeIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The paths to match.</p>
+   */
+  inline const Aws::Vector<AccessScopePath>& GetMatchPaths() const { return m_matchPaths; }
+  inline bool MatchPathsHasBeenSet() const { return m_matchPathsHasBeenSet; }
+  template <typename MatchPathsT = Aws::Vector<AccessScopePath>>
+  void SetMatchPaths(MatchPathsT&& value) {
+    m_matchPathsHasBeenSet = true;
+    m_matchPaths = std::forward<MatchPathsT>(value);
+  }
+  template <typename MatchPathsT = Aws::Vector<AccessScopePath>>
+  NetworkInsightsAccessScopeContent& WithMatchPaths(MatchPathsT&& value) {
+    SetMatchPaths(std::forward<MatchPathsT>(value));
+    return *this;
+  }
+  template <typename MatchPathsT = AccessScopePath>
+  NetworkInsightsAccessScopeContent& AddMatchPaths(MatchPathsT&& value) {
+    m_matchPathsHasBeenSet = true;
+    m_matchPaths.emplace_back(std::forward<MatchPathsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The paths to exclude.</p>
+   */
+  inline const Aws::Vector<AccessScopePath>& GetExcludePaths() const { return m_excludePaths; }
+  inline bool ExcludePathsHasBeenSet() const { return m_excludePathsHasBeenSet; }
+  template <typename ExcludePathsT = Aws::Vector<AccessScopePath>>
+  void SetExcludePaths(ExcludePathsT&& value) {
+    m_excludePathsHasBeenSet = true;
+    m_excludePaths = std::forward<ExcludePathsT>(value);
+  }
+  template <typename ExcludePathsT = Aws::Vector<AccessScopePath>>
+  NetworkInsightsAccessScopeContent& WithExcludePaths(ExcludePathsT&& value) {
+    SetExcludePaths(std::forward<ExcludePathsT>(value));
+    return *this;
+  }
+  template <typename ExcludePathsT = AccessScopePath>
+  NetworkInsightsAccessScopeContent& AddExcludePaths(ExcludePathsT&& value) {
+    m_excludePathsHasBeenSet = true;
+    m_excludePaths.emplace_back(std::forward<ExcludePathsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_networkInsightsAccessScopeId;
 
-    ///@{
-    /**
-     * <p>The ID of the Network Access Scope.</p>
-     */
-    inline const Aws::String& GetNetworkInsightsAccessScopeId() const{ return m_networkInsightsAccessScopeId; }
-    inline bool NetworkInsightsAccessScopeIdHasBeenSet() const { return m_networkInsightsAccessScopeIdHasBeenSet; }
-    inline void SetNetworkInsightsAccessScopeId(const Aws::String& value) { m_networkInsightsAccessScopeIdHasBeenSet = true; m_networkInsightsAccessScopeId = value; }
-    inline void SetNetworkInsightsAccessScopeId(Aws::String&& value) { m_networkInsightsAccessScopeIdHasBeenSet = true; m_networkInsightsAccessScopeId = std::move(value); }
-    inline void SetNetworkInsightsAccessScopeId(const char* value) { m_networkInsightsAccessScopeIdHasBeenSet = true; m_networkInsightsAccessScopeId.assign(value); }
-    inline NetworkInsightsAccessScopeContent& WithNetworkInsightsAccessScopeId(const Aws::String& value) { SetNetworkInsightsAccessScopeId(value); return *this;}
-    inline NetworkInsightsAccessScopeContent& WithNetworkInsightsAccessScopeId(Aws::String&& value) { SetNetworkInsightsAccessScopeId(std::move(value)); return *this;}
-    inline NetworkInsightsAccessScopeContent& WithNetworkInsightsAccessScopeId(const char* value) { SetNetworkInsightsAccessScopeId(value); return *this;}
-    ///@}
+  Aws::Vector<AccessScopePath> m_matchPaths;
 
-    ///@{
-    /**
-     * <p>The paths to match.</p>
-     */
-    inline const Aws::Vector<AccessScopePath>& GetMatchPaths() const{ return m_matchPaths; }
-    inline bool MatchPathsHasBeenSet() const { return m_matchPathsHasBeenSet; }
-    inline void SetMatchPaths(const Aws::Vector<AccessScopePath>& value) { m_matchPathsHasBeenSet = true; m_matchPaths = value; }
-    inline void SetMatchPaths(Aws::Vector<AccessScopePath>&& value) { m_matchPathsHasBeenSet = true; m_matchPaths = std::move(value); }
-    inline NetworkInsightsAccessScopeContent& WithMatchPaths(const Aws::Vector<AccessScopePath>& value) { SetMatchPaths(value); return *this;}
-    inline NetworkInsightsAccessScopeContent& WithMatchPaths(Aws::Vector<AccessScopePath>&& value) { SetMatchPaths(std::move(value)); return *this;}
-    inline NetworkInsightsAccessScopeContent& AddMatchPaths(const AccessScopePath& value) { m_matchPathsHasBeenSet = true; m_matchPaths.push_back(value); return *this; }
-    inline NetworkInsightsAccessScopeContent& AddMatchPaths(AccessScopePath&& value) { m_matchPathsHasBeenSet = true; m_matchPaths.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<AccessScopePath> m_excludePaths;
+  bool m_networkInsightsAccessScopeIdHasBeenSet = false;
+  bool m_matchPathsHasBeenSet = false;
+  bool m_excludePathsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The paths to exclude.</p>
-     */
-    inline const Aws::Vector<AccessScopePath>& GetExcludePaths() const{ return m_excludePaths; }
-    inline bool ExcludePathsHasBeenSet() const { return m_excludePathsHasBeenSet; }
-    inline void SetExcludePaths(const Aws::Vector<AccessScopePath>& value) { m_excludePathsHasBeenSet = true; m_excludePaths = value; }
-    inline void SetExcludePaths(Aws::Vector<AccessScopePath>&& value) { m_excludePathsHasBeenSet = true; m_excludePaths = std::move(value); }
-    inline NetworkInsightsAccessScopeContent& WithExcludePaths(const Aws::Vector<AccessScopePath>& value) { SetExcludePaths(value); return *this;}
-    inline NetworkInsightsAccessScopeContent& WithExcludePaths(Aws::Vector<AccessScopePath>&& value) { SetExcludePaths(std::move(value)); return *this;}
-    inline NetworkInsightsAccessScopeContent& AddExcludePaths(const AccessScopePath& value) { m_excludePathsHasBeenSet = true; m_excludePaths.push_back(value); return *this; }
-    inline NetworkInsightsAccessScopeContent& AddExcludePaths(AccessScopePath&& value) { m_excludePathsHasBeenSet = true; m_excludePaths.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_networkInsightsAccessScopeId;
-    bool m_networkInsightsAccessScopeIdHasBeenSet = false;
-
-    Aws::Vector<AccessScopePath> m_matchPaths;
-    bool m_matchPathsHasBeenSet = false;
-
-    Aws::Vector<AccessScopePath> m_excludePaths;
-    bool m_excludePathsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

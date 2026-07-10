@@ -4,79 +4,86 @@
  */
 
 #pragma once
-#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/kendra/model/SuggestionHighlight.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace kendra
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace kendra {
+namespace Model {
 
+/**
+ * <p>Provides text and information about where to highlight the query suggestion
+ * text.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/SuggestionTextWithHighlights">AWS
+ * API Reference</a></p>
+ */
+class SuggestionTextWithHighlights {
+ public:
+  AWS_KENDRA_API SuggestionTextWithHighlights() = default;
+  AWS_KENDRA_API SuggestionTextWithHighlights(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API SuggestionTextWithHighlights& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides text and information about where to highlight the query suggestion
-   * text.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/SuggestionTextWithHighlights">AWS
-   * API Reference</a></p>
+   * <p>The query suggestion text to display to the user.</p>
    */
-  class SuggestionTextWithHighlights
-  {
-  public:
-    AWS_KENDRA_API SuggestionTextWithHighlights();
-    AWS_KENDRA_API SuggestionTextWithHighlights(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API SuggestionTextWithHighlights& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetText() const { return m_text; }
+  inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
+  template <typename TextT = Aws::String>
+  void SetText(TextT&& value) {
+    m_textHasBeenSet = true;
+    m_text = std::forward<TextT>(value);
+  }
+  template <typename TextT = Aws::String>
+  SuggestionTextWithHighlights& WithText(TextT&& value) {
+    SetText(std::forward<TextT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The beginning and end of the query suggestion text that should be
+   * highlighted.</p>
+   */
+  inline const Aws::Vector<SuggestionHighlight>& GetHighlights() const { return m_highlights; }
+  inline bool HighlightsHasBeenSet() const { return m_highlightsHasBeenSet; }
+  template <typename HighlightsT = Aws::Vector<SuggestionHighlight>>
+  void SetHighlights(HighlightsT&& value) {
+    m_highlightsHasBeenSet = true;
+    m_highlights = std::forward<HighlightsT>(value);
+  }
+  template <typename HighlightsT = Aws::Vector<SuggestionHighlight>>
+  SuggestionTextWithHighlights& WithHighlights(HighlightsT&& value) {
+    SetHighlights(std::forward<HighlightsT>(value));
+    return *this;
+  }
+  template <typename HighlightsT = SuggestionHighlight>
+  SuggestionTextWithHighlights& AddHighlights(HighlightsT&& value) {
+    m_highlightsHasBeenSet = true;
+    m_highlights.emplace_back(std::forward<HighlightsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_text;
 
-    ///@{
-    /**
-     * <p>The query suggestion text to display to the user.</p>
-     */
-    inline const Aws::String& GetText() const{ return m_text; }
-    inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
-    inline void SetText(const Aws::String& value) { m_textHasBeenSet = true; m_text = value; }
-    inline void SetText(Aws::String&& value) { m_textHasBeenSet = true; m_text = std::move(value); }
-    inline void SetText(const char* value) { m_textHasBeenSet = true; m_text.assign(value); }
-    inline SuggestionTextWithHighlights& WithText(const Aws::String& value) { SetText(value); return *this;}
-    inline SuggestionTextWithHighlights& WithText(Aws::String&& value) { SetText(std::move(value)); return *this;}
-    inline SuggestionTextWithHighlights& WithText(const char* value) { SetText(value); return *this;}
-    ///@}
+  Aws::Vector<SuggestionHighlight> m_highlights;
+  bool m_textHasBeenSet = false;
+  bool m_highlightsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The beginning and end of the query suggestion text that should be
-     * highlighted.</p>
-     */
-    inline const Aws::Vector<SuggestionHighlight>& GetHighlights() const{ return m_highlights; }
-    inline bool HighlightsHasBeenSet() const { return m_highlightsHasBeenSet; }
-    inline void SetHighlights(const Aws::Vector<SuggestionHighlight>& value) { m_highlightsHasBeenSet = true; m_highlights = value; }
-    inline void SetHighlights(Aws::Vector<SuggestionHighlight>&& value) { m_highlightsHasBeenSet = true; m_highlights = std::move(value); }
-    inline SuggestionTextWithHighlights& WithHighlights(const Aws::Vector<SuggestionHighlight>& value) { SetHighlights(value); return *this;}
-    inline SuggestionTextWithHighlights& WithHighlights(Aws::Vector<SuggestionHighlight>&& value) { SetHighlights(std::move(value)); return *this;}
-    inline SuggestionTextWithHighlights& AddHighlights(const SuggestionHighlight& value) { m_highlightsHasBeenSet = true; m_highlights.push_back(value); return *this; }
-    inline SuggestionTextWithHighlights& AddHighlights(SuggestionHighlight&& value) { m_highlightsHasBeenSet = true; m_highlights.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_text;
-    bool m_textHasBeenSet = false;
-
-    Aws::Vector<SuggestionHighlight> m_highlights;
-    bool m_highlightsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/memorydb/MemoryDB_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/memorydb/MemoryDB_EXPORTS.h>
 #include <aws/memorydb/model/ReservedNodesOffering.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MemoryDB
-{
-namespace Model
-{
-  class DescribeReservedNodesOfferingsResult
-  {
-  public:
-    AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult();
-    AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MemoryDB {
+namespace Model {
+class DescribeReservedNodesOfferingsResult {
+ public:
+  AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult() = default;
+  AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEMORYDB_API DescribeReservedNodesOfferingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An optional marker returned from a prior request. Use this marker for
+   * pagination of results from this operation. If this parameter is specified, the
+   * response includes only records beyond the marker, up to the value specified by
+   * MaxRecords.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeReservedNodesOfferingsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional marker returned from a prior request. Use this marker for
-     * pagination of results from this operation. If this parameter is specified, the
-     * response includes only records beyond the marker, up to the value specified by
-     * MaxRecords.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeReservedNodesOfferingsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeReservedNodesOfferingsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeReservedNodesOfferingsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Lists available reserved node offerings.</p>
+   */
+  inline const Aws::Vector<ReservedNodesOffering>& GetReservedNodesOfferings() const { return m_reservedNodesOfferings; }
+  template <typename ReservedNodesOfferingsT = Aws::Vector<ReservedNodesOffering>>
+  void SetReservedNodesOfferings(ReservedNodesOfferingsT&& value) {
+    m_reservedNodesOfferingsHasBeenSet = true;
+    m_reservedNodesOfferings = std::forward<ReservedNodesOfferingsT>(value);
+  }
+  template <typename ReservedNodesOfferingsT = Aws::Vector<ReservedNodesOffering>>
+  DescribeReservedNodesOfferingsResult& WithReservedNodesOfferings(ReservedNodesOfferingsT&& value) {
+    SetReservedNodesOfferings(std::forward<ReservedNodesOfferingsT>(value));
+    return *this;
+  }
+  template <typename ReservedNodesOfferingsT = ReservedNodesOffering>
+  DescribeReservedNodesOfferingsResult& AddReservedNodesOfferings(ReservedNodesOfferingsT&& value) {
+    m_reservedNodesOfferingsHasBeenSet = true;
+    m_reservedNodesOfferings.emplace_back(std::forward<ReservedNodesOfferingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Lists available reserved node offerings.</p>
-     */
-    inline const Aws::Vector<ReservedNodesOffering>& GetReservedNodesOfferings() const{ return m_reservedNodesOfferings; }
-    inline void SetReservedNodesOfferings(const Aws::Vector<ReservedNodesOffering>& value) { m_reservedNodesOfferings = value; }
-    inline void SetReservedNodesOfferings(Aws::Vector<ReservedNodesOffering>&& value) { m_reservedNodesOfferings = std::move(value); }
-    inline DescribeReservedNodesOfferingsResult& WithReservedNodesOfferings(const Aws::Vector<ReservedNodesOffering>& value) { SetReservedNodesOfferings(value); return *this;}
-    inline DescribeReservedNodesOfferingsResult& WithReservedNodesOfferings(Aws::Vector<ReservedNodesOffering>&& value) { SetReservedNodesOfferings(std::move(value)); return *this;}
-    inline DescribeReservedNodesOfferingsResult& AddReservedNodesOfferings(const ReservedNodesOffering& value) { m_reservedNodesOfferings.push_back(value); return *this; }
-    inline DescribeReservedNodesOfferingsResult& AddReservedNodesOfferings(ReservedNodesOffering&& value) { m_reservedNodesOfferings.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReservedNodesOfferingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReservedNodesOfferingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReservedNodesOfferingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReservedNodesOfferingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<ReservedNodesOffering> m_reservedNodesOfferings;
+  Aws::Vector<ReservedNodesOffering> m_reservedNodesOfferings;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_reservedNodesOfferingsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

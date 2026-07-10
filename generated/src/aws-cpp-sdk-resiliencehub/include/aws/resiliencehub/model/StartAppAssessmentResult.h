@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/AppAssessment.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class StartAppAssessmentResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API StartAppAssessmentResult();
-    AWS_RESILIENCEHUB_API StartAppAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API StartAppAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class StartAppAssessmentResult {
+ public:
+  AWS_RESILIENCEHUB_API StartAppAssessmentResult() = default;
+  AWS_RESILIENCEHUB_API StartAppAssessmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API StartAppAssessmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The assessment created.</p>
+   */
+  inline const AppAssessment& GetAssessment() const { return m_assessment; }
+  template <typename AssessmentT = AppAssessment>
+  void SetAssessment(AssessmentT&& value) {
+    m_assessmentHasBeenSet = true;
+    m_assessment = std::forward<AssessmentT>(value);
+  }
+  template <typename AssessmentT = AppAssessment>
+  StartAppAssessmentResult& WithAssessment(AssessmentT&& value) {
+    SetAssessment(std::forward<AssessmentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The assessment created.</p>
-     */
-    inline const AppAssessment& GetAssessment() const{ return m_assessment; }
-    inline void SetAssessment(const AppAssessment& value) { m_assessment = value; }
-    inline void SetAssessment(AppAssessment&& value) { m_assessment = std::move(value); }
-    inline StartAppAssessmentResult& WithAssessment(const AppAssessment& value) { SetAssessment(value); return *this;}
-    inline StartAppAssessmentResult& WithAssessment(AppAssessment&& value) { SetAssessment(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartAppAssessmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartAppAssessmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartAppAssessmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartAppAssessmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppAssessment m_assessment;
+ private:
+  AppAssessment m_assessment;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_assessmentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

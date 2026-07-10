@@ -12,46 +12,34 @@ using namespace Aws::CognitoIdentityProvider::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateUserPoolDomainRequest::UpdateUserPoolDomainRequest() : 
-    m_domainHasBeenSet(false),
-    m_userPoolIdHasBeenSet(false),
-    m_customDomainConfigHasBeenSet(false)
-{
-}
-
-Aws::String UpdateUserPoolDomainRequest::SerializePayload() const
-{
+Aws::String UpdateUserPoolDomainRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_domainHasBeenSet)
-  {
-   payload.WithString("Domain", m_domain);
-
+  if (m_domainHasBeenSet) {
+    payload.WithString("Domain", m_domain);
   }
 
-  if(m_userPoolIdHasBeenSet)
-  {
-   payload.WithString("UserPoolId", m_userPoolId);
-
+  if (m_userPoolIdHasBeenSet) {
+    payload.WithString("UserPoolId", m_userPoolId);
   }
 
-  if(m_customDomainConfigHasBeenSet)
-  {
-   payload.WithObject("CustomDomainConfig", m_customDomainConfig.Jsonize());
+  if (m_managedLoginVersionHasBeenSet) {
+    payload.WithInteger("ManagedLoginVersion", m_managedLoginVersion);
+  }
 
+  if (m_customDomainConfigHasBeenSet) {
+    payload.WithObject("CustomDomainConfig", m_customDomainConfig.Jsonize());
+  }
+
+  if (m_routingHasBeenSet) {
+    payload.WithObject("Routing", m_routing.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection UpdateUserPoolDomainRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateUserPoolDomainRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSCognitoIdentityProviderService.UpdateUserPoolDomain"));
   return headers;
-
 }
-
-
-
-

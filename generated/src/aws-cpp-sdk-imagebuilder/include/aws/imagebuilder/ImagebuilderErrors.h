@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
 
-namespace Aws
-{
-namespace imagebuilder
-{
-enum class ImagebuilderErrors
-{
-  //From Core//
+namespace Aws {
+namespace imagebuilder {
+enum class ImagebuilderErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class ImagebuilderErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,8 +44,9 @@ enum class ImagebuilderErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  CALL_RATE_LIMIT_EXCEEDED= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  CALL_RATE_LIMIT_EXCEEDED = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
   CLIENT,
+  DRY_RUN_OPERATION,
   FORBIDDEN,
   IDEMPOTENT_PARAMETER_MISMATCH,
   INVALID_PAGINATION_TOKEN,
@@ -59,12 +57,12 @@ enum class ImagebuilderErrors
   RESOURCE_DEPENDENCY,
   RESOURCE_IN_USE,
   SERVICE,
-  SERVICE_QUOTA_EXCEEDED
+  SERVICE_QUOTA_EXCEEDED,
+  TOO_MANY_REQUESTS
 };
 
-class AWS_IMAGEBUILDER_API ImagebuilderError : public Aws::Client::AWSError<ImagebuilderErrors>
-{
-public:
+class AWS_IMAGEBUILDER_API ImagebuilderError : public Aws::Client::AWSError<ImagebuilderErrors> {
+ public:
   ImagebuilderError() {}
   ImagebuilderError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<ImagebuilderErrors>(rhs) {}
   ImagebuilderError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<ImagebuilderErrors>(rhs) {}
@@ -75,10 +73,9 @@ public:
   T GetModeledError();
 };
 
-namespace ImagebuilderErrorMapper
-{
-  AWS_IMAGEBUILDER_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace ImagebuilderErrorMapper {
+AWS_IMAGEBUILDER_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace imagebuilder
+}  // namespace Aws

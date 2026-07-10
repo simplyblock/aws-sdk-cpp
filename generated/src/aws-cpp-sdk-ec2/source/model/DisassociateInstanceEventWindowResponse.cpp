@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DisassociateInstanceEventWindowResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DisassociateInstanceEventWindowResponse.h>
 
 #include <utility>
 
@@ -17,41 +17,36 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DisassociateInstanceEventWindowResponse::DisassociateInstanceEventWindowResponse()
-{
-}
-
-DisassociateInstanceEventWindowResponse::DisassociateInstanceEventWindowResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DisassociateInstanceEventWindowResponse::DisassociateInstanceEventWindowResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DisassociateInstanceEventWindowResponse& DisassociateInstanceEventWindowResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DisassociateInstanceEventWindowResponse& DisassociateInstanceEventWindowResponse::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DisassociateInstanceEventWindowResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DisassociateInstanceEventWindowResponse")) {
     resultNode = rootNode.FirstChild("DisassociateInstanceEventWindowResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode instanceEventWindowNode = resultNode.FirstChild("instanceEventWindow");
-    if(!instanceEventWindowNode.IsNull())
-    {
+    if (!instanceEventWindowNode.IsNull()) {
       m_instanceEventWindow = instanceEventWindowNode;
+      m_instanceEventWindowHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DisassociateInstanceEventWindowResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DisassociateInstanceEventWindowResponse",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

@@ -12,16 +12,4 @@ using namespace Aws::CleanRoomsML::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetTrainingDatasetRequest::GetTrainingDatasetRequest() : 
-    m_trainingDatasetArnHasBeenSet(false)
-{
-}
-
-Aws::String GetTrainingDatasetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetTrainingDatasetRequest::SerializePayload() const { return {}; }

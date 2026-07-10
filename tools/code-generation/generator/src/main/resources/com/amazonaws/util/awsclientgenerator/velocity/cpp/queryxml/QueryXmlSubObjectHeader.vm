@@ -29,6 +29,9 @@ namespace ${serviceNamespace}
 {
 namespace Model
 {
+#foreach($forwardDeclaration in $typeInfo.forwardDeclarations)
+  class $forwardDeclaration;
+#end
 #set($xmlRef = "${typeInfo.xmlNodeType}&")
 #set($classNameRef = "${typeInfo.className}&")
 
@@ -40,7 +43,7 @@ namespace Model
   class $typeInfo.className
   {
   public:
-    ${exportMacro} ${typeInfo.className}();
+    ${exportMacro} ${typeInfo.className}() = default;
     ${exportMacro} ${typeInfo.className}(const ${xmlRef} xmlNode);
     ${exportMacro} ${classNameRef} operator=(const ${xmlRef} xmlNode);
 

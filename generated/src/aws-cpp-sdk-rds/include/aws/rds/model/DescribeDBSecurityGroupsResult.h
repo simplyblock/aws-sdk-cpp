@@ -4,88 +4,108 @@
  */
 
 #pragma once
-#include <aws/rds/RDS_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/rds/model/ResponseMetadata.h>
+#include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/DBSecurityGroup.h>
+#include <aws/rds/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace RDS
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace RDS {
+namespace Model {
+/**
+ * <p>Contains the result of a successful invocation of the
+ * <code>DescribeDBSecurityGroups</code> action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBSecurityGroupMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeDBSecurityGroupsResult {
+ public:
+  AWS_RDS_API DescribeDBSecurityGroupsResult() = default;
+  AWS_RDS_API DescribeDBSecurityGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_RDS_API DescribeDBSecurityGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the result of a successful invocation of the
-   * <code>DescribeDBSecurityGroups</code> action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/DBSecurityGroupMessage">AWS
-   * API Reference</a></p>
+   * <p>An optional pagination token provided by a previous request. If this
+   * parameter is specified, the response includes only records beyond the marker, up
+   * to the value specified by <code>MaxRecords</code>.</p>
    */
-  class DescribeDBSecurityGroupsResult
-  {
-  public:
-    AWS_RDS_API DescribeDBSecurityGroupsResult();
-    AWS_RDS_API DescribeDBSecurityGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_RDS_API DescribeDBSecurityGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeDBSecurityGroupsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of <code>DBSecurityGroup</code> instances.</p>
+   */
+  inline const Aws::Vector<DBSecurityGroup>& GetDBSecurityGroups() const { return m_dBSecurityGroups; }
+  template <typename DBSecurityGroupsT = Aws::Vector<DBSecurityGroup>>
+  void SetDBSecurityGroups(DBSecurityGroupsT&& value) {
+    m_dBSecurityGroupsHasBeenSet = true;
+    m_dBSecurityGroups = std::forward<DBSecurityGroupsT>(value);
+  }
+  template <typename DBSecurityGroupsT = Aws::Vector<DBSecurityGroup>>
+  DescribeDBSecurityGroupsResult& WithDBSecurityGroups(DBSecurityGroupsT&& value) {
+    SetDBSecurityGroups(std::forward<DBSecurityGroupsT>(value));
+    return *this;
+  }
+  template <typename DBSecurityGroupsT = DBSecurityGroup>
+  DescribeDBSecurityGroupsResult& AddDBSecurityGroups(DBSecurityGroupsT&& value) {
+    m_dBSecurityGroupsHasBeenSet = true;
+    m_dBSecurityGroups.emplace_back(std::forward<DBSecurityGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous request. If this
-     * parameter is specified, the response includes only records beyond the marker, up
-     * to the value specified by <code>MaxRecords</code>.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeDBSecurityGroupsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeDBSecurityGroupsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeDBSecurityGroupsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of <code>DBSecurityGroup</code> instances.</p>
-     */
-    inline const Aws::Vector<DBSecurityGroup>& GetDBSecurityGroups() const{ return m_dBSecurityGroups; }
-    inline void SetDBSecurityGroups(const Aws::Vector<DBSecurityGroup>& value) { m_dBSecurityGroups = value; }
-    inline void SetDBSecurityGroups(Aws::Vector<DBSecurityGroup>&& value) { m_dBSecurityGroups = std::move(value); }
-    inline DescribeDBSecurityGroupsResult& WithDBSecurityGroups(const Aws::Vector<DBSecurityGroup>& value) { SetDBSecurityGroups(value); return *this;}
-    inline DescribeDBSecurityGroupsResult& WithDBSecurityGroups(Aws::Vector<DBSecurityGroup>&& value) { SetDBSecurityGroups(std::move(value)); return *this;}
-    inline DescribeDBSecurityGroupsResult& AddDBSecurityGroups(const DBSecurityGroup& value) { m_dBSecurityGroups.push_back(value); return *this; }
-    inline DescribeDBSecurityGroupsResult& AddDBSecurityGroups(DBSecurityGroup&& value) { m_dBSecurityGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeDBSecurityGroupsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeDBSecurityGroupsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeDBSecurityGroupsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::Vector<DBSecurityGroup> m_dBSecurityGroups;
 
-    Aws::Vector<DBSecurityGroup> m_dBSecurityGroups;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_dBSecurityGroupsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace RDS
-} // namespace Aws
+}  // namespace Model
+}  // namespace RDS
+}  // namespace Aws

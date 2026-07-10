@@ -4,69 +4,79 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/ReplicationConfig.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateReplicationConfigResponse">AWS
+ * API Reference</a></p>
+ */
+class CreateReplicationConfigResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateReplicationConfigResponse">AWS
-   * API Reference</a></p>
+   * <p>Configuration parameters returned from the DMS Serverless replication after
+   * it is created.</p>
    */
-  class CreateReplicationConfigResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult();
-    AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API CreateReplicationConfigResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const ReplicationConfig& GetReplicationConfig() const { return m_replicationConfig; }
+  template <typename ReplicationConfigT = ReplicationConfig>
+  void SetReplicationConfig(ReplicationConfigT&& value) {
+    m_replicationConfigHasBeenSet = true;
+    m_replicationConfig = std::forward<ReplicationConfigT>(value);
+  }
+  template <typename ReplicationConfigT = ReplicationConfig>
+  CreateReplicationConfigResult& WithReplicationConfig(ReplicationConfigT&& value) {
+    SetReplicationConfig(std::forward<ReplicationConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Configuration parameters returned from the DMS Serverless replication after
-     * it is created.</p>
-     */
-    inline const ReplicationConfig& GetReplicationConfig() const{ return m_replicationConfig; }
-    inline void SetReplicationConfig(const ReplicationConfig& value) { m_replicationConfig = value; }
-    inline void SetReplicationConfig(ReplicationConfig&& value) { m_replicationConfig = std::move(value); }
-    inline CreateReplicationConfigResult& WithReplicationConfig(const ReplicationConfig& value) { SetReplicationConfig(value); return *this;}
-    inline CreateReplicationConfigResult& WithReplicationConfig(ReplicationConfig&& value) { SetReplicationConfig(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateReplicationConfigResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateReplicationConfigResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateReplicationConfigResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateReplicationConfigResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  ReplicationConfig m_replicationConfig;
 
-    ReplicationConfig m_replicationConfig;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replicationConfigHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

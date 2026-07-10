@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mailmanager/model/GetAddonInstanceResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/mailmanager/model/GetAddonInstanceResult.h>
 
 #include <utility>
 
@@ -17,50 +17,34 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetAddonInstanceResult::GetAddonInstanceResult()
-{
-}
+GetAddonInstanceResult::GetAddonInstanceResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-GetAddonInstanceResult::GetAddonInstanceResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-GetAddonInstanceResult& GetAddonInstanceResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetAddonInstanceResult& GetAddonInstanceResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("AddonInstanceArn"))
-  {
-    m_addonInstanceArn = jsonValue.GetString("AddonInstanceArn");
-
-  }
-
-  if(jsonValue.ValueExists("AddonName"))
-  {
-    m_addonName = jsonValue.GetString("AddonName");
-
-  }
-
-  if(jsonValue.ValueExists("AddonSubscriptionId"))
-  {
+  if (jsonValue.ValueExists("AddonSubscriptionId")) {
     m_addonSubscriptionId = jsonValue.GetString("AddonSubscriptionId");
-
+    m_addonSubscriptionIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CreatedTimestamp"))
-  {
+  if (jsonValue.ValueExists("AddonName")) {
+    m_addonName = jsonValue.GetString("AddonName");
+    m_addonNameHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("AddonInstanceArn")) {
+    m_addonInstanceArn = jsonValue.GetString("AddonInstanceArn");
+    m_addonInstanceArnHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("CreatedTimestamp")) {
     m_createdTimestamp = jsonValue.GetDouble("CreatedTimestamp");
-
+    m_createdTimestampHasBeenSet = true;
   }
-
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

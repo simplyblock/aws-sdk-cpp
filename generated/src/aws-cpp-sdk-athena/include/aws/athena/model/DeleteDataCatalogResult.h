@@ -5,48 +5,69 @@
 
 #pragma once
 #include <aws/athena/Athena_EXPORTS.h>
+#include <aws/athena/model/DataCatalog.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Athena
-{
-namespace Model
-{
-  class DeleteDataCatalogResult
-  {
-  public:
-    AWS_ATHENA_API DeleteDataCatalogResult();
-    AWS_ATHENA_API DeleteDataCatalogResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ATHENA_API DeleteDataCatalogResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Athena {
+namespace Model {
+class DeleteDataCatalogResult {
+ public:
+  AWS_ATHENA_API DeleteDataCatalogResult() = default;
+  AWS_ATHENA_API DeleteDataCatalogResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ATHENA_API DeleteDataCatalogResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteDataCatalogResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteDataCatalogResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteDataCatalogResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const DataCatalog& GetDataCatalog() const { return m_dataCatalog; }
+  template <typename DataCatalogT = DataCatalog>
+  void SetDataCatalog(DataCatalogT&& value) {
+    m_dataCatalogHasBeenSet = true;
+    m_dataCatalog = std::forward<DataCatalogT>(value);
+  }
+  template <typename DataCatalogT = DataCatalog>
+  DeleteDataCatalogResult& WithDataCatalog(DataCatalogT&& value) {
+    SetDataCatalog(std::forward<DataCatalogT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_requestId;
-  };
+  ///@{
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteDataCatalogResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
+
+ private:
+  DataCatalog m_dataCatalog;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataCatalogHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

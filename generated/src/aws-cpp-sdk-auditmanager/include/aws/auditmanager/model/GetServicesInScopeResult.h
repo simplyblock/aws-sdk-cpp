@@ -5,65 +5,78 @@
 
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/auditmanager/model/ServiceMetadata.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AuditManager
-{
-namespace Model
-{
-  class GetServicesInScopeResult
-  {
-  public:
-    AWS_AUDITMANAGER_API GetServicesInScopeResult();
-    AWS_AUDITMANAGER_API GetServicesInScopeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUDITMANAGER_API GetServicesInScopeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AuditManager {
+namespace Model {
+class GetServicesInScopeResult {
+ public:
+  AWS_AUDITMANAGER_API GetServicesInScopeResult() = default;
+  AWS_AUDITMANAGER_API GetServicesInScopeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUDITMANAGER_API GetServicesInScopeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The metadata that's associated with the Amazon Web Services service. </p>
+   */
+  inline const Aws::Vector<ServiceMetadata>& GetServiceMetadata() const { return m_serviceMetadata; }
+  template <typename ServiceMetadataT = Aws::Vector<ServiceMetadata>>
+  void SetServiceMetadata(ServiceMetadataT&& value) {
+    m_serviceMetadataHasBeenSet = true;
+    m_serviceMetadata = std::forward<ServiceMetadataT>(value);
+  }
+  template <typename ServiceMetadataT = Aws::Vector<ServiceMetadata>>
+  GetServicesInScopeResult& WithServiceMetadata(ServiceMetadataT&& value) {
+    SetServiceMetadata(std::forward<ServiceMetadataT>(value));
+    return *this;
+  }
+  template <typename ServiceMetadataT = ServiceMetadata>
+  GetServicesInScopeResult& AddServiceMetadata(ServiceMetadataT&& value) {
+    m_serviceMetadataHasBeenSet = true;
+    m_serviceMetadata.emplace_back(std::forward<ServiceMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The metadata that's associated with the Amazon Web Service. </p>
-     */
-    inline const Aws::Vector<ServiceMetadata>& GetServiceMetadata() const{ return m_serviceMetadata; }
-    inline void SetServiceMetadata(const Aws::Vector<ServiceMetadata>& value) { m_serviceMetadata = value; }
-    inline void SetServiceMetadata(Aws::Vector<ServiceMetadata>&& value) { m_serviceMetadata = std::move(value); }
-    inline GetServicesInScopeResult& WithServiceMetadata(const Aws::Vector<ServiceMetadata>& value) { SetServiceMetadata(value); return *this;}
-    inline GetServicesInScopeResult& WithServiceMetadata(Aws::Vector<ServiceMetadata>&& value) { SetServiceMetadata(std::move(value)); return *this;}
-    inline GetServicesInScopeResult& AddServiceMetadata(const ServiceMetadata& value) { m_serviceMetadata.push_back(value); return *this; }
-    inline GetServicesInScopeResult& AddServiceMetadata(ServiceMetadata&& value) { m_serviceMetadata.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetServicesInScopeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetServicesInScopeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetServicesInScopeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetServicesInScopeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ServiceMetadata> m_serviceMetadata;
+ private:
+  Aws::Vector<ServiceMetadata> m_serviceMetadata;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serviceMetadataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace AuditManager
+}  // namespace Aws

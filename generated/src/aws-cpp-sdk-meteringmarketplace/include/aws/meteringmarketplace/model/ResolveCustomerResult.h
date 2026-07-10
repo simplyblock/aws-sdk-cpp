@@ -4,106 +4,150 @@
  */
 
 #pragma once
-#include <aws/meteringmarketplace/MarketplaceMetering_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/meteringmarketplace/MarketplaceMetering_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MarketplaceMetering
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MarketplaceMetering {
+namespace Model {
+/**
+ * <p>The result of the <code>ResolveCustomer</code> operation. Contains the
+ * <code>CustomerIdentifier</code> along with the
+ * <code>CustomerAWSAccountId</code>, <code>ProductCode</code>, and
+ * <code>LicenseArn</code>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/meteringmarketplace-2016-01-14/ResolveCustomerResult">AWS
+ * API Reference</a></p>
+ */
+class ResolveCustomerResult {
+ public:
+  AWS_MARKETPLACEMETERING_API ResolveCustomerResult() = default;
+  AWS_MARKETPLACEMETERING_API ResolveCustomerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MARKETPLACEMETERING_API ResolveCustomerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result of the <code>ResolveCustomer</code> operation. Contains the
-   * <code>CustomerIdentifier</code> along with the <code>CustomerAWSAccountId</code>
-   * and <code>ProductCode</code>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/meteringmarketplace-2016-01-14/ResolveCustomerResult">AWS
-   * API Reference</a></p>
+   * <p>The <code>CustomerIdentifier</code> is used to identify an individual
+   * customer in your application.</p>
    */
-  class ResolveCustomerResult
-  {
-  public:
-    AWS_MARKETPLACEMETERING_API ResolveCustomerResult();
-    AWS_MARKETPLACEMETERING_API ResolveCustomerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MARKETPLACEMETERING_API ResolveCustomerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetCustomerIdentifier() const { return m_customerIdentifier; }
+  template <typename CustomerIdentifierT = Aws::String>
+  void SetCustomerIdentifier(CustomerIdentifierT&& value) {
+    m_customerIdentifierHasBeenSet = true;
+    m_customerIdentifier = std::forward<CustomerIdentifierT>(value);
+  }
+  template <typename CustomerIdentifierT = Aws::String>
+  ResolveCustomerResult& WithCustomerIdentifier(CustomerIdentifierT&& value) {
+    SetCustomerIdentifier(std::forward<CustomerIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The product code is returned to confirm that the buyer is registering for
+   * your product. Subsequent <code>BatchMeterUsage</code> calls should be made using
+   * this product code.</p>
+   */
+  inline const Aws::String& GetProductCode() const { return m_productCode; }
+  template <typename ProductCodeT = Aws::String>
+  void SetProductCode(ProductCodeT&& value) {
+    m_productCodeHasBeenSet = true;
+    m_productCode = std::forward<ProductCodeT>(value);
+  }
+  template <typename ProductCodeT = Aws::String>
+  ResolveCustomerResult& WithProductCode(ProductCodeT&& value) {
+    SetProductCode(std::forward<ProductCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>CustomerIdentifier</code> is used to identify an individual
-     * customer in your application. Calls to <code>BatchMeterUsage</code> require
-     * <code>CustomerIdentifiers</code> for each <code>UsageRecord</code>.</p>
-     */
-    inline const Aws::String& GetCustomerIdentifier() const{ return m_customerIdentifier; }
-    inline void SetCustomerIdentifier(const Aws::String& value) { m_customerIdentifier = value; }
-    inline void SetCustomerIdentifier(Aws::String&& value) { m_customerIdentifier = std::move(value); }
-    inline void SetCustomerIdentifier(const char* value) { m_customerIdentifier.assign(value); }
-    inline ResolveCustomerResult& WithCustomerIdentifier(const Aws::String& value) { SetCustomerIdentifier(value); return *this;}
-    inline ResolveCustomerResult& WithCustomerIdentifier(Aws::String&& value) { SetCustomerIdentifier(std::move(value)); return *this;}
-    inline ResolveCustomerResult& WithCustomerIdentifier(const char* value) { SetCustomerIdentifier(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>CustomerAWSAccountId</code> provides the Amazon Web Services
+   * account ID associated with the <code>CustomerIdentifier</code> for the
+   * individual customer. Calls to <code>BatchMeterUsage</code> require
+   * <code>CustomerAWSAccountId</code> for each <code>UsageRecord</code>.</p>
+   */
+  inline const Aws::String& GetCustomerAWSAccountId() const { return m_customerAWSAccountId; }
+  template <typename CustomerAWSAccountIdT = Aws::String>
+  void SetCustomerAWSAccountId(CustomerAWSAccountIdT&& value) {
+    m_customerAWSAccountIdHasBeenSet = true;
+    m_customerAWSAccountId = std::forward<CustomerAWSAccountIdT>(value);
+  }
+  template <typename CustomerAWSAccountIdT = Aws::String>
+  ResolveCustomerResult& WithCustomerAWSAccountId(CustomerAWSAccountIdT&& value) {
+    SetCustomerAWSAccountId(std::forward<CustomerAWSAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The product code is returned to confirm that the buyer is registering for
-     * your product. Subsequent <code>BatchMeterUsage</code> calls should be made using
-     * this product code.</p>
-     */
-    inline const Aws::String& GetProductCode() const{ return m_productCode; }
-    inline void SetProductCode(const Aws::String& value) { m_productCode = value; }
-    inline void SetProductCode(Aws::String&& value) { m_productCode = std::move(value); }
-    inline void SetProductCode(const char* value) { m_productCode.assign(value); }
-    inline ResolveCustomerResult& WithProductCode(const Aws::String& value) { SetProductCode(value); return *this;}
-    inline ResolveCustomerResult& WithProductCode(Aws::String&& value) { SetProductCode(std::move(value)); return *this;}
-    inline ResolveCustomerResult& WithProductCode(const char* value) { SetProductCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>LicenseArn</code> is a unique identifier for a specific granted
+   * license. These are typically used for software purchased through Amazon Web
+   * Services Marketplace. Calls to <code>BatchMeterUsage</code> require
+   * <code>LicenseArn</code> for each <code>UsageRecord</code>.</p>  <p>Once
+   * you receive the <code>CustomerAWSAccountId</code> and <code>LicenseArn</code> in
+   * the response, store that for future purposes/API calls/integrations.</p>
+   */
+  inline const Aws::String& GetLicenseArn() const { return m_licenseArn; }
+  template <typename LicenseArnT = Aws::String>
+  void SetLicenseArn(LicenseArnT&& value) {
+    m_licenseArnHasBeenSet = true;
+    m_licenseArn = std::forward<LicenseArnT>(value);
+  }
+  template <typename LicenseArnT = Aws::String>
+  ResolveCustomerResult& WithLicenseArn(LicenseArnT&& value) {
+    SetLicenseArn(std::forward<LicenseArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>CustomerAWSAccountId</code> provides the AWS account ID associated
-     * with the <code>CustomerIdentifier</code> for the individual customer.</p>
-     */
-    inline const Aws::String& GetCustomerAWSAccountId() const{ return m_customerAWSAccountId; }
-    inline void SetCustomerAWSAccountId(const Aws::String& value) { m_customerAWSAccountId = value; }
-    inline void SetCustomerAWSAccountId(Aws::String&& value) { m_customerAWSAccountId = std::move(value); }
-    inline void SetCustomerAWSAccountId(const char* value) { m_customerAWSAccountId.assign(value); }
-    inline ResolveCustomerResult& WithCustomerAWSAccountId(const Aws::String& value) { SetCustomerAWSAccountId(value); return *this;}
-    inline ResolveCustomerResult& WithCustomerAWSAccountId(Aws::String&& value) { SetCustomerAWSAccountId(std::move(value)); return *this;}
-    inline ResolveCustomerResult& WithCustomerAWSAccountId(const char* value) { SetCustomerAWSAccountId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ResolveCustomerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ResolveCustomerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ResolveCustomerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ResolveCustomerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_customerIdentifier;
+ private:
+  Aws::String m_customerIdentifier;
 
-    Aws::String m_productCode;
+  Aws::String m_productCode;
 
-    Aws::String m_customerAWSAccountId;
+  Aws::String m_customerAWSAccountId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_licenseArn;
 
-} // namespace Model
-} // namespace MarketplaceMetering
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_customerIdentifierHasBeenSet = false;
+  bool m_productCodeHasBeenSet = false;
+  bool m_customerAWSAccountIdHasBeenSet = false;
+  bool m_licenseArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MarketplaceMetering
+}  // namespace Aws

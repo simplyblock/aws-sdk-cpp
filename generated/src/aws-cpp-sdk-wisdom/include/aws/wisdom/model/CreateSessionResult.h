@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
 #include <aws/wisdom/model/SessionData.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectWisdomService
-{
-namespace Model
-{
-  class CreateSessionResult
-  {
-  public:
-    AWS_CONNECTWISDOMSERVICE_API CreateSessionResult();
-    AWS_CONNECTWISDOMSERVICE_API CreateSessionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTWISDOMSERVICE_API CreateSessionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectWisdomService {
+namespace Model {
+class CreateSessionResult {
+ public:
+  AWS_CONNECTWISDOMSERVICE_API CreateSessionResult() = default;
+  AWS_CONNECTWISDOMSERVICE_API CreateSessionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTWISDOMSERVICE_API CreateSessionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The session.</p>
+   */
+  inline const SessionData& GetSession() const { return m_session; }
+  template <typename SessionT = SessionData>
+  void SetSession(SessionT&& value) {
+    m_sessionHasBeenSet = true;
+    m_session = std::forward<SessionT>(value);
+  }
+  template <typename SessionT = SessionData>
+  CreateSessionResult& WithSession(SessionT&& value) {
+    SetSession(std::forward<SessionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The session.</p>
-     */
-    inline const SessionData& GetSession() const{ return m_session; }
-    inline void SetSession(const SessionData& value) { m_session = value; }
-    inline void SetSession(SessionData&& value) { m_session = std::move(value); }
-    inline CreateSessionResult& WithSession(const SessionData& value) { SetSession(value); return *this;}
-    inline CreateSessionResult& WithSession(SessionData&& value) { SetSession(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateSessionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateSessionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateSessionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateSessionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SessionData m_session;
+ private:
+  SessionData m_session;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sessionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConnectWisdomService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectWisdomService
+}  // namespace Aws

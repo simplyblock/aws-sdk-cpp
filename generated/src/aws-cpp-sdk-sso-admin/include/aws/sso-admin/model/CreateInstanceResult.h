@@ -4,68 +4,75 @@
  */
 
 #pragma once
-#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOAdmin
-{
-namespace Model
-{
-  class CreateInstanceResult
-  {
-  public:
-    AWS_SSOADMIN_API CreateInstanceResult();
-    AWS_SSOADMIN_API CreateInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOADMIN_API CreateInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOAdmin {
+namespace Model {
+class CreateInstanceResult {
+ public:
+  AWS_SSOADMIN_API CreateInstanceResult() = default;
+  AWS_SSOADMIN_API CreateInstanceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOADMIN_API CreateInstanceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the instance of IAM Identity Center under which the operation will
+   * run. </p> <p>For more information about ARNs, see <a
+   * href="/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
+   * (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web
+   * Services General Reference</i>.</p>
+   */
+  inline const Aws::String& GetInstanceArn() const { return m_instanceArn; }
+  template <typename InstanceArnT = Aws::String>
+  void SetInstanceArn(InstanceArnT&& value) {
+    m_instanceArnHasBeenSet = true;
+    m_instanceArn = std::forward<InstanceArnT>(value);
+  }
+  template <typename InstanceArnT = Aws::String>
+  CreateInstanceResult& WithInstanceArn(InstanceArnT&& value) {
+    SetInstanceArn(std::forward<InstanceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the instance of IAM Identity Center under which the operation will
-     * run. </p> <p>For more information about ARNs, see <a
-     * href="/general/latest/gr/aws-arns-and-namespaces.html">Amazon Resource Names
-     * (ARNs) and Amazon Web Services Service Namespaces</a> in the <i>Amazon Web
-     * Services General Reference</i>.</p>
-     */
-    inline const Aws::String& GetInstanceArn() const{ return m_instanceArn; }
-    inline void SetInstanceArn(const Aws::String& value) { m_instanceArn = value; }
-    inline void SetInstanceArn(Aws::String&& value) { m_instanceArn = std::move(value); }
-    inline void SetInstanceArn(const char* value) { m_instanceArn.assign(value); }
-    inline CreateInstanceResult& WithInstanceArn(const Aws::String& value) { SetInstanceArn(value); return *this;}
-    inline CreateInstanceResult& WithInstanceArn(Aws::String&& value) { SetInstanceArn(std::move(value)); return *this;}
-    inline CreateInstanceResult& WithInstanceArn(const char* value) { SetInstanceArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateInstanceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateInstanceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateInstanceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateInstanceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_instanceArn;
+ private:
+  Aws::String m_instanceArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

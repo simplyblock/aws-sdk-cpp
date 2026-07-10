@@ -11,99 +11,61 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
-ResourceServerType::ResourceServerType() : 
-    m_userPoolIdHasBeenSet(false),
-    m_identifierHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_scopesHasBeenSet(false)
-{
-}
+ResourceServerType::ResourceServerType(JsonView jsonValue) { *this = jsonValue; }
 
-ResourceServerType::ResourceServerType(JsonView jsonValue)
-  : ResourceServerType()
-{
-  *this = jsonValue;
-}
-
-ResourceServerType& ResourceServerType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("UserPoolId"))
-  {
+ResourceServerType& ResourceServerType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("UserPoolId")) {
     m_userPoolId = jsonValue.GetString("UserPoolId");
-
     m_userPoolIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Identifier"))
-  {
+  if (jsonValue.ValueExists("Identifier")) {
     m_identifier = jsonValue.GetString("Identifier");
-
     m_identifierHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Name"))
-  {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Scopes"))
-  {
+  if (jsonValue.ValueExists("Scopes")) {
     Aws::Utils::Array<JsonView> scopesJsonList = jsonValue.GetArray("Scopes");
-    for(unsigned scopesIndex = 0; scopesIndex < scopesJsonList.GetLength(); ++scopesIndex)
-    {
+    for (unsigned scopesIndex = 0; scopesIndex < scopesJsonList.GetLength(); ++scopesIndex) {
       m_scopes.push_back(scopesJsonList[scopesIndex].AsObject());
     }
     m_scopesHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue ResourceServerType::Jsonize() const
-{
+JsonValue ResourceServerType::Jsonize() const {
   JsonValue payload;
 
-  if(m_userPoolIdHasBeenSet)
-  {
-   payload.WithString("UserPoolId", m_userPoolId);
-
+  if (m_userPoolIdHasBeenSet) {
+    payload.WithString("UserPoolId", m_userPoolId);
   }
 
-  if(m_identifierHasBeenSet)
-  {
-   payload.WithString("Identifier", m_identifier);
-
+  if (m_identifierHasBeenSet) {
+    payload.WithString("Identifier", m_identifier);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_scopesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> scopesJsonList(m_scopes.size());
-   for(unsigned scopesIndex = 0; scopesIndex < scopesJsonList.GetLength(); ++scopesIndex)
-   {
-     scopesJsonList[scopesIndex].AsObject(m_scopes[scopesIndex].Jsonize());
-   }
-   payload.WithArray("Scopes", std::move(scopesJsonList));
-
+  if (m_scopesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> scopesJsonList(m_scopes.size());
+    for (unsigned scopesIndex = 0; scopesIndex < scopesJsonList.GetLength(); ++scopesIndex) {
+      scopesJsonList[scopesIndex].AsObject(m_scopes[scopesIndex].Jsonize());
+    }
+    payload.WithArray("Scopes", std::move(scopesJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

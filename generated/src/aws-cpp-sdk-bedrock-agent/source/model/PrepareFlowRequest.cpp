@@ -12,16 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PrepareFlowRequest::PrepareFlowRequest() : 
-    m_flowIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String PrepareFlowRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String PrepareFlowRequest::SerializePayload() const { return {}; }

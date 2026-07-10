@@ -10,36 +10,22 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-StartInstanceRefreshRequest::StartInstanceRefreshRequest() : 
-    m_autoScalingGroupNameHasBeenSet(false),
-    m_strategy(RefreshStrategy::NOT_SET),
-    m_strategyHasBeenSet(false),
-    m_desiredConfigurationHasBeenSet(false),
-    m_preferencesHasBeenSet(false)
-{
-}
-
-Aws::String StartInstanceRefreshRequest::SerializePayload() const
-{
+Aws::String StartInstanceRefreshRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=StartInstanceRefresh&";
-  if(m_autoScalingGroupNameHasBeenSet)
-  {
+  if (m_autoScalingGroupNameHasBeenSet) {
     ss << "AutoScalingGroupName=" << StringUtils::URLEncode(m_autoScalingGroupName.c_str()) << "&";
   }
 
-  if(m_strategyHasBeenSet)
-  {
-    ss << "Strategy=" << RefreshStrategyMapper::GetNameForRefreshStrategy(m_strategy) << "&";
+  if (m_strategyHasBeenSet) {
+    ss << "Strategy=" << StringUtils::URLEncode(RefreshStrategyMapper::GetNameForRefreshStrategy(m_strategy)) << "&";
   }
 
-  if(m_desiredConfigurationHasBeenSet)
-  {
+  if (m_desiredConfigurationHasBeenSet) {
     m_desiredConfiguration.OutputToStream(ss, "DesiredConfiguration");
   }
 
-  if(m_preferencesHasBeenSet)
-  {
+  if (m_preferencesHasBeenSet) {
     m_preferences.OutputToStream(ss, "Preferences");
   }
 
@@ -47,8 +33,4 @@ Aws::String StartInstanceRefreshRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  StartInstanceRefreshRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void StartInstanceRefreshRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

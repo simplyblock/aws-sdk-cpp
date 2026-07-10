@@ -4,98 +4,117 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/location/LocationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
-  class UpdateKeyResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API UpdateKeyResult();
-    AWS_LOCATIONSERVICE_API UpdateKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LOCATIONSERVICE_API UpdateKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
+class UpdateKeyResult {
+ public:
+  AWS_LOCATIONSERVICE_API UpdateKeyResult() = default;
+  AWS_LOCATIONSERVICE_API UpdateKeyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LOCATIONSERVICE_API UpdateKeyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the API key resource. Used when you need
+   * to specify a resource across all Amazon Web Services.</p> <ul> <li> <p>Format
+   * example: <code>arn:aws:geo:region:account-id:key/ExampleKey</code> </p> </li>
+   * </ul>
+   */
+  inline const Aws::String& GetKeyArn() const { return m_keyArn; }
+  template <typename KeyArnT = Aws::String>
+  void SetKeyArn(KeyArnT&& value) {
+    m_keyArnHasBeenSet = true;
+    m_keyArn = std::forward<KeyArnT>(value);
+  }
+  template <typename KeyArnT = Aws::String>
+  UpdateKeyResult& WithKeyArn(KeyArnT&& value) {
+    SetKeyArn(std::forward<KeyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the API key resource. Used when you need
-     * to specify a resource across all Amazon Web Services.</p> <ul> <li> <p>Format
-     * example: <code>arn:aws:geo:region:account-id:key/ExampleKey</code> </p> </li>
-     * </ul>
-     */
-    inline const Aws::String& GetKeyArn() const{ return m_keyArn; }
-    inline void SetKeyArn(const Aws::String& value) { m_keyArn = value; }
-    inline void SetKeyArn(Aws::String&& value) { m_keyArn = std::move(value); }
-    inline void SetKeyArn(const char* value) { m_keyArn.assign(value); }
-    inline UpdateKeyResult& WithKeyArn(const Aws::String& value) { SetKeyArn(value); return *this;}
-    inline UpdateKeyResult& WithKeyArn(Aws::String&& value) { SetKeyArn(std::move(value)); return *this;}
-    inline UpdateKeyResult& WithKeyArn(const char* value) { SetKeyArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the API key resource.</p>
+   */
+  inline const Aws::String& GetKeyName() const { return m_keyName; }
+  template <typename KeyNameT = Aws::String>
+  void SetKeyName(KeyNameT&& value) {
+    m_keyNameHasBeenSet = true;
+    m_keyName = std::forward<KeyNameT>(value);
+  }
+  template <typename KeyNameT = Aws::String>
+  UpdateKeyResult& WithKeyName(KeyNameT&& value) {
+    SetKeyName(std::forward<KeyNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the API key resource.</p>
-     */
-    inline const Aws::String& GetKeyName() const{ return m_keyName; }
-    inline void SetKeyName(const Aws::String& value) { m_keyName = value; }
-    inline void SetKeyName(Aws::String&& value) { m_keyName = std::move(value); }
-    inline void SetKeyName(const char* value) { m_keyName.assign(value); }
-    inline UpdateKeyResult& WithKeyName(const Aws::String& value) { SetKeyName(value); return *this;}
-    inline UpdateKeyResult& WithKeyName(Aws::String&& value) { SetKeyName(std::move(value)); return *this;}
-    inline UpdateKeyResult& WithKeyName(const char* value) { SetKeyName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the API key resource was last updated in <a
+   * href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a>
+   * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdateTime() const { return m_updateTime; }
+  template <typename UpdateTimeT = Aws::Utils::DateTime>
+  void SetUpdateTime(UpdateTimeT&& value) {
+    m_updateTimeHasBeenSet = true;
+    m_updateTime = std::forward<UpdateTimeT>(value);
+  }
+  template <typename UpdateTimeT = Aws::Utils::DateTime>
+  UpdateKeyResult& WithUpdateTime(UpdateTimeT&& value) {
+    SetUpdateTime(std::forward<UpdateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the API key resource was last updated in <a
-     * href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a>
-     * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdateTime() const{ return m_updateTime; }
-    inline void SetUpdateTime(const Aws::Utils::DateTime& value) { m_updateTime = value; }
-    inline void SetUpdateTime(Aws::Utils::DateTime&& value) { m_updateTime = std::move(value); }
-    inline UpdateKeyResult& WithUpdateTime(const Aws::Utils::DateTime& value) { SetUpdateTime(value); return *this;}
-    inline UpdateKeyResult& WithUpdateTime(Aws::Utils::DateTime&& value) { SetUpdateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateKeyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateKeyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateKeyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateKeyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_keyArn;
+ private:
+  Aws::String m_keyArn;
 
-    Aws::String m_keyName;
+  Aws::String m_keyName;
 
-    Aws::Utils::DateTime m_updateTime;
+  Aws::Utils::DateTime m_updateTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_keyArnHasBeenSet = false;
+  bool m_keyNameHasBeenSet = false;
+  bool m_updateTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

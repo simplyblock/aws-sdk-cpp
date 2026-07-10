@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/deadline/model/GetFarmRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/deadline/model/GetFarmRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::deadline::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetFarmRequest::GetFarmRequest() : 
-    m_farmIdHasBeenSet(false)
-{
-}
-
-Aws::String GetFarmRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetFarmRequest::SerializePayload() const { return {}; }

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iotwireless/model/GetMetricConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/iotwireless/model/GetMetricConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,15 +12,4 @@ using namespace Aws::IoTWireless::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetMetricConfigurationRequest::GetMetricConfigurationRequest()
-{
-}
-
-Aws::String GetMetricConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetMetricConfigurationRequest::SerializePayload() const { return {}; }

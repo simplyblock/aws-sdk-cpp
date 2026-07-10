@@ -4,87 +4,105 @@
  */
 
 #pragma once
-#include <aws/fms/FMS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/fms/FMS_EXPORTS.h>
 #include <aws/fms/model/PolicyComplianceStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FMS
-{
-namespace Model
-{
-  class ListComplianceStatusResult
-  {
-  public:
-    AWS_FMS_API ListComplianceStatusResult();
-    AWS_FMS_API ListComplianceStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FMS_API ListComplianceStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FMS {
+namespace Model {
+class ListComplianceStatusResult {
+ public:
+  AWS_FMS_API ListComplianceStatusResult() = default;
+  AWS_FMS_API ListComplianceStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FMS_API ListComplianceStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of <code>PolicyComplianceStatus</code> objects.</p>
+   */
+  inline const Aws::Vector<PolicyComplianceStatus>& GetPolicyComplianceStatusList() const { return m_policyComplianceStatusList; }
+  template <typename PolicyComplianceStatusListT = Aws::Vector<PolicyComplianceStatus>>
+  void SetPolicyComplianceStatusList(PolicyComplianceStatusListT&& value) {
+    m_policyComplianceStatusListHasBeenSet = true;
+    m_policyComplianceStatusList = std::forward<PolicyComplianceStatusListT>(value);
+  }
+  template <typename PolicyComplianceStatusListT = Aws::Vector<PolicyComplianceStatus>>
+  ListComplianceStatusResult& WithPolicyComplianceStatusList(PolicyComplianceStatusListT&& value) {
+    SetPolicyComplianceStatusList(std::forward<PolicyComplianceStatusListT>(value));
+    return *this;
+  }
+  template <typename PolicyComplianceStatusListT = PolicyComplianceStatus>
+  ListComplianceStatusResult& AddPolicyComplianceStatusList(PolicyComplianceStatusListT&& value) {
+    m_policyComplianceStatusListHasBeenSet = true;
+    m_policyComplianceStatusList.emplace_back(std::forward<PolicyComplianceStatusListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>PolicyComplianceStatus</code> objects.</p>
-     */
-    inline const Aws::Vector<PolicyComplianceStatus>& GetPolicyComplianceStatusList() const{ return m_policyComplianceStatusList; }
-    inline void SetPolicyComplianceStatusList(const Aws::Vector<PolicyComplianceStatus>& value) { m_policyComplianceStatusList = value; }
-    inline void SetPolicyComplianceStatusList(Aws::Vector<PolicyComplianceStatus>&& value) { m_policyComplianceStatusList = std::move(value); }
-    inline ListComplianceStatusResult& WithPolicyComplianceStatusList(const Aws::Vector<PolicyComplianceStatus>& value) { SetPolicyComplianceStatusList(value); return *this;}
-    inline ListComplianceStatusResult& WithPolicyComplianceStatusList(Aws::Vector<PolicyComplianceStatus>&& value) { SetPolicyComplianceStatusList(std::move(value)); return *this;}
-    inline ListComplianceStatusResult& AddPolicyComplianceStatusList(const PolicyComplianceStatus& value) { m_policyComplianceStatusList.push_back(value); return *this; }
-    inline ListComplianceStatusResult& AddPolicyComplianceStatusList(PolicyComplianceStatus&& value) { m_policyComplianceStatusList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If you have more <code>PolicyComplianceStatus</code> objects than the number
+   * that you specified for <code>MaxResults</code> in the request, the response
+   * includes a <code>NextToken</code> value. To list more
+   * <code>PolicyComplianceStatus</code> objects, submit another
+   * <code>ListComplianceStatus</code> request, and specify the
+   * <code>NextToken</code> value from the response in the <code>NextToken</code>
+   * value in the next request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListComplianceStatusResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If you have more <code>PolicyComplianceStatus</code> objects than the number
-     * that you specified for <code>MaxResults</code> in the request, the response
-     * includes a <code>NextToken</code> value. To list more
-     * <code>PolicyComplianceStatus</code> objects, submit another
-     * <code>ListComplianceStatus</code> request, and specify the
-     * <code>NextToken</code> value from the response in the <code>NextToken</code>
-     * value in the next request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListComplianceStatusResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListComplianceStatusResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListComplianceStatusResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListComplianceStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListComplianceStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListComplianceStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListComplianceStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PolicyComplianceStatus> m_policyComplianceStatusList;
+ private:
+  Aws::Vector<PolicyComplianceStatus> m_policyComplianceStatusList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyComplianceStatusListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FMS
+}  // namespace Aws

@@ -4,141 +4,177 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/iot/model/CustomMetricType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+#include <aws/iot/model/CustomMetricType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class DescribeCustomMetricResult
-  {
-  public:
-    AWS_IOT_API DescribeCustomMetricResult();
-    AWS_IOT_API DescribeCustomMetricResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API DescribeCustomMetricResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class DescribeCustomMetricResult {
+ public:
+  AWS_IOT_API DescribeCustomMetricResult() = default;
+  AWS_IOT_API DescribeCustomMetricResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API DescribeCustomMetricResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The name of the custom metric. </p>
+   */
+  inline const Aws::String& GetMetricName() const { return m_metricName; }
+  template <typename MetricNameT = Aws::String>
+  void SetMetricName(MetricNameT&& value) {
+    m_metricNameHasBeenSet = true;
+    m_metricName = std::forward<MetricNameT>(value);
+  }
+  template <typename MetricNameT = Aws::String>
+  DescribeCustomMetricResult& WithMetricName(MetricNameT&& value) {
+    SetMetricName(std::forward<MetricNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The name of the custom metric. </p>
-     */
-    inline const Aws::String& GetMetricName() const{ return m_metricName; }
-    inline void SetMetricName(const Aws::String& value) { m_metricName = value; }
-    inline void SetMetricName(Aws::String&& value) { m_metricName = std::move(value); }
-    inline void SetMetricName(const char* value) { m_metricName.assign(value); }
-    inline DescribeCustomMetricResult& WithMetricName(const Aws::String& value) { SetMetricName(value); return *this;}
-    inline DescribeCustomMetricResult& WithMetricName(Aws::String&& value) { SetMetricName(std::move(value)); return *this;}
-    inline DescribeCustomMetricResult& WithMetricName(const char* value) { SetMetricName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The Amazon Resource Number (ARN) of the custom metric. </p>
+   */
+  inline const Aws::String& GetMetricArn() const { return m_metricArn; }
+  template <typename MetricArnT = Aws::String>
+  void SetMetricArn(MetricArnT&& value) {
+    m_metricArnHasBeenSet = true;
+    m_metricArn = std::forward<MetricArnT>(value);
+  }
+  template <typename MetricArnT = Aws::String>
+  DescribeCustomMetricResult& WithMetricArn(MetricArnT&& value) {
+    SetMetricArn(std::forward<MetricArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The Amazon Resource Number (ARN) of the custom metric. </p>
-     */
-    inline const Aws::String& GetMetricArn() const{ return m_metricArn; }
-    inline void SetMetricArn(const Aws::String& value) { m_metricArn = value; }
-    inline void SetMetricArn(Aws::String&& value) { m_metricArn = std::move(value); }
-    inline void SetMetricArn(const char* value) { m_metricArn.assign(value); }
-    inline DescribeCustomMetricResult& WithMetricArn(const Aws::String& value) { SetMetricArn(value); return *this;}
-    inline DescribeCustomMetricResult& WithMetricArn(Aws::String&& value) { SetMetricArn(std::move(value)); return *this;}
-    inline DescribeCustomMetricResult& WithMetricArn(const char* value) { SetMetricArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The type of the custom metric. </p>  <p>The type
+   * <code>number</code> only takes a single metric value as an input, but while
+   * submitting the metrics value in the DeviceMetrics report, it must be passed as
+   * an array with a single value.</p>
+   */
+  inline CustomMetricType GetMetricType() const { return m_metricType; }
+  inline void SetMetricType(CustomMetricType value) {
+    m_metricTypeHasBeenSet = true;
+    m_metricType = value;
+  }
+  inline DescribeCustomMetricResult& WithMetricType(CustomMetricType value) {
+    SetMetricType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The type of the custom metric. </p>  <p>The type
-     * <code>number</code> only takes a single metric value as an input, but while
-     * submitting the metrics value in the DeviceMetrics report, it must be passed as
-     * an array with a single value.</p> 
-     */
-    inline const CustomMetricType& GetMetricType() const{ return m_metricType; }
-    inline void SetMetricType(const CustomMetricType& value) { m_metricType = value; }
-    inline void SetMetricType(CustomMetricType&& value) { m_metricType = std::move(value); }
-    inline DescribeCustomMetricResult& WithMetricType(const CustomMetricType& value) { SetMetricType(value); return *this;}
-    inline DescribeCustomMetricResult& WithMetricType(CustomMetricType&& value) { SetMetricType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Field represents a friendly name in the console for the custom metric;
+   * doesn't have to be unique. Don't use this name as the metric identifier in the
+   * device metric report. Can be updated. </p>
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  DescribeCustomMetricResult& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Field represents a friendly name in the console for the custom metric;
-     * doesn't have to be unique. Don't use this name as the metric identifier in the
-     * device metric report. Can be updated. </p>
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayName.assign(value); }
-    inline DescribeCustomMetricResult& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline DescribeCustomMetricResult& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline DescribeCustomMetricResult& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The creation date of the custom metric in milliseconds since epoch. </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDate() const { return m_creationDate; }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  DescribeCustomMetricResult& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The creation date of the custom metric in milliseconds since epoch. </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDate() const{ return m_creationDate; }
-    inline void SetCreationDate(const Aws::Utils::DateTime& value) { m_creationDate = value; }
-    inline void SetCreationDate(Aws::Utils::DateTime&& value) { m_creationDate = std::move(value); }
-    inline DescribeCustomMetricResult& WithCreationDate(const Aws::Utils::DateTime& value) { SetCreationDate(value); return *this;}
-    inline DescribeCustomMetricResult& WithCreationDate(Aws::Utils::DateTime&& value) { SetCreationDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The time the custom metric was last modified in milliseconds since epoch.
+   * </p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedDate() const { return m_lastModifiedDate; }
+  template <typename LastModifiedDateT = Aws::Utils::DateTime>
+  void SetLastModifiedDate(LastModifiedDateT&& value) {
+    m_lastModifiedDateHasBeenSet = true;
+    m_lastModifiedDate = std::forward<LastModifiedDateT>(value);
+  }
+  template <typename LastModifiedDateT = Aws::Utils::DateTime>
+  DescribeCustomMetricResult& WithLastModifiedDate(LastModifiedDateT&& value) {
+    SetLastModifiedDate(std::forward<LastModifiedDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The time the custom metric was last modified in milliseconds since epoch.
-     * </p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedDate() const{ return m_lastModifiedDate; }
-    inline void SetLastModifiedDate(const Aws::Utils::DateTime& value) { m_lastModifiedDate = value; }
-    inline void SetLastModifiedDate(Aws::Utils::DateTime&& value) { m_lastModifiedDate = std::move(value); }
-    inline DescribeCustomMetricResult& WithLastModifiedDate(const Aws::Utils::DateTime& value) { SetLastModifiedDate(value); return *this;}
-    inline DescribeCustomMetricResult& WithLastModifiedDate(Aws::Utils::DateTime&& value) { SetLastModifiedDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeCustomMetricResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeCustomMetricResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeCustomMetricResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeCustomMetricResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_metricName;
+ private:
+  Aws::String m_metricName;
 
-    Aws::String m_metricArn;
+  Aws::String m_metricArn;
 
-    CustomMetricType m_metricType;
+  CustomMetricType m_metricType{CustomMetricType::NOT_SET};
 
-    Aws::String m_displayName;
+  Aws::String m_displayName;
 
-    Aws::Utils::DateTime m_creationDate;
+  Aws::Utils::DateTime m_creationDate{};
 
-    Aws::Utils::DateTime m_lastModifiedDate;
+  Aws::Utils::DateTime m_lastModifiedDate{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_metricNameHasBeenSet = false;
+  bool m_metricArnHasBeenSet = false;
+  bool m_metricTypeHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_lastModifiedDateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/route53resolver/Route53Resolver_EXPORTS.h>
 #include <aws/route53resolver/model/FirewallRule.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Route53Resolver
-{
-namespace Model
-{
-  class UpdateFirewallRuleResult
-  {
-  public:
-    AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult();
-    AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Route53Resolver {
+namespace Model {
+class UpdateFirewallRuleResult {
+ public:
+  AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult() = default;
+  AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ROUTE53RESOLVER_API UpdateFirewallRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The firewall rule that you just updated. </p>
+   */
+  inline const FirewallRule& GetFirewallRule() const { return m_firewallRule; }
+  template <typename FirewallRuleT = FirewallRule>
+  void SetFirewallRule(FirewallRuleT&& value) {
+    m_firewallRuleHasBeenSet = true;
+    m_firewallRule = std::forward<FirewallRuleT>(value);
+  }
+  template <typename FirewallRuleT = FirewallRule>
+  UpdateFirewallRuleResult& WithFirewallRule(FirewallRuleT&& value) {
+    SetFirewallRule(std::forward<FirewallRuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The firewall rule that you just updated. </p>
-     */
-    inline const FirewallRule& GetFirewallRule() const{ return m_firewallRule; }
-    inline void SetFirewallRule(const FirewallRule& value) { m_firewallRule = value; }
-    inline void SetFirewallRule(FirewallRule&& value) { m_firewallRule = std::move(value); }
-    inline UpdateFirewallRuleResult& WithFirewallRule(const FirewallRule& value) { SetFirewallRule(value); return *this;}
-    inline UpdateFirewallRuleResult& WithFirewallRule(FirewallRule&& value) { SetFirewallRule(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateFirewallRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateFirewallRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateFirewallRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateFirewallRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    FirewallRule m_firewallRule;
+ private:
+  FirewallRule m_firewallRule;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_firewallRuleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Route53Resolver
-} // namespace Aws
+}  // namespace Model
+}  // namespace Route53Resolver
+}  // namespace Aws

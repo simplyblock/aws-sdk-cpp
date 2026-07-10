@@ -4,79 +4,91 @@
  */
 
 #pragma once
-#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSMIncidents
-{
-namespace Model
-{
-  class CreateTimelineEventResult
-  {
-  public:
-    AWS_SSMINCIDENTS_API CreateTimelineEventResult();
-    AWS_SSMINCIDENTS_API CreateTimelineEventResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMINCIDENTS_API CreateTimelineEventResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSMIncidents {
+namespace Model {
+class CreateTimelineEventResult {
+ public:
+  AWS_SSMINCIDENTS_API CreateTimelineEventResult() = default;
+  AWS_SSMINCIDENTS_API CreateTimelineEventResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMINCIDENTS_API CreateTimelineEventResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the event for easy reference later. </p>
+   */
+  inline const Aws::String& GetEventId() const { return m_eventId; }
+  template <typename EventIdT = Aws::String>
+  void SetEventId(EventIdT&& value) {
+    m_eventIdHasBeenSet = true;
+    m_eventId = std::forward<EventIdT>(value);
+  }
+  template <typename EventIdT = Aws::String>
+  CreateTimelineEventResult& WithEventId(EventIdT&& value) {
+    SetEventId(std::forward<EventIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the event for easy reference later. </p>
-     */
-    inline const Aws::String& GetEventId() const{ return m_eventId; }
-    inline void SetEventId(const Aws::String& value) { m_eventId = value; }
-    inline void SetEventId(Aws::String&& value) { m_eventId = std::move(value); }
-    inline void SetEventId(const char* value) { m_eventId.assign(value); }
-    inline CreateTimelineEventResult& WithEventId(const Aws::String& value) { SetEventId(value); return *this;}
-    inline CreateTimelineEventResult& WithEventId(Aws::String&& value) { SetEventId(std::move(value)); return *this;}
-    inline CreateTimelineEventResult& WithEventId(const char* value) { SetEventId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the incident record that you added the event to.</p>
+   */
+  inline const Aws::String& GetIncidentRecordArn() const { return m_incidentRecordArn; }
+  template <typename IncidentRecordArnT = Aws::String>
+  void SetIncidentRecordArn(IncidentRecordArnT&& value) {
+    m_incidentRecordArnHasBeenSet = true;
+    m_incidentRecordArn = std::forward<IncidentRecordArnT>(value);
+  }
+  template <typename IncidentRecordArnT = Aws::String>
+  CreateTimelineEventResult& WithIncidentRecordArn(IncidentRecordArnT&& value) {
+    SetIncidentRecordArn(std::forward<IncidentRecordArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the incident record that you added the event to.</p>
-     */
-    inline const Aws::String& GetIncidentRecordArn() const{ return m_incidentRecordArn; }
-    inline void SetIncidentRecordArn(const Aws::String& value) { m_incidentRecordArn = value; }
-    inline void SetIncidentRecordArn(Aws::String&& value) { m_incidentRecordArn = std::move(value); }
-    inline void SetIncidentRecordArn(const char* value) { m_incidentRecordArn.assign(value); }
-    inline CreateTimelineEventResult& WithIncidentRecordArn(const Aws::String& value) { SetIncidentRecordArn(value); return *this;}
-    inline CreateTimelineEventResult& WithIncidentRecordArn(Aws::String&& value) { SetIncidentRecordArn(std::move(value)); return *this;}
-    inline CreateTimelineEventResult& WithIncidentRecordArn(const char* value) { SetIncidentRecordArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTimelineEventResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTimelineEventResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTimelineEventResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTimelineEventResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_eventId;
+ private:
+  Aws::String m_eventId;
 
-    Aws::String m_incidentRecordArn;
+  Aws::String m_incidentRecordArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventIdHasBeenSet = false;
+  bool m_incidentRecordArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSMIncidents
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSMIncidents
+}  // namespace Aws

@@ -11,49 +11,30 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
-FirehoseConfigurationType::FirehoseConfigurationType() : 
-    m_streamArnHasBeenSet(false)
-{
-}
+FirehoseConfigurationType::FirehoseConfigurationType(JsonView jsonValue) { *this = jsonValue; }
 
-FirehoseConfigurationType::FirehoseConfigurationType(JsonView jsonValue)
-  : FirehoseConfigurationType()
-{
-  *this = jsonValue;
-}
-
-FirehoseConfigurationType& FirehoseConfigurationType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("StreamArn"))
-  {
+FirehoseConfigurationType& FirehoseConfigurationType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("StreamArn")) {
     m_streamArn = jsonValue.GetString("StreamArn");
-
     m_streamArnHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue FirehoseConfigurationType::Jsonize() const
-{
+JsonValue FirehoseConfigurationType::Jsonize() const {
   JsonValue payload;
 
-  if(m_streamArnHasBeenSet)
-  {
-   payload.WithString("StreamArn", m_streamArn);
-
+  if (m_streamArnHasBeenSet) {
+    payload.WithString("StreamArn", m_streamArn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

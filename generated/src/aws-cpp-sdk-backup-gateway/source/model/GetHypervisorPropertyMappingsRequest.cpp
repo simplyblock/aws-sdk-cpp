@@ -12,32 +12,18 @@ using namespace Aws::BackupGateway::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetHypervisorPropertyMappingsRequest::GetHypervisorPropertyMappingsRequest() : 
-    m_hypervisorArnHasBeenSet(false)
-{
-}
-
-Aws::String GetHypervisorPropertyMappingsRequest::SerializePayload() const
-{
+Aws::String GetHypervisorPropertyMappingsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_hypervisorArnHasBeenSet)
-  {
-   payload.WithString("HypervisorArn", m_hypervisorArn);
-
+  if (m_hypervisorArnHasBeenSet) {
+    payload.WithString("HypervisorArn", m_hypervisorArn);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetHypervisorPropertyMappingsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetHypervisorPropertyMappingsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "BackupOnPremises_v20210101.GetHypervisorPropertyMappings"));
   return headers;
-
 }
-
-
-
-

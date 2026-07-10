@@ -12,17 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteModelRequest::DeleteModelRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_modelIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteModelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteModelRequest::SerializePayload() const { return {}; }

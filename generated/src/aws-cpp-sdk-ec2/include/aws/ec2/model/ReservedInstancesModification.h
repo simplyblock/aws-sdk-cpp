@@ -4,198 +4,245 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ReservedInstancesModificationResponse.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ReservedInstancesId.h>
+#include <aws/ec2/model/ReservedInstancesModificationResponse.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a Reserved Instance modification.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReservedInstancesModification">AWS
+ * API Reference</a></p>
+ */
+class ReservedInstancesModification {
+ public:
+  AWS_EC2_API ReservedInstancesModification() = default;
+  AWS_EC2_API ReservedInstancesModification(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API ReservedInstancesModification& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a Reserved Instance modification.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReservedInstancesModification">AWS
-   * API Reference</a></p>
+   * <p>A unique, case-sensitive key supplied by the client to ensure that the
+   * request is idempotent. For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
+   * Idempotency</a>.</p>
    */
-  class ReservedInstancesModification
-  {
-  public:
-    AWS_EC2_API ReservedInstancesModification();
-    AWS_EC2_API ReservedInstancesModification(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API ReservedInstancesModification& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  ReservedInstancesModification& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The time when the modification request was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateDate() const { return m_createDate; }
+  inline bool CreateDateHasBeenSet() const { return m_createDateHasBeenSet; }
+  template <typename CreateDateT = Aws::Utils::DateTime>
+  void SetCreateDate(CreateDateT&& value) {
+    m_createDateHasBeenSet = true;
+    m_createDate = std::forward<CreateDateT>(value);
+  }
+  template <typename CreateDateT = Aws::Utils::DateTime>
+  ReservedInstancesModification& WithCreateDate(CreateDateT&& value) {
+    SetCreateDate(std::forward<CreateDateT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The time for the modification to become effective.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEffectiveDate() const { return m_effectiveDate; }
+  inline bool EffectiveDateHasBeenSet() const { return m_effectiveDateHasBeenSet; }
+  template <typename EffectiveDateT = Aws::Utils::DateTime>
+  void SetEffectiveDate(EffectiveDateT&& value) {
+    m_effectiveDateHasBeenSet = true;
+    m_effectiveDate = std::forward<EffectiveDateT>(value);
+  }
+  template <typename EffectiveDateT = Aws::Utils::DateTime>
+  ReservedInstancesModification& WithEffectiveDate(EffectiveDateT&& value) {
+    SetEffectiveDate(std::forward<EffectiveDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive key supplied by the client to ensure that the
-     * request is idempotent. For more information, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-     * Idempotency</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline ReservedInstancesModification& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline ReservedInstancesModification& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline ReservedInstancesModification& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains target configurations along with their corresponding new Reserved
+   * Instance IDs.</p>
+   */
+  inline const Aws::Vector<ReservedInstancesModificationResponse>& GetModificationResults() const { return m_modificationResults; }
+  inline bool ModificationResultsHasBeenSet() const { return m_modificationResultsHasBeenSet; }
+  template <typename ModificationResultsT = Aws::Vector<ReservedInstancesModificationResponse>>
+  void SetModificationResults(ModificationResultsT&& value) {
+    m_modificationResultsHasBeenSet = true;
+    m_modificationResults = std::forward<ModificationResultsT>(value);
+  }
+  template <typename ModificationResultsT = Aws::Vector<ReservedInstancesModificationResponse>>
+  ReservedInstancesModification& WithModificationResults(ModificationResultsT&& value) {
+    SetModificationResults(std::forward<ModificationResultsT>(value));
+    return *this;
+  }
+  template <typename ModificationResultsT = ReservedInstancesModificationResponse>
+  ReservedInstancesModification& AddModificationResults(ModificationResultsT&& value) {
+    m_modificationResultsHasBeenSet = true;
+    m_modificationResults.emplace_back(std::forward<ModificationResultsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the modification request was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateDate() const{ return m_createDate; }
-    inline bool CreateDateHasBeenSet() const { return m_createDateHasBeenSet; }
-    inline void SetCreateDate(const Aws::Utils::DateTime& value) { m_createDateHasBeenSet = true; m_createDate = value; }
-    inline void SetCreateDate(Aws::Utils::DateTime&& value) { m_createDateHasBeenSet = true; m_createDate = std::move(value); }
-    inline ReservedInstancesModification& WithCreateDate(const Aws::Utils::DateTime& value) { SetCreateDate(value); return *this;}
-    inline ReservedInstancesModification& WithCreateDate(Aws::Utils::DateTime&& value) { SetCreateDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IDs of one or more Reserved Instances.</p>
+   */
+  inline const Aws::Vector<ReservedInstancesId>& GetReservedInstancesIds() const { return m_reservedInstancesIds; }
+  inline bool ReservedInstancesIdsHasBeenSet() const { return m_reservedInstancesIdsHasBeenSet; }
+  template <typename ReservedInstancesIdsT = Aws::Vector<ReservedInstancesId>>
+  void SetReservedInstancesIds(ReservedInstancesIdsT&& value) {
+    m_reservedInstancesIdsHasBeenSet = true;
+    m_reservedInstancesIds = std::forward<ReservedInstancesIdsT>(value);
+  }
+  template <typename ReservedInstancesIdsT = Aws::Vector<ReservedInstancesId>>
+  ReservedInstancesModification& WithReservedInstancesIds(ReservedInstancesIdsT&& value) {
+    SetReservedInstancesIds(std::forward<ReservedInstancesIdsT>(value));
+    return *this;
+  }
+  template <typename ReservedInstancesIdsT = ReservedInstancesId>
+  ReservedInstancesModification& AddReservedInstancesIds(ReservedInstancesIdsT&& value) {
+    m_reservedInstancesIdsHasBeenSet = true;
+    m_reservedInstancesIds.emplace_back(std::forward<ReservedInstancesIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time for the modification to become effective.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEffectiveDate() const{ return m_effectiveDate; }
-    inline bool EffectiveDateHasBeenSet() const { return m_effectiveDateHasBeenSet; }
-    inline void SetEffectiveDate(const Aws::Utils::DateTime& value) { m_effectiveDateHasBeenSet = true; m_effectiveDate = value; }
-    inline void SetEffectiveDate(Aws::Utils::DateTime&& value) { m_effectiveDateHasBeenSet = true; m_effectiveDate = std::move(value); }
-    inline ReservedInstancesModification& WithEffectiveDate(const Aws::Utils::DateTime& value) { SetEffectiveDate(value); return *this;}
-    inline ReservedInstancesModification& WithEffectiveDate(Aws::Utils::DateTime&& value) { SetEffectiveDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique ID for the Reserved Instance modification.</p>
+   */
+  inline const Aws::String& GetReservedInstancesModificationId() const { return m_reservedInstancesModificationId; }
+  inline bool ReservedInstancesModificationIdHasBeenSet() const { return m_reservedInstancesModificationIdHasBeenSet; }
+  template <typename ReservedInstancesModificationIdT = Aws::String>
+  void SetReservedInstancesModificationId(ReservedInstancesModificationIdT&& value) {
+    m_reservedInstancesModificationIdHasBeenSet = true;
+    m_reservedInstancesModificationId = std::forward<ReservedInstancesModificationIdT>(value);
+  }
+  template <typename ReservedInstancesModificationIdT = Aws::String>
+  ReservedInstancesModification& WithReservedInstancesModificationId(ReservedInstancesModificationIdT&& value) {
+    SetReservedInstancesModificationId(std::forward<ReservedInstancesModificationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains target configurations along with their corresponding new Reserved
-     * Instance IDs.</p>
-     */
-    inline const Aws::Vector<ReservedInstancesModificationResponse>& GetModificationResults() const{ return m_modificationResults; }
-    inline bool ModificationResultsHasBeenSet() const { return m_modificationResultsHasBeenSet; }
-    inline void SetModificationResults(const Aws::Vector<ReservedInstancesModificationResponse>& value) { m_modificationResultsHasBeenSet = true; m_modificationResults = value; }
-    inline void SetModificationResults(Aws::Vector<ReservedInstancesModificationResponse>&& value) { m_modificationResultsHasBeenSet = true; m_modificationResults = std::move(value); }
-    inline ReservedInstancesModification& WithModificationResults(const Aws::Vector<ReservedInstancesModificationResponse>& value) { SetModificationResults(value); return *this;}
-    inline ReservedInstancesModification& WithModificationResults(Aws::Vector<ReservedInstancesModificationResponse>&& value) { SetModificationResults(std::move(value)); return *this;}
-    inline ReservedInstancesModification& AddModificationResults(const ReservedInstancesModificationResponse& value) { m_modificationResultsHasBeenSet = true; m_modificationResults.push_back(value); return *this; }
-    inline ReservedInstancesModification& AddModificationResults(ReservedInstancesModificationResponse&& value) { m_modificationResultsHasBeenSet = true; m_modificationResults.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the Reserved Instances modification request.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  ReservedInstancesModification& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IDs of one or more Reserved Instances.</p>
-     */
-    inline const Aws::Vector<ReservedInstancesId>& GetReservedInstancesIds() const{ return m_reservedInstancesIds; }
-    inline bool ReservedInstancesIdsHasBeenSet() const { return m_reservedInstancesIdsHasBeenSet; }
-    inline void SetReservedInstancesIds(const Aws::Vector<ReservedInstancesId>& value) { m_reservedInstancesIdsHasBeenSet = true; m_reservedInstancesIds = value; }
-    inline void SetReservedInstancesIds(Aws::Vector<ReservedInstancesId>&& value) { m_reservedInstancesIdsHasBeenSet = true; m_reservedInstancesIds = std::move(value); }
-    inline ReservedInstancesModification& WithReservedInstancesIds(const Aws::Vector<ReservedInstancesId>& value) { SetReservedInstancesIds(value); return *this;}
-    inline ReservedInstancesModification& WithReservedInstancesIds(Aws::Vector<ReservedInstancesId>&& value) { SetReservedInstancesIds(std::move(value)); return *this;}
-    inline ReservedInstancesModification& AddReservedInstancesIds(const ReservedInstancesId& value) { m_reservedInstancesIdsHasBeenSet = true; m_reservedInstancesIds.push_back(value); return *this; }
-    inline ReservedInstancesModification& AddReservedInstancesIds(ReservedInstancesId&& value) { m_reservedInstancesIdsHasBeenSet = true; m_reservedInstancesIds.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for the status.</p>
+   */
+  inline const Aws::String& GetStatusMessage() const { return m_statusMessage; }
+  inline bool StatusMessageHasBeenSet() const { return m_statusMessageHasBeenSet; }
+  template <typename StatusMessageT = Aws::String>
+  void SetStatusMessage(StatusMessageT&& value) {
+    m_statusMessageHasBeenSet = true;
+    m_statusMessage = std::forward<StatusMessageT>(value);
+  }
+  template <typename StatusMessageT = Aws::String>
+  ReservedInstancesModification& WithStatusMessage(StatusMessageT&& value) {
+    SetStatusMessage(std::forward<StatusMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique ID for the Reserved Instance modification.</p>
-     */
-    inline const Aws::String& GetReservedInstancesModificationId() const{ return m_reservedInstancesModificationId; }
-    inline bool ReservedInstancesModificationIdHasBeenSet() const { return m_reservedInstancesModificationIdHasBeenSet; }
-    inline void SetReservedInstancesModificationId(const Aws::String& value) { m_reservedInstancesModificationIdHasBeenSet = true; m_reservedInstancesModificationId = value; }
-    inline void SetReservedInstancesModificationId(Aws::String&& value) { m_reservedInstancesModificationIdHasBeenSet = true; m_reservedInstancesModificationId = std::move(value); }
-    inline void SetReservedInstancesModificationId(const char* value) { m_reservedInstancesModificationIdHasBeenSet = true; m_reservedInstancesModificationId.assign(value); }
-    inline ReservedInstancesModification& WithReservedInstancesModificationId(const Aws::String& value) { SetReservedInstancesModificationId(value); return *this;}
-    inline ReservedInstancesModification& WithReservedInstancesModificationId(Aws::String&& value) { SetReservedInstancesModificationId(std::move(value)); return *this;}
-    inline ReservedInstancesModification& WithReservedInstancesModificationId(const char* value) { SetReservedInstancesModificationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the modification request was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdateDate() const { return m_updateDate; }
+  inline bool UpdateDateHasBeenSet() const { return m_updateDateHasBeenSet; }
+  template <typename UpdateDateT = Aws::Utils::DateTime>
+  void SetUpdateDate(UpdateDateT&& value) {
+    m_updateDateHasBeenSet = true;
+    m_updateDate = std::forward<UpdateDateT>(value);
+  }
+  template <typename UpdateDateT = Aws::Utils::DateTime>
+  ReservedInstancesModification& WithUpdateDate(UpdateDateT&& value) {
+    SetUpdateDate(std::forward<UpdateDateT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken;
 
-    ///@{
-    /**
-     * <p>The status of the Reserved Instances modification request.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const Aws::String& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_statusHasBeenSet = true; m_status.assign(value); }
-    inline ReservedInstancesModification& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline ReservedInstancesModification& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline ReservedInstancesModification& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_createDate{};
 
-    ///@{
-    /**
-     * <p>The reason for the status.</p>
-     */
-    inline const Aws::String& GetStatusMessage() const{ return m_statusMessage; }
-    inline bool StatusMessageHasBeenSet() const { return m_statusMessageHasBeenSet; }
-    inline void SetStatusMessage(const Aws::String& value) { m_statusMessageHasBeenSet = true; m_statusMessage = value; }
-    inline void SetStatusMessage(Aws::String&& value) { m_statusMessageHasBeenSet = true; m_statusMessage = std::move(value); }
-    inline void SetStatusMessage(const char* value) { m_statusMessageHasBeenSet = true; m_statusMessage.assign(value); }
-    inline ReservedInstancesModification& WithStatusMessage(const Aws::String& value) { SetStatusMessage(value); return *this;}
-    inline ReservedInstancesModification& WithStatusMessage(Aws::String&& value) { SetStatusMessage(std::move(value)); return *this;}
-    inline ReservedInstancesModification& WithStatusMessage(const char* value) { SetStatusMessage(value); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_effectiveDate{};
 
-    ///@{
-    /**
-     * <p>The time when the modification request was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdateDate() const{ return m_updateDate; }
-    inline bool UpdateDateHasBeenSet() const { return m_updateDateHasBeenSet; }
-    inline void SetUpdateDate(const Aws::Utils::DateTime& value) { m_updateDateHasBeenSet = true; m_updateDate = value; }
-    inline void SetUpdateDate(Aws::Utils::DateTime&& value) { m_updateDateHasBeenSet = true; m_updateDate = std::move(value); }
-    inline ReservedInstancesModification& WithUpdateDate(const Aws::Utils::DateTime& value) { SetUpdateDate(value); return *this;}
-    inline ReservedInstancesModification& WithUpdateDate(Aws::Utils::DateTime&& value) { SetUpdateDate(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Vector<ReservedInstancesModificationResponse> m_modificationResults;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::Vector<ReservedInstancesId> m_reservedInstancesIds;
 
-    Aws::Utils::DateTime m_createDate;
-    bool m_createDateHasBeenSet = false;
+  Aws::String m_reservedInstancesModificationId;
 
-    Aws::Utils::DateTime m_effectiveDate;
-    bool m_effectiveDateHasBeenSet = false;
+  Aws::String m_status;
 
-    Aws::Vector<ReservedInstancesModificationResponse> m_modificationResults;
-    bool m_modificationResultsHasBeenSet = false;
+  Aws::String m_statusMessage;
 
-    Aws::Vector<ReservedInstancesId> m_reservedInstancesIds;
-    bool m_reservedInstancesIdsHasBeenSet = false;
+  Aws::Utils::DateTime m_updateDate{};
+  bool m_clientTokenHasBeenSet = false;
+  bool m_createDateHasBeenSet = false;
+  bool m_effectiveDateHasBeenSet = false;
+  bool m_modificationResultsHasBeenSet = false;
+  bool m_reservedInstancesIdsHasBeenSet = false;
+  bool m_reservedInstancesModificationIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_statusMessageHasBeenSet = false;
+  bool m_updateDateHasBeenSet = false;
+};
 
-    Aws::String m_reservedInstancesModificationId;
-    bool m_reservedInstancesModificationIdHasBeenSet = false;
-
-    Aws::String m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_statusMessage;
-    bool m_statusMessageHasBeenSet = false;
-
-    Aws::Utils::DateTime m_updateDate;
-    bool m_updateDateHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

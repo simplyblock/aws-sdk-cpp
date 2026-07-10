@@ -4,55 +4,54 @@
  */
 
 #pragma once
-#include <aws/cloud9/Cloud9_EXPORTS.h>
 #include <aws/cloud9/Cloud9Request.h>
+#include <aws/cloud9/Cloud9_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Cloud9
-{
-namespace Model
-{
+namespace Aws {
+namespace Cloud9 {
+namespace Model {
 
+/**
+ */
+class DeleteEnvironmentRequest : public Cloud9Request {
+ public:
+  AWS_CLOUD9_API DeleteEnvironmentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteEnvironment"; }
+
+  AWS_CLOUD9_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUD9_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the environment to delete.</p>
    */
-  class DeleteEnvironmentRequest : public Cloud9Request
-  {
-  public:
-    AWS_CLOUD9_API DeleteEnvironmentRequest();
+  inline const Aws::String& GetEnvironmentId() const { return m_environmentId; }
+  inline bool EnvironmentIdHasBeenSet() const { return m_environmentIdHasBeenSet; }
+  template <typename EnvironmentIdT = Aws::String>
+  void SetEnvironmentId(EnvironmentIdT&& value) {
+    m_environmentIdHasBeenSet = true;
+    m_environmentId = std::forward<EnvironmentIdT>(value);
+  }
+  template <typename EnvironmentIdT = Aws::String>
+  DeleteEnvironmentRequest& WithEnvironmentId(EnvironmentIdT&& value) {
+    SetEnvironmentId(std::forward<EnvironmentIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_environmentId;
+  bool m_environmentIdHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteEnvironment"; }
-
-    AWS_CLOUD9_API Aws::String SerializePayload() const override;
-
-    AWS_CLOUD9_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The ID of the environment to delete.</p>
-     */
-    inline const Aws::String& GetEnvironmentId() const{ return m_environmentId; }
-    inline bool EnvironmentIdHasBeenSet() const { return m_environmentIdHasBeenSet; }
-    inline void SetEnvironmentId(const Aws::String& value) { m_environmentIdHasBeenSet = true; m_environmentId = value; }
-    inline void SetEnvironmentId(Aws::String&& value) { m_environmentIdHasBeenSet = true; m_environmentId = std::move(value); }
-    inline void SetEnvironmentId(const char* value) { m_environmentIdHasBeenSet = true; m_environmentId.assign(value); }
-    inline DeleteEnvironmentRequest& WithEnvironmentId(const Aws::String& value) { SetEnvironmentId(value); return *this;}
-    inline DeleteEnvironmentRequest& WithEnvironmentId(Aws::String&& value) { SetEnvironmentId(std::move(value)); return *this;}
-    inline DeleteEnvironmentRequest& WithEnvironmentId(const char* value) { SetEnvironmentId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_environmentId;
-    bool m_environmentIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Cloud9
-} // namespace Aws
+}  // namespace Model
+}  // namespace Cloud9
+}  // namespace Aws

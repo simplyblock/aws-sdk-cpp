@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/chime-sdk-voice/ChimeSDKVoice_EXPORTS.h>
 #include <aws/chime-sdk-voice/model/VoiceProfileDomain.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKVoice
-{
-namespace Model
-{
-  class GetVoiceProfileDomainResult
-  {
-  public:
-    AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult();
-    AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKVoice {
+namespace Model {
+class GetVoiceProfileDomainResult {
+ public:
+  AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult() = default;
+  AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKVOICE_API GetVoiceProfileDomainResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the voice profile domain.</p>
+   */
+  inline const VoiceProfileDomain& GetVoiceProfileDomain() const { return m_voiceProfileDomain; }
+  template <typename VoiceProfileDomainT = VoiceProfileDomain>
+  void SetVoiceProfileDomain(VoiceProfileDomainT&& value) {
+    m_voiceProfileDomainHasBeenSet = true;
+    m_voiceProfileDomain = std::forward<VoiceProfileDomainT>(value);
+  }
+  template <typename VoiceProfileDomainT = VoiceProfileDomain>
+  GetVoiceProfileDomainResult& WithVoiceProfileDomain(VoiceProfileDomainT&& value) {
+    SetVoiceProfileDomain(std::forward<VoiceProfileDomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the voice profile domain.</p>
-     */
-    inline const VoiceProfileDomain& GetVoiceProfileDomain() const{ return m_voiceProfileDomain; }
-    inline void SetVoiceProfileDomain(const VoiceProfileDomain& value) { m_voiceProfileDomain = value; }
-    inline void SetVoiceProfileDomain(VoiceProfileDomain&& value) { m_voiceProfileDomain = std::move(value); }
-    inline GetVoiceProfileDomainResult& WithVoiceProfileDomain(const VoiceProfileDomain& value) { SetVoiceProfileDomain(value); return *this;}
-    inline GetVoiceProfileDomainResult& WithVoiceProfileDomain(VoiceProfileDomain&& value) { SetVoiceProfileDomain(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetVoiceProfileDomainResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetVoiceProfileDomainResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetVoiceProfileDomainResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetVoiceProfileDomainResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    VoiceProfileDomain m_voiceProfileDomain;
+ private:
+  VoiceProfileDomain m_voiceProfileDomain;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_voiceProfileDomainHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKVoice
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKVoice
+}  // namespace Aws

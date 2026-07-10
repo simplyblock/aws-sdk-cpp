@@ -12,36 +12,20 @@ using namespace Aws::ChimeSDKMessaging::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-TagResourceRequest::TagResourceRequest() : 
-    m_resourceARNHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String TagResourceRequest::SerializePayload() const
-{
+Aws::String TagResourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_resourceARNHasBeenSet)
-  {
-   payload.WithString("ResourceARN", m_resourceARN);
-
+  if (m_resourceARNHasBeenSet) {
+    payload.WithString("ResourceARN", m_resourceARN);
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
-   for(unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex)
-   {
-     tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
-   }
-   payload.WithArray("Tags", std::move(tagsJsonList));
-
+  if (m_tagsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> tagsJsonList(m_tags.size());
+    for (unsigned tagsIndex = 0; tagsIndex < tagsJsonList.GetLength(); ++tagsIndex) {
+      tagsJsonList[tagsIndex].AsObject(m_tags[tagsIndex].Jsonize());
+    }
+    payload.WithArray("Tags", std::move(tagsJsonList));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

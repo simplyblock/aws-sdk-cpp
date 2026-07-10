@@ -4,106 +4,115 @@
  */
 
 #pragma once
-#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/wellarchitected/model/ChoiceStatus.h>
+#include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/ChoiceReason.h>
+#include <aws/wellarchitected/model/ChoiceStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
 
+/**
+ * <p>A choice that has been answered on a question in your workload.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ChoiceAnswer">AWS
+ * API Reference</a></p>
+ */
+class ChoiceAnswer {
+ public:
+  AWS_WELLARCHITECTED_API ChoiceAnswer() = default;
+  AWS_WELLARCHITECTED_API ChoiceAnswer(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API ChoiceAnswer& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetChoiceId() const { return m_choiceId; }
+  inline bool ChoiceIdHasBeenSet() const { return m_choiceIdHasBeenSet; }
+  template <typename ChoiceIdT = Aws::String>
+  void SetChoiceId(ChoiceIdT&& value) {
+    m_choiceIdHasBeenSet = true;
+    m_choiceId = std::forward<ChoiceIdT>(value);
+  }
+  template <typename ChoiceIdT = Aws::String>
+  ChoiceAnswer& WithChoiceId(ChoiceIdT&& value) {
+    SetChoiceId(std::forward<ChoiceIdT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>A choice that has been answered on a question in your workload.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/wellarchitected-2020-03-31/ChoiceAnswer">AWS
-   * API Reference</a></p>
+   * <p>The status of a choice.</p>
    */
-  class ChoiceAnswer
-  {
-  public:
-    AWS_WELLARCHITECTED_API ChoiceAnswer();
-    AWS_WELLARCHITECTED_API ChoiceAnswer(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API ChoiceAnswer& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_WELLARCHITECTED_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline ChoiceStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(ChoiceStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline ChoiceAnswer& WithStatus(ChoiceStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The reason why a choice is non-applicable to a question in your workload.</p>
+   */
+  inline ChoiceReason GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  inline void SetReason(ChoiceReason value) {
+    m_reasonHasBeenSet = true;
+    m_reason = value;
+  }
+  inline ChoiceAnswer& WithReason(ChoiceReason value) {
+    SetReason(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetChoiceId() const{ return m_choiceId; }
-    inline bool ChoiceIdHasBeenSet() const { return m_choiceIdHasBeenSet; }
-    inline void SetChoiceId(const Aws::String& value) { m_choiceIdHasBeenSet = true; m_choiceId = value; }
-    inline void SetChoiceId(Aws::String&& value) { m_choiceIdHasBeenSet = true; m_choiceId = std::move(value); }
-    inline void SetChoiceId(const char* value) { m_choiceIdHasBeenSet = true; m_choiceId.assign(value); }
-    inline ChoiceAnswer& WithChoiceId(const Aws::String& value) { SetChoiceId(value); return *this;}
-    inline ChoiceAnswer& WithChoiceId(Aws::String&& value) { SetChoiceId(std::move(value)); return *this;}
-    inline ChoiceAnswer& WithChoiceId(const char* value) { SetChoiceId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The notes associated with a choice.</p>
+   */
+  inline const Aws::String& GetNotes() const { return m_notes; }
+  inline bool NotesHasBeenSet() const { return m_notesHasBeenSet; }
+  template <typename NotesT = Aws::String>
+  void SetNotes(NotesT&& value) {
+    m_notesHasBeenSet = true;
+    m_notes = std::forward<NotesT>(value);
+  }
+  template <typename NotesT = Aws::String>
+  ChoiceAnswer& WithNotes(NotesT&& value) {
+    SetNotes(std::forward<NotesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_choiceId;
 
-    ///@{
-    /**
-     * <p>The status of a choice.</p>
-     */
-    inline const ChoiceStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const ChoiceStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(ChoiceStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline ChoiceAnswer& WithStatus(const ChoiceStatus& value) { SetStatus(value); return *this;}
-    inline ChoiceAnswer& WithStatus(ChoiceStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ChoiceStatus m_status{ChoiceStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The reason why a choice is non-applicable to a question in your workload.</p>
-     */
-    inline const ChoiceReason& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const ChoiceReason& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(ChoiceReason&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline ChoiceAnswer& WithReason(const ChoiceReason& value) { SetReason(value); return *this;}
-    inline ChoiceAnswer& WithReason(ChoiceReason&& value) { SetReason(std::move(value)); return *this;}
-    ///@}
+  ChoiceReason m_reason{ChoiceReason::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The notes associated with a choice.</p>
-     */
-    inline const Aws::String& GetNotes() const{ return m_notes; }
-    inline bool NotesHasBeenSet() const { return m_notesHasBeenSet; }
-    inline void SetNotes(const Aws::String& value) { m_notesHasBeenSet = true; m_notes = value; }
-    inline void SetNotes(Aws::String&& value) { m_notesHasBeenSet = true; m_notes = std::move(value); }
-    inline void SetNotes(const char* value) { m_notesHasBeenSet = true; m_notes.assign(value); }
-    inline ChoiceAnswer& WithNotes(const Aws::String& value) { SetNotes(value); return *this;}
-    inline ChoiceAnswer& WithNotes(Aws::String&& value) { SetNotes(std::move(value)); return *this;}
-    inline ChoiceAnswer& WithNotes(const char* value) { SetNotes(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_notes;
+  bool m_choiceIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+  bool m_notesHasBeenSet = false;
+};
 
-    Aws::String m_choiceId;
-    bool m_choiceIdHasBeenSet = false;
-
-    ChoiceStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    ChoiceReason m_reason;
-    bool m_reasonHasBeenSet = false;
-
-    Aws::String m_notes;
-    bool m_notesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

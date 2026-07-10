@@ -6,56 +6,53 @@
 #pragma once
 #include <aws/chime-sdk-media-pipelines/ChimeSDKMediaPipelines_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMediaPipelines
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMediaPipelines {
+namespace Model {
 
+/**
+ * <p>The configuration settings for the SQS sink.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-media-pipelines-2021-07-15/SqsQueueSinkConfiguration">AWS
+ * API Reference</a></p>
+ */
+class SqsQueueSinkConfiguration {
+ public:
+  AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration() = default;
+  AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CHIMESDKMEDIAPIPELINES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration settings for the SQS sink.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-media-pipelines-2021-07-15/SqsQueueSinkConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the SQS sink.</p>
    */
-  class SqsQueueSinkConfiguration
-  {
-  public:
-    AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration();
-    AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKMEDIAPIPELINES_API SqsQueueSinkConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CHIMESDKMEDIAPIPELINES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetInsightsTarget() const { return m_insightsTarget; }
+  inline bool InsightsTargetHasBeenSet() const { return m_insightsTargetHasBeenSet; }
+  template <typename InsightsTargetT = Aws::String>
+  void SetInsightsTarget(InsightsTargetT&& value) {
+    m_insightsTargetHasBeenSet = true;
+    m_insightsTarget = std::forward<InsightsTargetT>(value);
+  }
+  template <typename InsightsTargetT = Aws::String>
+  SqsQueueSinkConfiguration& WithInsightsTarget(InsightsTargetT&& value) {
+    SetInsightsTarget(std::forward<InsightsTargetT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_insightsTarget;
+  bool m_insightsTargetHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The ARN of the SQS sink.</p>
-     */
-    inline const Aws::String& GetInsightsTarget() const{ return m_insightsTarget; }
-    inline bool InsightsTargetHasBeenSet() const { return m_insightsTargetHasBeenSet; }
-    inline void SetInsightsTarget(const Aws::String& value) { m_insightsTargetHasBeenSet = true; m_insightsTarget = value; }
-    inline void SetInsightsTarget(Aws::String&& value) { m_insightsTargetHasBeenSet = true; m_insightsTarget = std::move(value); }
-    inline void SetInsightsTarget(const char* value) { m_insightsTargetHasBeenSet = true; m_insightsTarget.assign(value); }
-    inline SqsQueueSinkConfiguration& WithInsightsTarget(const Aws::String& value) { SetInsightsTarget(value); return *this;}
-    inline SqsQueueSinkConfiguration& WithInsightsTarget(Aws::String&& value) { SetInsightsTarget(std::move(value)); return *this;}
-    inline SqsQueueSinkConfiguration& WithInsightsTarget(const char* value) { SetInsightsTarget(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_insightsTarget;
-    bool m_insightsTargetHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKMediaPipelines
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMediaPipelines
+}  // namespace Aws

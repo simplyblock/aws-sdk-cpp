@@ -4,73 +4,89 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/Firewall.h>
 #include <aws/network-firewall/model/FirewallStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkFirewall
-{
-namespace Model
-{
-  class DeleteFirewallResult
-  {
-  public:
-    AWS_NETWORKFIREWALL_API DeleteFirewallResult();
-    AWS_NETWORKFIREWALL_API DeleteFirewallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKFIREWALL_API DeleteFirewallResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkFirewall {
+namespace Model {
+class DeleteFirewallResult {
+ public:
+  AWS_NETWORKFIREWALL_API DeleteFirewallResult() = default;
+  AWS_NETWORKFIREWALL_API DeleteFirewallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKFIREWALL_API DeleteFirewallResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Firewall& GetFirewall() const{ return m_firewall; }
-    inline void SetFirewall(const Firewall& value) { m_firewall = value; }
-    inline void SetFirewall(Firewall&& value) { m_firewall = std::move(value); }
-    inline DeleteFirewallResult& WithFirewall(const Firewall& value) { SetFirewall(value); return *this;}
-    inline DeleteFirewallResult& WithFirewall(Firewall&& value) { SetFirewall(std::move(value)); return *this;}
-    ///@}
+  inline const Firewall& GetFirewall() const { return m_firewall; }
+  template <typename FirewallT = Firewall>
+  void SetFirewall(FirewallT&& value) {
+    m_firewallHasBeenSet = true;
+    m_firewall = std::forward<FirewallT>(value);
+  }
+  template <typename FirewallT = Firewall>
+  DeleteFirewallResult& WithFirewall(FirewallT&& value) {
+    SetFirewall(std::forward<FirewallT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const FirewallStatus& GetFirewallStatus() const{ return m_firewallStatus; }
-    inline void SetFirewallStatus(const FirewallStatus& value) { m_firewallStatus = value; }
-    inline void SetFirewallStatus(FirewallStatus&& value) { m_firewallStatus = std::move(value); }
-    inline DeleteFirewallResult& WithFirewallStatus(const FirewallStatus& value) { SetFirewallStatus(value); return *this;}
-    inline DeleteFirewallResult& WithFirewallStatus(FirewallStatus&& value) { SetFirewallStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteFirewallResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteFirewallResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteFirewallResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const FirewallStatus& GetFirewallStatus() const { return m_firewallStatus; }
+  template <typename FirewallStatusT = FirewallStatus>
+  void SetFirewallStatus(FirewallStatusT&& value) {
+    m_firewallStatusHasBeenSet = true;
+    m_firewallStatus = std::forward<FirewallStatusT>(value);
+  }
+  template <typename FirewallStatusT = FirewallStatus>
+  DeleteFirewallResult& WithFirewallStatus(FirewallStatusT&& value) {
+    SetFirewallStatus(std::forward<FirewallStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    Firewall m_firewall;
+  ///@{
 
-    FirewallStatus m_firewallStatus;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteFirewallResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Firewall m_firewall;
 
-} // namespace Model
-} // namespace NetworkFirewall
-} // namespace Aws
+  FirewallStatus m_firewallStatus;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_firewallHasBeenSet = false;
+  bool m_firewallStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace NetworkFirewall
+}  // namespace Aws

@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/personalize/Personalize_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/personalize/Personalize_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Personalize
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Personalize {
+namespace Model {
 
+/**
+ * <p>Describes an algorithm image.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/AlgorithmImage">AWS
+ * API Reference</a></p>
+ */
+class AlgorithmImage {
+ public:
+  AWS_PERSONALIZE_API AlgorithmImage() = default;
+  AWS_PERSONALIZE_API AlgorithmImage(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PERSONALIZE_API AlgorithmImage& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PERSONALIZE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes an algorithm image.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/AlgorithmImage">AWS
-   * API Reference</a></p>
+   * <p>The name of the algorithm image.</p>
    */
-  class AlgorithmImage
-  {
-  public:
-    AWS_PERSONALIZE_API AlgorithmImage();
-    AWS_PERSONALIZE_API AlgorithmImage(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PERSONALIZE_API AlgorithmImage& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PERSONALIZE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  AlgorithmImage& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The URI of the Docker container for the algorithm image.</p>
+   */
+  inline const Aws::String& GetDockerURI() const { return m_dockerURI; }
+  inline bool DockerURIHasBeenSet() const { return m_dockerURIHasBeenSet; }
+  template <typename DockerURIT = Aws::String>
+  void SetDockerURI(DockerURIT&& value) {
+    m_dockerURIHasBeenSet = true;
+    m_dockerURI = std::forward<DockerURIT>(value);
+  }
+  template <typename DockerURIT = Aws::String>
+  AlgorithmImage& WithDockerURI(DockerURIT&& value) {
+    SetDockerURI(std::forward<DockerURIT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the algorithm image.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline AlgorithmImage& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline AlgorithmImage& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline AlgorithmImage& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_dockerURI;
+  bool m_nameHasBeenSet = false;
+  bool m_dockerURIHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The URI of the Docker container for the algorithm image.</p>
-     */
-    inline const Aws::String& GetDockerURI() const{ return m_dockerURI; }
-    inline bool DockerURIHasBeenSet() const { return m_dockerURIHasBeenSet; }
-    inline void SetDockerURI(const Aws::String& value) { m_dockerURIHasBeenSet = true; m_dockerURI = value; }
-    inline void SetDockerURI(Aws::String&& value) { m_dockerURIHasBeenSet = true; m_dockerURI = std::move(value); }
-    inline void SetDockerURI(const char* value) { m_dockerURIHasBeenSet = true; m_dockerURI.assign(value); }
-    inline AlgorithmImage& WithDockerURI(const Aws::String& value) { SetDockerURI(value); return *this;}
-    inline AlgorithmImage& WithDockerURI(Aws::String&& value) { SetDockerURI(std::move(value)); return *this;}
-    inline AlgorithmImage& WithDockerURI(const char* value) { SetDockerURI(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_dockerURI;
-    bool m_dockerURIHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Personalize
-} // namespace Aws
+}  // namespace Model
+}  // namespace Personalize
+}  // namespace Aws

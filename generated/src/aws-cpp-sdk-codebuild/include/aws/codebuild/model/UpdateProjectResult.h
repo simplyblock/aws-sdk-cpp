@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/codebuild/CodeBuild_EXPORTS.h>
 #include <aws/codebuild/model/Project.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeBuild
-{
-namespace Model
-{
-  class UpdateProjectResult
-  {
-  public:
-    AWS_CODEBUILD_API UpdateProjectResult();
-    AWS_CODEBUILD_API UpdateProjectResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEBUILD_API UpdateProjectResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeBuild {
+namespace Model {
+class UpdateProjectResult {
+ public:
+  AWS_CODEBUILD_API UpdateProjectResult() = default;
+  AWS_CODEBUILD_API UpdateProjectResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEBUILD_API UpdateProjectResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the build project that was changed.</p>
+   */
+  inline const Project& GetProject() const { return m_project; }
+  template <typename ProjectT = Project>
+  void SetProject(ProjectT&& value) {
+    m_projectHasBeenSet = true;
+    m_project = std::forward<ProjectT>(value);
+  }
+  template <typename ProjectT = Project>
+  UpdateProjectResult& WithProject(ProjectT&& value) {
+    SetProject(std::forward<ProjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the build project that was changed.</p>
-     */
-    inline const Project& GetProject() const{ return m_project; }
-    inline void SetProject(const Project& value) { m_project = value; }
-    inline void SetProject(Project&& value) { m_project = std::move(value); }
-    inline UpdateProjectResult& WithProject(const Project& value) { SetProject(value); return *this;}
-    inline UpdateProjectResult& WithProject(Project&& value) { SetProject(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateProjectResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateProjectResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateProjectResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateProjectResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Project m_project;
+ private:
+  Project m_project;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_projectHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

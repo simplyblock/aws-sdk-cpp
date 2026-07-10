@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dax/DAX_EXPORTS.h>
 #include <aws/dax/model/SubnetGroup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DAX
-{
-namespace Model
-{
-  class UpdateSubnetGroupResult
-  {
-  public:
-    AWS_DAX_API UpdateSubnetGroupResult();
-    AWS_DAX_API UpdateSubnetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DAX_API UpdateSubnetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DAX {
+namespace Model {
+class UpdateSubnetGroupResult {
+ public:
+  AWS_DAX_API UpdateSubnetGroupResult() = default;
+  AWS_DAX_API UpdateSubnetGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DAX_API UpdateSubnetGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The subnet group that has been modified.</p>
+   */
+  inline const SubnetGroup& GetSubnetGroup() const { return m_subnetGroup; }
+  template <typename SubnetGroupT = SubnetGroup>
+  void SetSubnetGroup(SubnetGroupT&& value) {
+    m_subnetGroupHasBeenSet = true;
+    m_subnetGroup = std::forward<SubnetGroupT>(value);
+  }
+  template <typename SubnetGroupT = SubnetGroup>
+  UpdateSubnetGroupResult& WithSubnetGroup(SubnetGroupT&& value) {
+    SetSubnetGroup(std::forward<SubnetGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subnet group that has been modified.</p>
-     */
-    inline const SubnetGroup& GetSubnetGroup() const{ return m_subnetGroup; }
-    inline void SetSubnetGroup(const SubnetGroup& value) { m_subnetGroup = value; }
-    inline void SetSubnetGroup(SubnetGroup&& value) { m_subnetGroup = std::move(value); }
-    inline UpdateSubnetGroupResult& WithSubnetGroup(const SubnetGroup& value) { SetSubnetGroup(value); return *this;}
-    inline UpdateSubnetGroupResult& WithSubnetGroup(SubnetGroup&& value) { SetSubnetGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateSubnetGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateSubnetGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateSubnetGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateSubnetGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    SubnetGroup m_subnetGroup;
+ private:
+  SubnetGroup m_subnetGroup;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_subnetGroupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DAX
-} // namespace Aws
+}  // namespace Model
+}  // namespace DAX
+}  // namespace Aws

@@ -4,95 +4,120 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticache/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+#include <aws/elasticache/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
+/**
+ * <p>Represents the allowed node types you can use to modify your cluster or
+ * replication group.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/AllowedNodeTypeModificationsMessage">AWS
+ * API Reference</a></p>
+ */
+class ListAllowedNodeTypeModificationsResult {
+ public:
+  AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult() = default;
+  AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Represents the allowed node types you can use to modify your cluster or
-   * replication group.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/AllowedNodeTypeModificationsMessage">AWS
-   * API Reference</a></p>
+   * <p>A string list, each element of which specifies a cache node type which you
+   * can use to scale your cluster or replication group.</p> <p>When scaling up a
+   * Valkey or Redis OSS cluster or replication group using
+   * <code>ModifyCacheCluster</code> or <code>ModifyReplicationGroup</code>, use a
+   * value from this list for the <code>CacheNodeType</code> parameter.</p>
    */
-  class ListAllowedNodeTypeModificationsResult
-  {
-  public:
-    AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult();
-    AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICACHE_API ListAllowedNodeTypeModificationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetScaleUpModifications() const { return m_scaleUpModifications; }
+  template <typename ScaleUpModificationsT = Aws::Vector<Aws::String>>
+  void SetScaleUpModifications(ScaleUpModificationsT&& value) {
+    m_scaleUpModificationsHasBeenSet = true;
+    m_scaleUpModifications = std::forward<ScaleUpModificationsT>(value);
+  }
+  template <typename ScaleUpModificationsT = Aws::Vector<Aws::String>>
+  ListAllowedNodeTypeModificationsResult& WithScaleUpModifications(ScaleUpModificationsT&& value) {
+    SetScaleUpModifications(std::forward<ScaleUpModificationsT>(value));
+    return *this;
+  }
+  template <typename ScaleUpModificationsT = Aws::String>
+  ListAllowedNodeTypeModificationsResult& AddScaleUpModifications(ScaleUpModificationsT&& value) {
+    m_scaleUpModificationsHasBeenSet = true;
+    m_scaleUpModifications.emplace_back(std::forward<ScaleUpModificationsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A string list, each element of which specifies a cache node type which you
+   * can use to scale your cluster or replication group. When scaling down a Valkey
+   * or Redis OSS cluster or replication group using ModifyCacheCluster or
+   * ModifyReplicationGroup, use a value from this list for the CacheNodeType
+   * parameter. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetScaleDownModifications() const { return m_scaleDownModifications; }
+  template <typename ScaleDownModificationsT = Aws::Vector<Aws::String>>
+  void SetScaleDownModifications(ScaleDownModificationsT&& value) {
+    m_scaleDownModificationsHasBeenSet = true;
+    m_scaleDownModifications = std::forward<ScaleDownModificationsT>(value);
+  }
+  template <typename ScaleDownModificationsT = Aws::Vector<Aws::String>>
+  ListAllowedNodeTypeModificationsResult& WithScaleDownModifications(ScaleDownModificationsT&& value) {
+    SetScaleDownModifications(std::forward<ScaleDownModificationsT>(value));
+    return *this;
+  }
+  template <typename ScaleDownModificationsT = Aws::String>
+  ListAllowedNodeTypeModificationsResult& AddScaleDownModifications(ScaleDownModificationsT&& value) {
+    m_scaleDownModificationsHasBeenSet = true;
+    m_scaleDownModifications.emplace_back(std::forward<ScaleDownModificationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string list, each element of which specifies a cache node type which you
-     * can use to scale your cluster or replication group.</p> <p>When scaling up a
-     * Valkey or Redis OSS cluster or replication group using
-     * <code>ModifyCacheCluster</code> or <code>ModifyReplicationGroup</code>, use a
-     * value from this list for the <code>CacheNodeType</code> parameter.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetScaleUpModifications() const{ return m_scaleUpModifications; }
-    inline void SetScaleUpModifications(const Aws::Vector<Aws::String>& value) { m_scaleUpModifications = value; }
-    inline void SetScaleUpModifications(Aws::Vector<Aws::String>&& value) { m_scaleUpModifications = std::move(value); }
-    inline ListAllowedNodeTypeModificationsResult& WithScaleUpModifications(const Aws::Vector<Aws::String>& value) { SetScaleUpModifications(value); return *this;}
-    inline ListAllowedNodeTypeModificationsResult& WithScaleUpModifications(Aws::Vector<Aws::String>&& value) { SetScaleUpModifications(std::move(value)); return *this;}
-    inline ListAllowedNodeTypeModificationsResult& AddScaleUpModifications(const Aws::String& value) { m_scaleUpModifications.push_back(value); return *this; }
-    inline ListAllowedNodeTypeModificationsResult& AddScaleUpModifications(Aws::String&& value) { m_scaleUpModifications.push_back(std::move(value)); return *this; }
-    inline ListAllowedNodeTypeModificationsResult& AddScaleUpModifications(const char* value) { m_scaleUpModifications.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A string list, each element of which specifies a cache node type which you
-     * can use to scale your cluster or replication group. When scaling down a Valkey
-     * or Redis OSS cluster or replication group using ModifyCacheCluster or
-     * ModifyReplicationGroup, use a value from this list for the CacheNodeType
-     * parameter. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetScaleDownModifications() const{ return m_scaleDownModifications; }
-    inline void SetScaleDownModifications(const Aws::Vector<Aws::String>& value) { m_scaleDownModifications = value; }
-    inline void SetScaleDownModifications(Aws::Vector<Aws::String>&& value) { m_scaleDownModifications = std::move(value); }
-    inline ListAllowedNodeTypeModificationsResult& WithScaleDownModifications(const Aws::Vector<Aws::String>& value) { SetScaleDownModifications(value); return *this;}
-    inline ListAllowedNodeTypeModificationsResult& WithScaleDownModifications(Aws::Vector<Aws::String>&& value) { SetScaleDownModifications(std::move(value)); return *this;}
-    inline ListAllowedNodeTypeModificationsResult& AddScaleDownModifications(const Aws::String& value) { m_scaleDownModifications.push_back(value); return *this; }
-    inline ListAllowedNodeTypeModificationsResult& AddScaleDownModifications(Aws::String&& value) { m_scaleDownModifications.push_back(std::move(value)); return *this; }
-    inline ListAllowedNodeTypeModificationsResult& AddScaleDownModifications(const char* value) { m_scaleDownModifications.push_back(value); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListAllowedNodeTypeModificationsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListAllowedNodeTypeModificationsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListAllowedNodeTypeModificationsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_scaleUpModifications;
 
-    Aws::Vector<Aws::String> m_scaleUpModifications;
+  Aws::Vector<Aws::String> m_scaleDownModifications;
 
-    Aws::Vector<Aws::String> m_scaleDownModifications;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_scaleUpModificationsHasBeenSet = false;
+  bool m_scaleDownModificationsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

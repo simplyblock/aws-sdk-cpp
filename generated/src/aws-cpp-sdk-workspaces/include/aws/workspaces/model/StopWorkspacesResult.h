@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/workspaces/WorkSpaces_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workspaces/WorkSpaces_EXPORTS.h>
 #include <aws/workspaces/model/FailedWorkspaceChangeRequest.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpaces
-{
-namespace Model
-{
-  class StopWorkspacesResult
-  {
-  public:
-    AWS_WORKSPACES_API StopWorkspacesResult();
-    AWS_WORKSPACES_API StopWorkspacesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACES_API StopWorkspacesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpaces {
+namespace Model {
+class StopWorkspacesResult {
+ public:
+  AWS_WORKSPACES_API StopWorkspacesResult() = default;
+  AWS_WORKSPACES_API StopWorkspacesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACES_API StopWorkspacesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the WorkSpaces that could not be stopped.</p>
+   */
+  inline const Aws::Vector<FailedWorkspaceChangeRequest>& GetFailedRequests() const { return m_failedRequests; }
+  template <typename FailedRequestsT = Aws::Vector<FailedWorkspaceChangeRequest>>
+  void SetFailedRequests(FailedRequestsT&& value) {
+    m_failedRequestsHasBeenSet = true;
+    m_failedRequests = std::forward<FailedRequestsT>(value);
+  }
+  template <typename FailedRequestsT = Aws::Vector<FailedWorkspaceChangeRequest>>
+  StopWorkspacesResult& WithFailedRequests(FailedRequestsT&& value) {
+    SetFailedRequests(std::forward<FailedRequestsT>(value));
+    return *this;
+  }
+  template <typename FailedRequestsT = FailedWorkspaceChangeRequest>
+  StopWorkspacesResult& AddFailedRequests(FailedRequestsT&& value) {
+    m_failedRequestsHasBeenSet = true;
+    m_failedRequests.emplace_back(std::forward<FailedRequestsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the WorkSpaces that could not be stopped.</p>
-     */
-    inline const Aws::Vector<FailedWorkspaceChangeRequest>& GetFailedRequests() const{ return m_failedRequests; }
-    inline void SetFailedRequests(const Aws::Vector<FailedWorkspaceChangeRequest>& value) { m_failedRequests = value; }
-    inline void SetFailedRequests(Aws::Vector<FailedWorkspaceChangeRequest>&& value) { m_failedRequests = std::move(value); }
-    inline StopWorkspacesResult& WithFailedRequests(const Aws::Vector<FailedWorkspaceChangeRequest>& value) { SetFailedRequests(value); return *this;}
-    inline StopWorkspacesResult& WithFailedRequests(Aws::Vector<FailedWorkspaceChangeRequest>&& value) { SetFailedRequests(std::move(value)); return *this;}
-    inline StopWorkspacesResult& AddFailedRequests(const FailedWorkspaceChangeRequest& value) { m_failedRequests.push_back(value); return *this; }
-    inline StopWorkspacesResult& AddFailedRequests(FailedWorkspaceChangeRequest&& value) { m_failedRequests.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StopWorkspacesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StopWorkspacesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StopWorkspacesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StopWorkspacesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FailedWorkspaceChangeRequest> m_failedRequests;
+ private:
+  Aws::Vector<FailedWorkspaceChangeRequest> m_failedRequests;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_failedRequestsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

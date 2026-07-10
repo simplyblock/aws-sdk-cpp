@@ -4,75 +4,76 @@
  */
 
 #pragma once
-#include <aws/shield/Shield_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/shield/Shield_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Shield
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Shield {
+namespace Model {
 
+/**
+ * <p>Exception indicating the specified resource already exists. If available,
+ * this exception includes details in additional properties. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/shield-2016-06-02/ResourceAlreadyExistsException">AWS
+ * API Reference</a></p>
+ */
+class ResourceAlreadyExistsException {
+ public:
+  AWS_SHIELD_API ResourceAlreadyExistsException() = default;
+  AWS_SHIELD_API ResourceAlreadyExistsException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SHIELD_API ResourceAlreadyExistsException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SHIELD_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ResourceAlreadyExistsException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>Exception indicating the specified resource already exists. If available,
-   * this exception includes details in additional properties. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/shield-2016-06-02/ResourceAlreadyExistsException">AWS
-   * API Reference</a></p>
+   * <p>The type of resource that already exists.</p>
    */
-  class ResourceAlreadyExistsException
-  {
-  public:
-    AWS_SHIELD_API ResourceAlreadyExistsException();
-    AWS_SHIELD_API ResourceAlreadyExistsException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SHIELD_API ResourceAlreadyExistsException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SHIELD_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetResourceType() const { return m_resourceType; }
+  inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
+  template <typename ResourceTypeT = Aws::String>
+  void SetResourceType(ResourceTypeT&& value) {
+    m_resourceTypeHasBeenSet = true;
+    m_resourceType = std::forward<ResourceTypeT>(value);
+  }
+  template <typename ResourceTypeT = Aws::String>
+  ResourceAlreadyExistsException& WithResourceType(ResourceTypeT&& value) {
+    SetResourceType(std::forward<ResourceTypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_message;
 
+  Aws::String m_resourceType;
+  bool m_messageHasBeenSet = false;
+  bool m_resourceTypeHasBeenSet = false;
+};
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline ResourceAlreadyExistsException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline ResourceAlreadyExistsException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline ResourceAlreadyExistsException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The type of resource that already exists.</p>
-     */
-    inline const Aws::String& GetResourceType() const{ return m_resourceType; }
-    inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
-    inline void SetResourceType(const Aws::String& value) { m_resourceTypeHasBeenSet = true; m_resourceType = value; }
-    inline void SetResourceType(Aws::String&& value) { m_resourceTypeHasBeenSet = true; m_resourceType = std::move(value); }
-    inline void SetResourceType(const char* value) { m_resourceTypeHasBeenSet = true; m_resourceType.assign(value); }
-    inline ResourceAlreadyExistsException& WithResourceType(const Aws::String& value) { SetResourceType(value); return *this;}
-    inline ResourceAlreadyExistsException& WithResourceType(Aws::String&& value) { SetResourceType(std::move(value)); return *this;}
-    inline ResourceAlreadyExistsException& WithResourceType(const char* value) { SetResourceType(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
-
-    Aws::String m_resourceType;
-    bool m_resourceTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Shield
-} // namespace Aws
+}  // namespace Model
+}  // namespace Shield
+}  // namespace Aws

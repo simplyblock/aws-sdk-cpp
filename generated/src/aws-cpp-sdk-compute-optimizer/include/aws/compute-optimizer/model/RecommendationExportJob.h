@@ -5,157 +5,184 @@
 
 #pragma once
 #include <aws/compute-optimizer/ComputeOptimizer_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/compute-optimizer/model/ExportDestination.h>
-#include <aws/compute-optimizer/model/ResourceType.h>
 #include <aws/compute-optimizer/model/JobStatus.h>
+#include <aws/compute-optimizer/model/ResourceType.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ComputeOptimizer
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace ComputeOptimizer {
+namespace Model {
 
+/**
+ * <p>Describes a recommendation export job.</p> <p>Use the
+ * <a>DescribeRecommendationExportJobs</a> action to view your recommendation
+ * export jobs.</p> <p>Use the <a>ExportAutoScalingGroupRecommendations</a> or
+ * <a>ExportEC2InstanceRecommendations</a> actions to request an export of your
+ * recommendations.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/RecommendationExportJob">AWS
+ * API Reference</a></p>
+ */
+class RecommendationExportJob {
+ public:
+  AWS_COMPUTEOPTIMIZER_API RecommendationExportJob() = default;
+  AWS_COMPUTEOPTIMIZER_API RecommendationExportJob(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPUTEOPTIMIZER_API RecommendationExportJob& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_COMPUTEOPTIMIZER_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>Describes a recommendation export job.</p> <p>Use the
-   * <a>DescribeRecommendationExportJobs</a> action to view your recommendation
-   * export jobs.</p> <p>Use the <a>ExportAutoScalingGroupRecommendations</a> or
-   * <a>ExportEC2InstanceRecommendations</a> actions to request an export of your
-   * recommendations.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/RecommendationExportJob">AWS
-   * API Reference</a></p>
+   * <p>The identification number of the export job.</p>
    */
-  class RecommendationExportJob
-  {
-  public:
-    AWS_COMPUTEOPTIMIZER_API RecommendationExportJob();
-    AWS_COMPUTEOPTIMIZER_API RecommendationExportJob(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPUTEOPTIMIZER_API RecommendationExportJob& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COMPUTEOPTIMIZER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  RecommendationExportJob& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An object that describes the destination of the export file.</p>
+   */
+  inline const ExportDestination& GetDestination() const { return m_destination; }
+  inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
+  template <typename DestinationT = ExportDestination>
+  void SetDestination(DestinationT&& value) {
+    m_destinationHasBeenSet = true;
+    m_destination = std::forward<DestinationT>(value);
+  }
+  template <typename DestinationT = ExportDestination>
+  RecommendationExportJob& WithDestination(DestinationT&& value) {
+    SetDestination(std::forward<DestinationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identification number of the export job.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
-    inline void SetJobId(const Aws::String& value) { m_jobIdHasBeenSet = true; m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobIdHasBeenSet = true; m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobIdHasBeenSet = true; m_jobId.assign(value); }
-    inline RecommendationExportJob& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline RecommendationExportJob& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline RecommendationExportJob& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The resource type of the exported recommendations.</p>
+   */
+  inline ResourceType GetResourceType() const { return m_resourceType; }
+  inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
+  inline void SetResourceType(ResourceType value) {
+    m_resourceTypeHasBeenSet = true;
+    m_resourceType = value;
+  }
+  inline RecommendationExportJob& WithResourceType(ResourceType value) {
+    SetResourceType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object that describes the destination of the export file.</p>
-     */
-    inline const ExportDestination& GetDestination() const{ return m_destination; }
-    inline bool DestinationHasBeenSet() const { return m_destinationHasBeenSet; }
-    inline void SetDestination(const ExportDestination& value) { m_destinationHasBeenSet = true; m_destination = value; }
-    inline void SetDestination(ExportDestination&& value) { m_destinationHasBeenSet = true; m_destination = std::move(value); }
-    inline RecommendationExportJob& WithDestination(const ExportDestination& value) { SetDestination(value); return *this;}
-    inline RecommendationExportJob& WithDestination(ExportDestination&& value) { SetDestination(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the export job.</p>
+   */
+  inline JobStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(JobStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline RecommendationExportJob& WithStatus(JobStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource type of the exported recommendations.</p>
-     */
-    inline const ResourceType& GetResourceType() const{ return m_resourceType; }
-    inline bool ResourceTypeHasBeenSet() const { return m_resourceTypeHasBeenSet; }
-    inline void SetResourceType(const ResourceType& value) { m_resourceTypeHasBeenSet = true; m_resourceType = value; }
-    inline void SetResourceType(ResourceType&& value) { m_resourceTypeHasBeenSet = true; m_resourceType = std::move(value); }
-    inline RecommendationExportJob& WithResourceType(const ResourceType& value) { SetResourceType(value); return *this;}
-    inline RecommendationExportJob& WithResourceType(ResourceType&& value) { SetResourceType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the export job was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTimestamp() const { return m_creationTimestamp; }
+  inline bool CreationTimestampHasBeenSet() const { return m_creationTimestampHasBeenSet; }
+  template <typename CreationTimestampT = Aws::Utils::DateTime>
+  void SetCreationTimestamp(CreationTimestampT&& value) {
+    m_creationTimestampHasBeenSet = true;
+    m_creationTimestamp = std::forward<CreationTimestampT>(value);
+  }
+  template <typename CreationTimestampT = Aws::Utils::DateTime>
+  RecommendationExportJob& WithCreationTimestamp(CreationTimestampT&& value) {
+    SetCreationTimestamp(std::forward<CreationTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the export job.</p>
-     */
-    inline const JobStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const JobStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(JobStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline RecommendationExportJob& WithStatus(const JobStatus& value) { SetStatus(value); return *this;}
-    inline RecommendationExportJob& WithStatus(JobStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp of when the export job was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTimestamp() const { return m_lastUpdatedTimestamp; }
+  inline bool LastUpdatedTimestampHasBeenSet() const { return m_lastUpdatedTimestampHasBeenSet; }
+  template <typename LastUpdatedTimestampT = Aws::Utils::DateTime>
+  void SetLastUpdatedTimestamp(LastUpdatedTimestampT&& value) {
+    m_lastUpdatedTimestampHasBeenSet = true;
+    m_lastUpdatedTimestamp = std::forward<LastUpdatedTimestampT>(value);
+  }
+  template <typename LastUpdatedTimestampT = Aws::Utils::DateTime>
+  RecommendationExportJob& WithLastUpdatedTimestamp(LastUpdatedTimestampT&& value) {
+    SetLastUpdatedTimestamp(std::forward<LastUpdatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp of when the export job was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTimestamp() const{ return m_creationTimestamp; }
-    inline bool CreationTimestampHasBeenSet() const { return m_creationTimestampHasBeenSet; }
-    inline void SetCreationTimestamp(const Aws::Utils::DateTime& value) { m_creationTimestampHasBeenSet = true; m_creationTimestamp = value; }
-    inline void SetCreationTimestamp(Aws::Utils::DateTime&& value) { m_creationTimestampHasBeenSet = true; m_creationTimestamp = std::move(value); }
-    inline RecommendationExportJob& WithCreationTimestamp(const Aws::Utils::DateTime& value) { SetCreationTimestamp(value); return *this;}
-    inline RecommendationExportJob& WithCreationTimestamp(Aws::Utils::DateTime&& value) { SetCreationTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for an export job failure.</p>
+   */
+  inline const Aws::String& GetFailureReason() const { return m_failureReason; }
+  inline bool FailureReasonHasBeenSet() const { return m_failureReasonHasBeenSet; }
+  template <typename FailureReasonT = Aws::String>
+  void SetFailureReason(FailureReasonT&& value) {
+    m_failureReasonHasBeenSet = true;
+    m_failureReason = std::forward<FailureReasonT>(value);
+  }
+  template <typename FailureReasonT = Aws::String>
+  RecommendationExportJob& WithFailureReason(FailureReasonT&& value) {
+    SetFailureReason(std::forward<FailureReasonT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobId;
 
-    ///@{
-    /**
-     * <p>The timestamp of when the export job was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTimestamp() const{ return m_lastUpdatedTimestamp; }
-    inline bool LastUpdatedTimestampHasBeenSet() const { return m_lastUpdatedTimestampHasBeenSet; }
-    inline void SetLastUpdatedTimestamp(const Aws::Utils::DateTime& value) { m_lastUpdatedTimestampHasBeenSet = true; m_lastUpdatedTimestamp = value; }
-    inline void SetLastUpdatedTimestamp(Aws::Utils::DateTime&& value) { m_lastUpdatedTimestampHasBeenSet = true; m_lastUpdatedTimestamp = std::move(value); }
-    inline RecommendationExportJob& WithLastUpdatedTimestamp(const Aws::Utils::DateTime& value) { SetLastUpdatedTimestamp(value); return *this;}
-    inline RecommendationExportJob& WithLastUpdatedTimestamp(Aws::Utils::DateTime&& value) { SetLastUpdatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ExportDestination m_destination;
 
-    ///@{
-    /**
-     * <p>The reason for an export job failure.</p>
-     */
-    inline const Aws::String& GetFailureReason() const{ return m_failureReason; }
-    inline bool FailureReasonHasBeenSet() const { return m_failureReasonHasBeenSet; }
-    inline void SetFailureReason(const Aws::String& value) { m_failureReasonHasBeenSet = true; m_failureReason = value; }
-    inline void SetFailureReason(Aws::String&& value) { m_failureReasonHasBeenSet = true; m_failureReason = std::move(value); }
-    inline void SetFailureReason(const char* value) { m_failureReasonHasBeenSet = true; m_failureReason.assign(value); }
-    inline RecommendationExportJob& WithFailureReason(const Aws::String& value) { SetFailureReason(value); return *this;}
-    inline RecommendationExportJob& WithFailureReason(Aws::String&& value) { SetFailureReason(std::move(value)); return *this;}
-    inline RecommendationExportJob& WithFailureReason(const char* value) { SetFailureReason(value); return *this;}
-    ///@}
-  private:
+  ResourceType m_resourceType{ResourceType::NOT_SET};
 
-    Aws::String m_jobId;
-    bool m_jobIdHasBeenSet = false;
+  JobStatus m_status{JobStatus::NOT_SET};
 
-    ExportDestination m_destination;
-    bool m_destinationHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTimestamp{};
 
-    ResourceType m_resourceType;
-    bool m_resourceTypeHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdatedTimestamp{};
 
-    JobStatus m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::String m_failureReason;
+  bool m_jobIdHasBeenSet = false;
+  bool m_destinationHasBeenSet = false;
+  bool m_resourceTypeHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_creationTimestampHasBeenSet = false;
+  bool m_lastUpdatedTimestampHasBeenSet = false;
+  bool m_failureReasonHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_creationTimestamp;
-    bool m_creationTimestampHasBeenSet = false;
-
-    Aws::Utils::DateTime m_lastUpdatedTimestamp;
-    bool m_lastUpdatedTimestampHasBeenSet = false;
-
-    Aws::String m_failureReason;
-    bool m_failureReasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ComputeOptimizer
-} // namespace Aws
+}  // namespace Model
+}  // namespace ComputeOptimizer
+}  // namespace Aws

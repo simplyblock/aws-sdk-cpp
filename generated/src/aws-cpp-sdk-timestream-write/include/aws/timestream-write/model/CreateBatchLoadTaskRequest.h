@@ -4,148 +4,179 @@
  */
 
 #pragma once
-#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
-#include <aws/timestream-write/TimestreamWriteRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/timestream-write/TimestreamWriteRequest.h>
+#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
 #include <aws/timestream-write/model/DataModelConfiguration.h>
 #include <aws/timestream-write/model/DataSourceConfiguration.h>
 #include <aws/timestream-write/model/ReportConfiguration.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace TimestreamWrite
-{
-namespace Model
-{
+namespace Aws {
+namespace TimestreamWrite {
+namespace Model {
 
+/**
+ */
+class CreateBatchLoadTaskRequest : public TimestreamWriteRequest {
+ public:
+  AWS_TIMESTREAMWRITE_API CreateBatchLoadTaskRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateBatchLoadTask"; }
+
+  AWS_TIMESTREAMWRITE_API Aws::String SerializePayload() const override;
+
+  AWS_TIMESTREAMWRITE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p/>
    */
-  class CreateBatchLoadTaskRequest : public TimestreamWriteRequest
-  {
-  public:
-    AWS_TIMESTREAMWRITE_API CreateBatchLoadTaskRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateBatchLoadTaskRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateBatchLoadTask"; }
+  ///@{
 
-    AWS_TIMESTREAMWRITE_API Aws::String SerializePayload() const override;
+  inline const DataModelConfiguration& GetDataModelConfiguration() const { return m_dataModelConfiguration; }
+  inline bool DataModelConfigurationHasBeenSet() const { return m_dataModelConfigurationHasBeenSet; }
+  template <typename DataModelConfigurationT = DataModelConfiguration>
+  void SetDataModelConfiguration(DataModelConfigurationT&& value) {
+    m_dataModelConfigurationHasBeenSet = true;
+    m_dataModelConfiguration = std::forward<DataModelConfigurationT>(value);
+  }
+  template <typename DataModelConfigurationT = DataModelConfiguration>
+  CreateBatchLoadTaskRequest& WithDataModelConfiguration(DataModelConfigurationT&& value) {
+    SetDataModelConfiguration(std::forward<DataModelConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_TIMESTREAMWRITE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Defines configuration details about the data source for a batch load
+   * task.</p>
+   */
+  inline const DataSourceConfiguration& GetDataSourceConfiguration() const { return m_dataSourceConfiguration; }
+  inline bool DataSourceConfigurationHasBeenSet() const { return m_dataSourceConfigurationHasBeenSet; }
+  template <typename DataSourceConfigurationT = DataSourceConfiguration>
+  void SetDataSourceConfiguration(DataSourceConfigurationT&& value) {
+    m_dataSourceConfigurationHasBeenSet = true;
+    m_dataSourceConfiguration = std::forward<DataSourceConfigurationT>(value);
+  }
+  template <typename DataSourceConfigurationT = DataSourceConfiguration>
+  CreateBatchLoadTaskRequest& WithDataSourceConfiguration(DataSourceConfigurationT&& value) {
+    SetDataSourceConfiguration(std::forward<DataSourceConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateBatchLoadTaskRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateBatchLoadTaskRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  inline const ReportConfiguration& GetReportConfiguration() const { return m_reportConfiguration; }
+  inline bool ReportConfigurationHasBeenSet() const { return m_reportConfigurationHasBeenSet; }
+  template <typename ReportConfigurationT = ReportConfiguration>
+  void SetReportConfiguration(ReportConfigurationT&& value) {
+    m_reportConfigurationHasBeenSet = true;
+    m_reportConfiguration = std::forward<ReportConfigurationT>(value);
+  }
+  template <typename ReportConfigurationT = ReportConfiguration>
+  CreateBatchLoadTaskRequest& WithReportConfiguration(ReportConfigurationT&& value) {
+    SetReportConfiguration(std::forward<ReportConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const DataModelConfiguration& GetDataModelConfiguration() const{ return m_dataModelConfiguration; }
-    inline bool DataModelConfigurationHasBeenSet() const { return m_dataModelConfigurationHasBeenSet; }
-    inline void SetDataModelConfiguration(const DataModelConfiguration& value) { m_dataModelConfigurationHasBeenSet = true; m_dataModelConfiguration = value; }
-    inline void SetDataModelConfiguration(DataModelConfiguration&& value) { m_dataModelConfigurationHasBeenSet = true; m_dataModelConfiguration = std::move(value); }
-    inline CreateBatchLoadTaskRequest& WithDataModelConfiguration(const DataModelConfiguration& value) { SetDataModelConfiguration(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithDataModelConfiguration(DataModelConfiguration&& value) { SetDataModelConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Target Timestream database for a batch load task.</p>
+   */
+  inline const Aws::String& GetTargetDatabaseName() const { return m_targetDatabaseName; }
+  inline bool TargetDatabaseNameHasBeenSet() const { return m_targetDatabaseNameHasBeenSet; }
+  template <typename TargetDatabaseNameT = Aws::String>
+  void SetTargetDatabaseName(TargetDatabaseNameT&& value) {
+    m_targetDatabaseNameHasBeenSet = true;
+    m_targetDatabaseName = std::forward<TargetDatabaseNameT>(value);
+  }
+  template <typename TargetDatabaseNameT = Aws::String>
+  CreateBatchLoadTaskRequest& WithTargetDatabaseName(TargetDatabaseNameT&& value) {
+    SetTargetDatabaseName(std::forward<TargetDatabaseNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines configuration details about the data source for a batch load
-     * task.</p>
-     */
-    inline const DataSourceConfiguration& GetDataSourceConfiguration() const{ return m_dataSourceConfiguration; }
-    inline bool DataSourceConfigurationHasBeenSet() const { return m_dataSourceConfigurationHasBeenSet; }
-    inline void SetDataSourceConfiguration(const DataSourceConfiguration& value) { m_dataSourceConfigurationHasBeenSet = true; m_dataSourceConfiguration = value; }
-    inline void SetDataSourceConfiguration(DataSourceConfiguration&& value) { m_dataSourceConfigurationHasBeenSet = true; m_dataSourceConfiguration = std::move(value); }
-    inline CreateBatchLoadTaskRequest& WithDataSourceConfiguration(const DataSourceConfiguration& value) { SetDataSourceConfiguration(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithDataSourceConfiguration(DataSourceConfiguration&& value) { SetDataSourceConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Target Timestream table for a batch load task.</p>
+   */
+  inline const Aws::String& GetTargetTableName() const { return m_targetTableName; }
+  inline bool TargetTableNameHasBeenSet() const { return m_targetTableNameHasBeenSet; }
+  template <typename TargetTableNameT = Aws::String>
+  void SetTargetTableName(TargetTableNameT&& value) {
+    m_targetTableNameHasBeenSet = true;
+    m_targetTableName = std::forward<TargetTableNameT>(value);
+  }
+  template <typename TargetTableNameT = Aws::String>
+  CreateBatchLoadTaskRequest& WithTargetTableName(TargetTableNameT&& value) {
+    SetTargetTableName(std::forward<TargetTableNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ReportConfiguration& GetReportConfiguration() const{ return m_reportConfiguration; }
-    inline bool ReportConfigurationHasBeenSet() const { return m_reportConfigurationHasBeenSet; }
-    inline void SetReportConfiguration(const ReportConfiguration& value) { m_reportConfigurationHasBeenSet = true; m_reportConfiguration = value; }
-    inline void SetReportConfiguration(ReportConfiguration&& value) { m_reportConfigurationHasBeenSet = true; m_reportConfiguration = std::move(value); }
-    inline CreateBatchLoadTaskRequest& WithReportConfiguration(const ReportConfiguration& value) { SetReportConfiguration(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithReportConfiguration(ReportConfiguration&& value) { SetReportConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p/>
+   */
+  inline long long GetRecordVersion() const { return m_recordVersion; }
+  inline bool RecordVersionHasBeenSet() const { return m_recordVersionHasBeenSet; }
+  inline void SetRecordVersion(long long value) {
+    m_recordVersionHasBeenSet = true;
+    m_recordVersion = value;
+  }
+  inline CreateBatchLoadTaskRequest& WithRecordVersion(long long value) {
+    SetRecordVersion(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>Target Timestream database for a batch load task.</p>
-     */
-    inline const Aws::String& GetTargetDatabaseName() const{ return m_targetDatabaseName; }
-    inline bool TargetDatabaseNameHasBeenSet() const { return m_targetDatabaseNameHasBeenSet; }
-    inline void SetTargetDatabaseName(const Aws::String& value) { m_targetDatabaseNameHasBeenSet = true; m_targetDatabaseName = value; }
-    inline void SetTargetDatabaseName(Aws::String&& value) { m_targetDatabaseNameHasBeenSet = true; m_targetDatabaseName = std::move(value); }
-    inline void SetTargetDatabaseName(const char* value) { m_targetDatabaseNameHasBeenSet = true; m_targetDatabaseName.assign(value); }
-    inline CreateBatchLoadTaskRequest& WithTargetDatabaseName(const Aws::String& value) { SetTargetDatabaseName(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithTargetDatabaseName(Aws::String&& value) { SetTargetDatabaseName(std::move(value)); return *this;}
-    inline CreateBatchLoadTaskRequest& WithTargetDatabaseName(const char* value) { SetTargetDatabaseName(value); return *this;}
-    ///@}
+  DataModelConfiguration m_dataModelConfiguration;
 
-    ///@{
-    /**
-     * <p>Target Timestream table for a batch load task.</p>
-     */
-    inline const Aws::String& GetTargetTableName() const{ return m_targetTableName; }
-    inline bool TargetTableNameHasBeenSet() const { return m_targetTableNameHasBeenSet; }
-    inline void SetTargetTableName(const Aws::String& value) { m_targetTableNameHasBeenSet = true; m_targetTableName = value; }
-    inline void SetTargetTableName(Aws::String&& value) { m_targetTableNameHasBeenSet = true; m_targetTableName = std::move(value); }
-    inline void SetTargetTableName(const char* value) { m_targetTableNameHasBeenSet = true; m_targetTableName.assign(value); }
-    inline CreateBatchLoadTaskRequest& WithTargetTableName(const Aws::String& value) { SetTargetTableName(value); return *this;}
-    inline CreateBatchLoadTaskRequest& WithTargetTableName(Aws::String&& value) { SetTargetTableName(std::move(value)); return *this;}
-    inline CreateBatchLoadTaskRequest& WithTargetTableName(const char* value) { SetTargetTableName(value); return *this;}
-    ///@}
+  DataSourceConfiguration m_dataSourceConfiguration;
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline long long GetRecordVersion() const{ return m_recordVersion; }
-    inline bool RecordVersionHasBeenSet() const { return m_recordVersionHasBeenSet; }
-    inline void SetRecordVersion(long long value) { m_recordVersionHasBeenSet = true; m_recordVersion = value; }
-    inline CreateBatchLoadTaskRequest& WithRecordVersion(long long value) { SetRecordVersion(value); return *this;}
-    ///@}
-  private:
+  ReportConfiguration m_reportConfiguration;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::String m_targetDatabaseName;
 
-    DataModelConfiguration m_dataModelConfiguration;
-    bool m_dataModelConfigurationHasBeenSet = false;
+  Aws::String m_targetTableName;
 
-    DataSourceConfiguration m_dataSourceConfiguration;
-    bool m_dataSourceConfigurationHasBeenSet = false;
+  long long m_recordVersion{0};
+  bool m_clientTokenHasBeenSet = true;
+  bool m_dataModelConfigurationHasBeenSet = false;
+  bool m_dataSourceConfigurationHasBeenSet = false;
+  bool m_reportConfigurationHasBeenSet = false;
+  bool m_targetDatabaseNameHasBeenSet = false;
+  bool m_targetTableNameHasBeenSet = false;
+  bool m_recordVersionHasBeenSet = false;
+};
 
-    ReportConfiguration m_reportConfiguration;
-    bool m_reportConfigurationHasBeenSet = false;
-
-    Aws::String m_targetDatabaseName;
-    bool m_targetDatabaseNameHasBeenSet = false;
-
-    Aws::String m_targetTableName;
-    bool m_targetTableNameHasBeenSet = false;
-
-    long long m_recordVersion;
-    bool m_recordVersionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TimestreamWrite
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamWrite
+}  // namespace Aws

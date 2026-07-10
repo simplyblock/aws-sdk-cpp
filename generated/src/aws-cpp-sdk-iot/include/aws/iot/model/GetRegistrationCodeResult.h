@@ -4,70 +4,77 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+/**
+ * <p>The output from the GetRegistrationCode operation.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GetRegistrationCodeResponse">AWS
+ * API Reference</a></p>
+ */
+class GetRegistrationCodeResult {
+ public:
+  AWS_IOT_API GetRegistrationCodeResult() = default;
+  AWS_IOT_API GetRegistrationCodeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API GetRegistrationCodeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The output from the GetRegistrationCode operation.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GetRegistrationCodeResponse">AWS
-   * API Reference</a></p>
+   * <p>The CA certificate registration code.</p>
    */
-  class GetRegistrationCodeResult
-  {
-  public:
-    AWS_IOT_API GetRegistrationCodeResult();
-    AWS_IOT_API GetRegistrationCodeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API GetRegistrationCodeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetRegistrationCode() const { return m_registrationCode; }
+  template <typename RegistrationCodeT = Aws::String>
+  void SetRegistrationCode(RegistrationCodeT&& value) {
+    m_registrationCodeHasBeenSet = true;
+    m_registrationCode = std::forward<RegistrationCodeT>(value);
+  }
+  template <typename RegistrationCodeT = Aws::String>
+  GetRegistrationCodeResult& WithRegistrationCode(RegistrationCodeT&& value) {
+    SetRegistrationCode(std::forward<RegistrationCodeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The CA certificate registration code.</p>
-     */
-    inline const Aws::String& GetRegistrationCode() const{ return m_registrationCode; }
-    inline void SetRegistrationCode(const Aws::String& value) { m_registrationCode = value; }
-    inline void SetRegistrationCode(Aws::String&& value) { m_registrationCode = std::move(value); }
-    inline void SetRegistrationCode(const char* value) { m_registrationCode.assign(value); }
-    inline GetRegistrationCodeResult& WithRegistrationCode(const Aws::String& value) { SetRegistrationCode(value); return *this;}
-    inline GetRegistrationCodeResult& WithRegistrationCode(Aws::String&& value) { SetRegistrationCode(std::move(value)); return *this;}
-    inline GetRegistrationCodeResult& WithRegistrationCode(const char* value) { SetRegistrationCode(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRegistrationCodeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRegistrationCodeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRegistrationCodeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRegistrationCodeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_registrationCode;
 
-    Aws::String m_registrationCode;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_registrationCodeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

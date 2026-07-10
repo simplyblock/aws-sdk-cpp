@@ -4,85 +4,103 @@
  */
 
 #pragma once
-#include <aws/ecr/ECR_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ecr/ECR_EXPORTS.h>
 #include <aws/ecr/model/PullThroughCacheRule.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECR
-{
-namespace Model
-{
-  class DescribePullThroughCacheRulesResult
-  {
-  public:
-    AWS_ECR_API DescribePullThroughCacheRulesResult();
-    AWS_ECR_API DescribePullThroughCacheRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECR_API DescribePullThroughCacheRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECR {
+namespace Model {
+class DescribePullThroughCacheRulesResult {
+ public:
+  AWS_ECR_API DescribePullThroughCacheRulesResult() = default;
+  AWS_ECR_API DescribePullThroughCacheRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECR_API DescribePullThroughCacheRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the pull through cache rules.</p>
+   */
+  inline const Aws::Vector<PullThroughCacheRule>& GetPullThroughCacheRules() const { return m_pullThroughCacheRules; }
+  template <typename PullThroughCacheRulesT = Aws::Vector<PullThroughCacheRule>>
+  void SetPullThroughCacheRules(PullThroughCacheRulesT&& value) {
+    m_pullThroughCacheRulesHasBeenSet = true;
+    m_pullThroughCacheRules = std::forward<PullThroughCacheRulesT>(value);
+  }
+  template <typename PullThroughCacheRulesT = Aws::Vector<PullThroughCacheRule>>
+  DescribePullThroughCacheRulesResult& WithPullThroughCacheRules(PullThroughCacheRulesT&& value) {
+    SetPullThroughCacheRules(std::forward<PullThroughCacheRulesT>(value));
+    return *this;
+  }
+  template <typename PullThroughCacheRulesT = PullThroughCacheRule>
+  DescribePullThroughCacheRulesResult& AddPullThroughCacheRules(PullThroughCacheRulesT&& value) {
+    m_pullThroughCacheRulesHasBeenSet = true;
+    m_pullThroughCacheRules.emplace_back(std::forward<PullThroughCacheRulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the pull through cache rules.</p>
-     */
-    inline const Aws::Vector<PullThroughCacheRule>& GetPullThroughCacheRules() const{ return m_pullThroughCacheRules; }
-    inline void SetPullThroughCacheRules(const Aws::Vector<PullThroughCacheRule>& value) { m_pullThroughCacheRules = value; }
-    inline void SetPullThroughCacheRules(Aws::Vector<PullThroughCacheRule>&& value) { m_pullThroughCacheRules = std::move(value); }
-    inline DescribePullThroughCacheRulesResult& WithPullThroughCacheRules(const Aws::Vector<PullThroughCacheRule>& value) { SetPullThroughCacheRules(value); return *this;}
-    inline DescribePullThroughCacheRulesResult& WithPullThroughCacheRules(Aws::Vector<PullThroughCacheRule>&& value) { SetPullThroughCacheRules(std::move(value)); return *this;}
-    inline DescribePullThroughCacheRulesResult& AddPullThroughCacheRules(const PullThroughCacheRule& value) { m_pullThroughCacheRules.push_back(value); return *this; }
-    inline DescribePullThroughCacheRulesResult& AddPullThroughCacheRules(PullThroughCacheRule&& value) { m_pullThroughCacheRules.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The <code>nextToken</code> value to include in a future
+   * <code>DescribePullThroughCacheRulesRequest</code> request. When the results of a
+   * <code>DescribePullThroughCacheRulesRequest</code> request exceed
+   * <code>maxResults</code>, this value can be used to retrieve the next page of
+   * results. This value is null when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribePullThroughCacheRulesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>nextToken</code> value to include in a future
-     * <code>DescribePullThroughCacheRulesRequest</code> request. When the results of a
-     * <code>DescribePullThroughCacheRulesRequest</code> request exceed
-     * <code>maxResults</code>, this value can be used to retrieve the next page of
-     * results. This value is null when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribePullThroughCacheRulesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribePullThroughCacheRulesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribePullThroughCacheRulesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribePullThroughCacheRulesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribePullThroughCacheRulesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribePullThroughCacheRulesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribePullThroughCacheRulesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PullThroughCacheRule> m_pullThroughCacheRules;
+ private:
+  Aws::Vector<PullThroughCacheRule> m_pullThroughCacheRules;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_pullThroughCacheRulesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECR
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECR
+}  // namespace Aws

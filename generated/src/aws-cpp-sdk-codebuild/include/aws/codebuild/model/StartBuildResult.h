@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/codebuild/CodeBuild_EXPORTS.h>
 #include <aws/codebuild/model/Build.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeBuild
-{
-namespace Model
-{
-  class StartBuildResult
-  {
-  public:
-    AWS_CODEBUILD_API StartBuildResult();
-    AWS_CODEBUILD_API StartBuildResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEBUILD_API StartBuildResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeBuild {
+namespace Model {
+class StartBuildResult {
+ public:
+  AWS_CODEBUILD_API StartBuildResult() = default;
+  AWS_CODEBUILD_API StartBuildResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEBUILD_API StartBuildResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the build to be run.</p>
+   */
+  inline const Build& GetBuild() const { return m_build; }
+  template <typename BuildT = Build>
+  void SetBuild(BuildT&& value) {
+    m_buildHasBeenSet = true;
+    m_build = std::forward<BuildT>(value);
+  }
+  template <typename BuildT = Build>
+  StartBuildResult& WithBuild(BuildT&& value) {
+    SetBuild(std::forward<BuildT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the build to be run.</p>
-     */
-    inline const Build& GetBuild() const{ return m_build; }
-    inline void SetBuild(const Build& value) { m_build = value; }
-    inline void SetBuild(Build&& value) { m_build = std::move(value); }
-    inline StartBuildResult& WithBuild(const Build& value) { SetBuild(value); return *this;}
-    inline StartBuildResult& WithBuild(Build&& value) { SetBuild(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartBuildResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartBuildResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartBuildResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartBuildResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Build m_build;
+ private:
+  Build m_build;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_buildHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces/WorkSpaces_EXPORTS.h>
 #include <aws/workspaces/model/WorkspaceResourceAssociation.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpaces
-{
-namespace Model
-{
-  class DisassociateWorkspaceApplicationResult
-  {
-  public:
-    AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult();
-    AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpaces {
+namespace Model {
+class DisassociateWorkspaceApplicationResult {
+ public:
+  AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult() = default;
+  AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACES_API DisassociateWorkspaceApplicationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the targeted association.</p>
+   */
+  inline const WorkspaceResourceAssociation& GetAssociation() const { return m_association; }
+  template <typename AssociationT = WorkspaceResourceAssociation>
+  void SetAssociation(AssociationT&& value) {
+    m_associationHasBeenSet = true;
+    m_association = std::forward<AssociationT>(value);
+  }
+  template <typename AssociationT = WorkspaceResourceAssociation>
+  DisassociateWorkspaceApplicationResult& WithAssociation(AssociationT&& value) {
+    SetAssociation(std::forward<AssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the targeted association.</p>
-     */
-    inline const WorkspaceResourceAssociation& GetAssociation() const{ return m_association; }
-    inline void SetAssociation(const WorkspaceResourceAssociation& value) { m_association = value; }
-    inline void SetAssociation(WorkspaceResourceAssociation&& value) { m_association = std::move(value); }
-    inline DisassociateWorkspaceApplicationResult& WithAssociation(const WorkspaceResourceAssociation& value) { SetAssociation(value); return *this;}
-    inline DisassociateWorkspaceApplicationResult& WithAssociation(WorkspaceResourceAssociation&& value) { SetAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DisassociateWorkspaceApplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DisassociateWorkspaceApplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DisassociateWorkspaceApplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DisassociateWorkspaceApplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    WorkspaceResourceAssociation m_association;
+ private:
+  WorkspaceResourceAssociation m_association;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_associationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

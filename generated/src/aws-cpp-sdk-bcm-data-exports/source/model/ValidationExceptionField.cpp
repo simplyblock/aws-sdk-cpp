@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BCMDataExports
-{
-namespace Model
-{
+namespace Aws {
+namespace BCMDataExports {
+namespace Model {
 
-ValidationExceptionField::ValidationExceptionField() : 
-    m_messageHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
+ValidationExceptionField::ValidationExceptionField(JsonView jsonValue) { *this = jsonValue; }
 
-ValidationExceptionField::ValidationExceptionField(JsonView jsonValue)
-  : ValidationExceptionField()
-{
-  *this = jsonValue;
-}
-
-ValidationExceptionField& ValidationExceptionField::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Message"))
-  {
-    m_message = jsonValue.GetString("Message");
-
-    m_messageHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("Name"))
-  {
+ValidationExceptionField& ValidationExceptionField::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("Message")) {
+    m_message = jsonValue.GetString("Message");
+    m_messageHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ValidationExceptionField::Jsonize() const
-{
+JsonValue ValidationExceptionField::Jsonize() const {
   JsonValue payload;
 
-  if(m_messageHasBeenSet)
-  {
-   payload.WithString("Message", m_message);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_messageHasBeenSet) {
+    payload.WithString("Message", m_message);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BCMDataExports
-} // namespace Aws
+}  // namespace Model
+}  // namespace BCMDataExports
+}  // namespace Aws

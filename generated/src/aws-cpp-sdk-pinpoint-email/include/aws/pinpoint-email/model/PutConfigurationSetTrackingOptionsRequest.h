@@ -4,75 +4,78 @@
  */
 
 #pragma once
-#include <aws/pinpoint-email/PinpointEmail_EXPORTS.h>
-#include <aws/pinpoint-email/PinpointEmailRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pinpoint-email/PinpointEmailRequest.h>
+#include <aws/pinpoint-email/PinpointEmail_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace PinpointEmail
-{
-namespace Model
-{
+namespace Aws {
+namespace PinpointEmail {
+namespace Model {
 
+/**
+ * <p>A request to add a custom domain for tracking open and click events to a
+ * configuration set.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-email-2018-07-26/PutConfigurationSetTrackingOptionsRequest">AWS
+ * API Reference</a></p>
+ */
+class PutConfigurationSetTrackingOptionsRequest : public PinpointEmailRequest {
+ public:
+  AWS_PINPOINTEMAIL_API PutConfigurationSetTrackingOptionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutConfigurationSetTrackingOptions"; }
+
+  AWS_PINPOINTEMAIL_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p>A request to add a custom domain for tracking open and click events to a
-   * configuration set.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-email-2018-07-26/PutConfigurationSetTrackingOptionsRequest">AWS
-   * API Reference</a></p>
+   * <p>The name of the configuration set that you want to add a custom tracking
+   * domain to.</p>
    */
-  class PutConfigurationSetTrackingOptionsRequest : public PinpointEmailRequest
-  {
-  public:
-    AWS_PINPOINTEMAIL_API PutConfigurationSetTrackingOptionsRequest();
+  inline const Aws::String& GetConfigurationSetName() const { return m_configurationSetName; }
+  inline bool ConfigurationSetNameHasBeenSet() const { return m_configurationSetNameHasBeenSet; }
+  template <typename ConfigurationSetNameT = Aws::String>
+  void SetConfigurationSetName(ConfigurationSetNameT&& value) {
+    m_configurationSetNameHasBeenSet = true;
+    m_configurationSetName = std::forward<ConfigurationSetNameT>(value);
+  }
+  template <typename ConfigurationSetNameT = Aws::String>
+  PutConfigurationSetTrackingOptionsRequest& WithConfigurationSetName(ConfigurationSetNameT&& value) {
+    SetConfigurationSetName(std::forward<ConfigurationSetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutConfigurationSetTrackingOptions"; }
+  ///@{
+  /**
+   * <p>The domain that you want to use to track open and click events.</p>
+   */
+  inline const Aws::String& GetCustomRedirectDomain() const { return m_customRedirectDomain; }
+  inline bool CustomRedirectDomainHasBeenSet() const { return m_customRedirectDomainHasBeenSet; }
+  template <typename CustomRedirectDomainT = Aws::String>
+  void SetCustomRedirectDomain(CustomRedirectDomainT&& value) {
+    m_customRedirectDomainHasBeenSet = true;
+    m_customRedirectDomain = std::forward<CustomRedirectDomainT>(value);
+  }
+  template <typename CustomRedirectDomainT = Aws::String>
+  PutConfigurationSetTrackingOptionsRequest& WithCustomRedirectDomain(CustomRedirectDomainT&& value) {
+    SetCustomRedirectDomain(std::forward<CustomRedirectDomainT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_configurationSetName;
 
-    AWS_PINPOINTEMAIL_API Aws::String SerializePayload() const override;
+  Aws::String m_customRedirectDomain;
+  bool m_configurationSetNameHasBeenSet = false;
+  bool m_customRedirectDomainHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The name of the configuration set that you want to add a custom tracking
-     * domain to.</p>
-     */
-    inline const Aws::String& GetConfigurationSetName() const{ return m_configurationSetName; }
-    inline bool ConfigurationSetNameHasBeenSet() const { return m_configurationSetNameHasBeenSet; }
-    inline void SetConfigurationSetName(const Aws::String& value) { m_configurationSetNameHasBeenSet = true; m_configurationSetName = value; }
-    inline void SetConfigurationSetName(Aws::String&& value) { m_configurationSetNameHasBeenSet = true; m_configurationSetName = std::move(value); }
-    inline void SetConfigurationSetName(const char* value) { m_configurationSetNameHasBeenSet = true; m_configurationSetName.assign(value); }
-    inline PutConfigurationSetTrackingOptionsRequest& WithConfigurationSetName(const Aws::String& value) { SetConfigurationSetName(value); return *this;}
-    inline PutConfigurationSetTrackingOptionsRequest& WithConfigurationSetName(Aws::String&& value) { SetConfigurationSetName(std::move(value)); return *this;}
-    inline PutConfigurationSetTrackingOptionsRequest& WithConfigurationSetName(const char* value) { SetConfigurationSetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The domain that you want to use to track open and click events.</p>
-     */
-    inline const Aws::String& GetCustomRedirectDomain() const{ return m_customRedirectDomain; }
-    inline bool CustomRedirectDomainHasBeenSet() const { return m_customRedirectDomainHasBeenSet; }
-    inline void SetCustomRedirectDomain(const Aws::String& value) { m_customRedirectDomainHasBeenSet = true; m_customRedirectDomain = value; }
-    inline void SetCustomRedirectDomain(Aws::String&& value) { m_customRedirectDomainHasBeenSet = true; m_customRedirectDomain = std::move(value); }
-    inline void SetCustomRedirectDomain(const char* value) { m_customRedirectDomainHasBeenSet = true; m_customRedirectDomain.assign(value); }
-    inline PutConfigurationSetTrackingOptionsRequest& WithCustomRedirectDomain(const Aws::String& value) { SetCustomRedirectDomain(value); return *this;}
-    inline PutConfigurationSetTrackingOptionsRequest& WithCustomRedirectDomain(Aws::String&& value) { SetCustomRedirectDomain(std::move(value)); return *this;}
-    inline PutConfigurationSetTrackingOptionsRequest& WithCustomRedirectDomain(const char* value) { SetCustomRedirectDomain(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_configurationSetName;
-    bool m_configurationSetNameHasBeenSet = false;
-
-    Aws::String m_customRedirectDomain;
-    bool m_customRedirectDomainHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace PinpointEmail
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointEmail
+}  // namespace Aws

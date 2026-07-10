@@ -5,92 +5,99 @@
 
 #pragma once
 #include <aws/codepipeline/CodePipeline_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/codepipeline/model/JobData.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CodePipeline
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CodePipeline {
+namespace Model {
 
+/**
+ * <p>Represents information about the details of a job.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/JobDetails">AWS
+ * API Reference</a></p>
+ */
+class JobDetails {
+ public:
+  AWS_CODEPIPELINE_API JobDetails() = default;
+  AWS_CODEPIPELINE_API JobDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEPIPELINE_API JobDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Represents information about the details of a job.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/JobDetails">AWS
-   * API Reference</a></p>
+   * <p>The unique system-generated ID of the job.</p>
    */
-  class JobDetails
-  {
-  public:
-    AWS_CODEPIPELINE_API JobDetails();
-    AWS_CODEPIPELINE_API JobDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEPIPELINE_API JobDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEPIPELINE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  JobDetails& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Represents other information about a job required for a job worker to
+   * complete the job. </p>
+   */
+  inline const JobData& GetData() const { return m_data; }
+  inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
+  template <typename DataT = JobData>
+  void SetData(DataT&& value) {
+    m_dataHasBeenSet = true;
+    m_data = std::forward<DataT>(value);
+  }
+  template <typename DataT = JobData>
+  JobDetails& WithData(DataT&& value) {
+    SetData(std::forward<DataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique system-generated ID of the job.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline JobDetails& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline JobDetails& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline JobDetails& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services account ID associated with the job.</p>
+   */
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  JobDetails& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>Represents other information about a job required for a job worker to
-     * complete the job. </p>
-     */
-    inline const JobData& GetData() const{ return m_data; }
-    inline bool DataHasBeenSet() const { return m_dataHasBeenSet; }
-    inline void SetData(const JobData& value) { m_dataHasBeenSet = true; m_data = value; }
-    inline void SetData(JobData&& value) { m_dataHasBeenSet = true; m_data = std::move(value); }
-    inline JobDetails& WithData(const JobData& value) { SetData(value); return *this;}
-    inline JobDetails& WithData(JobData&& value) { SetData(std::move(value)); return *this;}
-    ///@}
+  JobData m_data;
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID associated with the job.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline JobDetails& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline JobDetails& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline JobDetails& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_accountId;
+  bool m_idHasBeenSet = false;
+  bool m_dataHasBeenSet = false;
+  bool m_accountIdHasBeenSet = false;
+};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    JobData m_data;
-    bool m_dataHasBeenSet = false;
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodePipeline
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodePipeline
+}  // namespace Aws

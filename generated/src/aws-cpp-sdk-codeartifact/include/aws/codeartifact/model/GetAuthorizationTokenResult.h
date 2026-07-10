@@ -5,78 +5,92 @@
 
 #pragma once
 #include <aws/codeartifact/CodeArtifact_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeArtifact
-{
-namespace Model
-{
-  class GetAuthorizationTokenResult
-  {
-  public:
-    AWS_CODEARTIFACT_API GetAuthorizationTokenResult();
-    AWS_CODEARTIFACT_API GetAuthorizationTokenResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEARTIFACT_API GetAuthorizationTokenResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeArtifact {
+namespace Model {
+class GetAuthorizationTokenResult {
+ public:
+  AWS_CODEARTIFACT_API GetAuthorizationTokenResult() = default;
+  AWS_CODEARTIFACT_API GetAuthorizationTokenResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEARTIFACT_API GetAuthorizationTokenResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The returned authentication token. </p>
+   */
+  inline const Aws::String& GetAuthorizationToken() const { return m_authorizationToken; }
+  template <typename AuthorizationTokenT = Aws::String>
+  void SetAuthorizationToken(AuthorizationTokenT&& value) {
+    m_authorizationTokenHasBeenSet = true;
+    m_authorizationToken = std::forward<AuthorizationTokenT>(value);
+  }
+  template <typename AuthorizationTokenT = Aws::String>
+  GetAuthorizationTokenResult& WithAuthorizationToken(AuthorizationTokenT&& value) {
+    SetAuthorizationToken(std::forward<AuthorizationTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The returned authentication token. </p>
-     */
-    inline const Aws::String& GetAuthorizationToken() const{ return m_authorizationToken; }
-    inline void SetAuthorizationToken(const Aws::String& value) { m_authorizationToken = value; }
-    inline void SetAuthorizationToken(Aws::String&& value) { m_authorizationToken = std::move(value); }
-    inline void SetAuthorizationToken(const char* value) { m_authorizationToken.assign(value); }
-    inline GetAuthorizationTokenResult& WithAuthorizationToken(const Aws::String& value) { SetAuthorizationToken(value); return *this;}
-    inline GetAuthorizationTokenResult& WithAuthorizationToken(Aws::String&& value) { SetAuthorizationToken(std::move(value)); return *this;}
-    inline GetAuthorizationTokenResult& WithAuthorizationToken(const char* value) { SetAuthorizationToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> A timestamp that specifies the date and time the authorization token
+   * expires. </p>
+   */
+  inline const Aws::Utils::DateTime& GetExpiration() const { return m_expiration; }
+  template <typename ExpirationT = Aws::Utils::DateTime>
+  void SetExpiration(ExpirationT&& value) {
+    m_expirationHasBeenSet = true;
+    m_expiration = std::forward<ExpirationT>(value);
+  }
+  template <typename ExpirationT = Aws::Utils::DateTime>
+  GetAuthorizationTokenResult& WithExpiration(ExpirationT&& value) {
+    SetExpiration(std::forward<ExpirationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A timestamp that specifies the date and time the authorization token
-     * expires. </p>
-     */
-    inline const Aws::Utils::DateTime& GetExpiration() const{ return m_expiration; }
-    inline void SetExpiration(const Aws::Utils::DateTime& value) { m_expiration = value; }
-    inline void SetExpiration(Aws::Utils::DateTime&& value) { m_expiration = std::move(value); }
-    inline GetAuthorizationTokenResult& WithExpiration(const Aws::Utils::DateTime& value) { SetExpiration(value); return *this;}
-    inline GetAuthorizationTokenResult& WithExpiration(Aws::Utils::DateTime&& value) { SetExpiration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAuthorizationTokenResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAuthorizationTokenResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAuthorizationTokenResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAuthorizationTokenResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_authorizationToken;
+ private:
+  Aws::String m_authorizationToken;
 
-    Aws::Utils::DateTime m_expiration;
+  Aws::Utils::DateTime m_expiration{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_authorizationTokenHasBeenSet = false;
+  bool m_expirationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CodeArtifact
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeArtifact
+}  // namespace Aws

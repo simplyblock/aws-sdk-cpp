@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lookoutequipment/model/StopRetrainingSchedulerRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lookoutequipment/model/StopRetrainingSchedulerRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,18 @@ using namespace Aws::LookoutEquipment::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopRetrainingSchedulerRequest::StopRetrainingSchedulerRequest() : 
-    m_modelNameHasBeenSet(false)
-{
-}
-
-Aws::String StopRetrainingSchedulerRequest::SerializePayload() const
-{
+Aws::String StopRetrainingSchedulerRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_modelNameHasBeenSet)
-  {
-   payload.WithString("ModelName", m_modelName);
-
+  if (m_modelNameHasBeenSet) {
+    payload.WithString("ModelName", m_modelName);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection StopRetrainingSchedulerRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StopRetrainingSchedulerRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSLookoutEquipmentFrontendService.StopRetrainingScheduler"));
   return headers;
-
 }
-
-
-
-

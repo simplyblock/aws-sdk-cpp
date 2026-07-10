@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/cost-optimization-hub/model/GetPreferencesResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/cost-optimization-hub/model/GetPreferencesResult.h>
 
 #include <utility>
 
@@ -17,41 +17,31 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-GetPreferencesResult::GetPreferencesResult() : 
-    m_savingsEstimationMode(SavingsEstimationMode::NOT_SET),
-    m_memberAccountDiscountVisibility(MemberAccountDiscountVisibility::NOT_SET)
-{
-}
+GetPreferencesResult::GetPreferencesResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-GetPreferencesResult::GetPreferencesResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : GetPreferencesResult()
-{
-  *this = result;
-}
-
-GetPreferencesResult& GetPreferencesResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+GetPreferencesResult& GetPreferencesResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("savingsEstimationMode"))
-  {
+  if (jsonValue.ValueExists("savingsEstimationMode")) {
     m_savingsEstimationMode = SavingsEstimationModeMapper::GetSavingsEstimationModeForName(jsonValue.GetString("savingsEstimationMode"));
-
+    m_savingsEstimationModeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("memberAccountDiscountVisibility"))
-  {
-    m_memberAccountDiscountVisibility = MemberAccountDiscountVisibilityMapper::GetMemberAccountDiscountVisibilityForName(jsonValue.GetString("memberAccountDiscountVisibility"));
-
+  if (jsonValue.ValueExists("memberAccountDiscountVisibility")) {
+    m_memberAccountDiscountVisibility = MemberAccountDiscountVisibilityMapper::GetMemberAccountDiscountVisibilityForName(
+        jsonValue.GetString("memberAccountDiscountVisibility"));
+    m_memberAccountDiscountVisibilityHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("preferredCommitment")) {
+    m_preferredCommitment = jsonValue.GetObject("preferredCommitment");
+    m_preferredCommitmentHasBeenSet = true;
+  }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/forecastquery/ForecastQueryService_EXPORTS.h>
 #include <aws/forecastquery/model/Forecast.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ForecastQueryService
-{
-namespace Model
-{
-  class QueryWhatIfForecastResult
-  {
-  public:
-    AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult();
-    AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ForecastQueryService {
+namespace Model {
+class QueryWhatIfForecastResult {
+ public:
+  AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult() = default;
+  AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FORECASTQUERYSERVICE_API QueryWhatIfForecastResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Forecast& GetForecast() const{ return m_forecast; }
-    inline void SetForecast(const Forecast& value) { m_forecast = value; }
-    inline void SetForecast(Forecast&& value) { m_forecast = std::move(value); }
-    inline QueryWhatIfForecastResult& WithForecast(const Forecast& value) { SetForecast(value); return *this;}
-    inline QueryWhatIfForecastResult& WithForecast(Forecast&& value) { SetForecast(std::move(value)); return *this;}
-    ///@}
+  inline const Forecast& GetForecast() const { return m_forecast; }
+  template <typename ForecastT = Forecast>
+  void SetForecast(ForecastT&& value) {
+    m_forecastHasBeenSet = true;
+    m_forecast = std::forward<ForecastT>(value);
+  }
+  template <typename ForecastT = Forecast>
+  QueryWhatIfForecastResult& WithForecast(ForecastT&& value) {
+    SetForecast(std::forward<ForecastT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline QueryWhatIfForecastResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline QueryWhatIfForecastResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline QueryWhatIfForecastResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Forecast m_forecast;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  QueryWhatIfForecastResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Forecast m_forecast;
 
-} // namespace Model
-} // namespace ForecastQueryService
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_forecastHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ForecastQueryService
+}  // namespace Aws

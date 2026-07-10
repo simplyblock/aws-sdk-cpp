@@ -12,16 +12,4 @@ using namespace Aws::ApplicationCostProfiler::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetReportDefinitionRequest::GetReportDefinitionRequest() : 
-    m_reportIdHasBeenSet(false)
-{
-}
-
-Aws::String GetReportDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetReportDefinitionRequest::SerializePayload() const { return {}; }

@@ -4,64 +4,96 @@
  */
 
 #pragma once
-#include <aws/s3-crt/S3Crt_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3-crt/S3Crt_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Crt
-{
-namespace Model
-{
-  class CreateBucketResult
-  {
-  public:
-    AWS_S3CRT_API CreateBucketResult();
-    AWS_S3CRT_API CreateBucketResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CRT_API CreateBucketResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Crt {
+namespace Model {
+class CreateBucketResult {
+ public:
+  AWS_S3CRT_API CreateBucketResult() = default;
+  AWS_S3CRT_API CreateBucketResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CRT_API CreateBucketResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A forward slash followed by the name of the bucket.</p>
+   */
+  inline const Aws::String& GetLocation() const { return m_location; }
+  template <typename LocationT = Aws::String>
+  void SetLocation(LocationT&& value) {
+    m_locationHasBeenSet = true;
+    m_location = std::forward<LocationT>(value);
+  }
+  template <typename LocationT = Aws::String>
+  CreateBucketResult& WithLocation(LocationT&& value) {
+    SetLocation(std::forward<LocationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A forward slash followed by the name of the bucket.</p>
-     */
-    inline const Aws::String& GetLocation() const{ return m_location; }
-    inline void SetLocation(const Aws::String& value) { m_location = value; }
-    inline void SetLocation(Aws::String&& value) { m_location = std::move(value); }
-    inline void SetLocation(const char* value) { m_location.assign(value); }
-    inline CreateBucketResult& WithLocation(const Aws::String& value) { SetLocation(value); return *this;}
-    inline CreateBucketResult& WithLocation(Aws::String&& value) { SetLocation(std::move(value)); return *this;}
-    inline CreateBucketResult& WithLocation(const char* value) { SetLocation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the S3 bucket. ARNs uniquely identify
+   * Amazon Web Services resources across all of Amazon Web Services.</p>
+   * <p>This parameter is only supported for S3 directory buckets. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-tagging.html">Using
+   * tags with directory buckets</a>.</p>
+   */
+  inline const Aws::String& GetBucketArn() const { return m_bucketArn; }
+  template <typename BucketArnT = Aws::String>
+  void SetBucketArn(BucketArnT&& value) {
+    m_bucketArnHasBeenSet = true;
+    m_bucketArn = std::forward<BucketArnT>(value);
+  }
+  template <typename BucketArnT = Aws::String>
+  CreateBucketResult& WithBucketArn(BucketArnT&& value) {
+    SetBucketArn(std::forward<BucketArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateBucketResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateBucketResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateBucketResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_location;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateBucketResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_location;
 
-} // namespace Model
-} // namespace S3Crt
-} // namespace Aws
+  Aws::String m_bucketArn;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_locationHasBeenSet = false;
+  bool m_bucketArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Crt
+}  // namespace Aws

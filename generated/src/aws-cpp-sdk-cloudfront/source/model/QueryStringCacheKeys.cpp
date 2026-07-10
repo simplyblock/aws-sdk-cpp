@@ -4,53 +4,36 @@
  */
 
 #include <aws/cloudfront/model/QueryStringCacheKeys.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CloudFront
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudFront {
+namespace Model {
 
-QueryStringCacheKeys::QueryStringCacheKeys() : 
-    m_quantity(0),
-    m_quantityHasBeenSet(false),
-    m_itemsHasBeenSet(false)
-{
-}
+QueryStringCacheKeys::QueryStringCacheKeys(const XmlNode& xmlNode) { *this = xmlNode; }
 
-QueryStringCacheKeys::QueryStringCacheKeys(const XmlNode& xmlNode)
-  : QueryStringCacheKeys()
-{
-  *this = xmlNode;
-}
-
-QueryStringCacheKeys& QueryStringCacheKeys::operator =(const XmlNode& xmlNode)
-{
+QueryStringCacheKeys& QueryStringCacheKeys::operator=(const XmlNode& xmlNode) {
   XmlNode resultNode = xmlNode;
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode quantityNode = resultNode.FirstChild("Quantity");
-    if(!quantityNode.IsNull())
-    {
-      m_quantity = StringUtils::ConvertToInt32(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(quantityNode.GetText()).c_str()).c_str());
+    if (!quantityNode.IsNull()) {
+      m_quantity =
+          StringUtils::ConvertToInt32(StringUtils::Trim(Aws::Utils::Xml::DecodeEscapedXmlText(quantityNode.GetText()).c_str()).c_str());
       m_quantityHasBeenSet = true;
     }
     XmlNode itemsNode = resultNode.FirstChild("Items");
-    if(!itemsNode.IsNull())
-    {
+    if (!itemsNode.IsNull()) {
       XmlNode itemsMember = itemsNode.FirstChild("Name");
-      while(!itemsMember.IsNull())
-      {
+      m_itemsHasBeenSet = !itemsMember.IsNull();
+      while (!itemsMember.IsNull()) {
         m_items.push_back(itemsMember.GetText());
         itemsMember = itemsMember.NextNode("Name");
       }
@@ -62,29 +45,24 @@ QueryStringCacheKeys& QueryStringCacheKeys::operator =(const XmlNode& xmlNode)
   return *this;
 }
 
-void QueryStringCacheKeys::AddToNode(XmlNode& parentNode) const
-{
+void QueryStringCacheKeys::AddToNode(XmlNode& parentNode) const {
   Aws::StringStream ss;
-  if(m_quantityHasBeenSet)
-  {
-   XmlNode quantityNode = parentNode.CreateChildElement("Quantity");
-   ss << m_quantity;
-   quantityNode.SetText(ss.str());
-   ss.str("");
+  if (m_quantityHasBeenSet) {
+    XmlNode quantityNode = parentNode.CreateChildElement("Quantity");
+    ss << m_quantity;
+    quantityNode.SetText(ss.str());
+    ss.str("");
   }
 
-  if(m_itemsHasBeenSet)
-  {
-   XmlNode itemsParentNode = parentNode.CreateChildElement("Items");
-   for(const auto& item : m_items)
-   {
-     XmlNode itemsNode = itemsParentNode.CreateChildElement("Name");
-     itemsNode.SetText(item);
-   }
+  if (m_itemsHasBeenSet) {
+    XmlNode itemsParentNode = parentNode.CreateChildElement("Items");
+    for (const auto& item : m_items) {
+      XmlNode itemsNode = itemsParentNode.CreateChildElement("Name");
+      itemsNode.SetText(item);
+    }
   }
-
 }
 
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

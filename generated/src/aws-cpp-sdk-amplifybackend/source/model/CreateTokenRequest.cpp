@@ -12,16 +12,4 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateTokenRequest::CreateTokenRequest() : 
-    m_appIdHasBeenSet(false)
-{
-}
-
-Aws::String CreateTokenRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String CreateTokenRequest::SerializePayload() const { return {}; }

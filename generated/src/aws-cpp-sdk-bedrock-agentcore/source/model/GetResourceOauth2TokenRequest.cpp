@@ -1,0 +1,79 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#include <aws/bedrock-agentcore/model/GetResourceOauth2TokenRequest.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+#include <utility>
+
+using namespace Aws::BedrockAgentCore::Model;
+using namespace Aws::Utils::Json;
+using namespace Aws::Utils;
+
+Aws::String GetResourceOauth2TokenRequest::SerializePayload() const {
+  JsonValue payload;
+
+  if (m_workloadIdentityTokenHasBeenSet) {
+    payload.WithString("workloadIdentityToken", m_workloadIdentityToken);
+  }
+
+  if (m_resourceCredentialProviderNameHasBeenSet) {
+    payload.WithString("resourceCredentialProviderName", m_resourceCredentialProviderName);
+  }
+
+  if (m_scopesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> scopesJsonList(m_scopes.size());
+    for (unsigned scopesIndex = 0; scopesIndex < scopesJsonList.GetLength(); ++scopesIndex) {
+      scopesJsonList[scopesIndex].AsString(m_scopes[scopesIndex]);
+    }
+    payload.WithArray("scopes", std::move(scopesJsonList));
+  }
+
+  if (m_oauth2FlowHasBeenSet) {
+    payload.WithString("oauth2Flow", Oauth2FlowTypeMapper::GetNameForOauth2FlowType(m_oauth2Flow));
+  }
+
+  if (m_sessionUriHasBeenSet) {
+    payload.WithString("sessionUri", m_sessionUri);
+  }
+
+  if (m_resourceOauth2ReturnUrlHasBeenSet) {
+    payload.WithString("resourceOauth2ReturnUrl", m_resourceOauth2ReturnUrl);
+  }
+
+  if (m_forceAuthenticationHasBeenSet) {
+    payload.WithBool("forceAuthentication", m_forceAuthentication);
+  }
+
+  if (m_customParametersHasBeenSet) {
+    JsonValue customParametersJsonMap;
+    for (auto& customParametersItem : m_customParameters) {
+      customParametersJsonMap.WithString(customParametersItem.first, customParametersItem.second);
+    }
+    payload.WithObject("customParameters", std::move(customParametersJsonMap));
+  }
+
+  if (m_customStateHasBeenSet) {
+    payload.WithString("customState", m_customState);
+  }
+
+  if (m_resourcesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> resourcesJsonList(m_resources.size());
+    for (unsigned resourcesIndex = 0; resourcesIndex < resourcesJsonList.GetLength(); ++resourcesIndex) {
+      resourcesJsonList[resourcesIndex].AsString(m_resources[resourcesIndex]);
+    }
+    payload.WithArray("resources", std::move(resourcesJsonList));
+  }
+
+  if (m_audiencesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> audiencesJsonList(m_audiences.size());
+    for (unsigned audiencesIndex = 0; audiencesIndex < audiencesJsonList.GetLength(); ++audiencesIndex) {
+      audiencesJsonList[audiencesIndex].AsString(m_audiences[audiencesIndex]);
+    }
+    payload.WithArray("audiences", std::move(audiencesJsonList));
+  }
+
+  return payload.View().WriteReadable();
+}

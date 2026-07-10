@@ -11,92 +11,54 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeBuild {
+namespace Model {
 
-S3LogsConfig::S3LogsConfig() : 
-    m_status(LogsConfigStatusType::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_locationHasBeenSet(false),
-    m_encryptionDisabled(false),
-    m_encryptionDisabledHasBeenSet(false),
-    m_bucketOwnerAccess(BucketOwnerAccess::NOT_SET),
-    m_bucketOwnerAccessHasBeenSet(false)
-{
-}
+S3LogsConfig::S3LogsConfig(JsonView jsonValue) { *this = jsonValue; }
 
-S3LogsConfig::S3LogsConfig(JsonView jsonValue)
-  : S3LogsConfig()
-{
-  *this = jsonValue;
-}
-
-S3LogsConfig& S3LogsConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("status"))
-  {
+S3LogsConfig& S3LogsConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("status")) {
     m_status = LogsConfigStatusTypeMapper::GetLogsConfigStatusTypeForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("location"))
-  {
+  if (jsonValue.ValueExists("location")) {
     m_location = jsonValue.GetString("location");
-
     m_locationHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("encryptionDisabled"))
-  {
+  if (jsonValue.ValueExists("encryptionDisabled")) {
     m_encryptionDisabled = jsonValue.GetBool("encryptionDisabled");
-
     m_encryptionDisabledHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("bucketOwnerAccess"))
-  {
+  if (jsonValue.ValueExists("bucketOwnerAccess")) {
     m_bucketOwnerAccess = BucketOwnerAccessMapper::GetBucketOwnerAccessForName(jsonValue.GetString("bucketOwnerAccess"));
-
     m_bucketOwnerAccessHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue S3LogsConfig::Jsonize() const
-{
+JsonValue S3LogsConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", LogsConfigStatusTypeMapper::GetNameForLogsConfigStatusType(m_status));
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", LogsConfigStatusTypeMapper::GetNameForLogsConfigStatusType(m_status));
   }
 
-  if(m_locationHasBeenSet)
-  {
-   payload.WithString("location", m_location);
-
+  if (m_locationHasBeenSet) {
+    payload.WithString("location", m_location);
   }
 
-  if(m_encryptionDisabledHasBeenSet)
-  {
-   payload.WithBool("encryptionDisabled", m_encryptionDisabled);
-
+  if (m_encryptionDisabledHasBeenSet) {
+    payload.WithBool("encryptionDisabled", m_encryptionDisabled);
   }
 
-  if(m_bucketOwnerAccessHasBeenSet)
-  {
-   payload.WithString("bucketOwnerAccess", BucketOwnerAccessMapper::GetNameForBucketOwnerAccess(m_bucketOwnerAccess));
+  if (m_bucketOwnerAccessHasBeenSet) {
+    payload.WithString("bucketOwnerAccess", BucketOwnerAccessMapper::GetNameForBucketOwnerAccess(m_bucketOwnerAccess));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

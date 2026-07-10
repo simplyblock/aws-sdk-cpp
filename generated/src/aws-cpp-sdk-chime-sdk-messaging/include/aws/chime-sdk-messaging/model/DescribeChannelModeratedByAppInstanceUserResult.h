@@ -6,61 +6,72 @@
 #pragma once
 #include <aws/chime-sdk-messaging/ChimeSDKMessaging_EXPORTS.h>
 #include <aws/chime-sdk-messaging/model/ChannelModeratedByAppInstanceUserSummary.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ChimeSDKMessaging
-{
-namespace Model
-{
-  class DescribeChannelModeratedByAppInstanceUserResult
-  {
-  public:
-    AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult();
-    AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ChimeSDKMessaging {
+namespace Model {
+class DescribeChannelModeratedByAppInstanceUserResult {
+ public:
+  AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult() = default;
+  AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIMESDKMESSAGING_API DescribeChannelModeratedByAppInstanceUserResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The moderated channel.</p>
+   */
+  inline const ChannelModeratedByAppInstanceUserSummary& GetChannel() const { return m_channel; }
+  template <typename ChannelT = ChannelModeratedByAppInstanceUserSummary>
+  void SetChannel(ChannelT&& value) {
+    m_channelHasBeenSet = true;
+    m_channel = std::forward<ChannelT>(value);
+  }
+  template <typename ChannelT = ChannelModeratedByAppInstanceUserSummary>
+  DescribeChannelModeratedByAppInstanceUserResult& WithChannel(ChannelT&& value) {
+    SetChannel(std::forward<ChannelT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The moderated channel.</p>
-     */
-    inline const ChannelModeratedByAppInstanceUserSummary& GetChannel() const{ return m_channel; }
-    inline void SetChannel(const ChannelModeratedByAppInstanceUserSummary& value) { m_channel = value; }
-    inline void SetChannel(ChannelModeratedByAppInstanceUserSummary&& value) { m_channel = std::move(value); }
-    inline DescribeChannelModeratedByAppInstanceUserResult& WithChannel(const ChannelModeratedByAppInstanceUserSummary& value) { SetChannel(value); return *this;}
-    inline DescribeChannelModeratedByAppInstanceUserResult& WithChannel(ChannelModeratedByAppInstanceUserSummary&& value) { SetChannel(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeChannelModeratedByAppInstanceUserResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeChannelModeratedByAppInstanceUserResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeChannelModeratedByAppInstanceUserResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeChannelModeratedByAppInstanceUserResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ChannelModeratedByAppInstanceUserSummary m_channel;
+ private:
+  ChannelModeratedByAppInstanceUserSummary m_channel;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ChimeSDKMessaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKMessaging
+}  // namespace Aws

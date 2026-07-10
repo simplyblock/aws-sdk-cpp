@@ -12,16 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetApiRequest::GetApiRequest() : 
-    m_apiIdHasBeenSet(false)
-{
-}
-
-Aws::String GetApiRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetApiRequest::SerializePayload() const { return {}; }

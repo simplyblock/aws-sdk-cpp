@@ -22,7 +22,10 @@ namespace Aws
 
     namespace Client
     {
-        typedef Utils::Outcome<AmazonWebServiceResult<Utils::Xml::XmlDocument>, AWSError<CoreErrors>> XmlOutcome;
+        using XmlOutcome = Utils::Outcome<AmazonWebServiceResult<Utils::Xml::XmlDocument>, AWSError<CoreErrors>>;
+
+        template <typename OutcomeT, typename ClientT, typename AWSEndpointT, typename RequestT, typename HandlerT>
+        class BidirectionalEventStreamingTask;
 
         /**
         *  AWSClient that handles marshalling xml response bodies. You would inherit from this class
@@ -32,6 +35,9 @@ namespace Aws
         {
         public:
             typedef AWSClient BASECLASS;
+
+            typedef XmlOutcome OUTCOME;
+            typedef Utils::Xml::XmlDocument RESPONSE;
 
             AWSXMLClient(const Aws::Client::ClientConfiguration& configuration,
                 const std::shared_ptr<Aws::Client::AWSAuthSigner>& signer,
@@ -44,6 +50,9 @@ namespace Aws
             virtual ~AWSXMLClient() = default;
 
         protected:
+            template <typename OutcomeT, typename ClientT, typename AWSEndpointT, typename RequestT, typename HandlerT>
+            friend class BidirectionalEventStreamingTask; // allow BidirectionalEventStreamingTask to MakeRequests
+
             /**
              * Converts/Parses an http response into a meaningful AWSError object. Using the XML message structure.
              */

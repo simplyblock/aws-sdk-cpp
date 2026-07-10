@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rbin/model/GetRuleRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/rbin/model/GetRuleRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::RecycleBin::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRuleRequest::GetRuleRequest() : 
-    m_identifierHasBeenSet(false)
-{
-}
-
-Aws::String GetRuleRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRuleRequest::SerializePayload() const { return {}; }

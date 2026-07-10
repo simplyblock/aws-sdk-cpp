@@ -4,87 +4,96 @@
  */
 
 #pragma once
-#include <aws/fsx/FSx_EXPORTS.h>
-#include <aws/fsx/FSxRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/fsx/model/UpdateFileCacheLustreConfiguration.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/fsx/FSxRequest.h>
+#include <aws/fsx/FSx_EXPORTS.h>
+#include <aws/fsx/model/UpdateFileCacheLustreConfiguration.h>
 
-namespace Aws
-{
-namespace FSx
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace FSx {
+namespace Model {
+
+/**
+ */
+class UpdateFileCacheRequest : public FSxRequest {
+ public:
+  AWS_FSX_API UpdateFileCacheRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateFileCache"; }
+
+  AWS_FSX_API Aws::String SerializePayload() const override;
+
+  AWS_FSX_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The ID of the cache that you are updating.</p>
    */
-  class UpdateFileCacheRequest : public FSxRequest
-  {
-  public:
-    AWS_FSX_API UpdateFileCacheRequest();
+  inline const Aws::String& GetFileCacheId() const { return m_fileCacheId; }
+  inline bool FileCacheIdHasBeenSet() const { return m_fileCacheIdHasBeenSet; }
+  template <typename FileCacheIdT = Aws::String>
+  void SetFileCacheId(FileCacheIdT&& value) {
+    m_fileCacheIdHasBeenSet = true;
+    m_fileCacheId = std::forward<FileCacheIdT>(value);
+  }
+  template <typename FileCacheIdT = Aws::String>
+  UpdateFileCacheRequest& WithFileCacheId(FileCacheIdT&& value) {
+    SetFileCacheId(std::forward<FileCacheIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateFileCache"; }
+  ///@{
 
-    AWS_FSX_API Aws::String SerializePayload() const override;
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  UpdateFileCacheRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_FSX_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The configuration updates for an Amazon File Cache resource.</p>
+   */
+  inline const UpdateFileCacheLustreConfiguration& GetLustreConfiguration() const { return m_lustreConfiguration; }
+  inline bool LustreConfigurationHasBeenSet() const { return m_lustreConfigurationHasBeenSet; }
+  template <typename LustreConfigurationT = UpdateFileCacheLustreConfiguration>
+  void SetLustreConfiguration(LustreConfigurationT&& value) {
+    m_lustreConfigurationHasBeenSet = true;
+    m_lustreConfiguration = std::forward<LustreConfigurationT>(value);
+  }
+  template <typename LustreConfigurationT = UpdateFileCacheLustreConfiguration>
+  UpdateFileCacheRequest& WithLustreConfiguration(LustreConfigurationT&& value) {
+    SetLustreConfiguration(std::forward<LustreConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_fileCacheId;
 
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The ID of the cache that you are updating.</p>
-     */
-    inline const Aws::String& GetFileCacheId() const{ return m_fileCacheId; }
-    inline bool FileCacheIdHasBeenSet() const { return m_fileCacheIdHasBeenSet; }
-    inline void SetFileCacheId(const Aws::String& value) { m_fileCacheIdHasBeenSet = true; m_fileCacheId = value; }
-    inline void SetFileCacheId(Aws::String&& value) { m_fileCacheIdHasBeenSet = true; m_fileCacheId = std::move(value); }
-    inline void SetFileCacheId(const char* value) { m_fileCacheIdHasBeenSet = true; m_fileCacheId.assign(value); }
-    inline UpdateFileCacheRequest& WithFileCacheId(const Aws::String& value) { SetFileCacheId(value); return *this;}
-    inline UpdateFileCacheRequest& WithFileCacheId(Aws::String&& value) { SetFileCacheId(std::move(value)); return *this;}
-    inline UpdateFileCacheRequest& WithFileCacheId(const char* value) { SetFileCacheId(value); return *this;}
-    ///@}
+  UpdateFileCacheLustreConfiguration m_lustreConfiguration;
+  bool m_fileCacheIdHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+  bool m_lustreConfigurationHasBeenSet = false;
+};
 
-    ///@{
-    
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline UpdateFileCacheRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline UpdateFileCacheRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline UpdateFileCacheRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The configuration updates for an Amazon File Cache resource.</p>
-     */
-    inline const UpdateFileCacheLustreConfiguration& GetLustreConfiguration() const{ return m_lustreConfiguration; }
-    inline bool LustreConfigurationHasBeenSet() const { return m_lustreConfigurationHasBeenSet; }
-    inline void SetLustreConfiguration(const UpdateFileCacheLustreConfiguration& value) { m_lustreConfigurationHasBeenSet = true; m_lustreConfiguration = value; }
-    inline void SetLustreConfiguration(UpdateFileCacheLustreConfiguration&& value) { m_lustreConfigurationHasBeenSet = true; m_lustreConfiguration = std::move(value); }
-    inline UpdateFileCacheRequest& WithLustreConfiguration(const UpdateFileCacheLustreConfiguration& value) { SetLustreConfiguration(value); return *this;}
-    inline UpdateFileCacheRequest& WithLustreConfiguration(UpdateFileCacheLustreConfiguration&& value) { SetLustreConfiguration(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_fileCacheId;
-    bool m_fileCacheIdHasBeenSet = false;
-
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
-
-    UpdateFileCacheLustreConfiguration m_lustreConfiguration;
-    bool m_lustreConfigurationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace FSx
-} // namespace Aws
+}  // namespace Model
+}  // namespace FSx
+}  // namespace Aws

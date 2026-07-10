@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticbeanstalk/model/DescribeConfigurationSettingsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticbeanstalk/model/DescribeConfigurationSettingsResult.h>
 
 #include <utility>
 
@@ -17,44 +17,40 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeConfigurationSettingsResult::DescribeConfigurationSettingsResult()
-{
-}
-
-DescribeConfigurationSettingsResult::DescribeConfigurationSettingsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeConfigurationSettingsResult::DescribeConfigurationSettingsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeConfigurationSettingsResult& DescribeConfigurationSettingsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeConfigurationSettingsResult& DescribeConfigurationSettingsResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeConfigurationSettingsResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeConfigurationSettingsResult")) {
     resultNode = rootNode.FirstChild("DescribeConfigurationSettingsResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode configurationSettingsNode = resultNode.FirstChild("ConfigurationSettings");
-    if(!configurationSettingsNode.IsNull())
-    {
+    if (!configurationSettingsNode.IsNull()) {
       XmlNode configurationSettingsMember = configurationSettingsNode.FirstChild("member");
-      while(!configurationSettingsMember.IsNull())
-      {
+      m_configurationSettingsHasBeenSet = !configurationSettingsMember.IsNull();
+      while (!configurationSettingsMember.IsNull()) {
         m_configurationSettings.push_back(configurationSettingsMember);
         configurationSettingsMember = configurationSettingsMember.NextNode("member");
       }
 
+      m_configurationSettingsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::DescribeConfigurationSettingsResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticBeanstalk::Model::DescribeConfigurationSettingsResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

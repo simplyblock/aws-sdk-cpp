@@ -12,39 +12,24 @@ using namespace Aws::ControlTower::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListEnabledBaselinesRequest::ListEnabledBaselinesRequest() : 
-    m_filterHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListEnabledBaselinesRequest::SerializePayload() const
-{
+Aws::String ListEnabledBaselinesRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_filterHasBeenSet)
-  {
-   payload.WithObject("filter", m_filter.Jsonize());
-
+  if (m_filterHasBeenSet) {
+    payload.WithObject("filter", m_filter.Jsonize());
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("maxResults", m_maxResults);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("maxResults", m_maxResults);
+  }
 
+  if (m_includeChildrenHasBeenSet) {
+    payload.WithBool("includeChildren", m_includeChildren);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

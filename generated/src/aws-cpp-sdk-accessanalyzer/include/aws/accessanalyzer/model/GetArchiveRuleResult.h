@@ -6,64 +6,73 @@
 #pragma once
 #include <aws/accessanalyzer/AccessAnalyzer_EXPORTS.h>
 #include <aws/accessanalyzer/model/ArchiveRuleSummary.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AccessAnalyzer
-{
-namespace Model
-{
-  /**
-   * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetArchiveRuleResponse">AWS
-   * API Reference</a></p>
-   */
-  class GetArchiveRuleResult
-  {
-  public:
-    AWS_ACCESSANALYZER_API GetArchiveRuleResult();
-    AWS_ACCESSANALYZER_API GetArchiveRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ACCESSANALYZER_API GetArchiveRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AccessAnalyzer {
+namespace Model {
+/**
+ * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetArchiveRuleResponse">AWS
+ * API Reference</a></p>
+ */
+class GetArchiveRuleResult {
+ public:
+  AWS_ACCESSANALYZER_API GetArchiveRuleResult() = default;
+  AWS_ACCESSANALYZER_API GetArchiveRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ACCESSANALYZER_API GetArchiveRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ArchiveRuleSummary& GetArchiveRule() const{ return m_archiveRule; }
-    inline void SetArchiveRule(const ArchiveRuleSummary& value) { m_archiveRule = value; }
-    inline void SetArchiveRule(ArchiveRuleSummary&& value) { m_archiveRule = std::move(value); }
-    inline GetArchiveRuleResult& WithArchiveRule(const ArchiveRuleSummary& value) { SetArchiveRule(value); return *this;}
-    inline GetArchiveRuleResult& WithArchiveRule(ArchiveRuleSummary&& value) { SetArchiveRule(std::move(value)); return *this;}
-    ///@}
+  inline const ArchiveRuleSummary& GetArchiveRule() const { return m_archiveRule; }
+  template <typename ArchiveRuleT = ArchiveRuleSummary>
+  void SetArchiveRule(ArchiveRuleT&& value) {
+    m_archiveRuleHasBeenSet = true;
+    m_archiveRule = std::forward<ArchiveRuleT>(value);
+  }
+  template <typename ArchiveRuleT = ArchiveRuleSummary>
+  GetArchiveRuleResult& WithArchiveRule(ArchiveRuleT&& value) {
+    SetArchiveRule(std::forward<ArchiveRuleT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetArchiveRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetArchiveRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetArchiveRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ArchiveRuleSummary m_archiveRule;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetArchiveRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  ArchiveRuleSummary m_archiveRule;
 
-} // namespace Model
-} // namespace AccessAnalyzer
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_archiveRuleHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace AccessAnalyzer
+}  // namespace Aws

@@ -11,63 +11,39 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AutoScalingPlans
-{
-namespace Model
-{
+namespace Aws {
+namespace AutoScalingPlans {
+namespace Model {
 
-PredefinedScalingMetricSpecification::PredefinedScalingMetricSpecification() : 
-    m_predefinedScalingMetricType(ScalingMetricType::NOT_SET),
-    m_predefinedScalingMetricTypeHasBeenSet(false),
-    m_resourceLabelHasBeenSet(false)
-{
-}
+PredefinedScalingMetricSpecification::PredefinedScalingMetricSpecification(JsonView jsonValue) { *this = jsonValue; }
 
-PredefinedScalingMetricSpecification::PredefinedScalingMetricSpecification(JsonView jsonValue)
-  : PredefinedScalingMetricSpecification()
-{
-  *this = jsonValue;
-}
-
-PredefinedScalingMetricSpecification& PredefinedScalingMetricSpecification::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("PredefinedScalingMetricType"))
-  {
-    m_predefinedScalingMetricType = ScalingMetricTypeMapper::GetScalingMetricTypeForName(jsonValue.GetString("PredefinedScalingMetricType"));
-
+PredefinedScalingMetricSpecification& PredefinedScalingMetricSpecification::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("PredefinedScalingMetricType")) {
+    m_predefinedScalingMetricType =
+        ScalingMetricTypeMapper::GetScalingMetricTypeForName(jsonValue.GetString("PredefinedScalingMetricType"));
     m_predefinedScalingMetricTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ResourceLabel"))
-  {
+  if (jsonValue.ValueExists("ResourceLabel")) {
     m_resourceLabel = jsonValue.GetString("ResourceLabel");
-
     m_resourceLabelHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue PredefinedScalingMetricSpecification::Jsonize() const
-{
+JsonValue PredefinedScalingMetricSpecification::Jsonize() const {
   JsonValue payload;
 
-  if(m_predefinedScalingMetricTypeHasBeenSet)
-  {
-   payload.WithString("PredefinedScalingMetricType", ScalingMetricTypeMapper::GetNameForScalingMetricType(m_predefinedScalingMetricType));
+  if (m_predefinedScalingMetricTypeHasBeenSet) {
+    payload.WithString("PredefinedScalingMetricType", ScalingMetricTypeMapper::GetNameForScalingMetricType(m_predefinedScalingMetricType));
   }
 
-  if(m_resourceLabelHasBeenSet)
-  {
-   payload.WithString("ResourceLabel", m_resourceLabel);
-
+  if (m_resourceLabelHasBeenSet) {
+    payload.WithString("ResourceLabel", m_resourceLabel);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AutoScalingPlans
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScalingPlans
+}  // namespace Aws

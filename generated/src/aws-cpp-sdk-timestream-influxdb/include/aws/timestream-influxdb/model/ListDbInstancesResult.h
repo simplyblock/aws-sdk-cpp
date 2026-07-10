@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/timestream-influxdb/TimestreamInfluxDB_EXPORTS.h>
 #include <aws/timestream-influxdb/model/DbInstanceSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TimestreamInfluxDB
-{
-namespace Model
-{
-  class ListDbInstancesResult
-  {
-  public:
-    AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult();
-    AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TimestreamInfluxDB {
+namespace Model {
+class ListDbInstancesResult {
+ public:
+  AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult() = default;
+  AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TIMESTREAMINFLUXDB_API ListDbInstancesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of Timestream for InfluxDB DB instance summaries.</p>
+   */
+  inline const Aws::Vector<DbInstanceSummary>& GetItems() const { return m_items; }
+  template <typename ItemsT = Aws::Vector<DbInstanceSummary>>
+  void SetItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items = std::forward<ItemsT>(value);
+  }
+  template <typename ItemsT = Aws::Vector<DbInstanceSummary>>
+  ListDbInstancesResult& WithItems(ItemsT&& value) {
+    SetItems(std::forward<ItemsT>(value));
+    return *this;
+  }
+  template <typename ItemsT = DbInstanceSummary>
+  ListDbInstancesResult& AddItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items.emplace_back(std::forward<ItemsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of Timestream for InfluxDB DB instance summaries.</p>
-     */
-    inline const Aws::Vector<DbInstanceSummary>& GetItems() const{ return m_items; }
-    inline void SetItems(const Aws::Vector<DbInstanceSummary>& value) { m_items = value; }
-    inline void SetItems(Aws::Vector<DbInstanceSummary>&& value) { m_items = std::move(value); }
-    inline ListDbInstancesResult& WithItems(const Aws::Vector<DbInstanceSummary>& value) { SetItems(value); return *this;}
-    inline ListDbInstancesResult& WithItems(Aws::Vector<DbInstanceSummary>&& value) { SetItems(std::move(value)); return *this;}
-    inline ListDbInstancesResult& AddItems(const DbInstanceSummary& value) { m_items.push_back(value); return *this; }
-    inline ListDbInstancesResult& AddItems(DbInstanceSummary&& value) { m_items.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Token from a previous call of the operation. When this value is provided, the
+   * service returns results from where the previous response left off.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDbInstancesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Token from a previous call of the operation. When this value is provided, the
-     * service returns results from where the previous response left off.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDbInstancesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDbInstancesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDbInstancesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDbInstancesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDbInstancesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDbInstancesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDbInstancesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DbInstanceSummary> m_items;
+ private:
+  Aws::Vector<DbInstanceSummary> m_items;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_itemsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TimestreamInfluxDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamInfluxDB
+}  // namespace Aws

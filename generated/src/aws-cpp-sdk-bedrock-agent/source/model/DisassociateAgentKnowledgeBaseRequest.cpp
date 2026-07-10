@@ -12,18 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DisassociateAgentKnowledgeBaseRequest::DisassociateAgentKnowledgeBaseRequest() : 
-    m_agentIdHasBeenSet(false),
-    m_agentVersionHasBeenSet(false),
-    m_knowledgeBaseIdHasBeenSet(false)
-{
-}
-
-Aws::String DisassociateAgentKnowledgeBaseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DisassociateAgentKnowledgeBaseRequest::SerializePayload() const { return {}; }

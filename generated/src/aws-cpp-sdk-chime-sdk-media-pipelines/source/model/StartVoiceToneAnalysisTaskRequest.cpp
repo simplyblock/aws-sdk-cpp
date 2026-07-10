@@ -12,40 +12,20 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartVoiceToneAnalysisTaskRequest::StartVoiceToneAnalysisTaskRequest() : 
-    m_identifierHasBeenSet(false),
-    m_languageCode(VoiceAnalyticsLanguageCode::NOT_SET),
-    m_languageCodeHasBeenSet(false),
-    m_kinesisVideoStreamSourceTaskConfigurationHasBeenSet(false),
-    m_clientRequestToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientRequestTokenHasBeenSet(true)
-{
-}
-
-Aws::String StartVoiceToneAnalysisTaskRequest::SerializePayload() const
-{
+Aws::String StartVoiceToneAnalysisTaskRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_languageCodeHasBeenSet)
-  {
-   payload.WithString("LanguageCode", VoiceAnalyticsLanguageCodeMapper::GetNameForVoiceAnalyticsLanguageCode(m_languageCode));
+  if (m_languageCodeHasBeenSet) {
+    payload.WithString("LanguageCode", VoiceAnalyticsLanguageCodeMapper::GetNameForVoiceAnalyticsLanguageCode(m_languageCode));
   }
 
-  if(m_kinesisVideoStreamSourceTaskConfigurationHasBeenSet)
-  {
-   payload.WithObject("KinesisVideoStreamSourceTaskConfiguration", m_kinesisVideoStreamSourceTaskConfiguration.Jsonize());
-
+  if (m_kinesisVideoStreamSourceTaskConfigurationHasBeenSet) {
+    payload.WithObject("KinesisVideoStreamSourceTaskConfiguration", m_kinesisVideoStreamSourceTaskConfiguration.Jsonize());
   }
 
-  if(m_clientRequestTokenHasBeenSet)
-  {
-   payload.WithString("ClientRequestToken", m_clientRequestToken);
-
+  if (m_clientRequestTokenHasBeenSet) {
+    payload.WithString("ClientRequestToken", m_clientRequestToken);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

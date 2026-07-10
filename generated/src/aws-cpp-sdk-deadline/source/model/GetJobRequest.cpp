@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/deadline/model/GetJobRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/deadline/model/GetJobRequest.h>
 
 #include <utility>
 
@@ -12,18 +12,4 @@ using namespace Aws::deadline::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetJobRequest::GetJobRequest() : 
-    m_farmIdHasBeenSet(false),
-    m_jobIdHasBeenSet(false),
-    m_queueIdHasBeenSet(false)
-{
-}
-
-Aws::String GetJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetJobRequest::SerializePayload() const { return {}; }

@@ -4,84 +4,102 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/SignalMapSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
+/**
+ * Placeholder documentation for ListSignalMapsResponse<p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListSignalMapsResponse">AWS
+ * API Reference</a></p>
+ */
+class ListSignalMapsResult {
+ public:
+  AWS_MEDIALIVE_API ListSignalMapsResult() = default;
+  AWS_MEDIALIVE_API ListSignalMapsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIALIVE_API ListSignalMapsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * Placeholder documentation for ListSignalMapsResponse<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ListSignalMapsResponse">AWS
-   * API Reference</a></p>
+   * A token used to retrieve the next set of results in paginated list responses.
    */
-  class ListSignalMapsResult
-  {
-  public:
-    AWS_MEDIALIVE_API ListSignalMapsResult();
-    AWS_MEDIALIVE_API ListSignalMapsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIALIVE_API ListSignalMapsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSignalMapsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * A token used to retrieve the next set of results in paginated list responses.
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSignalMapsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSignalMapsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSignalMapsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::Vector<SignalMapSummary>& GetSignalMaps() const { return m_signalMaps; }
+  template <typename SignalMapsT = Aws::Vector<SignalMapSummary>>
+  void SetSignalMaps(SignalMapsT&& value) {
+    m_signalMapsHasBeenSet = true;
+    m_signalMaps = std::forward<SignalMapsT>(value);
+  }
+  template <typename SignalMapsT = Aws::Vector<SignalMapSummary>>
+  ListSignalMapsResult& WithSignalMaps(SignalMapsT&& value) {
+    SetSignalMaps(std::forward<SignalMapsT>(value));
+    return *this;
+  }
+  template <typename SignalMapsT = SignalMapSummary>
+  ListSignalMapsResult& AddSignalMaps(SignalMapsT&& value) {
+    m_signalMapsHasBeenSet = true;
+    m_signalMaps.emplace_back(std::forward<SignalMapsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<SignalMapSummary>& GetSignalMaps() const{ return m_signalMaps; }
-    inline void SetSignalMaps(const Aws::Vector<SignalMapSummary>& value) { m_signalMaps = value; }
-    inline void SetSignalMaps(Aws::Vector<SignalMapSummary>&& value) { m_signalMaps = std::move(value); }
-    inline ListSignalMapsResult& WithSignalMaps(const Aws::Vector<SignalMapSummary>& value) { SetSignalMaps(value); return *this;}
-    inline ListSignalMapsResult& WithSignalMaps(Aws::Vector<SignalMapSummary>&& value) { SetSignalMaps(std::move(value)); return *this;}
-    inline ListSignalMapsResult& AddSignalMaps(const SignalMapSummary& value) { m_signalMaps.push_back(value); return *this; }
-    inline ListSignalMapsResult& AddSignalMaps(SignalMapSummary&& value) { m_signalMaps.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSignalMapsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSignalMapsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSignalMapsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSignalMapsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<SignalMapSummary> m_signalMaps;
+  Aws::Vector<SignalMapSummary> m_signalMaps;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_signalMapsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

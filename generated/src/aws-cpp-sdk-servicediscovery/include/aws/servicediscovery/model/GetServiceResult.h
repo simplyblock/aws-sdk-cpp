@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/servicediscovery/ServiceDiscovery_EXPORTS.h>
 #include <aws/servicediscovery/model/Service.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ServiceDiscovery
-{
-namespace Model
-{
-  class GetServiceResult
-  {
-  public:
-    AWS_SERVICEDISCOVERY_API GetServiceResult();
-    AWS_SERVICEDISCOVERY_API GetServiceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SERVICEDISCOVERY_API GetServiceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ServiceDiscovery {
+namespace Model {
+class GetServiceResult {
+ public:
+  AWS_SERVICEDISCOVERY_API GetServiceResult() = default;
+  AWS_SERVICEDISCOVERY_API GetServiceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SERVICEDISCOVERY_API GetServiceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A complex type that contains information about the service.</p>
+   */
+  inline const Service& GetService() const { return m_service; }
+  template <typename ServiceT = Service>
+  void SetService(ServiceT&& value) {
+    m_serviceHasBeenSet = true;
+    m_service = std::forward<ServiceT>(value);
+  }
+  template <typename ServiceT = Service>
+  GetServiceResult& WithService(ServiceT&& value) {
+    SetService(std::forward<ServiceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A complex type that contains information about the service.</p>
-     */
-    inline const Service& GetService() const{ return m_service; }
-    inline void SetService(const Service& value) { m_service = value; }
-    inline void SetService(Service&& value) { m_service = std::move(value); }
-    inline GetServiceResult& WithService(const Service& value) { SetService(value); return *this;}
-    inline GetServiceResult& WithService(Service&& value) { SetService(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetServiceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetServiceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetServiceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetServiceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Service m_service;
+ private:
+  Service m_service;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serviceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ServiceDiscovery
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceDiscovery
+}  // namespace Aws

@@ -12,31 +12,16 @@ using namespace Aws::Account::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutContactInformationRequest::PutContactInformationRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_contactInformationHasBeenSet(false)
-{
-}
-
-Aws::String PutContactInformationRequest::SerializePayload() const
-{
+Aws::String PutContactInformationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_accountIdHasBeenSet)
-  {
-   payload.WithString("AccountId", m_accountId);
-
+  if (m_contactInformationHasBeenSet) {
+    payload.WithObject("ContactInformation", m_contactInformation.Jsonize());
   }
 
-  if(m_contactInformationHasBeenSet)
-  {
-   payload.WithObject("ContactInformation", m_contactInformation.Jsonize());
-
+  if (m_accountIdHasBeenSet) {
+    payload.WithString("AccountId", m_accountId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

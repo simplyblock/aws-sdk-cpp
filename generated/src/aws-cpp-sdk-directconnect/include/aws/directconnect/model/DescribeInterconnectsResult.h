@@ -4,66 +4,100 @@
  */
 
 #pragma once
-#include <aws/directconnect/DirectConnect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/directconnect/DirectConnect_EXPORTS.h>
 #include <aws/directconnect/model/Interconnect.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectConnect
-{
-namespace Model
-{
-  class DescribeInterconnectsResult
-  {
-  public:
-    AWS_DIRECTCONNECT_API DescribeInterconnectsResult();
-    AWS_DIRECTCONNECT_API DescribeInterconnectsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTCONNECT_API DescribeInterconnectsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectConnect {
+namespace Model {
+class DescribeInterconnectsResult {
+ public:
+  AWS_DIRECTCONNECT_API DescribeInterconnectsResult() = default;
+  AWS_DIRECTCONNECT_API DescribeInterconnectsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTCONNECT_API DescribeInterconnectsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The interconnects.</p>
+   */
+  inline const Aws::Vector<Interconnect>& GetInterconnects() const { return m_interconnects; }
+  template <typename InterconnectsT = Aws::Vector<Interconnect>>
+  void SetInterconnects(InterconnectsT&& value) {
+    m_interconnectsHasBeenSet = true;
+    m_interconnects = std::forward<InterconnectsT>(value);
+  }
+  template <typename InterconnectsT = Aws::Vector<Interconnect>>
+  DescribeInterconnectsResult& WithInterconnects(InterconnectsT&& value) {
+    SetInterconnects(std::forward<InterconnectsT>(value));
+    return *this;
+  }
+  template <typename InterconnectsT = Interconnect>
+  DescribeInterconnectsResult& AddInterconnects(InterconnectsT&& value) {
+    m_interconnectsHasBeenSet = true;
+    m_interconnects.emplace_back(std::forward<InterconnectsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The interconnects.</p>
-     */
-    inline const Aws::Vector<Interconnect>& GetInterconnects() const{ return m_interconnects; }
-    inline void SetInterconnects(const Aws::Vector<Interconnect>& value) { m_interconnects = value; }
-    inline void SetInterconnects(Aws::Vector<Interconnect>&& value) { m_interconnects = std::move(value); }
-    inline DescribeInterconnectsResult& WithInterconnects(const Aws::Vector<Interconnect>& value) { SetInterconnects(value); return *this;}
-    inline DescribeInterconnectsResult& WithInterconnects(Aws::Vector<Interconnect>&& value) { SetInterconnects(std::move(value)); return *this;}
-    inline DescribeInterconnectsResult& AddInterconnects(const Interconnect& value) { m_interconnects.push_back(value); return *this; }
-    inline DescribeInterconnectsResult& AddInterconnects(Interconnect&& value) { m_interconnects.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeInterconnectsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeInterconnectsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeInterconnectsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeInterconnectsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<Interconnect> m_interconnects;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeInterconnectsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::Vector<Interconnect> m_interconnects;
 
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_interconnectsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

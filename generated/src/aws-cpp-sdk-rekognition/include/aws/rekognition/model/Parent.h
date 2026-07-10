@@ -4,59 +4,56 @@
  */
 
 #pragma once
-#include <aws/rekognition/Rekognition_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/rekognition/Rekognition_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Rekognition
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Rekognition {
+namespace Model {
 
+/**
+ * <p>A parent label for a label. A label can have 0, 1, or more parents.
+ * </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/rekognition-2016-06-27/Parent">AWS
+ * API Reference</a></p>
+ */
+class Parent {
+ public:
+  AWS_REKOGNITION_API Parent() = default;
+  AWS_REKOGNITION_API Parent(Aws::Utils::Json::JsonView jsonValue);
+  AWS_REKOGNITION_API Parent& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_REKOGNITION_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A parent label for a label. A label can have 0, 1, or more parents.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/rekognition-2016-06-27/Parent">AWS
-   * API Reference</a></p>
+   * <p>The name of the parent label.</p>
    */
-  class Parent
-  {
-  public:
-    AWS_REKOGNITION_API Parent();
-    AWS_REKOGNITION_API Parent(Aws::Utils::Json::JsonView jsonValue);
-    AWS_REKOGNITION_API Parent& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_REKOGNITION_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Parent& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
+  bool m_nameHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The name of the parent label.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Parent& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Parent& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Parent& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Rekognition
-} // namespace Aws
+}  // namespace Model
+}  // namespace Rekognition
+}  // namespace Aws

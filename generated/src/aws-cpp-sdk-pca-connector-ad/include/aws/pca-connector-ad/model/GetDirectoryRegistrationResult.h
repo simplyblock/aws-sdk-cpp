@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
 #include <aws/pca-connector-ad/model/DirectoryRegistration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorAd
-{
-namespace Model
-{
-  class GetDirectoryRegistrationResult
-  {
-  public:
-    AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult();
-    AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorAd {
+namespace Model {
+class GetDirectoryRegistrationResult {
+ public:
+  AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult() = default;
+  AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORAD_API GetDirectoryRegistrationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The directory registration represents the authorization of the connector
+   * service with a directory.</p>
+   */
+  inline const DirectoryRegistration& GetDirectoryRegistration() const { return m_directoryRegistration; }
+  template <typename DirectoryRegistrationT = DirectoryRegistration>
+  void SetDirectoryRegistration(DirectoryRegistrationT&& value) {
+    m_directoryRegistrationHasBeenSet = true;
+    m_directoryRegistration = std::forward<DirectoryRegistrationT>(value);
+  }
+  template <typename DirectoryRegistrationT = DirectoryRegistration>
+  GetDirectoryRegistrationResult& WithDirectoryRegistration(DirectoryRegistrationT&& value) {
+    SetDirectoryRegistration(std::forward<DirectoryRegistrationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The directory registration represents the authorization of the connector
-     * service with a directory.</p>
-     */
-    inline const DirectoryRegistration& GetDirectoryRegistration() const{ return m_directoryRegistration; }
-    inline void SetDirectoryRegistration(const DirectoryRegistration& value) { m_directoryRegistration = value; }
-    inline void SetDirectoryRegistration(DirectoryRegistration&& value) { m_directoryRegistration = std::move(value); }
-    inline GetDirectoryRegistrationResult& WithDirectoryRegistration(const DirectoryRegistration& value) { SetDirectoryRegistration(value); return *this;}
-    inline GetDirectoryRegistrationResult& WithDirectoryRegistration(DirectoryRegistration&& value) { SetDirectoryRegistration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDirectoryRegistrationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDirectoryRegistrationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDirectoryRegistrationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDirectoryRegistrationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DirectoryRegistration m_directoryRegistration;
+ private:
+  DirectoryRegistration m_directoryRegistration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_directoryRegistrationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorAd
+}  // namespace Aws

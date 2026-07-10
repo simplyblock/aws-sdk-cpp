@@ -4,143 +4,197 @@
  */
 
 #pragma once
-#include <aws/eks/EKS_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/eks/EKS_EXPORTS.h>
+#include <aws/eks/model/Cancellation.h>
+#include <aws/eks/model/ErrorDetail.h>
+#include <aws/eks/model/UpdateParam.h>
 #include <aws/eks/model/UpdateStatus.h>
 #include <aws/eks/model/UpdateType.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/eks/model/UpdateParam.h>
-#include <aws/eks/model/ErrorDetail.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EKS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EKS {
+namespace Model {
 
+/**
+ * <p>An object representing an asynchronous update.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/Update">AWS API
+ * Reference</a></p>
+ */
+class Update {
+ public:
+  AWS_EKS_API Update() = default;
+  AWS_EKS_API Update(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API Update& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object representing an asynchronous update.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/Update">AWS API
-   * Reference</a></p>
+   * <p>A UUID that is used to track the update.</p>
    */
-  class Update
-  {
-  public:
-    AWS_EKS_API Update();
-    AWS_EKS_API Update(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API Update& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  Update& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The current status of the update.</p>
+   */
+  inline UpdateStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(UpdateStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline Update& WithStatus(UpdateStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A UUID that is used to track the update.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline Update& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline Update& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline Update& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the update.</p>
+   */
+  inline UpdateType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(UpdateType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline Update& WithType(UpdateType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the update.</p>
-     */
-    inline const UpdateStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const UpdateStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(UpdateStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline Update& WithStatus(const UpdateStatus& value) { SetStatus(value); return *this;}
-    inline Update& WithStatus(UpdateStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A key-value map that contains the parameters associated with the update.</p>
+   */
+  inline const Aws::Vector<UpdateParam>& GetParams() const { return m_params; }
+  inline bool ParamsHasBeenSet() const { return m_paramsHasBeenSet; }
+  template <typename ParamsT = Aws::Vector<UpdateParam>>
+  void SetParams(ParamsT&& value) {
+    m_paramsHasBeenSet = true;
+    m_params = std::forward<ParamsT>(value);
+  }
+  template <typename ParamsT = Aws::Vector<UpdateParam>>
+  Update& WithParams(ParamsT&& value) {
+    SetParams(std::forward<ParamsT>(value));
+    return *this;
+  }
+  template <typename ParamsT = UpdateParam>
+  Update& AddParams(ParamsT&& value) {
+    m_paramsHasBeenSet = true;
+    m_params.emplace_back(std::forward<ParamsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the update.</p>
-     */
-    inline const UpdateType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const UpdateType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(UpdateType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline Update& WithType(const UpdateType& value) { SetType(value); return *this;}
-    inline Update& WithType(UpdateType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Unix epoch timestamp at object creation.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  Update& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A key-value map that contains the parameters associated with the update.</p>
-     */
-    inline const Aws::Vector<UpdateParam>& GetParams() const{ return m_params; }
-    inline bool ParamsHasBeenSet() const { return m_paramsHasBeenSet; }
-    inline void SetParams(const Aws::Vector<UpdateParam>& value) { m_paramsHasBeenSet = true; m_params = value; }
-    inline void SetParams(Aws::Vector<UpdateParam>&& value) { m_paramsHasBeenSet = true; m_params = std::move(value); }
-    inline Update& WithParams(const Aws::Vector<UpdateParam>& value) { SetParams(value); return *this;}
-    inline Update& WithParams(Aws::Vector<UpdateParam>&& value) { SetParams(std::move(value)); return *this;}
-    inline Update& AddParams(const UpdateParam& value) { m_paramsHasBeenSet = true; m_params.push_back(value); return *this; }
-    inline Update& AddParams(UpdateParam&& value) { m_paramsHasBeenSet = true; m_params.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Any errors associated with a <code>Failed</code> update.</p>
+   */
+  inline const Aws::Vector<ErrorDetail>& GetErrors() const { return m_errors; }
+  inline bool ErrorsHasBeenSet() const { return m_errorsHasBeenSet; }
+  template <typename ErrorsT = Aws::Vector<ErrorDetail>>
+  void SetErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors = std::forward<ErrorsT>(value);
+  }
+  template <typename ErrorsT = Aws::Vector<ErrorDetail>>
+  Update& WithErrors(ErrorsT&& value) {
+    SetErrors(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  template <typename ErrorsT = ErrorDetail>
+  Update& AddErrors(ErrorsT&& value) {
+    m_errorsHasBeenSet = true;
+    m_errors.emplace_back(std::forward<ErrorsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Unix epoch timestamp at object creation.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline Update& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline Update& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The latest cancellation information for the update. This field is present
+   * only if any cancellation is attempted for the update.</p>
+   */
+  inline const Cancellation& GetCancellation() const { return m_cancellation; }
+  inline bool CancellationHasBeenSet() const { return m_cancellationHasBeenSet; }
+  template <typename CancellationT = Cancellation>
+  void SetCancellation(CancellationT&& value) {
+    m_cancellationHasBeenSet = true;
+    m_cancellation = std::forward<CancellationT>(value);
+  }
+  template <typename CancellationT = Cancellation>
+  Update& WithCancellation(CancellationT&& value) {
+    SetCancellation(std::forward<CancellationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>Any errors associated with a <code>Failed</code> update.</p>
-     */
-    inline const Aws::Vector<ErrorDetail>& GetErrors() const{ return m_errors; }
-    inline bool ErrorsHasBeenSet() const { return m_errorsHasBeenSet; }
-    inline void SetErrors(const Aws::Vector<ErrorDetail>& value) { m_errorsHasBeenSet = true; m_errors = value; }
-    inline void SetErrors(Aws::Vector<ErrorDetail>&& value) { m_errorsHasBeenSet = true; m_errors = std::move(value); }
-    inline Update& WithErrors(const Aws::Vector<ErrorDetail>& value) { SetErrors(value); return *this;}
-    inline Update& WithErrors(Aws::Vector<ErrorDetail>&& value) { SetErrors(std::move(value)); return *this;}
-    inline Update& AddErrors(const ErrorDetail& value) { m_errorsHasBeenSet = true; m_errors.push_back(value); return *this; }
-    inline Update& AddErrors(ErrorDetail&& value) { m_errorsHasBeenSet = true; m_errors.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  UpdateStatus m_status{UpdateStatus::NOT_SET};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  UpdateType m_type{UpdateType::NOT_SET};
 
-    UpdateStatus m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::Vector<UpdateParam> m_params;
 
-    UpdateType m_type;
-    bool m_typeHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::Vector<UpdateParam> m_params;
-    bool m_paramsHasBeenSet = false;
+  Aws::Vector<ErrorDetail> m_errors;
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  Cancellation m_cancellation;
+  bool m_idHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_paramsHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_errorsHasBeenSet = false;
+  bool m_cancellationHasBeenSet = false;
+};
 
-    Aws::Vector<ErrorDetail> m_errors;
-    bool m_errorsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAssessmentFrameworkRequest::DeleteAssessmentFrameworkRequest() : 
-    m_frameworkIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAssessmentFrameworkRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAssessmentFrameworkRequest::SerializePayload() const { return {}; }

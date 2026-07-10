@@ -5,223 +5,299 @@
 
 #pragma once
 #include <aws/cloudformation/CloudFormation_EXPORTS.h>
+#include <aws/cloudformation/model/GeneratedTemplateStatus.h>
+#include <aws/cloudformation/model/ResourceDetail.h>
+#include <aws/cloudformation/model/ResponseMetadata.h>
+#include <aws/cloudformation/model/TemplateConfiguration.h>
+#include <aws/cloudformation/model/TemplateProgress.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/cloudformation/model/GeneratedTemplateStatus.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/cloudformation/model/TemplateProgress.h>
-#include <aws/cloudformation/model/TemplateConfiguration.h>
-#include <aws/cloudformation/model/ResponseMetadata.h>
-#include <aws/cloudformation/model/ResourceDetail.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFormation
-{
-namespace Model
-{
-  class DescribeGeneratedTemplateResult
-  {
-  public:
-    AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult();
-    AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFormation {
+namespace Model {
+class DescribeGeneratedTemplateResult {
+ public:
+  AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult() = default;
+  AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFORMATION_API DescribeGeneratedTemplateResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the generated template. The format is
+   * <code>arn:${Partition}:cloudformation:${Region}:${Account}:generatedtemplate/${Id}</code>.
+   * For example,
+   * <code>arn:aws:cloudformation:<i>us-east-1</i>:<i>123456789012</i>:generatedtemplate/<i>2e8465c1-9a80-43ea-a3a3-4f2d692fe6dc</i>
+   * </code>.</p>
+   */
+  inline const Aws::String& GetGeneratedTemplateId() const { return m_generatedTemplateId; }
+  template <typename GeneratedTemplateIdT = Aws::String>
+  void SetGeneratedTemplateId(GeneratedTemplateIdT&& value) {
+    m_generatedTemplateIdHasBeenSet = true;
+    m_generatedTemplateId = std::forward<GeneratedTemplateIdT>(value);
+  }
+  template <typename GeneratedTemplateIdT = Aws::String>
+  DescribeGeneratedTemplateResult& WithGeneratedTemplateId(GeneratedTemplateIdT&& value) {
+    SetGeneratedTemplateId(std::forward<GeneratedTemplateIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the generated template. The format is
-     * <code>arn:${Partition}:cloudformation:${Region}:${Account}:generatedtemplate/${Id}</code>.
-     * For example,
-     * <code>arn:aws:cloudformation:<i>us-east-1</i>:<i>123456789012</i>:generatedtemplate/<i>2e8465c1-9a80-43ea-a3a3-4f2d692fe6dc</i>
-     * </code>.</p>
-     */
-    inline const Aws::String& GetGeneratedTemplateId() const{ return m_generatedTemplateId; }
-    inline void SetGeneratedTemplateId(const Aws::String& value) { m_generatedTemplateId = value; }
-    inline void SetGeneratedTemplateId(Aws::String&& value) { m_generatedTemplateId = std::move(value); }
-    inline void SetGeneratedTemplateId(const char* value) { m_generatedTemplateId.assign(value); }
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateId(const Aws::String& value) { SetGeneratedTemplateId(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateId(Aws::String&& value) { SetGeneratedTemplateId(std::move(value)); return *this;}
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateId(const char* value) { SetGeneratedTemplateId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the generated template.</p>
+   */
+  inline const Aws::String& GetGeneratedTemplateName() const { return m_generatedTemplateName; }
+  template <typename GeneratedTemplateNameT = Aws::String>
+  void SetGeneratedTemplateName(GeneratedTemplateNameT&& value) {
+    m_generatedTemplateNameHasBeenSet = true;
+    m_generatedTemplateName = std::forward<GeneratedTemplateNameT>(value);
+  }
+  template <typename GeneratedTemplateNameT = Aws::String>
+  DescribeGeneratedTemplateResult& WithGeneratedTemplateName(GeneratedTemplateNameT&& value) {
+    SetGeneratedTemplateName(std::forward<GeneratedTemplateNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the generated template.</p>
-     */
-    inline const Aws::String& GetGeneratedTemplateName() const{ return m_generatedTemplateName; }
-    inline void SetGeneratedTemplateName(const Aws::String& value) { m_generatedTemplateName = value; }
-    inline void SetGeneratedTemplateName(Aws::String&& value) { m_generatedTemplateName = std::move(value); }
-    inline void SetGeneratedTemplateName(const char* value) { m_generatedTemplateName.assign(value); }
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateName(const Aws::String& value) { SetGeneratedTemplateName(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateName(Aws::String&& value) { SetGeneratedTemplateName(std::move(value)); return *this;}
-    inline DescribeGeneratedTemplateResult& WithGeneratedTemplateName(const char* value) { SetGeneratedTemplateName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of objects describing the details of the resources in the template
+   * generation.</p>
+   */
+  inline const Aws::Vector<ResourceDetail>& GetResources() const { return m_resources; }
+  template <typename ResourcesT = Aws::Vector<ResourceDetail>>
+  void SetResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources = std::forward<ResourcesT>(value);
+  }
+  template <typename ResourcesT = Aws::Vector<ResourceDetail>>
+  DescribeGeneratedTemplateResult& WithResources(ResourcesT&& value) {
+    SetResources(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  template <typename ResourcesT = ResourceDetail>
+  DescribeGeneratedTemplateResult& AddResources(ResourcesT&& value) {
+    m_resourcesHasBeenSet = true;
+    m_resources.emplace_back(std::forward<ResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of objects describing the details of the resources in the template
-     * generation.</p>
-     */
-    inline const Aws::Vector<ResourceDetail>& GetResources() const{ return m_resources; }
-    inline void SetResources(const Aws::Vector<ResourceDetail>& value) { m_resources = value; }
-    inline void SetResources(Aws::Vector<ResourceDetail>&& value) { m_resources = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithResources(const Aws::Vector<ResourceDetail>& value) { SetResources(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithResources(Aws::Vector<ResourceDetail>&& value) { SetResources(std::move(value)); return *this;}
-    inline DescribeGeneratedTemplateResult& AddResources(const ResourceDetail& value) { m_resources.push_back(value); return *this; }
-    inline DescribeGeneratedTemplateResult& AddResources(ResourceDetail&& value) { m_resources.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the template generation. Supported values are:</p> <ul> <li>
+   * <p> <code>CreatePending</code> - the creation of the template is pending.</p>
+   * </li> <li> <p> <code>CreateInProgress</code> - the creation of the template is
+   * in progress.</p> </li> <li> <p> <code>DeletePending</code> - the deletion of the
+   * template is pending.</p> </li> <li> <p> <code>DeleteInProgress</code> - the
+   * deletion of the template is in progress.</p> </li> <li> <p>
+   * <code>UpdatePending</code> - the update of the template is pending.</p> </li>
+   * <li> <p> <code>UpdateInProgress</code> - the update of the template is in
+   * progress.</p> </li> <li> <p> <code>Failed</code> - the template operation
+   * failed.</p> </li> <li> <p> <code>Complete</code> - the template operation is
+   * complete.</p> </li> </ul>
+   */
+  inline GeneratedTemplateStatus GetStatus() const { return m_status; }
+  inline void SetStatus(GeneratedTemplateStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DescribeGeneratedTemplateResult& WithStatus(GeneratedTemplateStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the template generation. Supported values are:</p> <ul> <li>
-     * <p> <code>CreatePending</code> - the creation of the template is pending.</p>
-     * </li> <li> <p> <code>CreateInProgress</code> - the creation of the template is
-     * in progress.</p> </li> <li> <p> <code>DeletePending</code> - the deletion of the
-     * template is pending.</p> </li> <li> <p> <code>DeleteInProgress</code> - the
-     * deletion of the template is in progress.</p> </li> <li> <p>
-     * <code>UpdatePending</code> - the update of the template is pending.</p> </li>
-     * <li> <p> <code>UpdateInProgress</code> - the update of the template is in
-     * progress.</p> </li> <li> <p> <code>Failed</code> - the template operation
-     * failed.</p> </li> <li> <p> <code>Complete</code> - the template operation is
-     * complete.</p> </li> </ul>
-     */
-    inline const GeneratedTemplateStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const GeneratedTemplateStatus& value) { m_status = value; }
-    inline void SetStatus(GeneratedTemplateStatus&& value) { m_status = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithStatus(const GeneratedTemplateStatus& value) { SetStatus(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithStatus(GeneratedTemplateStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for the current template generation status. This will provide more
+   * details if a failure happened.</p>
+   */
+  inline const Aws::String& GetStatusReason() const { return m_statusReason; }
+  template <typename StatusReasonT = Aws::String>
+  void SetStatusReason(StatusReasonT&& value) {
+    m_statusReasonHasBeenSet = true;
+    m_statusReason = std::forward<StatusReasonT>(value);
+  }
+  template <typename StatusReasonT = Aws::String>
+  DescribeGeneratedTemplateResult& WithStatusReason(StatusReasonT&& value) {
+    SetStatusReason(std::forward<StatusReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason for the current template generation status. This will provide more
-     * details if a failure happened.</p>
-     */
-    inline const Aws::String& GetStatusReason() const{ return m_statusReason; }
-    inline void SetStatusReason(const Aws::String& value) { m_statusReason = value; }
-    inline void SetStatusReason(Aws::String&& value) { m_statusReason = std::move(value); }
-    inline void SetStatusReason(const char* value) { m_statusReason.assign(value); }
-    inline DescribeGeneratedTemplateResult& WithStatusReason(const Aws::String& value) { SetStatusReason(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithStatusReason(Aws::String&& value) { SetStatusReason(std::move(value)); return *this;}
-    inline DescribeGeneratedTemplateResult& WithStatusReason(const char* value) { SetStatusReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time the generated template was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  DescribeGeneratedTemplateResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time the generated template was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time the generated template was last updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTime() const { return m_lastUpdatedTime; }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  void SetLastUpdatedTime(LastUpdatedTimeT&& value) {
+    m_lastUpdatedTimeHasBeenSet = true;
+    m_lastUpdatedTime = std::forward<LastUpdatedTimeT>(value);
+  }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  DescribeGeneratedTemplateResult& WithLastUpdatedTime(LastUpdatedTimeT&& value) {
+    SetLastUpdatedTime(std::forward<LastUpdatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time the generated template was last updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTime() const{ return m_lastUpdatedTime; }
-    inline void SetLastUpdatedTime(const Aws::Utils::DateTime& value) { m_lastUpdatedTime = value; }
-    inline void SetLastUpdatedTime(Aws::Utils::DateTime&& value) { m_lastUpdatedTime = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithLastUpdatedTime(const Aws::Utils::DateTime& value) { SetLastUpdatedTime(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithLastUpdatedTime(Aws::Utils::DateTime&& value) { SetLastUpdatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An object describing the progress of the template generation.</p>
+   */
+  inline const TemplateProgress& GetProgress() const { return m_progress; }
+  template <typename ProgressT = TemplateProgress>
+  void SetProgress(ProgressT&& value) {
+    m_progressHasBeenSet = true;
+    m_progress = std::forward<ProgressT>(value);
+  }
+  template <typename ProgressT = TemplateProgress>
+  DescribeGeneratedTemplateResult& WithProgress(ProgressT&& value) {
+    SetProgress(std::forward<ProgressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object describing the progress of the template generation.</p>
-     */
-    inline const TemplateProgress& GetProgress() const{ return m_progress; }
-    inline void SetProgress(const TemplateProgress& value) { m_progress = value; }
-    inline void SetProgress(TemplateProgress&& value) { m_progress = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithProgress(const TemplateProgress& value) { SetProgress(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithProgress(TemplateProgress&& value) { SetProgress(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The stack ARN of the base stack if a base stack was provided when generating
+   * the template.</p>
+   */
+  inline const Aws::String& GetStackId() const { return m_stackId; }
+  template <typename StackIdT = Aws::String>
+  void SetStackId(StackIdT&& value) {
+    m_stackIdHasBeenSet = true;
+    m_stackId = std::forward<StackIdT>(value);
+  }
+  template <typename StackIdT = Aws::String>
+  DescribeGeneratedTemplateResult& WithStackId(StackIdT&& value) {
+    SetStackId(std::forward<StackIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The stack ARN of the base stack if a base stack was provided when generating
-     * the template.</p>
-     */
-    inline const Aws::String& GetStackId() const{ return m_stackId; }
-    inline void SetStackId(const Aws::String& value) { m_stackId = value; }
-    inline void SetStackId(Aws::String&& value) { m_stackId = std::move(value); }
-    inline void SetStackId(const char* value) { m_stackId.assign(value); }
-    inline DescribeGeneratedTemplateResult& WithStackId(const Aws::String& value) { SetStackId(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithStackId(Aws::String&& value) { SetStackId(std::move(value)); return *this;}
-    inline DescribeGeneratedTemplateResult& WithStackId(const char* value) { SetStackId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration details of the generated template, including the
+   * <code>DeletionPolicy</code> and <code>UpdateReplacePolicy</code>.</p>
+   */
+  inline const TemplateConfiguration& GetTemplateConfiguration() const { return m_templateConfiguration; }
+  template <typename TemplateConfigurationT = TemplateConfiguration>
+  void SetTemplateConfiguration(TemplateConfigurationT&& value) {
+    m_templateConfigurationHasBeenSet = true;
+    m_templateConfiguration = std::forward<TemplateConfigurationT>(value);
+  }
+  template <typename TemplateConfigurationT = TemplateConfiguration>
+  DescribeGeneratedTemplateResult& WithTemplateConfiguration(TemplateConfigurationT&& value) {
+    SetTemplateConfiguration(std::forward<TemplateConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration details of the generated template, including the
-     * <code>DeletionPolicy</code> and <code>UpdateReplacePolicy</code>.</p>
-     */
-    inline const TemplateConfiguration& GetTemplateConfiguration() const{ return m_templateConfiguration; }
-    inline void SetTemplateConfiguration(const TemplateConfiguration& value) { m_templateConfiguration = value; }
-    inline void SetTemplateConfiguration(TemplateConfiguration&& value) { m_templateConfiguration = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithTemplateConfiguration(const TemplateConfiguration& value) { SetTemplateConfiguration(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithTemplateConfiguration(TemplateConfiguration&& value) { SetTemplateConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of warnings generated for this template. The warnings are found in
+   * the details of each of the resources in the template.</p>
+   */
+  inline int GetTotalWarnings() const { return m_totalWarnings; }
+  inline void SetTotalWarnings(int value) {
+    m_totalWarningsHasBeenSet = true;
+    m_totalWarnings = value;
+  }
+  inline DescribeGeneratedTemplateResult& WithTotalWarnings(int value) {
+    SetTotalWarnings(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of warnings generated for this template. The warnings are found in
-     * the details of each of the resources in the template.</p>
-     */
-    inline int GetTotalWarnings() const{ return m_totalWarnings; }
-    inline void SetTotalWarnings(int value) { m_totalWarnings = value; }
-    inline DescribeGeneratedTemplateResult& WithTotalWarnings(int value) { SetTotalWarnings(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeGeneratedTemplateResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeGeneratedTemplateResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeGeneratedTemplateResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_generatedTemplateId;
+ private:
+  Aws::String m_generatedTemplateId;
 
-    Aws::String m_generatedTemplateName;
+  Aws::String m_generatedTemplateName;
 
-    Aws::Vector<ResourceDetail> m_resources;
+  Aws::Vector<ResourceDetail> m_resources;
 
-    GeneratedTemplateStatus m_status;
+  GeneratedTemplateStatus m_status{GeneratedTemplateStatus::NOT_SET};
 
-    Aws::String m_statusReason;
+  Aws::String m_statusReason;
 
-    Aws::Utils::DateTime m_creationTime;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::Utils::DateTime m_lastUpdatedTime;
+  Aws::Utils::DateTime m_lastUpdatedTime{};
 
-    TemplateProgress m_progress;
+  TemplateProgress m_progress;
 
-    Aws::String m_stackId;
+  Aws::String m_stackId;
 
-    TemplateConfiguration m_templateConfiguration;
+  TemplateConfiguration m_templateConfiguration;
 
-    int m_totalWarnings;
+  int m_totalWarnings{0};
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_generatedTemplateIdHasBeenSet = false;
+  bool m_generatedTemplateNameHasBeenSet = false;
+  bool m_resourcesHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_statusReasonHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_lastUpdatedTimeHasBeenSet = false;
+  bool m_progressHasBeenSet = false;
+  bool m_stackIdHasBeenSet = false;
+  bool m_templateConfigurationHasBeenSet = false;
+  bool m_totalWarningsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFormation
+}  // namespace Aws

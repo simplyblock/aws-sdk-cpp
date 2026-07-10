@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ReplaceRootVolumeTask.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CreateReplaceRootVolumeTaskResponse
-  {
-  public:
-    AWS_EC2_API CreateReplaceRootVolumeTaskResponse();
-    AWS_EC2_API CreateReplaceRootVolumeTaskResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateReplaceRootVolumeTaskResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CreateReplaceRootVolumeTaskResponse {
+ public:
+  AWS_EC2_API CreateReplaceRootVolumeTaskResponse() = default;
+  AWS_EC2_API CreateReplaceRootVolumeTaskResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateReplaceRootVolumeTaskResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the root volume replacement task.</p>
+   */
+  inline const ReplaceRootVolumeTask& GetReplaceRootVolumeTask() const { return m_replaceRootVolumeTask; }
+  template <typename ReplaceRootVolumeTaskT = ReplaceRootVolumeTask>
+  void SetReplaceRootVolumeTask(ReplaceRootVolumeTaskT&& value) {
+    m_replaceRootVolumeTaskHasBeenSet = true;
+    m_replaceRootVolumeTask = std::forward<ReplaceRootVolumeTaskT>(value);
+  }
+  template <typename ReplaceRootVolumeTaskT = ReplaceRootVolumeTask>
+  CreateReplaceRootVolumeTaskResponse& WithReplaceRootVolumeTask(ReplaceRootVolumeTaskT&& value) {
+    SetReplaceRootVolumeTask(std::forward<ReplaceRootVolumeTaskT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the root volume replacement task.</p>
-     */
-    inline const ReplaceRootVolumeTask& GetReplaceRootVolumeTask() const{ return m_replaceRootVolumeTask; }
-    inline void SetReplaceRootVolumeTask(const ReplaceRootVolumeTask& value) { m_replaceRootVolumeTask = value; }
-    inline void SetReplaceRootVolumeTask(ReplaceRootVolumeTask&& value) { m_replaceRootVolumeTask = std::move(value); }
-    inline CreateReplaceRootVolumeTaskResponse& WithReplaceRootVolumeTask(const ReplaceRootVolumeTask& value) { SetReplaceRootVolumeTask(value); return *this;}
-    inline CreateReplaceRootVolumeTaskResponse& WithReplaceRootVolumeTask(ReplaceRootVolumeTask&& value) { SetReplaceRootVolumeTask(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateReplaceRootVolumeTaskResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateReplaceRootVolumeTaskResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateReplaceRootVolumeTaskResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ReplaceRootVolumeTask m_replaceRootVolumeTask;
+ private:
+  ReplaceRootVolumeTask m_replaceRootVolumeTask;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replaceRootVolumeTaskHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

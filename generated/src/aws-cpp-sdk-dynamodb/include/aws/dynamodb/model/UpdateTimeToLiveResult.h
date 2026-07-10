@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dynamodb/DynamoDB_EXPORTS.h>
 #include <aws/dynamodb/model/TimeToLiveSpecification.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DynamoDB
-{
-namespace Model
-{
-  class UpdateTimeToLiveResult
-  {
-  public:
-    AWS_DYNAMODB_API UpdateTimeToLiveResult();
-    AWS_DYNAMODB_API UpdateTimeToLiveResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DYNAMODB_API UpdateTimeToLiveResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DynamoDB {
+namespace Model {
+class UpdateTimeToLiveResult {
+ public:
+  AWS_DYNAMODB_API UpdateTimeToLiveResult() = default;
+  AWS_DYNAMODB_API UpdateTimeToLiveResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DYNAMODB_API UpdateTimeToLiveResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Represents the output of an <code>UpdateTimeToLive</code> operation.</p>
+   */
+  inline const TimeToLiveSpecification& GetTimeToLiveSpecification() const { return m_timeToLiveSpecification; }
+  template <typename TimeToLiveSpecificationT = TimeToLiveSpecification>
+  void SetTimeToLiveSpecification(TimeToLiveSpecificationT&& value) {
+    m_timeToLiveSpecificationHasBeenSet = true;
+    m_timeToLiveSpecification = std::forward<TimeToLiveSpecificationT>(value);
+  }
+  template <typename TimeToLiveSpecificationT = TimeToLiveSpecification>
+  UpdateTimeToLiveResult& WithTimeToLiveSpecification(TimeToLiveSpecificationT&& value) {
+    SetTimeToLiveSpecification(std::forward<TimeToLiveSpecificationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Represents the output of an <code>UpdateTimeToLive</code> operation.</p>
-     */
-    inline const TimeToLiveSpecification& GetTimeToLiveSpecification() const{ return m_timeToLiveSpecification; }
-    inline void SetTimeToLiveSpecification(const TimeToLiveSpecification& value) { m_timeToLiveSpecification = value; }
-    inline void SetTimeToLiveSpecification(TimeToLiveSpecification&& value) { m_timeToLiveSpecification = std::move(value); }
-    inline UpdateTimeToLiveResult& WithTimeToLiveSpecification(const TimeToLiveSpecification& value) { SetTimeToLiveSpecification(value); return *this;}
-    inline UpdateTimeToLiveResult& WithTimeToLiveSpecification(TimeToLiveSpecification&& value) { SetTimeToLiveSpecification(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateTimeToLiveResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateTimeToLiveResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateTimeToLiveResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateTimeToLiveResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TimeToLiveSpecification m_timeToLiveSpecification;
+ private:
+  TimeToLiveSpecification m_timeToLiveSpecification;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_timeToLiveSpecificationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DynamoDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace DynamoDB
+}  // namespace Aws

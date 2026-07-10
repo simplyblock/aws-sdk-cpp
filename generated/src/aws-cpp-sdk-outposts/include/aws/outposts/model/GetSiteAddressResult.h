@@ -4,90 +4,109 @@
  */
 
 #pragma once
-#include <aws/outposts/Outposts_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/outposts/model/AddressType.h>
+#include <aws/outposts/Outposts_EXPORTS.h>
 #include <aws/outposts/model/Address.h>
+#include <aws/outposts/model/AddressType.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Outposts
-{
-namespace Model
-{
-  class GetSiteAddressResult
-  {
-  public:
-    AWS_OUTPOSTS_API GetSiteAddressResult();
-    AWS_OUTPOSTS_API GetSiteAddressResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_OUTPOSTS_API GetSiteAddressResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Outposts {
+namespace Model {
+class GetSiteAddressResult {
+ public:
+  AWS_OUTPOSTS_API GetSiteAddressResult() = default;
+  AWS_OUTPOSTS_API GetSiteAddressResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_OUTPOSTS_API GetSiteAddressResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetSiteId() const{ return m_siteId; }
-    inline void SetSiteId(const Aws::String& value) { m_siteId = value; }
-    inline void SetSiteId(Aws::String&& value) { m_siteId = std::move(value); }
-    inline void SetSiteId(const char* value) { m_siteId.assign(value); }
-    inline GetSiteAddressResult& WithSiteId(const Aws::String& value) { SetSiteId(value); return *this;}
-    inline GetSiteAddressResult& WithSiteId(Aws::String&& value) { SetSiteId(std::move(value)); return *this;}
-    inline GetSiteAddressResult& WithSiteId(const char* value) { SetSiteId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetSiteId() const { return m_siteId; }
+  template <typename SiteIdT = Aws::String>
+  void SetSiteId(SiteIdT&& value) {
+    m_siteIdHasBeenSet = true;
+    m_siteId = std::forward<SiteIdT>(value);
+  }
+  template <typename SiteIdT = Aws::String>
+  GetSiteAddressResult& WithSiteId(SiteIdT&& value) {
+    SetSiteId(std::forward<SiteIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of the address you receive. </p>
-     */
-    inline const AddressType& GetAddressType() const{ return m_addressType; }
-    inline void SetAddressType(const AddressType& value) { m_addressType = value; }
-    inline void SetAddressType(AddressType&& value) { m_addressType = std::move(value); }
-    inline GetSiteAddressResult& WithAddressType(const AddressType& value) { SetAddressType(value); return *this;}
-    inline GetSiteAddressResult& WithAddressType(AddressType&& value) { SetAddressType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of the address you receive. </p>
+   */
+  inline AddressType GetAddressType() const { return m_addressType; }
+  inline void SetAddressType(AddressType value) {
+    m_addressTypeHasBeenSet = true;
+    m_addressType = value;
+  }
+  inline GetSiteAddressResult& WithAddressType(AddressType value) {
+    SetAddressType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Information about the address. </p>
-     */
-    inline const Address& GetAddress() const{ return m_address; }
-    inline void SetAddress(const Address& value) { m_address = value; }
-    inline void SetAddress(Address&& value) { m_address = std::move(value); }
-    inline GetSiteAddressResult& WithAddress(const Address& value) { SetAddress(value); return *this;}
-    inline GetSiteAddressResult& WithAddress(Address&& value) { SetAddress(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Information about the address. </p>
+   */
+  inline const Address& GetAddress() const { return m_address; }
+  template <typename AddressT = Address>
+  void SetAddress(AddressT&& value) {
+    m_addressHasBeenSet = true;
+    m_address = std::forward<AddressT>(value);
+  }
+  template <typename AddressT = Address>
+  GetSiteAddressResult& WithAddress(AddressT&& value) {
+    SetAddress(std::forward<AddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetSiteAddressResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetSiteAddressResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetSiteAddressResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_siteId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetSiteAddressResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AddressType m_addressType;
+ private:
+  Aws::String m_siteId;
 
-    Address m_address;
+  AddressType m_addressType{AddressType::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Address m_address;
 
-} // namespace Model
-} // namespace Outposts
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_siteIdHasBeenSet = false;
+  bool m_addressTypeHasBeenSet = false;
+  bool m_addressHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Outposts
+}  // namespace Aws

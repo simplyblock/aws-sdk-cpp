@@ -45,13 +45,13 @@ AWSCredentials STSProfileCredentialsProvider::GetAWSCredentials()
 void STSProfileCredentialsProvider::RefreshIfExpired()
 {
     Utils::Threading::ReaderLockGuard guard(m_reloadLock);
-    if (!IsTimeToRefresh(static_cast<long>(m_reloadFrequency.count())) || !m_credentials.IsExpiredOrEmpty())
+    if (!IsTimeToRefresh(static_cast<long>(m_reloadFrequency.count())) && !m_credentials.IsEmpty() && !m_credentials.ExpiresSoon(m_reloadFrequency.count()))
     {
        return;
     }
 
     guard.UpgradeToWriterLock();
-    if (!IsTimeToRefresh(static_cast<long>(m_reloadFrequency.count())) || !m_credentials.IsExpiredOrEmpty()) // double-checked lock to avoid refreshing twice
+    if (!IsTimeToRefresh(static_cast<long>(m_reloadFrequency.count())) && !m_credentials.IsEmpty() && !m_credentials.ExpiresSoon(m_reloadFrequency.count())) // double-checked lock to avoid refreshing twice
     {
         return;
     }
@@ -295,7 +295,12 @@ void STSProfileCredentialsProvider::Reload()
 
         // get the role arn from the profile at the top of the stack (which hasn't been popped out yet)
         const auto arn = sourceProfiles.back()->second.GetRoleArn();
-        const auto& assumedCreds = GetCredentialsFromSTS(stsCreds, arn);
+        auto assumedCreds = GetCredentialsFromSTS(stsCreds, arn);
+
+        if (!assumedCreds.IsEmpty()) {
+          assumedCreds.AddUserAgentFeature(Aws::Client::UserAgentFeature::CREDENTIALS_PROFILE_SOURCE_PROFILE);
+        }
+
         sourceProfiles.back()->second.SetCredentials(assumedCreds);
     }
 

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeMacHostsResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DescribeMacHostsResponse.h>
 
 #include <utility>
 
@@ -17,52 +17,43 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeMacHostsResponse::DescribeMacHostsResponse()
-{
-}
+DescribeMacHostsResponse::DescribeMacHostsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeMacHostsResponse::DescribeMacHostsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeMacHostsResponse& DescribeMacHostsResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeMacHostsResponse& DescribeMacHostsResponse::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeMacHostsResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeMacHostsResponse")) {
     resultNode = rootNode.FirstChild("DescribeMacHostsResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode macHostsNode = resultNode.FirstChild("macHostSet");
-    if(!macHostsNode.IsNull())
-    {
+    if (!macHostsNode.IsNull()) {
       XmlNode macHostsMember = macHostsNode.FirstChild("item");
-      while(!macHostsMember.IsNull())
-      {
+      m_macHostsHasBeenSet = !macHostsMember.IsNull();
+      while (!macHostsMember.IsNull()) {
         m_macHosts.push_back(macHostsMember);
         macHostsMember = macHostsMember.NextNode("item");
       }
 
+      m_macHostsHasBeenSet = true;
     }
     XmlNode nextTokenNode = resultNode.FirstChild("nextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeMacHostsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeMacHostsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

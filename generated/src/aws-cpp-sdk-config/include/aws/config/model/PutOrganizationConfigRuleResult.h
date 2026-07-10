@@ -5,63 +5,70 @@
 
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
-  class PutOrganizationConfigRuleResult
-  {
-  public:
-    AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult();
-    AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
+class PutOrganizationConfigRuleResult {
+ public:
+  AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult() = default;
+  AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONFIGSERVICE_API PutOrganizationConfigRuleResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of an organization Config rule.</p>
+   */
+  inline const Aws::String& GetOrganizationConfigRuleArn() const { return m_organizationConfigRuleArn; }
+  template <typename OrganizationConfigRuleArnT = Aws::String>
+  void SetOrganizationConfigRuleArn(OrganizationConfigRuleArnT&& value) {
+    m_organizationConfigRuleArnHasBeenSet = true;
+    m_organizationConfigRuleArn = std::forward<OrganizationConfigRuleArnT>(value);
+  }
+  template <typename OrganizationConfigRuleArnT = Aws::String>
+  PutOrganizationConfigRuleResult& WithOrganizationConfigRuleArn(OrganizationConfigRuleArnT&& value) {
+    SetOrganizationConfigRuleArn(std::forward<OrganizationConfigRuleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of an organization Config rule.</p>
-     */
-    inline const Aws::String& GetOrganizationConfigRuleArn() const{ return m_organizationConfigRuleArn; }
-    inline void SetOrganizationConfigRuleArn(const Aws::String& value) { m_organizationConfigRuleArn = value; }
-    inline void SetOrganizationConfigRuleArn(Aws::String&& value) { m_organizationConfigRuleArn = std::move(value); }
-    inline void SetOrganizationConfigRuleArn(const char* value) { m_organizationConfigRuleArn.assign(value); }
-    inline PutOrganizationConfigRuleResult& WithOrganizationConfigRuleArn(const Aws::String& value) { SetOrganizationConfigRuleArn(value); return *this;}
-    inline PutOrganizationConfigRuleResult& WithOrganizationConfigRuleArn(Aws::String&& value) { SetOrganizationConfigRuleArn(std::move(value)); return *this;}
-    inline PutOrganizationConfigRuleResult& WithOrganizationConfigRuleArn(const char* value) { SetOrganizationConfigRuleArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutOrganizationConfigRuleResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutOrganizationConfigRuleResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutOrganizationConfigRuleResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutOrganizationConfigRuleResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_organizationConfigRuleArn;
+ private:
+  Aws::String m_organizationConfigRuleArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_organizationConfigRuleArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

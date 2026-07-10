@@ -5,84 +5,102 @@
 
 #pragma once
 #include <aws/apigateway/APIGateway_EXPORTS.h>
+#include <aws/apigateway/model/UsagePlan.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/apigateway/model/UsagePlan.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace APIGateway
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace APIGateway {
+namespace Model {
+/**
+ * <p>Represents a collection of usage plans for an AWS account.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/UsagePlans">AWS
+ * API Reference</a></p>
+ */
+class GetUsagePlansResult {
+ public:
+  AWS_APIGATEWAY_API GetUsagePlansResult() = default;
+  AWS_APIGATEWAY_API GetUsagePlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APIGATEWAY_API GetUsagePlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
+
+  inline const Aws::String& GetPosition() const { return m_position; }
+  template <typename PositionT = Aws::String>
+  void SetPosition(PositionT&& value) {
+    m_positionHasBeenSet = true;
+    m_position = std::forward<PositionT>(value);
+  }
+  template <typename PositionT = Aws::String>
+  GetUsagePlansResult& WithPosition(PositionT&& value) {
+    SetPosition(std::forward<PositionT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p>Represents a collection of usage plans for an AWS account.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/UsagePlans">AWS
-   * API Reference</a></p>
+   * <p>The current page of elements from this collection.</p>
    */
-  class GetUsagePlansResult
-  {
-  public:
-    AWS_APIGATEWAY_API GetUsagePlansResult();
-    AWS_APIGATEWAY_API GetUsagePlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APIGATEWAY_API GetUsagePlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<UsagePlan>& GetItems() const { return m_items; }
+  template <typename ItemsT = Aws::Vector<UsagePlan>>
+  void SetItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items = std::forward<ItemsT>(value);
+  }
+  template <typename ItemsT = Aws::Vector<UsagePlan>>
+  GetUsagePlansResult& WithItems(ItemsT&& value) {
+    SetItems(std::forward<ItemsT>(value));
+    return *this;
+  }
+  template <typename ItemsT = UsagePlan>
+  GetUsagePlansResult& AddItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items.emplace_back(std::forward<ItemsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetPosition() const{ return m_position; }
-    inline void SetPosition(const Aws::String& value) { m_position = value; }
-    inline void SetPosition(Aws::String&& value) { m_position = std::move(value); }
-    inline void SetPosition(const char* value) { m_position.assign(value); }
-    inline GetUsagePlansResult& WithPosition(const Aws::String& value) { SetPosition(value); return *this;}
-    inline GetUsagePlansResult& WithPosition(Aws::String&& value) { SetPosition(std::move(value)); return *this;}
-    inline GetUsagePlansResult& WithPosition(const char* value) { SetPosition(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetUsagePlansResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The current page of elements from this collection.</p>
-     */
-    inline const Aws::Vector<UsagePlan>& GetItems() const{ return m_items; }
-    inline void SetItems(const Aws::Vector<UsagePlan>& value) { m_items = value; }
-    inline void SetItems(Aws::Vector<UsagePlan>&& value) { m_items = std::move(value); }
-    inline GetUsagePlansResult& WithItems(const Aws::Vector<UsagePlan>& value) { SetItems(value); return *this;}
-    inline GetUsagePlansResult& WithItems(Aws::Vector<UsagePlan>&& value) { SetItems(std::move(value)); return *this;}
-    inline GetUsagePlansResult& AddItems(const UsagePlan& value) { m_items.push_back(value); return *this; }
-    inline GetUsagePlansResult& AddItems(UsagePlan&& value) { m_items.push_back(std::move(value)); return *this; }
-    ///@}
+ private:
+  Aws::String m_position;
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetUsagePlansResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetUsagePlansResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetUsagePlansResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  Aws::Vector<UsagePlan> m_items;
 
-    Aws::String m_position;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_positionHasBeenSet = false;
+  bool m_itemsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::Vector<UsagePlan> m_items;
-
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace APIGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace APIGateway
+}  // namespace Aws

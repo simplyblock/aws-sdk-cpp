@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetProvisionedModelThroughputRequest::GetProvisionedModelThroughputRequest() : 
-    m_provisionedModelIdHasBeenSet(false)
-{
-}
-
-Aws::String GetProvisionedModelThroughputRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetProvisionedModelThroughputRequest::SerializePayload() const { return {}; }

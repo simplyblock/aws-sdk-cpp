@@ -4,136 +4,147 @@
  */
 
 #pragma once
-#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
-#include <aws/devicefarm/DeviceFarmRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/devicefarm/DeviceFarmRequest.h>
+#include <aws/devicefarm/DeviceFarm_EXPORTS.h>
 #include <aws/devicefarm/model/UploadType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace DeviceFarm
-{
-namespace Model
-{
+namespace Aws {
+namespace DeviceFarm {
+namespace Model {
 
+/**
+ * <p>Represents a request to the create upload operation.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/CreateUploadRequest">AWS
+ * API Reference</a></p>
+ */
+class CreateUploadRequest : public DeviceFarmRequest {
+ public:
+  AWS_DEVICEFARM_API CreateUploadRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateUpload"; }
+
+  AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
+
+  AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
-   * <p>Represents a request to the create upload operation.</p><p><h3>See Also:</h3>
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/devicefarm-2015-06-23/CreateUploadRequest">AWS
-   * API Reference</a></p>
+   * <p>The ARN of the project for the upload.</p>
    */
-  class CreateUploadRequest : public DeviceFarmRequest
-  {
-  public:
-    AWS_DEVICEFARM_API CreateUploadRequest();
+  inline const Aws::String& GetProjectArn() const { return m_projectArn; }
+  inline bool ProjectArnHasBeenSet() const { return m_projectArnHasBeenSet; }
+  template <typename ProjectArnT = Aws::String>
+  void SetProjectArn(ProjectArnT&& value) {
+    m_projectArnHasBeenSet = true;
+    m_projectArn = std::forward<ProjectArnT>(value);
+  }
+  template <typename ProjectArnT = Aws::String>
+  CreateUploadRequest& WithProjectArn(ProjectArnT&& value) {
+    SetProjectArn(std::forward<ProjectArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateUpload"; }
+  ///@{
+  /**
+   * <p>The upload's file name. The name should not contain any forward slashes
+   * (<code>/</code>). If you are uploading an iOS app, the file name must end with
+   * the <code>.ipa</code> extension. If you are uploading an Android app, the file
+   * name must end with the <code>.apk</code> extension. For all others, the file
+   * name must end with the <code>.zip</code> file extension.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateUploadRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEVICEFARM_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The upload's upload type.</p> <p>Must be one of the following values:</p>
+   * <ul> <li> <p>ANDROID_APP</p> </li> <li> <p>IOS_APP</p> </li> <li> <p>WEB_APP</p>
+   * </li> <li> <p>EXTERNAL_DATA</p> </li> <li> <p>APPIUM_JAVA_JUNIT_TEST_PACKAGE</p>
+   * </li> <li> <p>APPIUM_JAVA_TESTNG_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_PYTHON_TEST_PACKAGE</p> </li> <li> <p>APPIUM_NODE_TEST_PACKAGE</p>
+   * </li> <li> <p>APPIUM_RUBY_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_WEB_JAVA_JUNIT_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_WEB_JAVA_TESTNG_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_WEB_PYTHON_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_WEB_NODE_TEST_PACKAGE</p> </li> <li>
+   * <p>APPIUM_WEB_RUBY_TEST_PACKAGE</p> </li> <li>
+   * <p>INSTRUMENTATION_TEST_PACKAGE</p> </li> <li> <p>XCTEST_TEST_PACKAGE</p> </li>
+   * <li> <p>XCTEST_UI_TEST_PACKAGE</p> </li> <li> <p>APPIUM_JAVA_JUNIT_TEST_SPEC</p>
+   * </li> <li> <p>APPIUM_JAVA_TESTNG_TEST_SPEC</p> </li> <li>
+   * <p>APPIUM_PYTHON_TEST_SPEC</p> </li> <li> <p>APPIUM_NODE_TEST_SPEC</p> </li>
+   * <li> <p>APPIUM_RUBY_TEST_SPEC</p> </li> <li>
+   * <p>APPIUM_WEB_JAVA_JUNIT_TEST_SPEC</p> </li> <li>
+   * <p>APPIUM_WEB_JAVA_TESTNG_TEST_SPEC</p> </li> <li>
+   * <p>APPIUM_WEB_PYTHON_TEST_SPEC</p> </li> <li> <p>APPIUM_WEB_NODE_TEST_SPEC</p>
+   * </li> <li> <p>APPIUM_WEB_RUBY_TEST_SPEC</p> </li> <li>
+   * <p>INSTRUMENTATION_TEST_SPEC</p> </li> <li> <p>XCTEST_UI_TEST_SPEC</p> </li>
+   * </ul> <p> If you call <code>CreateUpload</code> with <code>WEB_APP</code>
+   * specified, AWS Device Farm throws an <code>ArgumentException</code> error.</p>
+   */
+  inline UploadType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(UploadType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline CreateUploadRequest& WithType(UploadType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_DEVICEFARM_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The upload's content type (for example,
+   * <code>application/octet-stream</code>).</p>
+   */
+  inline const Aws::String& GetContentType() const { return m_contentType; }
+  inline bool ContentTypeHasBeenSet() const { return m_contentTypeHasBeenSet; }
+  template <typename ContentTypeT = Aws::String>
+  void SetContentType(ContentTypeT&& value) {
+    m_contentTypeHasBeenSet = true;
+    m_contentType = std::forward<ContentTypeT>(value);
+  }
+  template <typename ContentTypeT = Aws::String>
+  CreateUploadRequest& WithContentType(ContentTypeT&& value) {
+    SetContentType(std::forward<ContentTypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_projectArn;
 
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The ARN of the project for the upload.</p>
-     */
-    inline const Aws::String& GetProjectArn() const{ return m_projectArn; }
-    inline bool ProjectArnHasBeenSet() const { return m_projectArnHasBeenSet; }
-    inline void SetProjectArn(const Aws::String& value) { m_projectArnHasBeenSet = true; m_projectArn = value; }
-    inline void SetProjectArn(Aws::String&& value) { m_projectArnHasBeenSet = true; m_projectArn = std::move(value); }
-    inline void SetProjectArn(const char* value) { m_projectArnHasBeenSet = true; m_projectArn.assign(value); }
-    inline CreateUploadRequest& WithProjectArn(const Aws::String& value) { SetProjectArn(value); return *this;}
-    inline CreateUploadRequest& WithProjectArn(Aws::String&& value) { SetProjectArn(std::move(value)); return *this;}
-    inline CreateUploadRequest& WithProjectArn(const char* value) { SetProjectArn(value); return *this;}
-    ///@}
+  UploadType m_type{UploadType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The upload's file name. The name should not contain any forward slashes
-     * (<code>/</code>). If you are uploading an iOS app, the file name must end with
-     * the <code>.ipa</code> extension. If you are uploading an Android app, the file
-     * name must end with the <code>.apk</code> extension. For all others, the file
-     * name must end with the <code>.zip</code> file extension.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateUploadRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateUploadRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateUploadRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_contentType;
+  bool m_projectArnHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_contentTypeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The upload's upload type.</p> <p>Must be one of the following values:</p>
-     * <ul> <li> <p>ANDROID_APP</p> </li> <li> <p>IOS_APP</p> </li> <li> <p>WEB_APP</p>
-     * </li> <li> <p>EXTERNAL_DATA</p> </li> <li> <p>APPIUM_JAVA_JUNIT_TEST_PACKAGE</p>
-     * </li> <li> <p>APPIUM_JAVA_TESTNG_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_PYTHON_TEST_PACKAGE</p> </li> <li> <p>APPIUM_NODE_TEST_PACKAGE</p>
-     * </li> <li> <p>APPIUM_RUBY_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_WEB_JAVA_JUNIT_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_WEB_JAVA_TESTNG_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_WEB_PYTHON_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_WEB_NODE_TEST_PACKAGE</p> </li> <li>
-     * <p>APPIUM_WEB_RUBY_TEST_PACKAGE</p> </li> <li>
-     * <p>INSTRUMENTATION_TEST_PACKAGE</p> </li> <li> <p>XCTEST_TEST_PACKAGE</p> </li>
-     * <li> <p>XCTEST_UI_TEST_PACKAGE</p> </li> <li> <p>APPIUM_JAVA_JUNIT_TEST_SPEC</p>
-     * </li> <li> <p>APPIUM_JAVA_TESTNG_TEST_SPEC</p> </li> <li>
-     * <p>APPIUM_PYTHON_TEST_SPEC</p> </li> <li> <p>APPIUM_NODE_TEST_SPEC</p> </li>
-     * <li> <p>APPIUM_RUBY_TEST_SPEC</p> </li> <li>
-     * <p>APPIUM_WEB_JAVA_JUNIT_TEST_SPEC</p> </li> <li>
-     * <p>APPIUM_WEB_JAVA_TESTNG_TEST_SPEC</p> </li> <li>
-     * <p>APPIUM_WEB_PYTHON_TEST_SPEC</p> </li> <li> <p>APPIUM_WEB_NODE_TEST_SPEC</p>
-     * </li> <li> <p>APPIUM_WEB_RUBY_TEST_SPEC</p> </li> <li>
-     * <p>INSTRUMENTATION_TEST_SPEC</p> </li> <li> <p>XCTEST_UI_TEST_SPEC</p> </li>
-     * </ul> <p> If you call <code>CreateUpload</code> with <code>WEB_APP</code>
-     * specified, AWS Device Farm throws an <code>ArgumentException</code> error.</p>
-     */
-    inline const UploadType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const UploadType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(UploadType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline CreateUploadRequest& WithType(const UploadType& value) { SetType(value); return *this;}
-    inline CreateUploadRequest& WithType(UploadType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The upload's content type (for example,
-     * <code>application/octet-stream</code>).</p>
-     */
-    inline const Aws::String& GetContentType() const{ return m_contentType; }
-    inline bool ContentTypeHasBeenSet() const { return m_contentTypeHasBeenSet; }
-    inline void SetContentType(const Aws::String& value) { m_contentTypeHasBeenSet = true; m_contentType = value; }
-    inline void SetContentType(Aws::String&& value) { m_contentTypeHasBeenSet = true; m_contentType = std::move(value); }
-    inline void SetContentType(const char* value) { m_contentTypeHasBeenSet = true; m_contentType.assign(value); }
-    inline CreateUploadRequest& WithContentType(const Aws::String& value) { SetContentType(value); return *this;}
-    inline CreateUploadRequest& WithContentType(Aws::String&& value) { SetContentType(std::move(value)); return *this;}
-    inline CreateUploadRequest& WithContentType(const char* value) { SetContentType(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_projectArn;
-    bool m_projectArnHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    UploadType m_type;
-    bool m_typeHasBeenSet = false;
-
-    Aws::String m_contentType;
-    bool m_contentTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace DeviceFarm
-} // namespace Aws
+}  // namespace Model
+}  // namespace DeviceFarm
+}  // namespace Aws

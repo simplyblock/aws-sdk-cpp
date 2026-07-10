@@ -5,6 +5,7 @@
 
 
 #include <aws/core/auth/SSOCredentialsProvider.h>
+#include <aws/core/auth/ProfileCredentialsProvider.h>
 #include <aws/core/config/AWSProfileConfigLoader.h>
 #include <aws/core/internal/AWSHttpResourceClient.h>
 #include <aws/core/platform/Environment.h>
@@ -72,7 +73,7 @@ void SSOCredentialsProvider::Reload()
             return token.GetToken();
         }
         Aws::String hashedStartUrl = Aws::Utils::HashingUtils::HexEncode(Aws::Utils::HashingUtils::CalculateSHA1(profile.GetSsoStartUrl()));
-        auto profileDirectory = ProfileConfigFileAWSCredentialsProvider::GetProfileDirectory();
+        auto profileDirectory = ProfileCredentialsProvider::GetProfileDirectory();
         Aws::StringStream ssToken;
         ssToken << profileDirectory;
         ssToken << PATH_DELIM << "sso"  << PATH_DELIM << "cache" << PATH_DELIM << hashedStartUrl << ".json";
@@ -101,6 +102,13 @@ void SSOCredentialsProvider::Reload()
     AWS_LOGSTREAM_TRACE(SSO_CREDENTIALS_PROVIDER_LOG_TAG, "Successfully retrieved credentials with AWS_ACCESS_KEY: " << result.creds.GetAWSAccessKeyId());
 
     m_credentials = result.creds;
+    if (!m_credentials.IsEmpty()) {
+        if (!profile.IsSsoSessionSet()) {
+          m_credentials.AddUserAgentFeature(Aws::Client::UserAgentFeature::CREDENTIALS_SSO_LEGACY);
+        } else {
+          m_credentials.AddUserAgentFeature(Aws::Client::UserAgentFeature::CREDENTIALS_SSO);
+        }
+    }
 }
 
 void SSOCredentialsProvider::RefreshIfExpired()

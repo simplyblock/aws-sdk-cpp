@@ -4,53 +4,52 @@
  */
 
 #pragma once
-#include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
-#include <aws/rolesanywhere/RolesAnywhereRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/rolesanywhere/RolesAnywhereRequest.h>
+#include <aws/rolesanywhere/RolesAnywhere_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace RolesAnywhere
-{
-namespace Model
-{
+namespace Aws {
+namespace RolesAnywhere {
+namespace Model {
 
+/**
+ */
+class DisableCrlRequest : public RolesAnywhereRequest {
+ public:
+  AWS_ROLESANYWHERE_API DisableCrlRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DisableCrl"; }
+
+  AWS_ROLESANYWHERE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the certificate revocation list (CRL).</p>
    */
-  class DisableCrlRequest : public RolesAnywhereRequest
-  {
-  public:
-    AWS_ROLESANYWHERE_API DisableCrlRequest();
+  inline const Aws::String& GetCrlId() const { return m_crlId; }
+  inline bool CrlIdHasBeenSet() const { return m_crlIdHasBeenSet; }
+  template <typename CrlIdT = Aws::String>
+  void SetCrlId(CrlIdT&& value) {
+    m_crlIdHasBeenSet = true;
+    m_crlId = std::forward<CrlIdT>(value);
+  }
+  template <typename CrlIdT = Aws::String>
+  DisableCrlRequest& WithCrlId(CrlIdT&& value) {
+    SetCrlId(std::forward<CrlIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_crlId;
+  bool m_crlIdHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DisableCrl"; }
-
-    AWS_ROLESANYWHERE_API Aws::String SerializePayload() const override;
-
-
-    ///@{
-    /**
-     * <p>The unique identifier of the certificate revocation list (CRL).</p>
-     */
-    inline const Aws::String& GetCrlId() const{ return m_crlId; }
-    inline bool CrlIdHasBeenSet() const { return m_crlIdHasBeenSet; }
-    inline void SetCrlId(const Aws::String& value) { m_crlIdHasBeenSet = true; m_crlId = value; }
-    inline void SetCrlId(Aws::String&& value) { m_crlIdHasBeenSet = true; m_crlId = std::move(value); }
-    inline void SetCrlId(const char* value) { m_crlIdHasBeenSet = true; m_crlId.assign(value); }
-    inline DisableCrlRequest& WithCrlId(const Aws::String& value) { SetCrlId(value); return *this;}
-    inline DisableCrlRequest& WithCrlId(Aws::String&& value) { SetCrlId(std::move(value)); return *this;}
-    inline DisableCrlRequest& WithCrlId(const char* value) { SetCrlId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_crlId;
-    bool m_crlIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace RolesAnywhere
-} // namespace Aws
+}  // namespace Model
+}  // namespace RolesAnywhere
+}  // namespace Aws

@@ -12,17 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeHoursOfOperationRequest::DescribeHoursOfOperationRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_hoursOfOperationIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeHoursOfOperationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeHoursOfOperationRequest::SerializePayload() const { return {}; }

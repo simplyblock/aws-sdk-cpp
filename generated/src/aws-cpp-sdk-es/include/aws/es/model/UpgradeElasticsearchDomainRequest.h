@@ -4,86 +4,95 @@
  */
 
 #pragma once
-#include <aws/es/ElasticsearchService_EXPORTS.h>
-#include <aws/es/ElasticsearchServiceRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/es/ElasticsearchServiceRequest.h>
+#include <aws/es/ElasticsearchService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElasticsearchService
-{
-namespace Model
-{
+namespace Aws {
+namespace ElasticsearchService {
+namespace Model {
 
+/**
+ * <p> Container for request parameters to <code> <a>UpgradeElasticsearchDomain</a>
+ * </code> operation. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpgradeElasticsearchDomainRequest">AWS
+ * API Reference</a></p>
+ */
+class UpgradeElasticsearchDomainRequest : public ElasticsearchServiceRequest {
+ public:
+  AWS_ELASTICSEARCHSERVICE_API UpgradeElasticsearchDomainRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpgradeElasticsearchDomain"; }
+
+  AWS_ELASTICSEARCHSERVICE_API Aws::String SerializePayload() const override;
+
+  ///@{
+
+  inline const Aws::String& GetDomainName() const { return m_domainName; }
+  inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
+  template <typename DomainNameT = Aws::String>
+  void SetDomainName(DomainNameT&& value) {
+    m_domainNameHasBeenSet = true;
+    m_domainName = std::forward<DomainNameT>(value);
+  }
+  template <typename DomainNameT = Aws::String>
+  UpgradeElasticsearchDomainRequest& WithDomainName(DomainNameT&& value) {
+    SetDomainName(std::forward<DomainNameT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
-   * <p> Container for request parameters to <code> <a>UpgradeElasticsearchDomain</a>
-   * </code> operation. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/es-2015-01-01/UpgradeElasticsearchDomainRequest">AWS
-   * API Reference</a></p>
+   * <p>The version of Elasticsearch that you intend to upgrade the domain to.</p>
    */
-  class UpgradeElasticsearchDomainRequest : public ElasticsearchServiceRequest
-  {
-  public:
-    AWS_ELASTICSEARCHSERVICE_API UpgradeElasticsearchDomainRequest();
+  inline const Aws::String& GetTargetVersion() const { return m_targetVersion; }
+  inline bool TargetVersionHasBeenSet() const { return m_targetVersionHasBeenSet; }
+  template <typename TargetVersionT = Aws::String>
+  void SetTargetVersion(TargetVersionT&& value) {
+    m_targetVersionHasBeenSet = true;
+    m_targetVersion = std::forward<TargetVersionT>(value);
+  }
+  template <typename TargetVersionT = Aws::String>
+  UpgradeElasticsearchDomainRequest& WithTargetVersion(TargetVersionT&& value) {
+    SetTargetVersion(std::forward<TargetVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpgradeElasticsearchDomain"; }
+  ///@{
+  /**
+   * <p> This flag, when set to True, indicates that an Upgrade Eligibility Check
+   * needs to be performed. This will not actually perform the Upgrade. </p>
+   */
+  inline bool GetPerformCheckOnly() const { return m_performCheckOnly; }
+  inline bool PerformCheckOnlyHasBeenSet() const { return m_performCheckOnlyHasBeenSet; }
+  inline void SetPerformCheckOnly(bool value) {
+    m_performCheckOnlyHasBeenSet = true;
+    m_performCheckOnly = value;
+  }
+  inline UpgradeElasticsearchDomainRequest& WithPerformCheckOnly(bool value) {
+    SetPerformCheckOnly(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainName;
 
-    AWS_ELASTICSEARCHSERVICE_API Aws::String SerializePayload() const override;
+  Aws::String m_targetVersion;
 
+  bool m_performCheckOnly{false};
+  bool m_domainNameHasBeenSet = false;
+  bool m_targetVersionHasBeenSet = false;
+  bool m_performCheckOnlyHasBeenSet = false;
+};
 
-    ///@{
-    
-    inline const Aws::String& GetDomainName() const{ return m_domainName; }
-    inline bool DomainNameHasBeenSet() const { return m_domainNameHasBeenSet; }
-    inline void SetDomainName(const Aws::String& value) { m_domainNameHasBeenSet = true; m_domainName = value; }
-    inline void SetDomainName(Aws::String&& value) { m_domainNameHasBeenSet = true; m_domainName = std::move(value); }
-    inline void SetDomainName(const char* value) { m_domainNameHasBeenSet = true; m_domainName.assign(value); }
-    inline UpgradeElasticsearchDomainRequest& WithDomainName(const Aws::String& value) { SetDomainName(value); return *this;}
-    inline UpgradeElasticsearchDomainRequest& WithDomainName(Aws::String&& value) { SetDomainName(std::move(value)); return *this;}
-    inline UpgradeElasticsearchDomainRequest& WithDomainName(const char* value) { SetDomainName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The version of Elasticsearch that you intend to upgrade the domain to.</p>
-     */
-    inline const Aws::String& GetTargetVersion() const{ return m_targetVersion; }
-    inline bool TargetVersionHasBeenSet() const { return m_targetVersionHasBeenSet; }
-    inline void SetTargetVersion(const Aws::String& value) { m_targetVersionHasBeenSet = true; m_targetVersion = value; }
-    inline void SetTargetVersion(Aws::String&& value) { m_targetVersionHasBeenSet = true; m_targetVersion = std::move(value); }
-    inline void SetTargetVersion(const char* value) { m_targetVersionHasBeenSet = true; m_targetVersion.assign(value); }
-    inline UpgradeElasticsearchDomainRequest& WithTargetVersion(const Aws::String& value) { SetTargetVersion(value); return *this;}
-    inline UpgradeElasticsearchDomainRequest& WithTargetVersion(Aws::String&& value) { SetTargetVersion(std::move(value)); return *this;}
-    inline UpgradeElasticsearchDomainRequest& WithTargetVersion(const char* value) { SetTargetVersion(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p> This flag, when set to True, indicates that an Upgrade Eligibility Check
-     * needs to be performed. This will not actually perform the Upgrade. </p>
-     */
-    inline bool GetPerformCheckOnly() const{ return m_performCheckOnly; }
-    inline bool PerformCheckOnlyHasBeenSet() const { return m_performCheckOnlyHasBeenSet; }
-    inline void SetPerformCheckOnly(bool value) { m_performCheckOnlyHasBeenSet = true; m_performCheckOnly = value; }
-    inline UpgradeElasticsearchDomainRequest& WithPerformCheckOnly(bool value) { SetPerformCheckOnly(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainName;
-    bool m_domainNameHasBeenSet = false;
-
-    Aws::String m_targetVersion;
-    bool m_targetVersionHasBeenSet = false;
-
-    bool m_performCheckOnly;
-    bool m_performCheckOnlyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElasticsearchService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticsearchService
+}  // namespace Aws

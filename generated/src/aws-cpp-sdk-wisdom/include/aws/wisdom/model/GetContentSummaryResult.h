@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
 #include <aws/wisdom/model/ContentSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectWisdomService
-{
-namespace Model
-{
-  class GetContentSummaryResult
-  {
-  public:
-    AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult();
-    AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectWisdomService {
+namespace Model {
+class GetContentSummaryResult {
+ public:
+  AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult() = default;
+  AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTWISDOMSERVICE_API GetContentSummaryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The content summary.</p>
+   */
+  inline const ContentSummary& GetContentSummary() const { return m_contentSummary; }
+  template <typename ContentSummaryT = ContentSummary>
+  void SetContentSummary(ContentSummaryT&& value) {
+    m_contentSummaryHasBeenSet = true;
+    m_contentSummary = std::forward<ContentSummaryT>(value);
+  }
+  template <typename ContentSummaryT = ContentSummary>
+  GetContentSummaryResult& WithContentSummary(ContentSummaryT&& value) {
+    SetContentSummary(std::forward<ContentSummaryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The content summary.</p>
-     */
-    inline const ContentSummary& GetContentSummary() const{ return m_contentSummary; }
-    inline void SetContentSummary(const ContentSummary& value) { m_contentSummary = value; }
-    inline void SetContentSummary(ContentSummary&& value) { m_contentSummary = std::move(value); }
-    inline GetContentSummaryResult& WithContentSummary(const ContentSummary& value) { SetContentSummary(value); return *this;}
-    inline GetContentSummaryResult& WithContentSummary(ContentSummary&& value) { SetContentSummary(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetContentSummaryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetContentSummaryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetContentSummaryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetContentSummaryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ContentSummary m_contentSummary;
+ private:
+  ContentSummary m_contentSummary;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_contentSummaryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConnectWisdomService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectWisdomService
+}  // namespace Aws

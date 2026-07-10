@@ -4,91 +4,103 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
-#include <aws/deadline/DeadlineRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/deadline/DeadlineRequest.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace deadline
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace deadline {
+namespace Model {
 
+/**
+ * <p>Shared pagination fields for List operation inputs (nextToken +
+ * maxResults).</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/ListStorageProfilesRequest">AWS
+ * API Reference</a></p>
+ */
+class ListStorageProfilesRequest : public DeadlineRequest {
+ public:
+  AWS_DEADLINE_API ListStorageProfilesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListStorageProfiles"; }
+
+  AWS_DEADLINE_API Aws::String SerializePayload() const override;
+
+  AWS_DEADLINE_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The farm ID of the storage profile.</p>
    */
-  class ListStorageProfilesRequest : public DeadlineRequest
-  {
-  public:
-    AWS_DEADLINE_API ListStorageProfilesRequest();
+  inline const Aws::String& GetFarmId() const { return m_farmId; }
+  inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
+  template <typename FarmIdT = Aws::String>
+  void SetFarmId(FarmIdT&& value) {
+    m_farmIdHasBeenSet = true;
+    m_farmId = std::forward<FarmIdT>(value);
+  }
+  template <typename FarmIdT = Aws::String>
+  ListStorageProfilesRequest& WithFarmId(FarmIdT&& value) {
+    SetFarmId(std::forward<FarmIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListStorageProfiles"; }
+  ///@{
+  /**
+   * <p>The token for the next set of results, or <code>null</code> to start from the
+   * beginning.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListStorageProfilesRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEADLINE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of results to return. Use this parameter with
+   * <code>NextToken</code> to get results as a set of sequential pages.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListStorageProfilesRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_farmId;
 
-    AWS_DEADLINE_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  Aws::String m_nextToken;
 
+  int m_maxResults{0};
+  bool m_farmIdHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The farm ID of the storage profile.</p>
-     */
-    inline const Aws::String& GetFarmId() const{ return m_farmId; }
-    inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
-    inline void SetFarmId(const Aws::String& value) { m_farmIdHasBeenSet = true; m_farmId = value; }
-    inline void SetFarmId(Aws::String&& value) { m_farmIdHasBeenSet = true; m_farmId = std::move(value); }
-    inline void SetFarmId(const char* value) { m_farmIdHasBeenSet = true; m_farmId.assign(value); }
-    inline ListStorageProfilesRequest& WithFarmId(const Aws::String& value) { SetFarmId(value); return *this;}
-    inline ListStorageProfilesRequest& WithFarmId(Aws::String&& value) { SetFarmId(std::move(value)); return *this;}
-    inline ListStorageProfilesRequest& WithFarmId(const char* value) { SetFarmId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The token for the next set of results, or <code>null</code> to start from the
-     * beginning.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListStorageProfilesRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListStorageProfilesRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListStorageProfilesRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of results to return. Use this parameter with
-     * <code>NextToken</code> to get results as a set of sequential pages.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListStorageProfilesRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_farmId;
-    bool m_farmIdHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

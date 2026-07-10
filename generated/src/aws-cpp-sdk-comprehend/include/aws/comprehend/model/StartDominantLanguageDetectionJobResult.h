@@ -5,104 +5,122 @@
 
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehend/model/JobStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class StartDominantLanguageDetectionJobResult
-  {
-  public:
-    AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult();
-    AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class StartDominantLanguageDetectionJobResult {
+ public:
+  AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult() = default;
+  AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API StartDominantLanguageDetectionJobResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier generated for the job. To get the status of a job, use this
+   * identifier with the operation.</p>
+   */
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  StartDominantLanguageDetectionJobResult& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier generated for the job. To get the status of a job, use this
-     * identifier with the operation.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline void SetJobId(const Aws::String& value) { m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobId.assign(value); }
-    inline StartDominantLanguageDetectionJobResult& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the dominant language detection job. It is
+   * a unique, fully qualified identifier for the job. It includes the Amazon Web
+   * Services account, Amazon Web Services Region, and the job ID. The format of the
+   * ARN is as follows:</p> <p>
+   * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:dominant-language-detection-job/&lt;job-id&gt;</code>
+   * </p> <p>The following is an example job ARN:</p> <p>
+   * <code>arn:aws:comprehend:us-west-2:111122223333:dominant-language-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
+   * </p>
+   */
+  inline const Aws::String& GetJobArn() const { return m_jobArn; }
+  template <typename JobArnT = Aws::String>
+  void SetJobArn(JobArnT&& value) {
+    m_jobArnHasBeenSet = true;
+    m_jobArn = std::forward<JobArnT>(value);
+  }
+  template <typename JobArnT = Aws::String>
+  StartDominantLanguageDetectionJobResult& WithJobArn(JobArnT&& value) {
+    SetJobArn(std::forward<JobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the dominant language detection job. It is
-     * a unique, fully qualified identifier for the job. It includes the Amazon Web
-     * Services account, Amazon Web Services Region, and the job ID. The format of the
-     * ARN is as follows:</p> <p>
-     * <code>arn:&lt;partition&gt;:comprehend:&lt;region&gt;:&lt;account-id&gt;:dominant-language-detection-job/&lt;job-id&gt;</code>
-     * </p> <p>The following is an example job ARN:</p> <p>
-     * <code>arn:aws:comprehend:us-west-2:111122223333:dominant-language-detection-job/1234abcd12ab34cd56ef1234567890ab</code>
-     * </p>
-     */
-    inline const Aws::String& GetJobArn() const{ return m_jobArn; }
-    inline void SetJobArn(const Aws::String& value) { m_jobArn = value; }
-    inline void SetJobArn(Aws::String&& value) { m_jobArn = std::move(value); }
-    inline void SetJobArn(const char* value) { m_jobArn.assign(value); }
-    inline StartDominantLanguageDetectionJobResult& WithJobArn(const Aws::String& value) { SetJobArn(value); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithJobArn(Aws::String&& value) { SetJobArn(std::move(value)); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithJobArn(const char* value) { SetJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the job. </p> <ul> <li> <p>SUBMITTED - The job has been
+   * received and is queued for processing.</p> </li> <li> <p>IN_PROGRESS - Amazon
+   * Comprehend is processing the job.</p> </li> <li> <p>COMPLETED - The job was
+   * successfully completed and the output is available.</p> </li> <li> <p>FAILED -
+   * The job did not complete. To get details, use the operation.</p> </li> </ul>
+   */
+  inline JobStatus GetJobStatus() const { return m_jobStatus; }
+  inline void SetJobStatus(JobStatus value) {
+    m_jobStatusHasBeenSet = true;
+    m_jobStatus = value;
+  }
+  inline StartDominantLanguageDetectionJobResult& WithJobStatus(JobStatus value) {
+    SetJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the job. </p> <ul> <li> <p>SUBMITTED - The job has been
-     * received and is queued for processing.</p> </li> <li> <p>IN_PROGRESS - Amazon
-     * Comprehend is processing the job.</p> </li> <li> <p>COMPLETED - The job was
-     * successfully completed and the output is available.</p> </li> <li> <p>FAILED -
-     * The job did not complete. To get details, use the operation.</p> </li> </ul>
-     */
-    inline const JobStatus& GetJobStatus() const{ return m_jobStatus; }
-    inline void SetJobStatus(const JobStatus& value) { m_jobStatus = value; }
-    inline void SetJobStatus(JobStatus&& value) { m_jobStatus = std::move(value); }
-    inline StartDominantLanguageDetectionJobResult& WithJobStatus(const JobStatus& value) { SetJobStatus(value); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithJobStatus(JobStatus&& value) { SetJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartDominantLanguageDetectionJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartDominantLanguageDetectionJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartDominantLanguageDetectionJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_jobId;
+ private:
+  Aws::String m_jobId;
 
-    Aws::String m_jobArn;
+  Aws::String m_jobArn;
 
-    JobStatus m_jobStatus;
+  JobStatus m_jobStatus{JobStatus::NOT_SET};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobIdHasBeenSet = false;
+  bool m_jobArnHasBeenSet = false;
+  bool m_jobStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

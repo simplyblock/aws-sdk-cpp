@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/pca-connector-scep/PcaConnectorScep_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pca-connector-scep/PcaConnectorScep_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorScep
-{
-namespace Model
-{
-  class CreateConnectorResult
-  {
-  public:
-    AWS_PCACONNECTORSCEP_API CreateConnectorResult();
-    AWS_PCACONNECTORSCEP_API CreateConnectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORSCEP_API CreateConnectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorScep {
+namespace Model {
+class CreateConnectorResult {
+ public:
+  AWS_PCACONNECTORSCEP_API CreateConnectorResult() = default;
+  AWS_PCACONNECTORSCEP_API CreateConnectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORSCEP_API CreateConnectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns the Amazon Resource Name (ARN) of the connector.</p>
+   */
+  inline const Aws::String& GetConnectorArn() const { return m_connectorArn; }
+  template <typename ConnectorArnT = Aws::String>
+  void SetConnectorArn(ConnectorArnT&& value) {
+    m_connectorArnHasBeenSet = true;
+    m_connectorArn = std::forward<ConnectorArnT>(value);
+  }
+  template <typename ConnectorArnT = Aws::String>
+  CreateConnectorResult& WithConnectorArn(ConnectorArnT&& value) {
+    SetConnectorArn(std::forward<ConnectorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns the Amazon Resource Name (ARN) of the connector.</p>
-     */
-    inline const Aws::String& GetConnectorArn() const{ return m_connectorArn; }
-    inline void SetConnectorArn(const Aws::String& value) { m_connectorArn = value; }
-    inline void SetConnectorArn(Aws::String&& value) { m_connectorArn = std::move(value); }
-    inline void SetConnectorArn(const char* value) { m_connectorArn.assign(value); }
-    inline CreateConnectorResult& WithConnectorArn(const Aws::String& value) { SetConnectorArn(value); return *this;}
-    inline CreateConnectorResult& WithConnectorArn(Aws::String&& value) { SetConnectorArn(std::move(value)); return *this;}
-    inline CreateConnectorResult& WithConnectorArn(const char* value) { SetConnectorArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateConnectorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateConnectorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateConnectorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateConnectorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_connectorArn;
+ private:
+  Aws::String m_connectorArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_connectorArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorScep
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorScep
+}  // namespace Aws

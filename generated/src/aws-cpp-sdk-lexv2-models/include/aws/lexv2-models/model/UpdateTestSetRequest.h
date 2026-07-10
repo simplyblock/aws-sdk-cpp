@@ -4,87 +4,94 @@
  */
 
 #pragma once
-#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
-#include <aws/lexv2-models/LexModelsV2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lexv2-models/LexModelsV2Request.h>
+#include <aws/lexv2-models/LexModelsV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace LexModelsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace LexModelsV2 {
+namespace Model {
 
+/**
+ */
+class UpdateTestSetRequest : public LexModelsV2Request {
+ public:
+  AWS_LEXMODELSV2_API UpdateTestSetRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateTestSet"; }
+
+  AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The test set Id for which update test operation to be performed.</p>
    */
-  class UpdateTestSetRequest : public LexModelsV2Request
-  {
-  public:
-    AWS_LEXMODELSV2_API UpdateTestSetRequest();
+  inline const Aws::String& GetTestSetId() const { return m_testSetId; }
+  inline bool TestSetIdHasBeenSet() const { return m_testSetIdHasBeenSet; }
+  template <typename TestSetIdT = Aws::String>
+  void SetTestSetId(TestSetIdT&& value) {
+    m_testSetIdHasBeenSet = true;
+    m_testSetId = std::forward<TestSetIdT>(value);
+  }
+  template <typename TestSetIdT = Aws::String>
+  UpdateTestSetRequest& WithTestSetId(TestSetIdT&& value) {
+    SetTestSetId(std::forward<TestSetIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateTestSet"; }
+  ///@{
+  /**
+   * <p>The new test set name.</p>
+   */
+  inline const Aws::String& GetTestSetName() const { return m_testSetName; }
+  inline bool TestSetNameHasBeenSet() const { return m_testSetNameHasBeenSet; }
+  template <typename TestSetNameT = Aws::String>
+  void SetTestSetName(TestSetNameT&& value) {
+    m_testSetNameHasBeenSet = true;
+    m_testSetName = std::forward<TestSetNameT>(value);
+  }
+  template <typename TestSetNameT = Aws::String>
+  UpdateTestSetRequest& WithTestSetName(TestSetNameT&& value) {
+    SetTestSetName(std::forward<TestSetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LEXMODELSV2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The new test set description.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateTestSetRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_testSetId;
 
+  Aws::String m_testSetName;
 
-    ///@{
-    /**
-     * <p>The test set Id for which update test operation to be performed.</p>
-     */
-    inline const Aws::String& GetTestSetId() const{ return m_testSetId; }
-    inline bool TestSetIdHasBeenSet() const { return m_testSetIdHasBeenSet; }
-    inline void SetTestSetId(const Aws::String& value) { m_testSetIdHasBeenSet = true; m_testSetId = value; }
-    inline void SetTestSetId(Aws::String&& value) { m_testSetIdHasBeenSet = true; m_testSetId = std::move(value); }
-    inline void SetTestSetId(const char* value) { m_testSetIdHasBeenSet = true; m_testSetId.assign(value); }
-    inline UpdateTestSetRequest& WithTestSetId(const Aws::String& value) { SetTestSetId(value); return *this;}
-    inline UpdateTestSetRequest& WithTestSetId(Aws::String&& value) { SetTestSetId(std::move(value)); return *this;}
-    inline UpdateTestSetRequest& WithTestSetId(const char* value) { SetTestSetId(value); return *this;}
-    ///@}
+  Aws::String m_description;
+  bool m_testSetIdHasBeenSet = false;
+  bool m_testSetNameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The new test set name.</p>
-     */
-    inline const Aws::String& GetTestSetName() const{ return m_testSetName; }
-    inline bool TestSetNameHasBeenSet() const { return m_testSetNameHasBeenSet; }
-    inline void SetTestSetName(const Aws::String& value) { m_testSetNameHasBeenSet = true; m_testSetName = value; }
-    inline void SetTestSetName(Aws::String&& value) { m_testSetNameHasBeenSet = true; m_testSetName = std::move(value); }
-    inline void SetTestSetName(const char* value) { m_testSetNameHasBeenSet = true; m_testSetName.assign(value); }
-    inline UpdateTestSetRequest& WithTestSetName(const Aws::String& value) { SetTestSetName(value); return *this;}
-    inline UpdateTestSetRequest& WithTestSetName(Aws::String&& value) { SetTestSetName(std::move(value)); return *this;}
-    inline UpdateTestSetRequest& WithTestSetName(const char* value) { SetTestSetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The new test set description.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateTestSetRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateTestSetRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateTestSetRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_testSetId;
-    bool m_testSetIdHasBeenSet = false;
-
-    Aws::String m_testSetName;
-    bool m_testSetNameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LexModelsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace LexModelsV2
+}  // namespace Aws

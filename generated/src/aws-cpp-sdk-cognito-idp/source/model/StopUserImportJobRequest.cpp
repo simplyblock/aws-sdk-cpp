@@ -12,39 +12,22 @@ using namespace Aws::CognitoIdentityProvider::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopUserImportJobRequest::StopUserImportJobRequest() : 
-    m_userPoolIdHasBeenSet(false),
-    m_jobIdHasBeenSet(false)
-{
-}
-
-Aws::String StopUserImportJobRequest::SerializePayload() const
-{
+Aws::String StopUserImportJobRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_userPoolIdHasBeenSet)
-  {
-   payload.WithString("UserPoolId", m_userPoolId);
-
+  if (m_userPoolIdHasBeenSet) {
+    payload.WithString("UserPoolId", m_userPoolId);
   }
 
-  if(m_jobIdHasBeenSet)
-  {
-   payload.WithString("JobId", m_jobId);
-
+  if (m_jobIdHasBeenSet) {
+    payload.WithString("JobId", m_jobId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection StopUserImportJobRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StopUserImportJobRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSCognitoIdentityProviderService.StopUserImportJob"));
   return headers;
-
 }
-
-
-
-

@@ -6,67 +6,76 @@
 #pragma once
 #include <aws/accessanalyzer/AccessAnalyzer_EXPORTS.h>
 #include <aws/accessanalyzer/model/AnalyzerSummary.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AccessAnalyzer
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AccessAnalyzer {
+namespace Model {
+/**
+ * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetAnalyzerResponse">AWS
+ * API Reference</a></p>
+ */
+class GetAnalyzerResult {
+ public:
+  AWS_ACCESSANALYZER_API GetAnalyzerResult() = default;
+  AWS_ACCESSANALYZER_API GetAnalyzerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ACCESSANALYZER_API GetAnalyzerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The response to the request.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetAnalyzerResponse">AWS
-   * API Reference</a></p>
+   * <p>An <code>AnalyzerSummary</code> object that contains information about the
+   * analyzer.</p>
    */
-  class GetAnalyzerResult
-  {
-  public:
-    AWS_ACCESSANALYZER_API GetAnalyzerResult();
-    AWS_ACCESSANALYZER_API GetAnalyzerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ACCESSANALYZER_API GetAnalyzerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const AnalyzerSummary& GetAnalyzer() const { return m_analyzer; }
+  template <typename AnalyzerT = AnalyzerSummary>
+  void SetAnalyzer(AnalyzerT&& value) {
+    m_analyzerHasBeenSet = true;
+    m_analyzer = std::forward<AnalyzerT>(value);
+  }
+  template <typename AnalyzerT = AnalyzerSummary>
+  GetAnalyzerResult& WithAnalyzer(AnalyzerT&& value) {
+    SetAnalyzer(std::forward<AnalyzerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>An <code>AnalyzerSummary</code> object that contains information about the
-     * analyzer.</p>
-     */
-    inline const AnalyzerSummary& GetAnalyzer() const{ return m_analyzer; }
-    inline void SetAnalyzer(const AnalyzerSummary& value) { m_analyzer = value; }
-    inline void SetAnalyzer(AnalyzerSummary&& value) { m_analyzer = std::move(value); }
-    inline GetAnalyzerResult& WithAnalyzer(const AnalyzerSummary& value) { SetAnalyzer(value); return *this;}
-    inline GetAnalyzerResult& WithAnalyzer(AnalyzerSummary&& value) { SetAnalyzer(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAnalyzerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAnalyzerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAnalyzerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAnalyzerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  AnalyzerSummary m_analyzer;
 
-    AnalyzerSummary m_analyzer;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_analyzerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace AccessAnalyzer
-} // namespace Aws
+}  // namespace Model
+}  // namespace AccessAnalyzer
+}  // namespace Aws

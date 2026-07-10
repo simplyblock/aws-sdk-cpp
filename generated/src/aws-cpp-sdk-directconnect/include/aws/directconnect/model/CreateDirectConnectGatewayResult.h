@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/directconnect/DirectConnect_EXPORTS.h>
 #include <aws/directconnect/model/DirectConnectGateway.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectConnect
-{
-namespace Model
-{
-  class CreateDirectConnectGatewayResult
-  {
-  public:
-    AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult();
-    AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectConnect {
+namespace Model {
+class CreateDirectConnectGatewayResult {
+ public:
+  AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult() = default;
+  AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTCONNECT_API CreateDirectConnectGatewayResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Direct Connect gateway.</p>
+   */
+  inline const DirectConnectGateway& GetDirectConnectGateway() const { return m_directConnectGateway; }
+  template <typename DirectConnectGatewayT = DirectConnectGateway>
+  void SetDirectConnectGateway(DirectConnectGatewayT&& value) {
+    m_directConnectGatewayHasBeenSet = true;
+    m_directConnectGateway = std::forward<DirectConnectGatewayT>(value);
+  }
+  template <typename DirectConnectGatewayT = DirectConnectGateway>
+  CreateDirectConnectGatewayResult& WithDirectConnectGateway(DirectConnectGatewayT&& value) {
+    SetDirectConnectGateway(std::forward<DirectConnectGatewayT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Direct Connect gateway.</p>
-     */
-    inline const DirectConnectGateway& GetDirectConnectGateway() const{ return m_directConnectGateway; }
-    inline void SetDirectConnectGateway(const DirectConnectGateway& value) { m_directConnectGateway = value; }
-    inline void SetDirectConnectGateway(DirectConnectGateway&& value) { m_directConnectGateway = std::move(value); }
-    inline CreateDirectConnectGatewayResult& WithDirectConnectGateway(const DirectConnectGateway& value) { SetDirectConnectGateway(value); return *this;}
-    inline CreateDirectConnectGatewayResult& WithDirectConnectGateway(DirectConnectGateway&& value) { SetDirectConnectGateway(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateDirectConnectGatewayResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateDirectConnectGatewayResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateDirectConnectGatewayResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateDirectConnectGatewayResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DirectConnectGateway m_directConnectGateway;
+ private:
+  DirectConnectGateway m_directConnectGateway;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_directConnectGatewayHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DirectConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectConnect
+}  // namespace Aws

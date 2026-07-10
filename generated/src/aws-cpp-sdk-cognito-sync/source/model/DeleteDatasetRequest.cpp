@@ -12,18 +12,4 @@ using namespace Aws::CognitoSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDatasetRequest::DeleteDatasetRequest() : 
-    m_identityPoolIdHasBeenSet(false),
-    m_identityIdHasBeenSet(false),
-    m_datasetNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDatasetRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDatasetRequest::SerializePayload() const { return {}; }

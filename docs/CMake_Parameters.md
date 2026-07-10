@@ -10,12 +10,6 @@ Example:
 -DBUILD_ONLY="s3;dynamodb;cognito-identity"
 ```
 
-### ADD_CUSTOM_CLIENTS
-Allows you to build any arbitrary clients based on the api definition. Simply place your definition in the code-generation/api-definitions folder. Then pass this arg to cmake. The cmake configure step will generate your client and include it as a subdirectory in your build. This is particularly useful if you want to generate a C++ client for using one of your API Gateway services. To use this feature you need to have python 2.7, java, jdk1.8, and maven installed and in your executable path. Example:
-```sh
--DADD_CUSTOM_CLIENTS="serviceName=myCustomService, version=2015-12-21;serviceName=someOtherService, version=2015-08-15"
-```
-
 ### REGENERATE_CLIENTS
 This argument will wipe out all generated code and generate the client directories from the code-generation/api-definitions folder. To use this argument, you need to have python 2.7, java, jdk1.8, and maven installed in your executable path. Example:
 ```sh
@@ -134,6 +128,9 @@ You can also tell gcc or clang to pass these linker flags by specifying `-Wl,--g
 ### BUILD_BENCHMARKS
 (Defaults to OFF) Enables building the benchmark executable
 
+### BUILD_PERFORMANCE_TESTS
+(Defaults to OFF) Enables building the performance test executables for S3 and DynamoDB. These tests measure operation latencies and output results to JSON files. Requires S3 and DynamoDB clients to be built.
+
 ### BUILD_OPTEL
 (Defaults to OFF) Enables building the open telemetry implementation of tracing
 
@@ -183,3 +180,7 @@ An override path for where the build system should find the Android NDK.  By def
 
 ### AWS_USE_CRYPTO_SHARED_LIBS
 Forces FindCrypto to use a shared crypto library if found. regardless of the value of BUILD_SHARED_LIBS
+
+
+### AWS_APPSTORE_SAFE
+One of our dependencies [aws-c-cal](https://github.com/awslabs/aws-c-cal) links against several [CommonCrypto](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/Common%20Crypto.3cc.html) APIs that will cause a binary application using these APIs to be rejected from the apple appstore. This will set the corresponding [definition ia aws-c-cal](https://github.com/awslabs/aws-c-cal/blob/027d9760908c649d1f53e397d74d907babbde059/source/darwin/commoncrypto_aes.c#L12-L16) that will no-op AES-GCM functionality. This option is turned `OFF` by default as to no t break AWS-GCM functionality by default.   

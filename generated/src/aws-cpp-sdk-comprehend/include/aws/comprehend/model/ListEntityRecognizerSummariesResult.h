@@ -5,80 +5,98 @@
 
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehend/model/EntityRecognizerSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class ListEntityRecognizerSummariesResult
-  {
-  public:
-    AWS_COMPREHEND_API ListEntityRecognizerSummariesResult();
-    AWS_COMPREHEND_API ListEntityRecognizerSummariesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API ListEntityRecognizerSummariesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class ListEntityRecognizerSummariesResult {
+ public:
+  AWS_COMPREHEND_API ListEntityRecognizerSummariesResult() = default;
+  AWS_COMPREHEND_API ListEntityRecognizerSummariesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API ListEntityRecognizerSummariesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list entity recognizer summaries.</p>
+   */
+  inline const Aws::Vector<EntityRecognizerSummary>& GetEntityRecognizerSummariesList() const { return m_entityRecognizerSummariesList; }
+  template <typename EntityRecognizerSummariesListT = Aws::Vector<EntityRecognizerSummary>>
+  void SetEntityRecognizerSummariesList(EntityRecognizerSummariesListT&& value) {
+    m_entityRecognizerSummariesListHasBeenSet = true;
+    m_entityRecognizerSummariesList = std::forward<EntityRecognizerSummariesListT>(value);
+  }
+  template <typename EntityRecognizerSummariesListT = Aws::Vector<EntityRecognizerSummary>>
+  ListEntityRecognizerSummariesResult& WithEntityRecognizerSummariesList(EntityRecognizerSummariesListT&& value) {
+    SetEntityRecognizerSummariesList(std::forward<EntityRecognizerSummariesListT>(value));
+    return *this;
+  }
+  template <typename EntityRecognizerSummariesListT = EntityRecognizerSummary>
+  ListEntityRecognizerSummariesResult& AddEntityRecognizerSummariesList(EntityRecognizerSummariesListT&& value) {
+    m_entityRecognizerSummariesListHasBeenSet = true;
+    m_entityRecognizerSummariesList.emplace_back(std::forward<EntityRecognizerSummariesListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list entity recognizer summaries.</p>
-     */
-    inline const Aws::Vector<EntityRecognizerSummary>& GetEntityRecognizerSummariesList() const{ return m_entityRecognizerSummariesList; }
-    inline void SetEntityRecognizerSummariesList(const Aws::Vector<EntityRecognizerSummary>& value) { m_entityRecognizerSummariesList = value; }
-    inline void SetEntityRecognizerSummariesList(Aws::Vector<EntityRecognizerSummary>&& value) { m_entityRecognizerSummariesList = std::move(value); }
-    inline ListEntityRecognizerSummariesResult& WithEntityRecognizerSummariesList(const Aws::Vector<EntityRecognizerSummary>& value) { SetEntityRecognizerSummariesList(value); return *this;}
-    inline ListEntityRecognizerSummariesResult& WithEntityRecognizerSummariesList(Aws::Vector<EntityRecognizerSummary>&& value) { SetEntityRecognizerSummariesList(std::move(value)); return *this;}
-    inline ListEntityRecognizerSummariesResult& AddEntityRecognizerSummariesList(const EntityRecognizerSummary& value) { m_entityRecognizerSummariesList.push_back(value); return *this; }
-    inline ListEntityRecognizerSummariesResult& AddEntityRecognizerSummariesList(EntityRecognizerSummary&& value) { m_entityRecognizerSummariesList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Identifies the next page of results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListEntityRecognizerSummariesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Identifies the next page of results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListEntityRecognizerSummariesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListEntityRecognizerSummariesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListEntityRecognizerSummariesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListEntityRecognizerSummariesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListEntityRecognizerSummariesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListEntityRecognizerSummariesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListEntityRecognizerSummariesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<EntityRecognizerSummary> m_entityRecognizerSummariesList;
+ private:
+  Aws::Vector<EntityRecognizerSummary> m_entityRecognizerSummariesList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entityRecognizerSummariesListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

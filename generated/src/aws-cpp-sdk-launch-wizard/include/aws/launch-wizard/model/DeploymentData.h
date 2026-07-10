@@ -4,243 +4,307 @@
  */
 
 #pragma once
-#include <aws/launch-wizard/LaunchWizard_EXPORTS.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/launch-wizard/LaunchWizard_EXPORTS.h>
 #include <aws/launch-wizard/model/DeploymentStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LaunchWizard
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LaunchWizard {
+namespace Model {
 
+/**
+ * <p>The data associated with a deployment.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/launch-wizard-2018-05-10/DeploymentData">AWS
+ * API Reference</a></p>
+ */
+class DeploymentData {
+ public:
+  AWS_LAUNCHWIZARD_API DeploymentData() = default;
+  AWS_LAUNCHWIZARD_API DeploymentData(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAUNCHWIZARD_API DeploymentData& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAUNCHWIZARD_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The data associated with a deployment.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/launch-wizard-2018-05-10/DeploymentData">AWS
-   * API Reference</a></p>
+   * <p>The name of the deployment.</p>
    */
-  class DeploymentData
-  {
-  public:
-    AWS_LAUNCHWIZARD_API DeploymentData();
-    AWS_LAUNCHWIZARD_API DeploymentData(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAUNCHWIZARD_API DeploymentData& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAUNCHWIZARD_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DeploymentData& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the deployment.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  DeploymentData& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time the deployment was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAtHasBeenSet = true; m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAtHasBeenSet = true; m_createdAt = std::move(value); }
-    inline DeploymentData& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline DeploymentData& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the workload.</p>
+   */
+  inline const Aws::String& GetWorkloadName() const { return m_workloadName; }
+  inline bool WorkloadNameHasBeenSet() const { return m_workloadNameHasBeenSet; }
+  template <typename WorkloadNameT = Aws::String>
+  void SetWorkloadName(WorkloadNameT&& value) {
+    m_workloadNameHasBeenSet = true;
+    m_workloadName = std::forward<WorkloadNameT>(value);
+  }
+  template <typename WorkloadNameT = Aws::String>
+  DeploymentData& WithWorkloadName(WorkloadNameT&& value) {
+    SetWorkloadName(std::forward<WorkloadNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time the deployment was deleted.</p>
-     */
-    inline const Aws::Utils::DateTime& GetDeletedAt() const{ return m_deletedAt; }
-    inline bool DeletedAtHasBeenSet() const { return m_deletedAtHasBeenSet; }
-    inline void SetDeletedAt(const Aws::Utils::DateTime& value) { m_deletedAtHasBeenSet = true; m_deletedAt = value; }
-    inline void SetDeletedAt(Aws::Utils::DateTime&& value) { m_deletedAtHasBeenSet = true; m_deletedAt = std::move(value); }
-    inline DeploymentData& WithDeletedAt(const Aws::Utils::DateTime& value) { SetDeletedAt(value); return *this;}
-    inline DeploymentData& WithDeletedAt(Aws::Utils::DateTime&& value) { SetDeletedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The pattern name of the deployment.</p>
+   */
+  inline const Aws::String& GetPatternName() const { return m_patternName; }
+  inline bool PatternNameHasBeenSet() const { return m_patternNameHasBeenSet; }
+  template <typename PatternNameT = Aws::String>
+  void SetPatternName(PatternNameT&& value) {
+    m_patternNameHasBeenSet = true;
+    m_patternName = std::forward<PatternNameT>(value);
+  }
+  template <typename PatternNameT = Aws::String>
+  DeploymentData& WithPatternName(PatternNameT&& value) {
+    SetPatternName(std::forward<PatternNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the deployment.</p>
-     */
-    inline const Aws::String& GetDeploymentArn() const{ return m_deploymentArn; }
-    inline bool DeploymentArnHasBeenSet() const { return m_deploymentArnHasBeenSet; }
-    inline void SetDeploymentArn(const Aws::String& value) { m_deploymentArnHasBeenSet = true; m_deploymentArn = value; }
-    inline void SetDeploymentArn(Aws::String&& value) { m_deploymentArnHasBeenSet = true; m_deploymentArn = std::move(value); }
-    inline void SetDeploymentArn(const char* value) { m_deploymentArnHasBeenSet = true; m_deploymentArn.assign(value); }
-    inline DeploymentData& WithDeploymentArn(const Aws::String& value) { SetDeploymentArn(value); return *this;}
-    inline DeploymentData& WithDeploymentArn(Aws::String&& value) { SetDeploymentArn(std::move(value)); return *this;}
-    inline DeploymentData& WithDeploymentArn(const char* value) { SetDeploymentArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the deployment.</p>
+   */
+  inline DeploymentStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(DeploymentStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline DeploymentData& WithStatus(DeploymentStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the deployment.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline DeploymentData& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline DeploymentData& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline DeploymentData& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time the deployment was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  inline bool CreatedAtHasBeenSet() const { return m_createdAtHasBeenSet; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  DeploymentData& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the deployment.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline DeploymentData& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DeploymentData& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DeploymentData& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time the deployment was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetModifiedAt() const { return m_modifiedAt; }
+  inline bool ModifiedAtHasBeenSet() const { return m_modifiedAtHasBeenSet; }
+  template <typename ModifiedAtT = Aws::Utils::DateTime>
+  void SetModifiedAt(ModifiedAtT&& value) {
+    m_modifiedAtHasBeenSet = true;
+    m_modifiedAt = std::forward<ModifiedAtT>(value);
+  }
+  template <typename ModifiedAtT = Aws::Utils::DateTime>
+  DeploymentData& WithModifiedAt(ModifiedAtT&& value) {
+    SetModifiedAt(std::forward<ModifiedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pattern name of the deployment.</p>
-     */
-    inline const Aws::String& GetPatternName() const{ return m_patternName; }
-    inline bool PatternNameHasBeenSet() const { return m_patternNameHasBeenSet; }
-    inline void SetPatternName(const Aws::String& value) { m_patternNameHasBeenSet = true; m_patternName = value; }
-    inline void SetPatternName(Aws::String&& value) { m_patternNameHasBeenSet = true; m_patternName = std::move(value); }
-    inline void SetPatternName(const char* value) { m_patternNameHasBeenSet = true; m_patternName.assign(value); }
-    inline DeploymentData& WithPatternName(const Aws::String& value) { SetPatternName(value); return *this;}
-    inline DeploymentData& WithPatternName(Aws::String&& value) { SetPatternName(std::move(value)); return *this;}
-    inline DeploymentData& WithPatternName(const char* value) { SetPatternName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The settings specified for the deployment. These settings define how to
+   * deploy and configure your resources created by the deployment. For more
+   * information about the specifications required for creating a deployment for a
+   * SAP workload, see <a
+   * href="https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html">SAP
+   * deployment specifications</a>. To retrieve the specifications required to create
+   * a deployment for other workloads, use the <a
+   * href="https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html">
+   * <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetSpecifications() const { return m_specifications; }
+  inline bool SpecificationsHasBeenSet() const { return m_specificationsHasBeenSet; }
+  template <typename SpecificationsT = Aws::Map<Aws::String, Aws::String>>
+  void SetSpecifications(SpecificationsT&& value) {
+    m_specificationsHasBeenSet = true;
+    m_specifications = std::forward<SpecificationsT>(value);
+  }
+  template <typename SpecificationsT = Aws::Map<Aws::String, Aws::String>>
+  DeploymentData& WithSpecifications(SpecificationsT&& value) {
+    SetSpecifications(std::forward<SpecificationsT>(value));
+    return *this;
+  }
+  template <typename SpecificationsKeyT = Aws::String, typename SpecificationsValueT = Aws::String>
+  DeploymentData& AddSpecifications(SpecificationsKeyT&& key, SpecificationsValueT&& value) {
+    m_specificationsHasBeenSet = true;
+    m_specifications.emplace(std::forward<SpecificationsKeyT>(key), std::forward<SpecificationsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource group of the deployment.</p>
-     */
-    inline const Aws::String& GetResourceGroup() const{ return m_resourceGroup; }
-    inline bool ResourceGroupHasBeenSet() const { return m_resourceGroupHasBeenSet; }
-    inline void SetResourceGroup(const Aws::String& value) { m_resourceGroupHasBeenSet = true; m_resourceGroup = value; }
-    inline void SetResourceGroup(Aws::String&& value) { m_resourceGroupHasBeenSet = true; m_resourceGroup = std::move(value); }
-    inline void SetResourceGroup(const char* value) { m_resourceGroupHasBeenSet = true; m_resourceGroup.assign(value); }
-    inline DeploymentData& WithResourceGroup(const Aws::String& value) { SetResourceGroup(value); return *this;}
-    inline DeploymentData& WithResourceGroup(Aws::String&& value) { SetResourceGroup(std::move(value)); return *this;}
-    inline DeploymentData& WithResourceGroup(const char* value) { SetResourceGroup(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The resource group of the deployment.</p>
+   */
+  inline const Aws::String& GetResourceGroup() const { return m_resourceGroup; }
+  inline bool ResourceGroupHasBeenSet() const { return m_resourceGroupHasBeenSet; }
+  template <typename ResourceGroupT = Aws::String>
+  void SetResourceGroup(ResourceGroupT&& value) {
+    m_resourceGroupHasBeenSet = true;
+    m_resourceGroup = std::forward<ResourceGroupT>(value);
+  }
+  template <typename ResourceGroupT = Aws::String>
+  DeploymentData& WithResourceGroup(ResourceGroupT&& value) {
+    SetResourceGroup(std::forward<ResourceGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The settings specified for the deployment. These settings define how to
-     * deploy and configure your resources created by the deployment. For more
-     * information about the specifications required for creating a deployment for a
-     * SAP workload, see <a
-     * href="https://docs.aws.amazon.com/launchwizard/latest/APIReference/launch-wizard-specifications-sap.html">SAP
-     * deployment specifications</a>. To retrieve the specifications required to create
-     * a deployment for other workloads, use the <a
-     * href="https://docs.aws.amazon.com/launchwizard/latest/APIReference/API_GetWorkloadDeploymentPattern.html">
-     * <code>GetWorkloadDeploymentPattern</code> </a> operation.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetSpecifications() const{ return m_specifications; }
-    inline bool SpecificationsHasBeenSet() const { return m_specificationsHasBeenSet; }
-    inline void SetSpecifications(const Aws::Map<Aws::String, Aws::String>& value) { m_specificationsHasBeenSet = true; m_specifications = value; }
-    inline void SetSpecifications(Aws::Map<Aws::String, Aws::String>&& value) { m_specificationsHasBeenSet = true; m_specifications = std::move(value); }
-    inline DeploymentData& WithSpecifications(const Aws::Map<Aws::String, Aws::String>& value) { SetSpecifications(value); return *this;}
-    inline DeploymentData& WithSpecifications(Aws::Map<Aws::String, Aws::String>&& value) { SetSpecifications(std::move(value)); return *this;}
-    inline DeploymentData& AddSpecifications(const Aws::String& key, const Aws::String& value) { m_specificationsHasBeenSet = true; m_specifications.emplace(key, value); return *this; }
-    inline DeploymentData& AddSpecifications(Aws::String&& key, const Aws::String& value) { m_specificationsHasBeenSet = true; m_specifications.emplace(std::move(key), value); return *this; }
-    inline DeploymentData& AddSpecifications(const Aws::String& key, Aws::String&& value) { m_specificationsHasBeenSet = true; m_specifications.emplace(key, std::move(value)); return *this; }
-    inline DeploymentData& AddSpecifications(Aws::String&& key, Aws::String&& value) { m_specificationsHasBeenSet = true; m_specifications.emplace(std::move(key), std::move(value)); return *this; }
-    inline DeploymentData& AddSpecifications(const char* key, Aws::String&& value) { m_specificationsHasBeenSet = true; m_specifications.emplace(key, std::move(value)); return *this; }
-    inline DeploymentData& AddSpecifications(Aws::String&& key, const char* value) { m_specificationsHasBeenSet = true; m_specifications.emplace(std::move(key), value); return *this; }
-    inline DeploymentData& AddSpecifications(const char* key, const char* value) { m_specificationsHasBeenSet = true; m_specifications.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The time the deployment was deleted.</p>
+   */
+  inline const Aws::Utils::DateTime& GetDeletedAt() const { return m_deletedAt; }
+  inline bool DeletedAtHasBeenSet() const { return m_deletedAtHasBeenSet; }
+  template <typename DeletedAtT = Aws::Utils::DateTime>
+  void SetDeletedAt(DeletedAtT&& value) {
+    m_deletedAtHasBeenSet = true;
+    m_deletedAt = std::forward<DeletedAtT>(value);
+  }
+  template <typename DeletedAtT = Aws::Utils::DateTime>
+  DeploymentData& WithDeletedAt(DeletedAtT&& value) {
+    SetDeletedAt(std::forward<DeletedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the deployment.</p>
-     */
-    inline const DeploymentStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const DeploymentStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(DeploymentStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline DeploymentData& WithStatus(const DeploymentStatus& value) { SetStatus(value); return *this;}
-    inline DeploymentData& WithStatus(DeploymentStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the tags attached to a deployment.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DeploymentData& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DeploymentData& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the tags attached to a deployment.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline DeploymentData& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DeploymentData& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DeploymentData& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline DeploymentData& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline DeploymentData& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline DeploymentData& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DeploymentData& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline DeploymentData& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline DeploymentData& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the deployment.</p>
+   */
+  inline const Aws::String& GetDeploymentArn() const { return m_deploymentArn; }
+  inline bool DeploymentArnHasBeenSet() const { return m_deploymentArnHasBeenSet; }
+  template <typename DeploymentArnT = Aws::String>
+  void SetDeploymentArn(DeploymentArnT&& value) {
+    m_deploymentArnHasBeenSet = true;
+    m_deploymentArn = std::forward<DeploymentArnT>(value);
+  }
+  template <typename DeploymentArnT = Aws::String>
+  DeploymentData& WithDeploymentArn(DeploymentArnT&& value) {
+    SetDeploymentArn(std::forward<DeploymentArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of the workload.</p>
-     */
-    inline const Aws::String& GetWorkloadName() const{ return m_workloadName; }
-    inline bool WorkloadNameHasBeenSet() const { return m_workloadNameHasBeenSet; }
-    inline void SetWorkloadName(const Aws::String& value) { m_workloadNameHasBeenSet = true; m_workloadName = value; }
-    inline void SetWorkloadName(Aws::String&& value) { m_workloadNameHasBeenSet = true; m_workloadName = std::move(value); }
-    inline void SetWorkloadName(const char* value) { m_workloadNameHasBeenSet = true; m_workloadName.assign(value); }
-    inline DeploymentData& WithWorkloadName(const Aws::String& value) { SetWorkloadName(value); return *this;}
-    inline DeploymentData& WithWorkloadName(Aws::String&& value) { SetWorkloadName(std::move(value)); return *this;}
-    inline DeploymentData& WithWorkloadName(const char* value) { SetWorkloadName(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_id;
 
-    Aws::Utils::DateTime m_createdAt;
-    bool m_createdAtHasBeenSet = false;
+  Aws::String m_workloadName;
 
-    Aws::Utils::DateTime m_deletedAt;
-    bool m_deletedAtHasBeenSet = false;
+  Aws::String m_patternName;
 
-    Aws::String m_deploymentArn;
-    bool m_deploymentArnHasBeenSet = false;
+  DeploymentStatus m_status{DeploymentStatus::NOT_SET};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  Aws::Utils::DateTime m_createdAt{};
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Utils::DateTime m_modifiedAt{};
 
-    Aws::String m_patternName;
-    bool m_patternNameHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_specifications;
 
-    Aws::String m_resourceGroup;
-    bool m_resourceGroupHasBeenSet = false;
+  Aws::String m_resourceGroup;
 
-    Aws::Map<Aws::String, Aws::String> m_specifications;
-    bool m_specificationsHasBeenSet = false;
+  Aws::Utils::DateTime m_deletedAt{};
 
-    DeploymentStatus m_status;
-    bool m_statusHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::String m_deploymentArn;
+  bool m_nameHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_workloadNameHasBeenSet = false;
+  bool m_patternNameHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_modifiedAtHasBeenSet = false;
+  bool m_specificationsHasBeenSet = false;
+  bool m_resourceGroupHasBeenSet = false;
+  bool m_deletedAtHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_deploymentArnHasBeenSet = false;
+};
 
-    Aws::String m_workloadName;
-    bool m_workloadNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LaunchWizard
-} // namespace Aws
+}  // namespace Model
+}  // namespace LaunchWizard
+}  // namespace Aws

@@ -4,227 +4,300 @@
  */
 
 #pragma once
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/kafka/model/BrokerNodeGroupInfo.h>
 #include <aws/kafka/model/ClientAuthentication.h>
 #include <aws/kafka/model/ConfigurationInfo.h>
 #include <aws/kafka/model/EncryptionInfo.h>
 #include <aws/kafka/model/EnhancedMonitoring.h>
-#include <aws/kafka/model/OpenMonitoringInfo.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/kafka/model/LoggingInfo.h>
+#include <aws/kafka/model/OpenMonitoringInfo.h>
+#include <aws/kafka/model/Rebalancing.h>
 #include <aws/kafka/model/StorageMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
 
+/**
+ *
+          <p>Provisioned cluster request.</p>
+       <p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/ProvisionedRequest">AWS
+ * API Reference</a></p>
+ */
+class ProvisionedRequest {
+ public:
+  AWS_KAFKA_API ProvisionedRequest() = default;
+  AWS_KAFKA_API ProvisionedRequest(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API ProvisionedRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * 
-            <p>Provisioned cluster request.</p>
-         <p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kafka-2018-11-14/ProvisionedRequest">AWS
-   * API Reference</a></p>
+   *
+          <p>Information about the brokers.</p>
+
    */
-  class ProvisionedRequest
-  {
-  public:
-    AWS_KAFKA_API ProvisionedRequest();
-    AWS_KAFKA_API ProvisionedRequest(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API ProvisionedRequest& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KAFKA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const BrokerNodeGroupInfo& GetBrokerNodeGroupInfo() const { return m_brokerNodeGroupInfo; }
+  inline bool BrokerNodeGroupInfoHasBeenSet() const { return m_brokerNodeGroupInfoHasBeenSet; }
+  template <typename BrokerNodeGroupInfoT = BrokerNodeGroupInfo>
+  void SetBrokerNodeGroupInfo(BrokerNodeGroupInfoT&& value) {
+    m_brokerNodeGroupInfoHasBeenSet = true;
+    m_brokerNodeGroupInfo = std::forward<BrokerNodeGroupInfoT>(value);
+  }
+  template <typename BrokerNodeGroupInfoT = BrokerNodeGroupInfo>
+  ProvisionedRequest& WithBrokerNodeGroupInfo(BrokerNodeGroupInfoT&& value) {
+    SetBrokerNodeGroupInfo(std::forward<BrokerNodeGroupInfoT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   *
+          <p>Specifies if intelligent rebalancing is turned on for your MSK
+   * Provisioned cluster with Express brokers. For all new Express-based clusters
+   * that you create, intelligent rebalancing is turned on by default.</p>
 
-    ///@{
-    /**
-     * 
-            <p>Information about the brokers.</p>
-         
-     */
-    inline const BrokerNodeGroupInfo& GetBrokerNodeGroupInfo() const{ return m_brokerNodeGroupInfo; }
-    inline bool BrokerNodeGroupInfoHasBeenSet() const { return m_brokerNodeGroupInfoHasBeenSet; }
-    inline void SetBrokerNodeGroupInfo(const BrokerNodeGroupInfo& value) { m_brokerNodeGroupInfoHasBeenSet = true; m_brokerNodeGroupInfo = value; }
-    inline void SetBrokerNodeGroupInfo(BrokerNodeGroupInfo&& value) { m_brokerNodeGroupInfoHasBeenSet = true; m_brokerNodeGroupInfo = std::move(value); }
-    inline ProvisionedRequest& WithBrokerNodeGroupInfo(const BrokerNodeGroupInfo& value) { SetBrokerNodeGroupInfo(value); return *this;}
-    inline ProvisionedRequest& WithBrokerNodeGroupInfo(BrokerNodeGroupInfo&& value) { SetBrokerNodeGroupInfo(std::move(value)); return *this;}
-    ///@}
+   */
+  inline const Rebalancing& GetRebalancing() const { return m_rebalancing; }
+  inline bool RebalancingHasBeenSet() const { return m_rebalancingHasBeenSet; }
+  template <typename RebalancingT = Rebalancing>
+  void SetRebalancing(RebalancingT&& value) {
+    m_rebalancingHasBeenSet = true;
+    m_rebalancing = std::forward<RebalancingT>(value);
+  }
+  template <typename RebalancingT = Rebalancing>
+  ProvisionedRequest& WithRebalancing(RebalancingT&& value) {
+    SetRebalancing(std::forward<RebalancingT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>Includes all client authentication information.</p>
-         
-     */
-    inline const ClientAuthentication& GetClientAuthentication() const{ return m_clientAuthentication; }
-    inline bool ClientAuthenticationHasBeenSet() const { return m_clientAuthenticationHasBeenSet; }
-    inline void SetClientAuthentication(const ClientAuthentication& value) { m_clientAuthenticationHasBeenSet = true; m_clientAuthentication = value; }
-    inline void SetClientAuthentication(ClientAuthentication&& value) { m_clientAuthenticationHasBeenSet = true; m_clientAuthentication = std::move(value); }
-    inline ProvisionedRequest& WithClientAuthentication(const ClientAuthentication& value) { SetClientAuthentication(value); return *this;}
-    inline ProvisionedRequest& WithClientAuthentication(ClientAuthentication&& value) { SetClientAuthentication(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>Includes all client authentication information.</p>
 
-    ///@{
-    /**
-     * 
-            <p>Represents the configuration that you want Amazon MSK to use for
-     * the brokers in a cluster.</p>
-         
-     */
-    inline const ConfigurationInfo& GetConfigurationInfo() const{ return m_configurationInfo; }
-    inline bool ConfigurationInfoHasBeenSet() const { return m_configurationInfoHasBeenSet; }
-    inline void SetConfigurationInfo(const ConfigurationInfo& value) { m_configurationInfoHasBeenSet = true; m_configurationInfo = value; }
-    inline void SetConfigurationInfo(ConfigurationInfo&& value) { m_configurationInfoHasBeenSet = true; m_configurationInfo = std::move(value); }
-    inline ProvisionedRequest& WithConfigurationInfo(const ConfigurationInfo& value) { SetConfigurationInfo(value); return *this;}
-    inline ProvisionedRequest& WithConfigurationInfo(ConfigurationInfo&& value) { SetConfigurationInfo(std::move(value)); return *this;}
-    ///@}
+   */
+  inline const ClientAuthentication& GetClientAuthentication() const { return m_clientAuthentication; }
+  inline bool ClientAuthenticationHasBeenSet() const { return m_clientAuthenticationHasBeenSet; }
+  template <typename ClientAuthenticationT = ClientAuthentication>
+  void SetClientAuthentication(ClientAuthenticationT&& value) {
+    m_clientAuthenticationHasBeenSet = true;
+    m_clientAuthentication = std::forward<ClientAuthenticationT>(value);
+  }
+  template <typename ClientAuthenticationT = ClientAuthentication>
+  ProvisionedRequest& WithClientAuthentication(ClientAuthenticationT&& value) {
+    SetClientAuthentication(std::forward<ClientAuthenticationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>Includes all encryption-related information.</p>
-         
-     */
-    inline const EncryptionInfo& GetEncryptionInfo() const{ return m_encryptionInfo; }
-    inline bool EncryptionInfoHasBeenSet() const { return m_encryptionInfoHasBeenSet; }
-    inline void SetEncryptionInfo(const EncryptionInfo& value) { m_encryptionInfoHasBeenSet = true; m_encryptionInfo = value; }
-    inline void SetEncryptionInfo(EncryptionInfo&& value) { m_encryptionInfoHasBeenSet = true; m_encryptionInfo = std::move(value); }
-    inline ProvisionedRequest& WithEncryptionInfo(const EncryptionInfo& value) { SetEncryptionInfo(value); return *this;}
-    inline ProvisionedRequest& WithEncryptionInfo(EncryptionInfo&& value) { SetEncryptionInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>Represents the configuration that you want Amazon MSK to use for
+   * the brokers in a cluster.</p>
 
-    ///@{
-    /**
-     * 
-            <p>Specifies the level of monitoring for the MSK cluster. The
-     * possible values are DEFAULT, PER_BROKER, PER_TOPIC_PER_BROKER, and
-     * PER_TOPIC_PER_PARTITION.</p>
-         
-     */
-    inline const EnhancedMonitoring& GetEnhancedMonitoring() const{ return m_enhancedMonitoring; }
-    inline bool EnhancedMonitoringHasBeenSet() const { return m_enhancedMonitoringHasBeenSet; }
-    inline void SetEnhancedMonitoring(const EnhancedMonitoring& value) { m_enhancedMonitoringHasBeenSet = true; m_enhancedMonitoring = value; }
-    inline void SetEnhancedMonitoring(EnhancedMonitoring&& value) { m_enhancedMonitoringHasBeenSet = true; m_enhancedMonitoring = std::move(value); }
-    inline ProvisionedRequest& WithEnhancedMonitoring(const EnhancedMonitoring& value) { SetEnhancedMonitoring(value); return *this;}
-    inline ProvisionedRequest& WithEnhancedMonitoring(EnhancedMonitoring&& value) { SetEnhancedMonitoring(std::move(value)); return *this;}
-    ///@}
+   */
+  inline const ConfigurationInfo& GetConfigurationInfo() const { return m_configurationInfo; }
+  inline bool ConfigurationInfoHasBeenSet() const { return m_configurationInfoHasBeenSet; }
+  template <typename ConfigurationInfoT = ConfigurationInfo>
+  void SetConfigurationInfo(ConfigurationInfoT&& value) {
+    m_configurationInfoHasBeenSet = true;
+    m_configurationInfo = std::forward<ConfigurationInfoT>(value);
+  }
+  template <typename ConfigurationInfoT = ConfigurationInfo>
+  ProvisionedRequest& WithConfigurationInfo(ConfigurationInfoT&& value) {
+    SetConfigurationInfo(std::forward<ConfigurationInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The settings for open monitoring.</p>
-         
-     */
-    inline const OpenMonitoringInfo& GetOpenMonitoring() const{ return m_openMonitoring; }
-    inline bool OpenMonitoringHasBeenSet() const { return m_openMonitoringHasBeenSet; }
-    inline void SetOpenMonitoring(const OpenMonitoringInfo& value) { m_openMonitoringHasBeenSet = true; m_openMonitoring = value; }
-    inline void SetOpenMonitoring(OpenMonitoringInfo&& value) { m_openMonitoringHasBeenSet = true; m_openMonitoring = std::move(value); }
-    inline ProvisionedRequest& WithOpenMonitoring(const OpenMonitoringInfo& value) { SetOpenMonitoring(value); return *this;}
-    inline ProvisionedRequest& WithOpenMonitoring(OpenMonitoringInfo&& value) { SetOpenMonitoring(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>Includes all encryption-related information.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The Apache Kafka version that you want for the cluster.</p>
-    
-     *     
-     */
-    inline const Aws::String& GetKafkaVersion() const{ return m_kafkaVersion; }
-    inline bool KafkaVersionHasBeenSet() const { return m_kafkaVersionHasBeenSet; }
-    inline void SetKafkaVersion(const Aws::String& value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion = value; }
-    inline void SetKafkaVersion(Aws::String&& value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion = std::move(value); }
-    inline void SetKafkaVersion(const char* value) { m_kafkaVersionHasBeenSet = true; m_kafkaVersion.assign(value); }
-    inline ProvisionedRequest& WithKafkaVersion(const Aws::String& value) { SetKafkaVersion(value); return *this;}
-    inline ProvisionedRequest& WithKafkaVersion(Aws::String&& value) { SetKafkaVersion(std::move(value)); return *this;}
-    inline ProvisionedRequest& WithKafkaVersion(const char* value) { SetKafkaVersion(value); return *this;}
-    ///@}
+   */
+  inline const EncryptionInfo& GetEncryptionInfo() const { return m_encryptionInfo; }
+  inline bool EncryptionInfoHasBeenSet() const { return m_encryptionInfoHasBeenSet; }
+  template <typename EncryptionInfoT = EncryptionInfo>
+  void SetEncryptionInfo(EncryptionInfoT&& value) {
+    m_encryptionInfoHasBeenSet = true;
+    m_encryptionInfo = std::forward<EncryptionInfoT>(value);
+  }
+  template <typename EncryptionInfoT = EncryptionInfo>
+  ProvisionedRequest& WithEncryptionInfo(EncryptionInfoT&& value) {
+    SetEncryptionInfo(std::forward<EncryptionInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>Log delivery information for the cluster.</p>
-         
-     */
-    inline const LoggingInfo& GetLoggingInfo() const{ return m_loggingInfo; }
-    inline bool LoggingInfoHasBeenSet() const { return m_loggingInfoHasBeenSet; }
-    inline void SetLoggingInfo(const LoggingInfo& value) { m_loggingInfoHasBeenSet = true; m_loggingInfo = value; }
-    inline void SetLoggingInfo(LoggingInfo&& value) { m_loggingInfoHasBeenSet = true; m_loggingInfo = std::move(value); }
-    inline ProvisionedRequest& WithLoggingInfo(const LoggingInfo& value) { SetLoggingInfo(value); return *this;}
-    inline ProvisionedRequest& WithLoggingInfo(LoggingInfo&& value) { SetLoggingInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>Specifies the level of monitoring for the MSK cluster. The
+   * possible values are DEFAULT, PER_BROKER, PER_TOPIC_PER_BROKER, and
+   * PER_TOPIC_PER_PARTITION.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The number of broker nodes in the cluster.</p>
-         
-     */
-    inline int GetNumberOfBrokerNodes() const{ return m_numberOfBrokerNodes; }
-    inline bool NumberOfBrokerNodesHasBeenSet() const { return m_numberOfBrokerNodesHasBeenSet; }
-    inline void SetNumberOfBrokerNodes(int value) { m_numberOfBrokerNodesHasBeenSet = true; m_numberOfBrokerNodes = value; }
-    inline ProvisionedRequest& WithNumberOfBrokerNodes(int value) { SetNumberOfBrokerNodes(value); return *this;}
-    ///@}
+   */
+  inline EnhancedMonitoring GetEnhancedMonitoring() const { return m_enhancedMonitoring; }
+  inline bool EnhancedMonitoringHasBeenSet() const { return m_enhancedMonitoringHasBeenSet; }
+  inline void SetEnhancedMonitoring(EnhancedMonitoring value) {
+    m_enhancedMonitoringHasBeenSet = true;
+    m_enhancedMonitoring = value;
+  }
+  inline ProvisionedRequest& WithEnhancedMonitoring(EnhancedMonitoring value) {
+    SetEnhancedMonitoring(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>This controls storage mode for supported storage tiers.</p>
-    
-     *     
-     */
-    inline const StorageMode& GetStorageMode() const{ return m_storageMode; }
-    inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
-    inline void SetStorageMode(const StorageMode& value) { m_storageModeHasBeenSet = true; m_storageMode = value; }
-    inline void SetStorageMode(StorageMode&& value) { m_storageModeHasBeenSet = true; m_storageMode = std::move(value); }
-    inline ProvisionedRequest& WithStorageMode(const StorageMode& value) { SetStorageMode(value); return *this;}
-    inline ProvisionedRequest& WithStorageMode(StorageMode&& value) { SetStorageMode(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   *
+          <p>The settings for open monitoring.</p>
 
-    BrokerNodeGroupInfo m_brokerNodeGroupInfo;
-    bool m_brokerNodeGroupInfoHasBeenSet = false;
+   */
+  inline const OpenMonitoringInfo& GetOpenMonitoring() const { return m_openMonitoring; }
+  inline bool OpenMonitoringHasBeenSet() const { return m_openMonitoringHasBeenSet; }
+  template <typename OpenMonitoringT = OpenMonitoringInfo>
+  void SetOpenMonitoring(OpenMonitoringT&& value) {
+    m_openMonitoringHasBeenSet = true;
+    m_openMonitoring = std::forward<OpenMonitoringT>(value);
+  }
+  template <typename OpenMonitoringT = OpenMonitoringInfo>
+  ProvisionedRequest& WithOpenMonitoring(OpenMonitoringT&& value) {
+    SetOpenMonitoring(std::forward<OpenMonitoringT>(value));
+    return *this;
+  }
+  ///@}
 
-    ClientAuthentication m_clientAuthentication;
-    bool m_clientAuthenticationHasBeenSet = false;
+  ///@{
+  /**
+   *
+          <p>The Apache Kafka version that you want for the cluster.</p>
 
-    ConfigurationInfo m_configurationInfo;
-    bool m_configurationInfoHasBeenSet = false;
+   *
+   */
+  inline const Aws::String& GetKafkaVersion() const { return m_kafkaVersion; }
+  inline bool KafkaVersionHasBeenSet() const { return m_kafkaVersionHasBeenSet; }
+  template <typename KafkaVersionT = Aws::String>
+  void SetKafkaVersion(KafkaVersionT&& value) {
+    m_kafkaVersionHasBeenSet = true;
+    m_kafkaVersion = std::forward<KafkaVersionT>(value);
+  }
+  template <typename KafkaVersionT = Aws::String>
+  ProvisionedRequest& WithKafkaVersion(KafkaVersionT&& value) {
+    SetKafkaVersion(std::forward<KafkaVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    EncryptionInfo m_encryptionInfo;
-    bool m_encryptionInfoHasBeenSet = false;
+  ///@{
+  /**
+   *
+          <p>Log delivery information for the cluster.</p>
 
-    EnhancedMonitoring m_enhancedMonitoring;
-    bool m_enhancedMonitoringHasBeenSet = false;
+   */
+  inline const LoggingInfo& GetLoggingInfo() const { return m_loggingInfo; }
+  inline bool LoggingInfoHasBeenSet() const { return m_loggingInfoHasBeenSet; }
+  template <typename LoggingInfoT = LoggingInfo>
+  void SetLoggingInfo(LoggingInfoT&& value) {
+    m_loggingInfoHasBeenSet = true;
+    m_loggingInfo = std::forward<LoggingInfoT>(value);
+  }
+  template <typename LoggingInfoT = LoggingInfo>
+  ProvisionedRequest& WithLoggingInfo(LoggingInfoT&& value) {
+    SetLoggingInfo(std::forward<LoggingInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    OpenMonitoringInfo m_openMonitoring;
-    bool m_openMonitoringHasBeenSet = false;
+  ///@{
+  /**
+   *
+          <p>The number of broker nodes in the cluster.</p>
 
-    Aws::String m_kafkaVersion;
-    bool m_kafkaVersionHasBeenSet = false;
+   */
+  inline int GetNumberOfBrokerNodes() const { return m_numberOfBrokerNodes; }
+  inline bool NumberOfBrokerNodesHasBeenSet() const { return m_numberOfBrokerNodesHasBeenSet; }
+  inline void SetNumberOfBrokerNodes(int value) {
+    m_numberOfBrokerNodesHasBeenSet = true;
+    m_numberOfBrokerNodes = value;
+  }
+  inline ProvisionedRequest& WithNumberOfBrokerNodes(int value) {
+    SetNumberOfBrokerNodes(value);
+    return *this;
+  }
+  ///@}
 
-    LoggingInfo m_loggingInfo;
-    bool m_loggingInfoHasBeenSet = false;
+  ///@{
+  /**
+   *
+          <p>This controls storage mode for supported storage tiers.</p>
 
-    int m_numberOfBrokerNodes;
-    bool m_numberOfBrokerNodesHasBeenSet = false;
+   *
+   */
+  inline StorageMode GetStorageMode() const { return m_storageMode; }
+  inline bool StorageModeHasBeenSet() const { return m_storageModeHasBeenSet; }
+  inline void SetStorageMode(StorageMode value) {
+    m_storageModeHasBeenSet = true;
+    m_storageMode = value;
+  }
+  inline ProvisionedRequest& WithStorageMode(StorageMode value) {
+    SetStorageMode(value);
+    return *this;
+  }
+  ///@}
+ private:
+  BrokerNodeGroupInfo m_brokerNodeGroupInfo;
 
-    StorageMode m_storageMode;
-    bool m_storageModeHasBeenSet = false;
-  };
+  Rebalancing m_rebalancing;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  ClientAuthentication m_clientAuthentication;
+
+  ConfigurationInfo m_configurationInfo;
+
+  EncryptionInfo m_encryptionInfo;
+
+  EnhancedMonitoring m_enhancedMonitoring{EnhancedMonitoring::NOT_SET};
+
+  OpenMonitoringInfo m_openMonitoring;
+
+  Aws::String m_kafkaVersion;
+
+  LoggingInfo m_loggingInfo;
+
+  int m_numberOfBrokerNodes{0};
+
+  StorageMode m_storageMode{StorageMode::NOT_SET};
+  bool m_brokerNodeGroupInfoHasBeenSet = false;
+  bool m_rebalancingHasBeenSet = false;
+  bool m_clientAuthenticationHasBeenSet = false;
+  bool m_configurationInfoHasBeenSet = false;
+  bool m_encryptionInfoHasBeenSet = false;
+  bool m_enhancedMonitoringHasBeenSet = false;
+  bool m_openMonitoringHasBeenSet = false;
+  bool m_kafkaVersionHasBeenSet = false;
+  bool m_loggingInfoHasBeenSet = false;
+  bool m_numberOfBrokerNodesHasBeenSet = false;
+  bool m_storageModeHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

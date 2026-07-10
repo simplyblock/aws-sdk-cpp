@@ -5,103 +5,160 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
+#include <aws/connect/model/AutomaticFailConfiguration.h>
+#include <aws/connect/model/QuestionOptionPointsConfiguration.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
 
+/**
+ * <p>Information about the automation configuration in single select
+ * questions.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EvaluationFormSingleSelectQuestionOption">AWS
+ * API Reference</a></p>
+ */
+class EvaluationFormSingleSelectQuestionOption {
+ public:
+  AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption() = default;
+  AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about the automation configuration in single select
-   * questions.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EvaluationFormSingleSelectQuestionOption">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the answer option. An identifier must be unique within the
+   * question.</p>
    */
-  class EvaluationFormSingleSelectQuestionOption
-  {
-  public:
-    AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption();
-    AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API EvaluationFormSingleSelectQuestionOption& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetRefId() const { return m_refId; }
+  inline bool RefIdHasBeenSet() const { return m_refIdHasBeenSet; }
+  template <typename RefIdT = Aws::String>
+  void SetRefId(RefIdT&& value) {
+    m_refIdHasBeenSet = true;
+    m_refId = std::forward<RefIdT>(value);
+  }
+  template <typename RefIdT = Aws::String>
+  EvaluationFormSingleSelectQuestionOption& WithRefId(RefIdT&& value) {
+    SetRefId(std::forward<RefIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The title of the answer option.</p>
+   */
+  inline const Aws::String& GetText() const { return m_text; }
+  inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
+  template <typename TextT = Aws::String>
+  void SetText(TextT&& value) {
+    m_textHasBeenSet = true;
+    m_text = std::forward<TextT>(value);
+  }
+  template <typename TextT = Aws::String>
+  EvaluationFormSingleSelectQuestionOption& WithText(TextT&& value) {
+    SetText(std::forward<TextT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the answer option. An identifier must be unique within the
-     * question.</p>
-     */
-    inline const Aws::String& GetRefId() const{ return m_refId; }
-    inline bool RefIdHasBeenSet() const { return m_refIdHasBeenSet; }
-    inline void SetRefId(const Aws::String& value) { m_refIdHasBeenSet = true; m_refId = value; }
-    inline void SetRefId(Aws::String&& value) { m_refIdHasBeenSet = true; m_refId = std::move(value); }
-    inline void SetRefId(const char* value) { m_refIdHasBeenSet = true; m_refId.assign(value); }
-    inline EvaluationFormSingleSelectQuestionOption& WithRefId(const Aws::String& value) { SetRefId(value); return *this;}
-    inline EvaluationFormSingleSelectQuestionOption& WithRefId(Aws::String&& value) { SetRefId(std::move(value)); return *this;}
-    inline EvaluationFormSingleSelectQuestionOption& WithRefId(const char* value) { SetRefId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The score assigned to the answer option.</p>
+   */
+  inline int GetScore() const { return m_score; }
+  inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
+  inline void SetScore(int value) {
+    m_scoreHasBeenSet = true;
+    m_score = value;
+  }
+  inline EvaluationFormSingleSelectQuestionOption& WithScore(int value) {
+    SetScore(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The title of the answer option.</p>
-     */
-    inline const Aws::String& GetText() const{ return m_text; }
-    inline bool TextHasBeenSet() const { return m_textHasBeenSet; }
-    inline void SetText(const Aws::String& value) { m_textHasBeenSet = true; m_text = value; }
-    inline void SetText(Aws::String&& value) { m_textHasBeenSet = true; m_text = std::move(value); }
-    inline void SetText(const char* value) { m_textHasBeenSet = true; m_text.assign(value); }
-    inline EvaluationFormSingleSelectQuestionOption& WithText(const Aws::String& value) { SetText(value); return *this;}
-    inline EvaluationFormSingleSelectQuestionOption& WithText(Aws::String&& value) { SetText(std::move(value)); return *this;}
-    inline EvaluationFormSingleSelectQuestionOption& WithText(const char* value) { SetText(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The flag to mark the option as automatic fail. If an automatic fail answer is
+   * provided, the overall evaluation gets a score of 0.</p>
+   */
+  inline bool GetAutomaticFail() const { return m_automaticFail; }
+  inline bool AutomaticFailHasBeenSet() const { return m_automaticFailHasBeenSet; }
+  inline void SetAutomaticFail(bool value) {
+    m_automaticFailHasBeenSet = true;
+    m_automaticFail = value;
+  }
+  inline EvaluationFormSingleSelectQuestionOption& WithAutomaticFail(bool value) {
+    SetAutomaticFail(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The score assigned to the answer option.</p>
-     */
-    inline int GetScore() const{ return m_score; }
-    inline bool ScoreHasBeenSet() const { return m_scoreHasBeenSet; }
-    inline void SetScore(int value) { m_scoreHasBeenSet = true; m_score = value; }
-    inline EvaluationFormSingleSelectQuestionOption& WithScore(int value) { SetScore(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether automatic fail is configured on a single select question. </p>
+   */
+  inline const AutomaticFailConfiguration& GetAutomaticFailConfiguration() const { return m_automaticFailConfiguration; }
+  inline bool AutomaticFailConfigurationHasBeenSet() const { return m_automaticFailConfigurationHasBeenSet; }
+  template <typename AutomaticFailConfigurationT = AutomaticFailConfiguration>
+  void SetAutomaticFailConfiguration(AutomaticFailConfigurationT&& value) {
+    m_automaticFailConfigurationHasBeenSet = true;
+    m_automaticFailConfiguration = std::forward<AutomaticFailConfigurationT>(value);
+  }
+  template <typename AutomaticFailConfigurationT = AutomaticFailConfiguration>
+  EvaluationFormSingleSelectQuestionOption& WithAutomaticFailConfiguration(AutomaticFailConfigurationT&& value) {
+    SetAutomaticFailConfiguration(std::forward<AutomaticFailConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The flag to mark the option as automatic fail. If an automatic fail answer is
-     * provided, the overall evaluation gets a score of 0.</p>
-     */
-    inline bool GetAutomaticFail() const{ return m_automaticFail; }
-    inline bool AutomaticFailHasBeenSet() const { return m_automaticFailHasBeenSet; }
-    inline void SetAutomaticFail(bool value) { m_automaticFailHasBeenSet = true; m_automaticFail = value; }
-    inline EvaluationFormSingleSelectQuestionOption& WithAutomaticFail(bool value) { SetAutomaticFail(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The points configuration for point-based scoring.</p>
+   */
+  inline const QuestionOptionPointsConfiguration& GetPointsConfiguration() const { return m_pointsConfiguration; }
+  inline bool PointsConfigurationHasBeenSet() const { return m_pointsConfigurationHasBeenSet; }
+  template <typename PointsConfigurationT = QuestionOptionPointsConfiguration>
+  void SetPointsConfiguration(PointsConfigurationT&& value) {
+    m_pointsConfigurationHasBeenSet = true;
+    m_pointsConfiguration = std::forward<PointsConfigurationT>(value);
+  }
+  template <typename PointsConfigurationT = QuestionOptionPointsConfiguration>
+  EvaluationFormSingleSelectQuestionOption& WithPointsConfiguration(PointsConfigurationT&& value) {
+    SetPointsConfiguration(std::forward<PointsConfigurationT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_refId;
 
-    Aws::String m_refId;
-    bool m_refIdHasBeenSet = false;
+  Aws::String m_text;
 
-    Aws::String m_text;
-    bool m_textHasBeenSet = false;
+  int m_score{0};
 
-    int m_score;
-    bool m_scoreHasBeenSet = false;
+  bool m_automaticFail{false};
 
-    bool m_automaticFail;
-    bool m_automaticFailHasBeenSet = false;
-  };
+  AutomaticFailConfiguration m_automaticFailConfiguration;
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+  QuestionOptionPointsConfiguration m_pointsConfiguration;
+  bool m_refIdHasBeenSet = false;
+  bool m_textHasBeenSet = false;
+  bool m_scoreHasBeenSet = false;
+  bool m_automaticFailHasBeenSet = false;
+  bool m_automaticFailConfigurationHasBeenSet = false;
+  bool m_pointsConfigurationHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

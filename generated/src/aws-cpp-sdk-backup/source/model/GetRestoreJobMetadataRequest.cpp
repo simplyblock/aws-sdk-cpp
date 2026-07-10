@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRestoreJobMetadataRequest::GetRestoreJobMetadataRequest() : 
-    m_restoreJobIdHasBeenSet(false)
-{
-}
-
-Aws::String GetRestoreJobMetadataRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRestoreJobMetadataRequest::SerializePayload() const { return {}; }

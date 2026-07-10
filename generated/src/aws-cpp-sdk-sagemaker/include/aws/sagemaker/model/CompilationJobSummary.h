@@ -4,220 +4,265 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/TargetDevice.h>
-#include <aws/sagemaker/model/TargetPlatformOs.h>
-#include <aws/sagemaker/model/TargetPlatformArch.h>
-#include <aws/sagemaker/model/TargetPlatformAccelerator.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/CompilationJobStatus.h>
+#include <aws/sagemaker/model/TargetDevice.h>
+#include <aws/sagemaker/model/TargetPlatformAccelerator.h>
+#include <aws/sagemaker/model/TargetPlatformArch.h>
+#include <aws/sagemaker/model/TargetPlatformOs.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
 
+/**
+ * <p>A summary of a model compilation job.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CompilationJobSummary">AWS
+ * API Reference</a></p>
+ */
+class CompilationJobSummary {
+ public:
+  AWS_SAGEMAKER_API CompilationJobSummary() = default;
+  AWS_SAGEMAKER_API CompilationJobSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API CompilationJobSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A summary of a model compilation job.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CompilationJobSummary">AWS
-   * API Reference</a></p>
+   * <p>The name of the model compilation job that you want a summary for.</p>
    */
-  class CompilationJobSummary
-  {
-  public:
-    AWS_SAGEMAKER_API CompilationJobSummary();
-    AWS_SAGEMAKER_API CompilationJobSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API CompilationJobSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SAGEMAKER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCompilationJobName() const { return m_compilationJobName; }
+  inline bool CompilationJobNameHasBeenSet() const { return m_compilationJobNameHasBeenSet; }
+  template <typename CompilationJobNameT = Aws::String>
+  void SetCompilationJobName(CompilationJobNameT&& value) {
+    m_compilationJobNameHasBeenSet = true;
+    m_compilationJobName = std::forward<CompilationJobNameT>(value);
+  }
+  template <typename CompilationJobNameT = Aws::String>
+  CompilationJobSummary& WithCompilationJobName(CompilationJobNameT&& value) {
+    SetCompilationJobName(std::forward<CompilationJobNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the model compilation job.</p>
+   */
+  inline const Aws::String& GetCompilationJobArn() const { return m_compilationJobArn; }
+  inline bool CompilationJobArnHasBeenSet() const { return m_compilationJobArnHasBeenSet; }
+  template <typename CompilationJobArnT = Aws::String>
+  void SetCompilationJobArn(CompilationJobArnT&& value) {
+    m_compilationJobArnHasBeenSet = true;
+    m_compilationJobArn = std::forward<CompilationJobArnT>(value);
+  }
+  template <typename CompilationJobArnT = Aws::String>
+  CompilationJobSummary& WithCompilationJobArn(CompilationJobArnT&& value) {
+    SetCompilationJobArn(std::forward<CompilationJobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the model compilation job that you want a summary for.</p>
-     */
-    inline const Aws::String& GetCompilationJobName() const{ return m_compilationJobName; }
-    inline bool CompilationJobNameHasBeenSet() const { return m_compilationJobNameHasBeenSet; }
-    inline void SetCompilationJobName(const Aws::String& value) { m_compilationJobNameHasBeenSet = true; m_compilationJobName = value; }
-    inline void SetCompilationJobName(Aws::String&& value) { m_compilationJobNameHasBeenSet = true; m_compilationJobName = std::move(value); }
-    inline void SetCompilationJobName(const char* value) { m_compilationJobNameHasBeenSet = true; m_compilationJobName.assign(value); }
-    inline CompilationJobSummary& WithCompilationJobName(const Aws::String& value) { SetCompilationJobName(value); return *this;}
-    inline CompilationJobSummary& WithCompilationJobName(Aws::String&& value) { SetCompilationJobName(std::move(value)); return *this;}
-    inline CompilationJobSummary& WithCompilationJobName(const char* value) { SetCompilationJobName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the model compilation job was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  CompilationJobSummary& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the model compilation job.</p>
-     */
-    inline const Aws::String& GetCompilationJobArn() const{ return m_compilationJobArn; }
-    inline bool CompilationJobArnHasBeenSet() const { return m_compilationJobArnHasBeenSet; }
-    inline void SetCompilationJobArn(const Aws::String& value) { m_compilationJobArnHasBeenSet = true; m_compilationJobArn = value; }
-    inline void SetCompilationJobArn(Aws::String&& value) { m_compilationJobArnHasBeenSet = true; m_compilationJobArn = std::move(value); }
-    inline void SetCompilationJobArn(const char* value) { m_compilationJobArnHasBeenSet = true; m_compilationJobArn.assign(value); }
-    inline CompilationJobSummary& WithCompilationJobArn(const Aws::String& value) { SetCompilationJobArn(value); return *this;}
-    inline CompilationJobSummary& WithCompilationJobArn(Aws::String&& value) { SetCompilationJobArn(std::move(value)); return *this;}
-    inline CompilationJobSummary& WithCompilationJobArn(const char* value) { SetCompilationJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the model compilation job started.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCompilationStartTime() const { return m_compilationStartTime; }
+  inline bool CompilationStartTimeHasBeenSet() const { return m_compilationStartTimeHasBeenSet; }
+  template <typename CompilationStartTimeT = Aws::Utils::DateTime>
+  void SetCompilationStartTime(CompilationStartTimeT&& value) {
+    m_compilationStartTimeHasBeenSet = true;
+    m_compilationStartTime = std::forward<CompilationStartTimeT>(value);
+  }
+  template <typename CompilationStartTimeT = Aws::Utils::DateTime>
+  CompilationJobSummary& WithCompilationStartTime(CompilationStartTimeT&& value) {
+    SetCompilationStartTime(std::forward<CompilationStartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the model compilation job was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline CompilationJobSummary& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline CompilationJobSummary& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the model compilation job completed.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCompilationEndTime() const { return m_compilationEndTime; }
+  inline bool CompilationEndTimeHasBeenSet() const { return m_compilationEndTimeHasBeenSet; }
+  template <typename CompilationEndTimeT = Aws::Utils::DateTime>
+  void SetCompilationEndTime(CompilationEndTimeT&& value) {
+    m_compilationEndTimeHasBeenSet = true;
+    m_compilationEndTime = std::forward<CompilationEndTimeT>(value);
+  }
+  template <typename CompilationEndTimeT = Aws::Utils::DateTime>
+  CompilationJobSummary& WithCompilationEndTime(CompilationEndTimeT&& value) {
+    SetCompilationEndTime(std::forward<CompilationEndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the model compilation job started.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCompilationStartTime() const{ return m_compilationStartTime; }
-    inline bool CompilationStartTimeHasBeenSet() const { return m_compilationStartTimeHasBeenSet; }
-    inline void SetCompilationStartTime(const Aws::Utils::DateTime& value) { m_compilationStartTimeHasBeenSet = true; m_compilationStartTime = value; }
-    inline void SetCompilationStartTime(Aws::Utils::DateTime&& value) { m_compilationStartTimeHasBeenSet = true; m_compilationStartTime = std::move(value); }
-    inline CompilationJobSummary& WithCompilationStartTime(const Aws::Utils::DateTime& value) { SetCompilationStartTime(value); return *this;}
-    inline CompilationJobSummary& WithCompilationStartTime(Aws::Utils::DateTime&& value) { SetCompilationStartTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of device that the model will run on after the compilation job has
+   * completed.</p>
+   */
+  inline TargetDevice GetCompilationTargetDevice() const { return m_compilationTargetDevice; }
+  inline bool CompilationTargetDeviceHasBeenSet() const { return m_compilationTargetDeviceHasBeenSet; }
+  inline void SetCompilationTargetDevice(TargetDevice value) {
+    m_compilationTargetDeviceHasBeenSet = true;
+    m_compilationTargetDevice = value;
+  }
+  inline CompilationJobSummary& WithCompilationTargetDevice(TargetDevice value) {
+    SetCompilationTargetDevice(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the model compilation job completed.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCompilationEndTime() const{ return m_compilationEndTime; }
-    inline bool CompilationEndTimeHasBeenSet() const { return m_compilationEndTimeHasBeenSet; }
-    inline void SetCompilationEndTime(const Aws::Utils::DateTime& value) { m_compilationEndTimeHasBeenSet = true; m_compilationEndTime = value; }
-    inline void SetCompilationEndTime(Aws::Utils::DateTime&& value) { m_compilationEndTimeHasBeenSet = true; m_compilationEndTime = std::move(value); }
-    inline CompilationJobSummary& WithCompilationEndTime(const Aws::Utils::DateTime& value) { SetCompilationEndTime(value); return *this;}
-    inline CompilationJobSummary& WithCompilationEndTime(Aws::Utils::DateTime&& value) { SetCompilationEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of OS that the model will run on after the compilation job has
+   * completed.</p>
+   */
+  inline TargetPlatformOs GetCompilationTargetPlatformOs() const { return m_compilationTargetPlatformOs; }
+  inline bool CompilationTargetPlatformOsHasBeenSet() const { return m_compilationTargetPlatformOsHasBeenSet; }
+  inline void SetCompilationTargetPlatformOs(TargetPlatformOs value) {
+    m_compilationTargetPlatformOsHasBeenSet = true;
+    m_compilationTargetPlatformOs = value;
+  }
+  inline CompilationJobSummary& WithCompilationTargetPlatformOs(TargetPlatformOs value) {
+    SetCompilationTargetPlatformOs(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of device that the model will run on after the compilation job has
-     * completed.</p>
-     */
-    inline const TargetDevice& GetCompilationTargetDevice() const{ return m_compilationTargetDevice; }
-    inline bool CompilationTargetDeviceHasBeenSet() const { return m_compilationTargetDeviceHasBeenSet; }
-    inline void SetCompilationTargetDevice(const TargetDevice& value) { m_compilationTargetDeviceHasBeenSet = true; m_compilationTargetDevice = value; }
-    inline void SetCompilationTargetDevice(TargetDevice&& value) { m_compilationTargetDeviceHasBeenSet = true; m_compilationTargetDevice = std::move(value); }
-    inline CompilationJobSummary& WithCompilationTargetDevice(const TargetDevice& value) { SetCompilationTargetDevice(value); return *this;}
-    inline CompilationJobSummary& WithCompilationTargetDevice(TargetDevice&& value) { SetCompilationTargetDevice(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of architecture that the model will run on after the compilation job
+   * has completed.</p>
+   */
+  inline TargetPlatformArch GetCompilationTargetPlatformArch() const { return m_compilationTargetPlatformArch; }
+  inline bool CompilationTargetPlatformArchHasBeenSet() const { return m_compilationTargetPlatformArchHasBeenSet; }
+  inline void SetCompilationTargetPlatformArch(TargetPlatformArch value) {
+    m_compilationTargetPlatformArchHasBeenSet = true;
+    m_compilationTargetPlatformArch = value;
+  }
+  inline CompilationJobSummary& WithCompilationTargetPlatformArch(TargetPlatformArch value) {
+    SetCompilationTargetPlatformArch(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of OS that the model will run on after the compilation job has
-     * completed.</p>
-     */
-    inline const TargetPlatformOs& GetCompilationTargetPlatformOs() const{ return m_compilationTargetPlatformOs; }
-    inline bool CompilationTargetPlatformOsHasBeenSet() const { return m_compilationTargetPlatformOsHasBeenSet; }
-    inline void SetCompilationTargetPlatformOs(const TargetPlatformOs& value) { m_compilationTargetPlatformOsHasBeenSet = true; m_compilationTargetPlatformOs = value; }
-    inline void SetCompilationTargetPlatformOs(TargetPlatformOs&& value) { m_compilationTargetPlatformOsHasBeenSet = true; m_compilationTargetPlatformOs = std::move(value); }
-    inline CompilationJobSummary& WithCompilationTargetPlatformOs(const TargetPlatformOs& value) { SetCompilationTargetPlatformOs(value); return *this;}
-    inline CompilationJobSummary& WithCompilationTargetPlatformOs(TargetPlatformOs&& value) { SetCompilationTargetPlatformOs(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of accelerator that the model will run on after the compilation job
+   * has completed.</p>
+   */
+  inline TargetPlatformAccelerator GetCompilationTargetPlatformAccelerator() const { return m_compilationTargetPlatformAccelerator; }
+  inline bool CompilationTargetPlatformAcceleratorHasBeenSet() const { return m_compilationTargetPlatformAcceleratorHasBeenSet; }
+  inline void SetCompilationTargetPlatformAccelerator(TargetPlatformAccelerator value) {
+    m_compilationTargetPlatformAcceleratorHasBeenSet = true;
+    m_compilationTargetPlatformAccelerator = value;
+  }
+  inline CompilationJobSummary& WithCompilationTargetPlatformAccelerator(TargetPlatformAccelerator value) {
+    SetCompilationTargetPlatformAccelerator(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of architecture that the model will run on after the compilation job
-     * has completed.</p>
-     */
-    inline const TargetPlatformArch& GetCompilationTargetPlatformArch() const{ return m_compilationTargetPlatformArch; }
-    inline bool CompilationTargetPlatformArchHasBeenSet() const { return m_compilationTargetPlatformArchHasBeenSet; }
-    inline void SetCompilationTargetPlatformArch(const TargetPlatformArch& value) { m_compilationTargetPlatformArchHasBeenSet = true; m_compilationTargetPlatformArch = value; }
-    inline void SetCompilationTargetPlatformArch(TargetPlatformArch&& value) { m_compilationTargetPlatformArchHasBeenSet = true; m_compilationTargetPlatformArch = std::move(value); }
-    inline CompilationJobSummary& WithCompilationTargetPlatformArch(const TargetPlatformArch& value) { SetCompilationTargetPlatformArch(value); return *this;}
-    inline CompilationJobSummary& WithCompilationTargetPlatformArch(TargetPlatformArch&& value) { SetCompilationTargetPlatformArch(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the model compilation job was last modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  CompilationJobSummary& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of accelerator that the model will run on after the compilation job
-     * has completed.</p>
-     */
-    inline const TargetPlatformAccelerator& GetCompilationTargetPlatformAccelerator() const{ return m_compilationTargetPlatformAccelerator; }
-    inline bool CompilationTargetPlatformAcceleratorHasBeenSet() const { return m_compilationTargetPlatformAcceleratorHasBeenSet; }
-    inline void SetCompilationTargetPlatformAccelerator(const TargetPlatformAccelerator& value) { m_compilationTargetPlatformAcceleratorHasBeenSet = true; m_compilationTargetPlatformAccelerator = value; }
-    inline void SetCompilationTargetPlatformAccelerator(TargetPlatformAccelerator&& value) { m_compilationTargetPlatformAcceleratorHasBeenSet = true; m_compilationTargetPlatformAccelerator = std::move(value); }
-    inline CompilationJobSummary& WithCompilationTargetPlatformAccelerator(const TargetPlatformAccelerator& value) { SetCompilationTargetPlatformAccelerator(value); return *this;}
-    inline CompilationJobSummary& WithCompilationTargetPlatformAccelerator(TargetPlatformAccelerator&& value) { SetCompilationTargetPlatformAccelerator(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the model compilation job.</p>
+   */
+  inline CompilationJobStatus GetCompilationJobStatus() const { return m_compilationJobStatus; }
+  inline bool CompilationJobStatusHasBeenSet() const { return m_compilationJobStatusHasBeenSet; }
+  inline void SetCompilationJobStatus(CompilationJobStatus value) {
+    m_compilationJobStatusHasBeenSet = true;
+    m_compilationJobStatus = value;
+  }
+  inline CompilationJobSummary& WithCompilationJobStatus(CompilationJobStatus value) {
+    SetCompilationJobStatus(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_compilationJobName;
 
-    ///@{
-    /**
-     * <p>The time when the model compilation job was last modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline CompilationJobSummary& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline CompilationJobSummary& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_compilationJobArn;
 
-    ///@{
-    /**
-     * <p>The status of the model compilation job.</p>
-     */
-    inline const CompilationJobStatus& GetCompilationJobStatus() const{ return m_compilationJobStatus; }
-    inline bool CompilationJobStatusHasBeenSet() const { return m_compilationJobStatusHasBeenSet; }
-    inline void SetCompilationJobStatus(const CompilationJobStatus& value) { m_compilationJobStatusHasBeenSet = true; m_compilationJobStatus = value; }
-    inline void SetCompilationJobStatus(CompilationJobStatus&& value) { m_compilationJobStatusHasBeenSet = true; m_compilationJobStatus = std::move(value); }
-    inline CompilationJobSummary& WithCompilationJobStatus(const CompilationJobStatus& value) { SetCompilationJobStatus(value); return *this;}
-    inline CompilationJobSummary& WithCompilationJobStatus(CompilationJobStatus&& value) { SetCompilationJobStatus(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::String m_compilationJobName;
-    bool m_compilationJobNameHasBeenSet = false;
+  Aws::Utils::DateTime m_compilationStartTime{};
 
-    Aws::String m_compilationJobArn;
-    bool m_compilationJobArnHasBeenSet = false;
+  Aws::Utils::DateTime m_compilationEndTime{};
 
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
+  TargetDevice m_compilationTargetDevice{TargetDevice::NOT_SET};
 
-    Aws::Utils::DateTime m_compilationStartTime;
-    bool m_compilationStartTimeHasBeenSet = false;
+  TargetPlatformOs m_compilationTargetPlatformOs{TargetPlatformOs::NOT_SET};
 
-    Aws::Utils::DateTime m_compilationEndTime;
-    bool m_compilationEndTimeHasBeenSet = false;
+  TargetPlatformArch m_compilationTargetPlatformArch{TargetPlatformArch::NOT_SET};
 
-    TargetDevice m_compilationTargetDevice;
-    bool m_compilationTargetDeviceHasBeenSet = false;
+  TargetPlatformAccelerator m_compilationTargetPlatformAccelerator{TargetPlatformAccelerator::NOT_SET};
 
-    TargetPlatformOs m_compilationTargetPlatformOs;
-    bool m_compilationTargetPlatformOsHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
 
-    TargetPlatformArch m_compilationTargetPlatformArch;
-    bool m_compilationTargetPlatformArchHasBeenSet = false;
+  CompilationJobStatus m_compilationJobStatus{CompilationJobStatus::NOT_SET};
+  bool m_compilationJobNameHasBeenSet = false;
+  bool m_compilationJobArnHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_compilationStartTimeHasBeenSet = false;
+  bool m_compilationEndTimeHasBeenSet = false;
+  bool m_compilationTargetDeviceHasBeenSet = false;
+  bool m_compilationTargetPlatformOsHasBeenSet = false;
+  bool m_compilationTargetPlatformArchHasBeenSet = false;
+  bool m_compilationTargetPlatformAcceleratorHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+  bool m_compilationJobStatusHasBeenSet = false;
+};
 
-    TargetPlatformAccelerator m_compilationTargetPlatformAccelerator;
-    bool m_compilationTargetPlatformAcceleratorHasBeenSet = false;
-
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
-
-    CompilationJobStatus m_compilationJobStatus;
-    bool m_compilationJobStatusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

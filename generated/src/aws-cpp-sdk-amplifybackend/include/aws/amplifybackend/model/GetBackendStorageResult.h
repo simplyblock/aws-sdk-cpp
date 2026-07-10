@@ -5,107 +5,131 @@
 
 #pragma once
 #include <aws/amplifybackend/AmplifyBackend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/amplifybackend/model/GetBackendStorageResourceConfig.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AmplifyBackend
-{
-namespace Model
-{
-  class GetBackendStorageResult
-  {
-  public:
-    AWS_AMPLIFYBACKEND_API GetBackendStorageResult();
-    AWS_AMPLIFYBACKEND_API GetBackendStorageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFYBACKEND_API GetBackendStorageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AmplifyBackend {
+namespace Model {
+class GetBackendStorageResult {
+ public:
+  AWS_AMPLIFYBACKEND_API GetBackendStorageResult() = default;
+  AWS_AMPLIFYBACKEND_API GetBackendStorageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFYBACKEND_API GetBackendStorageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The app ID.</p>
+   */
+  inline const Aws::String& GetAppId() const { return m_appId; }
+  template <typename AppIdT = Aws::String>
+  void SetAppId(AppIdT&& value) {
+    m_appIdHasBeenSet = true;
+    m_appId = std::forward<AppIdT>(value);
+  }
+  template <typename AppIdT = Aws::String>
+  GetBackendStorageResult& WithAppId(AppIdT&& value) {
+    SetAppId(std::forward<AppIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The app ID.</p>
-     */
-    inline const Aws::String& GetAppId() const{ return m_appId; }
-    inline void SetAppId(const Aws::String& value) { m_appId = value; }
-    inline void SetAppId(Aws::String&& value) { m_appId = std::move(value); }
-    inline void SetAppId(const char* value) { m_appId.assign(value); }
-    inline GetBackendStorageResult& WithAppId(const Aws::String& value) { SetAppId(value); return *this;}
-    inline GetBackendStorageResult& WithAppId(Aws::String&& value) { SetAppId(std::move(value)); return *this;}
-    inline GetBackendStorageResult& WithAppId(const char* value) { SetAppId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the backend environment.</p>
+   */
+  inline const Aws::String& GetBackendEnvironmentName() const { return m_backendEnvironmentName; }
+  template <typename BackendEnvironmentNameT = Aws::String>
+  void SetBackendEnvironmentName(BackendEnvironmentNameT&& value) {
+    m_backendEnvironmentNameHasBeenSet = true;
+    m_backendEnvironmentName = std::forward<BackendEnvironmentNameT>(value);
+  }
+  template <typename BackendEnvironmentNameT = Aws::String>
+  GetBackendStorageResult& WithBackendEnvironmentName(BackendEnvironmentNameT&& value) {
+    SetBackendEnvironmentName(std::forward<BackendEnvironmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the backend environment.</p>
-     */
-    inline const Aws::String& GetBackendEnvironmentName() const{ return m_backendEnvironmentName; }
-    inline void SetBackendEnvironmentName(const Aws::String& value) { m_backendEnvironmentName = value; }
-    inline void SetBackendEnvironmentName(Aws::String&& value) { m_backendEnvironmentName = std::move(value); }
-    inline void SetBackendEnvironmentName(const char* value) { m_backendEnvironmentName.assign(value); }
-    inline GetBackendStorageResult& WithBackendEnvironmentName(const Aws::String& value) { SetBackendEnvironmentName(value); return *this;}
-    inline GetBackendStorageResult& WithBackendEnvironmentName(Aws::String&& value) { SetBackendEnvironmentName(std::move(value)); return *this;}
-    inline GetBackendStorageResult& WithBackendEnvironmentName(const char* value) { SetBackendEnvironmentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The resource configuration for the backend storage resource.</p>
+   */
+  inline const GetBackendStorageResourceConfig& GetResourceConfig() const { return m_resourceConfig; }
+  template <typename ResourceConfigT = GetBackendStorageResourceConfig>
+  void SetResourceConfig(ResourceConfigT&& value) {
+    m_resourceConfigHasBeenSet = true;
+    m_resourceConfig = std::forward<ResourceConfigT>(value);
+  }
+  template <typename ResourceConfigT = GetBackendStorageResourceConfig>
+  GetBackendStorageResult& WithResourceConfig(ResourceConfigT&& value) {
+    SetResourceConfig(std::forward<ResourceConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource configuration for the backend storage resource.</p>
-     */
-    inline const GetBackendStorageResourceConfig& GetResourceConfig() const{ return m_resourceConfig; }
-    inline void SetResourceConfig(const GetBackendStorageResourceConfig& value) { m_resourceConfig = value; }
-    inline void SetResourceConfig(GetBackendStorageResourceConfig&& value) { m_resourceConfig = std::move(value); }
-    inline GetBackendStorageResult& WithResourceConfig(const GetBackendStorageResourceConfig& value) { SetResourceConfig(value); return *this;}
-    inline GetBackendStorageResult& WithResourceConfig(GetBackendStorageResourceConfig&& value) { SetResourceConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the storage resource.</p>
+   */
+  inline const Aws::String& GetResourceName() const { return m_resourceName; }
+  template <typename ResourceNameT = Aws::String>
+  void SetResourceName(ResourceNameT&& value) {
+    m_resourceNameHasBeenSet = true;
+    m_resourceName = std::forward<ResourceNameT>(value);
+  }
+  template <typename ResourceNameT = Aws::String>
+  GetBackendStorageResult& WithResourceName(ResourceNameT&& value) {
+    SetResourceName(std::forward<ResourceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the storage resource.</p>
-     */
-    inline const Aws::String& GetResourceName() const{ return m_resourceName; }
-    inline void SetResourceName(const Aws::String& value) { m_resourceName = value; }
-    inline void SetResourceName(Aws::String&& value) { m_resourceName = std::move(value); }
-    inline void SetResourceName(const char* value) { m_resourceName.assign(value); }
-    inline GetBackendStorageResult& WithResourceName(const Aws::String& value) { SetResourceName(value); return *this;}
-    inline GetBackendStorageResult& WithResourceName(Aws::String&& value) { SetResourceName(std::move(value)); return *this;}
-    inline GetBackendStorageResult& WithResourceName(const char* value) { SetResourceName(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBackendStorageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBackendStorageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBackendStorageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBackendStorageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appId;
+ private:
+  Aws::String m_appId;
 
-    Aws::String m_backendEnvironmentName;
+  Aws::String m_backendEnvironmentName;
 
-    GetBackendStorageResourceConfig m_resourceConfig;
+  GetBackendStorageResourceConfig m_resourceConfig;
 
-    Aws::String m_resourceName;
+  Aws::String m_resourceName;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appIdHasBeenSet = false;
+  bool m_backendEnvironmentNameHasBeenSet = false;
+  bool m_resourceConfigHasBeenSet = false;
+  bool m_resourceNameHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AmplifyBackend
-} // namespace Aws
+}  // namespace Model
+}  // namespace AmplifyBackend
+}  // namespace Aws

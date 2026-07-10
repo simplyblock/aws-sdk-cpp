@@ -4,157 +4,181 @@
  */
 
 #pragma once
-#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
-#include <aws/wisdom/ConnectWisdomServiceRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/wisdom/model/ServerSideEncryptionConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/wisdom/model/AssistantType.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wisdom/ConnectWisdomServiceRequest.h>
+#include <aws/wisdom/ConnectWisdomService_EXPORTS.h>
+#include <aws/wisdom/model/AssistantType.h>
+#include <aws/wisdom/model/ServerSideEncryptionConfiguration.h>
 
-namespace Aws
-{
-namespace ConnectWisdomService
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace ConnectWisdomService {
+namespace Model {
+
+/**
+ */
+class CreateAssistantRequest : public ConnectWisdomServiceRequest {
+ public:
+  AWS_CONNECTWISDOMSERVICE_API CreateAssistantRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateAssistant"; }
+
+  AWS_CONNECTWISDOMSERVICE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the
+   * idempotency of the request. If not provided, the Amazon Web Services SDK
+   * populates this field. For more information about idempotency, see <a
+   * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+   * retries safe with idempotent APIs</a>.</p>
    */
-  class CreateAssistantRequest : public ConnectWisdomServiceRequest
-  {
-  public:
-    AWS_CONNECTWISDOMSERVICE_API CreateAssistantRequest();
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateAssistantRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateAssistant"; }
+  ///@{
+  /**
+   * <p>The description of the assistant.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateAssistantRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECTWISDOMSERVICE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the assistant.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateAssistantRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The configuration information for the customer managed key used for
+   * encryption. </p> <p>The customer managed key must have a policy that allows
+   * <code>kms:CreateGrant</code>, <code> kms:DescribeKey</code>, and
+   * <code>kms:Decrypt/kms:GenerateDataKey</code> permissions to the IAM identity
+   * using the key to invoke Wisdom. To use Wisdom with chat, the key policy must
+   * also allow <code>kms:Decrypt</code>, <code>kms:GenerateDataKey*</code>, and
+   * <code>kms:DescribeKey</code> permissions to the
+   * <code>connect.amazonaws.com</code> service principal. </p> <p>For more
+   * information about setting up a customer managed key for Wisdom, see <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/enable-wisdom.html">Enable
+   * Amazon Connect Wisdom for your instance</a>.</p>
+   */
+  inline const ServerSideEncryptionConfiguration& GetServerSideEncryptionConfiguration() const {
+    return m_serverSideEncryptionConfiguration;
+  }
+  inline bool ServerSideEncryptionConfigurationHasBeenSet() const { return m_serverSideEncryptionConfigurationHasBeenSet; }
+  template <typename ServerSideEncryptionConfigurationT = ServerSideEncryptionConfiguration>
+  void SetServerSideEncryptionConfiguration(ServerSideEncryptionConfigurationT&& value) {
+    m_serverSideEncryptionConfigurationHasBeenSet = true;
+    m_serverSideEncryptionConfiguration = std::forward<ServerSideEncryptionConfigurationT>(value);
+  }
+  template <typename ServerSideEncryptionConfigurationT = ServerSideEncryptionConfiguration>
+  CreateAssistantRequest& WithServerSideEncryptionConfiguration(ServerSideEncryptionConfigurationT&& value) {
+    SetServerSideEncryptionConfiguration(std::forward<ServerSideEncryptionConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive identifier that you provide to ensure the
-     * idempotency of the request. If not provided, the Amazon Web Services SDK
-     * populates this field. For more information about idempotency, see <a
-     * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
-     * retries safe with idempotent APIs</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateAssistantRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateAssistantRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateAssistantRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags used to organize, track, or control access for this resource.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  CreateAssistantRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  CreateAssistantRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the assistant.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateAssistantRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateAssistantRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateAssistantRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of assistant.</p>
+   */
+  inline AssistantType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(AssistantType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline CreateAssistantRequest& WithType(AssistantType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>The name of the assistant.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateAssistantRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateAssistantRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateAssistantRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The configuration information for the customer managed key used for
-     * encryption. </p> <p>The customer managed key must have a policy that allows
-     * <code>kms:CreateGrant</code>, <code> kms:DescribeKey</code>, and
-     * <code>kms:Decrypt/kms:GenerateDataKey</code> permissions to the IAM identity
-     * using the key to invoke Wisdom. To use Wisdom with chat, the key policy must
-     * also allow <code>kms:Decrypt</code>, <code>kms:GenerateDataKey*</code>, and
-     * <code>kms:DescribeKey</code> permissions to the
-     * <code>connect.amazonaws.com</code> service principal. </p> <p>For more
-     * information about setting up a customer managed key for Wisdom, see <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/enable-wisdom.html">Enable
-     * Amazon Connect Wisdom for your instance</a>.</p>
-     */
-    inline const ServerSideEncryptionConfiguration& GetServerSideEncryptionConfiguration() const{ return m_serverSideEncryptionConfiguration; }
-    inline bool ServerSideEncryptionConfigurationHasBeenSet() const { return m_serverSideEncryptionConfigurationHasBeenSet; }
-    inline void SetServerSideEncryptionConfiguration(const ServerSideEncryptionConfiguration& value) { m_serverSideEncryptionConfigurationHasBeenSet = true; m_serverSideEncryptionConfiguration = value; }
-    inline void SetServerSideEncryptionConfiguration(ServerSideEncryptionConfiguration&& value) { m_serverSideEncryptionConfigurationHasBeenSet = true; m_serverSideEncryptionConfiguration = std::move(value); }
-    inline CreateAssistantRequest& WithServerSideEncryptionConfiguration(const ServerSideEncryptionConfiguration& value) { SetServerSideEncryptionConfiguration(value); return *this;}
-    inline CreateAssistantRequest& WithServerSideEncryptionConfiguration(ServerSideEncryptionConfiguration&& value) { SetServerSideEncryptionConfiguration(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The tags used to organize, track, or control access for this resource.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateAssistantRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline CreateAssistantRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateAssistantRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline CreateAssistantRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateAssistantRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateAssistantRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreateAssistantRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline CreateAssistantRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline CreateAssistantRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
+  ServerSideEncryptionConfiguration m_serverSideEncryptionConfiguration;
 
-    ///@{
-    /**
-     * <p>The type of assistant.</p>
-     */
-    inline const AssistantType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const AssistantType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(AssistantType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline CreateAssistantRequest& WithType(const AssistantType& value) { SetType(value); return *this;}
-    inline CreateAssistantRequest& WithType(AssistantType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  AssistantType m_type{AssistantType::NOT_SET};
+  bool m_clientTokenHasBeenSet = true;
+  bool m_descriptionHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_serverSideEncryptionConfigurationHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    ServerSideEncryptionConfiguration m_serverSideEncryptionConfiguration;
-    bool m_serverSideEncryptionConfigurationHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    AssistantType m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectWisdomService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectWisdomService
+}  // namespace Aws

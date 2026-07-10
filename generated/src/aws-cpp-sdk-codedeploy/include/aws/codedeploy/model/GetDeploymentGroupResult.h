@@ -6,67 +6,76 @@
 #pragma once
 #include <aws/codedeploy/CodeDeploy_EXPORTS.h>
 #include <aws/codedeploy/model/DeploymentGroupInfo.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CodeDeploy
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeDeploy {
+namespace Model {
+/**
+ * <p>Represents the output of a <code>GetDeploymentGroup</code>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codedeploy-2014-10-06/GetDeploymentGroupOutput">AWS
+ * API Reference</a></p>
+ */
+class GetDeploymentGroupResult {
+ public:
+  AWS_CODEDEPLOY_API GetDeploymentGroupResult() = default;
+  AWS_CODEDEPLOY_API GetDeploymentGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CODEDEPLOY_API GetDeploymentGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the output of a <code>GetDeploymentGroup</code>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codedeploy-2014-10-06/GetDeploymentGroupOutput">AWS
-   * API Reference</a></p>
+   * <p>Information about the deployment group.</p>
    */
-  class GetDeploymentGroupResult
-  {
-  public:
-    AWS_CODEDEPLOY_API GetDeploymentGroupResult();
-    AWS_CODEDEPLOY_API GetDeploymentGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CODEDEPLOY_API GetDeploymentGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const DeploymentGroupInfo& GetDeploymentGroupInfo() const { return m_deploymentGroupInfo; }
+  template <typename DeploymentGroupInfoT = DeploymentGroupInfo>
+  void SetDeploymentGroupInfo(DeploymentGroupInfoT&& value) {
+    m_deploymentGroupInfoHasBeenSet = true;
+    m_deploymentGroupInfo = std::forward<DeploymentGroupInfoT>(value);
+  }
+  template <typename DeploymentGroupInfoT = DeploymentGroupInfo>
+  GetDeploymentGroupResult& WithDeploymentGroupInfo(DeploymentGroupInfoT&& value) {
+    SetDeploymentGroupInfo(std::forward<DeploymentGroupInfoT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Information about the deployment group.</p>
-     */
-    inline const DeploymentGroupInfo& GetDeploymentGroupInfo() const{ return m_deploymentGroupInfo; }
-    inline void SetDeploymentGroupInfo(const DeploymentGroupInfo& value) { m_deploymentGroupInfo = value; }
-    inline void SetDeploymentGroupInfo(DeploymentGroupInfo&& value) { m_deploymentGroupInfo = std::move(value); }
-    inline GetDeploymentGroupResult& WithDeploymentGroupInfo(const DeploymentGroupInfo& value) { SetDeploymentGroupInfo(value); return *this;}
-    inline GetDeploymentGroupResult& WithDeploymentGroupInfo(DeploymentGroupInfo&& value) { SetDeploymentGroupInfo(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDeploymentGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDeploymentGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDeploymentGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDeploymentGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  DeploymentGroupInfo m_deploymentGroupInfo;
 
-    DeploymentGroupInfo m_deploymentGroupInfo;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_deploymentGroupInfoHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CodeDeploy
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeDeploy
+}  // namespace Aws

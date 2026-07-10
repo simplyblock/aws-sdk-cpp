@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/datazone/model/StartMetadataGenerationRunResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/datazone/model/StartMetadataGenerationRunResult.h>
 
 #include <utility>
 
@@ -17,71 +17,49 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-StartMetadataGenerationRunResult::StartMetadataGenerationRunResult() : 
-    m_status(MetadataGenerationRunStatus::NOT_SET),
-    m_type(MetadataGenerationRunType::NOT_SET)
-{
-}
+StartMetadataGenerationRunResult::StartMetadataGenerationRunResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-StartMetadataGenerationRunResult::StartMetadataGenerationRunResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : StartMetadataGenerationRunResult()
-{
-  *this = result;
-}
-
-StartMetadataGenerationRunResult& StartMetadataGenerationRunResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+StartMetadataGenerationRunResult& StartMetadataGenerationRunResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("createdAt"))
-  {
-    m_createdAt = jsonValue.GetDouble("createdAt");
-
-  }
-
-  if(jsonValue.ValueExists("createdBy"))
-  {
-    m_createdBy = jsonValue.GetString("createdBy");
-
-  }
-
-  if(jsonValue.ValueExists("domainId"))
-  {
+  if (jsonValue.ValueExists("domainId")) {
     m_domainId = jsonValue.GetString("domainId");
-
+    m_domainIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("id"))
-  {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
+    m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("owningProjectId"))
-  {
-    m_owningProjectId = jsonValue.GetString("owningProjectId");
-
-  }
-
-  if(jsonValue.ValueExists("status"))
-  {
+  if (jsonValue.ValueExists("status")) {
     m_status = MetadataGenerationRunStatusMapper::GetMetadataGenerationRunStatusForName(jsonValue.GetString("status"));
-
+    m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("type"))
-  {
-    m_type = MetadataGenerationRunTypeMapper::GetMetadataGenerationRunTypeForName(jsonValue.GetString("type"));
-
+  if (jsonValue.ValueExists("types")) {
+    Aws::Utils::Array<JsonView> typesJsonList = jsonValue.GetArray("types");
+    for (unsigned typesIndex = 0; typesIndex < typesJsonList.GetLength(); ++typesIndex) {
+      m_types.push_back(MetadataGenerationRunTypeMapper::GetMetadataGenerationRunTypeForName(typesJsonList[typesIndex].AsString()));
+    }
+    m_typesHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("createdAt")) {
+    m_createdAt = jsonValue.GetDouble("createdAt");
+    m_createdAtHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("createdBy")) {
+    m_createdBy = jsonValue.GetString("createdBy");
+    m_createdByHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("owningProjectId")) {
+    m_owningProjectId = jsonValue.GetString("owningProjectId");
+    m_owningProjectIdHasBeenSet = true;
+  }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

@@ -4,201 +4,266 @@
  */
 
 #pragma once
-#include <aws/bedrock/Bedrock_EXPORTS.h>
 #include <aws/bedrock/BedrockRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/bedrock/Bedrock_EXPORTS.h>
 #include <aws/bedrock/model/ModelInvocationJobInputDataConfig.h>
 #include <aws/bedrock/model/ModelInvocationJobOutputDataConfig.h>
-#include <aws/bedrock/model/VpcConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/bedrock/model/ModelInvocationType.h>
 #include <aws/bedrock/model/Tag.h>
-#include <utility>
+#include <aws/bedrock/model/VpcConfig.h>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
 
-namespace Aws
-{
-namespace Bedrock
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace Bedrock {
+namespace Model {
+
+/**
+ */
+class CreateModelInvocationJobRequest : public BedrockRequest {
+ public:
+  AWS_BEDROCK_API CreateModelInvocationJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateModelInvocationJob"; }
+
+  AWS_BEDROCK_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A name to give the batch inference job.</p>
    */
-  class CreateModelInvocationJobRequest : public BedrockRequest
-  {
-  public:
-    AWS_BEDROCK_API CreateModelInvocationJobRequest();
+  inline const Aws::String& GetJobName() const { return m_jobName; }
+  inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
+  template <typename JobNameT = Aws::String>
+  void SetJobName(JobNameT&& value) {
+    m_jobNameHasBeenSet = true;
+    m_jobName = std::forward<JobNameT>(value);
+  }
+  template <typename JobNameT = Aws::String>
+  CreateModelInvocationJobRequest& WithJobName(JobNameT&& value) {
+    SetJobName(std::forward<JobNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateModelInvocationJob"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the service role with permissions to carry
+   * out and manage batch inference. You can use the console to create a default
+   * service role or follow the steps at <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-iam-sr.html">Create
+   * a service role for batch inference</a>.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  CreateModelInvocationJobRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BEDROCK_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A unique, case-sensitive identifier to ensure that the API request completes
+   * no more than one time. If this token matches a previous request, Amazon Bedrock
+   * ignores the request, but does not return an error. For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
+   * idempotency</a>.</p>
+   */
+  inline const Aws::String& GetClientRequestToken() const { return m_clientRequestToken; }
+  inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
+  template <typename ClientRequestTokenT = Aws::String>
+  void SetClientRequestToken(ClientRequestTokenT&& value) {
+    m_clientRequestTokenHasBeenSet = true;
+    m_clientRequestToken = std::forward<ClientRequestTokenT>(value);
+  }
+  template <typename ClientRequestTokenT = Aws::String>
+  CreateModelInvocationJobRequest& WithClientRequestToken(ClientRequestTokenT&& value) {
+    SetClientRequestToken(std::forward<ClientRequestTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of the foundation model to use for the batch inference
+   * job.</p>
+   */
+  inline const Aws::String& GetModelId() const { return m_modelId; }
+  inline bool ModelIdHasBeenSet() const { return m_modelIdHasBeenSet; }
+  template <typename ModelIdT = Aws::String>
+  void SetModelId(ModelIdT&& value) {
+    m_modelIdHasBeenSet = true;
+    m_modelId = std::forward<ModelIdT>(value);
+  }
+  template <typename ModelIdT = Aws::String>
+  CreateModelInvocationJobRequest& WithModelId(ModelIdT&& value) {
+    SetModelId(std::forward<ModelIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A name to give the batch inference job.</p>
-     */
-    inline const Aws::String& GetJobName() const{ return m_jobName; }
-    inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
-    inline void SetJobName(const Aws::String& value) { m_jobNameHasBeenSet = true; m_jobName = value; }
-    inline void SetJobName(Aws::String&& value) { m_jobNameHasBeenSet = true; m_jobName = std::move(value); }
-    inline void SetJobName(const char* value) { m_jobNameHasBeenSet = true; m_jobName.assign(value); }
-    inline CreateModelInvocationJobRequest& WithJobName(const Aws::String& value) { SetJobName(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithJobName(Aws::String&& value) { SetJobName(std::move(value)); return *this;}
-    inline CreateModelInvocationJobRequest& WithJobName(const char* value) { SetJobName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details about the location of the input to the batch inference job.</p>
+   */
+  inline const ModelInvocationJobInputDataConfig& GetInputDataConfig() const { return m_inputDataConfig; }
+  inline bool InputDataConfigHasBeenSet() const { return m_inputDataConfigHasBeenSet; }
+  template <typename InputDataConfigT = ModelInvocationJobInputDataConfig>
+  void SetInputDataConfig(InputDataConfigT&& value) {
+    m_inputDataConfigHasBeenSet = true;
+    m_inputDataConfig = std::forward<InputDataConfigT>(value);
+  }
+  template <typename InputDataConfigT = ModelInvocationJobInputDataConfig>
+  CreateModelInvocationJobRequest& WithInputDataConfig(InputDataConfigT&& value) {
+    SetInputDataConfig(std::forward<InputDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the service role with permissions to carry
-     * out and manage batch inference. You can use the console to create a default
-     * service role or follow the steps at <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-iam-sr.html">Create
-     * a service role for batch inference</a>.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline CreateModelInvocationJobRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline CreateModelInvocationJobRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details about the location of the output of the batch inference job.</p>
+   */
+  inline const ModelInvocationJobOutputDataConfig& GetOutputDataConfig() const { return m_outputDataConfig; }
+  inline bool OutputDataConfigHasBeenSet() const { return m_outputDataConfigHasBeenSet; }
+  template <typename OutputDataConfigT = ModelInvocationJobOutputDataConfig>
+  void SetOutputDataConfig(OutputDataConfigT&& value) {
+    m_outputDataConfigHasBeenSet = true;
+    m_outputDataConfig = std::forward<OutputDataConfigT>(value);
+  }
+  template <typename OutputDataConfigT = ModelInvocationJobOutputDataConfig>
+  CreateModelInvocationJobRequest& WithOutputDataConfig(OutputDataConfigT&& value) {
+    SetOutputDataConfig(std::forward<OutputDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique, case-sensitive identifier to ensure that the API request completes
-     * no more than one time. If this token matches a previous request, Amazon Bedrock
-     * ignores the request, but does not return an error. For more information, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-     * idempotency</a>.</p>
-     */
-    inline const Aws::String& GetClientRequestToken() const{ return m_clientRequestToken; }
-    inline bool ClientRequestTokenHasBeenSet() const { return m_clientRequestTokenHasBeenSet; }
-    inline void SetClientRequestToken(const Aws::String& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = value; }
-    inline void SetClientRequestToken(Aws::String&& value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken = std::move(value); }
-    inline void SetClientRequestToken(const char* value) { m_clientRequestTokenHasBeenSet = true; m_clientRequestToken.assign(value); }
-    inline CreateModelInvocationJobRequest& WithClientRequestToken(const Aws::String& value) { SetClientRequestToken(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithClientRequestToken(Aws::String&& value) { SetClientRequestToken(std::move(value)); return *this;}
-    inline CreateModelInvocationJobRequest& WithClientRequestToken(const char* value) { SetClientRequestToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration of the Virtual Private Cloud (VPC) for the data in the
+   * batch inference job. For more information, see <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc">Protect
+   * batch inference jobs using a VPC</a>.</p>
+   */
+  inline const VpcConfig& GetVpcConfig() const { return m_vpcConfig; }
+  inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
+  template <typename VpcConfigT = VpcConfig>
+  void SetVpcConfig(VpcConfigT&& value) {
+    m_vpcConfigHasBeenSet = true;
+    m_vpcConfig = std::forward<VpcConfigT>(value);
+  }
+  template <typename VpcConfigT = VpcConfig>
+  CreateModelInvocationJobRequest& WithVpcConfig(VpcConfigT&& value) {
+    SetVpcConfig(std::forward<VpcConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier of the foundation model to use for the batch inference
-     * job.</p>
-     */
-    inline const Aws::String& GetModelId() const{ return m_modelId; }
-    inline bool ModelIdHasBeenSet() const { return m_modelIdHasBeenSet; }
-    inline void SetModelId(const Aws::String& value) { m_modelIdHasBeenSet = true; m_modelId = value; }
-    inline void SetModelId(Aws::String&& value) { m_modelIdHasBeenSet = true; m_modelId = std::move(value); }
-    inline void SetModelId(const char* value) { m_modelIdHasBeenSet = true; m_modelId.assign(value); }
-    inline CreateModelInvocationJobRequest& WithModelId(const Aws::String& value) { SetModelId(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithModelId(Aws::String&& value) { SetModelId(std::move(value)); return *this;}
-    inline CreateModelInvocationJobRequest& WithModelId(const char* value) { SetModelId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of hours after which to force the batch inference job to time
+   * out.</p>
+   */
+  inline int GetTimeoutDurationInHours() const { return m_timeoutDurationInHours; }
+  inline bool TimeoutDurationInHoursHasBeenSet() const { return m_timeoutDurationInHoursHasBeenSet; }
+  inline void SetTimeoutDurationInHours(int value) {
+    m_timeoutDurationInHoursHasBeenSet = true;
+    m_timeoutDurationInHours = value;
+  }
+  inline CreateModelInvocationJobRequest& WithTimeoutDurationInHours(int value) {
+    SetTimeoutDurationInHours(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about the location of the input to the batch inference job.</p>
-     */
-    inline const ModelInvocationJobInputDataConfig& GetInputDataConfig() const{ return m_inputDataConfig; }
-    inline bool InputDataConfigHasBeenSet() const { return m_inputDataConfigHasBeenSet; }
-    inline void SetInputDataConfig(const ModelInvocationJobInputDataConfig& value) { m_inputDataConfigHasBeenSet = true; m_inputDataConfig = value; }
-    inline void SetInputDataConfig(ModelInvocationJobInputDataConfig&& value) { m_inputDataConfigHasBeenSet = true; m_inputDataConfig = std::move(value); }
-    inline CreateModelInvocationJobRequest& WithInputDataConfig(const ModelInvocationJobInputDataConfig& value) { SetInputDataConfig(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithInputDataConfig(ModelInvocationJobInputDataConfig&& value) { SetInputDataConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Any tags to associate with the batch inference job. For more information, see
+   * <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html">Tagging
+   * Amazon Bedrock resources</a>.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateModelInvocationJobRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateModelInvocationJobRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details about the location of the output of the batch inference job.</p>
-     */
-    inline const ModelInvocationJobOutputDataConfig& GetOutputDataConfig() const{ return m_outputDataConfig; }
-    inline bool OutputDataConfigHasBeenSet() const { return m_outputDataConfigHasBeenSet; }
-    inline void SetOutputDataConfig(const ModelInvocationJobOutputDataConfig& value) { m_outputDataConfigHasBeenSet = true; m_outputDataConfig = value; }
-    inline void SetOutputDataConfig(ModelInvocationJobOutputDataConfig&& value) { m_outputDataConfigHasBeenSet = true; m_outputDataConfig = std::move(value); }
-    inline CreateModelInvocationJobRequest& WithOutputDataConfig(const ModelInvocationJobOutputDataConfig& value) { SetOutputDataConfig(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithOutputDataConfig(ModelInvocationJobOutputDataConfig&& value) { SetOutputDataConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The invocation endpoint for ModelInvocationJob</p>
+   */
+  inline ModelInvocationType GetModelInvocationType() const { return m_modelInvocationType; }
+  inline bool ModelInvocationTypeHasBeenSet() const { return m_modelInvocationTypeHasBeenSet; }
+  inline void SetModelInvocationType(ModelInvocationType value) {
+    m_modelInvocationTypeHasBeenSet = true;
+    m_modelInvocationType = value;
+  }
+  inline CreateModelInvocationJobRequest& WithModelInvocationType(ModelInvocationType value) {
+    SetModelInvocationType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobName;
 
-    ///@{
-    /**
-     * <p>The configuration of the Virtual Private Cloud (VPC) for the data in the
-     * batch inference job. For more information, see <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc">Protect
-     * batch inference jobs using a VPC</a>.</p>
-     */
-    inline const VpcConfig& GetVpcConfig() const{ return m_vpcConfig; }
-    inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
-    inline void SetVpcConfig(const VpcConfig& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = value; }
-    inline void SetVpcConfig(VpcConfig&& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = std::move(value); }
-    inline CreateModelInvocationJobRequest& WithVpcConfig(const VpcConfig& value) { SetVpcConfig(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithVpcConfig(VpcConfig&& value) { SetVpcConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_roleArn;
 
-    ///@{
-    /**
-     * <p>The number of hours after which to force the batch inference job to time
-     * out.</p>
-     */
-    inline int GetTimeoutDurationInHours() const{ return m_timeoutDurationInHours; }
-    inline bool TimeoutDurationInHoursHasBeenSet() const { return m_timeoutDurationInHoursHasBeenSet; }
-    inline void SetTimeoutDurationInHours(int value) { m_timeoutDurationInHoursHasBeenSet = true; m_timeoutDurationInHours = value; }
-    inline CreateModelInvocationJobRequest& WithTimeoutDurationInHours(int value) { SetTimeoutDurationInHours(value); return *this;}
-    ///@}
+  Aws::String m_clientRequestToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    ///@{
-    /**
-     * <p>Any tags to associate with the batch inference job. For more information, see
-     * <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/tagging.html">Tagging
-     * Amazon Bedrock resources</a>.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateModelInvocationJobRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateModelInvocationJobRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateModelInvocationJobRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateModelInvocationJobRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_modelId;
 
-    Aws::String m_jobName;
-    bool m_jobNameHasBeenSet = false;
+  ModelInvocationJobInputDataConfig m_inputDataConfig;
 
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
+  ModelInvocationJobOutputDataConfig m_outputDataConfig;
 
-    Aws::String m_clientRequestToken;
-    bool m_clientRequestTokenHasBeenSet = false;
+  VpcConfig m_vpcConfig;
 
-    Aws::String m_modelId;
-    bool m_modelIdHasBeenSet = false;
+  int m_timeoutDurationInHours{0};
 
-    ModelInvocationJobInputDataConfig m_inputDataConfig;
-    bool m_inputDataConfigHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    ModelInvocationJobOutputDataConfig m_outputDataConfig;
-    bool m_outputDataConfigHasBeenSet = false;
+  ModelInvocationType m_modelInvocationType{ModelInvocationType::NOT_SET};
+  bool m_jobNameHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_clientRequestTokenHasBeenSet = true;
+  bool m_modelIdHasBeenSet = false;
+  bool m_inputDataConfigHasBeenSet = false;
+  bool m_outputDataConfigHasBeenSet = false;
+  bool m_vpcConfigHasBeenSet = false;
+  bool m_timeoutDurationInHoursHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_modelInvocationTypeHasBeenSet = false;
+};
 
-    VpcConfig m_vpcConfig;
-    bool m_vpcConfigHasBeenSet = false;
-
-    int m_timeoutDurationInHours;
-    bool m_timeoutDurationInHoursHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

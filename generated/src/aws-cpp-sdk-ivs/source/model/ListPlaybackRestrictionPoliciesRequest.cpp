@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ivs/model/ListPlaybackRestrictionPoliciesRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/ivs/model/ListPlaybackRestrictionPoliciesRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,16 @@ using namespace Aws::IVS::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListPlaybackRestrictionPoliciesRequest::ListPlaybackRestrictionPoliciesRequest() : 
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
-}
-
-Aws::String ListPlaybackRestrictionPoliciesRequest::SerializePayload() const
-{
+Aws::String ListPlaybackRestrictionPoliciesRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("maxResults", m_maxResults);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("nextToken", m_nextToken);
   }
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("nextToken", m_nextToken);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("maxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

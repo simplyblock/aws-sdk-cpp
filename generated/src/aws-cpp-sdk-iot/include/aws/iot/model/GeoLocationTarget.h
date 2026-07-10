@@ -4,79 +4,80 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
 #include <aws/iot/model/TargetFieldOrder.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
 
+/**
+ * <p>A geolocation target that you select to index. Each geolocation target
+ * contains a <code>name</code> and <code>order</code> key-value pair that
+ * specifies the geolocation target fields.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GeoLocationTarget">AWS
+ * API Reference</a></p>
+ */
+class GeoLocationTarget {
+ public:
+  AWS_IOT_API GeoLocationTarget() = default;
+  AWS_IOT_API GeoLocationTarget(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API GeoLocationTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A geolocation target that you select to index. Each geolocation target
-   * contains a <code>name</code> and <code>order</code> key-value pair that
-   * specifies the geolocation target fields.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iot-2015-05-28/GeoLocationTarget">AWS
-   * API Reference</a></p>
+   * <p>The <code>name</code> of the geolocation target field. If the target field is
+   * part of a named shadow, you must select the named shadow using the
+   * <code>namedShadow</code> filter.</p>
    */
-  class GeoLocationTarget
-  {
-  public:
-    AWS_IOT_API GeoLocationTarget();
-    AWS_IOT_API GeoLocationTarget(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API GeoLocationTarget& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_IOT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GeoLocationTarget& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The <code>order</code> of the geolocation target field. This field is
+   * optional. The default value is <code>LatLon</code>.</p>
+   */
+  inline TargetFieldOrder GetOrder() const { return m_order; }
+  inline bool OrderHasBeenSet() const { return m_orderHasBeenSet; }
+  inline void SetOrder(TargetFieldOrder value) {
+    m_orderHasBeenSet = true;
+    m_order = value;
+  }
+  inline GeoLocationTarget& WithOrder(TargetFieldOrder value) {
+    SetOrder(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The <code>name</code> of the geolocation target field. If the target field is
-     * part of a named shadow, you must select the named shadow using the
-     * <code>namedShadow</code> filter.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline GeoLocationTarget& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GeoLocationTarget& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GeoLocationTarget& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  TargetFieldOrder m_order{TargetFieldOrder::NOT_SET};
+  bool m_nameHasBeenSet = false;
+  bool m_orderHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The <code>order</code> of the geolocation target field. This field is
-     * optional. The default value is <code>LatLon</code>.</p>
-     */
-    inline const TargetFieldOrder& GetOrder() const{ return m_order; }
-    inline bool OrderHasBeenSet() const { return m_orderHasBeenSet; }
-    inline void SetOrder(const TargetFieldOrder& value) { m_orderHasBeenSet = true; m_order = value; }
-    inline void SetOrder(TargetFieldOrder&& value) { m_orderHasBeenSet = true; m_order = std::move(value); }
-    inline GeoLocationTarget& WithOrder(const TargetFieldOrder& value) { SetOrder(value); return *this;}
-    inline GeoLocationTarget& WithOrder(TargetFieldOrder&& value) { SetOrder(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    TargetFieldOrder m_order;
-    bool m_orderHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

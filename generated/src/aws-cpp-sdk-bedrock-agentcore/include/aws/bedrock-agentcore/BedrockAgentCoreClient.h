@@ -1,0 +1,2073 @@
+﻿/**
+ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0.
+ */
+
+#pragma once
+#include <aws/bedrock-agentcore/BedrockAgentCorePaginationBase.h>
+#include <aws/bedrock-agentcore/BedrockAgentCoreServiceClientModel.h>
+#include <aws/bedrock-agentcore/BedrockAgentCoreWaiter.h>
+#include <aws/bedrock-agentcore/BedrockAgentCore_EXPORTS.h>
+#include <aws/core/client/AWSClient.h>
+#include <aws/core/client/AWSClientAsyncCRTP.h>
+#include <aws/core/client/ClientConfiguration.h>
+#include <aws/core/utils/json/JsonSerializer.h>
+
+namespace Aws {
+namespace BedrockAgentCore {
+/**
+ * <p>Welcome to the Amazon Bedrock AgentCore Data Plane API reference. Data Plane
+ * actions process and handle data or workloads within Amazon Web Services
+ * services. </p>
+ */
+class AWS_BEDROCKAGENTCORE_API BedrockAgentCoreClient : public Aws::Client::AWSJsonClient,
+                                                        public Aws::Client::ClientWithAsyncTemplateMethods<BedrockAgentCoreClient>,
+                                                        public BedrockAgentCorePaginationBase<BedrockAgentCoreClient>,
+                                                        public BedrockAgentCoreWaiter<BedrockAgentCoreClient> {
+ public:
+  typedef Aws::Client::AWSJsonClient BASECLASS;
+  static const char* GetServiceName();
+  static const char* GetAllocationTag();
+
+  typedef BedrockAgentCoreClientConfiguration ClientConfigurationType;
+  typedef BedrockAgentCoreEndpointProvider EndpointProviderType;
+
+  /**
+   * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client
+   * config is not specified, it will be initialized to default values.
+   */
+  BedrockAgentCoreClient(const Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration& clientConfiguration =
+                             Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration(),
+                         std::shared_ptr<BedrockAgentCoreEndpointProviderBase> endpointProvider = nullptr);
+
+  /**
+   * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+   * is not specified, it will be initialized to default values.
+   */
+  BedrockAgentCoreClient(const Aws::Auth::AWSCredentials& credentials,
+                         std::shared_ptr<BedrockAgentCoreEndpointProviderBase> endpointProvider = nullptr,
+                         const Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration& clientConfiguration =
+                             Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration());
+
+  /**
+   * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+   * the default http client factory will be used
+   */
+  BedrockAgentCoreClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         std::shared_ptr<BedrockAgentCoreEndpointProviderBase> endpointProvider = nullptr,
+                         const Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration& clientConfiguration =
+                             Aws::BedrockAgentCore::BedrockAgentCoreClientConfiguration());
+
+  /* Legacy constructors due deprecation */
+  /**
+   * Initializes client to use DefaultCredentialProviderChain, with default http client factory, and optional client config. If client
+   * config is not specified, it will be initialized to default values.
+   */
+  BedrockAgentCoreClient(const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /**
+   * Initializes client to use SimpleAWSCredentialsProvider, with default http client factory, and optional client config. If client config
+   * is not specified, it will be initialized to default values.
+   */
+  BedrockAgentCoreClient(const Aws::Auth::AWSCredentials& credentials, const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /**
+   * Initializes client to use specified credentials provider with specified client config. If http client factory is not supplied,
+   * the default http client factory will be used
+   */
+  BedrockAgentCoreClient(const std::shared_ptr<Aws::Auth::AWSCredentialsProvider>& credentialsProvider,
+                         const Aws::Client::ClientConfiguration& clientConfiguration);
+
+  /* End of legacy constructors due deprecation */
+  virtual ~BedrockAgentCoreClient();
+
+  /**
+   * <p>Creates multiple memory records in a single batch operation for the specified
+   * memory with custom content.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/BatchCreateMemoryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchCreateMemoryRecordsOutcome BatchCreateMemoryRecords(const Model::BatchCreateMemoryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchCreateMemoryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename BatchCreateMemoryRecordsRequestT = Model::BatchCreateMemoryRecordsRequest>
+  Model::BatchCreateMemoryRecordsOutcomeCallable BatchCreateMemoryRecordsCallable(const BatchCreateMemoryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::BatchCreateMemoryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for BatchCreateMemoryRecords that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename BatchCreateMemoryRecordsRequestT = Model::BatchCreateMemoryRecordsRequest>
+  void BatchCreateMemoryRecordsAsync(const BatchCreateMemoryRecordsRequestT& request,
+                                     const BatchCreateMemoryRecordsResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::BatchCreateMemoryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes multiple memory records in a single batch operation from the
+   * specified memory.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/BatchDeleteMemoryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchDeleteMemoryRecordsOutcome BatchDeleteMemoryRecords(const Model::BatchDeleteMemoryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchDeleteMemoryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename BatchDeleteMemoryRecordsRequestT = Model::BatchDeleteMemoryRecordsRequest>
+  Model::BatchDeleteMemoryRecordsOutcomeCallable BatchDeleteMemoryRecordsCallable(const BatchDeleteMemoryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::BatchDeleteMemoryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for BatchDeleteMemoryRecords that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename BatchDeleteMemoryRecordsRequestT = Model::BatchDeleteMemoryRecordsRequest>
+  void BatchDeleteMemoryRecordsAsync(const BatchDeleteMemoryRecordsRequestT& request,
+                                     const BatchDeleteMemoryRecordsResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::BatchDeleteMemoryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>Updates multiple memory records with custom content in a single batch
+   * operation within the specified memory.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/BatchUpdateMemoryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::BatchUpdateMemoryRecordsOutcome BatchUpdateMemoryRecords(const Model::BatchUpdateMemoryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for BatchUpdateMemoryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename BatchUpdateMemoryRecordsRequestT = Model::BatchUpdateMemoryRecordsRequest>
+  Model::BatchUpdateMemoryRecordsOutcomeCallable BatchUpdateMemoryRecordsCallable(const BatchUpdateMemoryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::BatchUpdateMemoryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for BatchUpdateMemoryRecords that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename BatchUpdateMemoryRecordsRequestT = Model::BatchUpdateMemoryRecordsRequest>
+  void BatchUpdateMemoryRecordsAsync(const BatchUpdateMemoryRecordsRequestT& request,
+                                     const BatchUpdateMemoryRecordsResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::BatchUpdateMemoryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>Confirms the user authentication session for obtaining OAuth2.0 tokens for a
+   * resource.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/CompleteResourceTokenAuth">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CompleteResourceTokenAuthOutcome CompleteResourceTokenAuth(const Model::CompleteResourceTokenAuthRequest& request) const;
+
+  /**
+   * A Callable wrapper for CompleteResourceTokenAuth that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CompleteResourceTokenAuthRequestT = Model::CompleteResourceTokenAuthRequest>
+  Model::CompleteResourceTokenAuthOutcomeCallable CompleteResourceTokenAuthCallable(
+      const CompleteResourceTokenAuthRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::CompleteResourceTokenAuth, request);
+  }
+
+  /**
+   * An Async wrapper for CompleteResourceTokenAuth that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CompleteResourceTokenAuthRequestT = Model::CompleteResourceTokenAuthRequest>
+  void CompleteResourceTokenAuthAsync(const CompleteResourceTokenAuthRequestT& request,
+                                      const CompleteResourceTokenAuthResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::CompleteResourceTokenAuth, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an A/B test for comparing agent configurations. A/B tests split
+   * traffic between a control variant and a treatment variant through a gateway,
+   * then evaluate performance using online evaluation configurations to determine
+   * which variant performs better.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/CreateABTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateABTestOutcome CreateABTest(const Model::CreateABTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateABTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateABTestRequestT = Model::CreateABTestRequest>
+  Model::CreateABTestOutcomeCallable CreateABTestCallable(const CreateABTestRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::CreateABTest, request);
+  }
+
+  /**
+   * An Async wrapper for CreateABTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateABTestRequestT = Model::CreateABTestRequest>
+  void CreateABTestAsync(const CreateABTestRequestT& request, const CreateABTestResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::CreateABTest, request, handler, context);
+  }
+
+  /**
+   * <p>Creates an event in an AgentCore Memory resource. Events represent
+   * interactions or activities that occur within a session and are associated with
+   * specific actors.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:CreateEvent</code> permission.</p> <p>This operation is
+   * subject to request rate limiting.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/CreateEvent">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreateEventOutcome CreateEvent(const Model::CreateEventRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreateEvent that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename CreateEventRequestT = Model::CreateEventRequest>
+  Model::CreateEventOutcomeCallable CreateEventCallable(const CreateEventRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::CreateEvent, request);
+  }
+
+  /**
+   * An Async wrapper for CreateEvent that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename CreateEventRequestT = Model::CreateEventRequest>
+  void CreateEventAsync(const CreateEventRequestT& request, const CreateEventResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::CreateEvent, request, handler, context);
+  }
+
+  /**
+   * <p>Create a new payment instrument for a connector.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/CreatePaymentInstrument">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreatePaymentInstrumentOutcome CreatePaymentInstrument(const Model::CreatePaymentInstrumentRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreatePaymentInstrument that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreatePaymentInstrumentRequestT = Model::CreatePaymentInstrumentRequest>
+  Model::CreatePaymentInstrumentOutcomeCallable CreatePaymentInstrumentCallable(const CreatePaymentInstrumentRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::CreatePaymentInstrument, request);
+  }
+
+  /**
+   * An Async wrapper for CreatePaymentInstrument that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreatePaymentInstrumentRequestT = Model::CreatePaymentInstrumentRequest>
+  void CreatePaymentInstrumentAsync(const CreatePaymentInstrumentRequestT& request,
+                                    const CreatePaymentInstrumentResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::CreatePaymentInstrument, request, handler, context);
+  }
+
+  /**
+   * <p>Create a new payment session.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/CreatePaymentSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::CreatePaymentSessionOutcome CreatePaymentSession(const Model::CreatePaymentSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for CreatePaymentSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename CreatePaymentSessionRequestT = Model::CreatePaymentSessionRequest>
+  Model::CreatePaymentSessionOutcomeCallable CreatePaymentSessionCallable(const CreatePaymentSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::CreatePaymentSession, request);
+  }
+
+  /**
+   * An Async wrapper for CreatePaymentSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename CreatePaymentSessionRequestT = Model::CreatePaymentSessionRequest>
+  void CreatePaymentSessionAsync(const CreatePaymentSessionRequestT& request, const CreatePaymentSessionResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::CreatePaymentSession, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes an A/B test and its associated gateway rules.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeleteABTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteABTestOutcome DeleteABTest(const Model::DeleteABTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteABTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteABTestRequestT = Model::DeleteABTestRequest>
+  Model::DeleteABTestOutcomeCallable DeleteABTestCallable(const DeleteABTestRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeleteABTest, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteABTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteABTestRequestT = Model::DeleteABTestRequest>
+  void DeleteABTestAsync(const DeleteABTestRequestT& request, const DeleteABTestResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeleteABTest, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a batch evaluation and its associated results.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeleteBatchEvaluation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteBatchEvaluationOutcome DeleteBatchEvaluation(const Model::DeleteBatchEvaluationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteBatchEvaluation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteBatchEvaluationRequestT = Model::DeleteBatchEvaluationRequest>
+  Model::DeleteBatchEvaluationOutcomeCallable DeleteBatchEvaluationCallable(const DeleteBatchEvaluationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeleteBatchEvaluation, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteBatchEvaluation that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteBatchEvaluationRequestT = Model::DeleteBatchEvaluationRequest>
+  void DeleteBatchEvaluationAsync(const DeleteBatchEvaluationRequestT& request, const DeleteBatchEvaluationResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeleteBatchEvaluation, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes an event from an AgentCore Memory resource. When you delete an event,
+   * it is permanently removed.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:DeleteEvent</code> permission.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeleteEvent">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteEventOutcome DeleteEvent(const Model::DeleteEventRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteEvent that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename DeleteEventRequestT = Model::DeleteEventRequest>
+  Model::DeleteEventOutcomeCallable DeleteEventCallable(const DeleteEventRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeleteEvent, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteEvent that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename DeleteEventRequestT = Model::DeleteEventRequest>
+  void DeleteEventAsync(const DeleteEventRequestT& request, const DeleteEventResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeleteEvent, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a memory record from an AgentCore Memory resource. When you delete a
+   * memory record, it is permanently removed.</p> <p>To use this operation, you must
+   * have the <code>bedrock-agentcore:DeleteMemoryRecord</code>
+   * permission.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeleteMemoryRecord">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteMemoryRecordOutcome DeleteMemoryRecord(const Model::DeleteMemoryRecordRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteMemoryRecord that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteMemoryRecordRequestT = Model::DeleteMemoryRecordRequest>
+  Model::DeleteMemoryRecordOutcomeCallable DeleteMemoryRecordCallable(const DeleteMemoryRecordRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeleteMemoryRecord, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteMemoryRecord that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename DeleteMemoryRecordRequestT = Model::DeleteMemoryRecordRequest>
+  void DeleteMemoryRecordAsync(const DeleteMemoryRecordRequestT& request, const DeleteMemoryRecordResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeleteMemoryRecord, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a payment instrument. This is a soft delete operation that preserves
+   * the record for audit and compliance purposes.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeletePaymentInstrument">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeletePaymentInstrumentOutcome DeletePaymentInstrument(const Model::DeletePaymentInstrumentRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeletePaymentInstrument that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeletePaymentInstrumentRequestT = Model::DeletePaymentInstrumentRequest>
+  Model::DeletePaymentInstrumentOutcomeCallable DeletePaymentInstrumentCallable(const DeletePaymentInstrumentRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeletePaymentInstrument, request);
+  }
+
+  /**
+   * An Async wrapper for DeletePaymentInstrument that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeletePaymentInstrumentRequestT = Model::DeletePaymentInstrumentRequest>
+  void DeletePaymentInstrumentAsync(const DeletePaymentInstrumentRequestT& request,
+                                    const DeletePaymentInstrumentResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeletePaymentInstrument, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a payment session. This permanently removes the payment session
+   * record.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeletePaymentSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeletePaymentSessionOutcome DeletePaymentSession(const Model::DeletePaymentSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeletePaymentSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeletePaymentSessionRequestT = Model::DeletePaymentSessionRequest>
+  Model::DeletePaymentSessionOutcomeCallable DeletePaymentSessionCallable(const DeletePaymentSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeletePaymentSession, request);
+  }
+
+  /**
+   * An Async wrapper for DeletePaymentSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeletePaymentSessionRequestT = Model::DeletePaymentSessionRequest>
+  void DeletePaymentSessionAsync(const DeletePaymentSessionRequestT& request, const DeletePaymentSessionResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeletePaymentSession, request, handler, context);
+  }
+
+  /**
+   * <p>Deletes a recommendation and its associated results.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/DeleteRecommendation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::DeleteRecommendationOutcome DeleteRecommendation(const Model::DeleteRecommendationRequest& request) const;
+
+  /**
+   * A Callable wrapper for DeleteRecommendation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename DeleteRecommendationRequestT = Model::DeleteRecommendationRequest>
+  Model::DeleteRecommendationOutcomeCallable DeleteRecommendationCallable(const DeleteRecommendationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::DeleteRecommendation, request);
+  }
+
+  /**
+   * An Async wrapper for DeleteRecommendation that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename DeleteRecommendationRequestT = Model::DeleteRecommendationRequest>
+  void DeleteRecommendationAsync(const DeleteRecommendationRequestT& request, const DeleteRecommendationResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::DeleteRecommendation, request, handler, context);
+  }
+
+  /**
+   * <p> Performs on-demand evaluation of agent traces using a specified evaluator.
+   * This synchronous API accepts traces in OpenTelemetry format and returns
+   * immediate scoring results with detailed explanations.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/Evaluate">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::EvaluateOutcome Evaluate(const Model::EvaluateRequest& request) const;
+
+  /**
+   * A Callable wrapper for Evaluate that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename EvaluateRequestT = Model::EvaluateRequest>
+  Model::EvaluateOutcomeCallable EvaluateCallable(const EvaluateRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::Evaluate, request);
+  }
+
+  /**
+   * An Async wrapper for Evaluate that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename EvaluateRequestT = Model::EvaluateRequest>
+  void EvaluateAsync(const EvaluateRequestT& request, const EvaluateResponseReceivedHandler& handler,
+                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::Evaluate, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves detailed information about an A/B test, including its
+   * configuration, status, and statistical results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetABTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetABTestOutcome GetABTest(const Model::GetABTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetABTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetABTestRequestT = Model::GetABTestRequest>
+  Model::GetABTestOutcomeCallable GetABTestCallable(const GetABTestRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetABTest, request);
+  }
+
+  /**
+   * An Async wrapper for GetABTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetABTestRequestT = Model::GetABTestRequest>
+  void GetABTestAsync(const GetABTestRequestT& request, const GetABTestResponseReceivedHandler& handler,
+                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetABTest, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the A2A agent card associated with an AgentCore Runtime
+   * agent.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetAgentCard">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetAgentCardOutcome GetAgentCard(const Model::GetAgentCardRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetAgentCard that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetAgentCardRequestT = Model::GetAgentCardRequest>
+  Model::GetAgentCardOutcomeCallable GetAgentCardCallable(const GetAgentCardRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetAgentCard, request);
+  }
+
+  /**
+   * An Async wrapper for GetAgentCard that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetAgentCardRequestT = Model::GetAgentCardRequest>
+  void GetAgentCardAsync(const GetAgentCardRequestT& request, const GetAgentCardResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetAgentCard, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves detailed information about a batch evaluation, including its
+   * status, configuration, results, and any error details.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetBatchEvaluation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetBatchEvaluationOutcome GetBatchEvaluation(const Model::GetBatchEvaluationRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetBatchEvaluation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetBatchEvaluationRequestT = Model::GetBatchEvaluationRequest>
+  Model::GetBatchEvaluationOutcomeCallable GetBatchEvaluationCallable(const GetBatchEvaluationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetBatchEvaluation, request);
+  }
+
+  /**
+   * An Async wrapper for GetBatchEvaluation that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetBatchEvaluationRequestT = Model::GetBatchEvaluationRequest>
+  void GetBatchEvaluationAsync(const GetBatchEvaluationRequestT& request, const GetBatchEvaluationResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetBatchEvaluation, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves detailed information about a specific browser session in Amazon
+   * Bedrock AgentCore. This operation returns the session's configuration, current
+   * status, associated streams, and metadata.</p> <p>To get a browser session, you
+   * must specify both the browser identifier and the session ID. The response
+   * includes information about the session's viewport configuration, timeout
+   * settings, and stream endpoints.</p> <p>The following operations are related to
+   * <code>GetBrowserSession</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html">StartBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListBrowserSessions.html">ListBrowserSessions</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html">StopBrowserSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetBrowserSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetBrowserSessionOutcome GetBrowserSession(const Model::GetBrowserSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetBrowserSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetBrowserSessionRequestT = Model::GetBrowserSessionRequest>
+  Model::GetBrowserSessionOutcomeCallable GetBrowserSessionCallable(const GetBrowserSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetBrowserSession, request);
+  }
+
+  /**
+   * An Async wrapper for GetBrowserSession that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetBrowserSessionRequestT = Model::GetBrowserSessionRequest>
+  void GetBrowserSessionAsync(const GetBrowserSessionRequestT& request, const GetBrowserSessionResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetBrowserSession, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves detailed information about a specific code interpreter session in
+   * Amazon Bedrock AgentCore. This operation returns the session's configuration,
+   * current status, and metadata.</p> <p>To get a code interpreter session, you must
+   * specify both the code interpreter identifier and the session ID. The response
+   * includes information about the session's timeout settings and current
+   * status.</p> <p>The following operations are related to
+   * <code>GetCodeInterpreterSession</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html">StartCodeInterpreterSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_ListCodeInterpreterSessions.html">ListCodeInterpreterSessions</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html">StopCodeInterpreterSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetCodeInterpreterSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetCodeInterpreterSessionOutcome GetCodeInterpreterSession(const Model::GetCodeInterpreterSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetCodeInterpreterSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetCodeInterpreterSessionRequestT = Model::GetCodeInterpreterSessionRequest>
+  Model::GetCodeInterpreterSessionOutcomeCallable GetCodeInterpreterSessionCallable(
+      const GetCodeInterpreterSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetCodeInterpreterSession, request);
+  }
+
+  /**
+   * An Async wrapper for GetCodeInterpreterSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetCodeInterpreterSessionRequestT = Model::GetCodeInterpreterSessionRequest>
+  void GetCodeInterpreterSessionAsync(const GetCodeInterpreterSessionRequestT& request,
+                                      const GetCodeInterpreterSessionResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetCodeInterpreterSession, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves information about a specific event in an AgentCore Memory
+   * resource.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:GetEvent</code> permission.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetEvent">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetEventOutcome GetEvent(const Model::GetEventRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetEvent that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetEventRequestT = Model::GetEventRequest>
+  Model::GetEventOutcomeCallable GetEventCallable(const GetEventRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetEvent, request);
+  }
+
+  /**
+   * An Async wrapper for GetEvent that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetEventRequestT = Model::GetEventRequest>
+  void GetEventAsync(const GetEventRequestT& request, const GetEventResponseReceivedHandler& handler,
+                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetEvent, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a specific memory record from an AgentCore Memory resource.</p>
+   * <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:GetMemoryRecord</code> permission.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetMemoryRecord">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetMemoryRecordOutcome GetMemoryRecord(const Model::GetMemoryRecordRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetMemoryRecord that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename GetMemoryRecordRequestT = Model::GetMemoryRecordRequest>
+  Model::GetMemoryRecordOutcomeCallable GetMemoryRecordCallable(const GetMemoryRecordRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetMemoryRecord, request);
+  }
+
+  /**
+   * An Async wrapper for GetMemoryRecord that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename GetMemoryRecordRequestT = Model::GetMemoryRecordRequest>
+  void GetMemoryRecordAsync(const GetMemoryRecordRequestT& request, const GetMemoryRecordResponseReceivedHandler& handler,
+                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetMemoryRecord, request, handler, context);
+  }
+
+  /**
+   * <p>Get a payment instrument by ID.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetPaymentInstrument">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetPaymentInstrumentOutcome GetPaymentInstrument(const Model::GetPaymentInstrumentRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetPaymentInstrument that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetPaymentInstrumentRequestT = Model::GetPaymentInstrumentRequest>
+  Model::GetPaymentInstrumentOutcomeCallable GetPaymentInstrumentCallable(const GetPaymentInstrumentRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetPaymentInstrument, request);
+  }
+
+  /**
+   * An Async wrapper for GetPaymentInstrument that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetPaymentInstrumentRequestT = Model::GetPaymentInstrumentRequest>
+  void GetPaymentInstrumentAsync(const GetPaymentInstrumentRequestT& request, const GetPaymentInstrumentResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetPaymentInstrument, request, handler, context);
+  }
+
+  /**
+   * <p>Get the balance of a payment instrument.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetPaymentInstrumentBalance">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetPaymentInstrumentBalanceOutcome GetPaymentInstrumentBalance(
+      const Model::GetPaymentInstrumentBalanceRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetPaymentInstrumentBalance that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetPaymentInstrumentBalanceRequestT = Model::GetPaymentInstrumentBalanceRequest>
+  Model::GetPaymentInstrumentBalanceOutcomeCallable GetPaymentInstrumentBalanceCallable(
+      const GetPaymentInstrumentBalanceRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetPaymentInstrumentBalance, request);
+  }
+
+  /**
+   * An Async wrapper for GetPaymentInstrumentBalance that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetPaymentInstrumentBalanceRequestT = Model::GetPaymentInstrumentBalanceRequest>
+  void GetPaymentInstrumentBalanceAsync(const GetPaymentInstrumentBalanceRequestT& request,
+                                        const GetPaymentInstrumentBalanceResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetPaymentInstrumentBalance, request, handler, context);
+  }
+
+  /**
+   * <p>Get a payment session.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetPaymentSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetPaymentSessionOutcome GetPaymentSession(const Model::GetPaymentSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetPaymentSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetPaymentSessionRequestT = Model::GetPaymentSessionRequest>
+  Model::GetPaymentSessionOutcomeCallable GetPaymentSessionCallable(const GetPaymentSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetPaymentSession, request);
+  }
+
+  /**
+   * An Async wrapper for GetPaymentSession that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetPaymentSessionRequestT = Model::GetPaymentSessionRequest>
+  void GetPaymentSessionAsync(const GetPaymentSessionRequestT& request, const GetPaymentSessionResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetPaymentSession, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves detailed information about a recommendation, including its
+   * configuration, status, and results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetRecommendation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetRecommendationOutcome GetRecommendation(const Model::GetRecommendationRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetRecommendation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetRecommendationRequestT = Model::GetRecommendationRequest>
+  Model::GetRecommendationOutcomeCallable GetRecommendationCallable(const GetRecommendationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetRecommendation, request);
+  }
+
+  /**
+   * An Async wrapper for GetRecommendation that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetRecommendationRequestT = Model::GetRecommendationRequest>
+  void GetRecommendationAsync(const GetRecommendationRequestT& request, const GetRecommendationResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetRecommendation, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves the API key associated with an API key credential
+   * provider.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetResourceApiKey">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetResourceApiKeyOutcome GetResourceApiKey(const Model::GetResourceApiKeyRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetResourceApiKey that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetResourceApiKeyRequestT = Model::GetResourceApiKeyRequest>
+  Model::GetResourceApiKeyOutcomeCallable GetResourceApiKeyCallable(const GetResourceApiKeyRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetResourceApiKey, request);
+  }
+
+  /**
+   * An Async wrapper for GetResourceApiKey that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename GetResourceApiKeyRequestT = Model::GetResourceApiKeyRequest>
+  void GetResourceApiKeyAsync(const GetResourceApiKeyRequestT& request, const GetResourceApiKeyResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetResourceApiKey, request, handler, context);
+  }
+
+  /**
+   * <p>Returns the OAuth 2.0 token of the provided resource.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetResourceOauth2Token">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetResourceOauth2TokenOutcome GetResourceOauth2Token(const Model::GetResourceOauth2TokenRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetResourceOauth2Token that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetResourceOauth2TokenRequestT = Model::GetResourceOauth2TokenRequest>
+  Model::GetResourceOauth2TokenOutcomeCallable GetResourceOauth2TokenCallable(const GetResourceOauth2TokenRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetResourceOauth2Token, request);
+  }
+
+  /**
+   * An Async wrapper for GetResourceOauth2Token that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetResourceOauth2TokenRequestT = Model::GetResourceOauth2TokenRequest>
+  void GetResourceOauth2TokenAsync(const GetResourceOauth2TokenRequestT& request,
+                                   const GetResourceOauth2TokenResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetResourceOauth2Token, request, handler, context);
+  }
+
+  /**
+   * <p>Generates authentication tokens for payment providers that use
+   * vendor-specific authentication mechanisms.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetResourcePaymentToken">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetResourcePaymentTokenOutcome GetResourcePaymentToken(const Model::GetResourcePaymentTokenRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetResourcePaymentToken that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetResourcePaymentTokenRequestT = Model::GetResourcePaymentTokenRequest>
+  Model::GetResourcePaymentTokenOutcomeCallable GetResourcePaymentTokenCallable(const GetResourcePaymentTokenRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetResourcePaymentToken, request);
+  }
+
+  /**
+   * An Async wrapper for GetResourcePaymentToken that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetResourcePaymentTokenRequestT = Model::GetResourcePaymentTokenRequest>
+  void GetResourcePaymentTokenAsync(const GetResourcePaymentTokenRequestT& request,
+                                    const GetResourcePaymentTokenResponseReceivedHandler& handler,
+                                    const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetResourcePaymentToken, request, handler, context);
+  }
+
+  /**
+   * <p>Obtains a workload access token for agentic workloads not acting on behalf of
+   * a user.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetWorkloadAccessToken">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetWorkloadAccessTokenOutcome GetWorkloadAccessToken(const Model::GetWorkloadAccessTokenRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetWorkloadAccessToken that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename GetWorkloadAccessTokenRequestT = Model::GetWorkloadAccessTokenRequest>
+  Model::GetWorkloadAccessTokenOutcomeCallable GetWorkloadAccessTokenCallable(const GetWorkloadAccessTokenRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetWorkloadAccessToken, request);
+  }
+
+  /**
+   * An Async wrapper for GetWorkloadAccessToken that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetWorkloadAccessTokenRequestT = Model::GetWorkloadAccessTokenRequest>
+  void GetWorkloadAccessTokenAsync(const GetWorkloadAccessTokenRequestT& request,
+                                   const GetWorkloadAccessTokenResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetWorkloadAccessToken, request, handler, context);
+  }
+
+  /**
+   * <p>Obtains a workload access token for agentic workloads acting on behalf of a
+   * user, using a JWT token.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetWorkloadAccessTokenForJWT">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetWorkloadAccessTokenForJWTOutcome GetWorkloadAccessTokenForJWT(
+      const Model::GetWorkloadAccessTokenForJWTRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetWorkloadAccessTokenForJWT that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetWorkloadAccessTokenForJWTRequestT = Model::GetWorkloadAccessTokenForJWTRequest>
+  Model::GetWorkloadAccessTokenForJWTOutcomeCallable GetWorkloadAccessTokenForJWTCallable(
+      const GetWorkloadAccessTokenForJWTRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetWorkloadAccessTokenForJWT, request);
+  }
+
+  /**
+   * An Async wrapper for GetWorkloadAccessTokenForJWT that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename GetWorkloadAccessTokenForJWTRequestT = Model::GetWorkloadAccessTokenForJWTRequest>
+  void GetWorkloadAccessTokenForJWTAsync(const GetWorkloadAccessTokenForJWTRequestT& request,
+                                         const GetWorkloadAccessTokenForJWTResponseReceivedHandler& handler,
+                                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetWorkloadAccessTokenForJWT, request, handler, context);
+  }
+
+  /**
+   * <p>Obtains a workload access token for agentic workloads acting on behalf of a
+   * user, using the user's ID.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/GetWorkloadAccessTokenForUserId">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::GetWorkloadAccessTokenForUserIdOutcome GetWorkloadAccessTokenForUserId(
+      const Model::GetWorkloadAccessTokenForUserIdRequest& request) const;
+
+  /**
+   * A Callable wrapper for GetWorkloadAccessTokenForUserId that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename GetWorkloadAccessTokenForUserIdRequestT = Model::GetWorkloadAccessTokenForUserIdRequest>
+  Model::GetWorkloadAccessTokenForUserIdOutcomeCallable GetWorkloadAccessTokenForUserIdCallable(
+      const GetWorkloadAccessTokenForUserIdRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::GetWorkloadAccessTokenForUserId, request);
+  }
+
+  /**
+   * An Async wrapper for GetWorkloadAccessTokenForUserId that queues the request into a thread executor and triggers associated callback
+   * when operation has finished.
+   */
+  template <typename GetWorkloadAccessTokenForUserIdRequestT = Model::GetWorkloadAccessTokenForUserIdRequest>
+  void GetWorkloadAccessTokenForUserIdAsync(const GetWorkloadAccessTokenForUserIdRequestT& request,
+                                            const GetWorkloadAccessTokenForUserIdResponseReceivedHandler& handler,
+                                            const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::GetWorkloadAccessTokenForUserId, request, handler, context);
+  }
+
+  /**
+   * <p>Sends a request to an agent or tool hosted in an Amazon Bedrock AgentCore
+   * Runtime and receives responses in real-time. </p> <p>To invoke an agent, you can
+   * specify either the AgentCore Runtime ARN or the agent ID with an account ID, and
+   * provide a payload containing your request. When you use the agent ID instead of
+   * the full ARN, you don't need to URL-encode the identifier. You can optionally
+   * specify a qualifier to target a specific endpoint of the agent.</p> <p>This
+   * operation supports streaming responses, allowing you to receive partial
+   * responses as they become available. We recommend using pagination to ensure that
+   * the operation returns quickly and successfully when processing large
+   * responses.</p> <p>For example code, see <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-invoke-agent.html">Invoke
+   * an AgentCore Runtime agent</a>. </p> <p>If you're integrating your agent with
+   * OAuth, you can't use the Amazon Web Services SDK to call
+   * <code>InvokeAgentRuntime</code>. Instead, make a HTTPS request to
+   * <code>InvokeAgentRuntime</code>. For an example, see <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-oauth.html">Authenticate
+   * and authorize with Inbound Auth and Outbound Auth</a>.</p> <p>To use this
+   * operation, you must have the <code>bedrock-agentcore:InvokeAgentRuntime</code>
+   * permission. If you are making a call to <code>InvokeAgentRuntime</code> on
+   * behalf of a user ID with the
+   * <code>X-Amzn-Bedrock-AgentCore-Runtime-User-Id</code> header, You require
+   * permissions to both actions (<code>bedrock-agentcore:InvokeAgentRuntime</code>
+   * and <code>bedrock-agentcore:InvokeAgentRuntimeForUser</code>). </p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/InvokeAgentRuntime">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::InvokeAgentRuntimeOutcome InvokeAgentRuntime(const Model::InvokeAgentRuntimeRequest& request) const;
+
+  /**
+   * A Callable wrapper for InvokeAgentRuntime that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename InvokeAgentRuntimeRequestT = Model::InvokeAgentRuntimeRequest>
+  Model::InvokeAgentRuntimeOutcomeCallable InvokeAgentRuntimeCallable(const InvokeAgentRuntimeRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::InvokeAgentRuntime, request);
+  }
+
+  /**
+   * An Async wrapper for InvokeAgentRuntime that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename InvokeAgentRuntimeRequestT = Model::InvokeAgentRuntimeRequest>
+  void InvokeAgentRuntimeAsync(const InvokeAgentRuntimeRequestT& request, const InvokeAgentRuntimeResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::InvokeAgentRuntime, request, handler, context);
+  }
+
+  /**
+   * <p>Executes a command in a runtime session container and streams the output back
+   * to the caller. This operation allows you to run shell commands within the agent
+   * runtime environment and receive real-time streaming responses including standard
+   * output and standard error.</p> <p>To invoke a command, you must specify the
+   * agent runtime ARN and a runtime session ID. The command execution supports
+   * streaming responses, allowing you to receive output as it becomes available
+   * through <code>contentStart</code>, <code>contentDelta</code>, and
+   * <code>contentStop</code> events.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:InvokeAgentRuntimeCommand</code>
+   * permission.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/InvokeAgentRuntimeCommand">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::InvokeAgentRuntimeCommandOutcome InvokeAgentRuntimeCommand(Model::InvokeAgentRuntimeCommandRequest& request) const;
+
+  /**
+   * A Callable wrapper for InvokeAgentRuntimeCommand that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename InvokeAgentRuntimeCommandRequestT = Model::InvokeAgentRuntimeCommandRequest>
+  Model::InvokeAgentRuntimeCommandOutcomeCallable InvokeAgentRuntimeCommandCallable(InvokeAgentRuntimeCommandRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::InvokeAgentRuntimeCommand, request);
+  }
+
+  /**
+   * An Async wrapper for InvokeAgentRuntimeCommand that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename InvokeAgentRuntimeCommandRequestT = Model::InvokeAgentRuntimeCommandRequest>
+  void InvokeAgentRuntimeCommandAsync(InvokeAgentRuntimeCommandRequestT& request,
+                                      const InvokeAgentRuntimeCommandResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::InvokeAgentRuntimeCommand, request, handler, context);
+  }
+
+  /**
+   * <p>Invokes an operating system-level action on a browser session in Amazon
+   * Bedrock AgentCore. This operation provides direct OS-level control over browser
+   * sessions, enabling mouse actions, keyboard input, and screenshots that the
+   * WebSocket-based Chrome DevTools Protocol (CDP) cannot handle — such as
+   * interacting with print dialogs, context menus, and JavaScript alerts.</p> <p>You
+   * send a request with exactly one action in the <code>BrowserAction</code> union,
+   * and receive a corresponding result in the <code>BrowserActionResult</code>
+   * union.</p> <p>The following operations are related to
+   * <code>InvokeBrowser</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html">StartBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html">GetBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html">StopBrowserSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/InvokeBrowser">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::InvokeBrowserOutcome InvokeBrowser(const Model::InvokeBrowserRequest& request) const;
+
+  /**
+   * A Callable wrapper for InvokeBrowser that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename InvokeBrowserRequestT = Model::InvokeBrowserRequest>
+  Model::InvokeBrowserOutcomeCallable InvokeBrowserCallable(const InvokeBrowserRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::InvokeBrowser, request);
+  }
+
+  /**
+   * An Async wrapper for InvokeBrowser that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename InvokeBrowserRequestT = Model::InvokeBrowserRequest>
+  void InvokeBrowserAsync(const InvokeBrowserRequestT& request, const InvokeBrowserResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::InvokeBrowser, request, handler, context);
+  }
+
+  /**
+   * <p>Executes code within an active code interpreter session in Amazon Bedrock
+   * AgentCore. This operation processes the provided code, runs it in a secure
+   * environment, and returns the execution results including output, errors, and
+   * generated visualizations.</p> <p>To execute code, you must specify the code
+   * interpreter identifier, session ID, and the code to run in the arguments
+   * parameter. The operation returns a stream containing the execution results,
+   * which can include text output, error messages, and data visualizations.</p>
+   * <p>This operation is subject to request rate limiting based on your account's
+   * service quotas.</p> <p>The following operations are related to
+   * <code>InvokeCodeInterpreter</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html">StartCodeInterpreterSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html">GetCodeInterpreterSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/InvokeCodeInterpreter">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::InvokeCodeInterpreterOutcome InvokeCodeInterpreter(Model::InvokeCodeInterpreterRequest& request) const;
+
+  /**
+   * A Callable wrapper for InvokeCodeInterpreter that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename InvokeCodeInterpreterRequestT = Model::InvokeCodeInterpreterRequest>
+  Model::InvokeCodeInterpreterOutcomeCallable InvokeCodeInterpreterCallable(InvokeCodeInterpreterRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::InvokeCodeInterpreter, request);
+  }
+
+  /**
+   * An Async wrapper for InvokeCodeInterpreter that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename InvokeCodeInterpreterRequestT = Model::InvokeCodeInterpreterRequest>
+  void InvokeCodeInterpreterAsync(InvokeCodeInterpreterRequestT& request, const InvokeCodeInterpreterResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::InvokeCodeInterpreter, request, handler, context);
+  }
+
+  /**
+   * <p>Operation to invoke a Harness.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/InvokeHarness">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::InvokeHarnessOutcome InvokeHarness(Model::InvokeHarnessRequest& request) const;
+
+  /**
+   * A Callable wrapper for InvokeHarness that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename InvokeHarnessRequestT = Model::InvokeHarnessRequest>
+  Model::InvokeHarnessOutcomeCallable InvokeHarnessCallable(InvokeHarnessRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::InvokeHarness, request);
+  }
+
+  /**
+   * An Async wrapper for InvokeHarness that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename InvokeHarnessRequestT = Model::InvokeHarnessRequest>
+  void InvokeHarnessAsync(InvokeHarnessRequestT& request, const InvokeHarnessResponseReceivedHandler& handler,
+                          const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::InvokeHarness, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all A/B tests in the account.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListABTests">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListABTestsOutcome ListABTests(const Model::ListABTestsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListABTests that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListABTestsRequestT = Model::ListABTestsRequest>
+  Model::ListABTestsOutcomeCallable ListABTestsCallable(const ListABTestsRequestT& request = {}) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListABTests, request);
+  }
+
+  /**
+   * An Async wrapper for ListABTests that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListABTestsRequestT = Model::ListABTestsRequest>
+  void ListABTestsAsync(const ListABTestsResponseReceivedHandler& handler,
+                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                        const ListABTestsRequestT& request = {}) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListABTests, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all actors in an AgentCore Memory resource. We recommend using
+   * pagination to ensure that the operation returns quickly and successfully.</p>
+   * <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:ListActors</code> permission.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListActors">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListActorsOutcome ListActors(const Model::ListActorsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListActors that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListActorsRequestT = Model::ListActorsRequest>
+  Model::ListActorsOutcomeCallable ListActorsCallable(const ListActorsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListActors, request);
+  }
+
+  /**
+   * An Async wrapper for ListActors that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListActorsRequestT = Model::ListActorsRequest>
+  void ListActorsAsync(const ListActorsRequestT& request, const ListActorsResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListActors, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all batch evaluations in the account, providing summary information
+   * about each evaluation's status and configuration.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListBatchEvaluations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBatchEvaluationsOutcome ListBatchEvaluations(const Model::ListBatchEvaluationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListBatchEvaluations that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListBatchEvaluationsRequestT = Model::ListBatchEvaluationsRequest>
+  Model::ListBatchEvaluationsOutcomeCallable ListBatchEvaluationsCallable(const ListBatchEvaluationsRequestT& request = {}) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListBatchEvaluations, request);
+  }
+
+  /**
+   * An Async wrapper for ListBatchEvaluations that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListBatchEvaluationsRequestT = Model::ListBatchEvaluationsRequest>
+  void ListBatchEvaluationsAsync(const ListBatchEvaluationsResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                 const ListBatchEvaluationsRequestT& request = {}) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListBatchEvaluations, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a list of browser sessions in Amazon Bedrock AgentCore that match
+   * the specified criteria. This operation returns summary information about each
+   * session, including identifiers, status, and timestamps.</p> <p>You can filter
+   * the results by browser identifier and session status. The operation supports
+   * pagination to handle large result sets efficiently.</p> <p>We recommend using
+   * pagination to ensure that the operation returns quickly and successfully when
+   * retrieving large numbers of sessions.</p> <p>The following operations are
+   * related to <code>ListBrowserSessions</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html">StartBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html">GetBrowserSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListBrowserSessions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListBrowserSessionsOutcome ListBrowserSessions(const Model::ListBrowserSessionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListBrowserSessions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListBrowserSessionsRequestT = Model::ListBrowserSessionsRequest>
+  Model::ListBrowserSessionsOutcomeCallable ListBrowserSessionsCallable(const ListBrowserSessionsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListBrowserSessions, request);
+  }
+
+  /**
+   * An Async wrapper for ListBrowserSessions that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListBrowserSessionsRequestT = Model::ListBrowserSessionsRequest>
+  void ListBrowserSessionsAsync(const ListBrowserSessionsRequestT& request, const ListBrowserSessionsResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListBrowserSessions, request, handler, context);
+  }
+
+  /**
+   * <p>Retrieves a list of code interpreter sessions in Amazon Bedrock AgentCore
+   * that match the specified criteria. This operation returns summary information
+   * about each session, including identifiers, status, and timestamps.</p> <p>You
+   * can filter the results by code interpreter identifier and session status. The
+   * operation supports pagination to handle large result sets efficiently.</p> <p>We
+   * recommend using pagination to ensure that the operation returns quickly and
+   * successfully when retrieving large numbers of sessions.</p> <p>The following
+   * operations are related to <code>ListCodeInterpreterSessions</code>:</p> <ul>
+   * <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html">StartCodeInterpreterSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html">GetCodeInterpreterSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListCodeInterpreterSessions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListCodeInterpreterSessionsOutcome ListCodeInterpreterSessions(
+      const Model::ListCodeInterpreterSessionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListCodeInterpreterSessions that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename ListCodeInterpreterSessionsRequestT = Model::ListCodeInterpreterSessionsRequest>
+  Model::ListCodeInterpreterSessionsOutcomeCallable ListCodeInterpreterSessionsCallable(
+      const ListCodeInterpreterSessionsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListCodeInterpreterSessions, request);
+  }
+
+  /**
+   * An Async wrapper for ListCodeInterpreterSessions that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListCodeInterpreterSessionsRequestT = Model::ListCodeInterpreterSessionsRequest>
+  void ListCodeInterpreterSessionsAsync(const ListCodeInterpreterSessionsRequestT& request,
+                                        const ListCodeInterpreterSessionsResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListCodeInterpreterSessions, request, handler, context);
+  }
+
+  /**
+   * <p>Lists events in an AgentCore Memory resource based on specified criteria. We
+   * recommend using pagination to ensure that the operation returns quickly and
+   * successfully.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:ListEvents</code> permission.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListEvents">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListEventsOutcome ListEvents(const Model::ListEventsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListEvents that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListEventsRequestT = Model::ListEventsRequest>
+  Model::ListEventsOutcomeCallable ListEventsCallable(const ListEventsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListEvents, request);
+  }
+
+  /**
+   * An Async wrapper for ListEvents that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListEventsRequestT = Model::ListEventsRequest>
+  void ListEventsAsync(const ListEventsRequestT& request, const ListEventsResponseReceivedHandler& handler,
+                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListEvents, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all long-term memory extraction jobs that are eligible to be started
+   * with optional filtering.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:ListMemoryExtractionJobs</code>
+   * permission.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListMemoryExtractionJobs">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListMemoryExtractionJobsOutcome ListMemoryExtractionJobs(const Model::ListMemoryExtractionJobsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListMemoryExtractionJobs that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListMemoryExtractionJobsRequestT = Model::ListMemoryExtractionJobsRequest>
+  Model::ListMemoryExtractionJobsOutcomeCallable ListMemoryExtractionJobsCallable(const ListMemoryExtractionJobsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListMemoryExtractionJobs, request);
+  }
+
+  /**
+   * An Async wrapper for ListMemoryExtractionJobs that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListMemoryExtractionJobsRequestT = Model::ListMemoryExtractionJobsRequest>
+  void ListMemoryExtractionJobsAsync(const ListMemoryExtractionJobsRequestT& request,
+                                     const ListMemoryExtractionJobsResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListMemoryExtractionJobs, request, handler, context);
+  }
+
+  /**
+   * <p>Lists memory records in an AgentCore Memory resource based on specified
+   * criteria. We recommend using pagination to ensure that the operation returns
+   * quickly and successfully.</p> <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:ListMemoryRecords</code> permission.</p><p><h3>See
+   * Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListMemoryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListMemoryRecordsOutcome ListMemoryRecords(const Model::ListMemoryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListMemoryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListMemoryRecordsRequestT = Model::ListMemoryRecordsRequest>
+  Model::ListMemoryRecordsOutcomeCallable ListMemoryRecordsCallable(const ListMemoryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListMemoryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for ListMemoryRecords that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListMemoryRecordsRequestT = Model::ListMemoryRecordsRequest>
+  void ListMemoryRecordsAsync(const ListMemoryRecordsRequestT& request, const ListMemoryRecordsResponseReceivedHandler& handler,
+                              const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListMemoryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>List payment instruments for a manager.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListPaymentInstruments">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListPaymentInstrumentsOutcome ListPaymentInstruments(const Model::ListPaymentInstrumentsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListPaymentInstruments that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListPaymentInstrumentsRequestT = Model::ListPaymentInstrumentsRequest>
+  Model::ListPaymentInstrumentsOutcomeCallable ListPaymentInstrumentsCallable(const ListPaymentInstrumentsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListPaymentInstruments, request);
+  }
+
+  /**
+   * An Async wrapper for ListPaymentInstruments that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename ListPaymentInstrumentsRequestT = Model::ListPaymentInstrumentsRequest>
+  void ListPaymentInstrumentsAsync(const ListPaymentInstrumentsRequestT& request,
+                                   const ListPaymentInstrumentsResponseReceivedHandler& handler,
+                                   const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListPaymentInstruments, request, handler, context);
+  }
+
+  /**
+   * <p>List payment sessions.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListPaymentSessions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListPaymentSessionsOutcome ListPaymentSessions(const Model::ListPaymentSessionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListPaymentSessions that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListPaymentSessionsRequestT = Model::ListPaymentSessionsRequest>
+  Model::ListPaymentSessionsOutcomeCallable ListPaymentSessionsCallable(const ListPaymentSessionsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListPaymentSessions, request);
+  }
+
+  /**
+   * An Async wrapper for ListPaymentSessions that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListPaymentSessionsRequestT = Model::ListPaymentSessionsRequest>
+  void ListPaymentSessionsAsync(const ListPaymentSessionsRequestT& request, const ListPaymentSessionsResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListPaymentSessions, request, handler, context);
+  }
+
+  /**
+   * <p>Lists all recommendations in the account, with optional filtering by
+   * status.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListRecommendations">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListRecommendationsOutcome ListRecommendations(const Model::ListRecommendationsRequest& request = {}) const;
+
+  /**
+   * A Callable wrapper for ListRecommendations that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename ListRecommendationsRequestT = Model::ListRecommendationsRequest>
+  Model::ListRecommendationsOutcomeCallable ListRecommendationsCallable(const ListRecommendationsRequestT& request = {}) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListRecommendations, request);
+  }
+
+  /**
+   * An Async wrapper for ListRecommendations that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename ListRecommendationsRequestT = Model::ListRecommendationsRequest>
+  void ListRecommendationsAsync(const ListRecommendationsResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr,
+                                const ListRecommendationsRequestT& request = {}) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListRecommendations, request, handler, context);
+  }
+
+  /**
+   * <p>Lists sessions in an AgentCore Memory resource based on specified criteria.
+   * We recommend using pagination to ensure that the operation returns quickly and
+   * successfully.</p> <p>Empty sessions are automatically deleted after one day.</p>
+   * <p>To use this operation, you must have the
+   * <code>bedrock-agentcore:ListSessions</code> permission.</p><p><h3>See Also:</h3>
+   * <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ListSessions">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ListSessionsOutcome ListSessions(const Model::ListSessionsRequest& request) const;
+
+  /**
+   * A Callable wrapper for ListSessions that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ListSessionsRequestT = Model::ListSessionsRequest>
+  Model::ListSessionsOutcomeCallable ListSessionsCallable(const ListSessionsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ListSessions, request);
+  }
+
+  /**
+   * An Async wrapper for ListSessions that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ListSessionsRequestT = Model::ListSessionsRequest>
+  void ListSessionsAsync(const ListSessionsRequestT& request, const ListSessionsResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ListSessions, request, handler, context);
+  }
+
+  /**
+   * <p>Processes a payment using a payment instrument within a payment
+   * session.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/ProcessPayment">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::ProcessPaymentOutcome ProcessPayment(const Model::ProcessPaymentRequest& request) const;
+
+  /**
+   * A Callable wrapper for ProcessPayment that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename ProcessPaymentRequestT = Model::ProcessPaymentRequest>
+  Model::ProcessPaymentOutcomeCallable ProcessPaymentCallable(const ProcessPaymentRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::ProcessPayment, request);
+  }
+
+  /**
+   * An Async wrapper for ProcessPayment that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename ProcessPaymentRequestT = Model::ProcessPaymentRequest>
+  void ProcessPaymentAsync(const ProcessPaymentRequestT& request, const ProcessPaymentResponseReceivedHandler& handler,
+                           const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::ProcessPayment, request, handler, context);
+  }
+
+  /**
+   * <p>Searches for and retrieves memory records from an AgentCore Memory resource
+   * based on specified search criteria. We recommend using pagination to ensure that
+   * the operation returns quickly and successfully.</p> <p>To use this operation,
+   * you must have the <code>bedrock-agentcore:RetrieveMemoryRecords</code>
+   * permission.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/RetrieveMemoryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::RetrieveMemoryRecordsOutcome RetrieveMemoryRecords(const Model::RetrieveMemoryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for RetrieveMemoryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename RetrieveMemoryRecordsRequestT = Model::RetrieveMemoryRecordsRequest>
+  Model::RetrieveMemoryRecordsOutcomeCallable RetrieveMemoryRecordsCallable(const RetrieveMemoryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::RetrieveMemoryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for RetrieveMemoryRecords that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename RetrieveMemoryRecordsRequestT = Model::RetrieveMemoryRecordsRequest>
+  void RetrieveMemoryRecordsAsync(const RetrieveMemoryRecordsRequestT& request, const RetrieveMemoryRecordsResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::RetrieveMemoryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>Saves the current state of a browser session as a reusable profile in Amazon
+   * Bedrock AgentCore. A browser profile captures persistent browser data such as
+   * cookies and local storage from an active session, enabling you to reuse this
+   * data in future browser sessions.</p> <p>To save a browser session profile, you
+   * must specify the profile identifier, browser identifier, and session ID. The
+   * session must be active when saving the profile. Once saved, the profile can be
+   * used with the <code>StartBrowserSession</code> operation to initialize new
+   * sessions with the stored browser state.</p> <p>Browser profiles are useful for
+   * scenarios that require persistent authentication, maintaining user preferences
+   * across sessions, or continuing tasks that depend on previously stored browser
+   * data.</p> <p>The following operations are related to
+   * <code>SaveBrowserSessionProfile</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html">StartBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html">GetBrowserSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/SaveBrowserSessionProfile">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SaveBrowserSessionProfileOutcome SaveBrowserSessionProfile(const Model::SaveBrowserSessionProfileRequest& request) const;
+
+  /**
+   * A Callable wrapper for SaveBrowserSessionProfile that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename SaveBrowserSessionProfileRequestT = Model::SaveBrowserSessionProfileRequest>
+  Model::SaveBrowserSessionProfileOutcomeCallable SaveBrowserSessionProfileCallable(
+      const SaveBrowserSessionProfileRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::SaveBrowserSessionProfile, request);
+  }
+
+  /**
+   * An Async wrapper for SaveBrowserSessionProfile that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename SaveBrowserSessionProfileRequestT = Model::SaveBrowserSessionProfileRequest>
+  void SaveBrowserSessionProfileAsync(const SaveBrowserSessionProfileRequestT& request,
+                                      const SaveBrowserSessionProfileResponseReceivedHandler& handler,
+                                      const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::SaveBrowserSessionProfile, request, handler, context);
+  }
+
+  /**
+   * <p> Searches for registry records using semantic, lexical, or hybrid queries.
+   * Returns metadata for matching records ordered by relevance within the specified
+   * registry.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/SearchRegistryRecords">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::SearchRegistryRecordsOutcome SearchRegistryRecords(const Model::SearchRegistryRecordsRequest& request) const;
+
+  /**
+   * A Callable wrapper for SearchRegistryRecords that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename SearchRegistryRecordsRequestT = Model::SearchRegistryRecordsRequest>
+  Model::SearchRegistryRecordsOutcomeCallable SearchRegistryRecordsCallable(const SearchRegistryRecordsRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::SearchRegistryRecords, request);
+  }
+
+  /**
+   * An Async wrapper for SearchRegistryRecords that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename SearchRegistryRecordsRequestT = Model::SearchRegistryRecordsRequest>
+  void SearchRegistryRecordsAsync(const SearchRegistryRecordsRequestT& request, const SearchRegistryRecordsResponseReceivedHandler& handler,
+                                  const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::SearchRegistryRecords, request, handler, context);
+  }
+
+  /**
+   * <p>Starts a batch evaluation job that evaluates agent performance across
+   * multiple sessions. Batch evaluations pull agent traces from CloudWatch Logs or
+   * an existing online evaluation configuration and run specified evaluators and
+   * insights against them.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StartBatchEvaluation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartBatchEvaluationOutcome StartBatchEvaluation(const Model::StartBatchEvaluationRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartBatchEvaluation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartBatchEvaluationRequestT = Model::StartBatchEvaluationRequest>
+  Model::StartBatchEvaluationOutcomeCallable StartBatchEvaluationCallable(const StartBatchEvaluationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StartBatchEvaluation, request);
+  }
+
+  /**
+   * An Async wrapper for StartBatchEvaluation that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartBatchEvaluationRequestT = Model::StartBatchEvaluationRequest>
+  void StartBatchEvaluationAsync(const StartBatchEvaluationRequestT& request, const StartBatchEvaluationResponseReceivedHandler& handler,
+                                 const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StartBatchEvaluation, request, handler, context);
+  }
+
+  /**
+   * <p>Creates and initializes a browser session in Amazon Bedrock AgentCore. The
+   * session enables agents to navigate and interact with web content, extract
+   * information from websites, and perform web-based tasks as part of their response
+   * generation.</p> <p>To create a session, you must specify a browser identifier
+   * and a name. You can also configure the viewport dimensions to control the
+   * visible area of web content. The session remains active until it times out or
+   * you explicitly stop it using the <code>StopBrowserSession</code> operation.</p>
+   * <p>The following operations are related to <code>StartBrowserSession</code>:</p>
+   * <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html">GetBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_UpdateBrowserStream.html">UpdateBrowserStream</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_SaveBrowserSessionProfile.html">SaveBrowserSessionProfile</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopBrowserSession.html">StopBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeBrowser.html">InvokeBrowser</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StartBrowserSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartBrowserSessionOutcome StartBrowserSession(const Model::StartBrowserSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartBrowserSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartBrowserSessionRequestT = Model::StartBrowserSessionRequest>
+  Model::StartBrowserSessionOutcomeCallable StartBrowserSessionCallable(const StartBrowserSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StartBrowserSession, request);
+  }
+
+  /**
+   * An Async wrapper for StartBrowserSession that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StartBrowserSessionRequestT = Model::StartBrowserSessionRequest>
+  void StartBrowserSessionAsync(const StartBrowserSessionRequestT& request, const StartBrowserSessionResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StartBrowserSession, request, handler, context);
+  }
+
+  /**
+   * <p>Creates and initializes a code interpreter session in Amazon Bedrock
+   * AgentCore. The session enables agents to execute code as part of their response
+   * generation, supporting programming languages such as Python for data analysis,
+   * visualization, and computation tasks.</p> <p>To create a session, you must
+   * specify a code interpreter identifier and a name. The session remains active
+   * until it times out or you explicitly stop it using the
+   * <code>StopCodeInterpreterSession</code> operation.</p> <p>The following
+   * operations are related to <code>StartCodeInterpreterSession</code>:</p> <ul>
+   * <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_InvokeCodeInterpreter.html">InvokeCodeInterpreter</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html">GetCodeInterpreterSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StopCodeInterpreterSession.html">StopCodeInterpreterSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StartCodeInterpreterSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartCodeInterpreterSessionOutcome StartCodeInterpreterSession(
+      const Model::StartCodeInterpreterSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartCodeInterpreterSession that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename StartCodeInterpreterSessionRequestT = Model::StartCodeInterpreterSessionRequest>
+  Model::StartCodeInterpreterSessionOutcomeCallable StartCodeInterpreterSessionCallable(
+      const StartCodeInterpreterSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StartCodeInterpreterSession, request);
+  }
+
+  /**
+   * An Async wrapper for StartCodeInterpreterSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartCodeInterpreterSessionRequestT = Model::StartCodeInterpreterSessionRequest>
+  void StartCodeInterpreterSessionAsync(const StartCodeInterpreterSessionRequestT& request,
+                                        const StartCodeInterpreterSessionResponseReceivedHandler& handler,
+                                        const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StartCodeInterpreterSession, request, handler, context);
+  }
+
+  /**
+   * <p> Starts a memory extraction job that processes events that failed extraction
+   * previously in an AgentCore Memory resource and produces structured memory
+   * records. When earlier extraction attempts have left events unprocessed, this job
+   * will pick up and extract those as well. </p> <p>To use this operation, you must
+   * have the <code>bedrock-agentcore:StartMemoryExtractionJob</code>
+   * permission.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StartMemoryExtractionJob">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartMemoryExtractionJobOutcome StartMemoryExtractionJob(const Model::StartMemoryExtractionJobRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartMemoryExtractionJob that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartMemoryExtractionJobRequestT = Model::StartMemoryExtractionJobRequest>
+  Model::StartMemoryExtractionJobOutcomeCallable StartMemoryExtractionJobCallable(const StartMemoryExtractionJobRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StartMemoryExtractionJob, request);
+  }
+
+  /**
+   * An Async wrapper for StartMemoryExtractionJob that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StartMemoryExtractionJobRequestT = Model::StartMemoryExtractionJobRequest>
+  void StartMemoryExtractionJobAsync(const StartMemoryExtractionJobRequestT& request,
+                                     const StartMemoryExtractionJobResponseReceivedHandler& handler,
+                                     const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StartMemoryExtractionJob, request, handler, context);
+  }
+
+  /**
+   * <p>Starts a recommendation job that analyzes agent traces and generates
+   * optimization suggestions for system prompts or tool descriptions to improve
+   * agent performance.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StartRecommendation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StartRecommendationOutcome StartRecommendation(const Model::StartRecommendationRequest& request) const;
+
+  /**
+   * A Callable wrapper for StartRecommendation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StartRecommendationRequestT = Model::StartRecommendationRequest>
+  Model::StartRecommendationOutcomeCallable StartRecommendationCallable(const StartRecommendationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StartRecommendation, request);
+  }
+
+  /**
+   * An Async wrapper for StartRecommendation that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StartRecommendationRequestT = Model::StartRecommendationRequest>
+  void StartRecommendationAsync(const StartRecommendationRequestT& request, const StartRecommendationResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StartRecommendation, request, handler, context);
+  }
+
+  /**
+   * <p>Stops a running batch evaluation. Sessions that have already been evaluated
+   * retain their results.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StopBatchEvaluation">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopBatchEvaluationOutcome StopBatchEvaluation(const Model::StopBatchEvaluationRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopBatchEvaluation that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StopBatchEvaluationRequestT = Model::StopBatchEvaluationRequest>
+  Model::StopBatchEvaluationOutcomeCallable StopBatchEvaluationCallable(const StopBatchEvaluationRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StopBatchEvaluation, request);
+  }
+
+  /**
+   * An Async wrapper for StopBatchEvaluation that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StopBatchEvaluationRequestT = Model::StopBatchEvaluationRequest>
+  void StopBatchEvaluationAsync(const StopBatchEvaluationRequestT& request, const StopBatchEvaluationResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StopBatchEvaluation, request, handler, context);
+  }
+
+  /**
+   * <p>Terminates an active browser session in Amazon Bedrock AgentCore. This
+   * operation stops the session, releases associated resources, and makes the
+   * session unavailable for further use.</p> <p>To stop a browser session, you must
+   * specify both the browser identifier and the session ID. Once stopped, a session
+   * cannot be restarted; you must create a new session using
+   * <code>StartBrowserSession</code>.</p> <p>The following operations are related to
+   * <code>StopBrowserSession</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartBrowserSession.html">StartBrowserSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetBrowserSession.html">GetBrowserSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StopBrowserSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopBrowserSessionOutcome StopBrowserSession(const Model::StopBrowserSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopBrowserSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StopBrowserSessionRequestT = Model::StopBrowserSessionRequest>
+  Model::StopBrowserSessionOutcomeCallable StopBrowserSessionCallable(const StopBrowserSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StopBrowserSession, request);
+  }
+
+  /**
+   * An Async wrapper for StopBrowserSession that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StopBrowserSessionRequestT = Model::StopBrowserSessionRequest>
+  void StopBrowserSessionAsync(const StopBrowserSessionRequestT& request, const StopBrowserSessionResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StopBrowserSession, request, handler, context);
+  }
+
+  /**
+   * <p>Terminates an active code interpreter session in Amazon Bedrock AgentCore.
+   * This operation stops the session, releases associated resources, and makes the
+   * session unavailable for further use.</p> <p>To stop a code interpreter session,
+   * you must specify both the code interpreter identifier and the session ID. Once
+   * stopped, a session cannot be restarted; you must create a new session using
+   * <code>StartCodeInterpreterSession</code>.</p> <p>The following operations are
+   * related to <code>StopCodeInterpreterSession</code>:</p> <ul> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_StartCodeInterpreterSession.html">StartCodeInterpreterSession</a>
+   * </p> </li> <li> <p> <a
+   * href="https://docs.aws.amazon.com/bedrock-agentcore/latest/APIReference/API_GetCodeInterpreterSession.html">GetCodeInterpreterSession</a>
+   * </p> </li> </ul><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StopCodeInterpreterSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopCodeInterpreterSessionOutcome StopCodeInterpreterSession(
+      const Model::StopCodeInterpreterSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopCodeInterpreterSession that returns a future to the operation so that it can be executed in parallel to
+   * other requests.
+   */
+  template <typename StopCodeInterpreterSessionRequestT = Model::StopCodeInterpreterSessionRequest>
+  Model::StopCodeInterpreterSessionOutcomeCallable StopCodeInterpreterSessionCallable(
+      const StopCodeInterpreterSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StopCodeInterpreterSession, request);
+  }
+
+  /**
+   * An Async wrapper for StopCodeInterpreterSession that queues the request into a thread executor and triggers associated callback when
+   * operation has finished.
+   */
+  template <typename StopCodeInterpreterSessionRequestT = Model::StopCodeInterpreterSessionRequest>
+  void StopCodeInterpreterSessionAsync(const StopCodeInterpreterSessionRequestT& request,
+                                       const StopCodeInterpreterSessionResponseReceivedHandler& handler,
+                                       const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StopCodeInterpreterSession, request, handler, context);
+  }
+
+  /**
+   * <p>Stops a session that is running in an running AgentCore Runtime
+   * agent.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/StopRuntimeSession">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::StopRuntimeSessionOutcome StopRuntimeSession(const Model::StopRuntimeSessionRequest& request) const;
+
+  /**
+   * A Callable wrapper for StopRuntimeSession that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename StopRuntimeSessionRequestT = Model::StopRuntimeSessionRequest>
+  Model::StopRuntimeSessionOutcomeCallable StopRuntimeSessionCallable(const StopRuntimeSessionRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::StopRuntimeSession, request);
+  }
+
+  /**
+   * An Async wrapper for StopRuntimeSession that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename StopRuntimeSessionRequestT = Model::StopRuntimeSessionRequest>
+  void StopRuntimeSessionAsync(const StopRuntimeSessionRequestT& request, const StopRuntimeSessionResponseReceivedHandler& handler,
+                               const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::StopRuntimeSession, request, handler, context);
+  }
+
+  /**
+   * <p>Updates an A/B test's configuration, including variants, traffic allocation,
+   * evaluation settings, or execution status.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/UpdateABTest">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateABTestOutcome UpdateABTest(const Model::UpdateABTestRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateABTest that returns a future to the operation so that it can be executed in parallel to other requests.
+   */
+  template <typename UpdateABTestRequestT = Model::UpdateABTestRequest>
+  Model::UpdateABTestOutcomeCallable UpdateABTestCallable(const UpdateABTestRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::UpdateABTest, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateABTest that queues the request into a thread executor and triggers associated callback when operation has
+   * finished.
+   */
+  template <typename UpdateABTestRequestT = Model::UpdateABTestRequest>
+  void UpdateABTestAsync(const UpdateABTestRequestT& request, const UpdateABTestResponseReceivedHandler& handler,
+                         const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::UpdateABTest, request, handler, context);
+  }
+
+  /**
+   * <p>Updates a browser stream. To use this operation, you must have permissions to
+   * perform the bedrock:UpdateBrowserStream action.</p><p><h3>See Also:</h3>   <a
+   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-agentcore-2024-02-28/UpdateBrowserStream">AWS
+   * API Reference</a></p>
+   */
+  virtual Model::UpdateBrowserStreamOutcome UpdateBrowserStream(const Model::UpdateBrowserStreamRequest& request) const;
+
+  /**
+   * A Callable wrapper for UpdateBrowserStream that returns a future to the operation so that it can be executed in parallel to other
+   * requests.
+   */
+  template <typename UpdateBrowserStreamRequestT = Model::UpdateBrowserStreamRequest>
+  Model::UpdateBrowserStreamOutcomeCallable UpdateBrowserStreamCallable(const UpdateBrowserStreamRequestT& request) const {
+    return SubmitCallable(&BedrockAgentCoreClient::UpdateBrowserStream, request);
+  }
+
+  /**
+   * An Async wrapper for UpdateBrowserStream that queues the request into a thread executor and triggers associated callback when operation
+   * has finished.
+   */
+  template <typename UpdateBrowserStreamRequestT = Model::UpdateBrowserStreamRequest>
+  void UpdateBrowserStreamAsync(const UpdateBrowserStreamRequestT& request, const UpdateBrowserStreamResponseReceivedHandler& handler,
+                                const std::shared_ptr<const Aws::Client::AsyncCallerContext>& context = nullptr) const {
+    return SubmitAsync(&BedrockAgentCoreClient::UpdateBrowserStream, request, handler, context);
+  }
+
+  virtual void OverrideEndpoint(const Aws::String& endpoint);
+  virtual std::shared_ptr<BedrockAgentCoreEndpointProviderBase>& accessEndpointProvider();
+
+ private:
+  friend class Aws::Client::ClientWithAsyncTemplateMethods<BedrockAgentCoreClient>;
+  void init(const BedrockAgentCoreClientConfiguration& clientConfiguration);
+
+  typedef Aws::Utils::Outcome<Aws::AmazonWebServiceResult<RESPONSE>, BedrockAgentCoreError> InvokeOperationOutcome;
+
+  InvokeOperationOutcome InvokeServiceOperation(const AmazonWebServiceRequest& request,
+                                                const std::function<void(Aws::Endpoint::ResolveEndpointOutcome&)>& resolveUri,
+                                                Aws::Http::HttpMethod httpMethod) const;
+
+  BedrockAgentCoreClientConfiguration m_clientConfiguration;
+  std::shared_ptr<BedrockAgentCoreEndpointProviderBase> m_endpointProvider;
+};
+
+}  // namespace BedrockAgentCore
+}  // namespace Aws

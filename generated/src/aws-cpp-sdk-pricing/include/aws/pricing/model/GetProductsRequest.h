@@ -4,124 +4,147 @@
  */
 
 #pragma once
-#include <aws/pricing/Pricing_EXPORTS.h>
-#include <aws/pricing/PricingRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pricing/PricingRequest.h>
+#include <aws/pricing/Pricing_EXPORTS.h>
 #include <aws/pricing/model/Filter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Pricing
-{
-namespace Model
-{
+namespace Aws {
+namespace Pricing {
+namespace Model {
 
+/**
+ */
+class GetProductsRequest : public PricingRequest {
+ public:
+  AWS_PRICING_API GetProductsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetProducts"; }
+
+  AWS_PRICING_API Aws::String SerializePayload() const override;
+
+  AWS_PRICING_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The code for the service whose products you want to retrieve. </p>
    */
-  class GetProductsRequest : public PricingRequest
-  {
-  public:
-    AWS_PRICING_API GetProductsRequest();
+  inline const Aws::String& GetServiceCode() const { return m_serviceCode; }
+  inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
+  template <typename ServiceCodeT = Aws::String>
+  void SetServiceCode(ServiceCodeT&& value) {
+    m_serviceCodeHasBeenSet = true;
+    m_serviceCode = std::forward<ServiceCodeT>(value);
+  }
+  template <typename ServiceCodeT = Aws::String>
+  GetProductsRequest& WithServiceCode(ServiceCodeT&& value) {
+    SetServiceCode(std::forward<ServiceCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetProducts"; }
+  ///@{
+  /**
+   * <p>The list of filters that limit the returned products. only products that
+   * match all filters are returned.</p>
+   */
+  inline const Aws::Vector<Filter>& GetFilters() const { return m_filters; }
+  inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  void SetFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters = std::forward<FiltersT>(value);
+  }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  GetProductsRequest& WithFilters(FiltersT&& value) {
+    SetFilters(std::forward<FiltersT>(value));
+    return *this;
+  }
+  template <typename FiltersT = Filter>
+  GetProductsRequest& AddFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters.emplace_back(std::forward<FiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PRICING_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The format version that you want the response to be in.</p> <p>Valid values
+   * are: <code>aws_v1</code> </p>
+   */
+  inline const Aws::String& GetFormatVersion() const { return m_formatVersion; }
+  inline bool FormatVersionHasBeenSet() const { return m_formatVersionHasBeenSet; }
+  template <typename FormatVersionT = Aws::String>
+  void SetFormatVersion(FormatVersionT&& value) {
+    m_formatVersionHasBeenSet = true;
+    m_formatVersion = std::forward<FormatVersionT>(value);
+  }
+  template <typename FormatVersionT = Aws::String>
+  GetProductsRequest& WithFormatVersion(FormatVersionT&& value) {
+    SetFormatVersion(std::forward<FormatVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_PRICING_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The pagination token that indicates the next set of results that you want to
+   * retrieve.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetProductsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The maximum number of results to return in the response.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline GetProductsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_serviceCode;
 
-    ///@{
-    /**
-     * <p>The code for the service whose products you want to retrieve. </p>
-     */
-    inline const Aws::String& GetServiceCode() const{ return m_serviceCode; }
-    inline bool ServiceCodeHasBeenSet() const { return m_serviceCodeHasBeenSet; }
-    inline void SetServiceCode(const Aws::String& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = value; }
-    inline void SetServiceCode(Aws::String&& value) { m_serviceCodeHasBeenSet = true; m_serviceCode = std::move(value); }
-    inline void SetServiceCode(const char* value) { m_serviceCodeHasBeenSet = true; m_serviceCode.assign(value); }
-    inline GetProductsRequest& WithServiceCode(const Aws::String& value) { SetServiceCode(value); return *this;}
-    inline GetProductsRequest& WithServiceCode(Aws::String&& value) { SetServiceCode(std::move(value)); return *this;}
-    inline GetProductsRequest& WithServiceCode(const char* value) { SetServiceCode(value); return *this;}
-    ///@}
+  Aws::Vector<Filter> m_filters;
 
-    ///@{
-    /**
-     * <p>The list of filters that limit the returned products. only products that
-     * match all filters are returned.</p>
-     */
-    inline const Aws::Vector<Filter>& GetFilters() const{ return m_filters; }
-    inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
-    inline void SetFilters(const Aws::Vector<Filter>& value) { m_filtersHasBeenSet = true; m_filters = value; }
-    inline void SetFilters(Aws::Vector<Filter>&& value) { m_filtersHasBeenSet = true; m_filters = std::move(value); }
-    inline GetProductsRequest& WithFilters(const Aws::Vector<Filter>& value) { SetFilters(value); return *this;}
-    inline GetProductsRequest& WithFilters(Aws::Vector<Filter>&& value) { SetFilters(std::move(value)); return *this;}
-    inline GetProductsRequest& AddFilters(const Filter& value) { m_filtersHasBeenSet = true; m_filters.push_back(value); return *this; }
-    inline GetProductsRequest& AddFilters(Filter&& value) { m_filtersHasBeenSet = true; m_filters.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_formatVersion;
 
-    ///@{
-    /**
-     * <p>The format version that you want the response to be in.</p> <p>Valid values
-     * are: <code>aws_v1</code> </p>
-     */
-    inline const Aws::String& GetFormatVersion() const{ return m_formatVersion; }
-    inline bool FormatVersionHasBeenSet() const { return m_formatVersionHasBeenSet; }
-    inline void SetFormatVersion(const Aws::String& value) { m_formatVersionHasBeenSet = true; m_formatVersion = value; }
-    inline void SetFormatVersion(Aws::String&& value) { m_formatVersionHasBeenSet = true; m_formatVersion = std::move(value); }
-    inline void SetFormatVersion(const char* value) { m_formatVersionHasBeenSet = true; m_formatVersion.assign(value); }
-    inline GetProductsRequest& WithFormatVersion(const Aws::String& value) { SetFormatVersion(value); return *this;}
-    inline GetProductsRequest& WithFormatVersion(Aws::String&& value) { SetFormatVersion(std::move(value)); return *this;}
-    inline GetProductsRequest& WithFormatVersion(const char* value) { SetFormatVersion(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The pagination token that indicates the next set of results that you want to
-     * retrieve.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline GetProductsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetProductsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetProductsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  int m_maxResults{0};
+  bool m_serviceCodeHasBeenSet = false;
+  bool m_filtersHasBeenSet = false;
+  bool m_formatVersionHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The maximum number of results to return in the response.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline GetProductsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_serviceCode;
-    bool m_serviceCodeHasBeenSet = false;
-
-    Aws::Vector<Filter> m_filters;
-    bool m_filtersHasBeenSet = false;
-
-    Aws::String m_formatVersion;
-    bool m_formatVersionHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Pricing
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pricing
+}  // namespace Aws

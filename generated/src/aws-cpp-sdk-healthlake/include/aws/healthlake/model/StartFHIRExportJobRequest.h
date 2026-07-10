@@ -4,125 +4,140 @@
  */
 
 #pragma once
-#include <aws/healthlake/HealthLake_EXPORTS.h>
-#include <aws/healthlake/HealthLakeRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/healthlake/model/OutputDataConfig.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/healthlake/HealthLakeRequest.h>
+#include <aws/healthlake/HealthLake_EXPORTS.h>
+#include <aws/healthlake/model/OutputDataConfig.h>
 
-namespace Aws
-{
-namespace HealthLake
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace HealthLake {
+namespace Model {
+
+/**
+ */
+class StartFHIRExportJobRequest : public HealthLakeRequest {
+ public:
+  AWS_HEALTHLAKE_API StartFHIRExportJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartFHIRExportJob"; }
+
+  AWS_HEALTHLAKE_API Aws::String SerializePayload() const override;
+
+  AWS_HEALTHLAKE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The export job name.</p>
    */
-  class StartFHIRExportJobRequest : public HealthLakeRequest
-  {
-  public:
-    AWS_HEALTHLAKE_API StartFHIRExportJobRequest();
+  inline const Aws::String& GetJobName() const { return m_jobName; }
+  inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
+  template <typename JobNameT = Aws::String>
+  void SetJobName(JobNameT&& value) {
+    m_jobNameHasBeenSet = true;
+    m_jobName = std::forward<JobNameT>(value);
+  }
+  template <typename JobNameT = Aws::String>
+  StartFHIRExportJobRequest& WithJobName(JobNameT&& value) {
+    SetJobName(std::forward<JobNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartFHIRExportJob"; }
+  ///@{
+  /**
+   * <p>The output data configuration supplied when the export job was started.</p>
+   */
+  inline const OutputDataConfig& GetOutputDataConfig() const { return m_outputDataConfig; }
+  inline bool OutputDataConfigHasBeenSet() const { return m_outputDataConfigHasBeenSet; }
+  template <typename OutputDataConfigT = OutputDataConfig>
+  void SetOutputDataConfig(OutputDataConfigT&& value) {
+    m_outputDataConfigHasBeenSet = true;
+    m_outputDataConfig = std::forward<OutputDataConfigT>(value);
+  }
+  template <typename OutputDataConfigT = OutputDataConfig>
+  StartFHIRExportJobRequest& WithOutputDataConfig(OutputDataConfigT&& value) {
+    SetOutputDataConfig(std::forward<OutputDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_HEALTHLAKE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The data store identifier from which files are being exported.</p>
+   */
+  inline const Aws::String& GetDatastoreId() const { return m_datastoreId; }
+  inline bool DatastoreIdHasBeenSet() const { return m_datastoreIdHasBeenSet; }
+  template <typename DatastoreIdT = Aws::String>
+  void SetDatastoreId(DatastoreIdT&& value) {
+    m_datastoreIdHasBeenSet = true;
+    m_datastoreId = std::forward<DatastoreIdT>(value);
+  }
+  template <typename DatastoreIdT = Aws::String>
+  StartFHIRExportJobRequest& WithDatastoreId(DatastoreIdT&& value) {
+    SetDatastoreId(std::forward<DatastoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_HEALTHLAKE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) used during initiation of the export job.</p>
+   */
+  inline const Aws::String& GetDataAccessRoleArn() const { return m_dataAccessRoleArn; }
+  inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
+  template <typename DataAccessRoleArnT = Aws::String>
+  void SetDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    m_dataAccessRoleArnHasBeenSet = true;
+    m_dataAccessRoleArn = std::forward<DataAccessRoleArnT>(value);
+  }
+  template <typename DataAccessRoleArnT = Aws::String>
+  StartFHIRExportJobRequest& WithDataAccessRoleArn(DataAccessRoleArnT&& value) {
+    SetDataAccessRoleArn(std::forward<DataAccessRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An optional user provided token used for ensuring API idempotency.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  StartFHIRExportJobRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobName;
 
-    ///@{
-    /**
-     * <p>The user generated name for an export job.</p>
-     */
-    inline const Aws::String& GetJobName() const{ return m_jobName; }
-    inline bool JobNameHasBeenSet() const { return m_jobNameHasBeenSet; }
-    inline void SetJobName(const Aws::String& value) { m_jobNameHasBeenSet = true; m_jobName = value; }
-    inline void SetJobName(Aws::String&& value) { m_jobNameHasBeenSet = true; m_jobName = std::move(value); }
-    inline void SetJobName(const char* value) { m_jobNameHasBeenSet = true; m_jobName.assign(value); }
-    inline StartFHIRExportJobRequest& WithJobName(const Aws::String& value) { SetJobName(value); return *this;}
-    inline StartFHIRExportJobRequest& WithJobName(Aws::String&& value) { SetJobName(std::move(value)); return *this;}
-    inline StartFHIRExportJobRequest& WithJobName(const char* value) { SetJobName(value); return *this;}
-    ///@}
+  OutputDataConfig m_outputDataConfig;
 
-    ///@{
-    /**
-     * <p>The output data configuration that was supplied when the export job was
-     * created.</p>
-     */
-    inline const OutputDataConfig& GetOutputDataConfig() const{ return m_outputDataConfig; }
-    inline bool OutputDataConfigHasBeenSet() const { return m_outputDataConfigHasBeenSet; }
-    inline void SetOutputDataConfig(const OutputDataConfig& value) { m_outputDataConfigHasBeenSet = true; m_outputDataConfig = value; }
-    inline void SetOutputDataConfig(OutputDataConfig&& value) { m_outputDataConfigHasBeenSet = true; m_outputDataConfig = std::move(value); }
-    inline StartFHIRExportJobRequest& WithOutputDataConfig(const OutputDataConfig& value) { SetOutputDataConfig(value); return *this;}
-    inline StartFHIRExportJobRequest& WithOutputDataConfig(OutputDataConfig&& value) { SetOutputDataConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_datastoreId;
 
-    ///@{
-    /**
-     * <p>The AWS generated ID for the data store from which files are being exported
-     * for an export job.</p>
-     */
-    inline const Aws::String& GetDatastoreId() const{ return m_datastoreId; }
-    inline bool DatastoreIdHasBeenSet() const { return m_datastoreIdHasBeenSet; }
-    inline void SetDatastoreId(const Aws::String& value) { m_datastoreIdHasBeenSet = true; m_datastoreId = value; }
-    inline void SetDatastoreId(Aws::String&& value) { m_datastoreIdHasBeenSet = true; m_datastoreId = std::move(value); }
-    inline void SetDatastoreId(const char* value) { m_datastoreIdHasBeenSet = true; m_datastoreId.assign(value); }
-    inline StartFHIRExportJobRequest& WithDatastoreId(const Aws::String& value) { SetDatastoreId(value); return *this;}
-    inline StartFHIRExportJobRequest& WithDatastoreId(Aws::String&& value) { SetDatastoreId(std::move(value)); return *this;}
-    inline StartFHIRExportJobRequest& WithDatastoreId(const char* value) { SetDatastoreId(value); return *this;}
-    ///@}
+  Aws::String m_dataAccessRoleArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name used during the initiation of the job.</p>
-     */
-    inline const Aws::String& GetDataAccessRoleArn() const{ return m_dataAccessRoleArn; }
-    inline bool DataAccessRoleArnHasBeenSet() const { return m_dataAccessRoleArnHasBeenSet; }
-    inline void SetDataAccessRoleArn(const Aws::String& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = value; }
-    inline void SetDataAccessRoleArn(Aws::String&& value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn = std::move(value); }
-    inline void SetDataAccessRoleArn(const char* value) { m_dataAccessRoleArnHasBeenSet = true; m_dataAccessRoleArn.assign(value); }
-    inline StartFHIRExportJobRequest& WithDataAccessRoleArn(const Aws::String& value) { SetDataAccessRoleArn(value); return *this;}
-    inline StartFHIRExportJobRequest& WithDataAccessRoleArn(Aws::String&& value) { SetDataAccessRoleArn(std::move(value)); return *this;}
-    inline StartFHIRExportJobRequest& WithDataAccessRoleArn(const char* value) { SetDataAccessRoleArn(value); return *this;}
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_jobNameHasBeenSet = false;
+  bool m_outputDataConfigHasBeenSet = false;
+  bool m_datastoreIdHasBeenSet = false;
+  bool m_dataAccessRoleArnHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    ///@{
-    /**
-     * <p>An optional user provided token used for ensuring idempotency.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline StartFHIRExportJobRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline StartFHIRExportJobRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline StartFHIRExportJobRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_jobName;
-    bool m_jobNameHasBeenSet = false;
-
-    OutputDataConfig m_outputDataConfig;
-    bool m_outputDataConfigHasBeenSet = false;
-
-    Aws::String m_datastoreId;
-    bool m_datastoreIdHasBeenSet = false;
-
-    Aws::String m_dataAccessRoleArn;
-    bool m_dataAccessRoleArnHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace HealthLake
-} // namespace Aws
+}  // namespace Model
+}  // namespace HealthLake
+}  // namespace Aws

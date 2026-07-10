@@ -4,219 +4,331 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
-#include <aws/lambda/LambdaRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lambda/LambdaRequest.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/lambda/model/Architecture.h>
+#include <aws/lambda/model/FunctionVersionLatestPublished.h>
+#include <aws/lambda/model/S3ObjectStorageMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Lambda
-{
-namespace Model
-{
+namespace Aws {
+namespace Lambda {
+namespace Model {
 
+/**
+ */
+class UpdateFunctionCodeRequest : public LambdaRequest {
+ public:
+  AWS_LAMBDA_API UpdateFunctionCodeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateFunctionCode"; }
+
+  AWS_LAMBDA_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name or ARN of the Lambda function.</p> <p class="title"> <b>Name
+   * formats</b> </p> <ul> <li> <p> <b>Function name</b> –
+   * <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> –
+   * <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p>
+   * </li> <li> <p> <b>Partial ARN</b> –
+   * <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length
+   * constraint applies only to the full ARN. If you specify only the function name,
+   * it is limited to 64 characters in length.</p>
    */
-  class UpdateFunctionCodeRequest : public LambdaRequest
-  {
-  public:
-    AWS_LAMBDA_API UpdateFunctionCodeRequest();
+  inline const Aws::String& GetFunctionName() const { return m_functionName; }
+  inline bool FunctionNameHasBeenSet() const { return m_functionNameHasBeenSet; }
+  template <typename FunctionNameT = Aws::String>
+  void SetFunctionName(FunctionNameT&& value) {
+    m_functionNameHasBeenSet = true;
+    m_functionName = std::forward<FunctionNameT>(value);
+  }
+  template <typename FunctionNameT = Aws::String>
+  UpdateFunctionCodeRequest& WithFunctionName(FunctionNameT&& value) {
+    SetFunctionName(std::forward<FunctionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateFunctionCode"; }
+  ///@{
+  /**
+   * <p>The base64-encoded contents of the deployment package. Amazon Web Services
+   * SDK and CLI clients handle the encoding for you. Use only with a function
+   * defined with a .zip file archive deployment package.</p>
+   */
+  inline const Aws::Utils::CryptoBuffer& GetZipFile() const { return m_zipFile; }
+  inline bool ZipFileHasBeenSet() const { return m_zipFileHasBeenSet; }
+  template <typename ZipFileT = Aws::Utils::CryptoBuffer>
+  void SetZipFile(ZipFileT&& value) {
+    m_zipFileHasBeenSet = true;
+    m_zipFile = std::forward<ZipFileT>(value);
+  }
+  template <typename ZipFileT = Aws::Utils::CryptoBuffer>
+  UpdateFunctionCodeRequest& WithZipFile(ZipFileT&& value) {
+    SetZipFile(std::forward<ZipFileT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LAMBDA_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An Amazon S3 bucket in the same Amazon Web Services Region as your function.
+   * The bucket can be in a different Amazon Web Services account. Use only with a
+   * function defined with a .zip file archive deployment package.</p>
+   */
+  inline const Aws::String& GetS3Bucket() const { return m_s3Bucket; }
+  inline bool S3BucketHasBeenSet() const { return m_s3BucketHasBeenSet; }
+  template <typename S3BucketT = Aws::String>
+  void SetS3Bucket(S3BucketT&& value) {
+    m_s3BucketHasBeenSet = true;
+    m_s3Bucket = std::forward<S3BucketT>(value);
+  }
+  template <typename S3BucketT = Aws::String>
+  UpdateFunctionCodeRequest& WithS3Bucket(S3BucketT&& value) {
+    SetS3Bucket(std::forward<S3BucketT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon S3 key of the deployment package. Use only with a function defined
+   * with a .zip file archive deployment package.</p>
+   */
+  inline const Aws::String& GetS3Key() const { return m_s3Key; }
+  inline bool S3KeyHasBeenSet() const { return m_s3KeyHasBeenSet; }
+  template <typename S3KeyT = Aws::String>
+  void SetS3Key(S3KeyT&& value) {
+    m_s3KeyHasBeenSet = true;
+    m_s3Key = std::forward<S3KeyT>(value);
+  }
+  template <typename S3KeyT = Aws::String>
+  UpdateFunctionCodeRequest& WithS3Key(S3KeyT&& value) {
+    SetS3Key(std::forward<S3KeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name or ARN of the Lambda function.</p> <p class="title"> <b>Name
-     * formats</b> </p> <ul> <li> <p> <b>Function name</b> –
-     * <code>my-function</code>.</p> </li> <li> <p> <b>Function ARN</b> –
-     * <code>arn:aws:lambda:us-west-2:123456789012:function:my-function</code>.</p>
-     * </li> <li> <p> <b>Partial ARN</b> –
-     * <code>123456789012:function:my-function</code>.</p> </li> </ul> <p>The length
-     * constraint applies only to the full ARN. If you specify only the function name,
-     * it is limited to 64 characters in length.</p>
-     */
-    inline const Aws::String& GetFunctionName() const{ return m_functionName; }
-    inline bool FunctionNameHasBeenSet() const { return m_functionNameHasBeenSet; }
-    inline void SetFunctionName(const Aws::String& value) { m_functionNameHasBeenSet = true; m_functionName = value; }
-    inline void SetFunctionName(Aws::String&& value) { m_functionNameHasBeenSet = true; m_functionName = std::move(value); }
-    inline void SetFunctionName(const char* value) { m_functionNameHasBeenSet = true; m_functionName.assign(value); }
-    inline UpdateFunctionCodeRequest& WithFunctionName(const Aws::String& value) { SetFunctionName(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithFunctionName(Aws::String&& value) { SetFunctionName(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithFunctionName(const char* value) { SetFunctionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>For versioned objects, the version of the deployment package object to
+   * use.</p>
+   */
+  inline const Aws::String& GetS3ObjectVersion() const { return m_s3ObjectVersion; }
+  inline bool S3ObjectVersionHasBeenSet() const { return m_s3ObjectVersionHasBeenSet; }
+  template <typename S3ObjectVersionT = Aws::String>
+  void SetS3ObjectVersion(S3ObjectVersionT&& value) {
+    m_s3ObjectVersionHasBeenSet = true;
+    m_s3ObjectVersion = std::forward<S3ObjectVersionT>(value);
+  }
+  template <typename S3ObjectVersionT = Aws::String>
+  UpdateFunctionCodeRequest& WithS3ObjectVersion(S3ObjectVersionT&& value) {
+    SetS3ObjectVersion(std::forward<S3ObjectVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded contents of the deployment package. Amazon Web Services
-     * SDK and CLI clients handle the encoding for you. Use only with a function
-     * defined with a .zip file archive deployment package.</p>
-     */
-    inline const Aws::Utils::CryptoBuffer& GetZipFile() const{ return m_zipFile; }
-    inline bool ZipFileHasBeenSet() const { return m_zipFileHasBeenSet; }
-    inline void SetZipFile(const Aws::Utils::CryptoBuffer& value) { m_zipFileHasBeenSet = true; m_zipFile = value; }
-    inline void SetZipFile(Aws::Utils::CryptoBuffer&& value) { m_zipFileHasBeenSet = true; m_zipFile = std::move(value); }
-    inline UpdateFunctionCodeRequest& WithZipFile(const Aws::Utils::CryptoBuffer& value) { SetZipFile(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithZipFile(Aws::Utils::CryptoBuffer&& value) { SetZipFile(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies how the deployment package is stored. Use <code>COPY</code>
+   * (default) to upload a copy of your deployment package to Lambda. Use
+   * <code>REFERENCE</code> to have Lambda reference the deployment package from the
+   * specified Amazon S3 bucket.</p>
+   */
+  inline S3ObjectStorageMode GetS3ObjectStorageMode() const { return m_s3ObjectStorageMode; }
+  inline bool S3ObjectStorageModeHasBeenSet() const { return m_s3ObjectStorageModeHasBeenSet; }
+  inline void SetS3ObjectStorageMode(S3ObjectStorageMode value) {
+    m_s3ObjectStorageModeHasBeenSet = true;
+    m_s3ObjectStorageMode = value;
+  }
+  inline UpdateFunctionCodeRequest& WithS3ObjectStorageMode(S3ObjectStorageMode value) {
+    SetS3ObjectStorageMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An Amazon S3 bucket in the same Amazon Web Services Region as your function.
-     * The bucket can be in a different Amazon Web Services account. Use only with a
-     * function defined with a .zip file archive deployment package.</p>
-     */
-    inline const Aws::String& GetS3Bucket() const{ return m_s3Bucket; }
-    inline bool S3BucketHasBeenSet() const { return m_s3BucketHasBeenSet; }
-    inline void SetS3Bucket(const Aws::String& value) { m_s3BucketHasBeenSet = true; m_s3Bucket = value; }
-    inline void SetS3Bucket(Aws::String&& value) { m_s3BucketHasBeenSet = true; m_s3Bucket = std::move(value); }
-    inline void SetS3Bucket(const char* value) { m_s3BucketHasBeenSet = true; m_s3Bucket.assign(value); }
-    inline UpdateFunctionCodeRequest& WithS3Bucket(const Aws::String& value) { SetS3Bucket(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3Bucket(Aws::String&& value) { SetS3Bucket(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3Bucket(const char* value) { SetS3Bucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>URI of a container image in the Amazon ECR registry. Do not use for a
+   * function defined with a .zip file archive.</p>
+   */
+  inline const Aws::String& GetImageUri() const { return m_imageUri; }
+  inline bool ImageUriHasBeenSet() const { return m_imageUriHasBeenSet; }
+  template <typename ImageUriT = Aws::String>
+  void SetImageUri(ImageUriT&& value) {
+    m_imageUriHasBeenSet = true;
+    m_imageUri = std::forward<ImageUriT>(value);
+  }
+  template <typename ImageUriT = Aws::String>
+  UpdateFunctionCodeRequest& WithImageUri(ImageUriT&& value) {
+    SetImageUri(std::forward<ImageUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon S3 key of the deployment package. Use only with a function defined
-     * with a .zip file archive deployment package.</p>
-     */
-    inline const Aws::String& GetS3Key() const{ return m_s3Key; }
-    inline bool S3KeyHasBeenSet() const { return m_s3KeyHasBeenSet; }
-    inline void SetS3Key(const Aws::String& value) { m_s3KeyHasBeenSet = true; m_s3Key = value; }
-    inline void SetS3Key(Aws::String&& value) { m_s3KeyHasBeenSet = true; m_s3Key = std::move(value); }
-    inline void SetS3Key(const char* value) { m_s3KeyHasBeenSet = true; m_s3Key.assign(value); }
-    inline UpdateFunctionCodeRequest& WithS3Key(const Aws::String& value) { SetS3Key(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3Key(Aws::String&& value) { SetS3Key(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3Key(const char* value) { SetS3Key(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The instruction set architecture that the function supports. Enter a string
+   * array with one of the valid values (arm64 or x86_64). The default value is
+   * <code>x86_64</code>.</p>
+   */
+  inline const Aws::Vector<Architecture>& GetArchitectures() const { return m_architectures; }
+  inline bool ArchitecturesHasBeenSet() const { return m_architecturesHasBeenSet; }
+  template <typename ArchitecturesT = Aws::Vector<Architecture>>
+  void SetArchitectures(ArchitecturesT&& value) {
+    m_architecturesHasBeenSet = true;
+    m_architectures = std::forward<ArchitecturesT>(value);
+  }
+  template <typename ArchitecturesT = Aws::Vector<Architecture>>
+  UpdateFunctionCodeRequest& WithArchitectures(ArchitecturesT&& value) {
+    SetArchitectures(std::forward<ArchitecturesT>(value));
+    return *this;
+  }
+  inline UpdateFunctionCodeRequest& AddArchitectures(Architecture value) {
+    m_architecturesHasBeenSet = true;
+    m_architectures.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>For versioned objects, the version of the deployment package object to
-     * use.</p>
-     */
-    inline const Aws::String& GetS3ObjectVersion() const{ return m_s3ObjectVersion; }
-    inline bool S3ObjectVersionHasBeenSet() const { return m_s3ObjectVersionHasBeenSet; }
-    inline void SetS3ObjectVersion(const Aws::String& value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion = value; }
-    inline void SetS3ObjectVersion(Aws::String&& value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion = std::move(value); }
-    inline void SetS3ObjectVersion(const char* value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion.assign(value); }
-    inline UpdateFunctionCodeRequest& WithS3ObjectVersion(const Aws::String& value) { SetS3ObjectVersion(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3ObjectVersion(Aws::String&& value) { SetS3ObjectVersion(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithS3ObjectVersion(const char* value) { SetS3ObjectVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Set to true to publish a new version of the function after updating the code.
+   * This has the same effect as calling <a>PublishVersion</a> separately.</p>
+   */
+  inline bool GetPublish() const { return m_publish; }
+  inline bool PublishHasBeenSet() const { return m_publishHasBeenSet; }
+  inline void SetPublish(bool value) {
+    m_publishHasBeenSet = true;
+    m_publish = value;
+  }
+  inline UpdateFunctionCodeRequest& WithPublish(bool value) {
+    SetPublish(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>URI of a container image in the Amazon ECR registry. Do not use for a
-     * function defined with a .zip file archive.</p>
-     */
-    inline const Aws::String& GetImageUri() const{ return m_imageUri; }
-    inline bool ImageUriHasBeenSet() const { return m_imageUriHasBeenSet; }
-    inline void SetImageUri(const Aws::String& value) { m_imageUriHasBeenSet = true; m_imageUri = value; }
-    inline void SetImageUri(Aws::String&& value) { m_imageUriHasBeenSet = true; m_imageUri = std::move(value); }
-    inline void SetImageUri(const char* value) { m_imageUriHasBeenSet = true; m_imageUri.assign(value); }
-    inline UpdateFunctionCodeRequest& WithImageUri(const Aws::String& value) { SetImageUri(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithImageUri(Aws::String&& value) { SetImageUri(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithImageUri(const char* value) { SetImageUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies where to publish the function version or configuration.</p>
+   */
+  inline FunctionVersionLatestPublished GetPublishTo() const { return m_publishTo; }
+  inline bool PublishToHasBeenSet() const { return m_publishToHasBeenSet; }
+  inline void SetPublishTo(FunctionVersionLatestPublished value) {
+    m_publishToHasBeenSet = true;
+    m_publishTo = value;
+  }
+  inline UpdateFunctionCodeRequest& WithPublishTo(FunctionVersionLatestPublished value) {
+    SetPublishTo(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Set to true to publish a new version of the function after updating the code.
-     * This has the same effect as calling <a>PublishVersion</a> separately.</p>
-     */
-    inline bool GetPublish() const{ return m_publish; }
-    inline bool PublishHasBeenSet() const { return m_publishHasBeenSet; }
-    inline void SetPublish(bool value) { m_publishHasBeenSet = true; m_publish = value; }
-    inline UpdateFunctionCodeRequest& WithPublish(bool value) { SetPublish(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Set to true to validate the request parameters and access permissions without
+   * modifying the function code.</p>
+   */
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline UpdateFunctionCodeRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Set to true to validate the request parameters and access permissions without
-     * modifying the function code.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline UpdateFunctionCodeRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Update the function only if the revision ID matches the ID that's specified.
+   * Use this option to avoid modifying a function that has changed since you last
+   * read it.</p>
+   */
+  inline const Aws::String& GetRevisionId() const { return m_revisionId; }
+  inline bool RevisionIdHasBeenSet() const { return m_revisionIdHasBeenSet; }
+  template <typename RevisionIdT = Aws::String>
+  void SetRevisionId(RevisionIdT&& value) {
+    m_revisionIdHasBeenSet = true;
+    m_revisionId = std::forward<RevisionIdT>(value);
+  }
+  template <typename RevisionIdT = Aws::String>
+  UpdateFunctionCodeRequest& WithRevisionId(RevisionIdT&& value) {
+    SetRevisionId(std::forward<RevisionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Update the function only if the revision ID matches the ID that's specified.
-     * Use this option to avoid modifying a function that has changed since you last
-     * read it.</p>
-     */
-    inline const Aws::String& GetRevisionId() const{ return m_revisionId; }
-    inline bool RevisionIdHasBeenSet() const { return m_revisionIdHasBeenSet; }
-    inline void SetRevisionId(const Aws::String& value) { m_revisionIdHasBeenSet = true; m_revisionId = value; }
-    inline void SetRevisionId(Aws::String&& value) { m_revisionIdHasBeenSet = true; m_revisionId = std::move(value); }
-    inline void SetRevisionId(const char* value) { m_revisionIdHasBeenSet = true; m_revisionId.assign(value); }
-    inline UpdateFunctionCodeRequest& WithRevisionId(const Aws::String& value) { SetRevisionId(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithRevisionId(Aws::String&& value) { SetRevisionId(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& WithRevisionId(const char* value) { SetRevisionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used
+   * to encrypt your function's .zip deployment package. If you don't provide a
+   * customer managed key, Lambda uses an Amazon Web Services managed key.</p>
+   */
+  inline const Aws::String& GetSourceKMSKeyArn() const { return m_sourceKMSKeyArn; }
+  inline bool SourceKMSKeyArnHasBeenSet() const { return m_sourceKMSKeyArnHasBeenSet; }
+  template <typename SourceKMSKeyArnT = Aws::String>
+  void SetSourceKMSKeyArn(SourceKMSKeyArnT&& value) {
+    m_sourceKMSKeyArnHasBeenSet = true;
+    m_sourceKMSKeyArn = std::forward<SourceKMSKeyArnT>(value);
+  }
+  template <typename SourceKMSKeyArnT = Aws::String>
+  UpdateFunctionCodeRequest& WithSourceKMSKeyArn(SourceKMSKeyArnT&& value) {
+    SetSourceKMSKeyArn(std::forward<SourceKMSKeyArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_functionName;
 
-    ///@{
-    /**
-     * <p>The instruction set architecture that the function supports. Enter a string
-     * array with one of the valid values (arm64 or x86_64). The default value is
-     * <code>x86_64</code>.</p>
-     */
-    inline const Aws::Vector<Architecture>& GetArchitectures() const{ return m_architectures; }
-    inline bool ArchitecturesHasBeenSet() const { return m_architecturesHasBeenSet; }
-    inline void SetArchitectures(const Aws::Vector<Architecture>& value) { m_architecturesHasBeenSet = true; m_architectures = value; }
-    inline void SetArchitectures(Aws::Vector<Architecture>&& value) { m_architecturesHasBeenSet = true; m_architectures = std::move(value); }
-    inline UpdateFunctionCodeRequest& WithArchitectures(const Aws::Vector<Architecture>& value) { SetArchitectures(value); return *this;}
-    inline UpdateFunctionCodeRequest& WithArchitectures(Aws::Vector<Architecture>&& value) { SetArchitectures(std::move(value)); return *this;}
-    inline UpdateFunctionCodeRequest& AddArchitectures(const Architecture& value) { m_architecturesHasBeenSet = true; m_architectures.push_back(value); return *this; }
-    inline UpdateFunctionCodeRequest& AddArchitectures(Architecture&& value) { m_architecturesHasBeenSet = true; m_architectures.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Utils::CryptoBuffer m_zipFile{};
 
-    Aws::String m_functionName;
-    bool m_functionNameHasBeenSet = false;
+  Aws::String m_s3Bucket;
 
-    Aws::Utils::CryptoBuffer m_zipFile;
-    bool m_zipFileHasBeenSet = false;
+  Aws::String m_s3Key;
 
-    Aws::String m_s3Bucket;
-    bool m_s3BucketHasBeenSet = false;
+  Aws::String m_s3ObjectVersion;
 
-    Aws::String m_s3Key;
-    bool m_s3KeyHasBeenSet = false;
+  S3ObjectStorageMode m_s3ObjectStorageMode{S3ObjectStorageMode::NOT_SET};
 
-    Aws::String m_s3ObjectVersion;
-    bool m_s3ObjectVersionHasBeenSet = false;
+  Aws::String m_imageUri;
 
-    Aws::String m_imageUri;
-    bool m_imageUriHasBeenSet = false;
+  Aws::Vector<Architecture> m_architectures;
 
-    bool m_publish;
-    bool m_publishHasBeenSet = false;
+  bool m_publish{false};
 
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
+  FunctionVersionLatestPublished m_publishTo{FunctionVersionLatestPublished::NOT_SET};
 
-    Aws::String m_revisionId;
-    bool m_revisionIdHasBeenSet = false;
+  bool m_dryRun{false};
 
-    Aws::Vector<Architecture> m_architectures;
-    bool m_architecturesHasBeenSet = false;
-  };
+  Aws::String m_revisionId;
 
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+  Aws::String m_sourceKMSKeyArn;
+  bool m_functionNameHasBeenSet = false;
+  bool m_zipFileHasBeenSet = false;
+  bool m_s3BucketHasBeenSet = false;
+  bool m_s3KeyHasBeenSet = false;
+  bool m_s3ObjectVersionHasBeenSet = false;
+  bool m_s3ObjectStorageModeHasBeenSet = false;
+  bool m_imageUriHasBeenSet = false;
+  bool m_architecturesHasBeenSet = false;
+  bool m_publishHasBeenSet = false;
+  bool m_publishToHasBeenSet = false;
+  bool m_dryRunHasBeenSet = false;
+  bool m_revisionIdHasBeenSet = false;
+  bool m_sourceKMSKeyArnHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

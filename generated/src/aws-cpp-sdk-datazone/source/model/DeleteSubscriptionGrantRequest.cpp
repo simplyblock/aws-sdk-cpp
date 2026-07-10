@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/datazone/model/DeleteSubscriptionGrantRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/datazone/model/DeleteSubscriptionGrantRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::DataZone::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteSubscriptionGrantRequest::DeleteSubscriptionGrantRequest() : 
-    m_domainIdentifierHasBeenSet(false),
-    m_identifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteSubscriptionGrantRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteSubscriptionGrantRequest::SerializePayload() const { return {}; }

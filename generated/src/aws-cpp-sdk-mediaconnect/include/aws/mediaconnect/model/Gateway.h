@@ -4,147 +4,185 @@
  */
 
 #pragma once
-#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/mediaconnect/MediaConnect_EXPORTS.h>
+#include <aws/mediaconnect/model/GatewayNetwork.h>
 #include <aws/mediaconnect/model/GatewayState.h>
 #include <aws/mediaconnect/model/MessageDetail.h>
-#include <aws/mediaconnect/model/GatewayNetwork.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaConnect
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaConnect {
+namespace Model {
 
+/**
+ * <p>The settings for a gateway, including its networks. </p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/Gateway">AWS
+ * API Reference</a></p>
+ */
+class Gateway {
+ public:
+  AWS_MEDIACONNECT_API Gateway() = default;
+  AWS_MEDIACONNECT_API Gateway(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API Gateway& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * The settings for a gateway, including its networks.<p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/Gateway">AWS
-   * API Reference</a></p>
+   * <p> The range of IP addresses that contribute content or initiate output
+   * requests for flows communicating with this gateway. These IP addresses should be
+   * in the form of a Classless Inter-Domain Routing (CIDR) block; for example,
+   * 10.0.0.0/16.</p>
    */
-  class Gateway
-  {
-  public:
-    AWS_MEDIACONNECT_API Gateway();
-    AWS_MEDIACONNECT_API Gateway(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API Gateway& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIACONNECT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetEgressCidrBlocks() const { return m_egressCidrBlocks; }
+  inline bool EgressCidrBlocksHasBeenSet() const { return m_egressCidrBlocksHasBeenSet; }
+  template <typename EgressCidrBlocksT = Aws::Vector<Aws::String>>
+  void SetEgressCidrBlocks(EgressCidrBlocksT&& value) {
+    m_egressCidrBlocksHasBeenSet = true;
+    m_egressCidrBlocks = std::forward<EgressCidrBlocksT>(value);
+  }
+  template <typename EgressCidrBlocksT = Aws::Vector<Aws::String>>
+  Gateway& WithEgressCidrBlocks(EgressCidrBlocksT&& value) {
+    SetEgressCidrBlocks(std::forward<EgressCidrBlocksT>(value));
+    return *this;
+  }
+  template <typename EgressCidrBlocksT = Aws::String>
+  Gateway& AddEgressCidrBlocks(EgressCidrBlocksT&& value) {
+    m_egressCidrBlocksHasBeenSet = true;
+    m_egressCidrBlocks.emplace_back(std::forward<EgressCidrBlocksT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> The Amazon Resource Name (ARN) of the gateway.</p>
+   */
+  inline const Aws::String& GetGatewayArn() const { return m_gatewayArn; }
+  inline bool GatewayArnHasBeenSet() const { return m_gatewayArnHasBeenSet; }
+  template <typename GatewayArnT = Aws::String>
+  void SetGatewayArn(GatewayArnT&& value) {
+    m_gatewayArnHasBeenSet = true;
+    m_gatewayArn = std::forward<GatewayArnT>(value);
+  }
+  template <typename GatewayArnT = Aws::String>
+  Gateway& WithGatewayArn(GatewayArnT&& value) {
+    SetGatewayArn(std::forward<GatewayArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The range of IP addresses that contribute content or initiate output requests
-     * for flows communicating with this gateway. These IP addresses should be in the
-     * form of a Classless Inter-Domain Routing (CIDR) block; for example, 10.0.0.0/16.
-     */
-    inline const Aws::Vector<Aws::String>& GetEgressCidrBlocks() const{ return m_egressCidrBlocks; }
-    inline bool EgressCidrBlocksHasBeenSet() const { return m_egressCidrBlocksHasBeenSet; }
-    inline void SetEgressCidrBlocks(const Aws::Vector<Aws::String>& value) { m_egressCidrBlocksHasBeenSet = true; m_egressCidrBlocks = value; }
-    inline void SetEgressCidrBlocks(Aws::Vector<Aws::String>&& value) { m_egressCidrBlocksHasBeenSet = true; m_egressCidrBlocks = std::move(value); }
-    inline Gateway& WithEgressCidrBlocks(const Aws::Vector<Aws::String>& value) { SetEgressCidrBlocks(value); return *this;}
-    inline Gateway& WithEgressCidrBlocks(Aws::Vector<Aws::String>&& value) { SetEgressCidrBlocks(std::move(value)); return *this;}
-    inline Gateway& AddEgressCidrBlocks(const Aws::String& value) { m_egressCidrBlocksHasBeenSet = true; m_egressCidrBlocks.push_back(value); return *this; }
-    inline Gateway& AddEgressCidrBlocks(Aws::String&& value) { m_egressCidrBlocksHasBeenSet = true; m_egressCidrBlocks.push_back(std::move(value)); return *this; }
-    inline Gateway& AddEgressCidrBlocks(const char* value) { m_egressCidrBlocksHasBeenSet = true; m_egressCidrBlocks.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Messages with information about the gateway. </p>
+   */
+  inline const Aws::Vector<MessageDetail>& GetGatewayMessages() const { return m_gatewayMessages; }
+  inline bool GatewayMessagesHasBeenSet() const { return m_gatewayMessagesHasBeenSet; }
+  template <typename GatewayMessagesT = Aws::Vector<MessageDetail>>
+  void SetGatewayMessages(GatewayMessagesT&& value) {
+    m_gatewayMessagesHasBeenSet = true;
+    m_gatewayMessages = std::forward<GatewayMessagesT>(value);
+  }
+  template <typename GatewayMessagesT = Aws::Vector<MessageDetail>>
+  Gateway& WithGatewayMessages(GatewayMessagesT&& value) {
+    SetGatewayMessages(std::forward<GatewayMessagesT>(value));
+    return *this;
+  }
+  template <typename GatewayMessagesT = MessageDetail>
+  Gateway& AddGatewayMessages(GatewayMessagesT&& value) {
+    m_gatewayMessagesHasBeenSet = true;
+    m_gatewayMessages.emplace_back(std::forward<GatewayMessagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The Amazon Resource Name (ARN) of the gateway.
-     */
-    inline const Aws::String& GetGatewayArn() const{ return m_gatewayArn; }
-    inline bool GatewayArnHasBeenSet() const { return m_gatewayArnHasBeenSet; }
-    inline void SetGatewayArn(const Aws::String& value) { m_gatewayArnHasBeenSet = true; m_gatewayArn = value; }
-    inline void SetGatewayArn(Aws::String&& value) { m_gatewayArnHasBeenSet = true; m_gatewayArn = std::move(value); }
-    inline void SetGatewayArn(const char* value) { m_gatewayArnHasBeenSet = true; m_gatewayArn.assign(value); }
-    inline Gateway& WithGatewayArn(const Aws::String& value) { SetGatewayArn(value); return *this;}
-    inline Gateway& WithGatewayArn(Aws::String&& value) { SetGatewayArn(std::move(value)); return *this;}
-    inline Gateway& WithGatewayArn(const char* value) { SetGatewayArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The current status of the gateway.</p>
+   */
+  inline GatewayState GetGatewayState() const { return m_gatewayState; }
+  inline bool GatewayStateHasBeenSet() const { return m_gatewayStateHasBeenSet; }
+  inline void SetGatewayState(GatewayState value) {
+    m_gatewayStateHasBeenSet = true;
+    m_gatewayState = value;
+  }
+  inline Gateway& WithGatewayState(GatewayState value) {
+    SetGatewayState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::Vector<MessageDetail>& GetGatewayMessages() const{ return m_gatewayMessages; }
-    inline bool GatewayMessagesHasBeenSet() const { return m_gatewayMessagesHasBeenSet; }
-    inline void SetGatewayMessages(const Aws::Vector<MessageDetail>& value) { m_gatewayMessagesHasBeenSet = true; m_gatewayMessages = value; }
-    inline void SetGatewayMessages(Aws::Vector<MessageDetail>&& value) { m_gatewayMessagesHasBeenSet = true; m_gatewayMessages = std::move(value); }
-    inline Gateway& WithGatewayMessages(const Aws::Vector<MessageDetail>& value) { SetGatewayMessages(value); return *this;}
-    inline Gateway& WithGatewayMessages(Aws::Vector<MessageDetail>&& value) { SetGatewayMessages(std::move(value)); return *this;}
-    inline Gateway& AddGatewayMessages(const MessageDetail& value) { m_gatewayMessagesHasBeenSet = true; m_gatewayMessages.push_back(value); return *this; }
-    inline Gateway& AddGatewayMessages(MessageDetail&& value) { m_gatewayMessagesHasBeenSet = true; m_gatewayMessages.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The name of the gateway. This name can not be modified after the gateway is
+   * created.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Gateway& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The current status of the gateway.
-     */
-    inline const GatewayState& GetGatewayState() const{ return m_gatewayState; }
-    inline bool GatewayStateHasBeenSet() const { return m_gatewayStateHasBeenSet; }
-    inline void SetGatewayState(const GatewayState& value) { m_gatewayStateHasBeenSet = true; m_gatewayState = value; }
-    inline void SetGatewayState(GatewayState&& value) { m_gatewayStateHasBeenSet = true; m_gatewayState = std::move(value); }
-    inline Gateway& WithGatewayState(const GatewayState& value) { SetGatewayState(value); return *this;}
-    inline Gateway& WithGatewayState(GatewayState&& value) { SetGatewayState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> The list of networks in the gateway.</p>
+   */
+  inline const Aws::Vector<GatewayNetwork>& GetNetworks() const { return m_networks; }
+  inline bool NetworksHasBeenSet() const { return m_networksHasBeenSet; }
+  template <typename NetworksT = Aws::Vector<GatewayNetwork>>
+  void SetNetworks(NetworksT&& value) {
+    m_networksHasBeenSet = true;
+    m_networks = std::forward<NetworksT>(value);
+  }
+  template <typename NetworksT = Aws::Vector<GatewayNetwork>>
+  Gateway& WithNetworks(NetworksT&& value) {
+    SetNetworks(std::forward<NetworksT>(value));
+    return *this;
+  }
+  template <typename NetworksT = GatewayNetwork>
+  Gateway& AddNetworks(NetworksT&& value) {
+    m_networksHasBeenSet = true;
+    m_networks.emplace_back(std::forward<NetworksT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_egressCidrBlocks;
 
-    ///@{
-    /**
-     * The name of the gateway. This name can not be modified after the gateway is
-     * created.
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Gateway& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Gateway& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Gateway& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_gatewayArn;
 
-    ///@{
-    /**
-     * The list of networks in the gateway.
-     */
-    inline const Aws::Vector<GatewayNetwork>& GetNetworks() const{ return m_networks; }
-    inline bool NetworksHasBeenSet() const { return m_networksHasBeenSet; }
-    inline void SetNetworks(const Aws::Vector<GatewayNetwork>& value) { m_networksHasBeenSet = true; m_networks = value; }
-    inline void SetNetworks(Aws::Vector<GatewayNetwork>&& value) { m_networksHasBeenSet = true; m_networks = std::move(value); }
-    inline Gateway& WithNetworks(const Aws::Vector<GatewayNetwork>& value) { SetNetworks(value); return *this;}
-    inline Gateway& WithNetworks(Aws::Vector<GatewayNetwork>&& value) { SetNetworks(std::move(value)); return *this;}
-    inline Gateway& AddNetworks(const GatewayNetwork& value) { m_networksHasBeenSet = true; m_networks.push_back(value); return *this; }
-    inline Gateway& AddNetworks(GatewayNetwork&& value) { m_networksHasBeenSet = true; m_networks.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<MessageDetail> m_gatewayMessages;
 
-    Aws::Vector<Aws::String> m_egressCidrBlocks;
-    bool m_egressCidrBlocksHasBeenSet = false;
+  GatewayState m_gatewayState{GatewayState::NOT_SET};
 
-    Aws::String m_gatewayArn;
-    bool m_gatewayArnHasBeenSet = false;
+  Aws::String m_name;
 
-    Aws::Vector<MessageDetail> m_gatewayMessages;
-    bool m_gatewayMessagesHasBeenSet = false;
+  Aws::Vector<GatewayNetwork> m_networks;
+  bool m_egressCidrBlocksHasBeenSet = false;
+  bool m_gatewayArnHasBeenSet = false;
+  bool m_gatewayMessagesHasBeenSet = false;
+  bool m_gatewayStateHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_networksHasBeenSet = false;
+};
 
-    GatewayState m_gatewayState;
-    bool m_gatewayStateHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Vector<GatewayNetwork> m_networks;
-    bool m_networksHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaConnect
+}  // namespace Aws

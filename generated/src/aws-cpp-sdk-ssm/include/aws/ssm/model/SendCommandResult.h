@@ -4,64 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/Command.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
-  class SendCommandResult
-  {
-  public:
-    AWS_SSM_API SendCommandResult();
-    AWS_SSM_API SendCommandResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSM_API SendCommandResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
+class SendCommandResult {
+ public:
+  AWS_SSM_API SendCommandResult() = default;
+  AWS_SSM_API SendCommandResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSM_API SendCommandResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The request as it was received by Systems Manager. Also provides the command
+   * ID which can be used future references to this request.</p>
+   */
+  inline const Command& GetCommand() const { return m_command; }
+  template <typename CommandT = Command>
+  void SetCommand(CommandT&& value) {
+    m_commandHasBeenSet = true;
+    m_command = std::forward<CommandT>(value);
+  }
+  template <typename CommandT = Command>
+  SendCommandResult& WithCommand(CommandT&& value) {
+    SetCommand(std::forward<CommandT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The request as it was received by Systems Manager. Also provides the command
-     * ID which can be used future references to this request.</p>
-     */
-    inline const Command& GetCommand() const{ return m_command; }
-    inline void SetCommand(const Command& value) { m_command = value; }
-    inline void SetCommand(Command&& value) { m_command = std::move(value); }
-    inline SendCommandResult& WithCommand(const Command& value) { SetCommand(value); return *this;}
-    inline SendCommandResult& WithCommand(Command&& value) { SetCommand(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SendCommandResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SendCommandResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SendCommandResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SendCommandResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Command m_command;
+ private:
+  Command m_command;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_commandHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

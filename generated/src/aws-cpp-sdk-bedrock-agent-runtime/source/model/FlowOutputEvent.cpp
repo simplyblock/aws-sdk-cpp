@@ -11,77 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-FlowOutputEvent::FlowOutputEvent() : 
-    m_contentHasBeenSet(false),
-    m_nodeNameHasBeenSet(false),
-    m_nodeType(NodeType::NOT_SET),
-    m_nodeTypeHasBeenSet(false)
-{
-}
+FlowOutputEvent::FlowOutputEvent(JsonView jsonValue) { *this = jsonValue; }
 
-FlowOutputEvent::FlowOutputEvent(JsonView jsonValue)
-  : FlowOutputEvent()
-{
-  *this = jsonValue;
-}
-
-FlowOutputEvent& FlowOutputEvent::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("content"))
-  {
+FlowOutputEvent& FlowOutputEvent::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("content")) {
     m_content = jsonValue.GetObject("content");
-
     m_contentHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("nodeName"))
-  {
+  if (jsonValue.ValueExists("nodeName")) {
     m_nodeName = jsonValue.GetString("nodeName");
-
     m_nodeNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("nodeType"))
-  {
+  if (jsonValue.ValueExists("nodeType")) {
     m_nodeType = NodeTypeMapper::GetNodeTypeForName(jsonValue.GetString("nodeType"));
-
     m_nodeTypeHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue FlowOutputEvent::Jsonize() const
-{
+JsonValue FlowOutputEvent::Jsonize() const {
   JsonValue payload;
 
-  if(m_contentHasBeenSet)
-  {
-   payload.WithObject("content", m_content.Jsonize());
-
+  if (m_contentHasBeenSet) {
+    payload.WithObject("content", m_content.Jsonize());
   }
 
-  if(m_nodeNameHasBeenSet)
-  {
-   payload.WithString("nodeName", m_nodeName);
-
+  if (m_nodeNameHasBeenSet) {
+    payload.WithString("nodeName", m_nodeName);
   }
 
-  if(m_nodeTypeHasBeenSet)
-  {
-   payload.WithString("nodeType", NodeTypeMapper::GetNameForNodeType(m_nodeType));
+  if (m_nodeTypeHasBeenSet) {
+    payload.WithString("nodeType", NodeTypeMapper::GetNameForNodeType(m_nodeType));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

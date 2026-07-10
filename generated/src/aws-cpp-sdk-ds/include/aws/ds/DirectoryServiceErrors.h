@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/ds/DirectoryService_EXPORTS.h>
 
-namespace Aws
-{
-namespace DirectoryService
-{
-enum class DirectoryServiceErrors
-{
-  //From Core//
+namespace Aws {
+namespace DirectoryService {
+enum class DirectoryServiceErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class DirectoryServiceErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,7 +44,8 @@ enum class DirectoryServiceErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  AUTHENTICATION_FAILED= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  AUTHENTICATION_FAILED = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  A_D_ASSESSMENT_LIMIT_EXCEEDED,
   CERTIFICATE_ALREADY_EXISTS,
   CERTIFICATE_DOES_NOT_EXIST,
   CERTIFICATE_IN_USE,
@@ -60,7 +58,9 @@ enum class DirectoryServiceErrors
   DIRECTORY_LIMIT_EXCEEDED,
   DIRECTORY_NOT_SHARED,
   DIRECTORY_UNAVAILABLE,
+  DISABLE_ALREADY_IN_PROGRESS,
   DOMAIN_CONTROLLER_LIMIT_EXCEEDED,
+  ENABLE_ALREADY_IN_PROGRESS,
   ENTITY_ALREADY_EXISTS,
   ENTITY_DOES_NOT_EXIST,
   INCOMPATIBLE_SETTINGS,
@@ -85,9 +85,8 @@ enum class DirectoryServiceErrors
   USER_DOES_NOT_EXIST
 };
 
-class AWS_DIRECTORYSERVICE_API DirectoryServiceError : public Aws::Client::AWSError<DirectoryServiceErrors>
-{
-public:
+class AWS_DIRECTORYSERVICE_API DirectoryServiceError : public Aws::Client::AWSError<DirectoryServiceErrors> {
+ public:
   DirectoryServiceError() {}
   DirectoryServiceError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<DirectoryServiceErrors>(rhs) {}
   DirectoryServiceError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<DirectoryServiceErrors>(rhs) {}
@@ -98,10 +97,9 @@ public:
   T GetModeledError();
 };
 
-namespace DirectoryServiceErrorMapper
-{
-  AWS_DIRECTORYSERVICE_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace DirectoryServiceErrorMapper {
+AWS_DIRECTORYSERVICE_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace DirectoryService
+}  // namespace Aws

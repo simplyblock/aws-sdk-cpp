@@ -4,68 +4,73 @@
  */
 
 #pragma once
-#include <aws/pinpoint/Pinpoint_EXPORTS.h>
-#include <aws/pinpoint/PinpointRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pinpoint/PinpointRequest.h>
+#include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/WriteCampaignRequest.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Pinpoint
-{
-namespace Model
-{
+namespace Aws {
+namespace Pinpoint {
+namespace Model {
 
+/**
+ */
+class CreateCampaignRequest : public PinpointRequest {
+ public:
+  AWS_PINPOINT_API CreateCampaignRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateCampaign"; }
+
+  AWS_PINPOINT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier for the application. This identifier is displayed as
+   * the <b>Project ID</b> on the Amazon Pinpoint console.</p>
    */
-  class CreateCampaignRequest : public PinpointRequest
-  {
-  public:
-    AWS_PINPOINT_API CreateCampaignRequest();
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  CreateCampaignRequest& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateCampaign"; }
+  ///@{
 
-    AWS_PINPOINT_API Aws::String SerializePayload() const override;
+  inline const WriteCampaignRequest& GetWriteCampaignRequest() const { return m_writeCampaignRequest; }
+  inline bool WriteCampaignRequestHasBeenSet() const { return m_writeCampaignRequestHasBeenSet; }
+  template <typename WriteCampaignRequestT = WriteCampaignRequest>
+  void SetWriteCampaignRequest(WriteCampaignRequestT&& value) {
+    m_writeCampaignRequestHasBeenSet = true;
+    m_writeCampaignRequest = std::forward<WriteCampaignRequestT>(value);
+  }
+  template <typename WriteCampaignRequestT = WriteCampaignRequest>
+  CreateCampaignRequest& WithWriteCampaignRequest(WriteCampaignRequestT&& value) {
+    SetWriteCampaignRequest(std::forward<WriteCampaignRequestT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationId;
 
+  WriteCampaignRequest m_writeCampaignRequest;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_writeCampaignRequestHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The unique identifier for the application. This identifier is displayed as
-     * the <b>Project ID</b> on the Amazon Pinpoint console.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationIdHasBeenSet = true; m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationIdHasBeenSet = true; m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationIdHasBeenSet = true; m_applicationId.assign(value); }
-    inline CreateCampaignRequest& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline CreateCampaignRequest& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline CreateCampaignRequest& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
-
-    ///@{
-    
-    inline const WriteCampaignRequest& GetWriteCampaignRequest() const{ return m_writeCampaignRequest; }
-    inline bool WriteCampaignRequestHasBeenSet() const { return m_writeCampaignRequestHasBeenSet; }
-    inline void SetWriteCampaignRequest(const WriteCampaignRequest& value) { m_writeCampaignRequestHasBeenSet = true; m_writeCampaignRequest = value; }
-    inline void SetWriteCampaignRequest(WriteCampaignRequest&& value) { m_writeCampaignRequestHasBeenSet = true; m_writeCampaignRequest = std::move(value); }
-    inline CreateCampaignRequest& WithWriteCampaignRequest(const WriteCampaignRequest& value) { SetWriteCampaignRequest(value); return *this;}
-    inline CreateCampaignRequest& WithWriteCampaignRequest(WriteCampaignRequest&& value) { SetWriteCampaignRequest(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet = false;
-
-    WriteCampaignRequest m_writeCampaignRequest;
-    bool m_writeCampaignRequestHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

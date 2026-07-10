@@ -11,121 +11,111 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ApplicationSignals
-{
-namespace Model
-{
+namespace Aws {
+namespace ApplicationSignals {
+namespace Model {
 
-RequestBasedServiceLevelIndicatorMetricConfig::RequestBasedServiceLevelIndicatorMetricConfig() : 
-    m_keyAttributesHasBeenSet(false),
-    m_operationNameHasBeenSet(false),
-    m_metricType(ServiceLevelIndicatorMetricType::NOT_SET),
-    m_metricTypeHasBeenSet(false),
-    m_totalRequestCountMetricHasBeenSet(false),
-    m_monitoredRequestCountMetricHasBeenSet(false)
-{
-}
+RequestBasedServiceLevelIndicatorMetricConfig::RequestBasedServiceLevelIndicatorMetricConfig(JsonView jsonValue) { *this = jsonValue; }
 
-RequestBasedServiceLevelIndicatorMetricConfig::RequestBasedServiceLevelIndicatorMetricConfig(JsonView jsonValue)
-  : RequestBasedServiceLevelIndicatorMetricConfig()
-{
-  *this = jsonValue;
-}
-
-RequestBasedServiceLevelIndicatorMetricConfig& RequestBasedServiceLevelIndicatorMetricConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("KeyAttributes"))
-  {
+RequestBasedServiceLevelIndicatorMetricConfig& RequestBasedServiceLevelIndicatorMetricConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("KeyAttributes")) {
     Aws::Map<Aws::String, JsonView> keyAttributesJsonMap = jsonValue.GetObject("KeyAttributes").GetAllObjects();
-    for(auto& keyAttributesItem : keyAttributesJsonMap)
-    {
+    for (auto& keyAttributesItem : keyAttributesJsonMap) {
       m_keyAttributes[keyAttributesItem.first] = keyAttributesItem.second.AsString();
     }
     m_keyAttributesHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("OperationName"))
-  {
+  if (jsonValue.ValueExists("OperationName")) {
     m_operationName = jsonValue.GetString("OperationName");
-
     m_operationNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("MetricType"))
-  {
+  if (jsonValue.ValueExists("MetricType")) {
     m_metricType = ServiceLevelIndicatorMetricTypeMapper::GetServiceLevelIndicatorMetricTypeForName(jsonValue.GetString("MetricType"));
-
     m_metricTypeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("TotalRequestCountMetric"))
-  {
+  if (jsonValue.ValueExists("TotalRequestCountMetric")) {
     Aws::Utils::Array<JsonView> totalRequestCountMetricJsonList = jsonValue.GetArray("TotalRequestCountMetric");
-    for(unsigned totalRequestCountMetricIndex = 0; totalRequestCountMetricIndex < totalRequestCountMetricJsonList.GetLength(); ++totalRequestCountMetricIndex)
-    {
+    for (unsigned totalRequestCountMetricIndex = 0; totalRequestCountMetricIndex < totalRequestCountMetricJsonList.GetLength();
+         ++totalRequestCountMetricIndex) {
       m_totalRequestCountMetric.push_back(totalRequestCountMetricJsonList[totalRequestCountMetricIndex].AsObject());
     }
     m_totalRequestCountMetricHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("MonitoredRequestCountMetric"))
-  {
+  if (jsonValue.ValueExists("MonitoredRequestCountMetric")) {
     m_monitoredRequestCountMetric = jsonValue.GetObject("MonitoredRequestCountMetric");
-
     m_monitoredRequestCountMetricHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("DependencyConfig")) {
+    m_dependencyConfig = jsonValue.GetObject("DependencyConfig");
+    m_dependencyConfigHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("MetricSource")) {
+    m_metricSource = jsonValue.GetObject("MetricSource");
+    m_metricSourceHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("MetricName")) {
+    m_metricName = jsonValue.GetString("MetricName");
+    m_metricNameHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("CompositeSliConfig")) {
+    m_compositeSliConfig = jsonValue.GetObject("CompositeSliConfig");
+    m_compositeSliConfigHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue RequestBasedServiceLevelIndicatorMetricConfig::Jsonize() const
-{
+JsonValue RequestBasedServiceLevelIndicatorMetricConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_keyAttributesHasBeenSet)
-  {
-   JsonValue keyAttributesJsonMap;
-   for(auto& keyAttributesItem : m_keyAttributes)
-   {
-     keyAttributesJsonMap.WithString(keyAttributesItem.first, keyAttributesItem.second);
-   }
-   payload.WithObject("KeyAttributes", std::move(keyAttributesJsonMap));
-
+  if (m_keyAttributesHasBeenSet) {
+    JsonValue keyAttributesJsonMap;
+    for (auto& keyAttributesItem : m_keyAttributes) {
+      keyAttributesJsonMap.WithString(keyAttributesItem.first, keyAttributesItem.second);
+    }
+    payload.WithObject("KeyAttributes", std::move(keyAttributesJsonMap));
   }
 
-  if(m_operationNameHasBeenSet)
-  {
-   payload.WithString("OperationName", m_operationName);
-
+  if (m_operationNameHasBeenSet) {
+    payload.WithString("OperationName", m_operationName);
   }
 
-  if(m_metricTypeHasBeenSet)
-  {
-   payload.WithString("MetricType", ServiceLevelIndicatorMetricTypeMapper::GetNameForServiceLevelIndicatorMetricType(m_metricType));
+  if (m_metricTypeHasBeenSet) {
+    payload.WithString("MetricType", ServiceLevelIndicatorMetricTypeMapper::GetNameForServiceLevelIndicatorMetricType(m_metricType));
   }
 
-  if(m_totalRequestCountMetricHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> totalRequestCountMetricJsonList(m_totalRequestCountMetric.size());
-   for(unsigned totalRequestCountMetricIndex = 0; totalRequestCountMetricIndex < totalRequestCountMetricJsonList.GetLength(); ++totalRequestCountMetricIndex)
-   {
-     totalRequestCountMetricJsonList[totalRequestCountMetricIndex].AsObject(m_totalRequestCountMetric[totalRequestCountMetricIndex].Jsonize());
-   }
-   payload.WithArray("TotalRequestCountMetric", std::move(totalRequestCountMetricJsonList));
-
+  if (m_totalRequestCountMetricHasBeenSet) {
+    Aws::Utils::Array<JsonValue> totalRequestCountMetricJsonList(m_totalRequestCountMetric.size());
+    for (unsigned totalRequestCountMetricIndex = 0; totalRequestCountMetricIndex < totalRequestCountMetricJsonList.GetLength();
+         ++totalRequestCountMetricIndex) {
+      totalRequestCountMetricJsonList[totalRequestCountMetricIndex].AsObject(
+          m_totalRequestCountMetric[totalRequestCountMetricIndex].Jsonize());
+    }
+    payload.WithArray("TotalRequestCountMetric", std::move(totalRequestCountMetricJsonList));
   }
 
-  if(m_monitoredRequestCountMetricHasBeenSet)
-  {
-   payload.WithObject("MonitoredRequestCountMetric", m_monitoredRequestCountMetric.Jsonize());
+  if (m_monitoredRequestCountMetricHasBeenSet) {
+    payload.WithObject("MonitoredRequestCountMetric", m_monitoredRequestCountMetric.Jsonize());
+  }
 
+  if (m_dependencyConfigHasBeenSet) {
+    payload.WithObject("DependencyConfig", m_dependencyConfig.Jsonize());
+  }
+
+  if (m_metricSourceHasBeenSet) {
+    payload.WithObject("MetricSource", m_metricSource.Jsonize());
+  }
+
+  if (m_metricNameHasBeenSet) {
+    payload.WithString("MetricName", m_metricName);
+  }
+
+  if (m_compositeSliConfigHasBeenSet) {
+    payload.WithObject("CompositeSliConfig", m_compositeSliConfig.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ApplicationSignals
-} // namespace Aws
+}  // namespace Model
+}  // namespace ApplicationSignals
+}  // namespace Aws

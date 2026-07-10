@@ -4,273 +4,348 @@
  */
 
 #pragma once
-#include <aws/sesv2/SESV2_EXPORTS.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/sesv2/SESV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SESV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SESV2 {
+namespace Model {
 
+/**
+ * <p>An object that contains the deliverability data for a specific campaign. This
+ * data is available for a campaign only if the campaign sent email by using a
+ * domain that the Deliverability dashboard is enabled for
+ * (<code>PutDeliverabilityDashboardOption</code> operation).</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DomainDeliverabilityCampaign">AWS
+ * API Reference</a></p>
+ */
+class DomainDeliverabilityCampaign {
+ public:
+  AWS_SESV2_API DomainDeliverabilityCampaign() = default;
+  AWS_SESV2_API DomainDeliverabilityCampaign(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SESV2_API DomainDeliverabilityCampaign& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SESV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object that contains the deliverability data for a specific campaign. This
-   * data is available for a campaign only if the campaign sent email by using a
-   * domain that the Deliverability dashboard is enabled for
-   * (<code>PutDeliverabilityDashboardOption</code> operation).</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DomainDeliverabilityCampaign">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for the campaign. The Deliverability dashboard
+   * automatically generates and assigns this identifier to a campaign.</p>
    */
-  class DomainDeliverabilityCampaign
-  {
-  public:
-    AWS_SESV2_API DomainDeliverabilityCampaign();
-    AWS_SESV2_API DomainDeliverabilityCampaign(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SESV2_API DomainDeliverabilityCampaign& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SESV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetCampaignId() const { return m_campaignId; }
+  inline bool CampaignIdHasBeenSet() const { return m_campaignIdHasBeenSet; }
+  template <typename CampaignIdT = Aws::String>
+  void SetCampaignId(CampaignIdT&& value) {
+    m_campaignIdHasBeenSet = true;
+    m_campaignId = std::forward<CampaignIdT>(value);
+  }
+  template <typename CampaignIdT = Aws::String>
+  DomainDeliverabilityCampaign& WithCampaignId(CampaignIdT&& value) {
+    SetCampaignId(std::forward<CampaignIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The URL of an image that contains a snapshot of the email message that was
+   * sent.</p>
+   */
+  inline const Aws::String& GetImageUrl() const { return m_imageUrl; }
+  inline bool ImageUrlHasBeenSet() const { return m_imageUrlHasBeenSet; }
+  template <typename ImageUrlT = Aws::String>
+  void SetImageUrl(ImageUrlT&& value) {
+    m_imageUrlHasBeenSet = true;
+    m_imageUrl = std::forward<ImageUrlT>(value);
+  }
+  template <typename ImageUrlT = Aws::String>
+  DomainDeliverabilityCampaign& WithImageUrl(ImageUrlT&& value) {
+    SetImageUrl(std::forward<ImageUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the campaign. The Deliverability dashboard
-     * automatically generates and assigns this identifier to a campaign.</p>
-     */
-    inline const Aws::String& GetCampaignId() const{ return m_campaignId; }
-    inline bool CampaignIdHasBeenSet() const { return m_campaignIdHasBeenSet; }
-    inline void SetCampaignId(const Aws::String& value) { m_campaignIdHasBeenSet = true; m_campaignId = value; }
-    inline void SetCampaignId(Aws::String&& value) { m_campaignIdHasBeenSet = true; m_campaignId = std::move(value); }
-    inline void SetCampaignId(const char* value) { m_campaignIdHasBeenSet = true; m_campaignId.assign(value); }
-    inline DomainDeliverabilityCampaign& WithCampaignId(const Aws::String& value) { SetCampaignId(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithCampaignId(Aws::String&& value) { SetCampaignId(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& WithCampaignId(const char* value) { SetCampaignId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The subject line, or title, of the email message.</p>
+   */
+  inline const Aws::String& GetSubject() const { return m_subject; }
+  inline bool SubjectHasBeenSet() const { return m_subjectHasBeenSet; }
+  template <typename SubjectT = Aws::String>
+  void SetSubject(SubjectT&& value) {
+    m_subjectHasBeenSet = true;
+    m_subject = std::forward<SubjectT>(value);
+  }
+  template <typename SubjectT = Aws::String>
+  DomainDeliverabilityCampaign& WithSubject(SubjectT&& value) {
+    SetSubject(std::forward<SubjectT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL of an image that contains a snapshot of the email message that was
-     * sent.</p>
-     */
-    inline const Aws::String& GetImageUrl() const{ return m_imageUrl; }
-    inline bool ImageUrlHasBeenSet() const { return m_imageUrlHasBeenSet; }
-    inline void SetImageUrl(const Aws::String& value) { m_imageUrlHasBeenSet = true; m_imageUrl = value; }
-    inline void SetImageUrl(Aws::String&& value) { m_imageUrlHasBeenSet = true; m_imageUrl = std::move(value); }
-    inline void SetImageUrl(const char* value) { m_imageUrlHasBeenSet = true; m_imageUrl.assign(value); }
-    inline DomainDeliverabilityCampaign& WithImageUrl(const Aws::String& value) { SetImageUrl(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithImageUrl(Aws::String&& value) { SetImageUrl(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& WithImageUrl(const char* value) { SetImageUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The verified email address that the email message was sent from.</p>
+   */
+  inline const Aws::String& GetFromAddress() const { return m_fromAddress; }
+  inline bool FromAddressHasBeenSet() const { return m_fromAddressHasBeenSet; }
+  template <typename FromAddressT = Aws::String>
+  void SetFromAddress(FromAddressT&& value) {
+    m_fromAddressHasBeenSet = true;
+    m_fromAddress = std::forward<FromAddressT>(value);
+  }
+  template <typename FromAddressT = Aws::String>
+  DomainDeliverabilityCampaign& WithFromAddress(FromAddressT&& value) {
+    SetFromAddress(std::forward<FromAddressT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The subject line, or title, of the email message.</p>
-     */
-    inline const Aws::String& GetSubject() const{ return m_subject; }
-    inline bool SubjectHasBeenSet() const { return m_subjectHasBeenSet; }
-    inline void SetSubject(const Aws::String& value) { m_subjectHasBeenSet = true; m_subject = value; }
-    inline void SetSubject(Aws::String&& value) { m_subjectHasBeenSet = true; m_subject = std::move(value); }
-    inline void SetSubject(const char* value) { m_subjectHasBeenSet = true; m_subject.assign(value); }
-    inline DomainDeliverabilityCampaign& WithSubject(const Aws::String& value) { SetSubject(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithSubject(Aws::String&& value) { SetSubject(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& WithSubject(const char* value) { SetSubject(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The IP addresses that were used to send the email message.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSendingIps() const { return m_sendingIps; }
+  inline bool SendingIpsHasBeenSet() const { return m_sendingIpsHasBeenSet; }
+  template <typename SendingIpsT = Aws::Vector<Aws::String>>
+  void SetSendingIps(SendingIpsT&& value) {
+    m_sendingIpsHasBeenSet = true;
+    m_sendingIps = std::forward<SendingIpsT>(value);
+  }
+  template <typename SendingIpsT = Aws::Vector<Aws::String>>
+  DomainDeliverabilityCampaign& WithSendingIps(SendingIpsT&& value) {
+    SetSendingIps(std::forward<SendingIpsT>(value));
+    return *this;
+  }
+  template <typename SendingIpsT = Aws::String>
+  DomainDeliverabilityCampaign& AddSendingIps(SendingIpsT&& value) {
+    m_sendingIpsHasBeenSet = true;
+    m_sendingIps.emplace_back(std::forward<SendingIpsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The verified email address that the email message was sent from.</p>
-     */
-    inline const Aws::String& GetFromAddress() const{ return m_fromAddress; }
-    inline bool FromAddressHasBeenSet() const { return m_fromAddressHasBeenSet; }
-    inline void SetFromAddress(const Aws::String& value) { m_fromAddressHasBeenSet = true; m_fromAddress = value; }
-    inline void SetFromAddress(Aws::String&& value) { m_fromAddressHasBeenSet = true; m_fromAddress = std::move(value); }
-    inline void SetFromAddress(const char* value) { m_fromAddressHasBeenSet = true; m_fromAddress.assign(value); }
-    inline DomainDeliverabilityCampaign& WithFromAddress(const Aws::String& value) { SetFromAddress(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithFromAddress(Aws::String&& value) { SetFromAddress(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& WithFromAddress(const char* value) { SetFromAddress(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The first time when the email message was delivered to any recipient's inbox.
+   * This value can help you determine how long it took for a campaign to deliver an
+   * email message.</p>
+   */
+  inline const Aws::Utils::DateTime& GetFirstSeenDateTime() const { return m_firstSeenDateTime; }
+  inline bool FirstSeenDateTimeHasBeenSet() const { return m_firstSeenDateTimeHasBeenSet; }
+  template <typename FirstSeenDateTimeT = Aws::Utils::DateTime>
+  void SetFirstSeenDateTime(FirstSeenDateTimeT&& value) {
+    m_firstSeenDateTimeHasBeenSet = true;
+    m_firstSeenDateTime = std::forward<FirstSeenDateTimeT>(value);
+  }
+  template <typename FirstSeenDateTimeT = Aws::Utils::DateTime>
+  DomainDeliverabilityCampaign& WithFirstSeenDateTime(FirstSeenDateTimeT&& value) {
+    SetFirstSeenDateTime(std::forward<FirstSeenDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IP addresses that were used to send the email message.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSendingIps() const{ return m_sendingIps; }
-    inline bool SendingIpsHasBeenSet() const { return m_sendingIpsHasBeenSet; }
-    inline void SetSendingIps(const Aws::Vector<Aws::String>& value) { m_sendingIpsHasBeenSet = true; m_sendingIps = value; }
-    inline void SetSendingIps(Aws::Vector<Aws::String>&& value) { m_sendingIpsHasBeenSet = true; m_sendingIps = std::move(value); }
-    inline DomainDeliverabilityCampaign& WithSendingIps(const Aws::Vector<Aws::String>& value) { SetSendingIps(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithSendingIps(Aws::Vector<Aws::String>&& value) { SetSendingIps(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& AddSendingIps(const Aws::String& value) { m_sendingIpsHasBeenSet = true; m_sendingIps.push_back(value); return *this; }
-    inline DomainDeliverabilityCampaign& AddSendingIps(Aws::String&& value) { m_sendingIpsHasBeenSet = true; m_sendingIps.push_back(std::move(value)); return *this; }
-    inline DomainDeliverabilityCampaign& AddSendingIps(const char* value) { m_sendingIpsHasBeenSet = true; m_sendingIps.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The last time when the email message was delivered to any recipient's inbox.
+   * This value can help you determine how long it took for a campaign to deliver an
+   * email message.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastSeenDateTime() const { return m_lastSeenDateTime; }
+  inline bool LastSeenDateTimeHasBeenSet() const { return m_lastSeenDateTimeHasBeenSet; }
+  template <typename LastSeenDateTimeT = Aws::Utils::DateTime>
+  void SetLastSeenDateTime(LastSeenDateTimeT&& value) {
+    m_lastSeenDateTimeHasBeenSet = true;
+    m_lastSeenDateTime = std::forward<LastSeenDateTimeT>(value);
+  }
+  template <typename LastSeenDateTimeT = Aws::Utils::DateTime>
+  DomainDeliverabilityCampaign& WithLastSeenDateTime(LastSeenDateTimeT&& value) {
+    SetLastSeenDateTime(std::forward<LastSeenDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The first time when the email message was delivered to any recipient's inbox.
-     * This value can help you determine how long it took for a campaign to deliver an
-     * email message.</p>
-     */
-    inline const Aws::Utils::DateTime& GetFirstSeenDateTime() const{ return m_firstSeenDateTime; }
-    inline bool FirstSeenDateTimeHasBeenSet() const { return m_firstSeenDateTimeHasBeenSet; }
-    inline void SetFirstSeenDateTime(const Aws::Utils::DateTime& value) { m_firstSeenDateTimeHasBeenSet = true; m_firstSeenDateTime = value; }
-    inline void SetFirstSeenDateTime(Aws::Utils::DateTime&& value) { m_firstSeenDateTimeHasBeenSet = true; m_firstSeenDateTime = std::move(value); }
-    inline DomainDeliverabilityCampaign& WithFirstSeenDateTime(const Aws::Utils::DateTime& value) { SetFirstSeenDateTime(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithFirstSeenDateTime(Aws::Utils::DateTime&& value) { SetFirstSeenDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of email messages that were delivered to recipients’ inboxes.</p>
+   */
+  inline long long GetInboxCount() const { return m_inboxCount; }
+  inline bool InboxCountHasBeenSet() const { return m_inboxCountHasBeenSet; }
+  inline void SetInboxCount(long long value) {
+    m_inboxCountHasBeenSet = true;
+    m_inboxCount = value;
+  }
+  inline DomainDeliverabilityCampaign& WithInboxCount(long long value) {
+    SetInboxCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The last time when the email message was delivered to any recipient's inbox.
-     * This value can help you determine how long it took for a campaign to deliver an
-     * email message.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastSeenDateTime() const{ return m_lastSeenDateTime; }
-    inline bool LastSeenDateTimeHasBeenSet() const { return m_lastSeenDateTimeHasBeenSet; }
-    inline void SetLastSeenDateTime(const Aws::Utils::DateTime& value) { m_lastSeenDateTimeHasBeenSet = true; m_lastSeenDateTime = value; }
-    inline void SetLastSeenDateTime(Aws::Utils::DateTime&& value) { m_lastSeenDateTimeHasBeenSet = true; m_lastSeenDateTime = std::move(value); }
-    inline DomainDeliverabilityCampaign& WithLastSeenDateTime(const Aws::Utils::DateTime& value) { SetLastSeenDateTime(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithLastSeenDateTime(Aws::Utils::DateTime&& value) { SetLastSeenDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of email messages that were delivered to recipients' spam or junk
+   * mail folders.</p>
+   */
+  inline long long GetSpamCount() const { return m_spamCount; }
+  inline bool SpamCountHasBeenSet() const { return m_spamCountHasBeenSet; }
+  inline void SetSpamCount(long long value) {
+    m_spamCountHasBeenSet = true;
+    m_spamCount = value;
+  }
+  inline DomainDeliverabilityCampaign& WithSpamCount(long long value) {
+    SetSpamCount(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of email messages that were delivered to recipients’ inboxes.</p>
-     */
-    inline long long GetInboxCount() const{ return m_inboxCount; }
-    inline bool InboxCountHasBeenSet() const { return m_inboxCountHasBeenSet; }
-    inline void SetInboxCount(long long value) { m_inboxCountHasBeenSet = true; m_inboxCount = value; }
-    inline DomainDeliverabilityCampaign& WithInboxCount(long long value) { SetInboxCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The percentage of email messages that were opened by recipients. Due to
+   * technical limitations, this value only includes recipients who opened the
+   * message by using an email client that supports images.</p>
+   */
+  inline double GetReadRate() const { return m_readRate; }
+  inline bool ReadRateHasBeenSet() const { return m_readRateHasBeenSet; }
+  inline void SetReadRate(double value) {
+    m_readRateHasBeenSet = true;
+    m_readRate = value;
+  }
+  inline DomainDeliverabilityCampaign& WithReadRate(double value) {
+    SetReadRate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of email messages that were delivered to recipients' spam or junk
-     * mail folders.</p>
-     */
-    inline long long GetSpamCount() const{ return m_spamCount; }
-    inline bool SpamCountHasBeenSet() const { return m_spamCountHasBeenSet; }
-    inline void SetSpamCount(long long value) { m_spamCountHasBeenSet = true; m_spamCount = value; }
-    inline DomainDeliverabilityCampaign& WithSpamCount(long long value) { SetSpamCount(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The percentage of email messages that were deleted by recipients, without
+   * being opened first. Due to technical limitations, this value only includes
+   * recipients who opened the message by using an email client that supports
+   * images.</p>
+   */
+  inline double GetDeleteRate() const { return m_deleteRate; }
+  inline bool DeleteRateHasBeenSet() const { return m_deleteRateHasBeenSet; }
+  inline void SetDeleteRate(double value) {
+    m_deleteRateHasBeenSet = true;
+    m_deleteRate = value;
+  }
+  inline DomainDeliverabilityCampaign& WithDeleteRate(double value) {
+    SetDeleteRate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The percentage of email messages that were opened by recipients. Due to
-     * technical limitations, this value only includes recipients who opened the
-     * message by using an email client that supports images.</p>
-     */
-    inline double GetReadRate() const{ return m_readRate; }
-    inline bool ReadRateHasBeenSet() const { return m_readRateHasBeenSet; }
-    inline void SetReadRate(double value) { m_readRateHasBeenSet = true; m_readRate = value; }
-    inline DomainDeliverabilityCampaign& WithReadRate(double value) { SetReadRate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The percentage of email messages that were opened and then deleted by
+   * recipients. Due to technical limitations, this value only includes recipients
+   * who opened the message by using an email client that supports images.</p>
+   */
+  inline double GetReadDeleteRate() const { return m_readDeleteRate; }
+  inline bool ReadDeleteRateHasBeenSet() const { return m_readDeleteRateHasBeenSet; }
+  inline void SetReadDeleteRate(double value) {
+    m_readDeleteRateHasBeenSet = true;
+    m_readDeleteRate = value;
+  }
+  inline DomainDeliverabilityCampaign& WithReadDeleteRate(double value) {
+    SetReadDeleteRate(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The percentage of email messages that were deleted by recipients, without
-     * being opened first. Due to technical limitations, this value only includes
-     * recipients who opened the message by using an email client that supports
-     * images.</p>
-     */
-    inline double GetDeleteRate() const{ return m_deleteRate; }
-    inline bool DeleteRateHasBeenSet() const { return m_deleteRateHasBeenSet; }
-    inline void SetDeleteRate(double value) { m_deleteRateHasBeenSet = true; m_deleteRate = value; }
-    inline DomainDeliverabilityCampaign& WithDeleteRate(double value) { SetDeleteRate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The projected number of recipients that the email message was sent to.</p>
+   */
+  inline long long GetProjectedVolume() const { return m_projectedVolume; }
+  inline bool ProjectedVolumeHasBeenSet() const { return m_projectedVolumeHasBeenSet; }
+  inline void SetProjectedVolume(long long value) {
+    m_projectedVolumeHasBeenSet = true;
+    m_projectedVolume = value;
+  }
+  inline DomainDeliverabilityCampaign& WithProjectedVolume(long long value) {
+    SetProjectedVolume(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The percentage of email messages that were opened and then deleted by
-     * recipients. Due to technical limitations, this value only includes recipients
-     * who opened the message by using an email client that supports images.</p>
-     */
-    inline double GetReadDeleteRate() const{ return m_readDeleteRate; }
-    inline bool ReadDeleteRateHasBeenSet() const { return m_readDeleteRateHasBeenSet; }
-    inline void SetReadDeleteRate(double value) { m_readDeleteRateHasBeenSet = true; m_readDeleteRate = value; }
-    inline DomainDeliverabilityCampaign& WithReadDeleteRate(double value) { SetReadDeleteRate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The major email providers who handled the email message.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetEsps() const { return m_esps; }
+  inline bool EspsHasBeenSet() const { return m_espsHasBeenSet; }
+  template <typename EspsT = Aws::Vector<Aws::String>>
+  void SetEsps(EspsT&& value) {
+    m_espsHasBeenSet = true;
+    m_esps = std::forward<EspsT>(value);
+  }
+  template <typename EspsT = Aws::Vector<Aws::String>>
+  DomainDeliverabilityCampaign& WithEsps(EspsT&& value) {
+    SetEsps(std::forward<EspsT>(value));
+    return *this;
+  }
+  template <typename EspsT = Aws::String>
+  DomainDeliverabilityCampaign& AddEsps(EspsT&& value) {
+    m_espsHasBeenSet = true;
+    m_esps.emplace_back(std::forward<EspsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_campaignId;
 
-    ///@{
-    /**
-     * <p>The projected number of recipients that the email message was sent to.</p>
-     */
-    inline long long GetProjectedVolume() const{ return m_projectedVolume; }
-    inline bool ProjectedVolumeHasBeenSet() const { return m_projectedVolumeHasBeenSet; }
-    inline void SetProjectedVolume(long long value) { m_projectedVolumeHasBeenSet = true; m_projectedVolume = value; }
-    inline DomainDeliverabilityCampaign& WithProjectedVolume(long long value) { SetProjectedVolume(value); return *this;}
-    ///@}
+  Aws::String m_imageUrl;
 
-    ///@{
-    /**
-     * <p>The major email providers who handled the email message.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetEsps() const{ return m_esps; }
-    inline bool EspsHasBeenSet() const { return m_espsHasBeenSet; }
-    inline void SetEsps(const Aws::Vector<Aws::String>& value) { m_espsHasBeenSet = true; m_esps = value; }
-    inline void SetEsps(Aws::Vector<Aws::String>&& value) { m_espsHasBeenSet = true; m_esps = std::move(value); }
-    inline DomainDeliverabilityCampaign& WithEsps(const Aws::Vector<Aws::String>& value) { SetEsps(value); return *this;}
-    inline DomainDeliverabilityCampaign& WithEsps(Aws::Vector<Aws::String>&& value) { SetEsps(std::move(value)); return *this;}
-    inline DomainDeliverabilityCampaign& AddEsps(const Aws::String& value) { m_espsHasBeenSet = true; m_esps.push_back(value); return *this; }
-    inline DomainDeliverabilityCampaign& AddEsps(Aws::String&& value) { m_espsHasBeenSet = true; m_esps.push_back(std::move(value)); return *this; }
-    inline DomainDeliverabilityCampaign& AddEsps(const char* value) { m_espsHasBeenSet = true; m_esps.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_subject;
 
-    Aws::String m_campaignId;
-    bool m_campaignIdHasBeenSet = false;
+  Aws::String m_fromAddress;
 
-    Aws::String m_imageUrl;
-    bool m_imageUrlHasBeenSet = false;
+  Aws::Vector<Aws::String> m_sendingIps;
 
-    Aws::String m_subject;
-    bool m_subjectHasBeenSet = false;
+  Aws::Utils::DateTime m_firstSeenDateTime{};
 
-    Aws::String m_fromAddress;
-    bool m_fromAddressHasBeenSet = false;
+  Aws::Utils::DateTime m_lastSeenDateTime{};
 
-    Aws::Vector<Aws::String> m_sendingIps;
-    bool m_sendingIpsHasBeenSet = false;
+  long long m_inboxCount{0};
 
-    Aws::Utils::DateTime m_firstSeenDateTime;
-    bool m_firstSeenDateTimeHasBeenSet = false;
+  long long m_spamCount{0};
 
-    Aws::Utils::DateTime m_lastSeenDateTime;
-    bool m_lastSeenDateTimeHasBeenSet = false;
+  double m_readRate{0.0};
 
-    long long m_inboxCount;
-    bool m_inboxCountHasBeenSet = false;
+  double m_deleteRate{0.0};
 
-    long long m_spamCount;
-    bool m_spamCountHasBeenSet = false;
+  double m_readDeleteRate{0.0};
 
-    double m_readRate;
-    bool m_readRateHasBeenSet = false;
+  long long m_projectedVolume{0};
 
-    double m_deleteRate;
-    bool m_deleteRateHasBeenSet = false;
+  Aws::Vector<Aws::String> m_esps;
+  bool m_campaignIdHasBeenSet = false;
+  bool m_imageUrlHasBeenSet = false;
+  bool m_subjectHasBeenSet = false;
+  bool m_fromAddressHasBeenSet = false;
+  bool m_sendingIpsHasBeenSet = false;
+  bool m_firstSeenDateTimeHasBeenSet = false;
+  bool m_lastSeenDateTimeHasBeenSet = false;
+  bool m_inboxCountHasBeenSet = false;
+  bool m_spamCountHasBeenSet = false;
+  bool m_readRateHasBeenSet = false;
+  bool m_deleteRateHasBeenSet = false;
+  bool m_readDeleteRateHasBeenSet = false;
+  bool m_projectedVolumeHasBeenSet = false;
+  bool m_espsHasBeenSet = false;
+};
 
-    double m_readDeleteRate;
-    bool m_readDeleteRateHasBeenSet = false;
-
-    long long m_projectedVolume;
-    bool m_projectedVolumeHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_esps;
-    bool m_espsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SESV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace SESV2
+}  // namespace Aws

@@ -4,79 +4,92 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
 #include <aws/quicksight/model/DimensionField.h>
 #include <aws/quicksight/model/MeasureField.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace QuickSight {
+namespace Model {
 
+/**
+ * <p>The aggregated field well for the table.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TableAggregatedFieldWells">AWS
+ * API Reference</a></p>
+ */
+class TableAggregatedFieldWells {
+ public:
+  AWS_QUICKSIGHT_API TableAggregatedFieldWells() = default;
+  AWS_QUICKSIGHT_API TableAggregatedFieldWells(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API TableAggregatedFieldWells& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The aggregated field well for the table.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TableAggregatedFieldWells">AWS
-   * API Reference</a></p>
+   * <p>The group by field well for a pivot table. Values are grouped by group by
+   * fields.</p>
    */
-  class TableAggregatedFieldWells
-  {
-  public:
-    AWS_QUICKSIGHT_API TableAggregatedFieldWells();
-    AWS_QUICKSIGHT_API TableAggregatedFieldWells(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API TableAggregatedFieldWells& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_QUICKSIGHT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<DimensionField>& GetGroupBy() const { return m_groupBy; }
+  inline bool GroupByHasBeenSet() const { return m_groupByHasBeenSet; }
+  template <typename GroupByT = Aws::Vector<DimensionField>>
+  void SetGroupBy(GroupByT&& value) {
+    m_groupByHasBeenSet = true;
+    m_groupBy = std::forward<GroupByT>(value);
+  }
+  template <typename GroupByT = Aws::Vector<DimensionField>>
+  TableAggregatedFieldWells& WithGroupBy(GroupByT&& value) {
+    SetGroupBy(std::forward<GroupByT>(value));
+    return *this;
+  }
+  template <typename GroupByT = DimensionField>
+  TableAggregatedFieldWells& AddGroupBy(GroupByT&& value) {
+    m_groupByHasBeenSet = true;
+    m_groupBy.emplace_back(std::forward<GroupByT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The values field well for a pivot table. Values are aggregated based on group
+   * by fields.</p>
+   */
+  inline const Aws::Vector<MeasureField>& GetValues() const { return m_values; }
+  inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
+  template <typename ValuesT = Aws::Vector<MeasureField>>
+  void SetValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values = std::forward<ValuesT>(value);
+  }
+  template <typename ValuesT = Aws::Vector<MeasureField>>
+  TableAggregatedFieldWells& WithValues(ValuesT&& value) {
+    SetValues(std::forward<ValuesT>(value));
+    return *this;
+  }
+  template <typename ValuesT = MeasureField>
+  TableAggregatedFieldWells& AddValues(ValuesT&& value) {
+    m_valuesHasBeenSet = true;
+    m_values.emplace_back(std::forward<ValuesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<DimensionField> m_groupBy;
 
-    ///@{
-    /**
-     * <p>The group by field well for a pivot table. Values are grouped by group by
-     * fields.</p>
-     */
-    inline const Aws::Vector<DimensionField>& GetGroupBy() const{ return m_groupBy; }
-    inline bool GroupByHasBeenSet() const { return m_groupByHasBeenSet; }
-    inline void SetGroupBy(const Aws::Vector<DimensionField>& value) { m_groupByHasBeenSet = true; m_groupBy = value; }
-    inline void SetGroupBy(Aws::Vector<DimensionField>&& value) { m_groupByHasBeenSet = true; m_groupBy = std::move(value); }
-    inline TableAggregatedFieldWells& WithGroupBy(const Aws::Vector<DimensionField>& value) { SetGroupBy(value); return *this;}
-    inline TableAggregatedFieldWells& WithGroupBy(Aws::Vector<DimensionField>&& value) { SetGroupBy(std::move(value)); return *this;}
-    inline TableAggregatedFieldWells& AddGroupBy(const DimensionField& value) { m_groupByHasBeenSet = true; m_groupBy.push_back(value); return *this; }
-    inline TableAggregatedFieldWells& AddGroupBy(DimensionField&& value) { m_groupByHasBeenSet = true; m_groupBy.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<MeasureField> m_values;
+  bool m_groupByHasBeenSet = false;
+  bool m_valuesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The values field well for a pivot table. Values are aggregated based on group
-     * by fields.</p>
-     */
-    inline const Aws::Vector<MeasureField>& GetValues() const{ return m_values; }
-    inline bool ValuesHasBeenSet() const { return m_valuesHasBeenSet; }
-    inline void SetValues(const Aws::Vector<MeasureField>& value) { m_valuesHasBeenSet = true; m_values = value; }
-    inline void SetValues(Aws::Vector<MeasureField>&& value) { m_valuesHasBeenSet = true; m_values = std::move(value); }
-    inline TableAggregatedFieldWells& WithValues(const Aws::Vector<MeasureField>& value) { SetValues(value); return *this;}
-    inline TableAggregatedFieldWells& WithValues(Aws::Vector<MeasureField>&& value) { SetValues(std::move(value)); return *this;}
-    inline TableAggregatedFieldWells& AddValues(const MeasureField& value) { m_valuesHasBeenSet = true; m_values.push_back(value); return *this; }
-    inline TableAggregatedFieldWells& AddValues(MeasureField&& value) { m_valuesHasBeenSet = true; m_values.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::Vector<DimensionField> m_groupBy;
-    bool m_groupByHasBeenSet = false;
-
-    Aws::Vector<MeasureField> m_values;
-    bool m_valuesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

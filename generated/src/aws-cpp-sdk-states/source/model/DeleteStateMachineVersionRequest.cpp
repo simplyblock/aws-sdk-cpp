@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/states/model/DeleteStateMachineVersionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/states/model/DeleteStateMachineVersionRequest.h>
 
 #include <utility>
 
@@ -12,32 +12,18 @@ using namespace Aws::SFN::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteStateMachineVersionRequest::DeleteStateMachineVersionRequest() : 
-    m_stateMachineVersionArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteStateMachineVersionRequest::SerializePayload() const
-{
+Aws::String DeleteStateMachineVersionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_stateMachineVersionArnHasBeenSet)
-  {
-   payload.WithString("stateMachineVersionArn", m_stateMachineVersionArn);
-
+  if (m_stateMachineVersionArnHasBeenSet) {
+    payload.WithString("stateMachineVersionArn", m_stateMachineVersionArn);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteStateMachineVersionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteStateMachineVersionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSStepFunctions.DeleteStateMachineVersion"));
   return headers;
-
 }
-
-
-
-

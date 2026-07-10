@@ -4,82 +4,99 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
-  class ResumeWorkflowRunResult
-  {
-  public:
-    AWS_GLUE_API ResumeWorkflowRunResult();
-    AWS_GLUE_API ResumeWorkflowRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLUE_API ResumeWorkflowRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
+class ResumeWorkflowRunResult {
+ public:
+  AWS_GLUE_API ResumeWorkflowRunResult() = default;
+  AWS_GLUE_API ResumeWorkflowRunResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLUE_API ResumeWorkflowRunResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The new ID assigned to the resumed workflow run. Each resume of a workflow
+   * run will have a new run ID.</p>
+   */
+  inline const Aws::String& GetRunId() const { return m_runId; }
+  template <typename RunIdT = Aws::String>
+  void SetRunId(RunIdT&& value) {
+    m_runIdHasBeenSet = true;
+    m_runId = std::forward<RunIdT>(value);
+  }
+  template <typename RunIdT = Aws::String>
+  ResumeWorkflowRunResult& WithRunId(RunIdT&& value) {
+    SetRunId(std::forward<RunIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The new ID assigned to the resumed workflow run. Each resume of a workflow
-     * run will have a new run ID.</p>
-     */
-    inline const Aws::String& GetRunId() const{ return m_runId; }
-    inline void SetRunId(const Aws::String& value) { m_runId = value; }
-    inline void SetRunId(Aws::String&& value) { m_runId = std::move(value); }
-    inline void SetRunId(const char* value) { m_runId.assign(value); }
-    inline ResumeWorkflowRunResult& WithRunId(const Aws::String& value) { SetRunId(value); return *this;}
-    inline ResumeWorkflowRunResult& WithRunId(Aws::String&& value) { SetRunId(std::move(value)); return *this;}
-    inline ResumeWorkflowRunResult& WithRunId(const char* value) { SetRunId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of the node IDs for the nodes that were actually restarted.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetNodeIds() const { return m_nodeIds; }
+  template <typename NodeIdsT = Aws::Vector<Aws::String>>
+  void SetNodeIds(NodeIdsT&& value) {
+    m_nodeIdsHasBeenSet = true;
+    m_nodeIds = std::forward<NodeIdsT>(value);
+  }
+  template <typename NodeIdsT = Aws::Vector<Aws::String>>
+  ResumeWorkflowRunResult& WithNodeIds(NodeIdsT&& value) {
+    SetNodeIds(std::forward<NodeIdsT>(value));
+    return *this;
+  }
+  template <typename NodeIdsT = Aws::String>
+  ResumeWorkflowRunResult& AddNodeIds(NodeIdsT&& value) {
+    m_nodeIdsHasBeenSet = true;
+    m_nodeIds.emplace_back(std::forward<NodeIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of the node IDs for the nodes that were actually restarted.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetNodeIds() const{ return m_nodeIds; }
-    inline void SetNodeIds(const Aws::Vector<Aws::String>& value) { m_nodeIds = value; }
-    inline void SetNodeIds(Aws::Vector<Aws::String>&& value) { m_nodeIds = std::move(value); }
-    inline ResumeWorkflowRunResult& WithNodeIds(const Aws::Vector<Aws::String>& value) { SetNodeIds(value); return *this;}
-    inline ResumeWorkflowRunResult& WithNodeIds(Aws::Vector<Aws::String>&& value) { SetNodeIds(std::move(value)); return *this;}
-    inline ResumeWorkflowRunResult& AddNodeIds(const Aws::String& value) { m_nodeIds.push_back(value); return *this; }
-    inline ResumeWorkflowRunResult& AddNodeIds(Aws::String&& value) { m_nodeIds.push_back(std::move(value)); return *this; }
-    inline ResumeWorkflowRunResult& AddNodeIds(const char* value) { m_nodeIds.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ResumeWorkflowRunResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ResumeWorkflowRunResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ResumeWorkflowRunResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ResumeWorkflowRunResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_runId;
+ private:
+  Aws::String m_runId;
 
-    Aws::Vector<Aws::String> m_nodeIds;
+  Aws::Vector<Aws::String> m_nodeIds;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_runIdHasBeenSet = false;
+  bool m_nodeIdsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

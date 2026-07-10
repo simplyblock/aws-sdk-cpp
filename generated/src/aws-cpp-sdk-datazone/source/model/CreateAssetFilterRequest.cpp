@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/datazone/model/CreateAssetFilterRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/datazone/model/CreateAssetFilterRequest.h>
 
 #include <utility>
 
@@ -12,48 +12,24 @@ using namespace Aws::DataZone::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateAssetFilterRequest::CreateAssetFilterRequest() : 
-    m_assetIdentifierHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_configurationHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_domainIdentifierHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String CreateAssetFilterRequest::SerializePayload() const
-{
+Aws::String CreateAssetFilterRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_configurationHasBeenSet)
-  {
-   payload.WithObject("configuration", m_configuration.Jsonize());
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_configurationHasBeenSet) {
+    payload.WithObject("configuration", m_configuration.Jsonize());
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

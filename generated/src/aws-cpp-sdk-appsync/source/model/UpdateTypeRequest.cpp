@@ -12,33 +12,16 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateTypeRequest::UpdateTypeRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_typeNameHasBeenSet(false),
-    m_definitionHasBeenSet(false),
-    m_format(TypeDefinitionFormat::NOT_SET),
-    m_formatHasBeenSet(false)
-{
-}
-
-Aws::String UpdateTypeRequest::SerializePayload() const
-{
+Aws::String UpdateTypeRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_definitionHasBeenSet)
-  {
-   payload.WithString("definition", m_definition);
-
+  if (m_definitionHasBeenSet) {
+    payload.WithString("definition", m_definition);
   }
 
-  if(m_formatHasBeenSet)
-  {
-   payload.WithString("format", TypeDefinitionFormatMapper::GetNameForTypeDefinitionFormat(m_format));
+  if (m_formatHasBeenSet) {
+    payload.WithString("format", TypeDefinitionFormatMapper::GetNameForTypeDefinitionFormat(m_format));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,107 +4,118 @@
  */
 
 #pragma once
-#include <aws/workdocs/WorkDocs_EXPORTS.h>
-#include <aws/workdocs/WorkDocsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workdocs/WorkDocsRequest.h>
+#include <aws/workdocs/WorkDocs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace WorkDocs
-{
-namespace Model
-{
+namespace Aws {
+namespace WorkDocs {
+namespace Model {
 
+/**
+ */
+class DeleteCommentRequest : public WorkDocsRequest {
+ public:
+  AWS_WORKDOCS_API DeleteCommentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteComment"; }
+
+  AWS_WORKDOCS_API Aws::String SerializePayload() const override;
+
+  AWS_WORKDOCS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Amazon WorkDocs authentication token. Not required when using Amazon Web
+   * Services administrator credentials to access the API.</p>
    */
-  class DeleteCommentRequest : public WorkDocsRequest
-  {
-  public:
-    AWS_WORKDOCS_API DeleteCommentRequest();
+  inline const Aws::String& GetAuthenticationToken() const { return m_authenticationToken; }
+  inline bool AuthenticationTokenHasBeenSet() const { return m_authenticationTokenHasBeenSet; }
+  template <typename AuthenticationTokenT = Aws::String>
+  void SetAuthenticationToken(AuthenticationTokenT&& value) {
+    m_authenticationTokenHasBeenSet = true;
+    m_authenticationToken = std::forward<AuthenticationTokenT>(value);
+  }
+  template <typename AuthenticationTokenT = Aws::String>
+  DeleteCommentRequest& WithAuthenticationToken(AuthenticationTokenT&& value) {
+    SetAuthenticationToken(std::forward<AuthenticationTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteComment"; }
+  ///@{
+  /**
+   * <p>The ID of the document.</p>
+   */
+  inline const Aws::String& GetDocumentId() const { return m_documentId; }
+  inline bool DocumentIdHasBeenSet() const { return m_documentIdHasBeenSet; }
+  template <typename DocumentIdT = Aws::String>
+  void SetDocumentId(DocumentIdT&& value) {
+    m_documentIdHasBeenSet = true;
+    m_documentId = std::forward<DocumentIdT>(value);
+  }
+  template <typename DocumentIdT = Aws::String>
+  DeleteCommentRequest& WithDocumentId(DocumentIdT&& value) {
+    SetDocumentId(std::forward<DocumentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_WORKDOCS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The ID of the document version.</p>
+   */
+  inline const Aws::String& GetVersionId() const { return m_versionId; }
+  inline bool VersionIdHasBeenSet() const { return m_versionIdHasBeenSet; }
+  template <typename VersionIdT = Aws::String>
+  void SetVersionId(VersionIdT&& value) {
+    m_versionIdHasBeenSet = true;
+    m_versionId = std::forward<VersionIdT>(value);
+  }
+  template <typename VersionIdT = Aws::String>
+  DeleteCommentRequest& WithVersionId(VersionIdT&& value) {
+    SetVersionId(std::forward<VersionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_WORKDOCS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The ID of the comment.</p>
+   */
+  inline const Aws::String& GetCommentId() const { return m_commentId; }
+  inline bool CommentIdHasBeenSet() const { return m_commentIdHasBeenSet; }
+  template <typename CommentIdT = Aws::String>
+  void SetCommentId(CommentIdT&& value) {
+    m_commentIdHasBeenSet = true;
+    m_commentId = std::forward<CommentIdT>(value);
+  }
+  template <typename CommentIdT = Aws::String>
+  DeleteCommentRequest& WithCommentId(CommentIdT&& value) {
+    SetCommentId(std::forward<CommentIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_authenticationToken;
 
+  Aws::String m_documentId;
 
-    ///@{
-    /**
-     * <p>Amazon WorkDocs authentication token. Not required when using Amazon Web
-     * Services administrator credentials to access the API.</p>
-     */
-    inline const Aws::String& GetAuthenticationToken() const{ return m_authenticationToken; }
-    inline bool AuthenticationTokenHasBeenSet() const { return m_authenticationTokenHasBeenSet; }
-    inline void SetAuthenticationToken(const Aws::String& value) { m_authenticationTokenHasBeenSet = true; m_authenticationToken = value; }
-    inline void SetAuthenticationToken(Aws::String&& value) { m_authenticationTokenHasBeenSet = true; m_authenticationToken = std::move(value); }
-    inline void SetAuthenticationToken(const char* value) { m_authenticationTokenHasBeenSet = true; m_authenticationToken.assign(value); }
-    inline DeleteCommentRequest& WithAuthenticationToken(const Aws::String& value) { SetAuthenticationToken(value); return *this;}
-    inline DeleteCommentRequest& WithAuthenticationToken(Aws::String&& value) { SetAuthenticationToken(std::move(value)); return *this;}
-    inline DeleteCommentRequest& WithAuthenticationToken(const char* value) { SetAuthenticationToken(value); return *this;}
-    ///@}
+  Aws::String m_versionId;
 
-    ///@{
-    /**
-     * <p>The ID of the document.</p>
-     */
-    inline const Aws::String& GetDocumentId() const{ return m_documentId; }
-    inline bool DocumentIdHasBeenSet() const { return m_documentIdHasBeenSet; }
-    inline void SetDocumentId(const Aws::String& value) { m_documentIdHasBeenSet = true; m_documentId = value; }
-    inline void SetDocumentId(Aws::String&& value) { m_documentIdHasBeenSet = true; m_documentId = std::move(value); }
-    inline void SetDocumentId(const char* value) { m_documentIdHasBeenSet = true; m_documentId.assign(value); }
-    inline DeleteCommentRequest& WithDocumentId(const Aws::String& value) { SetDocumentId(value); return *this;}
-    inline DeleteCommentRequest& WithDocumentId(Aws::String&& value) { SetDocumentId(std::move(value)); return *this;}
-    inline DeleteCommentRequest& WithDocumentId(const char* value) { SetDocumentId(value); return *this;}
-    ///@}
+  Aws::String m_commentId;
+  bool m_authenticationTokenHasBeenSet = false;
+  bool m_documentIdHasBeenSet = false;
+  bool m_versionIdHasBeenSet = false;
+  bool m_commentIdHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The ID of the document version.</p>
-     */
-    inline const Aws::String& GetVersionId() const{ return m_versionId; }
-    inline bool VersionIdHasBeenSet() const { return m_versionIdHasBeenSet; }
-    inline void SetVersionId(const Aws::String& value) { m_versionIdHasBeenSet = true; m_versionId = value; }
-    inline void SetVersionId(Aws::String&& value) { m_versionIdHasBeenSet = true; m_versionId = std::move(value); }
-    inline void SetVersionId(const char* value) { m_versionIdHasBeenSet = true; m_versionId.assign(value); }
-    inline DeleteCommentRequest& WithVersionId(const Aws::String& value) { SetVersionId(value); return *this;}
-    inline DeleteCommentRequest& WithVersionId(Aws::String&& value) { SetVersionId(std::move(value)); return *this;}
-    inline DeleteCommentRequest& WithVersionId(const char* value) { SetVersionId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The ID of the comment.</p>
-     */
-    inline const Aws::String& GetCommentId() const{ return m_commentId; }
-    inline bool CommentIdHasBeenSet() const { return m_commentIdHasBeenSet; }
-    inline void SetCommentId(const Aws::String& value) { m_commentIdHasBeenSet = true; m_commentId = value; }
-    inline void SetCommentId(Aws::String&& value) { m_commentIdHasBeenSet = true; m_commentId = std::move(value); }
-    inline void SetCommentId(const char* value) { m_commentIdHasBeenSet = true; m_commentId.assign(value); }
-    inline DeleteCommentRequest& WithCommentId(const Aws::String& value) { SetCommentId(value); return *this;}
-    inline DeleteCommentRequest& WithCommentId(Aws::String&& value) { SetCommentId(std::move(value)); return *this;}
-    inline DeleteCommentRequest& WithCommentId(const char* value) { SetCommentId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_authenticationToken;
-    bool m_authenticationTokenHasBeenSet = false;
-
-    Aws::String m_documentId;
-    bool m_documentIdHasBeenSet = false;
-
-    Aws::String m_versionId;
-    bool m_versionIdHasBeenSet = false;
-
-    Aws::String m_commentId;
-    bool m_commentIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkDocs
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkDocs
+}  // namespace Aws

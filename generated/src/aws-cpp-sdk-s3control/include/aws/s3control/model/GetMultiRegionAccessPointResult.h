@@ -4,64 +4,95 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3control/S3Control_EXPORTS.h>
 #include <aws/s3control/model/MultiRegionAccessPointReport.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Control
-{
-namespace Model
-{
-  class GetMultiRegionAccessPointResult
-  {
-  public:
-    AWS_S3CONTROL_API GetMultiRegionAccessPointResult();
-    AWS_S3CONTROL_API GetMultiRegionAccessPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CONTROL_API GetMultiRegionAccessPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Control {
+namespace Model {
+class GetMultiRegionAccessPointResult {
+ public:
+  AWS_S3CONTROL_API GetMultiRegionAccessPointResult() = default;
+  AWS_S3CONTROL_API GetMultiRegionAccessPointResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CONTROL_API GetMultiRegionAccessPointResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A container element containing the details of the requested Multi-Region
+   * Access Point.</p>
+   */
+  inline const MultiRegionAccessPointReport& GetAccessPoint() const { return m_accessPoint; }
+  template <typename AccessPointT = MultiRegionAccessPointReport>
+  void SetAccessPoint(AccessPointT&& value) {
+    m_accessPointHasBeenSet = true;
+    m_accessPoint = std::forward<AccessPointT>(value);
+  }
+  template <typename AccessPointT = MultiRegionAccessPointReport>
+  GetMultiRegionAccessPointResult& WithAccessPoint(AccessPointT&& value) {
+    SetAccessPoint(std::forward<AccessPointT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A container element containing the details of the requested Multi-Region
-     * Access Point.</p>
-     */
-    inline const MultiRegionAccessPointReport& GetAccessPoint() const{ return m_accessPoint; }
-    inline void SetAccessPoint(const MultiRegionAccessPointReport& value) { m_accessPoint = value; }
-    inline void SetAccessPoint(MultiRegionAccessPointReport&& value) { m_accessPoint = std::move(value); }
-    inline GetMultiRegionAccessPointResult& WithAccessPoint(const MultiRegionAccessPointReport& value) { SetAccessPoint(value); return *this;}
-    inline GetMultiRegionAccessPointResult& WithAccessPoint(MultiRegionAccessPointReport&& value) { SetAccessPoint(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * AWS Request Id value
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMultiRegionAccessPointResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMultiRegionAccessPointResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMultiRegionAccessPointResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMultiRegionAccessPointResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * x-amz-id-2 header value, also known as Host Id
+   */
+  inline const Aws::String& GetHostId() const { return m_hostId; }
+  template <typename HostIdT = Aws::String>
+  void SetHostId(HostIdT&& value) {
+    m_hostIdHasBeenSet = true;
+    m_hostId = std::forward<HostIdT>(value);
+  }
+  template <typename HostIdT = Aws::String>
+  GetMultiRegionAccessPointResult& WithHostId(HostIdT&& value) {
+    SetHostId(std::forward<HostIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    MultiRegionAccessPointReport m_accessPoint;
+ private:
+  MultiRegionAccessPointReport m_accessPoint;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+  Aws::String m_hostId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessPointHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_hostIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

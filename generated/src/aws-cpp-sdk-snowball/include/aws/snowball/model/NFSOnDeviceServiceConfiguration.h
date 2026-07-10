@@ -4,71 +4,74 @@
  */
 
 #pragma once
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/snowball/Snowball_EXPORTS.h>
 #include <aws/snowball/model/StorageUnit.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Snowball
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace Snowball {
+namespace Model {
 
+/**
+ * <p>An object that represents the metadata and configuration settings for the NFS
+ * (Network File System) service on an Amazon Web Services Snow Family
+ * device.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/NFSOnDeviceServiceConfiguration">AWS
+ * API Reference</a></p>
+ */
+class NFSOnDeviceServiceConfiguration {
+ public:
+  AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration() = default;
+  AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_SNOWBALL_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>An object that represents the metadata and configuration settings for the NFS
-   * (Network File System) service on an Amazon Web Services Snow Family
-   * device.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/snowball-2016-06-30/NFSOnDeviceServiceConfiguration">AWS
-   * API Reference</a></p>
+   * <p>The maximum NFS storage for one Snow Family device.</p>
    */
-  class NFSOnDeviceServiceConfiguration
-  {
-  public:
-    AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration();
-    AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API NFSOnDeviceServiceConfiguration& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SNOWBALL_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline int64_t GetStorageLimit() const { return m_storageLimit; }
+  inline bool StorageLimitHasBeenSet() const { return m_storageLimitHasBeenSet; }
+  inline void SetStorageLimit(int64_t value) {
+    m_storageLimitHasBeenSet = true;
+    m_storageLimit = value;
+  }
+  inline NFSOnDeviceServiceConfiguration& WithStorageLimit(int64_t value) {
+    SetStorageLimit(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The scale unit of the NFS storage on the device.</p> <p>Valid values: TB.</p>
+   */
+  inline StorageUnit GetStorageUnit() const { return m_storageUnit; }
+  inline bool StorageUnitHasBeenSet() const { return m_storageUnitHasBeenSet; }
+  inline void SetStorageUnit(StorageUnit value) {
+    m_storageUnitHasBeenSet = true;
+    m_storageUnit = value;
+  }
+  inline NFSOnDeviceServiceConfiguration& WithStorageUnit(StorageUnit value) {
+    SetStorageUnit(value);
+    return *this;
+  }
+  ///@}
+ private:
+  int64_t m_storageLimit{0};
 
-    ///@{
-    /**
-     * <p>The maximum NFS storage for one Snow Family device.</p>
-     */
-    inline int GetStorageLimit() const{ return m_storageLimit; }
-    inline bool StorageLimitHasBeenSet() const { return m_storageLimitHasBeenSet; }
-    inline void SetStorageLimit(int value) { m_storageLimitHasBeenSet = true; m_storageLimit = value; }
-    inline NFSOnDeviceServiceConfiguration& WithStorageLimit(int value) { SetStorageLimit(value); return *this;}
-    ///@}
+  StorageUnit m_storageUnit{StorageUnit::NOT_SET};
+  bool m_storageLimitHasBeenSet = false;
+  bool m_storageUnitHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The scale unit of the NFS storage on the device.</p> <p>Valid values: TB.</p>
-     */
-    inline const StorageUnit& GetStorageUnit() const{ return m_storageUnit; }
-    inline bool StorageUnitHasBeenSet() const { return m_storageUnitHasBeenSet; }
-    inline void SetStorageUnit(const StorageUnit& value) { m_storageUnitHasBeenSet = true; m_storageUnit = value; }
-    inline void SetStorageUnit(StorageUnit&& value) { m_storageUnitHasBeenSet = true; m_storageUnit = std::move(value); }
-    inline NFSOnDeviceServiceConfiguration& WithStorageUnit(const StorageUnit& value) { SetStorageUnit(value); return *this;}
-    inline NFSOnDeviceServiceConfiguration& WithStorageUnit(StorageUnit&& value) { SetStorageUnit(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    int m_storageLimit;
-    bool m_storageLimitHasBeenSet = false;
-
-    StorageUnit m_storageUnit;
-    bool m_storageUnitHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Snowball
-} // namespace Aws
+}  // namespace Model
+}  // namespace Snowball
+}  // namespace Aws

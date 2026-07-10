@@ -5,80 +5,101 @@
 
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/cleanrooms/model/ConfiguredTableAssociationSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class ListConfiguredTableAssociationsResult
-  {
-  public:
-    AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult();
-    AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class ListConfiguredTableAssociationsResult {
+ public:
+  AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult() = default;
+  AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API ListConfiguredTableAssociationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The retrieved list of configured table associations.</p>
+   */
+  inline const Aws::Vector<ConfiguredTableAssociationSummary>& GetConfiguredTableAssociationSummaries() const {
+    return m_configuredTableAssociationSummaries;
+  }
+  template <typename ConfiguredTableAssociationSummariesT = Aws::Vector<ConfiguredTableAssociationSummary>>
+  void SetConfiguredTableAssociationSummaries(ConfiguredTableAssociationSummariesT&& value) {
+    m_configuredTableAssociationSummariesHasBeenSet = true;
+    m_configuredTableAssociationSummaries = std::forward<ConfiguredTableAssociationSummariesT>(value);
+  }
+  template <typename ConfiguredTableAssociationSummariesT = Aws::Vector<ConfiguredTableAssociationSummary>>
+  ListConfiguredTableAssociationsResult& WithConfiguredTableAssociationSummaries(ConfiguredTableAssociationSummariesT&& value) {
+    SetConfiguredTableAssociationSummaries(std::forward<ConfiguredTableAssociationSummariesT>(value));
+    return *this;
+  }
+  template <typename ConfiguredTableAssociationSummariesT = ConfiguredTableAssociationSummary>
+  ListConfiguredTableAssociationsResult& AddConfiguredTableAssociationSummaries(ConfiguredTableAssociationSummariesT&& value) {
+    m_configuredTableAssociationSummariesHasBeenSet = true;
+    m_configuredTableAssociationSummaries.emplace_back(std::forward<ConfiguredTableAssociationSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The retrieved list of configured table associations.</p>
-     */
-    inline const Aws::Vector<ConfiguredTableAssociationSummary>& GetConfiguredTableAssociationSummaries() const{ return m_configuredTableAssociationSummaries; }
-    inline void SetConfiguredTableAssociationSummaries(const Aws::Vector<ConfiguredTableAssociationSummary>& value) { m_configuredTableAssociationSummaries = value; }
-    inline void SetConfiguredTableAssociationSummaries(Aws::Vector<ConfiguredTableAssociationSummary>&& value) { m_configuredTableAssociationSummaries = std::move(value); }
-    inline ListConfiguredTableAssociationsResult& WithConfiguredTableAssociationSummaries(const Aws::Vector<ConfiguredTableAssociationSummary>& value) { SetConfiguredTableAssociationSummaries(value); return *this;}
-    inline ListConfiguredTableAssociationsResult& WithConfiguredTableAssociationSummaries(Aws::Vector<ConfiguredTableAssociationSummary>&& value) { SetConfiguredTableAssociationSummaries(std::move(value)); return *this;}
-    inline ListConfiguredTableAssociationsResult& AddConfiguredTableAssociationSummaries(const ConfiguredTableAssociationSummary& value) { m_configuredTableAssociationSummaries.push_back(value); return *this; }
-    inline ListConfiguredTableAssociationsResult& AddConfiguredTableAssociationSummaries(ConfiguredTableAssociationSummary&& value) { m_configuredTableAssociationSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token that's used to fetch the next set of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListConfiguredTableAssociationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token that's used to fetch the next set of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListConfiguredTableAssociationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListConfiguredTableAssociationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListConfiguredTableAssociationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListConfiguredTableAssociationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListConfiguredTableAssociationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListConfiguredTableAssociationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListConfiguredTableAssociationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ConfiguredTableAssociationSummary> m_configuredTableAssociationSummaries;
+ private:
+  Aws::Vector<ConfiguredTableAssociationSummary> m_configuredTableAssociationSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configuredTableAssociationSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

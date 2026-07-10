@@ -12,27 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ActivateEvaluationFormRequest::ActivateEvaluationFormRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_evaluationFormIdHasBeenSet(false),
-    m_evaluationFormVersion(0),
-    m_evaluationFormVersionHasBeenSet(false)
-{
-}
-
-Aws::String ActivateEvaluationFormRequest::SerializePayload() const
-{
+Aws::String ActivateEvaluationFormRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_evaluationFormVersionHasBeenSet)
-  {
-   payload.WithInteger("EvaluationFormVersion", m_evaluationFormVersion);
-
+  if (m_evaluationFormVersionHasBeenSet) {
+    payload.WithInteger("EvaluationFormVersion", m_evaluationFormVersion);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

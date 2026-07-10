@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/workspaces/WorkSpaces_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workspaces/WorkSpaces_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpaces
-{
-namespace Model
-{
-  class ImportWorkspaceImageResult
-  {
-  public:
-    AWS_WORKSPACES_API ImportWorkspaceImageResult();
-    AWS_WORKSPACES_API ImportWorkspaceImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACES_API ImportWorkspaceImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpaces {
+namespace Model {
+class ImportWorkspaceImageResult {
+ public:
+  AWS_WORKSPACES_API ImportWorkspaceImageResult() = default;
+  AWS_WORKSPACES_API ImportWorkspaceImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACES_API ImportWorkspaceImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the WorkSpace image.</p>
+   */
+  inline const Aws::String& GetImageId() const { return m_imageId; }
+  template <typename ImageIdT = Aws::String>
+  void SetImageId(ImageIdT&& value) {
+    m_imageIdHasBeenSet = true;
+    m_imageId = std::forward<ImageIdT>(value);
+  }
+  template <typename ImageIdT = Aws::String>
+  ImportWorkspaceImageResult& WithImageId(ImageIdT&& value) {
+    SetImageId(std::forward<ImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the WorkSpace image.</p>
-     */
-    inline const Aws::String& GetImageId() const{ return m_imageId; }
-    inline void SetImageId(const Aws::String& value) { m_imageId = value; }
-    inline void SetImageId(Aws::String&& value) { m_imageId = std::move(value); }
-    inline void SetImageId(const char* value) { m_imageId.assign(value); }
-    inline ImportWorkspaceImageResult& WithImageId(const Aws::String& value) { SetImageId(value); return *this;}
-    inline ImportWorkspaceImageResult& WithImageId(Aws::String&& value) { SetImageId(std::move(value)); return *this;}
-    inline ImportWorkspaceImageResult& WithImageId(const char* value) { SetImageId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ImportWorkspaceImageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ImportWorkspaceImageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ImportWorkspaceImageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ImportWorkspaceImageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_imageId;
+ private:
+  Aws::String m_imageId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_imageIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/location/LocationService_EXPORTS.h>
 #include <aws/location/model/ListGeofenceCollectionsResponseEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
-  class ListGeofenceCollectionsResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult();
-    AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
+class ListGeofenceCollectionsResult {
+ public:
+  AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult() = default;
+  AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LOCATIONSERVICE_API ListGeofenceCollectionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Lists the geofence collections that exist in your Amazon Web Services
+   * account.</p>
+   */
+  inline const Aws::Vector<ListGeofenceCollectionsResponseEntry>& GetEntries() const { return m_entries; }
+  template <typename EntriesT = Aws::Vector<ListGeofenceCollectionsResponseEntry>>
+  void SetEntries(EntriesT&& value) {
+    m_entriesHasBeenSet = true;
+    m_entries = std::forward<EntriesT>(value);
+  }
+  template <typename EntriesT = Aws::Vector<ListGeofenceCollectionsResponseEntry>>
+  ListGeofenceCollectionsResult& WithEntries(EntriesT&& value) {
+    SetEntries(std::forward<EntriesT>(value));
+    return *this;
+  }
+  template <typename EntriesT = ListGeofenceCollectionsResponseEntry>
+  ListGeofenceCollectionsResult& AddEntries(EntriesT&& value) {
+    m_entriesHasBeenSet = true;
+    m_entries.emplace_back(std::forward<EntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Lists the geofence collections that exist in your Amazon Web Services
-     * account.</p>
-     */
-    inline const Aws::Vector<ListGeofenceCollectionsResponseEntry>& GetEntries() const{ return m_entries; }
-    inline void SetEntries(const Aws::Vector<ListGeofenceCollectionsResponseEntry>& value) { m_entries = value; }
-    inline void SetEntries(Aws::Vector<ListGeofenceCollectionsResponseEntry>&& value) { m_entries = std::move(value); }
-    inline ListGeofenceCollectionsResult& WithEntries(const Aws::Vector<ListGeofenceCollectionsResponseEntry>& value) { SetEntries(value); return *this;}
-    inline ListGeofenceCollectionsResult& WithEntries(Aws::Vector<ListGeofenceCollectionsResponseEntry>&& value) { SetEntries(std::move(value)); return *this;}
-    inline ListGeofenceCollectionsResult& AddEntries(const ListGeofenceCollectionsResponseEntry& value) { m_entries.push_back(value); return *this; }
-    inline ListGeofenceCollectionsResult& AddEntries(ListGeofenceCollectionsResponseEntry&& value) { m_entries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A pagination token indicating there are additional pages available. You can
+   * use the token in a following request to fetch the next set of results. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListGeofenceCollectionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A pagination token indicating there are additional pages available. You can
-     * use the token in a following request to fetch the next set of results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListGeofenceCollectionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListGeofenceCollectionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListGeofenceCollectionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListGeofenceCollectionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListGeofenceCollectionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListGeofenceCollectionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListGeofenceCollectionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ListGeofenceCollectionsResponseEntry> m_entries;
+ private:
+  Aws::Vector<ListGeofenceCollectionsResponseEntry> m_entries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_entriesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

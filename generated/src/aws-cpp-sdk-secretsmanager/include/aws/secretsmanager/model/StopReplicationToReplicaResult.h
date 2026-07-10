@@ -4,65 +4,72 @@
  */
 
 #pragma once
-#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/secretsmanager/SecretsManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecretsManager
-{
-namespace Model
-{
-  class StopReplicationToReplicaResult
-  {
-  public:
-    AWS_SECRETSMANAGER_API StopReplicationToReplicaResult();
-    AWS_SECRETSMANAGER_API StopReplicationToReplicaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECRETSMANAGER_API StopReplicationToReplicaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecretsManager {
+namespace Model {
+class StopReplicationToReplicaResult {
+ public:
+  AWS_SECRETSMANAGER_API StopReplicationToReplicaResult() = default;
+  AWS_SECRETSMANAGER_API StopReplicationToReplicaResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECRETSMANAGER_API StopReplicationToReplicaResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the promoted secret. The ARN is the same as the original primary
+   * secret except the Region is changed.</p>
+   */
+  inline const Aws::String& GetARN() const { return m_aRN; }
+  template <typename ARNT = Aws::String>
+  void SetARN(ARNT&& value) {
+    m_aRNHasBeenSet = true;
+    m_aRN = std::forward<ARNT>(value);
+  }
+  template <typename ARNT = Aws::String>
+  StopReplicationToReplicaResult& WithARN(ARNT&& value) {
+    SetARN(std::forward<ARNT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the promoted secret. The ARN is the same as the original primary
-     * secret except the Region is changed.</p>
-     */
-    inline const Aws::String& GetARN() const{ return m_aRN; }
-    inline void SetARN(const Aws::String& value) { m_aRN = value; }
-    inline void SetARN(Aws::String&& value) { m_aRN = std::move(value); }
-    inline void SetARN(const char* value) { m_aRN.assign(value); }
-    inline StopReplicationToReplicaResult& WithARN(const Aws::String& value) { SetARN(value); return *this;}
-    inline StopReplicationToReplicaResult& WithARN(Aws::String&& value) { SetARN(std::move(value)); return *this;}
-    inline StopReplicationToReplicaResult& WithARN(const char* value) { SetARN(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StopReplicationToReplicaResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StopReplicationToReplicaResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StopReplicationToReplicaResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StopReplicationToReplicaResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_aRN;
+ private:
+  Aws::String m_aRN;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_aRNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecretsManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecretsManager
+}  // namespace Aws

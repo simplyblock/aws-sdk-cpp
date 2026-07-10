@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/launch-wizard/model/GetWorkloadDeploymentPatternRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/launch-wizard/model/GetWorkloadDeploymentPatternRequest.h>
 
 #include <utility>
 
@@ -12,31 +12,16 @@ using namespace Aws::LaunchWizard::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetWorkloadDeploymentPatternRequest::GetWorkloadDeploymentPatternRequest() : 
-    m_deploymentPatternNameHasBeenSet(false),
-    m_workloadNameHasBeenSet(false)
-{
-}
-
-Aws::String GetWorkloadDeploymentPatternRequest::SerializePayload() const
-{
+Aws::String GetWorkloadDeploymentPatternRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_deploymentPatternNameHasBeenSet)
-  {
-   payload.WithString("deploymentPatternName", m_deploymentPatternName);
-
+  if (m_workloadNameHasBeenSet) {
+    payload.WithString("workloadName", m_workloadName);
   }
 
-  if(m_workloadNameHasBeenSet)
-  {
-   payload.WithString("workloadName", m_workloadName);
-
+  if (m_deploymentPatternNameHasBeenSet) {
+    payload.WithString("deploymentPatternName", m_deploymentPatternName);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

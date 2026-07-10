@@ -4,110 +4,127 @@
  */
 
 #pragma once
-#include <aws/memorydb/MemoryDB_EXPORTS.h>
-#include <aws/memorydb/MemoryDBRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/memorydb/MemoryDBRequest.h>
+#include <aws/memorydb/MemoryDB_EXPORTS.h>
 #include <aws/memorydb/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace MemoryDB
-{
-namespace Model
-{
+namespace Aws {
+namespace MemoryDB {
+namespace Model {
 
+/**
+ */
+class CreateParameterGroupRequest : public MemoryDBRequest {
+ public:
+  AWS_MEMORYDB_API CreateParameterGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateParameterGroup"; }
+
+  AWS_MEMORYDB_API Aws::String SerializePayload() const override;
+
+  AWS_MEMORYDB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the parameter group.</p>
    */
-  class CreateParameterGroupRequest : public MemoryDBRequest
-  {
-  public:
-    AWS_MEMORYDB_API CreateParameterGroupRequest();
+  inline const Aws::String& GetParameterGroupName() const { return m_parameterGroupName; }
+  inline bool ParameterGroupNameHasBeenSet() const { return m_parameterGroupNameHasBeenSet; }
+  template <typename ParameterGroupNameT = Aws::String>
+  void SetParameterGroupName(ParameterGroupNameT&& value) {
+    m_parameterGroupNameHasBeenSet = true;
+    m_parameterGroupName = std::forward<ParameterGroupNameT>(value);
+  }
+  template <typename ParameterGroupNameT = Aws::String>
+  CreateParameterGroupRequest& WithParameterGroupName(ParameterGroupNameT&& value) {
+    SetParameterGroupName(std::forward<ParameterGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateParameterGroup"; }
+  ///@{
+  /**
+   * <p>The name of the parameter group family that the parameter group can be used
+   * with.</p>
+   */
+  inline const Aws::String& GetFamily() const { return m_family; }
+  inline bool FamilyHasBeenSet() const { return m_familyHasBeenSet; }
+  template <typename FamilyT = Aws::String>
+  void SetFamily(FamilyT&& value) {
+    m_familyHasBeenSet = true;
+    m_family = std::forward<FamilyT>(value);
+  }
+  template <typename FamilyT = Aws::String>
+  CreateParameterGroupRequest& WithFamily(FamilyT&& value) {
+    SetFamily(std::forward<FamilyT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEMORYDB_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An optional description of the parameter group.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateParameterGroupRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_MEMORYDB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A list of tags to be added to this resource. A tag is a key-value pair. A tag
+   * key must be accompanied by a tag value, although null is accepted.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateParameterGroupRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateParameterGroupRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_parameterGroupName;
 
+  Aws::String m_family;
 
-    ///@{
-    /**
-     * <p>The name of the parameter group.</p>
-     */
-    inline const Aws::String& GetParameterGroupName() const{ return m_parameterGroupName; }
-    inline bool ParameterGroupNameHasBeenSet() const { return m_parameterGroupNameHasBeenSet; }
-    inline void SetParameterGroupName(const Aws::String& value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName = value; }
-    inline void SetParameterGroupName(Aws::String&& value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName = std::move(value); }
-    inline void SetParameterGroupName(const char* value) { m_parameterGroupNameHasBeenSet = true; m_parameterGroupName.assign(value); }
-    inline CreateParameterGroupRequest& WithParameterGroupName(const Aws::String& value) { SetParameterGroupName(value); return *this;}
-    inline CreateParameterGroupRequest& WithParameterGroupName(Aws::String&& value) { SetParameterGroupName(std::move(value)); return *this;}
-    inline CreateParameterGroupRequest& WithParameterGroupName(const char* value) { SetParameterGroupName(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The name of the parameter group family that the parameter group can be used
-     * with.</p>
-     */
-    inline const Aws::String& GetFamily() const{ return m_family; }
-    inline bool FamilyHasBeenSet() const { return m_familyHasBeenSet; }
-    inline void SetFamily(const Aws::String& value) { m_familyHasBeenSet = true; m_family = value; }
-    inline void SetFamily(Aws::String&& value) { m_familyHasBeenSet = true; m_family = std::move(value); }
-    inline void SetFamily(const char* value) { m_familyHasBeenSet = true; m_family.assign(value); }
-    inline CreateParameterGroupRequest& WithFamily(const Aws::String& value) { SetFamily(value); return *this;}
-    inline CreateParameterGroupRequest& WithFamily(Aws::String&& value) { SetFamily(std::move(value)); return *this;}
-    inline CreateParameterGroupRequest& WithFamily(const char* value) { SetFamily(value); return *this;}
-    ///@}
+  Aws::Vector<Tag> m_tags;
+  bool m_parameterGroupNameHasBeenSet = false;
+  bool m_familyHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>An optional description of the parameter group.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateParameterGroupRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateParameterGroupRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateParameterGroupRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A list of tags to be added to this resource. A tag is a key-value pair. A tag
-     * key must be accompanied by a tag value, although null is accepted.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateParameterGroupRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateParameterGroupRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateParameterGroupRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateParameterGroupRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_parameterGroupName;
-    bool m_parameterGroupNameHasBeenSet = false;
-
-    Aws::String m_family;
-    bool m_familyHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

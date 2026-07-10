@@ -4,77 +4,78 @@
  */
 
 #pragma once
-#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/geo-routes/GeoRoutes_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GeoRoutes
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GeoRoutes {
+namespace Model {
 
+/**
+ * <p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3,
+ * Euro4, Euro5, Euro6, EuroEev</code> </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/RouteEmissionType">AWS
+ * API Reference</a></p>
+ */
+class RouteEmissionType {
+ public:
+  AWS_GEOROUTES_API RouteEmissionType() = default;
+  AWS_GEOROUTES_API RouteEmissionType(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API RouteEmissionType& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
+  /**
+   * <p>The CO 2 emission classes.</p>
+   */
+  inline const Aws::String& GetCo2EmissionClass() const { return m_co2EmissionClass; }
+  inline bool Co2EmissionClassHasBeenSet() const { return m_co2EmissionClassHasBeenSet; }
+  template <typename Co2EmissionClassT = Aws::String>
+  void SetCo2EmissionClass(Co2EmissionClassT&& value) {
+    m_co2EmissionClassHasBeenSet = true;
+    m_co2EmissionClass = std::forward<Co2EmissionClassT>(value);
+  }
+  template <typename Co2EmissionClassT = Aws::String>
+  RouteEmissionType& WithCo2EmissionClass(Co2EmissionClassT&& value) {
+    SetCo2EmissionClass(std::forward<Co2EmissionClassT>(value));
+    return *this;
+  }
+  ///@}
+
+  ///@{
   /**
    * <p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3,
-   * Euro4, Euro5, Euro6, EuroEev</code> </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/RouteEmissionType">AWS
-   * API Reference</a></p>
+   * Euro4, Euro5, Euro6, EuroEev</code> </p>
    */
-  class RouteEmissionType
-  {
-  public:
-    AWS_GEOROUTES_API RouteEmissionType();
-    AWS_GEOROUTES_API RouteEmissionType(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API RouteEmissionType& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  RouteEmissionType& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_co2EmissionClass;
 
+  Aws::String m_type;
+  bool m_co2EmissionClassHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The CO 2 emission classes.</p>
-     */
-    inline const Aws::String& GetCo2EmissionClass() const{ return m_co2EmissionClass; }
-    inline bool Co2EmissionClassHasBeenSet() const { return m_co2EmissionClassHasBeenSet; }
-    inline void SetCo2EmissionClass(const Aws::String& value) { m_co2EmissionClassHasBeenSet = true; m_co2EmissionClass = value; }
-    inline void SetCo2EmissionClass(Aws::String&& value) { m_co2EmissionClassHasBeenSet = true; m_co2EmissionClass = std::move(value); }
-    inline void SetCo2EmissionClass(const char* value) { m_co2EmissionClassHasBeenSet = true; m_co2EmissionClass.assign(value); }
-    inline RouteEmissionType& WithCo2EmissionClass(const Aws::String& value) { SetCo2EmissionClass(value); return *this;}
-    inline RouteEmissionType& WithCo2EmissionClass(Aws::String&& value) { SetCo2EmissionClass(std::move(value)); return *this;}
-    inline RouteEmissionType& WithCo2EmissionClass(const char* value) { SetCo2EmissionClass(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Type of the emission.</p> <p> <b>Valid values</b>: <code>Euro1, Euro2, Euro3,
-     * Euro4, Euro5, Euro6, EuroEev</code> </p>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline RouteEmissionType& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline RouteEmissionType& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline RouteEmissionType& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_co2EmissionClass;
-    bool m_co2EmissionClassHasBeenSet = false;
-
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GeoRoutes
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoRoutes
+}  // namespace Aws

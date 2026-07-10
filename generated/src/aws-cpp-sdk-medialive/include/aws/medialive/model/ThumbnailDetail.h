@@ -4,78 +4,85 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
 #include <aws/medialive/model/Thumbnail.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
 
+/**
+ * Thumbnail details for one pipeline of a running channel.<p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ThumbnailDetail">AWS
+ * API Reference</a></p>
+ */
+class ThumbnailDetail {
+ public:
+  AWS_MEDIALIVE_API ThumbnailDetail() = default;
+  AWS_MEDIALIVE_API ThumbnailDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API ThumbnailDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * Thumbnail details for one pipeline of a running channel.<p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/ThumbnailDetail">AWS
-   * API Reference</a></p>
+   * Pipeline ID
    */
-  class ThumbnailDetail
-  {
-  public:
-    AWS_MEDIALIVE_API ThumbnailDetail();
-    AWS_MEDIALIVE_API ThumbnailDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API ThumbnailDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetPipelineId() const { return m_pipelineId; }
+  inline bool PipelineIdHasBeenSet() const { return m_pipelineIdHasBeenSet; }
+  template <typename PipelineIdT = Aws::String>
+  void SetPipelineId(PipelineIdT&& value) {
+    m_pipelineIdHasBeenSet = true;
+    m_pipelineId = std::forward<PipelineIdT>(value);
+  }
+  template <typename PipelineIdT = Aws::String>
+  ThumbnailDetail& WithPipelineId(PipelineIdT&& value) {
+    SetPipelineId(std::forward<PipelineIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * thumbnails of a single pipeline
+   */
+  inline const Aws::Vector<Thumbnail>& GetThumbnails() const { return m_thumbnails; }
+  inline bool ThumbnailsHasBeenSet() const { return m_thumbnailsHasBeenSet; }
+  template <typename ThumbnailsT = Aws::Vector<Thumbnail>>
+  void SetThumbnails(ThumbnailsT&& value) {
+    m_thumbnailsHasBeenSet = true;
+    m_thumbnails = std::forward<ThumbnailsT>(value);
+  }
+  template <typename ThumbnailsT = Aws::Vector<Thumbnail>>
+  ThumbnailDetail& WithThumbnails(ThumbnailsT&& value) {
+    SetThumbnails(std::forward<ThumbnailsT>(value));
+    return *this;
+  }
+  template <typename ThumbnailsT = Thumbnail>
+  ThumbnailDetail& AddThumbnails(ThumbnailsT&& value) {
+    m_thumbnailsHasBeenSet = true;
+    m_thumbnails.emplace_back(std::forward<ThumbnailsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_pipelineId;
 
-    ///@{
-    /**
-     * Pipeline ID
-     */
-    inline const Aws::String& GetPipelineId() const{ return m_pipelineId; }
-    inline bool PipelineIdHasBeenSet() const { return m_pipelineIdHasBeenSet; }
-    inline void SetPipelineId(const Aws::String& value) { m_pipelineIdHasBeenSet = true; m_pipelineId = value; }
-    inline void SetPipelineId(Aws::String&& value) { m_pipelineIdHasBeenSet = true; m_pipelineId = std::move(value); }
-    inline void SetPipelineId(const char* value) { m_pipelineIdHasBeenSet = true; m_pipelineId.assign(value); }
-    inline ThumbnailDetail& WithPipelineId(const Aws::String& value) { SetPipelineId(value); return *this;}
-    inline ThumbnailDetail& WithPipelineId(Aws::String&& value) { SetPipelineId(std::move(value)); return *this;}
-    inline ThumbnailDetail& WithPipelineId(const char* value) { SetPipelineId(value); return *this;}
-    ///@}
+  Aws::Vector<Thumbnail> m_thumbnails;
+  bool m_pipelineIdHasBeenSet = false;
+  bool m_thumbnailsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * thumbnails of a single pipeline
-     */
-    inline const Aws::Vector<Thumbnail>& GetThumbnails() const{ return m_thumbnails; }
-    inline bool ThumbnailsHasBeenSet() const { return m_thumbnailsHasBeenSet; }
-    inline void SetThumbnails(const Aws::Vector<Thumbnail>& value) { m_thumbnailsHasBeenSet = true; m_thumbnails = value; }
-    inline void SetThumbnails(Aws::Vector<Thumbnail>&& value) { m_thumbnailsHasBeenSet = true; m_thumbnails = std::move(value); }
-    inline ThumbnailDetail& WithThumbnails(const Aws::Vector<Thumbnail>& value) { SetThumbnails(value); return *this;}
-    inline ThumbnailDetail& WithThumbnails(Aws::Vector<Thumbnail>&& value) { SetThumbnails(std::move(value)); return *this;}
-    inline ThumbnailDetail& AddThumbnails(const Thumbnail& value) { m_thumbnailsHasBeenSet = true; m_thumbnails.push_back(value); return *this; }
-    inline ThumbnailDetail& AddThumbnails(Thumbnail&& value) { m_thumbnailsHasBeenSet = true; m_thumbnails.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_pipelineId;
-    bool m_pipelineIdHasBeenSet = false;
-
-    Aws::Vector<Thumbnail> m_thumbnails;
-    bool m_thumbnailsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

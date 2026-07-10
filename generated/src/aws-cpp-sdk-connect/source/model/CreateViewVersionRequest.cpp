@@ -12,33 +12,16 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateViewVersionRequest::CreateViewVersionRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_viewIdHasBeenSet(false),
-    m_versionDescriptionHasBeenSet(false),
-    m_viewContentSha256HasBeenSet(false)
-{
-}
-
-Aws::String CreateViewVersionRequest::SerializePayload() const
-{
+Aws::String CreateViewVersionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_versionDescriptionHasBeenSet)
-  {
-   payload.WithString("VersionDescription", m_versionDescription);
-
+  if (m_versionDescriptionHasBeenSet) {
+    payload.WithString("VersionDescription", m_versionDescription);
   }
 
-  if(m_viewContentSha256HasBeenSet)
-  {
-   payload.WithString("ViewContentSha256", m_viewContentSha256);
-
+  if (m_viewContentSha256HasBeenSet) {
+    payload.WithString("ViewContentSha256", m_viewContentSha256);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

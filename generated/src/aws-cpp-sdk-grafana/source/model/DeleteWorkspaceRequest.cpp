@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/grafana/model/DeleteWorkspaceRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/grafana/model/DeleteWorkspaceRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::ManagedGrafana::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteWorkspaceRequest::DeleteWorkspaceRequest() : 
-    m_workspaceIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteWorkspaceRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteWorkspaceRequest::SerializePayload() const { return {}; }

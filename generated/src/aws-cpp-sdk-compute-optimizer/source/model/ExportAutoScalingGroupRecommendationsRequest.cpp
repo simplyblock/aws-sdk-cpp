@@ -4,98 +4,95 @@
  */
 
 #include <aws/compute-optimizer/model/ExportAutoScalingGroupRecommendationsRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/crt/cbor/Cbor.h>
 
 #include <utility>
 
 using namespace Aws::ComputeOptimizer::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ExportAutoScalingGroupRecommendationsRequest::ExportAutoScalingGroupRecommendationsRequest() : 
-    m_accountIdsHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_fieldsToExportHasBeenSet(false),
-    m_s3DestinationConfigHasBeenSet(false),
-    m_fileFormat(FileFormat::NOT_SET),
-    m_fileFormatHasBeenSet(false),
-    m_includeMemberAccounts(false),
-    m_includeMemberAccountsHasBeenSet(false),
-    m_recommendationPreferencesHasBeenSet(false)
-{
+Aws::String ExportAutoScalingGroupRecommendationsRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_accountIdsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_filtersHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fieldsToExportHasBeenSet) {
+    mapSize++;
+  }
+  if (m_s3DestinationConfigHasBeenSet) {
+    mapSize++;
+  }
+  if (m_fileFormatHasBeenSet) {
+    mapSize++;
+  }
+  if (m_includeMemberAccountsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_recommendationPreferencesHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_accountIdsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("accountIds"));
+    encoder.WriteArrayStart(m_accountIds.size());
+    for (const auto& item_0 : m_accountIds) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+
+  if (m_filtersHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("filters"));
+    encoder.WriteArrayStart(m_filters.size());
+    for (const auto& item_0 : m_filters) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_fieldsToExportHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("fieldsToExport"));
+    encoder.WriteArrayStart(m_fieldsToExport.size());
+    for (const auto& item_0 : m_fieldsToExport) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(
+          ExportableAutoScalingGroupFieldMapper::GetNameForExportableAutoScalingGroupField(item_0).c_str()));
+    }
+  }
+
+  if (m_s3DestinationConfigHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("s3DestinationConfig"));
+    m_s3DestinationConfig.CborEncode(encoder);
+  }
+
+  if (m_fileFormatHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("fileFormat"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(FileFormatMapper::GetNameForFileFormat(m_fileFormat).c_str()));
+  }
+
+  if (m_includeMemberAccountsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("includeMemberAccounts"));
+    encoder.WriteBool(m_includeMemberAccounts);
+  }
+
+  if (m_recommendationPreferencesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("recommendationPreferences"));
+    m_recommendationPreferences.CborEncode(encoder);
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ExportAutoScalingGroupRecommendationsRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_accountIdsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> accountIdsJsonList(m_accountIds.size());
-   for(unsigned accountIdsIndex = 0; accountIdsIndex < accountIdsJsonList.GetLength(); ++accountIdsIndex)
-   {
-     accountIdsJsonList[accountIdsIndex].AsString(m_accountIds[accountIdsIndex]);
-   }
-   payload.WithArray("accountIds", std::move(accountIdsJsonList));
-
-  }
-
-  if(m_filtersHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> filtersJsonList(m_filters.size());
-   for(unsigned filtersIndex = 0; filtersIndex < filtersJsonList.GetLength(); ++filtersIndex)
-   {
-     filtersJsonList[filtersIndex].AsObject(m_filters[filtersIndex].Jsonize());
-   }
-   payload.WithArray("filters", std::move(filtersJsonList));
-
-  }
-
-  if(m_fieldsToExportHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> fieldsToExportJsonList(m_fieldsToExport.size());
-   for(unsigned fieldsToExportIndex = 0; fieldsToExportIndex < fieldsToExportJsonList.GetLength(); ++fieldsToExportIndex)
-   {
-     fieldsToExportJsonList[fieldsToExportIndex].AsString(ExportableAutoScalingGroupFieldMapper::GetNameForExportableAutoScalingGroupField(m_fieldsToExport[fieldsToExportIndex]));
-   }
-   payload.WithArray("fieldsToExport", std::move(fieldsToExportJsonList));
-
-  }
-
-  if(m_s3DestinationConfigHasBeenSet)
-  {
-   payload.WithObject("s3DestinationConfig", m_s3DestinationConfig.Jsonize());
-
-  }
-
-  if(m_fileFormatHasBeenSet)
-  {
-   payload.WithString("fileFormat", FileFormatMapper::GetNameForFileFormat(m_fileFormat));
-  }
-
-  if(m_includeMemberAccountsHasBeenSet)
-  {
-   payload.WithBool("includeMemberAccounts", m_includeMemberAccounts);
-
-  }
-
-  if(m_recommendationPreferencesHasBeenSet)
-  {
-   payload.WithObject("recommendationPreferences", m_recommendationPreferences.Jsonize());
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ExportAutoScalingGroupRecommendationsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ExportAutoScalingGroupRecommendationsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "ComputeOptimizerService.ExportAutoScalingGroupRecommendations"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

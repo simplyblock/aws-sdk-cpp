@@ -59,10 +59,12 @@ namespace Aws
         extern AWS_CORE_API const char AWS_TRAILER_HEADER[];
         extern AWS_CORE_API const char SDK_INVOCATION_ID_HEADER[];
         extern AWS_CORE_API const char SDK_REQUEST_HEADER[];
+        extern AWS_CORE_API const char SMITHY_PROTOCOL_HEADER[];
         extern AWS_CORE_API const char X_AMZN_TRACE_ID_HEADER[];
         extern AWS_CORE_API const char CHUNKED_VALUE[];
         extern AWS_CORE_API const char AWS_CHUNKED_VALUE[];
         extern AWS_CORE_API const char X_AMZN_ERROR_TYPE[];
+        extern AWS_CORE_API const char X_AMZN_QUERY_MODE[];
 
         class HttpRequest;
         class HttpResponse;
@@ -396,6 +398,19 @@ namespace Aws
                 SetHeaderValue(CONTENT_TYPE_HEADER, value);
             }
 
+            /**
+             * Has content-encoding header.
+             */
+            inline bool HasContentEncoding() const { return HasHeader(CONTENT_ENCODING_HEADER); }
+            /**
+             * Gets content-encoding header.
+             */
+            inline const Aws::String& GetContentEncoding() const { return GetHeaderValue(CONTENT_ENCODING_HEADER); }
+            /**
+             * Sets content-encoding header.
+             */
+            inline void SetContentEncoding(const Aws::String& value) { SetHeaderValue(CONTENT_ENCODING_HEADER, value); }
+
             inline bool HasTransferEncoding() const
             {
                 return HasHeader(TRANSFER_ENCODING_HEADER);
@@ -567,8 +582,11 @@ namespace Aws
             Aws::String GetResolvedRemoteHost() const { return m_resolvedRemoteHost; }
             void SetResolvedRemoteHost(const Aws::String& ip) { m_resolvedRemoteHost = ip; }
 
-            bool IsEventStreamRequest() { return m_isEvenStreamRequest; }
+            bool IsEventStreamRequest() const { return m_isEvenStreamRequest; }
             void SetEventStreamRequest(bool eventStreamRequest) { m_isEvenStreamRequest = eventStreamRequest; }
+            
+            bool HasEventStreamResponse() const { return m_hasEvenStreamResponse; }
+            void SetHasEventStreamResponse(bool hasEventStreamResponse) { m_hasEvenStreamResponse = hasEventStreamResponse; }
 
             virtual std::shared_ptr<Aws::Crt::Http::HttpRequest> ToCrtHttpRequest();
 
@@ -592,6 +610,7 @@ namespace Aws
             URI m_uri;
             HttpMethod m_method;
             bool m_isEvenStreamRequest = false;
+            bool m_hasEvenStreamResponse{false};
             HeadersReceivedEventHandler m_onHeadersReceived;
             DataReceivedEventHandler m_onDataReceived;
             DataSentEventHandler m_onDataSent;

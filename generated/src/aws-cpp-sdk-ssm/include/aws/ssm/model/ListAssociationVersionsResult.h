@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm/SSM_EXPORTS.h>
 #include <aws/ssm/model/AssociationVersionInfo.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
-  class ListAssociationVersionsResult
-  {
-  public:
-    AWS_SSM_API ListAssociationVersionsResult();
-    AWS_SSM_API ListAssociationVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSM_API ListAssociationVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
+class ListAssociationVersionsResult {
+ public:
+  AWS_SSM_API ListAssociationVersionsResult() = default;
+  AWS_SSM_API ListAssociationVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSM_API ListAssociationVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about all versions of the association for the specified
+   * association ID.</p>
+   */
+  inline const Aws::Vector<AssociationVersionInfo>& GetAssociationVersions() const { return m_associationVersions; }
+  template <typename AssociationVersionsT = Aws::Vector<AssociationVersionInfo>>
+  void SetAssociationVersions(AssociationVersionsT&& value) {
+    m_associationVersionsHasBeenSet = true;
+    m_associationVersions = std::forward<AssociationVersionsT>(value);
+  }
+  template <typename AssociationVersionsT = Aws::Vector<AssociationVersionInfo>>
+  ListAssociationVersionsResult& WithAssociationVersions(AssociationVersionsT&& value) {
+    SetAssociationVersions(std::forward<AssociationVersionsT>(value));
+    return *this;
+  }
+  template <typename AssociationVersionsT = AssociationVersionInfo>
+  ListAssociationVersionsResult& AddAssociationVersions(AssociationVersionsT&& value) {
+    m_associationVersionsHasBeenSet = true;
+    m_associationVersions.emplace_back(std::forward<AssociationVersionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about all versions of the association for the specified
-     * association ID.</p>
-     */
-    inline const Aws::Vector<AssociationVersionInfo>& GetAssociationVersions() const{ return m_associationVersions; }
-    inline void SetAssociationVersions(const Aws::Vector<AssociationVersionInfo>& value) { m_associationVersions = value; }
-    inline void SetAssociationVersions(Aws::Vector<AssociationVersionInfo>&& value) { m_associationVersions = std::move(value); }
-    inline ListAssociationVersionsResult& WithAssociationVersions(const Aws::Vector<AssociationVersionInfo>& value) { SetAssociationVersions(value); return *this;}
-    inline ListAssociationVersionsResult& WithAssociationVersions(Aws::Vector<AssociationVersionInfo>&& value) { SetAssociationVersions(std::move(value)); return *this;}
-    inline ListAssociationVersionsResult& AddAssociationVersions(const AssociationVersionInfo& value) { m_associationVersions.push_back(value); return *this; }
-    inline ListAssociationVersionsResult& AddAssociationVersions(AssociationVersionInfo&& value) { m_associationVersions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token for the next set of items to return. Use this token to get the next
+   * set of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAssociationVersionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of items to return. Use this token to get the next
-     * set of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListAssociationVersionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAssociationVersionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAssociationVersionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListAssociationVersionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListAssociationVersionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListAssociationVersionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListAssociationVersionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AssociationVersionInfo> m_associationVersions;
+ private:
+  Aws::Vector<AssociationVersionInfo> m_associationVersions;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_associationVersionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

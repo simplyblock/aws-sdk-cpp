@@ -4,90 +4,97 @@
  */
 
 #pragma once
-#include <aws/workmail/WorkMail_EXPORTS.h>
-#include <aws/workmail/WorkMailRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/workmail/WorkMailRequest.h>
+#include <aws/workmail/WorkMail_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace WorkMail
-{
-namespace Model
-{
+namespace Aws {
+namespace WorkMail {
+namespace Model {
 
+/**
+ */
+class ResetPasswordRequest : public WorkMailRequest {
+ public:
+  AWS_WORKMAIL_API ResetPasswordRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ResetPassword"; }
+
+  AWS_WORKMAIL_API Aws::String SerializePayload() const override;
+
+  AWS_WORKMAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the organization that contains the user for which the
+   * password is reset.</p>
    */
-  class ResetPasswordRequest : public WorkMailRequest
-  {
-  public:
-    AWS_WORKMAIL_API ResetPasswordRequest();
+  inline const Aws::String& GetOrganizationId() const { return m_organizationId; }
+  inline bool OrganizationIdHasBeenSet() const { return m_organizationIdHasBeenSet; }
+  template <typename OrganizationIdT = Aws::String>
+  void SetOrganizationId(OrganizationIdT&& value) {
+    m_organizationIdHasBeenSet = true;
+    m_organizationId = std::forward<OrganizationIdT>(value);
+  }
+  template <typename OrganizationIdT = Aws::String>
+  ResetPasswordRequest& WithOrganizationId(OrganizationIdT&& value) {
+    SetOrganizationId(std::forward<OrganizationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ResetPassword"; }
+  ///@{
+  /**
+   * <p>The identifier of the user for whom the password is reset.</p>
+   */
+  inline const Aws::String& GetUserId() const { return m_userId; }
+  inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
+  template <typename UserIdT = Aws::String>
+  void SetUserId(UserIdT&& value) {
+    m_userIdHasBeenSet = true;
+    m_userId = std::forward<UserIdT>(value);
+  }
+  template <typename UserIdT = Aws::String>
+  ResetPasswordRequest& WithUserId(UserIdT&& value) {
+    SetUserId(std::forward<UserIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_WORKMAIL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The new password for the user.</p>
+   */
+  inline const Aws::String& GetPassword() const { return m_password; }
+  inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
+  template <typename PasswordT = Aws::String>
+  void SetPassword(PasswordT&& value) {
+    m_passwordHasBeenSet = true;
+    m_password = std::forward<PasswordT>(value);
+  }
+  template <typename PasswordT = Aws::String>
+  ResetPasswordRequest& WithPassword(PasswordT&& value) {
+    SetPassword(std::forward<PasswordT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_organizationId;
 
-    AWS_WORKMAIL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_userId;
 
+  Aws::String m_password;
+  bool m_organizationIdHasBeenSet = false;
+  bool m_userIdHasBeenSet = false;
+  bool m_passwordHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier of the organization that contains the user for which the
-     * password is reset.</p>
-     */
-    inline const Aws::String& GetOrganizationId() const{ return m_organizationId; }
-    inline bool OrganizationIdHasBeenSet() const { return m_organizationIdHasBeenSet; }
-    inline void SetOrganizationId(const Aws::String& value) { m_organizationIdHasBeenSet = true; m_organizationId = value; }
-    inline void SetOrganizationId(Aws::String&& value) { m_organizationIdHasBeenSet = true; m_organizationId = std::move(value); }
-    inline void SetOrganizationId(const char* value) { m_organizationIdHasBeenSet = true; m_organizationId.assign(value); }
-    inline ResetPasswordRequest& WithOrganizationId(const Aws::String& value) { SetOrganizationId(value); return *this;}
-    inline ResetPasswordRequest& WithOrganizationId(Aws::String&& value) { SetOrganizationId(std::move(value)); return *this;}
-    inline ResetPasswordRequest& WithOrganizationId(const char* value) { SetOrganizationId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the user for whom the password is reset.</p>
-     */
-    inline const Aws::String& GetUserId() const{ return m_userId; }
-    inline bool UserIdHasBeenSet() const { return m_userIdHasBeenSet; }
-    inline void SetUserId(const Aws::String& value) { m_userIdHasBeenSet = true; m_userId = value; }
-    inline void SetUserId(Aws::String&& value) { m_userIdHasBeenSet = true; m_userId = std::move(value); }
-    inline void SetUserId(const char* value) { m_userIdHasBeenSet = true; m_userId.assign(value); }
-    inline ResetPasswordRequest& WithUserId(const Aws::String& value) { SetUserId(value); return *this;}
-    inline ResetPasswordRequest& WithUserId(Aws::String&& value) { SetUserId(std::move(value)); return *this;}
-    inline ResetPasswordRequest& WithUserId(const char* value) { SetUserId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The new password for the user.</p>
-     */
-    inline const Aws::String& GetPassword() const{ return m_password; }
-    inline bool PasswordHasBeenSet() const { return m_passwordHasBeenSet; }
-    inline void SetPassword(const Aws::String& value) { m_passwordHasBeenSet = true; m_password = value; }
-    inline void SetPassword(Aws::String&& value) { m_passwordHasBeenSet = true; m_password = std::move(value); }
-    inline void SetPassword(const char* value) { m_passwordHasBeenSet = true; m_password.assign(value); }
-    inline ResetPasswordRequest& WithPassword(const Aws::String& value) { SetPassword(value); return *this;}
-    inline ResetPasswordRequest& WithPassword(Aws::String&& value) { SetPassword(std::move(value)); return *this;}
-    inline ResetPasswordRequest& WithPassword(const char* value) { SetPassword(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_organizationId;
-    bool m_organizationIdHasBeenSet = false;
-
-    Aws::String m_userId;
-    bool m_userIdHasBeenSet = false;
-
-    Aws::String m_password;
-    bool m_passwordHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace WorkMail
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkMail
+}  // namespace Aws

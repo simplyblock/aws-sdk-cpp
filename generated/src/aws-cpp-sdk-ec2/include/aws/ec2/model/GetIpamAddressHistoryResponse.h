@@ -4,83 +4,103 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IpamAddressHistoryRecord.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class GetIpamAddressHistoryResponse
-  {
-  public:
-    AWS_EC2_API GetIpamAddressHistoryResponse();
-    AWS_EC2_API GetIpamAddressHistoryResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API GetIpamAddressHistoryResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class GetIpamAddressHistoryResponse {
+ public:
+  AWS_EC2_API GetIpamAddressHistoryResponse() = default;
+  AWS_EC2_API GetIpamAddressHistoryResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API GetIpamAddressHistoryResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A historical record for a CIDR within an IPAM scope. If the CIDR is
+   * associated with an EC2 instance, you will see an object in the response for the
+   * instance and one for the network interface.</p>
+   */
+  inline const Aws::Vector<IpamAddressHistoryRecord>& GetHistoryRecords() const { return m_historyRecords; }
+  template <typename HistoryRecordsT = Aws::Vector<IpamAddressHistoryRecord>>
+  void SetHistoryRecords(HistoryRecordsT&& value) {
+    m_historyRecordsHasBeenSet = true;
+    m_historyRecords = std::forward<HistoryRecordsT>(value);
+  }
+  template <typename HistoryRecordsT = Aws::Vector<IpamAddressHistoryRecord>>
+  GetIpamAddressHistoryResponse& WithHistoryRecords(HistoryRecordsT&& value) {
+    SetHistoryRecords(std::forward<HistoryRecordsT>(value));
+    return *this;
+  }
+  template <typename HistoryRecordsT = IpamAddressHistoryRecord>
+  GetIpamAddressHistoryResponse& AddHistoryRecords(HistoryRecordsT&& value) {
+    m_historyRecordsHasBeenSet = true;
+    m_historyRecords.emplace_back(std::forward<HistoryRecordsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A historical record for a CIDR within an IPAM scope. If the CIDR is
-     * associated with an EC2 instance, you will see an object in the response for the
-     * instance and one for the network interface.</p>
-     */
-    inline const Aws::Vector<IpamAddressHistoryRecord>& GetHistoryRecords() const{ return m_historyRecords; }
-    inline void SetHistoryRecords(const Aws::Vector<IpamAddressHistoryRecord>& value) { m_historyRecords = value; }
-    inline void SetHistoryRecords(Aws::Vector<IpamAddressHistoryRecord>&& value) { m_historyRecords = std::move(value); }
-    inline GetIpamAddressHistoryResponse& WithHistoryRecords(const Aws::Vector<IpamAddressHistoryRecord>& value) { SetHistoryRecords(value); return *this;}
-    inline GetIpamAddressHistoryResponse& WithHistoryRecords(Aws::Vector<IpamAddressHistoryRecord>&& value) { SetHistoryRecords(std::move(value)); return *this;}
-    inline GetIpamAddressHistoryResponse& AddHistoryRecords(const IpamAddressHistoryRecord& value) { m_historyRecords.push_back(value); return *this; }
-    inline GetIpamAddressHistoryResponse& AddHistoryRecords(IpamAddressHistoryRecord&& value) { m_historyRecords.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetIpamAddressHistoryResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetIpamAddressHistoryResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetIpamAddressHistoryResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetIpamAddressHistoryResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline GetIpamAddressHistoryResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline GetIpamAddressHistoryResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  GetIpamAddressHistoryResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<IpamAddressHistoryRecord> m_historyRecords;
+ private:
+  Aws::Vector<IpamAddressHistoryRecord> m_historyRecords;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_historyRecordsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -3,43 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DisableTransitGatewayRouteTablePropagationRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/DisableTransitGatewayRouteTablePropagationRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-DisableTransitGatewayRouteTablePropagationRequest::DisableTransitGatewayRouteTablePropagationRequest() : 
-    m_transitGatewayRouteTableIdHasBeenSet(false),
-    m_transitGatewayAttachmentIdHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_transitGatewayRouteTableAnnouncementIdHasBeenSet(false)
-{
-}
-
-Aws::String DisableTransitGatewayRouteTablePropagationRequest::SerializePayload() const
-{
+Aws::String DisableTransitGatewayRouteTablePropagationRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DisableTransitGatewayRouteTablePropagation&";
-  if(m_transitGatewayRouteTableIdHasBeenSet)
-  {
+  if (m_transitGatewayRouteTableIdHasBeenSet) {
     ss << "TransitGatewayRouteTableId=" << StringUtils::URLEncode(m_transitGatewayRouteTableId.c_str()) << "&";
   }
 
-  if(m_transitGatewayAttachmentIdHasBeenSet)
-  {
+  if (m_transitGatewayAttachmentIdHasBeenSet) {
     ss << "TransitGatewayAttachmentId=" << StringUtils::URLEncode(m_transitGatewayAttachmentId.c_str()) << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_transitGatewayRouteTableAnnouncementIdHasBeenSet)
-  {
+  if (m_transitGatewayRouteTableAnnouncementIdHasBeenSet) {
     ss << "TransitGatewayRouteTableAnnouncementId=" << StringUtils::URLEncode(m_transitGatewayRouteTableAnnouncementId.c_str()) << "&";
   }
 
@@ -47,8 +33,4 @@ Aws::String DisableTransitGatewayRouteTablePropagationRequest::SerializePayload(
   return ss.str();
 }
 
-
-void  DisableTransitGatewayRouteTablePropagationRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DisableTransitGatewayRouteTablePropagationRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

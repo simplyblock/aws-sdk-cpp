@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateQueueOutboundCallerConfigRequest::UpdateQueueOutboundCallerConfigRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_queueIdHasBeenSet(false),
-    m_outboundCallerConfigHasBeenSet(false)
-{
-}
-
-Aws::String UpdateQueueOutboundCallerConfigRequest::SerializePayload() const
-{
+Aws::String UpdateQueueOutboundCallerConfigRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_outboundCallerConfigHasBeenSet)
-  {
-   payload.WithObject("OutboundCallerConfig", m_outboundCallerConfig.Jsonize());
-
+  if (m_outboundCallerConfigHasBeenSet) {
+    payload.WithObject("OutboundCallerConfig", m_outboundCallerConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

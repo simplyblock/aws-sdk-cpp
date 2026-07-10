@@ -3,71 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/mailmanager/model/IngressPointAuthConfiguration.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/mailmanager/model/IngressPointAuthConfiguration.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace MailManager
-{
-namespace Model
-{
+namespace Aws {
+namespace MailManager {
+namespace Model {
 
-IngressPointAuthConfiguration::IngressPointAuthConfiguration() : 
-    m_ingressPointPasswordConfigurationHasBeenSet(false),
-    m_secretArnHasBeenSet(false)
-{
-}
+IngressPointAuthConfiguration::IngressPointAuthConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-IngressPointAuthConfiguration::IngressPointAuthConfiguration(JsonView jsonValue)
-  : IngressPointAuthConfiguration()
-{
-  *this = jsonValue;
-}
-
-IngressPointAuthConfiguration& IngressPointAuthConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("IngressPointPasswordConfiguration"))
-  {
+IngressPointAuthConfiguration& IngressPointAuthConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("IngressPointPasswordConfiguration")) {
     m_ingressPointPasswordConfiguration = jsonValue.GetObject("IngressPointPasswordConfiguration");
-
     m_ingressPointPasswordConfigurationHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("SecretArn"))
-  {
+  if (jsonValue.ValueExists("SecretArn")) {
     m_secretArn = jsonValue.GetString("SecretArn");
-
     m_secretArnHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("TlsAuthConfiguration")) {
+    m_tlsAuthConfiguration = jsonValue.GetObject("TlsAuthConfiguration");
+    m_tlsAuthConfigurationHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue IngressPointAuthConfiguration::Jsonize() const
-{
+JsonValue IngressPointAuthConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_ingressPointPasswordConfigurationHasBeenSet)
-  {
-   payload.WithObject("IngressPointPasswordConfiguration", m_ingressPointPasswordConfiguration.Jsonize());
-
+  if (m_ingressPointPasswordConfigurationHasBeenSet) {
+    payload.WithObject("IngressPointPasswordConfiguration", m_ingressPointPasswordConfiguration.Jsonize());
   }
 
-  if(m_secretArnHasBeenSet)
-  {
-   payload.WithString("SecretArn", m_secretArn);
+  if (m_secretArnHasBeenSet) {
+    payload.WithString("SecretArn", m_secretArn);
+  }
 
+  if (m_tlsAuthConfigurationHasBeenSet) {
+    payload.WithObject("TlsAuthConfiguration", m_tlsAuthConfiguration.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

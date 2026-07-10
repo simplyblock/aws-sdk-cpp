@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopEvaluationJobRequest::StopEvaluationJobRequest() : 
-    m_jobIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String StopEvaluationJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StopEvaluationJobRequest::SerializePayload() const { return {}; }

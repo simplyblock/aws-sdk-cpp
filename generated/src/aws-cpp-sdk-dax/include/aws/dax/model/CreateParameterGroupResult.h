@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dax/DAX_EXPORTS.h>
 #include <aws/dax/model/ParameterGroup.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DAX
-{
-namespace Model
-{
-  class CreateParameterGroupResult
-  {
-  public:
-    AWS_DAX_API CreateParameterGroupResult();
-    AWS_DAX_API CreateParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DAX_API CreateParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DAX {
+namespace Model {
+class CreateParameterGroupResult {
+ public:
+  AWS_DAX_API CreateParameterGroupResult() = default;
+  AWS_DAX_API CreateParameterGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DAX_API CreateParameterGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Represents the output of a <i>CreateParameterGroup</i> action.</p>
+   */
+  inline const ParameterGroup& GetParameterGroup() const { return m_parameterGroup; }
+  template <typename ParameterGroupT = ParameterGroup>
+  void SetParameterGroup(ParameterGroupT&& value) {
+    m_parameterGroupHasBeenSet = true;
+    m_parameterGroup = std::forward<ParameterGroupT>(value);
+  }
+  template <typename ParameterGroupT = ParameterGroup>
+  CreateParameterGroupResult& WithParameterGroup(ParameterGroupT&& value) {
+    SetParameterGroup(std::forward<ParameterGroupT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Represents the output of a <i>CreateParameterGroup</i> action.</p>
-     */
-    inline const ParameterGroup& GetParameterGroup() const{ return m_parameterGroup; }
-    inline void SetParameterGroup(const ParameterGroup& value) { m_parameterGroup = value; }
-    inline void SetParameterGroup(ParameterGroup&& value) { m_parameterGroup = std::move(value); }
-    inline CreateParameterGroupResult& WithParameterGroup(const ParameterGroup& value) { SetParameterGroup(value); return *this;}
-    inline CreateParameterGroupResult& WithParameterGroup(ParameterGroup&& value) { SetParameterGroup(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateParameterGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateParameterGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateParameterGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateParameterGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ParameterGroup m_parameterGroup;
+ private:
+  ParameterGroup m_parameterGroup;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_parameterGroupHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DAX
-} // namespace Aws
+}  // namespace Model
+}  // namespace DAX
+}  // namespace Aws

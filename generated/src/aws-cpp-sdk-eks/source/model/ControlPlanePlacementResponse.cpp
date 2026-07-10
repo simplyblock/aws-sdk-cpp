@@ -3,57 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/eks/model/ControlPlanePlacementResponse.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/eks/model/ControlPlanePlacementResponse.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EKS
-{
-namespace Model
-{
+namespace Aws {
+namespace EKS {
+namespace Model {
 
-ControlPlanePlacementResponse::ControlPlanePlacementResponse() : 
-    m_groupNameHasBeenSet(false)
-{
-}
+ControlPlanePlacementResponse::ControlPlanePlacementResponse(JsonView jsonValue) { *this = jsonValue; }
 
-ControlPlanePlacementResponse::ControlPlanePlacementResponse(JsonView jsonValue)
-  : ControlPlanePlacementResponse()
-{
-  *this = jsonValue;
-}
-
-ControlPlanePlacementResponse& ControlPlanePlacementResponse::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("groupName"))
-  {
+ControlPlanePlacementResponse& ControlPlanePlacementResponse::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("groupName")) {
     m_groupName = jsonValue.GetString("groupName");
-
     m_groupNameHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("spreadLevel")) {
+    m_spreadLevel = SpreadLevelMapper::GetSpreadLevelForName(jsonValue.GetString("spreadLevel"));
+    m_spreadLevelHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue ControlPlanePlacementResponse::Jsonize() const
-{
+JsonValue ControlPlanePlacementResponse::Jsonize() const {
   JsonValue payload;
 
-  if(m_groupNameHasBeenSet)
-  {
-   payload.WithString("groupName", m_groupName);
+  if (m_groupNameHasBeenSet) {
+    payload.WithString("groupName", m_groupName);
+  }
 
+  if (m_spreadLevelHasBeenSet) {
+    payload.WithString("spreadLevel", SpreadLevelMapper::GetNameForSpreadLevel(m_spreadLevel));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

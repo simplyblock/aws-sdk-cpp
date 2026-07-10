@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/mailmanager/MailManager_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mailmanager/MailManager_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MailManager
-{
-namespace Model
-{
-  class CreateTrafficPolicyResult
-  {
-  public:
-    AWS_MAILMANAGER_API CreateTrafficPolicyResult();
-    AWS_MAILMANAGER_API CreateTrafficPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MAILMANAGER_API CreateTrafficPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MailManager {
+namespace Model {
+class CreateTrafficPolicyResult {
+ public:
+  AWS_MAILMANAGER_API CreateTrafficPolicyResult() = default;
+  AWS_MAILMANAGER_API CreateTrafficPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MAILMANAGER_API CreateTrafficPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the traffic policy resource.</p>
+   */
+  inline const Aws::String& GetTrafficPolicyId() const { return m_trafficPolicyId; }
+  template <typename TrafficPolicyIdT = Aws::String>
+  void SetTrafficPolicyId(TrafficPolicyIdT&& value) {
+    m_trafficPolicyIdHasBeenSet = true;
+    m_trafficPolicyId = std::forward<TrafficPolicyIdT>(value);
+  }
+  template <typename TrafficPolicyIdT = Aws::String>
+  CreateTrafficPolicyResult& WithTrafficPolicyId(TrafficPolicyIdT&& value) {
+    SetTrafficPolicyId(std::forward<TrafficPolicyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the traffic policy resource.</p>
-     */
-    inline const Aws::String& GetTrafficPolicyId() const{ return m_trafficPolicyId; }
-    inline void SetTrafficPolicyId(const Aws::String& value) { m_trafficPolicyId = value; }
-    inline void SetTrafficPolicyId(Aws::String&& value) { m_trafficPolicyId = std::move(value); }
-    inline void SetTrafficPolicyId(const char* value) { m_trafficPolicyId.assign(value); }
-    inline CreateTrafficPolicyResult& WithTrafficPolicyId(const Aws::String& value) { SetTrafficPolicyId(value); return *this;}
-    inline CreateTrafficPolicyResult& WithTrafficPolicyId(Aws::String&& value) { SetTrafficPolicyId(std::move(value)); return *this;}
-    inline CreateTrafficPolicyResult& WithTrafficPolicyId(const char* value) { SetTrafficPolicyId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTrafficPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTrafficPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTrafficPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTrafficPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_trafficPolicyId;
+ private:
+  Aws::String m_trafficPolicyId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trafficPolicyIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MailManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace MailManager
+}  // namespace Aws

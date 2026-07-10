@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/email/model/CreateReceiptRuleSetResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/email/model/CreateReceiptRuleSetResult.h>
 
 #include <utility>
 
@@ -17,33 +17,25 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateReceiptRuleSetResult::CreateReceiptRuleSetResult()
-{
-}
+CreateReceiptRuleSetResult::CreateReceiptRuleSetResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-CreateReceiptRuleSetResult::CreateReceiptRuleSetResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-CreateReceiptRuleSetResult& CreateReceiptRuleSetResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateReceiptRuleSetResult& CreateReceiptRuleSetResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateReceiptRuleSetResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateReceiptRuleSetResult")) {
     resultNode = rootNode.FirstChild("CreateReceiptRuleSetResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::SES::Model::CreateReceiptRuleSetResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::SES::Model::CreateReceiptRuleSetResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

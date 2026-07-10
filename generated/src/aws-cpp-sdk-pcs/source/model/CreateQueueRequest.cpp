@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pcs/model/CreateQueueRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pcs/model/CreateQueueRequest.h>
 
 #include <utility>
 
@@ -12,71 +12,48 @@ using namespace Aws::PCS::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateQueueRequest::CreateQueueRequest() : 
-    m_clusterIdentifierHasBeenSet(false),
-    m_queueNameHasBeenSet(false),
-    m_computeNodeGroupConfigurationsHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateQueueRequest::SerializePayload() const
-{
+Aws::String CreateQueueRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clusterIdentifierHasBeenSet)
-  {
-   payload.WithString("clusterIdentifier", m_clusterIdentifier);
-
+  if (m_clusterIdentifierHasBeenSet) {
+    payload.WithString("clusterIdentifier", m_clusterIdentifier);
   }
 
-  if(m_queueNameHasBeenSet)
-  {
-   payload.WithString("queueName", m_queueName);
-
+  if (m_queueNameHasBeenSet) {
+    payload.WithString("queueName", m_queueName);
   }
 
-  if(m_computeNodeGroupConfigurationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> computeNodeGroupConfigurationsJsonList(m_computeNodeGroupConfigurations.size());
-   for(unsigned computeNodeGroupConfigurationsIndex = 0; computeNodeGroupConfigurationsIndex < computeNodeGroupConfigurationsJsonList.GetLength(); ++computeNodeGroupConfigurationsIndex)
-   {
-     computeNodeGroupConfigurationsJsonList[computeNodeGroupConfigurationsIndex].AsObject(m_computeNodeGroupConfigurations[computeNodeGroupConfigurationsIndex].Jsonize());
-   }
-   payload.WithArray("computeNodeGroupConfigurations", std::move(computeNodeGroupConfigurationsJsonList));
-
+  if (m_computeNodeGroupConfigurationsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> computeNodeGroupConfigurationsJsonList(m_computeNodeGroupConfigurations.size());
+    for (unsigned computeNodeGroupConfigurationsIndex = 0;
+         computeNodeGroupConfigurationsIndex < computeNodeGroupConfigurationsJsonList.GetLength(); ++computeNodeGroupConfigurationsIndex) {
+      computeNodeGroupConfigurationsJsonList[computeNodeGroupConfigurationsIndex].AsObject(
+          m_computeNodeGroupConfigurations[computeNodeGroupConfigurationsIndex].Jsonize());
+    }
+    payload.WithArray("computeNodeGroupConfigurations", std::move(computeNodeGroupConfigurationsJsonList));
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
-
+  if (m_slurmConfigurationHasBeenSet) {
+    payload.WithObject("slurmConfiguration", m_slurmConfiguration.Jsonize());
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
+  }
 
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection CreateQueueRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateQueueRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSParallelComputingService.CreateQueue"));
   return headers;
-
 }
-
-
-
-

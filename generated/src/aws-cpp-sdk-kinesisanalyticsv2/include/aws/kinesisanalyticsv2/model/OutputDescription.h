@@ -4,146 +4,171 @@
  */
 
 #pragma once
-#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/kinesisanalyticsv2/model/KinesisStreamsOutputDescription.h>
-#include <aws/kinesisanalyticsv2/model/KinesisFirehoseOutputDescription.h>
-#include <aws/kinesisanalyticsv2/model/LambdaOutputDescription.h>
+#include <aws/kinesisanalyticsv2/KinesisAnalyticsV2_EXPORTS.h>
 #include <aws/kinesisanalyticsv2/model/DestinationSchema.h>
+#include <aws/kinesisanalyticsv2/model/KinesisFirehoseOutputDescription.h>
+#include <aws/kinesisanalyticsv2/model/KinesisStreamsOutputDescription.h>
+#include <aws/kinesisanalyticsv2/model/LambdaOutputDescription.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace KinesisAnalyticsV2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisAnalyticsV2 {
+namespace Model {
 
+/**
+ * <p>For a SQL-based Kinesis Data Analytics application, describes the application
+ * output configuration, which includes the in-application stream name and the
+ * destination where the stream data is written. The destination can be a Kinesis
+ * data stream or a Kinesis Data Firehose delivery stream. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/OutputDescription">AWS
+ * API Reference</a></p>
+ */
+class OutputDescription {
+ public:
+  AWS_KINESISANALYTICSV2_API OutputDescription() = default;
+  AWS_KINESISANALYTICSV2_API OutputDescription(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API OutputDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>For a SQL-based Kinesis Data Analytics application, describes the application
-   * output configuration, which includes the in-application stream name and the
-   * destination where the stream data is written. The destination can be a Kinesis
-   * data stream or a Kinesis Data Firehose delivery stream. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kinesisanalyticsv2-2018-05-23/OutputDescription">AWS
-   * API Reference</a></p>
+   * <p>A unique identifier for the output configuration.</p>
    */
-  class OutputDescription
-  {
-  public:
-    AWS_KINESISANALYTICSV2_API OutputDescription();
-    AWS_KINESISANALYTICSV2_API OutputDescription(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API OutputDescription& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KINESISANALYTICSV2_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetOutputId() const { return m_outputId; }
+  inline bool OutputIdHasBeenSet() const { return m_outputIdHasBeenSet; }
+  template <typename OutputIdT = Aws::String>
+  void SetOutputId(OutputIdT&& value) {
+    m_outputIdHasBeenSet = true;
+    m_outputId = std::forward<OutputIdT>(value);
+  }
+  template <typename OutputIdT = Aws::String>
+  OutputDescription& WithOutputId(OutputIdT&& value) {
+    SetOutputId(std::forward<OutputIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The name of the in-application stream that is configured as output.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  OutputDescription& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the output configuration.</p>
-     */
-    inline const Aws::String& GetOutputId() const{ return m_outputId; }
-    inline bool OutputIdHasBeenSet() const { return m_outputIdHasBeenSet; }
-    inline void SetOutputId(const Aws::String& value) { m_outputIdHasBeenSet = true; m_outputId = value; }
-    inline void SetOutputId(Aws::String&& value) { m_outputIdHasBeenSet = true; m_outputId = std::move(value); }
-    inline void SetOutputId(const char* value) { m_outputIdHasBeenSet = true; m_outputId.assign(value); }
-    inline OutputDescription& WithOutputId(const Aws::String& value) { SetOutputId(value); return *this;}
-    inline OutputDescription& WithOutputId(Aws::String&& value) { SetOutputId(std::move(value)); return *this;}
-    inline OutputDescription& WithOutputId(const char* value) { SetOutputId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the Kinesis data stream that is configured as the destination where
+   * output is written.</p>
+   */
+  inline const KinesisStreamsOutputDescription& GetKinesisStreamsOutputDescription() const { return m_kinesisStreamsOutputDescription; }
+  inline bool KinesisStreamsOutputDescriptionHasBeenSet() const { return m_kinesisStreamsOutputDescriptionHasBeenSet; }
+  template <typename KinesisStreamsOutputDescriptionT = KinesisStreamsOutputDescription>
+  void SetKinesisStreamsOutputDescription(KinesisStreamsOutputDescriptionT&& value) {
+    m_kinesisStreamsOutputDescriptionHasBeenSet = true;
+    m_kinesisStreamsOutputDescription = std::forward<KinesisStreamsOutputDescriptionT>(value);
+  }
+  template <typename KinesisStreamsOutputDescriptionT = KinesisStreamsOutputDescription>
+  OutputDescription& WithKinesisStreamsOutputDescription(KinesisStreamsOutputDescriptionT&& value) {
+    SetKinesisStreamsOutputDescription(std::forward<KinesisStreamsOutputDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the in-application stream that is configured as output.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline OutputDescription& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline OutputDescription& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline OutputDescription& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the Kinesis Data Firehose delivery stream that is configured as the
+   * destination where output is written.</p>
+   */
+  inline const KinesisFirehoseOutputDescription& GetKinesisFirehoseOutputDescription() const { return m_kinesisFirehoseOutputDescription; }
+  inline bool KinesisFirehoseOutputDescriptionHasBeenSet() const { return m_kinesisFirehoseOutputDescriptionHasBeenSet; }
+  template <typename KinesisFirehoseOutputDescriptionT = KinesisFirehoseOutputDescription>
+  void SetKinesisFirehoseOutputDescription(KinesisFirehoseOutputDescriptionT&& value) {
+    m_kinesisFirehoseOutputDescriptionHasBeenSet = true;
+    m_kinesisFirehoseOutputDescription = std::forward<KinesisFirehoseOutputDescriptionT>(value);
+  }
+  template <typename KinesisFirehoseOutputDescriptionT = KinesisFirehoseOutputDescription>
+  OutputDescription& WithKinesisFirehoseOutputDescription(KinesisFirehoseOutputDescriptionT&& value) {
+    SetKinesisFirehoseOutputDescription(std::forward<KinesisFirehoseOutputDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the Kinesis data stream that is configured as the destination where
-     * output is written.</p>
-     */
-    inline const KinesisStreamsOutputDescription& GetKinesisStreamsOutputDescription() const{ return m_kinesisStreamsOutputDescription; }
-    inline bool KinesisStreamsOutputDescriptionHasBeenSet() const { return m_kinesisStreamsOutputDescriptionHasBeenSet; }
-    inline void SetKinesisStreamsOutputDescription(const KinesisStreamsOutputDescription& value) { m_kinesisStreamsOutputDescriptionHasBeenSet = true; m_kinesisStreamsOutputDescription = value; }
-    inline void SetKinesisStreamsOutputDescription(KinesisStreamsOutputDescription&& value) { m_kinesisStreamsOutputDescriptionHasBeenSet = true; m_kinesisStreamsOutputDescription = std::move(value); }
-    inline OutputDescription& WithKinesisStreamsOutputDescription(const KinesisStreamsOutputDescription& value) { SetKinesisStreamsOutputDescription(value); return *this;}
-    inline OutputDescription& WithKinesisStreamsOutputDescription(KinesisStreamsOutputDescription&& value) { SetKinesisStreamsOutputDescription(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the Lambda function that is configured as the destination where
+   * output is written.</p>
+   */
+  inline const LambdaOutputDescription& GetLambdaOutputDescription() const { return m_lambdaOutputDescription; }
+  inline bool LambdaOutputDescriptionHasBeenSet() const { return m_lambdaOutputDescriptionHasBeenSet; }
+  template <typename LambdaOutputDescriptionT = LambdaOutputDescription>
+  void SetLambdaOutputDescription(LambdaOutputDescriptionT&& value) {
+    m_lambdaOutputDescriptionHasBeenSet = true;
+    m_lambdaOutputDescription = std::forward<LambdaOutputDescriptionT>(value);
+  }
+  template <typename LambdaOutputDescriptionT = LambdaOutputDescription>
+  OutputDescription& WithLambdaOutputDescription(LambdaOutputDescriptionT&& value) {
+    SetLambdaOutputDescription(std::forward<LambdaOutputDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the Kinesis Data Firehose delivery stream that is configured as the
-     * destination where output is written.</p>
-     */
-    inline const KinesisFirehoseOutputDescription& GetKinesisFirehoseOutputDescription() const{ return m_kinesisFirehoseOutputDescription; }
-    inline bool KinesisFirehoseOutputDescriptionHasBeenSet() const { return m_kinesisFirehoseOutputDescriptionHasBeenSet; }
-    inline void SetKinesisFirehoseOutputDescription(const KinesisFirehoseOutputDescription& value) { m_kinesisFirehoseOutputDescriptionHasBeenSet = true; m_kinesisFirehoseOutputDescription = value; }
-    inline void SetKinesisFirehoseOutputDescription(KinesisFirehoseOutputDescription&& value) { m_kinesisFirehoseOutputDescriptionHasBeenSet = true; m_kinesisFirehoseOutputDescription = std::move(value); }
-    inline OutputDescription& WithKinesisFirehoseOutputDescription(const KinesisFirehoseOutputDescription& value) { SetKinesisFirehoseOutputDescription(value); return *this;}
-    inline OutputDescription& WithKinesisFirehoseOutputDescription(KinesisFirehoseOutputDescription&& value) { SetKinesisFirehoseOutputDescription(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The data format used for writing data to the destination.</p>
+   */
+  inline const DestinationSchema& GetDestinationSchema() const { return m_destinationSchema; }
+  inline bool DestinationSchemaHasBeenSet() const { return m_destinationSchemaHasBeenSet; }
+  template <typename DestinationSchemaT = DestinationSchema>
+  void SetDestinationSchema(DestinationSchemaT&& value) {
+    m_destinationSchemaHasBeenSet = true;
+    m_destinationSchema = std::forward<DestinationSchemaT>(value);
+  }
+  template <typename DestinationSchemaT = DestinationSchema>
+  OutputDescription& WithDestinationSchema(DestinationSchemaT&& value) {
+    SetDestinationSchema(std::forward<DestinationSchemaT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_outputId;
 
-    ///@{
-    /**
-     * <p>Describes the Lambda function that is configured as the destination where
-     * output is written.</p>
-     */
-    inline const LambdaOutputDescription& GetLambdaOutputDescription() const{ return m_lambdaOutputDescription; }
-    inline bool LambdaOutputDescriptionHasBeenSet() const { return m_lambdaOutputDescriptionHasBeenSet; }
-    inline void SetLambdaOutputDescription(const LambdaOutputDescription& value) { m_lambdaOutputDescriptionHasBeenSet = true; m_lambdaOutputDescription = value; }
-    inline void SetLambdaOutputDescription(LambdaOutputDescription&& value) { m_lambdaOutputDescriptionHasBeenSet = true; m_lambdaOutputDescription = std::move(value); }
-    inline OutputDescription& WithLambdaOutputDescription(const LambdaOutputDescription& value) { SetLambdaOutputDescription(value); return *this;}
-    inline OutputDescription& WithLambdaOutputDescription(LambdaOutputDescription&& value) { SetLambdaOutputDescription(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The data format used for writing data to the destination.</p>
-     */
-    inline const DestinationSchema& GetDestinationSchema() const{ return m_destinationSchema; }
-    inline bool DestinationSchemaHasBeenSet() const { return m_destinationSchemaHasBeenSet; }
-    inline void SetDestinationSchema(const DestinationSchema& value) { m_destinationSchemaHasBeenSet = true; m_destinationSchema = value; }
-    inline void SetDestinationSchema(DestinationSchema&& value) { m_destinationSchemaHasBeenSet = true; m_destinationSchema = std::move(value); }
-    inline OutputDescription& WithDestinationSchema(const DestinationSchema& value) { SetDestinationSchema(value); return *this;}
-    inline OutputDescription& WithDestinationSchema(DestinationSchema&& value) { SetDestinationSchema(std::move(value)); return *this;}
-    ///@}
-  private:
+  KinesisStreamsOutputDescription m_kinesisStreamsOutputDescription;
 
-    Aws::String m_outputId;
-    bool m_outputIdHasBeenSet = false;
+  KinesisFirehoseOutputDescription m_kinesisFirehoseOutputDescription;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  LambdaOutputDescription m_lambdaOutputDescription;
 
-    KinesisStreamsOutputDescription m_kinesisStreamsOutputDescription;
-    bool m_kinesisStreamsOutputDescriptionHasBeenSet = false;
+  DestinationSchema m_destinationSchema;
+  bool m_outputIdHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_kinesisStreamsOutputDescriptionHasBeenSet = false;
+  bool m_kinesisFirehoseOutputDescriptionHasBeenSet = false;
+  bool m_lambdaOutputDescriptionHasBeenSet = false;
+  bool m_destinationSchemaHasBeenSet = false;
+};
 
-    KinesisFirehoseOutputDescription m_kinesisFirehoseOutputDescription;
-    bool m_kinesisFirehoseOutputDescriptionHasBeenSet = false;
-
-    LambdaOutputDescription m_lambdaOutputDescription;
-    bool m_lambdaOutputDescriptionHasBeenSet = false;
-
-    DestinationSchema m_destinationSchema;
-    bool m_destinationSchemaHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace KinesisAnalyticsV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisAnalyticsV2
+}  // namespace Aws

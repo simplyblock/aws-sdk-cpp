@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/lambda/Lambda_EXPORTS.h>
 
-namespace Aws
-{
-namespace Lambda
-{
-enum class LambdaErrors
-{
-  //From Core//
+namespace Aws {
+namespace Lambda {
+enum class LambdaErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class LambdaErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,9 +44,16 @@ enum class LambdaErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  CODE_SIGNING_CONFIG_NOT_FOUND= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ALIAS_LIMIT_EXCEEDED = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  CALLBACK_TIMEOUT,
+  CAPACITY_PROVIDER_LIMIT_EXCEEDED,
+  CODE_ARTIFACT_USER_DELETED,
+  CODE_ARTIFACT_USER_FAILED,
+  CODE_ARTIFACT_USER_PENDING,
+  CODE_SIGNING_CONFIG_NOT_FOUND,
   CODE_STORAGE_EXCEEDED,
   CODE_VERIFICATION_FAILED,
+  DURABLE_EXECUTION_ALREADY_STARTED,
   E_C2_ACCESS_DENIED,
   E_C2_THROTTLED,
   E_C2_UNEXPECTED,
@@ -58,6 +62,8 @@ enum class LambdaErrors
   E_F_S_MOUNT_FAILURE,
   E_F_S_MOUNT_TIMEOUT,
   E_N_I_LIMIT_REACHED,
+  E_N_I_NOT_READY,
+  FUNCTION_VERSIONS_PER_CAPACITY_PROVIDER_LIMIT_EXCEEDED,
   INVALID_CODE_SIGNATURE,
   INVALID_REQUEST_CONTENT,
   INVALID_RUNTIME,
@@ -68,26 +74,34 @@ enum class LambdaErrors
   K_M_S_DISABLED,
   K_M_S_INVALID_STATE,
   K_M_S_NOT_FOUND,
+  MODE_NOT_SUPPORTED,
+  NO_PUBLISHED_VERSION,
   POLICY_LENGTH_EXCEEDED,
   PRECONDITION_FAILED,
   PROVISIONED_CONCURRENCY_CONFIG_NOT_FOUND,
+  PUBLIC_POLICY,
   RECURSIVE_INVOCATION,
   REQUEST_TOO_LARGE,
   RESOURCE_CONFLICT,
   RESOURCE_IN_USE,
   RESOURCE_NOT_READY,
+  S3_FILES_MOUNT_CONNECTIVITY,
+  S3_FILES_MOUNT_FAILURE,
+  S3_FILES_MOUNT_TIMEOUT,
+  SERIALIZED_REQUEST_ENTITY_TOO_LARGE,
   SERVICE,
+  SERVICE_QUOTA_EXCEEDED,
   SNAP_START,
   SNAP_START_NOT_READY,
+  SNAP_START_REGENERATION_FAILURE,
   SNAP_START_TIMEOUT,
   SUBNET_I_P_ADDRESS_LIMIT_REACHED,
   TOO_MANY_REQUESTS,
   UNSUPPORTED_MEDIA_TYPE
 };
 
-class AWS_LAMBDA_API LambdaError : public Aws::Client::AWSError<LambdaErrors>
-{
-public:
+class AWS_LAMBDA_API LambdaError : public Aws::Client::AWSError<LambdaErrors> {
+ public:
   LambdaError() {}
   LambdaError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<LambdaErrors>(rhs) {}
   LambdaError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<LambdaErrors>(rhs) {}
@@ -98,10 +112,9 @@ public:
   T GetModeledError();
 };
 
-namespace LambdaErrorMapper
-{
-  AWS_LAMBDA_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace LambdaErrorMapper {
+AWS_LAMBDA_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Lambda
+}  // namespace Aws

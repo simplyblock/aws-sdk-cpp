@@ -5,78 +5,90 @@
 
 #pragma once
 #include <aws/connect/Connect_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Connect
-{
-namespace Model
-{
-  class CreateUserHierarchyGroupResult
-  {
-  public:
-    AWS_CONNECT_API CreateUserHierarchyGroupResult();
-    AWS_CONNECT_API CreateUserHierarchyGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECT_API CreateUserHierarchyGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Connect {
+namespace Model {
+class CreateUserHierarchyGroupResult {
+ public:
+  AWS_CONNECT_API CreateUserHierarchyGroupResult() = default;
+  AWS_CONNECT_API CreateUserHierarchyGroupResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECT_API CreateUserHierarchyGroupResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The identifier of the hierarchy group.</p>
+   */
+  inline const Aws::String& GetHierarchyGroupId() const { return m_hierarchyGroupId; }
+  template <typename HierarchyGroupIdT = Aws::String>
+  void SetHierarchyGroupId(HierarchyGroupIdT&& value) {
+    m_hierarchyGroupIdHasBeenSet = true;
+    m_hierarchyGroupId = std::forward<HierarchyGroupIdT>(value);
+  }
+  template <typename HierarchyGroupIdT = Aws::String>
+  CreateUserHierarchyGroupResult& WithHierarchyGroupId(HierarchyGroupIdT&& value) {
+    SetHierarchyGroupId(std::forward<HierarchyGroupIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the hierarchy group.</p>
-     */
-    inline const Aws::String& GetHierarchyGroupId() const{ return m_hierarchyGroupId; }
-    inline void SetHierarchyGroupId(const Aws::String& value) { m_hierarchyGroupId = value; }
-    inline void SetHierarchyGroupId(Aws::String&& value) { m_hierarchyGroupId = std::move(value); }
-    inline void SetHierarchyGroupId(const char* value) { m_hierarchyGroupId.assign(value); }
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupId(const Aws::String& value) { SetHierarchyGroupId(value); return *this;}
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupId(Aws::String&& value) { SetHierarchyGroupId(std::move(value)); return *this;}
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupId(const char* value) { SetHierarchyGroupId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the hierarchy group. </p>
+   */
+  inline const Aws::String& GetHierarchyGroupArn() const { return m_hierarchyGroupArn; }
+  template <typename HierarchyGroupArnT = Aws::String>
+  void SetHierarchyGroupArn(HierarchyGroupArnT&& value) {
+    m_hierarchyGroupArnHasBeenSet = true;
+    m_hierarchyGroupArn = std::forward<HierarchyGroupArnT>(value);
+  }
+  template <typename HierarchyGroupArnT = Aws::String>
+  CreateUserHierarchyGroupResult& WithHierarchyGroupArn(HierarchyGroupArnT&& value) {
+    SetHierarchyGroupArn(std::forward<HierarchyGroupArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the hierarchy group. </p>
-     */
-    inline const Aws::String& GetHierarchyGroupArn() const{ return m_hierarchyGroupArn; }
-    inline void SetHierarchyGroupArn(const Aws::String& value) { m_hierarchyGroupArn = value; }
-    inline void SetHierarchyGroupArn(Aws::String&& value) { m_hierarchyGroupArn = std::move(value); }
-    inline void SetHierarchyGroupArn(const char* value) { m_hierarchyGroupArn.assign(value); }
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupArn(const Aws::String& value) { SetHierarchyGroupArn(value); return *this;}
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupArn(Aws::String&& value) { SetHierarchyGroupArn(std::move(value)); return *this;}
-    inline CreateUserHierarchyGroupResult& WithHierarchyGroupArn(const char* value) { SetHierarchyGroupArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateUserHierarchyGroupResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateUserHierarchyGroupResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateUserHierarchyGroupResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateUserHierarchyGroupResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_hierarchyGroupId;
+ private:
+  Aws::String m_hierarchyGroupId;
 
-    Aws::String m_hierarchyGroupArn;
+  Aws::String m_hierarchyGroupArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hierarchyGroupIdHasBeenSet = false;
+  bool m_hierarchyGroupArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

@@ -4,54 +4,53 @@
  */
 #pragma once
 
-#include <smithy/identity/resolver/AwsCredentialIdentityResolver.h>
-
 #include <aws/core/auth/AWSCredentials.h>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <smithy/identity/resolver/AwsCredentialIdentityResolver.h>
 
 namespace smithy {
-    constexpr char ALLOC_ID[] = "DefaultAwsCredentialIdentityResolver";
-    /**
-     * A smithy SigV4 AWS Credentials resolver wrapper on top of legacy SDK Credentials provider
-     * TODO: refactor into own signer using smithy design
-     */
-    class DefaultAwsCredentialIdentityResolver : public AwsCredentialIdentityResolver {
-    protected:
+constexpr char ALLOC_ID[] = "DefaultAwsCredentialIdentityResolver";
+/**
+ * A smithy SigV4 AWS Credentials resolver wrapper on top of legacy SDK Credentials provider
+ * TODO: refactor into own signer using smithy design
+ */
+class DefaultAwsCredentialIdentityResolver : public AwsCredentialIdentityResolver {
+ protected:
+  mutable std::shared_ptr<Aws::Auth::AWSCredentialsProviderChain> legacyChain_sp;
 
-        mutable std::shared_ptr<Aws::Auth::AWSCredentialsProviderChain> legacyChain_sp;
+ public:
+  using SigV4AuthSchemeParameters = DefaultAuthSchemeResolverParameters;
 
-    public:
-        using SigV4AuthSchemeParameters = DefaultAuthSchemeResolverParameters;
+  DefaultAwsCredentialIdentityResolver() : legacyChain_sp{Aws::MakeShared<Aws::Auth::DefaultAWSCredentialsProviderChain>(ALLOC_ID)} {};
+  DefaultAwsCredentialIdentityResolver(const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& config)
+      : legacyChain_sp{Aws::MakeShared<Aws::Auth::DefaultAWSCredentialsProviderChain>(ALLOC_ID, config)} {};
+  DefaultAwsCredentialIdentityResolver(const Aws::Auth::DefaultAWSCredentialsProviderChain& credChain)
+      : legacyChain_sp{Aws::MakeShared<Aws::Auth::DefaultAWSCredentialsProviderChain>(ALLOC_ID, credChain)} {};
 
-        DefaultAwsCredentialIdentityResolver(): legacyChain_sp{Aws::MakeShared<Aws::Auth::DefaultAWSCredentialsProviderChain>(ALLOC_ID)}{
+  DefaultAwsCredentialIdentityResolver(const DefaultAwsCredentialIdentityResolver& other) = delete;
+  DefaultAwsCredentialIdentityResolver(DefaultAwsCredentialIdentityResolver&& other) noexcept = default;
+  DefaultAwsCredentialIdentityResolver& operator=(const DefaultAwsCredentialIdentityResolver& other) = delete;
+  DefaultAwsCredentialIdentityResolver& operator=(DefaultAwsCredentialIdentityResolver&& other) noexcept = default;
+  virtual ~DefaultAwsCredentialIdentityResolver() = default;
 
-        };
+  DefaultAwsCredentialIdentityResolver(std::shared_ptr<Aws::Auth::AWSCredentialsProviderChain> providerChain)
+      : legacyChain_sp{providerChain} {
+    assert(legacyChain_sp);
+  };
 
-        DefaultAwsCredentialIdentityResolver(const DefaultAwsCredentialIdentityResolver& other) = delete;
-        DefaultAwsCredentialIdentityResolver(DefaultAwsCredentialIdentityResolver&& other) noexcept = default;
-        DefaultAwsCredentialIdentityResolver& operator=(const DefaultAwsCredentialIdentityResolver& other) = delete;
-        DefaultAwsCredentialIdentityResolver& operator=(DefaultAwsCredentialIdentityResolver&& other) noexcept = default;
-        virtual ~DefaultAwsCredentialIdentityResolver() = default;
+  ResolveIdentityFutureOutcome getIdentity(const IdentityProperties& identityProperties,
+                                           const AdditionalParameters& additionalParameters) override {
+    AWS_UNREFERENCED_PARAM(identityProperties);
+    AWS_UNREFERENCED_PARAM(additionalParameters);
 
-        DefaultAwsCredentialIdentityResolver(std::shared_ptr<Aws::Auth::AWSCredentialsProviderChain> providerChain): legacyChain_sp{providerChain}
-        {
-            assert(legacyChain_sp);
-        };
+    auto legacyCreds = legacyChain_sp->GetAWSCredentials();
 
-        ResolveIdentityFutureOutcome getIdentity(const IdentityProperties& identityProperties, const AdditionalParameters& additionalParameters) override
-        {
-            AWS_UNREFERENCED_PARAM(identityProperties);
-            AWS_UNREFERENCED_PARAM(additionalParameters);
+    auto smithyCreds = Aws::MakeUnique<AwsCredentialIdentity>(
+        "DefaultAwsCredentialIdentityResolver", legacyCreds.GetAWSAccessKeyId(), legacyCreds.GetAWSSecretKey(),
+        legacyCreds.GetSessionToken().empty() ? Aws::Crt::Optional<Aws::String>() : legacyCreds.GetSessionToken(),
+        legacyCreds.GetExpiration(), legacyCreds.GetAccountId().empty() ? Aws::Crt::Optional<Aws::String>() : legacyCreds.GetAccountId());
 
-            auto legacyCreds = legacyChain_sp->GetAWSCredentials();
-
-            auto smithyCreds = Aws::MakeUnique<AwsCredentialIdentity>("DefaultAwsCredentialIdentityResolver",
-                                                                     legacyCreds.GetAWSAccessKeyId(), 
-                                                                     legacyCreds.GetAWSSecretKey(),
-                                                                     legacyCreds.GetSessionToken().empty()? Aws::Crt::Optional<Aws::String>() : legacyCreds.GetSessionToken(),
-                                                                     legacyCreds.GetExpiration());
-
-            return ResolveIdentityFutureOutcome(std::move(smithyCreds));
-        }
-    };
-}
+    return ResolveIdentityFutureOutcome(std::move(smithyCreds));
+  }
+};
+}  // namespace smithy

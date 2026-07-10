@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/servicecatalog-appregistry/AppRegistry_EXPORTS.h>
 #include <aws/servicecatalog-appregistry/model/AppRegistryConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppRegistry
-{
-namespace Model
-{
-  class GetConfigurationResult
-  {
-  public:
-    AWS_APPREGISTRY_API GetConfigurationResult();
-    AWS_APPREGISTRY_API GetConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPREGISTRY_API GetConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppRegistry {
+namespace Model {
+class GetConfigurationResult {
+ public:
+  AWS_APPREGISTRY_API GetConfigurationResult() = default;
+  AWS_APPREGISTRY_API GetConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPREGISTRY_API GetConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> Retrieves <code>TagKey</code> configuration from an account. </p>
+   */
+  inline const AppRegistryConfiguration& GetConfiguration() const { return m_configuration; }
+  template <typename ConfigurationT = AppRegistryConfiguration>
+  void SetConfiguration(ConfigurationT&& value) {
+    m_configurationHasBeenSet = true;
+    m_configuration = std::forward<ConfigurationT>(value);
+  }
+  template <typename ConfigurationT = AppRegistryConfiguration>
+  GetConfigurationResult& WithConfiguration(ConfigurationT&& value) {
+    SetConfiguration(std::forward<ConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Retrieves <code>TagKey</code> configuration from an account. </p>
-     */
-    inline const AppRegistryConfiguration& GetConfiguration() const{ return m_configuration; }
-    inline void SetConfiguration(const AppRegistryConfiguration& value) { m_configuration = value; }
-    inline void SetConfiguration(AppRegistryConfiguration&& value) { m_configuration = std::move(value); }
-    inline GetConfigurationResult& WithConfiguration(const AppRegistryConfiguration& value) { SetConfiguration(value); return *this;}
-    inline GetConfigurationResult& WithConfiguration(AppRegistryConfiguration&& value) { SetConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AppRegistryConfiguration m_configuration;
+ private:
+  AppRegistryConfiguration m_configuration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppRegistry
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppRegistry
+}  // namespace Aws

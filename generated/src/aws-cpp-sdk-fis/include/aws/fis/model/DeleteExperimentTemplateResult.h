@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/fis/FIS_EXPORTS.h>
 #include <aws/fis/model/ExperimentTemplate.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace FIS
-{
-namespace Model
-{
-  class DeleteExperimentTemplateResult
-  {
-  public:
-    AWS_FIS_API DeleteExperimentTemplateResult();
-    AWS_FIS_API DeleteExperimentTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FIS_API DeleteExperimentTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace FIS {
+namespace Model {
+class DeleteExperimentTemplateResult {
+ public:
+  AWS_FIS_API DeleteExperimentTemplateResult() = default;
+  AWS_FIS_API DeleteExperimentTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FIS_API DeleteExperimentTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the experiment template.</p>
+   */
+  inline const ExperimentTemplate& GetExperimentTemplate() const { return m_experimentTemplate; }
+  template <typename ExperimentTemplateT = ExperimentTemplate>
+  void SetExperimentTemplate(ExperimentTemplateT&& value) {
+    m_experimentTemplateHasBeenSet = true;
+    m_experimentTemplate = std::forward<ExperimentTemplateT>(value);
+  }
+  template <typename ExperimentTemplateT = ExperimentTemplate>
+  DeleteExperimentTemplateResult& WithExperimentTemplate(ExperimentTemplateT&& value) {
+    SetExperimentTemplate(std::forward<ExperimentTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the experiment template.</p>
-     */
-    inline const ExperimentTemplate& GetExperimentTemplate() const{ return m_experimentTemplate; }
-    inline void SetExperimentTemplate(const ExperimentTemplate& value) { m_experimentTemplate = value; }
-    inline void SetExperimentTemplate(ExperimentTemplate&& value) { m_experimentTemplate = std::move(value); }
-    inline DeleteExperimentTemplateResult& WithExperimentTemplate(const ExperimentTemplate& value) { SetExperimentTemplate(value); return *this;}
-    inline DeleteExperimentTemplateResult& WithExperimentTemplate(ExperimentTemplate&& value) { SetExperimentTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteExperimentTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteExperimentTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteExperimentTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteExperimentTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ExperimentTemplate m_experimentTemplate;
+ private:
+  ExperimentTemplate m_experimentTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_experimentTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace FIS
-} // namespace Aws
+}  // namespace Model
+}  // namespace FIS
+}  // namespace Aws

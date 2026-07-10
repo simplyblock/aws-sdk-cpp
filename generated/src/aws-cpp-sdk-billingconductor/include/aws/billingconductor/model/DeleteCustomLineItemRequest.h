@@ -4,67 +4,72 @@
  */
 
 #pragma once
-#include <aws/billingconductor/BillingConductor_EXPORTS.h>
 #include <aws/billingconductor/BillingConductorRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/billingconductor/BillingConductor_EXPORTS.h>
 #include <aws/billingconductor/model/CustomLineItemBillingPeriodRange.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace BillingConductor
-{
-namespace Model
-{
+namespace Aws {
+namespace BillingConductor {
+namespace Model {
 
+/**
+ */
+class DeleteCustomLineItemRequest : public BillingConductorRequest {
+ public:
+  AWS_BILLINGCONDUCTOR_API DeleteCustomLineItemRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DeleteCustomLineItem"; }
+
+  AWS_BILLINGCONDUCTOR_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p> The ARN of the custom line item to be deleted. </p>
    */
-  class DeleteCustomLineItemRequest : public BillingConductorRequest
-  {
-  public:
-    AWS_BILLINGCONDUCTOR_API DeleteCustomLineItemRequest();
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  DeleteCustomLineItemRequest& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DeleteCustomLineItem"; }
+  ///@{
 
-    AWS_BILLINGCONDUCTOR_API Aws::String SerializePayload() const override;
+  inline const CustomLineItemBillingPeriodRange& GetBillingPeriodRange() const { return m_billingPeriodRange; }
+  inline bool BillingPeriodRangeHasBeenSet() const { return m_billingPeriodRangeHasBeenSet; }
+  template <typename BillingPeriodRangeT = CustomLineItemBillingPeriodRange>
+  void SetBillingPeriodRange(BillingPeriodRangeT&& value) {
+    m_billingPeriodRangeHasBeenSet = true;
+    m_billingPeriodRange = std::forward<BillingPeriodRangeT>(value);
+  }
+  template <typename BillingPeriodRangeT = CustomLineItemBillingPeriodRange>
+  DeleteCustomLineItemRequest& WithBillingPeriodRange(BillingPeriodRangeT&& value) {
+    SetBillingPeriodRange(std::forward<BillingPeriodRangeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
+  CustomLineItemBillingPeriodRange m_billingPeriodRange;
+  bool m_arnHasBeenSet = false;
+  bool m_billingPeriodRangeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The ARN of the custom line item to be deleted. </p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline DeleteCustomLineItemRequest& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline DeleteCustomLineItemRequest& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline DeleteCustomLineItemRequest& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
-
-    ///@{
-    
-    inline const CustomLineItemBillingPeriodRange& GetBillingPeriodRange() const{ return m_billingPeriodRange; }
-    inline bool BillingPeriodRangeHasBeenSet() const { return m_billingPeriodRangeHasBeenSet; }
-    inline void SetBillingPeriodRange(const CustomLineItemBillingPeriodRange& value) { m_billingPeriodRangeHasBeenSet = true; m_billingPeriodRange = value; }
-    inline void SetBillingPeriodRange(CustomLineItemBillingPeriodRange&& value) { m_billingPeriodRangeHasBeenSet = true; m_billingPeriodRange = std::move(value); }
-    inline DeleteCustomLineItemRequest& WithBillingPeriodRange(const CustomLineItemBillingPeriodRange& value) { SetBillingPeriodRange(value); return *this;}
-    inline DeleteCustomLineItemRequest& WithBillingPeriodRange(CustomLineItemBillingPeriodRange&& value) { SetBillingPeriodRange(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
-
-    CustomLineItemBillingPeriodRange m_billingPeriodRange;
-    bool m_billingPeriodRangeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BillingConductor
-} // namespace Aws
+}  // namespace Model
+}  // namespace BillingConductor
+}  // namespace Aws

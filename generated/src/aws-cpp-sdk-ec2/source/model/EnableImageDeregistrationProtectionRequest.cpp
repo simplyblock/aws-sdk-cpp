@@ -3,38 +3,25 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/EnableImageDeregistrationProtectionRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/EnableImageDeregistrationProtectionRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-EnableImageDeregistrationProtectionRequest::EnableImageDeregistrationProtectionRequest() : 
-    m_imageIdHasBeenSet(false),
-    m_withCooldown(false),
-    m_withCooldownHasBeenSet(false),
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false)
-{
-}
-
-Aws::String EnableImageDeregistrationProtectionRequest::SerializePayload() const
-{
+Aws::String EnableImageDeregistrationProtectionRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=EnableImageDeregistrationProtection&";
-  if(m_imageIdHasBeenSet)
-  {
+  if (m_imageIdHasBeenSet) {
     ss << "ImageId=" << StringUtils::URLEncode(m_imageId.c_str()) << "&";
   }
 
-  if(m_withCooldownHasBeenSet)
-  {
+  if (m_withCooldownHasBeenSet) {
     ss << "WithCooldown=" << std::boolalpha << m_withCooldown << "&";
   }
 
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
@@ -42,8 +29,4 @@ Aws::String EnableImageDeregistrationProtectionRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  EnableImageDeregistrationProtectionRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void EnableImageDeregistrationProtectionRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

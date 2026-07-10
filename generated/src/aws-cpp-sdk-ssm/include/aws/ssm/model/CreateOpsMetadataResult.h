@@ -4,65 +4,72 @@
  */
 
 #pragma once
-#include <aws/ssm/SSM_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ssm/SSM_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSM
-{
-namespace Model
-{
-  class CreateOpsMetadataResult
-  {
-  public:
-    AWS_SSM_API CreateOpsMetadataResult();
-    AWS_SSM_API CreateOpsMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSM_API CreateOpsMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSM {
+namespace Model {
+class CreateOpsMetadataResult {
+ public:
+  AWS_SSM_API CreateOpsMetadataResult() = default;
+  AWS_SSM_API CreateOpsMetadataResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSM_API CreateOpsMetadataResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the OpsMetadata Object or blob created by
+   * the call.</p>
+   */
+  inline const Aws::String& GetOpsMetadataArn() const { return m_opsMetadataArn; }
+  template <typename OpsMetadataArnT = Aws::String>
+  void SetOpsMetadataArn(OpsMetadataArnT&& value) {
+    m_opsMetadataArnHasBeenSet = true;
+    m_opsMetadataArn = std::forward<OpsMetadataArnT>(value);
+  }
+  template <typename OpsMetadataArnT = Aws::String>
+  CreateOpsMetadataResult& WithOpsMetadataArn(OpsMetadataArnT&& value) {
+    SetOpsMetadataArn(std::forward<OpsMetadataArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the OpsMetadata Object or blob created by
-     * the call.</p>
-     */
-    inline const Aws::String& GetOpsMetadataArn() const{ return m_opsMetadataArn; }
-    inline void SetOpsMetadataArn(const Aws::String& value) { m_opsMetadataArn = value; }
-    inline void SetOpsMetadataArn(Aws::String&& value) { m_opsMetadataArn = std::move(value); }
-    inline void SetOpsMetadataArn(const char* value) { m_opsMetadataArn.assign(value); }
-    inline CreateOpsMetadataResult& WithOpsMetadataArn(const Aws::String& value) { SetOpsMetadataArn(value); return *this;}
-    inline CreateOpsMetadataResult& WithOpsMetadataArn(Aws::String&& value) { SetOpsMetadataArn(std::move(value)); return *this;}
-    inline CreateOpsMetadataResult& WithOpsMetadataArn(const char* value) { SetOpsMetadataArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateOpsMetadataResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateOpsMetadataResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateOpsMetadataResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateOpsMetadataResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_opsMetadataArn;
+ private:
+  Aws::String m_opsMetadataArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_opsMetadataArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSM
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSM
+}  // namespace Aws

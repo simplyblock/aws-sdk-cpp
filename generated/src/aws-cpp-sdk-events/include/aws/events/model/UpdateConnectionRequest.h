@@ -4,104 +4,117 @@
  */
 
 #pragma once
-#include <aws/events/CloudWatchEvents_EXPORTS.h>
-#include <aws/events/CloudWatchEventsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/events/CloudWatchEventsRequest.h>
+#include <aws/events/CloudWatchEvents_EXPORTS.h>
 #include <aws/events/model/ConnectionAuthorizationType.h>
 #include <aws/events/model/UpdateConnectionAuthRequestParameters.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudWatchEvents
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudWatchEvents {
+namespace Model {
 
+/**
+ */
+class UpdateConnectionRequest : public CloudWatchEventsRequest {
+ public:
+  AWS_CLOUDWATCHEVENTS_API UpdateConnectionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateConnection"; }
+
+  AWS_CLOUDWATCHEVENTS_API Aws::String SerializePayload() const override;
+
+  AWS_CLOUDWATCHEVENTS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the connection to update.</p>
    */
-  class UpdateConnectionRequest : public CloudWatchEventsRequest
-  {
-  public:
-    AWS_CLOUDWATCHEVENTS_API UpdateConnectionRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateConnectionRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateConnection"; }
+  ///@{
+  /**
+   * <p>A description for the connection.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateConnectionRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCHEVENTS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The type of authorization to use for the connection.</p>
+   */
+  inline ConnectionAuthorizationType GetAuthorizationType() const { return m_authorizationType; }
+  inline bool AuthorizationTypeHasBeenSet() const { return m_authorizationTypeHasBeenSet; }
+  inline void SetAuthorizationType(ConnectionAuthorizationType value) {
+    m_authorizationTypeHasBeenSet = true;
+    m_authorizationType = value;
+  }
+  inline UpdateConnectionRequest& WithAuthorizationType(ConnectionAuthorizationType value) {
+    SetAuthorizationType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCHEVENTS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The authorization parameters to use for the connection.</p>
+   */
+  inline const UpdateConnectionAuthRequestParameters& GetAuthParameters() const { return m_authParameters; }
+  inline bool AuthParametersHasBeenSet() const { return m_authParametersHasBeenSet; }
+  template <typename AuthParametersT = UpdateConnectionAuthRequestParameters>
+  void SetAuthParameters(AuthParametersT&& value) {
+    m_authParametersHasBeenSet = true;
+    m_authParameters = std::forward<AuthParametersT>(value);
+  }
+  template <typename AuthParametersT = UpdateConnectionAuthRequestParameters>
+  UpdateConnectionRequest& WithAuthParameters(AuthParametersT&& value) {
+    SetAuthParameters(std::forward<AuthParametersT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The name of the connection to update.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateConnectionRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateConnectionRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateConnectionRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ConnectionAuthorizationType m_authorizationType{ConnectionAuthorizationType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>A description for the connection.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateConnectionRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateConnectionRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateConnectionRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  UpdateConnectionAuthRequestParameters m_authParameters;
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_authorizationTypeHasBeenSet = false;
+  bool m_authParametersHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The type of authorization to use for the connection.</p>
-     */
-    inline const ConnectionAuthorizationType& GetAuthorizationType() const{ return m_authorizationType; }
-    inline bool AuthorizationTypeHasBeenSet() const { return m_authorizationTypeHasBeenSet; }
-    inline void SetAuthorizationType(const ConnectionAuthorizationType& value) { m_authorizationTypeHasBeenSet = true; m_authorizationType = value; }
-    inline void SetAuthorizationType(ConnectionAuthorizationType&& value) { m_authorizationTypeHasBeenSet = true; m_authorizationType = std::move(value); }
-    inline UpdateConnectionRequest& WithAuthorizationType(const ConnectionAuthorizationType& value) { SetAuthorizationType(value); return *this;}
-    inline UpdateConnectionRequest& WithAuthorizationType(ConnectionAuthorizationType&& value) { SetAuthorizationType(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The authorization parameters to use for the connection.</p>
-     */
-    inline const UpdateConnectionAuthRequestParameters& GetAuthParameters() const{ return m_authParameters; }
-    inline bool AuthParametersHasBeenSet() const { return m_authParametersHasBeenSet; }
-    inline void SetAuthParameters(const UpdateConnectionAuthRequestParameters& value) { m_authParametersHasBeenSet = true; m_authParameters = value; }
-    inline void SetAuthParameters(UpdateConnectionAuthRequestParameters&& value) { m_authParametersHasBeenSet = true; m_authParameters = std::move(value); }
-    inline UpdateConnectionRequest& WithAuthParameters(const UpdateConnectionAuthRequestParameters& value) { SetAuthParameters(value); return *this;}
-    inline UpdateConnectionRequest& WithAuthParameters(UpdateConnectionAuthRequestParameters&& value) { SetAuthParameters(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    ConnectionAuthorizationType m_authorizationType;
-    bool m_authorizationTypeHasBeenSet = false;
-
-    UpdateConnectionAuthRequestParameters m_authParameters;
-    bool m_authParametersHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudWatchEvents
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchEvents
+}  // namespace Aws

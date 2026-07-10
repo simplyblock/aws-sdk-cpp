@@ -4,87 +4,105 @@
  */
 
 #pragma once
-#include <aws/elasticmapreduce/EMR_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticmapreduce/EMR_EXPORTS.h>
 #include <aws/elasticmapreduce/model/ClusterSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EMR
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EMR {
+namespace Model {
+/**
+ * <p>This contains a ClusterSummaryList with the cluster details; for example, the
+ * cluster IDs, names, and status.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/ListClustersOutput">AWS
+ * API Reference</a></p>
+ */
+class ListClustersResult {
+ public:
+  AWS_EMR_API ListClustersResult() = default;
+  AWS_EMR_API ListClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EMR_API ListClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>This contains a ClusterSummaryList with the cluster details; for example, the
-   * cluster IDs, names, and status.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/ListClustersOutput">AWS
-   * API Reference</a></p>
+   * <p>The list of clusters for the account based on the given filters.</p>
    */
-  class ListClustersResult
-  {
-  public:
-    AWS_EMR_API ListClustersResult();
-    AWS_EMR_API ListClustersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EMR_API ListClustersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<ClusterSummary>& GetClusters() const { return m_clusters; }
+  template <typename ClustersT = Aws::Vector<ClusterSummary>>
+  void SetClusters(ClustersT&& value) {
+    m_clustersHasBeenSet = true;
+    m_clusters = std::forward<ClustersT>(value);
+  }
+  template <typename ClustersT = Aws::Vector<ClusterSummary>>
+  ListClustersResult& WithClusters(ClustersT&& value) {
+    SetClusters(std::forward<ClustersT>(value));
+    return *this;
+  }
+  template <typename ClustersT = ClusterSummary>
+  ListClustersResult& AddClusters(ClustersT&& value) {
+    m_clustersHasBeenSet = true;
+    m_clusters.emplace_back(std::forward<ClustersT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The pagination token that indicates the next set of results to retrieve.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  ListClustersResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of clusters for the account based on the given filters.</p>
-     */
-    inline const Aws::Vector<ClusterSummary>& GetClusters() const{ return m_clusters; }
-    inline void SetClusters(const Aws::Vector<ClusterSummary>& value) { m_clusters = value; }
-    inline void SetClusters(Aws::Vector<ClusterSummary>&& value) { m_clusters = std::move(value); }
-    inline ListClustersResult& WithClusters(const Aws::Vector<ClusterSummary>& value) { SetClusters(value); return *this;}
-    inline ListClustersResult& WithClusters(Aws::Vector<ClusterSummary>&& value) { SetClusters(std::move(value)); return *this;}
-    inline ListClustersResult& AddClusters(const ClusterSummary& value) { m_clusters.push_back(value); return *this; }
-    inline ListClustersResult& AddClusters(ClusterSummary&& value) { m_clusters.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The pagination token that indicates the next set of results to retrieve.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline ListClustersResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline ListClustersResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline ListClustersResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListClustersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListClustersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListClustersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListClustersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<ClusterSummary> m_clusters;
 
-    Aws::Vector<ClusterSummary> m_clusters;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_clustersHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws

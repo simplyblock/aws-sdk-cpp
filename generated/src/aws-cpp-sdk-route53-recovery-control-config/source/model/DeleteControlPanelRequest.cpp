@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/route53-recovery-control-config/model/DeleteControlPanelRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/route53-recovery-control-config/model/DeleteControlPanelRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Route53RecoveryControlConfig::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteControlPanelRequest::DeleteControlPanelRequest() : 
-    m_controlPanelArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteControlPanelRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteControlPanelRequest::SerializePayload() const { return {}; }

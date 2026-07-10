@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticache/model/AuthorizeCacheSecurityGroupIngressResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticache/model/AuthorizeCacheSecurityGroupIngressResult.h>
 
 #include <utility>
 
@@ -17,38 +17,34 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-AuthorizeCacheSecurityGroupIngressResult::AuthorizeCacheSecurityGroupIngressResult()
-{
-}
-
-AuthorizeCacheSecurityGroupIngressResult::AuthorizeCacheSecurityGroupIngressResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+AuthorizeCacheSecurityGroupIngressResult::AuthorizeCacheSecurityGroupIngressResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-AuthorizeCacheSecurityGroupIngressResult& AuthorizeCacheSecurityGroupIngressResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+AuthorizeCacheSecurityGroupIngressResult& AuthorizeCacheSecurityGroupIngressResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "AuthorizeCacheSecurityGroupIngressResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "AuthorizeCacheSecurityGroupIngressResult")) {
     resultNode = rootNode.FirstChild("AuthorizeCacheSecurityGroupIngressResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode cacheSecurityGroupNode = resultNode.FirstChild("CacheSecurityGroup");
-    if(!cacheSecurityGroupNode.IsNull())
-    {
+    if (!cacheSecurityGroupNode.IsNull()) {
       m_cacheSecurityGroup = cacheSecurityGroupNode;
+      m_cacheSecurityGroupHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::AuthorizeCacheSecurityGroupIngressResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElastiCache::Model::AuthorizeCacheSecurityGroupIngressResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

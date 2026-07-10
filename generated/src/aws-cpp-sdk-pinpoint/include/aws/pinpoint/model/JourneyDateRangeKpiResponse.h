@@ -4,169 +4,196 @@
  */
 
 #pragma once
-#include <aws/pinpoint/Pinpoint_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/pinpoint/model/BaseKpiResult.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
 
+/**
+ * <p>Provides the results of a query that retrieved the data for a standard
+ * engagement metric that applies to a journey, and provides information about that
+ * query.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/JourneyDateRangeKpiResponse">AWS
+ * API Reference</a></p>
+ */
+class JourneyDateRangeKpiResponse {
+ public:
+  AWS_PINPOINT_API JourneyDateRangeKpiResponse() = default;
+  AWS_PINPOINT_API JourneyDateRangeKpiResponse(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API JourneyDateRangeKpiResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides the results of a query that retrieved the data for a standard
-   * engagement metric that applies to a journey, and provides information about that
-   * query.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/JourneyDateRangeKpiResponse">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for the application that the metric applies to.</p>
    */
-  class JourneyDateRangeKpiResponse
-  {
-  public:
-    AWS_PINPOINT_API JourneyDateRangeKpiResponse();
-    AWS_PINPOINT_API JourneyDateRangeKpiResponse(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API JourneyDateRangeKpiResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  JourneyDateRangeKpiResponse& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The last date and time of the date range that was used to filter the query
+   * results, in extended ISO 8601 format. The date range is inclusive.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  JourneyDateRangeKpiResponse& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the application that the metric applies to.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationIdHasBeenSet = true; m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationIdHasBeenSet = true; m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationIdHasBeenSet = true; m_applicationId.assign(value); }
-    inline JourneyDateRangeKpiResponse& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline JourneyDateRangeKpiResponse& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the journey that the metric applies to.</p>
+   */
+  inline const Aws::String& GetJourneyId() const { return m_journeyId; }
+  inline bool JourneyIdHasBeenSet() const { return m_journeyIdHasBeenSet; }
+  template <typename JourneyIdT = Aws::String>
+  void SetJourneyId(JourneyIdT&& value) {
+    m_journeyIdHasBeenSet = true;
+    m_journeyId = std::forward<JourneyIdT>(value);
+  }
+  template <typename JourneyIdT = Aws::String>
+  JourneyDateRangeKpiResponse& WithJourneyId(JourneyIdT&& value) {
+    SetJourneyId(std::forward<JourneyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The last date and time of the date range that was used to filter the query
-     * results, in extended ISO 8601 format. The date range is inclusive.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
-    inline JourneyDateRangeKpiResponse& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the metric, also referred to as a <i>key performance indicator
+   * (KPI)</i>, that the data was retrieved for. This value describes the associated
+   * metric and consists of two or more terms, which are comprised of lowercase
+   * alphanumeric characters, separated by a hyphen. For a list of possible values,
+   * see the <a
+   * href="https://docs.aws.amazon.com/pinpoint/latest/developerguide/analytics-standard-metrics.html">Amazon
+   * Pinpoint Developer Guide</a>.</p>
+   */
+  inline const Aws::String& GetKpiName() const { return m_kpiName; }
+  inline bool KpiNameHasBeenSet() const { return m_kpiNameHasBeenSet; }
+  template <typename KpiNameT = Aws::String>
+  void SetKpiName(KpiNameT&& value) {
+    m_kpiNameHasBeenSet = true;
+    m_kpiName = std::forward<KpiNameT>(value);
+  }
+  template <typename KpiNameT = Aws::String>
+  JourneyDateRangeKpiResponse& WithKpiName(KpiNameT&& value) {
+    SetKpiName(std::forward<KpiNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the journey that the metric applies to.</p>
-     */
-    inline const Aws::String& GetJourneyId() const{ return m_journeyId; }
-    inline bool JourneyIdHasBeenSet() const { return m_journeyIdHasBeenSet; }
-    inline void SetJourneyId(const Aws::String& value) { m_journeyIdHasBeenSet = true; m_journeyId = value; }
-    inline void SetJourneyId(Aws::String&& value) { m_journeyIdHasBeenSet = true; m_journeyId = std::move(value); }
-    inline void SetJourneyId(const char* value) { m_journeyIdHasBeenSet = true; m_journeyId.assign(value); }
-    inline JourneyDateRangeKpiResponse& WithJourneyId(const Aws::String& value) { SetJourneyId(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithJourneyId(Aws::String&& value) { SetJourneyId(std::move(value)); return *this;}
-    inline JourneyDateRangeKpiResponse& WithJourneyId(const char* value) { SetJourneyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of objects that contains the results of the query. Each object
+   * contains the value for the metric and metadata about that value.</p>
+   */
+  inline const BaseKpiResult& GetKpiResult() const { return m_kpiResult; }
+  inline bool KpiResultHasBeenSet() const { return m_kpiResultHasBeenSet; }
+  template <typename KpiResultT = BaseKpiResult>
+  void SetKpiResult(KpiResultT&& value) {
+    m_kpiResultHasBeenSet = true;
+    m_kpiResult = std::forward<KpiResultT>(value);
+  }
+  template <typename KpiResultT = BaseKpiResult>
+  JourneyDateRangeKpiResponse& WithKpiResult(KpiResultT&& value) {
+    SetKpiResult(std::forward<KpiResultT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the metric, also referred to as a <i>key performance indicator
-     * (KPI)</i>, that the data was retrieved for. This value describes the associated
-     * metric and consists of two or more terms, which are comprised of lowercase
-     * alphanumeric characters, separated by a hyphen. For a list of possible values,
-     * see the <a
-     * href="https://docs.aws.amazon.com/pinpoint/latest/developerguide/analytics-standard-metrics.html">Amazon
-     * Pinpoint Developer Guide</a>.</p>
-     */
-    inline const Aws::String& GetKpiName() const{ return m_kpiName; }
-    inline bool KpiNameHasBeenSet() const { return m_kpiNameHasBeenSet; }
-    inline void SetKpiName(const Aws::String& value) { m_kpiNameHasBeenSet = true; m_kpiName = value; }
-    inline void SetKpiName(Aws::String&& value) { m_kpiNameHasBeenSet = true; m_kpiName = std::move(value); }
-    inline void SetKpiName(const char* value) { m_kpiNameHasBeenSet = true; m_kpiName.assign(value); }
-    inline JourneyDateRangeKpiResponse& WithKpiName(const Aws::String& value) { SetKpiName(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithKpiName(Aws::String&& value) { SetKpiName(std::move(value)); return *this;}
-    inline JourneyDateRangeKpiResponse& WithKpiName(const char* value) { SetKpiName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The string to use in a subsequent request to get the next page of results in
+   * a paginated response. This value is null for the Journey Engagement Metrics
+   * resource because the resource returns all results in a single page.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  JourneyDateRangeKpiResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects that contains the results of the query. Each object
-     * contains the value for the metric and metadata about that value.</p>
-     */
-    inline const BaseKpiResult& GetKpiResult() const{ return m_kpiResult; }
-    inline bool KpiResultHasBeenSet() const { return m_kpiResultHasBeenSet; }
-    inline void SetKpiResult(const BaseKpiResult& value) { m_kpiResultHasBeenSet = true; m_kpiResult = value; }
-    inline void SetKpiResult(BaseKpiResult&& value) { m_kpiResultHasBeenSet = true; m_kpiResult = std::move(value); }
-    inline JourneyDateRangeKpiResponse& WithKpiResult(const BaseKpiResult& value) { SetKpiResult(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithKpiResult(BaseKpiResult&& value) { SetKpiResult(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The first date and time of the date range that was used to filter the query
+   * results, in extended ISO 8601 format. The date range is inclusive.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  JourneyDateRangeKpiResponse& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationId;
 
-    ///@{
-    /**
-     * <p>The string to use in a subsequent request to get the next page of results in
-     * a paginated response. This value is null for the Journey Engagement Metrics
-     * resource because the resource returns all results in a single page.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline JourneyDateRangeKpiResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline JourneyDateRangeKpiResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_endTime{};
 
-    ///@{
-    /**
-     * <p>The first date and time of the date range that was used to filter the query
-     * results, in extended ISO 8601 format. The date range is inclusive.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline JourneyDateRangeKpiResponse& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline JourneyDateRangeKpiResponse& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_journeyId;
 
-    Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet = false;
+  Aws::String m_kpiName;
 
-    Aws::Utils::DateTime m_endTime;
-    bool m_endTimeHasBeenSet = false;
+  BaseKpiResult m_kpiResult;
 
-    Aws::String m_journeyId;
-    bool m_journeyIdHasBeenSet = false;
+  Aws::String m_nextToken;
 
-    Aws::String m_kpiName;
-    bool m_kpiNameHasBeenSet = false;
+  Aws::Utils::DateTime m_startTime{};
+  bool m_applicationIdHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+  bool m_journeyIdHasBeenSet = false;
+  bool m_kpiNameHasBeenSet = false;
+  bool m_kpiResultHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+};
 
-    BaseKpiResult m_kpiResult;
-    bool m_kpiResultHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

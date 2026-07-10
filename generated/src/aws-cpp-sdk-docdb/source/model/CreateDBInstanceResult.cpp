@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/docdb/model/CreateDBInstanceResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/docdb/model/CreateDBInstanceResult.h>
 
 #include <utility>
 
@@ -17,38 +17,30 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateDBInstanceResult::CreateDBInstanceResult()
-{
-}
+CreateDBInstanceResult::CreateDBInstanceResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-CreateDBInstanceResult::CreateDBInstanceResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-CreateDBInstanceResult& CreateDBInstanceResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateDBInstanceResult& CreateDBInstanceResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateDBInstanceResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateDBInstanceResult")) {
     resultNode = rootNode.FirstChild("CreateDBInstanceResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode dBInstanceNode = resultNode.FirstChild("DBInstance");
-    if(!dBInstanceNode.IsNull())
-    {
+    if (!dBInstanceNode.IsNull()) {
       m_dBInstance = dBInstanceNode;
+      m_dBInstanceHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::DocDB::Model::CreateDBInstanceResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::DocDB::Model::CreateDBInstanceResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

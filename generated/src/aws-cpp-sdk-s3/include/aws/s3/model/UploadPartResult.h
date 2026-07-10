@@ -4,243 +4,436 @@
  */
 
 #pragma once
-#include <aws/s3/S3_EXPORTS.h>
-#include <aws/s3/model/ServerSideEncryption.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3/S3_EXPORTS.h>
 #include <aws/s3/model/RequestCharged.h>
+#include <aws/s3/model/ServerSideEncryption.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3
-{
-namespace Model
-{
-  class UploadPartResult
-  {
-  public:
-    AWS_S3_API UploadPartResult();
-    AWS_S3_API UploadPartResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3_API UploadPartResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3 {
+namespace Model {
+class UploadPartResult {
+ public:
+  AWS_S3_API UploadPartResult() = default;
+  AWS_S3_API UploadPartResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3_API UploadPartResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The server-side encryption algorithm used when you store this object in
+   * Amazon S3 or Amazon FSx.</p>  <p>When accessing data stored in Amazon FSx
+   * file systems using S3 access points, the only valid server side encryption
+   * option is <code>aws:fsx</code>.</p>
+   */
+  inline ServerSideEncryption GetServerSideEncryption() const { return m_serverSideEncryption; }
+  inline void SetServerSideEncryption(ServerSideEncryption value) {
+    m_serverSideEncryptionHasBeenSet = true;
+    m_serverSideEncryption = value;
+  }
+  inline UploadPartResult& WithServerSideEncryption(ServerSideEncryption value) {
+    SetServerSideEncryption(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The server-side encryption algorithm used when you store this object in
-     * Amazon S3 (for example, <code>AES256</code>, <code>aws:kms</code>).</p>
-     */
-    inline const ServerSideEncryption& GetServerSideEncryption() const{ return m_serverSideEncryption; }
-    inline void SetServerSideEncryption(const ServerSideEncryption& value) { m_serverSideEncryption = value; }
-    inline void SetServerSideEncryption(ServerSideEncryption&& value) { m_serverSideEncryption = std::move(value); }
-    inline UploadPartResult& WithServerSideEncryption(const ServerSideEncryption& value) { SetServerSideEncryption(value); return *this;}
-    inline UploadPartResult& WithServerSideEncryption(ServerSideEncryption&& value) { SetServerSideEncryption(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Entity tag for the uploaded object.</p>
+   */
+  inline const Aws::String& GetETag() const { return m_eTag; }
+  template <typename ETagT = Aws::String>
+  void SetETag(ETagT&& value) {
+    m_eTagHasBeenSet = true;
+    m_eTag = std::forward<ETagT>(value);
+  }
+  template <typename ETagT = Aws::String>
+  UploadPartResult& WithETag(ETagT&& value) {
+    SetETag(std::forward<ETagT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Entity tag for the uploaded object.</p>
-     */
-    inline const Aws::String& GetETag() const{ return m_eTag; }
-    inline void SetETag(const Aws::String& value) { m_eTag = value; }
-    inline void SetETag(Aws::String&& value) { m_eTag = std::move(value); }
-    inline void SetETag(const char* value) { m_eTag.assign(value); }
-    inline UploadPartResult& WithETag(const Aws::String& value) { SetETag(value); return *this;}
-    inline UploadPartResult& WithETag(Aws::String&& value) { SetETag(std::move(value)); return *this;}
-    inline UploadPartResult& WithETag(const char* value) { SetETag(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 32-bit <code>CRC32</code> checksum of the part. This will
+   * only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumCRC32() const { return m_checksumCRC32; }
+  template <typename ChecksumCRC32T = Aws::String>
+  void SetChecksumCRC32(ChecksumCRC32T&& value) {
+    m_checksumCRC32HasBeenSet = true;
+    m_checksumCRC32 = std::forward<ChecksumCRC32T>(value);
+  }
+  template <typename ChecksumCRC32T = Aws::String>
+  UploadPartResult& WithChecksumCRC32(ChecksumCRC32T&& value) {
+    SetChecksumCRC32(std::forward<ChecksumCRC32T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded, 32-bit CRC-32 checksum of the object. This will only be
-     * present if it was uploaded with the object. When you use an API operation on an
-     * object that was uploaded using multipart uploads, this value may not be a direct
-     * checksum value of the full object. Instead, it's a calculation based on the
-     * checksum values of each individual part. For more information about how
-     * checksums are calculated with multipart uploads, see <a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html#large-object-checksums">
-     * Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
-     */
-    inline const Aws::String& GetChecksumCRC32() const{ return m_checksumCRC32; }
-    inline void SetChecksumCRC32(const Aws::String& value) { m_checksumCRC32 = value; }
-    inline void SetChecksumCRC32(Aws::String&& value) { m_checksumCRC32 = std::move(value); }
-    inline void SetChecksumCRC32(const char* value) { m_checksumCRC32.assign(value); }
-    inline UploadPartResult& WithChecksumCRC32(const Aws::String& value) { SetChecksumCRC32(value); return *this;}
-    inline UploadPartResult& WithChecksumCRC32(Aws::String&& value) { SetChecksumCRC32(std::move(value)); return *this;}
-    inline UploadPartResult& WithChecksumCRC32(const char* value) { SetChecksumCRC32(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 32-bit <code>CRC32C</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumCRC32C() const { return m_checksumCRC32C; }
+  template <typename ChecksumCRC32CT = Aws::String>
+  void SetChecksumCRC32C(ChecksumCRC32CT&& value) {
+    m_checksumCRC32CHasBeenSet = true;
+    m_checksumCRC32C = std::forward<ChecksumCRC32CT>(value);
+  }
+  template <typename ChecksumCRC32CT = Aws::String>
+  UploadPartResult& WithChecksumCRC32C(ChecksumCRC32CT&& value) {
+    SetChecksumCRC32C(std::forward<ChecksumCRC32CT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded, 32-bit CRC-32C checksum of the object. This will only be
-     * present if it was uploaded with the object. When you use an API operation on an
-     * object that was uploaded using multipart uploads, this value may not be a direct
-     * checksum value of the full object. Instead, it's a calculation based on the
-     * checksum values of each individual part. For more information about how
-     * checksums are calculated with multipart uploads, see <a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html#large-object-checksums">
-     * Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
-     */
-    inline const Aws::String& GetChecksumCRC32C() const{ return m_checksumCRC32C; }
-    inline void SetChecksumCRC32C(const Aws::String& value) { m_checksumCRC32C = value; }
-    inline void SetChecksumCRC32C(Aws::String&& value) { m_checksumCRC32C = std::move(value); }
-    inline void SetChecksumCRC32C(const char* value) { m_checksumCRC32C.assign(value); }
-    inline UploadPartResult& WithChecksumCRC32C(const Aws::String& value) { SetChecksumCRC32C(value); return *this;}
-    inline UploadPartResult& WithChecksumCRC32C(Aws::String&& value) { SetChecksumCRC32C(std::move(value)); return *this;}
-    inline UploadPartResult& WithChecksumCRC32C(const char* value) { SetChecksumCRC32C(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 64-bit <code>CRC64NVME</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumCRC64NVME() const { return m_checksumCRC64NVME; }
+  template <typename ChecksumCRC64NVMET = Aws::String>
+  void SetChecksumCRC64NVME(ChecksumCRC64NVMET&& value) {
+    m_checksumCRC64NVMEHasBeenSet = true;
+    m_checksumCRC64NVME = std::forward<ChecksumCRC64NVMET>(value);
+  }
+  template <typename ChecksumCRC64NVMET = Aws::String>
+  UploadPartResult& WithChecksumCRC64NVME(ChecksumCRC64NVMET&& value) {
+    SetChecksumCRC64NVME(std::forward<ChecksumCRC64NVMET>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded, 160-bit SHA-1 digest of the object. This will only be
-     * present if it was uploaded with the object. When you use the API operation on an
-     * object that was uploaded using multipart uploads, this value may not be a direct
-     * checksum value of the full object. Instead, it's a calculation based on the
-     * checksum values of each individual part. For more information about how
-     * checksums are calculated with multipart uploads, see <a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html#large-object-checksums">
-     * Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
-     */
-    inline const Aws::String& GetChecksumSHA1() const{ return m_checksumSHA1; }
-    inline void SetChecksumSHA1(const Aws::String& value) { m_checksumSHA1 = value; }
-    inline void SetChecksumSHA1(Aws::String&& value) { m_checksumSHA1 = std::move(value); }
-    inline void SetChecksumSHA1(const char* value) { m_checksumSHA1.assign(value); }
-    inline UploadPartResult& WithChecksumSHA1(const Aws::String& value) { SetChecksumSHA1(value); return *this;}
-    inline UploadPartResult& WithChecksumSHA1(Aws::String&& value) { SetChecksumSHA1(std::move(value)); return *this;}
-    inline UploadPartResult& WithChecksumSHA1(const char* value) { SetChecksumSHA1(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 160-bit <code>SHA1</code> checksum of the part. This will
+   * only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumSHA1() const { return m_checksumSHA1; }
+  template <typename ChecksumSHA1T = Aws::String>
+  void SetChecksumSHA1(ChecksumSHA1T&& value) {
+    m_checksumSHA1HasBeenSet = true;
+    m_checksumSHA1 = std::forward<ChecksumSHA1T>(value);
+  }
+  template <typename ChecksumSHA1T = Aws::String>
+  UploadPartResult& WithChecksumSHA1(ChecksumSHA1T&& value) {
+    SetChecksumSHA1(std::forward<ChecksumSHA1T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded, 256-bit SHA-256 digest of the object. This will only be
-     * present if it was uploaded with the object. When you use an API operation on an
-     * object that was uploaded using multipart uploads, this value may not be a direct
-     * checksum value of the full object. Instead, it's a calculation based on the
-     * checksum values of each individual part. For more information about how
-     * checksums are calculated with multipart uploads, see <a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html#large-object-checksums">
-     * Checking object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
-     */
-    inline const Aws::String& GetChecksumSHA256() const{ return m_checksumSHA256; }
-    inline void SetChecksumSHA256(const Aws::String& value) { m_checksumSHA256 = value; }
-    inline void SetChecksumSHA256(Aws::String&& value) { m_checksumSHA256 = std::move(value); }
-    inline void SetChecksumSHA256(const char* value) { m_checksumSHA256.assign(value); }
-    inline UploadPartResult& WithChecksumSHA256(const Aws::String& value) { SetChecksumSHA256(value); return *this;}
-    inline UploadPartResult& WithChecksumSHA256(Aws::String&& value) { SetChecksumSHA256(std::move(value)); return *this;}
-    inline UploadPartResult& WithChecksumSHA256(const char* value) { SetChecksumSHA256(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 256-bit <code>SHA256</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumSHA256() const { return m_checksumSHA256; }
+  template <typename ChecksumSHA256T = Aws::String>
+  void SetChecksumSHA256(ChecksumSHA256T&& value) {
+    m_checksumSHA256HasBeenSet = true;
+    m_checksumSHA256 = std::forward<ChecksumSHA256T>(value);
+  }
+  template <typename ChecksumSHA256T = Aws::String>
+  UploadPartResult& WithChecksumSHA256(ChecksumSHA256T&& value) {
+    SetChecksumSHA256(std::forward<ChecksumSHA256T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If server-side encryption with a customer-provided encryption key was
-     * requested, the response will include this header to confirm the encryption
-     * algorithm that's used.</p>  <p>This functionality is not supported for
-     * directory buckets.</p> 
-     */
-    inline const Aws::String& GetSSECustomerAlgorithm() const{ return m_sSECustomerAlgorithm; }
-    inline void SetSSECustomerAlgorithm(const Aws::String& value) { m_sSECustomerAlgorithm = value; }
-    inline void SetSSECustomerAlgorithm(Aws::String&& value) { m_sSECustomerAlgorithm = std::move(value); }
-    inline void SetSSECustomerAlgorithm(const char* value) { m_sSECustomerAlgorithm.assign(value); }
-    inline UploadPartResult& WithSSECustomerAlgorithm(const Aws::String& value) { SetSSECustomerAlgorithm(value); return *this;}
-    inline UploadPartResult& WithSSECustomerAlgorithm(Aws::String&& value) { SetSSECustomerAlgorithm(std::move(value)); return *this;}
-    inline UploadPartResult& WithSSECustomerAlgorithm(const char* value) { SetSSECustomerAlgorithm(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 512-bit <code>SHA512</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumSHA512() const { return m_checksumSHA512; }
+  template <typename ChecksumSHA512T = Aws::String>
+  void SetChecksumSHA512(ChecksumSHA512T&& value) {
+    m_checksumSHA512HasBeenSet = true;
+    m_checksumSHA512 = std::forward<ChecksumSHA512T>(value);
+  }
+  template <typename ChecksumSHA512T = Aws::String>
+  UploadPartResult& WithChecksumSHA512(ChecksumSHA512T&& value) {
+    SetChecksumSHA512(std::forward<ChecksumSHA512T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If server-side encryption with a customer-provided encryption key was
-     * requested, the response will include this header to provide the round-trip
-     * message integrity verification of the customer-provided encryption key.</p>
-     *  <p>This functionality is not supported for directory buckets.</p> 
-     */
-    inline const Aws::String& GetSSECustomerKeyMD5() const{ return m_sSECustomerKeyMD5; }
-    inline void SetSSECustomerKeyMD5(const Aws::String& value) { m_sSECustomerKeyMD5 = value; }
-    inline void SetSSECustomerKeyMD5(Aws::String&& value) { m_sSECustomerKeyMD5 = std::move(value); }
-    inline void SetSSECustomerKeyMD5(const char* value) { m_sSECustomerKeyMD5.assign(value); }
-    inline UploadPartResult& WithSSECustomerKeyMD5(const Aws::String& value) { SetSSECustomerKeyMD5(value); return *this;}
-    inline UploadPartResult& WithSSECustomerKeyMD5(Aws::String&& value) { SetSSECustomerKeyMD5(std::move(value)); return *this;}
-    inline UploadPartResult& WithSSECustomerKeyMD5(const char* value) { SetSSECustomerKeyMD5(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 128-bit <code>MD5</code> checksum of the part. This will
+   * only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumMD5() const { return m_checksumMD5; }
+  template <typename ChecksumMD5T = Aws::String>
+  void SetChecksumMD5(ChecksumMD5T&& value) {
+    m_checksumMD5HasBeenSet = true;
+    m_checksumMD5 = std::forward<ChecksumMD5T>(value);
+  }
+  template <typename ChecksumMD5T = Aws::String>
+  UploadPartResult& WithChecksumMD5(ChecksumMD5T&& value) {
+    SetChecksumMD5(std::forward<ChecksumMD5T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If present, indicates the ID of the KMS key that was used for object
-     * encryption.</p>
-     */
-    inline const Aws::String& GetSSEKMSKeyId() const{ return m_sSEKMSKeyId; }
-    inline void SetSSEKMSKeyId(const Aws::String& value) { m_sSEKMSKeyId = value; }
-    inline void SetSSEKMSKeyId(Aws::String&& value) { m_sSEKMSKeyId = std::move(value); }
-    inline void SetSSEKMSKeyId(const char* value) { m_sSEKMSKeyId.assign(value); }
-    inline UploadPartResult& WithSSEKMSKeyId(const Aws::String& value) { SetSSEKMSKeyId(value); return *this;}
-    inline UploadPartResult& WithSSEKMSKeyId(Aws::String&& value) { SetSSEKMSKeyId(std::move(value)); return *this;}
-    inline UploadPartResult& WithSSEKMSKeyId(const char* value) { SetSSEKMSKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 64-bit <code>XXHASH64</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumXXHASH64() const { return m_checksumXXHASH64; }
+  template <typename ChecksumXXHASH64T = Aws::String>
+  void SetChecksumXXHASH64(ChecksumXXHASH64T&& value) {
+    m_checksumXXHASH64HasBeenSet = true;
+    m_checksumXXHASH64 = std::forward<ChecksumXXHASH64T>(value);
+  }
+  template <typename ChecksumXXHASH64T = Aws::String>
+  UploadPartResult& WithChecksumXXHASH64(ChecksumXXHASH64T&& value) {
+    SetChecksumXXHASH64(std::forward<ChecksumXXHASH64T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the multipart upload uses an S3 Bucket Key for server-side
-     * encryption with Key Management Service (KMS) keys (SSE-KMS).</p>
-     */
-    inline bool GetBucketKeyEnabled() const{ return m_bucketKeyEnabled; }
-    inline void SetBucketKeyEnabled(bool value) { m_bucketKeyEnabled = value; }
-    inline UploadPartResult& WithBucketKeyEnabled(bool value) { SetBucketKeyEnabled(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 64-bit <code>XXHASH3</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumXXHASH3() const { return m_checksumXXHASH3; }
+  template <typename ChecksumXXHASH3T = Aws::String>
+  void SetChecksumXXHASH3(ChecksumXXHASH3T&& value) {
+    m_checksumXXHASH3HasBeenSet = true;
+    m_checksumXXHASH3 = std::forward<ChecksumXXHASH3T>(value);
+  }
+  template <typename ChecksumXXHASH3T = Aws::String>
+  UploadPartResult& WithChecksumXXHASH3(ChecksumXXHASH3T&& value) {
+    SetChecksumXXHASH3(std::forward<ChecksumXXHASH3T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const RequestCharged& GetRequestCharged() const{ return m_requestCharged; }
-    inline void SetRequestCharged(const RequestCharged& value) { m_requestCharged = value; }
-    inline void SetRequestCharged(RequestCharged&& value) { m_requestCharged = std::move(value); }
-    inline UploadPartResult& WithRequestCharged(const RequestCharged& value) { SetRequestCharged(value); return *this;}
-    inline UploadPartResult& WithRequestCharged(RequestCharged&& value) { SetRequestCharged(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Base64 encoded, 128-bit <code>XXHASH128</code> checksum of the part. This
+   * will only be present if the checksum was provided in the request. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity</a> in the <i>Amazon S3 User Guide</i>.</p>
+   */
+  inline const Aws::String& GetChecksumXXHASH128() const { return m_checksumXXHASH128; }
+  template <typename ChecksumXXHASH128T = Aws::String>
+  void SetChecksumXXHASH128(ChecksumXXHASH128T&& value) {
+    m_checksumXXHASH128HasBeenSet = true;
+    m_checksumXXHASH128 = std::forward<ChecksumXXHASH128T>(value);
+  }
+  template <typename ChecksumXXHASH128T = Aws::String>
+  UploadPartResult& WithChecksumXXHASH128(ChecksumXXHASH128T&& value) {
+    SetChecksumXXHASH128(std::forward<ChecksumXXHASH128T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UploadPartResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UploadPartResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UploadPartResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>If server-side encryption with a customer-provided encryption key was
+   * requested, the response will include this header to confirm the encryption
+   * algorithm that's used.</p>  <p>This functionality is not supported for
+   * directory buckets.</p>
+   */
+  inline const Aws::String& GetSSECustomerAlgorithm() const { return m_sSECustomerAlgorithm; }
+  template <typename SSECustomerAlgorithmT = Aws::String>
+  void SetSSECustomerAlgorithm(SSECustomerAlgorithmT&& value) {
+    m_sSECustomerAlgorithmHasBeenSet = true;
+    m_sSECustomerAlgorithm = std::forward<SSECustomerAlgorithmT>(value);
+  }
+  template <typename SSECustomerAlgorithmT = Aws::String>
+  UploadPartResult& WithSSECustomerAlgorithm(SSECustomerAlgorithmT&& value) {
+    SetSSECustomerAlgorithm(std::forward<SSECustomerAlgorithmT>(value));
+    return *this;
+  }
+  ///@}
 
-    ServerSideEncryption m_serverSideEncryption;
+  ///@{
+  /**
+   * <p>If server-side encryption with a customer-provided encryption key was
+   * requested, the response will include this header to provide the round-trip
+   * message integrity verification of the customer-provided encryption key.</p>
+   *  <p>This functionality is not supported for directory buckets.</p>
+   */
+  inline const Aws::String& GetSSECustomerKeyMD5() const { return m_sSECustomerKeyMD5; }
+  template <typename SSECustomerKeyMD5T = Aws::String>
+  void SetSSECustomerKeyMD5(SSECustomerKeyMD5T&& value) {
+    m_sSECustomerKeyMD5HasBeenSet = true;
+    m_sSECustomerKeyMD5 = std::forward<SSECustomerKeyMD5T>(value);
+  }
+  template <typename SSECustomerKeyMD5T = Aws::String>
+  UploadPartResult& WithSSECustomerKeyMD5(SSECustomerKeyMD5T&& value) {
+    SetSSECustomerKeyMD5(std::forward<SSECustomerKeyMD5T>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_eTag;
+  ///@{
+  /**
+   * <p>If present, indicates the ID of the KMS key that was used for object
+   * encryption.</p>
+   */
+  inline const Aws::String& GetSSEKMSKeyId() const { return m_sSEKMSKeyId; }
+  template <typename SSEKMSKeyIdT = Aws::String>
+  void SetSSEKMSKeyId(SSEKMSKeyIdT&& value) {
+    m_sSEKMSKeyIdHasBeenSet = true;
+    m_sSEKMSKeyId = std::forward<SSEKMSKeyIdT>(value);
+  }
+  template <typename SSEKMSKeyIdT = Aws::String>
+  UploadPartResult& WithSSEKMSKeyId(SSEKMSKeyIdT&& value) {
+    SetSSEKMSKeyId(std::forward<SSEKMSKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_checksumCRC32;
+  ///@{
+  /**
+   * <p>Indicates whether the multipart upload uses an S3 Bucket Key for server-side
+   * encryption with Key Management Service (KMS) keys (SSE-KMS).</p>
+   */
+  inline bool GetBucketKeyEnabled() const { return m_bucketKeyEnabled; }
+  inline void SetBucketKeyEnabled(bool value) {
+    m_bucketKeyEnabledHasBeenSet = true;
+    m_bucketKeyEnabled = value;
+  }
+  inline UploadPartResult& WithBucketKeyEnabled(bool value) {
+    SetBucketKeyEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_checksumCRC32C;
+  ///@{
 
-    Aws::String m_checksumSHA1;
+  inline RequestCharged GetRequestCharged() const { return m_requestCharged; }
+  inline void SetRequestCharged(RequestCharged value) {
+    m_requestChargedHasBeenSet = true;
+    m_requestCharged = value;
+  }
+  inline UploadPartResult& WithRequestCharged(RequestCharged value) {
+    SetRequestCharged(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_checksumSHA256;
+  ///@{
 
-    Aws::String m_sSECustomerAlgorithm;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UploadPartResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_sSECustomerKeyMD5;
+ private:
+  ServerSideEncryption m_serverSideEncryption{ServerSideEncryption::NOT_SET};
 
-    Aws::String m_sSEKMSKeyId;
+  Aws::String m_eTag;
 
-    bool m_bucketKeyEnabled;
+  Aws::String m_checksumCRC32;
 
-    RequestCharged m_requestCharged;
+  Aws::String m_checksumCRC32C;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_checksumCRC64NVME;
 
-} // namespace Model
-} // namespace S3
-} // namespace Aws
+  Aws::String m_checksumSHA1;
+
+  Aws::String m_checksumSHA256;
+
+  Aws::String m_checksumSHA512;
+
+  Aws::String m_checksumMD5;
+
+  Aws::String m_checksumXXHASH64;
+
+  Aws::String m_checksumXXHASH3;
+
+  Aws::String m_checksumXXHASH128;
+
+  Aws::String m_sSECustomerAlgorithm;
+
+  Aws::String m_sSECustomerKeyMD5;
+
+  Aws::String m_sSEKMSKeyId;
+
+  bool m_bucketKeyEnabled{false};
+
+  RequestCharged m_requestCharged{RequestCharged::NOT_SET};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_serverSideEncryptionHasBeenSet = false;
+  bool m_eTagHasBeenSet = false;
+  bool m_checksumCRC32HasBeenSet = false;
+  bool m_checksumCRC32CHasBeenSet = false;
+  bool m_checksumCRC64NVMEHasBeenSet = false;
+  bool m_checksumSHA1HasBeenSet = false;
+  bool m_checksumSHA256HasBeenSet = false;
+  bool m_checksumSHA512HasBeenSet = false;
+  bool m_checksumMD5HasBeenSet = false;
+  bool m_checksumXXHASH64HasBeenSet = false;
+  bool m_checksumXXHASH3HasBeenSet = false;
+  bool m_checksumXXHASH128HasBeenSet = false;
+  bool m_sSECustomerAlgorithmHasBeenSet = false;
+  bool m_sSECustomerKeyMD5HasBeenSet = false;
+  bool m_sSEKMSKeyIdHasBeenSet = false;
+  bool m_bucketKeyEnabledHasBeenSet = false;
+  bool m_requestChargedHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3
+}  // namespace Aws

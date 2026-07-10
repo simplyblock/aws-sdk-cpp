@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/Compute.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class RegisterComputeResult
-  {
-  public:
-    AWS_GAMELIFT_API RegisterComputeResult();
-    AWS_GAMELIFT_API RegisterComputeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API RegisterComputeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class RegisterComputeResult {
+ public:
+  AWS_GAMELIFT_API RegisterComputeResult() = default;
+  AWS_GAMELIFT_API RegisterComputeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API RegisterComputeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the compute resource you registered.</p>
+   */
+  inline const Compute& GetCompute() const { return m_compute; }
+  template <typename ComputeT = Compute>
+  void SetCompute(ComputeT&& value) {
+    m_computeHasBeenSet = true;
+    m_compute = std::forward<ComputeT>(value);
+  }
+  template <typename ComputeT = Compute>
+  RegisterComputeResult& WithCompute(ComputeT&& value) {
+    SetCompute(std::forward<ComputeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the compute resource you registered.</p>
-     */
-    inline const Compute& GetCompute() const{ return m_compute; }
-    inline void SetCompute(const Compute& value) { m_compute = value; }
-    inline void SetCompute(Compute&& value) { m_compute = std::move(value); }
-    inline RegisterComputeResult& WithCompute(const Compute& value) { SetCompute(value); return *this;}
-    inline RegisterComputeResult& WithCompute(Compute&& value) { SetCompute(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline RegisterComputeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline RegisterComputeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline RegisterComputeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  RegisterComputeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Compute m_compute;
+ private:
+  Compute m_compute;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_computeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

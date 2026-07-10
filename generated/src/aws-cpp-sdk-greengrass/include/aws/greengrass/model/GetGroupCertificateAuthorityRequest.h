@@ -4,70 +4,73 @@
  */
 
 #pragma once
-#include <aws/greengrass/Greengrass_EXPORTS.h>
-#include <aws/greengrass/GreengrassRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/greengrass/GreengrassRequest.h>
+#include <aws/greengrass/Greengrass_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Greengrass
-{
-namespace Model
-{
+namespace Aws {
+namespace Greengrass {
+namespace Model {
 
+/**
+ */
+class GetGroupCertificateAuthorityRequest : public GreengrassRequest {
+ public:
+  AWS_GREENGRASS_API GetGroupCertificateAuthorityRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetGroupCertificateAuthority"; }
+
+  AWS_GREENGRASS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * The ID of the certificate authority.
    */
-  class GetGroupCertificateAuthorityRequest : public GreengrassRequest
-  {
-  public:
-    AWS_GREENGRASS_API GetGroupCertificateAuthorityRequest();
+  inline const Aws::String& GetCertificateAuthorityId() const { return m_certificateAuthorityId; }
+  inline bool CertificateAuthorityIdHasBeenSet() const { return m_certificateAuthorityIdHasBeenSet; }
+  template <typename CertificateAuthorityIdT = Aws::String>
+  void SetCertificateAuthorityId(CertificateAuthorityIdT&& value) {
+    m_certificateAuthorityIdHasBeenSet = true;
+    m_certificateAuthorityId = std::forward<CertificateAuthorityIdT>(value);
+  }
+  template <typename CertificateAuthorityIdT = Aws::String>
+  GetGroupCertificateAuthorityRequest& WithCertificateAuthorityId(CertificateAuthorityIdT&& value) {
+    SetCertificateAuthorityId(std::forward<CertificateAuthorityIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetGroupCertificateAuthority"; }
+  ///@{
+  /**
+   * The ID of the Greengrass group.
+   */
+  inline const Aws::String& GetGroupId() const { return m_groupId; }
+  inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
+  template <typename GroupIdT = Aws::String>
+  void SetGroupId(GroupIdT&& value) {
+    m_groupIdHasBeenSet = true;
+    m_groupId = std::forward<GroupIdT>(value);
+  }
+  template <typename GroupIdT = Aws::String>
+  GetGroupCertificateAuthorityRequest& WithGroupId(GroupIdT&& value) {
+    SetGroupId(std::forward<GroupIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_certificateAuthorityId;
 
-    AWS_GREENGRASS_API Aws::String SerializePayload() const override;
+  Aws::String m_groupId;
+  bool m_certificateAuthorityIdHasBeenSet = false;
+  bool m_groupIdHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * The ID of the certificate authority.
-     */
-    inline const Aws::String& GetCertificateAuthorityId() const{ return m_certificateAuthorityId; }
-    inline bool CertificateAuthorityIdHasBeenSet() const { return m_certificateAuthorityIdHasBeenSet; }
-    inline void SetCertificateAuthorityId(const Aws::String& value) { m_certificateAuthorityIdHasBeenSet = true; m_certificateAuthorityId = value; }
-    inline void SetCertificateAuthorityId(Aws::String&& value) { m_certificateAuthorityIdHasBeenSet = true; m_certificateAuthorityId = std::move(value); }
-    inline void SetCertificateAuthorityId(const char* value) { m_certificateAuthorityIdHasBeenSet = true; m_certificateAuthorityId.assign(value); }
-    inline GetGroupCertificateAuthorityRequest& WithCertificateAuthorityId(const Aws::String& value) { SetCertificateAuthorityId(value); return *this;}
-    inline GetGroupCertificateAuthorityRequest& WithCertificateAuthorityId(Aws::String&& value) { SetCertificateAuthorityId(std::move(value)); return *this;}
-    inline GetGroupCertificateAuthorityRequest& WithCertificateAuthorityId(const char* value) { SetCertificateAuthorityId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * The ID of the Greengrass group.
-     */
-    inline const Aws::String& GetGroupId() const{ return m_groupId; }
-    inline bool GroupIdHasBeenSet() const { return m_groupIdHasBeenSet; }
-    inline void SetGroupId(const Aws::String& value) { m_groupIdHasBeenSet = true; m_groupId = value; }
-    inline void SetGroupId(Aws::String&& value) { m_groupIdHasBeenSet = true; m_groupId = std::move(value); }
-    inline void SetGroupId(const char* value) { m_groupIdHasBeenSet = true; m_groupId.assign(value); }
-    inline GetGroupCertificateAuthorityRequest& WithGroupId(const Aws::String& value) { SetGroupId(value); return *this;}
-    inline GetGroupCertificateAuthorityRequest& WithGroupId(Aws::String&& value) { SetGroupId(std::move(value)); return *this;}
-    inline GetGroupCertificateAuthorityRequest& WithGroupId(const char* value) { SetGroupId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_certificateAuthorityId;
-    bool m_certificateAuthorityIdHasBeenSet = false;
-
-    Aws::String m_groupId;
-    bool m_groupIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Greengrass
-} // namespace Aws
+}  // namespace Model
+}  // namespace Greengrass
+}  // namespace Aws

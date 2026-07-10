@@ -4,83 +4,92 @@
  */
 
 #pragma once
-#include <aws/chime/Chime_EXPORTS.h>
 #include <aws/chime/ChimeRequest.h>
+#include <aws/chime/Chime_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Chime
-{
-namespace Model
-{
+namespace Aws {
+namespace Chime {
+namespace Model {
 
+/**
+ */
+class UpdateBotRequest : public ChimeRequest {
+ public:
+  AWS_CHIME_API UpdateBotRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateBot"; }
+
+  AWS_CHIME_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Chime account ID.</p>
    */
-  class UpdateBotRequest : public ChimeRequest
-  {
-  public:
-    AWS_CHIME_API UpdateBotRequest();
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  UpdateBotRequest& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateBot"; }
+  ///@{
+  /**
+   * <p>The bot ID.</p>
+   */
+  inline const Aws::String& GetBotId() const { return m_botId; }
+  inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
+  template <typename BotIdT = Aws::String>
+  void SetBotId(BotIdT&& value) {
+    m_botIdHasBeenSet = true;
+    m_botId = std::forward<BotIdT>(value);
+  }
+  template <typename BotIdT = Aws::String>
+  UpdateBotRequest& WithBotId(BotIdT&& value) {
+    SetBotId(std::forward<BotIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CHIME_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>When true, stops the specified bot from running in your account.</p>
+   */
+  inline bool GetDisabled() const { return m_disabled; }
+  inline bool DisabledHasBeenSet() const { return m_disabledHasBeenSet; }
+  inline void SetDisabled(bool value) {
+    m_disabledHasBeenSet = true;
+    m_disabled = value;
+  }
+  inline UpdateBotRequest& WithDisabled(bool value) {
+    SetDisabled(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_accountId;
 
+  Aws::String m_botId;
 
-    ///@{
-    /**
-     * <p>The Amazon Chime account ID.</p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline UpdateBotRequest& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline UpdateBotRequest& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline UpdateBotRequest& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
+  bool m_disabled{false};
+  bool m_accountIdHasBeenSet = false;
+  bool m_botIdHasBeenSet = false;
+  bool m_disabledHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The bot ID.</p>
-     */
-    inline const Aws::String& GetBotId() const{ return m_botId; }
-    inline bool BotIdHasBeenSet() const { return m_botIdHasBeenSet; }
-    inline void SetBotId(const Aws::String& value) { m_botIdHasBeenSet = true; m_botId = value; }
-    inline void SetBotId(Aws::String&& value) { m_botIdHasBeenSet = true; m_botId = std::move(value); }
-    inline void SetBotId(const char* value) { m_botIdHasBeenSet = true; m_botId.assign(value); }
-    inline UpdateBotRequest& WithBotId(const Aws::String& value) { SetBotId(value); return *this;}
-    inline UpdateBotRequest& WithBotId(Aws::String&& value) { SetBotId(std::move(value)); return *this;}
-    inline UpdateBotRequest& WithBotId(const char* value) { SetBotId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>When true, stops the specified bot from running in your account.</p>
-     */
-    inline bool GetDisabled() const{ return m_disabled; }
-    inline bool DisabledHasBeenSet() const { return m_disabledHasBeenSet; }
-    inline void SetDisabled(bool value) { m_disabledHasBeenSet = true; m_disabled = value; }
-    inline UpdateBotRequest& WithDisabled(bool value) { SetDisabled(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    Aws::String m_botId;
-    bool m_botIdHasBeenSet = false;
-
-    bool m_disabled;
-    bool m_disabledHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Chime
-} // namespace Aws
+}  // namespace Model
+}  // namespace Chime
+}  // namespace Aws

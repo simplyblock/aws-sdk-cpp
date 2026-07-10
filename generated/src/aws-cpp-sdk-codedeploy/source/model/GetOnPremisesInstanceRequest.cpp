@@ -12,32 +12,18 @@ using namespace Aws::CodeDeploy::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetOnPremisesInstanceRequest::GetOnPremisesInstanceRequest() : 
-    m_instanceNameHasBeenSet(false)
-{
-}
-
-Aws::String GetOnPremisesInstanceRequest::SerializePayload() const
-{
+Aws::String GetOnPremisesInstanceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_instanceNameHasBeenSet)
-  {
-   payload.WithString("instanceName", m_instanceName);
-
+  if (m_instanceNameHasBeenSet) {
+    payload.WithString("instanceName", m_instanceName);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetOnPremisesInstanceRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetOnPremisesInstanceRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.GetOnPremisesInstance"));
   return headers;
-
 }
-
-
-
-

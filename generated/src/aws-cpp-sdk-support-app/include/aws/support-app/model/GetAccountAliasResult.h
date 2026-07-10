@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/support-app/SupportApp_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/support-app/SupportApp_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SupportApp
-{
-namespace Model
-{
-  class GetAccountAliasResult
-  {
-  public:
-    AWS_SUPPORTAPP_API GetAccountAliasResult();
-    AWS_SUPPORTAPP_API GetAccountAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SUPPORTAPP_API GetAccountAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SupportApp {
+namespace Model {
+class GetAccountAliasResult {
+ public:
+  AWS_SUPPORTAPP_API GetAccountAliasResult() = default;
+  AWS_SUPPORTAPP_API GetAccountAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SUPPORTAPP_API GetAccountAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An alias or short name for an Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetAccountAlias() const { return m_accountAlias; }
+  template <typename AccountAliasT = Aws::String>
+  void SetAccountAlias(AccountAliasT&& value) {
+    m_accountAliasHasBeenSet = true;
+    m_accountAlias = std::forward<AccountAliasT>(value);
+  }
+  template <typename AccountAliasT = Aws::String>
+  GetAccountAliasResult& WithAccountAlias(AccountAliasT&& value) {
+    SetAccountAlias(std::forward<AccountAliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An alias or short name for an Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetAccountAlias() const{ return m_accountAlias; }
-    inline void SetAccountAlias(const Aws::String& value) { m_accountAlias = value; }
-    inline void SetAccountAlias(Aws::String&& value) { m_accountAlias = std::move(value); }
-    inline void SetAccountAlias(const char* value) { m_accountAlias.assign(value); }
-    inline GetAccountAliasResult& WithAccountAlias(const Aws::String& value) { SetAccountAlias(value); return *this;}
-    inline GetAccountAliasResult& WithAccountAlias(Aws::String&& value) { SetAccountAlias(std::move(value)); return *this;}
-    inline GetAccountAliasResult& WithAccountAlias(const char* value) { SetAccountAlias(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetAccountAliasResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetAccountAliasResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetAccountAliasResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetAccountAliasResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_accountAlias;
+ private:
+  Aws::String m_accountAlias;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountAliasHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SupportApp
-} // namespace Aws
+}  // namespace Model
+}  // namespace SupportApp
+}  // namespace Aws

@@ -11,63 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace AppSync
-{
-namespace Model
-{
+namespace Aws {
+namespace AppSync {
+namespace Model {
 
-EventLogConfig::EventLogConfig() : 
-    m_logLevel(EventLogLevel::NOT_SET),
-    m_logLevelHasBeenSet(false),
-    m_cloudWatchLogsRoleArnHasBeenSet(false)
-{
-}
+EventLogConfig::EventLogConfig(JsonView jsonValue) { *this = jsonValue; }
 
-EventLogConfig::EventLogConfig(JsonView jsonValue)
-  : EventLogConfig()
-{
-  *this = jsonValue;
-}
-
-EventLogConfig& EventLogConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("logLevel"))
-  {
+EventLogConfig& EventLogConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("logLevel")) {
     m_logLevel = EventLogLevelMapper::GetEventLogLevelForName(jsonValue.GetString("logLevel"));
-
     m_logLevelHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("cloudWatchLogsRoleArn"))
-  {
+  if (jsonValue.ValueExists("cloudWatchLogsRoleArn")) {
     m_cloudWatchLogsRoleArn = jsonValue.GetString("cloudWatchLogsRoleArn");
-
     m_cloudWatchLogsRoleArnHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue EventLogConfig::Jsonize() const
-{
+JsonValue EventLogConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_logLevelHasBeenSet)
-  {
-   payload.WithString("logLevel", EventLogLevelMapper::GetNameForEventLogLevel(m_logLevel));
+  if (m_logLevelHasBeenSet) {
+    payload.WithString("logLevel", EventLogLevelMapper::GetNameForEventLogLevel(m_logLevel));
   }
 
-  if(m_cloudWatchLogsRoleArnHasBeenSet)
-  {
-   payload.WithString("cloudWatchLogsRoleArn", m_cloudWatchLogsRoleArn);
-
+  if (m_cloudWatchLogsRoleArnHasBeenSet) {
+    payload.WithString("cloudWatchLogsRoleArn", m_cloudWatchLogsRoleArn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

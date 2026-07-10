@@ -4,10 +4,10 @@
  */
 
 #include <aws/cloudsearch/model/DescribeIndexFieldsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
 
 #include <utility>
 
@@ -17,44 +17,36 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeIndexFieldsResult::DescribeIndexFieldsResult()
-{
-}
+DescribeIndexFieldsResult::DescribeIndexFieldsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeIndexFieldsResult::DescribeIndexFieldsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeIndexFieldsResult& DescribeIndexFieldsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeIndexFieldsResult& DescribeIndexFieldsResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeIndexFieldsResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeIndexFieldsResult")) {
     resultNode = rootNode.FirstChild("DescribeIndexFieldsResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode indexFieldsNode = resultNode.FirstChild("IndexFields");
-    if(!indexFieldsNode.IsNull())
-    {
+    if (!indexFieldsNode.IsNull()) {
       XmlNode indexFieldsMember = indexFieldsNode.FirstChild("member");
-      while(!indexFieldsMember.IsNull())
-      {
+      m_indexFieldsHasBeenSet = !indexFieldsMember.IsNull();
+      while (!indexFieldsMember.IsNull()) {
         m_indexFields.push_back(indexFieldsMember);
         indexFieldsMember = indexFieldsMember.NextNode("member");
       }
 
+      m_indexFieldsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::CloudSearch::Model::DescribeIndexFieldsResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::CloudSearch::Model::DescribeIndexFieldsResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

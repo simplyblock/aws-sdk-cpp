@@ -4,86 +4,104 @@
  */
 
 #pragma once
-#include <aws/lightsail/Lightsail_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lightsail/Lightsail_EXPORTS.h>
 #include <aws/lightsail/model/RelationalDatabaseBundle.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lightsail
-{
-namespace Model
-{
-  class GetRelationalDatabaseBundlesResult
-  {
-  public:
-    AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult();
-    AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lightsail {
+namespace Model {
+class GetRelationalDatabaseBundlesResult {
+ public:
+  AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult() = default;
+  AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LIGHTSAIL_API GetRelationalDatabaseBundlesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An object describing the result of your get relational database bundles
+   * request.</p>
+   */
+  inline const Aws::Vector<RelationalDatabaseBundle>& GetBundles() const { return m_bundles; }
+  template <typename BundlesT = Aws::Vector<RelationalDatabaseBundle>>
+  void SetBundles(BundlesT&& value) {
+    m_bundlesHasBeenSet = true;
+    m_bundles = std::forward<BundlesT>(value);
+  }
+  template <typename BundlesT = Aws::Vector<RelationalDatabaseBundle>>
+  GetRelationalDatabaseBundlesResult& WithBundles(BundlesT&& value) {
+    SetBundles(std::forward<BundlesT>(value));
+    return *this;
+  }
+  template <typename BundlesT = RelationalDatabaseBundle>
+  GetRelationalDatabaseBundlesResult& AddBundles(BundlesT&& value) {
+    m_bundlesHasBeenSet = true;
+    m_bundles.emplace_back(std::forward<BundlesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An object describing the result of your get relational database bundles
-     * request.</p>
-     */
-    inline const Aws::Vector<RelationalDatabaseBundle>& GetBundles() const{ return m_bundles; }
-    inline void SetBundles(const Aws::Vector<RelationalDatabaseBundle>& value) { m_bundles = value; }
-    inline void SetBundles(Aws::Vector<RelationalDatabaseBundle>&& value) { m_bundles = std::move(value); }
-    inline GetRelationalDatabaseBundlesResult& WithBundles(const Aws::Vector<RelationalDatabaseBundle>& value) { SetBundles(value); return *this;}
-    inline GetRelationalDatabaseBundlesResult& WithBundles(Aws::Vector<RelationalDatabaseBundle>&& value) { SetBundles(std::move(value)); return *this;}
-    inline GetRelationalDatabaseBundlesResult& AddBundles(const RelationalDatabaseBundle& value) { m_bundles.push_back(value); return *this; }
-    inline GetRelationalDatabaseBundlesResult& AddBundles(RelationalDatabaseBundle&& value) { m_bundles.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to advance to the next page of results from your request.</p> <p>A
+   * next page token is not returned if there are no more results to display.</p>
+   * <p>To get the next page of results, perform another
+   * <code>GetRelationalDatabaseBundles</code> request and specify the next page
+   * token using the <code>pageToken</code> parameter.</p>
+   */
+  inline const Aws::String& GetNextPageToken() const { return m_nextPageToken; }
+  template <typename NextPageTokenT = Aws::String>
+  void SetNextPageToken(NextPageTokenT&& value) {
+    m_nextPageTokenHasBeenSet = true;
+    m_nextPageToken = std::forward<NextPageTokenT>(value);
+  }
+  template <typename NextPageTokenT = Aws::String>
+  GetRelationalDatabaseBundlesResult& WithNextPageToken(NextPageTokenT&& value) {
+    SetNextPageToken(std::forward<NextPageTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to advance to the next page of results from your request.</p> <p>A
-     * next page token is not returned if there are no more results to display.</p>
-     * <p>To get the next page of results, perform another
-     * <code>GetRelationalDatabaseBundles</code> request and specify the next page
-     * token using the <code>pageToken</code> parameter.</p>
-     */
-    inline const Aws::String& GetNextPageToken() const{ return m_nextPageToken; }
-    inline void SetNextPageToken(const Aws::String& value) { m_nextPageToken = value; }
-    inline void SetNextPageToken(Aws::String&& value) { m_nextPageToken = std::move(value); }
-    inline void SetNextPageToken(const char* value) { m_nextPageToken.assign(value); }
-    inline GetRelationalDatabaseBundlesResult& WithNextPageToken(const Aws::String& value) { SetNextPageToken(value); return *this;}
-    inline GetRelationalDatabaseBundlesResult& WithNextPageToken(Aws::String&& value) { SetNextPageToken(std::move(value)); return *this;}
-    inline GetRelationalDatabaseBundlesResult& WithNextPageToken(const char* value) { SetNextPageToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRelationalDatabaseBundlesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRelationalDatabaseBundlesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRelationalDatabaseBundlesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRelationalDatabaseBundlesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<RelationalDatabaseBundle> m_bundles;
+ private:
+  Aws::Vector<RelationalDatabaseBundle> m_bundles;
 
-    Aws::String m_nextPageToken;
+  Aws::String m_nextPageToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_bundlesHasBeenSet = false;
+  bool m_nextPageTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

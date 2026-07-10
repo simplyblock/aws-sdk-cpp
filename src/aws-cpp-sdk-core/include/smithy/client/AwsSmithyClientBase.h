@@ -9,6 +9,8 @@
 #include <smithy/tracing/TelemetryProvider.h>
 #include <smithy/interceptor/Interceptor.h>
 #include <smithy/client/features/ChecksumInterceptor.h>
+#include <smithy/client/features/ChunkingInterceptor.h>
+#include <smithy/client/features/UserAgentInterceptor.h>
 
 #include <aws/crt/Variant.h>
 #include <aws/core/client/ClientConfiguration.h>
@@ -17,6 +19,14 @@
 #include <aws/core/utils/FutureOutcome.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/Outcome.h>
+#include <aws/core/platform/Environment.h>
+#include <aws/core/NoResult.h>
+#include <aws/core/http/HttpClientFactory.h>
+#include <aws/core/http/HttpClient.h>
+#include <aws/core/client/AWSErrorMarshaller.h>
+#include <aws/core/AmazonWebServiceResult.h>
+#include <smithy/identity/identity/AwsIdentity.h>
+#include <utility>
 
 namespace Aws
 {
@@ -69,60 +79,69 @@ namespace client
         using HttpRequest = Aws::Http::HttpRequest;
         using HttpResponse = Aws::Http::HttpResponse;
         using CoreErrors = Aws::Client::CoreErrors;
-        using AWSError = Aws::Client::AWSError<CoreErrors>;
-        using ClientError = AWSError;
-        using SigningError = AWSError;
+        using AWSCoreError = Aws::Client::AWSError<CoreErrors>;
+        using ClientError = AWSCoreError;
+        using SigningError = AWSCoreError;
         using SigningOutcome = Aws::Utils::FutureOutcome<std::shared_ptr<Aws::Http::HttpRequest>, SigningError>;
+        using SigningEventOutcome = Aws::Utils::Outcome<Aws::Utils::Event::Message, SigningError>;
         using EndpointUpdateCallback = std::function<void(Aws::Endpoint::AWSEndpoint&)>;
-        using HttpResponseOutcome = Aws::Utils::Outcome<std::shared_ptr<Aws::Http::HttpResponse>, AWSError>;
+        using AuthResolvedCallback = std::function<void(std::shared_ptr<AwsSmithyClientAsyncRequestContext>)>;
+        using HttpResponseOutcome = Aws::Utils::Outcome<std::shared_ptr<Aws::Http::HttpResponse>, AWSCoreError>;
         using ResponseHandlerFunc = std::function<void(HttpResponseOutcome&&)>;
-        using SelectAuthSchemeOptionOutcome = Aws::Utils::Outcome<AuthSchemeOption, AWSError>;
-        using ResolveEndpointOutcome = Aws::Utils::Outcome<Aws::Endpoint::AWSEndpoint, AWSError>;
+        using SelectAuthSchemeOptionOutcome = Aws::Utils::Outcome<AuthSchemeOption, AWSCoreError>;
+        using ResolveEndpointOutcome = Aws::Utils::Outcome<Aws::Endpoint::AWSEndpoint, AWSCoreError>;
+        using StreamOutcome = Aws::Utils::Outcome<Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>, AWSCoreError >;
+        using IdentityOutcome = Aws::Utils::Outcome<std::shared_ptr<smithy::AwsIdentity>, AWSCoreError>;
+        using GetContextEndpointParametersOutcome = Aws::Utils::Outcome<Aws::Vector<Aws::Endpoint::EndpointParameter>, AWSCoreError>;
 
+        /* primary constructor */
         AwsSmithyClientBase(Aws::UniquePtr<Aws::Client::ClientConfiguration>&& clientConfig,
                             Aws::String serviceName,
+                            Aws::String serviceUserAgentName,
                             std::shared_ptr<Aws::Http::HttpClient> httpClient,
                             std::shared_ptr<Aws::Client::AWSErrorMarshaller> errorMarshaller) :
           m_clientConfig(std::move(clientConfig)),
           m_serviceName(std::move(serviceName)),
-          m_userAgent(),
+          m_serviceUserAgentName(std::move(serviceUserAgentName)),
           m_httpClient(std::move(httpClient)),
           m_errorMarshaller(std::move(errorMarshaller)),
-          m_interceptors{Aws::MakeShared<ChecksumInterceptor>("AwsSmithyClientBase")}
+          m_interceptors({
+              Aws::MakeShared<ChecksumInterceptor>("AwsSmithyClientBase", *m_clientConfig),
+              Aws::MakeShared<features::ChunkingInterceptor>("AwsSmithyClientBase", 
+                  m_httpClient->IsDefaultAwsHttpClient() ? Aws::Client::HttpClientChunkedMode::DEFAULT : m_clientConfig->httpClientChunkedMode,
+                  m_clientConfig->awsChunkedBufferSize)
+          }),
+          m_enableNewRetries{Aws::Utils::StringUtils::ToLower(Aws::Environment::GetEnv("AWS_NEW_RETRIES_2026").c_str()) == "true"}
         {
-            if (!m_clientConfig->retryStrategy)
-            {
-                assert(m_clientConfig->configFactories.retryStrategyCreateFn);
-                m_clientConfig->retryStrategy = m_clientConfig->configFactories.retryStrategyCreateFn();
-            }
-            if (!m_clientConfig->executor)
-            {
-                assert(m_clientConfig->configFactories.executorCreateFn);
-                m_clientConfig->executor = m_clientConfig->configFactories.executorCreateFn();
-            }
-            if (!m_clientConfig->writeRateLimiter)
-            {
-                assert(m_clientConfig->configFactories.writeRateLimiterCreateFn);
-                m_clientConfig->writeRateLimiter = m_clientConfig->configFactories.writeRateLimiterCreateFn();
-            }
-            if (!m_clientConfig->readRateLimiter)
-            {
-                assert(m_clientConfig->configFactories.readRateLimiterCreateFn);
-                m_clientConfig->readRateLimiter = m_clientConfig->configFactories.readRateLimiterCreateFn();
-            }
-            if (!m_clientConfig->telemetryProvider)
-            {
-                assert(m_clientConfig->configFactories.telemetryProviderCreateFn);
-                m_clientConfig->telemetryProvider = m_clientConfig->configFactories.telemetryProviderCreateFn();
-            }
-
-            m_userAgent = Aws::Client::ComputeUserAgentString(m_clientConfig.get());
+            
+            baseInit();
         }
 
-        AwsSmithyClientBase(const AwsSmithyClientBase&) = delete;
-        AwsSmithyClientBase(AwsSmithyClientBase&&) = delete;
-        AwsSmithyClientBase& operator=(const AwsSmithyClientBase&) = delete;
-        AwsSmithyClientBase& operator=(AwsSmithyClientBase&&) = delete;
+        /* copy constructor substitute */
+        AwsSmithyClientBase(const AwsSmithyClientBase& other,
+                            Aws::UniquePtr<Aws::Client::ClientConfiguration>&& clientConfig,
+                            std::shared_ptr<Aws::Http::HttpClient> httpClient,
+                            std::shared_ptr<Aws::Client::AWSErrorMarshaller> errorMarshaller) :
+                            m_clientConfig(std::move(clientConfig))
+        {
+          // this c-tor needs httpClient and errorMarshaller passed explicitly because this base class stores them
+          // by their parent pointer classes
+          // and base client class has no idea how to re-create or copy them, and "lombok toBuilder" is not a thing in cpp.
+          baseCopyAssign(other, std::move(httpClient), std::move(errorMarshaller));
+        }
+
+        /* move constructor substitute */
+        AwsSmithyClientBase(AwsSmithyClientBase&& other,
+                            Aws::UniquePtr<Aws::Client::ClientConfiguration>&& clientConfig) :
+          m_clientConfig(std::move(clientConfig))
+        {
+          baseMoveAssign(std::move(other));
+        }
+
+        AwsSmithyClientBase(AwsSmithyClientBase& target) = delete;
+        AwsSmithyClientBase& operator=(AwsSmithyClientBase& target) = delete;
+        AwsSmithyClientBase(AwsSmithyClientBase&& target) = delete;
+        AwsSmithyClientBase& operator=(AwsSmithyClientBase&& target) = delete;
 
         virtual ~AwsSmithyClientBase() = default;
 
@@ -131,14 +150,64 @@ namespace client
                               Aws::Http::HttpMethod method,
                               EndpointUpdateCallback&& endpointCallback,
                               ResponseHandlerFunc&& responseHandler,
+                              AuthResolvedCallback&& authCallback,
                               std::shared_ptr<Aws::Utils::Threading::Executor> pExecutor) const;
 
         HttpResponseOutcome MakeRequestSync(Aws::AmazonWebServiceRequest const * const request,
                                             const char* requestName,
                                             Aws::Http::HttpMethod method,
-                                            EndpointUpdateCallback&& endpointCallback) const;
+                                            EndpointUpdateCallback&& endpointCallback,
+                                            AuthResolvedCallback&& authCallback) const;
+
+        StreamOutcome MakeRequestWithUnparsedResponse(Aws::AmazonWebServiceRequest const * const request,
+                                const char* requestName,
+                                Aws::Http::HttpMethod method,
+                                EndpointUpdateCallback&& endpointCallback
+                                ) const;
+        void AppendToUserAgent(const Aws::String& valueToAppend);
+        virtual void DisableRequestProcessing();
+        virtual void EnableRequestProcessing();
+        inline virtual const char* GetServiceClientName() const { return m_serviceName.c_str(); }
+        inline virtual const std::shared_ptr<Aws::Http::HttpClient>& GetHttpClient() { return m_httpClient; }
 
     protected:
+        template <typename OutcomeT, typename ClientT, typename RequestT, typename HandlerT>
+        friend class SmithyBidirectionalEventStreamingTask;
+
+        template <typename OutcomeT, typename ClientT, typename RequestT, typename EncoderStreamT, typename HandlerT>
+        friend class SmithyBidirectionalStreamingWriteDataTask;
+        
+        //for backwards compatibility
+        const std::shared_ptr<Aws::Client::AWSErrorMarshaller>& GetErrorMarshaller() const
+        {
+            return m_errorMarshaller;
+        }
+
+        /**
+         * Initialize client configuration with their factory method, unless the user has explicitly set the
+         * configuration, and it is to be shallow copied between different clients, in which case, delete the
+         * factory method.
+         */
+        void baseInit();
+
+        /**
+         * Initialize client configuration on copy, if there is a factory use it, otherwise use the already present
+         * shared configuration.
+         */
+        void baseCopyInit();
+
+        /**
+         * A helper utility to re-initialize on copy assignment
+         */
+        void baseCopyAssign(const AwsSmithyClientBase& other,
+                            std::shared_ptr<Aws::Http::HttpClient> httpClient,
+                            std::shared_ptr<Aws::Client::AWSErrorMarshaller> errorMarshaller);
+
+        /**
+         * A helper utility to move assign base client
+         */
+        void baseMoveAssign(AwsSmithyClientBase&& other);
+
         /**
          * Transforms the AmazonWebServicesResult object into an HttpRequest.
          */
@@ -150,23 +219,37 @@ namespace client
         virtual void HandleAsyncReply(std::shared_ptr<AwsSmithyClientAsyncRequestContext> pRequestCtx,
                                       std::shared_ptr<Aws::Http::HttpResponse> httpResponse) const;
 
-        inline virtual const char* GetServiceClientName() const { return m_serviceName.c_str(); }
-        inline virtual const std::shared_ptr<Aws::Http::HttpClient>& GetHttpClient() { return m_httpClient; }
-        virtual void DisableRequestProcessing();
-
         virtual ResolveEndpointOutcome ResolveEndpoint(const Aws::Endpoint::EndpointParameters& endpointParameters, EndpointUpdateCallback&& epCallback) const = 0;
         virtual SelectAuthSchemeOptionOutcome SelectAuthSchemeOption(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
-        virtual SigningOutcome SignRequest(std::shared_ptr<HttpRequest> httpRequest, const AuthSchemeOption& targetAuthSchemeOption) const = 0;
+        virtual SigningOutcome SignHttpRequest(std::shared_ptr<HttpRequest> httpRequest, const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
         virtual bool AdjustClockSkew(HttpResponseOutcome& outcome, const AuthSchemeOption& authSchemeOption) const = 0;
+        virtual IdentityOutcome ResolveIdentity(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
+        virtual GetContextEndpointParametersOutcome GetContextEndpointParameters(const AwsSmithyClientAsyncRequestContext& ctx) const = 0;
+        AwsSmithyClientBase::ResolveEndpointOutcome ResolveEndpointFromRequest(
+            Aws::AmazonWebServiceRequest const * const request,
+            const char* requestName,
+            EndpointUpdateCallback&& endpointCallback) const;
 
-    protected:
-        Aws::UniquePtr<Aws::Client::ClientConfiguration> m_clientConfig;
+        /* AwsSmithyClientT class binds its config reference to this pointer, so don't remove const and don't re-allocate it.
+         * This is done to avoid duplication of config object between this base and actual service template classes.
+         */
+        const Aws::UniquePtr<Aws::Client::ClientConfiguration> m_clientConfig;
         Aws::String m_serviceName;
-        Aws::String m_userAgent;
+        Aws::String m_serviceUserAgentName;
 
         std::shared_ptr<Aws::Http::HttpClient> m_httpClient;
         std::shared_ptr<Aws::Client::AWSErrorMarshaller> m_errorMarshaller;
         Aws::Vector<std::shared_ptr<smithy::interceptor::Interceptor>> m_interceptors{};
+        std::shared_ptr<smithy::client::UserAgentInterceptor> m_userAgentInterceptor;
+    private:
+        void UpdateAuthSchemeFromEndpoint(const Aws::Endpoint::AWSEndpoint& endpoint, AuthSchemeOption& authscheme) const;
+
+        bool ResolveIdentityAuth(
+            std::shared_ptr<AwsSmithyClientAsyncRequestContext>& pRequestCtx,
+            ResponseHandlerFunc&& responseHandler,
+            EndpointUpdateCallback&& endpointCallback
+        ) const;
+        bool m_enableNewRetries;
     };
 } // namespace client
 } // namespace smithy

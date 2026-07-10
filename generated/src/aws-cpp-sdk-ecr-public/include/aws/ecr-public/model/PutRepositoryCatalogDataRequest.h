@@ -4,91 +4,100 @@
  */
 
 #pragma once
-#include <aws/ecr-public/ECRPublic_EXPORTS.h>
-#include <aws/ecr-public/ECRPublicRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ecr-public/ECRPublicRequest.h>
+#include <aws/ecr-public/ECRPublic_EXPORTS.h>
 #include <aws/ecr-public/model/RepositoryCatalogDataInput.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ECRPublic
-{
-namespace Model
-{
+namespace Aws {
+namespace ECRPublic {
+namespace Model {
 
+/**
+ */
+class PutRepositoryCatalogDataRequest : public ECRPublicRequest {
+ public:
+  AWS_ECRPUBLIC_API PutRepositoryCatalogDataRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutRepositoryCatalogData"; }
+
+  AWS_ECRPUBLIC_API Aws::String SerializePayload() const override;
+
+  AWS_ECRPUBLIC_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Web Services account ID that's associated with the public registry
+   * the repository is in. If you do not specify a registry, the default public
+   * registry is assumed.</p>
    */
-  class PutRepositoryCatalogDataRequest : public ECRPublicRequest
-  {
-  public:
-    AWS_ECRPUBLIC_API PutRepositoryCatalogDataRequest();
+  inline const Aws::String& GetRegistryId() const { return m_registryId; }
+  inline bool RegistryIdHasBeenSet() const { return m_registryIdHasBeenSet; }
+  template <typename RegistryIdT = Aws::String>
+  void SetRegistryId(RegistryIdT&& value) {
+    m_registryIdHasBeenSet = true;
+    m_registryId = std::forward<RegistryIdT>(value);
+  }
+  template <typename RegistryIdT = Aws::String>
+  PutRepositoryCatalogDataRequest& WithRegistryId(RegistryIdT&& value) {
+    SetRegistryId(std::forward<RegistryIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutRepositoryCatalogData"; }
+  ///@{
+  /**
+   * <p>The name of the repository to create or update the catalog data for.</p>
+   */
+  inline const Aws::String& GetRepositoryName() const { return m_repositoryName; }
+  inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
+  template <typename RepositoryNameT = Aws::String>
+  void SetRepositoryName(RepositoryNameT&& value) {
+    m_repositoryNameHasBeenSet = true;
+    m_repositoryName = std::forward<RepositoryNameT>(value);
+  }
+  template <typename RepositoryNameT = Aws::String>
+  PutRepositoryCatalogDataRequest& WithRepositoryName(RepositoryNameT&& value) {
+    SetRepositoryName(std::forward<RepositoryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ECRPUBLIC_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An object containing the catalog data for a repository. This data is publicly
+   * visible in the Amazon ECR Public Gallery.</p>
+   */
+  inline const RepositoryCatalogDataInput& GetCatalogData() const { return m_catalogData; }
+  inline bool CatalogDataHasBeenSet() const { return m_catalogDataHasBeenSet; }
+  template <typename CatalogDataT = RepositoryCatalogDataInput>
+  void SetCatalogData(CatalogDataT&& value) {
+    m_catalogDataHasBeenSet = true;
+    m_catalogData = std::forward<CatalogDataT>(value);
+  }
+  template <typename CatalogDataT = RepositoryCatalogDataInput>
+  PutRepositoryCatalogDataRequest& WithCatalogData(CatalogDataT&& value) {
+    SetCatalogData(std::forward<CatalogDataT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_registryId;
 
-    AWS_ECRPUBLIC_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_repositoryName;
 
+  RepositoryCatalogDataInput m_catalogData;
+  bool m_registryIdHasBeenSet = false;
+  bool m_repositoryNameHasBeenSet = false;
+  bool m_catalogDataHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account ID that's associated with the public registry
-     * the repository is in. If you do not specify a registry, the default public
-     * registry is assumed.</p>
-     */
-    inline const Aws::String& GetRegistryId() const{ return m_registryId; }
-    inline bool RegistryIdHasBeenSet() const { return m_registryIdHasBeenSet; }
-    inline void SetRegistryId(const Aws::String& value) { m_registryIdHasBeenSet = true; m_registryId = value; }
-    inline void SetRegistryId(Aws::String&& value) { m_registryIdHasBeenSet = true; m_registryId = std::move(value); }
-    inline void SetRegistryId(const char* value) { m_registryIdHasBeenSet = true; m_registryId.assign(value); }
-    inline PutRepositoryCatalogDataRequest& WithRegistryId(const Aws::String& value) { SetRegistryId(value); return *this;}
-    inline PutRepositoryCatalogDataRequest& WithRegistryId(Aws::String&& value) { SetRegistryId(std::move(value)); return *this;}
-    inline PutRepositoryCatalogDataRequest& WithRegistryId(const char* value) { SetRegistryId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name of the repository to create or update the catalog data for.</p>
-     */
-    inline const Aws::String& GetRepositoryName() const{ return m_repositoryName; }
-    inline bool RepositoryNameHasBeenSet() const { return m_repositoryNameHasBeenSet; }
-    inline void SetRepositoryName(const Aws::String& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = value; }
-    inline void SetRepositoryName(Aws::String&& value) { m_repositoryNameHasBeenSet = true; m_repositoryName = std::move(value); }
-    inline void SetRepositoryName(const char* value) { m_repositoryNameHasBeenSet = true; m_repositoryName.assign(value); }
-    inline PutRepositoryCatalogDataRequest& WithRepositoryName(const Aws::String& value) { SetRepositoryName(value); return *this;}
-    inline PutRepositoryCatalogDataRequest& WithRepositoryName(Aws::String&& value) { SetRepositoryName(std::move(value)); return *this;}
-    inline PutRepositoryCatalogDataRequest& WithRepositoryName(const char* value) { SetRepositoryName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>An object containing the catalog data for a repository. This data is publicly
-     * visible in the Amazon ECR Public Gallery.</p>
-     */
-    inline const RepositoryCatalogDataInput& GetCatalogData() const{ return m_catalogData; }
-    inline bool CatalogDataHasBeenSet() const { return m_catalogDataHasBeenSet; }
-    inline void SetCatalogData(const RepositoryCatalogDataInput& value) { m_catalogDataHasBeenSet = true; m_catalogData = value; }
-    inline void SetCatalogData(RepositoryCatalogDataInput&& value) { m_catalogDataHasBeenSet = true; m_catalogData = std::move(value); }
-    inline PutRepositoryCatalogDataRequest& WithCatalogData(const RepositoryCatalogDataInput& value) { SetCatalogData(value); return *this;}
-    inline PutRepositoryCatalogDataRequest& WithCatalogData(RepositoryCatalogDataInput&& value) { SetCatalogData(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_registryId;
-    bool m_registryIdHasBeenSet = false;
-
-    Aws::String m_repositoryName;
-    bool m_repositoryNameHasBeenSet = false;
-
-    RepositoryCatalogDataInput m_catalogData;
-    bool m_catalogDataHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ECRPublic
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECRPublic
+}  // namespace Aws

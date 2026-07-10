@@ -4,90 +4,109 @@
  */
 
 #pragma once
-#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/neptunedata/Neptunedata_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace neptunedata
-{
-namespace Model
-{
-  class StartMLModelTrainingJobResult
-  {
-  public:
-    AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult();
-    AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace neptunedata {
+namespace Model {
+class StartMLModelTrainingJobResult {
+ public:
+  AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult() = default;
+  AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NEPTUNEDATA_API StartMLModelTrainingJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The unique ID of the new model training job.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  StartMLModelTrainingJobResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique ID of the new model training job.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline StartMLModelTrainingJobResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline StartMLModelTrainingJobResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline StartMLModelTrainingJobResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the new model training job.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  StartMLModelTrainingJobResult& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the new model training job.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline void SetArn(const Aws::String& value) { m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arn.assign(value); }
-    inline StartMLModelTrainingJobResult& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline StartMLModelTrainingJobResult& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline StartMLModelTrainingJobResult& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The model training job creation time, in milliseconds.</p>
+   */
+  inline long long GetCreationTimeInMillis() const { return m_creationTimeInMillis; }
+  inline void SetCreationTimeInMillis(long long value) {
+    m_creationTimeInMillisHasBeenSet = true;
+    m_creationTimeInMillis = value;
+  }
+  inline StartMLModelTrainingJobResult& WithCreationTimeInMillis(long long value) {
+    SetCreationTimeInMillis(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The model training job creation time, in milliseconds.</p>
-     */
-    inline long long GetCreationTimeInMillis() const{ return m_creationTimeInMillis; }
-    inline void SetCreationTimeInMillis(long long value) { m_creationTimeInMillis = value; }
-    inline StartMLModelTrainingJobResult& WithCreationTimeInMillis(long long value) { SetCreationTimeInMillis(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartMLModelTrainingJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartMLModelTrainingJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartMLModelTrainingJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartMLModelTrainingJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_id;
+ private:
+  Aws::String m_id;
 
-    Aws::String m_arn;
+  Aws::String m_arn;
 
-    long long m_creationTimeInMillis;
+  long long m_creationTimeInMillis{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_idHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_creationTimeInMillisHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace neptunedata
-} // namespace Aws
+}  // namespace Model
+}  // namespace neptunedata
+}  // namespace Aws

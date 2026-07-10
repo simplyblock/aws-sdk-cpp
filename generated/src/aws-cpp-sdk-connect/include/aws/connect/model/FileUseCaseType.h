@@ -7,24 +7,25 @@
 #include <aws/connect/Connect_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
-  enum class FileUseCaseType
-  {
-    NOT_SET,
-    ATTACHMENT
-  };
+namespace Aws {
+namespace Connect {
+namespace Model {
+enum class FileUseCaseType {
+  NOT_SET,
+  CONTACT_ANALYSIS,
+  EMAIL_MESSAGE,
+  EMAIL_MESSAGE_PLAIN_TEXT,
+  EMAIL_MESSAGE_REDACTED,
+  EMAIL_MESSAGE_PLAIN_TEXT_REDACTED,
+  ATTACHMENT,
+  VOICE_RECORDING
+};
 
-namespace FileUseCaseTypeMapper
-{
+namespace FileUseCaseTypeMapper {
 AWS_CONNECT_API FileUseCaseType GetFileUseCaseTypeForName(const Aws::String& name);
 
 AWS_CONNECT_API Aws::String GetNameForFileUseCaseType(FileUseCaseType value);
-} // namespace FileUseCaseTypeMapper
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace FileUseCaseTypeMapper
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

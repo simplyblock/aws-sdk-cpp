@@ -10,27 +10,15 @@
 using namespace Aws::CloudFormation::Model;
 using namespace Aws::Utils;
 
-DescribeOrganizationsAccessRequest::DescribeOrganizationsAccessRequest() : 
-    m_callAs(CallAs::NOT_SET),
-    m_callAsHasBeenSet(false)
-{
-}
-
-Aws::String DescribeOrganizationsAccessRequest::SerializePayload() const
-{
+Aws::String DescribeOrganizationsAccessRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeOrganizationsAccess&";
-  if(m_callAsHasBeenSet)
-  {
-    ss << "CallAs=" << CallAsMapper::GetNameForCallAs(m_callAs) << "&";
+  if (m_callAsHasBeenSet) {
+    ss << "CallAs=" << StringUtils::URLEncode(CallAsMapper::GetNameForCallAs(m_callAs)) << "&";
   }
 
   ss << "Version=2010-05-15";
   return ss.str();
 }
 
-
-void  DescribeOrganizationsAccessRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeOrganizationsAccessRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

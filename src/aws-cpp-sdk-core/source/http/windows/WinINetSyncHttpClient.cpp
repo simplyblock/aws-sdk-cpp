@@ -27,9 +27,16 @@ using namespace Aws::Http::Standard;
 using namespace Aws::Utils;
 using namespace Aws::Utils::Logging;
 
+#ifndef HTTP_PROTOCOL_FLAG_HTTP2
+static const DWORD HTTP_PROTOCOL_FLAG_HTTP2 = 0x2;
+#endif
+
+#ifndef INTERNET_OPTION_ENABLE_HTTP_PROTOCOL
+static const DWORD INTERNET_OPTION_ENABLE_HTTP_PROTOCOL = 148;
+#endif
+
 static void WinINetEnableHttp2(void* handle)
 {
-#ifdef WININET_HAS_H2
     DWORD http2 = HTTP_PROTOCOL_FLAG_HTTP2;
     if (!InternetSetOptionA(handle, INTERNET_OPTION_ENABLE_HTTP_PROTOCOL, &http2, sizeof(http2)))
     {
@@ -39,9 +46,6 @@ static void WinINetEnableHttp2(void* handle)
     {
         AWS_LOGSTREAM_DEBUG("WinINetHttp2", "HTTP/2 enabled on WinInet handle: " << handle << ".");
     }
-#else
-    AWS_UNREFERENCED_PARAM(handle);
-#endif
 }
 
 WinINetSyncHttpClient::WinINetSyncHttpClient(const ClientConfiguration& config) :
@@ -223,7 +227,7 @@ bool WinINetSyncHttpClient::DoQueryHeaders(void* hHttpRequest, std::shared_ptr<H
     char contentTypeStr[1024];
     dwSize = sizeof(contentTypeStr);
     HttpQueryInfoA(hHttpRequest, HTTP_QUERY_CONTENT_TYPE, &contentTypeStr, &dwSize, 0);
-    if (contentTypeStr[0] != NULL)
+    if (contentTypeStr[0])
     {
         response->SetContentType(contentTypeStr);
         AWS_LOGSTREAM_DEBUG(GetLogTag(), "Received content type " << contentTypeStr);

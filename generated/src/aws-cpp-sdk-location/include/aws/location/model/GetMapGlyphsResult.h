@@ -4,96 +4,108 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/stream/ResponseStream.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/Array.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/stream/ResponseStream.h>
+#include <aws/location/LocationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace LocationService
-{
-namespace Model
-{
-  class GetMapGlyphsResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API GetMapGlyphsResult();
-    //We have to define these because Microsoft doesn't auto generate them
-    AWS_LOCATIONSERVICE_API GetMapGlyphsResult(GetMapGlyphsResult&&);
-    AWS_LOCATIONSERVICE_API GetMapGlyphsResult& operator=(GetMapGlyphsResult&&);
-    //we delete these because Microsoft doesn't handle move generation correctly
-    //and we therefore don't trust them to get it right here either.
-    GetMapGlyphsResult(const GetMapGlyphsResult&) = delete;
-    GetMapGlyphsResult& operator=(const GetMapGlyphsResult&) = delete;
+namespace LocationService {
+namespace Model {
+class GetMapGlyphsResult {
+ public:
+  AWS_LOCATIONSERVICE_API GetMapGlyphsResult() = default;
+  AWS_LOCATIONSERVICE_API GetMapGlyphsResult(GetMapGlyphsResult&&) = default;
+  AWS_LOCATIONSERVICE_API GetMapGlyphsResult& operator=(GetMapGlyphsResult&&) = default;
+  // we delete these because Microsoft doesn't handle move generation correctly
+  // and we therefore don't trust them to get it right here either.
+  GetMapGlyphsResult(const GetMapGlyphsResult&) = delete;
+  GetMapGlyphsResult& operator=(const GetMapGlyphsResult&) = delete;
 
+  AWS_LOCATIONSERVICE_API GetMapGlyphsResult(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
+  AWS_LOCATIONSERVICE_API GetMapGlyphsResult& operator=(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
 
-    AWS_LOCATIONSERVICE_API GetMapGlyphsResult(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
-    AWS_LOCATIONSERVICE_API GetMapGlyphsResult& operator=(Aws::AmazonWebServiceResult<Aws::Utils::Stream::ResponseStream>&& result);
+  ///@{
+  /**
+   * <p>The glyph, as binary blob.</p>
+   */
+  inline Aws::IOStream& GetBlob() const { return m_blob.GetUnderlyingStream(); }
+  inline void ReplaceBody(Aws::IOStream* body) { m_blob = Aws::Utils::Stream::ResponseStream(body); }
 
+  ///@}
 
+  ///@{
+  /**
+   * <p>The map glyph content type. For example,
+   * <code>application/octet-stream</code>.</p>
+   */
+  inline const Aws::String& GetContentType() const { return m_contentType; }
+  template <typename ContentTypeT = Aws::String>
+  void SetContentType(ContentTypeT&& value) {
+    m_contentTypeHasBeenSet = true;
+    m_contentType = std::forward<ContentTypeT>(value);
+  }
+  template <typename ContentTypeT = Aws::String>
+  GetMapGlyphsResult& WithContentType(ContentTypeT&& value) {
+    SetContentType(std::forward<ContentTypeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The glyph, as binary blob.</p>
-     */
-    inline Aws::IOStream& GetBlob() const { return m_blob.GetUnderlyingStream(); }
-    inline void ReplaceBody(Aws::IOStream* body) { m_blob = Aws::Utils::Stream::ResponseStream(body); }
+  ///@{
+  /**
+   * <p>The HTTP Cache-Control directive for the value.</p>
+   */
+  inline const Aws::String& GetCacheControl() const { return m_cacheControl; }
+  template <typename CacheControlT = Aws::String>
+  void SetCacheControl(CacheControlT&& value) {
+    m_cacheControlHasBeenSet = true;
+    m_cacheControl = std::forward<CacheControlT>(value);
+  }
+  template <typename CacheControlT = Aws::String>
+  GetMapGlyphsResult& WithCacheControl(CacheControlT&& value) {
+    SetCacheControl(std::forward<CacheControlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The map glyph content type. For example,
-     * <code>application/octet-stream</code>.</p>
-     */
-    inline const Aws::String& GetContentType() const{ return m_contentType; }
-    inline void SetContentType(const Aws::String& value) { m_contentType = value; }
-    inline void SetContentType(Aws::String&& value) { m_contentType = std::move(value); }
-    inline void SetContentType(const char* value) { m_contentType.assign(value); }
-    inline GetMapGlyphsResult& WithContentType(const Aws::String& value) { SetContentType(value); return *this;}
-    inline GetMapGlyphsResult& WithContentType(Aws::String&& value) { SetContentType(std::move(value)); return *this;}
-    inline GetMapGlyphsResult& WithContentType(const char* value) { SetContentType(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMapGlyphsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    /**
-     * <p>The HTTP Cache-Control directive for the value.</p>
-     */
-    inline const Aws::String& GetCacheControl() const{ return m_cacheControl; }
-    inline void SetCacheControl(const Aws::String& value) { m_cacheControl = value; }
-    inline void SetCacheControl(Aws::String&& value) { m_cacheControl = std::move(value); }
-    inline void SetCacheControl(const char* value) { m_cacheControl.assign(value); }
-    inline GetMapGlyphsResult& WithCacheControl(const Aws::String& value) { SetCacheControl(value); return *this;}
-    inline GetMapGlyphsResult& WithCacheControl(Aws::String&& value) { SetCacheControl(std::move(value)); return *this;}
-    inline GetMapGlyphsResult& WithCacheControl(const char* value) { SetCacheControl(value); return *this;}
-    ///@}
+ private:
+  Aws::Utils::Stream::ResponseStream m_blob{};
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMapGlyphsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMapGlyphsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMapGlyphsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_contentType;
 
-    Aws::Utils::Stream::ResponseStream m_blob;
+  Aws::String m_cacheControl;
 
-    Aws::String m_contentType;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_blobHasBeenSet = false;
+  bool m_contentTypeHasBeenSet = false;
+  bool m_cacheControlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_cacheControl;
-
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

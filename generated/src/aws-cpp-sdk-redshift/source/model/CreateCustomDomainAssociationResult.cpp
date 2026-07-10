@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/redshift/model/CreateCustomDomainAssociationResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/redshift/model/CreateCustomDomainAssociationResult.h>
 
 #include <utility>
 
@@ -17,53 +17,49 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-CreateCustomDomainAssociationResult::CreateCustomDomainAssociationResult()
-{
-}
-
-CreateCustomDomainAssociationResult::CreateCustomDomainAssociationResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateCustomDomainAssociationResult::CreateCustomDomainAssociationResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-CreateCustomDomainAssociationResult& CreateCustomDomainAssociationResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+CreateCustomDomainAssociationResult& CreateCustomDomainAssociationResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateCustomDomainAssociationResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "CreateCustomDomainAssociationResult")) {
     resultNode = rootNode.FirstChild("CreateCustomDomainAssociationResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode customDomainNameNode = resultNode.FirstChild("CustomDomainName");
-    if(!customDomainNameNode.IsNull())
-    {
+    if (!customDomainNameNode.IsNull()) {
       m_customDomainName = Aws::Utils::Xml::DecodeEscapedXmlText(customDomainNameNode.GetText());
+      m_customDomainNameHasBeenSet = true;
     }
     XmlNode customDomainCertificateArnNode = resultNode.FirstChild("CustomDomainCertificateArn");
-    if(!customDomainCertificateArnNode.IsNull())
-    {
+    if (!customDomainCertificateArnNode.IsNull()) {
       m_customDomainCertificateArn = Aws::Utils::Xml::DecodeEscapedXmlText(customDomainCertificateArnNode.GetText());
+      m_customDomainCertificateArnHasBeenSet = true;
     }
     XmlNode clusterIdentifierNode = resultNode.FirstChild("ClusterIdentifier");
-    if(!clusterIdentifierNode.IsNull())
-    {
+    if (!clusterIdentifierNode.IsNull()) {
       m_clusterIdentifier = Aws::Utils::Xml::DecodeEscapedXmlText(clusterIdentifierNode.GetText());
+      m_clusterIdentifierHasBeenSet = true;
     }
     XmlNode customDomainCertExpiryTimeNode = resultNode.FirstChild("CustomDomainCertExpiryTime");
-    if(!customDomainCertExpiryTimeNode.IsNull())
-    {
+    if (!customDomainCertExpiryTimeNode.IsNull()) {
       m_customDomainCertExpiryTime = Aws::Utils::Xml::DecodeEscapedXmlText(customDomainCertExpiryTimeNode.GetText());
+      m_customDomainCertExpiryTimeHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::CreateCustomDomainAssociationResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::Redshift::Model::CreateCustomDomainAssociationResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

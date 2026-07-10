@@ -4,268 +4,327 @@
  */
 
 #pragma once
-#include <aws/eventbridge/EventBridge_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/eventbridge/model/RoutingConfig.h>
-#include <aws/eventbridge/model/ReplicationConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/eventbridge/model/EndpointState.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/eventbridge/EventBridge_EXPORTS.h>
 #include <aws/eventbridge/model/EndpointEventBus.h>
+#include <aws/eventbridge/model/EndpointState.h>
+#include <aws/eventbridge/model/ReplicationConfig.h>
+#include <aws/eventbridge/model/RoutingConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EventBridge
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EventBridge {
+namespace Model {
 
+/**
+ * <p>A global endpoint used to improve your application's availability by making
+ * it regional-fault tolerant. For more information about global endpoints, see <a
+ * href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html">Making
+ * applications Regional-fault tolerant with global endpoints and event
+ * replication</a> in the <i> <i>Amazon EventBridge User Guide</i>
+ * </i>.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/Endpoint">AWS
+ * API Reference</a></p>
+ */
+class Endpoint {
+ public:
+  AWS_EVENTBRIDGE_API Endpoint() = default;
+  AWS_EVENTBRIDGE_API Endpoint(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EVENTBRIDGE_API Endpoint& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EVENTBRIDGE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A global endpoint used to improve your application's availability by making
-   * it regional-fault tolerant. For more information about global endpoints, see <a
-   * href="https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-global-endpoints.html">Making
-   * applications Regional-fault tolerant with global endpoints and event
-   * replication</a> in the <i> <i>Amazon EventBridge User Guide</i>
-   * </i>.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/Endpoint">AWS
-   * API Reference</a></p>
+   * <p>The name of the endpoint.</p>
    */
-  class Endpoint
-  {
-  public:
-    AWS_EVENTBRIDGE_API Endpoint();
-    AWS_EVENTBRIDGE_API Endpoint(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EVENTBRIDGE_API Endpoint& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EVENTBRIDGE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Endpoint& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A description for the endpoint.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  Endpoint& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the endpoint.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Endpoint& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Endpoint& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Endpoint& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the endpoint.</p>
+   */
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  Endpoint& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A description for the endpoint.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline Endpoint& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline Endpoint& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline Endpoint& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The routing configuration of the endpoint.</p>
+   */
+  inline const RoutingConfig& GetRoutingConfig() const { return m_routingConfig; }
+  inline bool RoutingConfigHasBeenSet() const { return m_routingConfigHasBeenSet; }
+  template <typename RoutingConfigT = RoutingConfig>
+  void SetRoutingConfig(RoutingConfigT&& value) {
+    m_routingConfigHasBeenSet = true;
+    m_routingConfig = std::forward<RoutingConfigT>(value);
+  }
+  template <typename RoutingConfigT = RoutingConfig>
+  Endpoint& WithRoutingConfig(RoutingConfigT&& value) {
+    SetRoutingConfig(std::forward<RoutingConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the endpoint.</p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline Endpoint& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline Endpoint& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline Endpoint& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether event replication was enabled or disabled for this endpoint. The
+   * default state is <code>ENABLED</code> which means you must supply a
+   * <code>RoleArn</code>. If you don't have a <code>RoleArn</code> or you don't want
+   * event replication enabled, set the state to <code>DISABLED</code>.</p>
+   */
+  inline const ReplicationConfig& GetReplicationConfig() const { return m_replicationConfig; }
+  inline bool ReplicationConfigHasBeenSet() const { return m_replicationConfigHasBeenSet; }
+  template <typename ReplicationConfigT = ReplicationConfig>
+  void SetReplicationConfig(ReplicationConfigT&& value) {
+    m_replicationConfigHasBeenSet = true;
+    m_replicationConfig = std::forward<ReplicationConfigT>(value);
+  }
+  template <typename ReplicationConfigT = ReplicationConfig>
+  Endpoint& WithReplicationConfig(ReplicationConfigT&& value) {
+    SetReplicationConfig(std::forward<ReplicationConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The routing configuration of the endpoint.</p>
-     */
-    inline const RoutingConfig& GetRoutingConfig() const{ return m_routingConfig; }
-    inline bool RoutingConfigHasBeenSet() const { return m_routingConfigHasBeenSet; }
-    inline void SetRoutingConfig(const RoutingConfig& value) { m_routingConfigHasBeenSet = true; m_routingConfig = value; }
-    inline void SetRoutingConfig(RoutingConfig&& value) { m_routingConfigHasBeenSet = true; m_routingConfig = std::move(value); }
-    inline Endpoint& WithRoutingConfig(const RoutingConfig& value) { SetRoutingConfig(value); return *this;}
-    inline Endpoint& WithRoutingConfig(RoutingConfig&& value) { SetRoutingConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The event buses being used by the endpoint.</p>
+   */
+  inline const Aws::Vector<EndpointEventBus>& GetEventBuses() const { return m_eventBuses; }
+  inline bool EventBusesHasBeenSet() const { return m_eventBusesHasBeenSet; }
+  template <typename EventBusesT = Aws::Vector<EndpointEventBus>>
+  void SetEventBuses(EventBusesT&& value) {
+    m_eventBusesHasBeenSet = true;
+    m_eventBuses = std::forward<EventBusesT>(value);
+  }
+  template <typename EventBusesT = Aws::Vector<EndpointEventBus>>
+  Endpoint& WithEventBuses(EventBusesT&& value) {
+    SetEventBuses(std::forward<EventBusesT>(value));
+    return *this;
+  }
+  template <typename EventBusesT = EndpointEventBus>
+  Endpoint& AddEventBuses(EventBusesT&& value) {
+    m_eventBusesHasBeenSet = true;
+    m_eventBuses.emplace_back(std::forward<EventBusesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether event replication was enabled or disabled for this endpoint. The
-     * default state is <code>ENABLED</code> which means you must supply a
-     * <code>RoleArn</code>. If you don't have a <code>RoleArn</code> or you don't want
-     * event replication enabled, set the state to <code>DISABLED</code>.</p>
-     */
-    inline const ReplicationConfig& GetReplicationConfig() const{ return m_replicationConfig; }
-    inline bool ReplicationConfigHasBeenSet() const { return m_replicationConfigHasBeenSet; }
-    inline void SetReplicationConfig(const ReplicationConfig& value) { m_replicationConfigHasBeenSet = true; m_replicationConfig = value; }
-    inline void SetReplicationConfig(ReplicationConfig&& value) { m_replicationConfigHasBeenSet = true; m_replicationConfig = std::move(value); }
-    inline Endpoint& WithReplicationConfig(const ReplicationConfig& value) { SetReplicationConfig(value); return *this;}
-    inline Endpoint& WithReplicationConfig(ReplicationConfig&& value) { SetReplicationConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the role used by event replication for the endpoint.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  Endpoint& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The event buses being used by the endpoint.</p>
-     */
-    inline const Aws::Vector<EndpointEventBus>& GetEventBuses() const{ return m_eventBuses; }
-    inline bool EventBusesHasBeenSet() const { return m_eventBusesHasBeenSet; }
-    inline void SetEventBuses(const Aws::Vector<EndpointEventBus>& value) { m_eventBusesHasBeenSet = true; m_eventBuses = value; }
-    inline void SetEventBuses(Aws::Vector<EndpointEventBus>&& value) { m_eventBusesHasBeenSet = true; m_eventBuses = std::move(value); }
-    inline Endpoint& WithEventBuses(const Aws::Vector<EndpointEventBus>& value) { SetEventBuses(value); return *this;}
-    inline Endpoint& WithEventBuses(Aws::Vector<EndpointEventBus>&& value) { SetEventBuses(std::move(value)); return *this;}
-    inline Endpoint& AddEventBuses(const EndpointEventBus& value) { m_eventBusesHasBeenSet = true; m_eventBuses.push_back(value); return *this; }
-    inline Endpoint& AddEventBuses(EndpointEventBus&& value) { m_eventBusesHasBeenSet = true; m_eventBuses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The URL subdomain of the endpoint. For example, if the URL for Endpoint is
+   * https://abcde.veo.endpoints.event.amazonaws.com, then the EndpointId is
+   * <code>abcde.veo</code>.</p>
+   */
+  inline const Aws::String& GetEndpointId() const { return m_endpointId; }
+  inline bool EndpointIdHasBeenSet() const { return m_endpointIdHasBeenSet; }
+  template <typename EndpointIdT = Aws::String>
+  void SetEndpointId(EndpointIdT&& value) {
+    m_endpointIdHasBeenSet = true;
+    m_endpointId = std::forward<EndpointIdT>(value);
+  }
+  template <typename EndpointIdT = Aws::String>
+  Endpoint& WithEndpointId(EndpointIdT&& value) {
+    SetEndpointId(std::forward<EndpointIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the role used by event replication for the endpoint.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline Endpoint& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline Endpoint& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline Endpoint& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The URL of the endpoint.</p>
+   */
+  inline const Aws::String& GetEndpointUrl() const { return m_endpointUrl; }
+  inline bool EndpointUrlHasBeenSet() const { return m_endpointUrlHasBeenSet; }
+  template <typename EndpointUrlT = Aws::String>
+  void SetEndpointUrl(EndpointUrlT&& value) {
+    m_endpointUrlHasBeenSet = true;
+    m_endpointUrl = std::forward<EndpointUrlT>(value);
+  }
+  template <typename EndpointUrlT = Aws::String>
+  Endpoint& WithEndpointUrl(EndpointUrlT&& value) {
+    SetEndpointUrl(std::forward<EndpointUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL subdomain of the endpoint. For example, if the URL for Endpoint is
-     * https://abcde.veo.endpoints.event.amazonaws.com, then the EndpointId is
-     * <code>abcde.veo</code>.</p>
-     */
-    inline const Aws::String& GetEndpointId() const{ return m_endpointId; }
-    inline bool EndpointIdHasBeenSet() const { return m_endpointIdHasBeenSet; }
-    inline void SetEndpointId(const Aws::String& value) { m_endpointIdHasBeenSet = true; m_endpointId = value; }
-    inline void SetEndpointId(Aws::String&& value) { m_endpointIdHasBeenSet = true; m_endpointId = std::move(value); }
-    inline void SetEndpointId(const char* value) { m_endpointIdHasBeenSet = true; m_endpointId.assign(value); }
-    inline Endpoint& WithEndpointId(const Aws::String& value) { SetEndpointId(value); return *this;}
-    inline Endpoint& WithEndpointId(Aws::String&& value) { SetEndpointId(std::move(value)); return *this;}
-    inline Endpoint& WithEndpointId(const char* value) { SetEndpointId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current state of the endpoint.</p>
+   */
+  inline EndpointState GetState() const { return m_state; }
+  inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
+  inline void SetState(EndpointState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline Endpoint& WithState(EndpointState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL of the endpoint.</p>
-     */
-    inline const Aws::String& GetEndpointUrl() const{ return m_endpointUrl; }
-    inline bool EndpointUrlHasBeenSet() const { return m_endpointUrlHasBeenSet; }
-    inline void SetEndpointUrl(const Aws::String& value) { m_endpointUrlHasBeenSet = true; m_endpointUrl = value; }
-    inline void SetEndpointUrl(Aws::String&& value) { m_endpointUrlHasBeenSet = true; m_endpointUrl = std::move(value); }
-    inline void SetEndpointUrl(const char* value) { m_endpointUrlHasBeenSet = true; m_endpointUrl.assign(value); }
-    inline Endpoint& WithEndpointUrl(const Aws::String& value) { SetEndpointUrl(value); return *this;}
-    inline Endpoint& WithEndpointUrl(Aws::String&& value) { SetEndpointUrl(std::move(value)); return *this;}
-    inline Endpoint& WithEndpointUrl(const char* value) { SetEndpointUrl(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason the endpoint is in its current state.</p>
+   */
+  inline const Aws::String& GetStateReason() const { return m_stateReason; }
+  inline bool StateReasonHasBeenSet() const { return m_stateReasonHasBeenSet; }
+  template <typename StateReasonT = Aws::String>
+  void SetStateReason(StateReasonT&& value) {
+    m_stateReasonHasBeenSet = true;
+    m_stateReason = std::forward<StateReasonT>(value);
+  }
+  template <typename StateReasonT = Aws::String>
+  Endpoint& WithStateReason(StateReasonT&& value) {
+    SetStateReason(std::forward<StateReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current state of the endpoint.</p>
-     */
-    inline const EndpointState& GetState() const{ return m_state; }
-    inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
-    inline void SetState(const EndpointState& value) { m_stateHasBeenSet = true; m_state = value; }
-    inline void SetState(EndpointState&& value) { m_stateHasBeenSet = true; m_state = std::move(value); }
-    inline Endpoint& WithState(const EndpointState& value) { SetState(value); return *this;}
-    inline Endpoint& WithState(EndpointState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time the endpoint was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  Endpoint& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason the endpoint is in its current state.</p>
-     */
-    inline const Aws::String& GetStateReason() const{ return m_stateReason; }
-    inline bool StateReasonHasBeenSet() const { return m_stateReasonHasBeenSet; }
-    inline void SetStateReason(const Aws::String& value) { m_stateReasonHasBeenSet = true; m_stateReason = value; }
-    inline void SetStateReason(Aws::String&& value) { m_stateReasonHasBeenSet = true; m_stateReason = std::move(value); }
-    inline void SetStateReason(const char* value) { m_stateReasonHasBeenSet = true; m_stateReason.assign(value); }
-    inline Endpoint& WithStateReason(const Aws::String& value) { SetStateReason(value); return *this;}
-    inline Endpoint& WithStateReason(Aws::String&& value) { SetStateReason(std::move(value)); return *this;}
-    inline Endpoint& WithStateReason(const char* value) { SetStateReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The last time the endpoint was modified.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastModifiedTime() const { return m_lastModifiedTime; }
+  inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  void SetLastModifiedTime(LastModifiedTimeT&& value) {
+    m_lastModifiedTimeHasBeenSet = true;
+    m_lastModifiedTime = std::forward<LastModifiedTimeT>(value);
+  }
+  template <typename LastModifiedTimeT = Aws::Utils::DateTime>
+  Endpoint& WithLastModifiedTime(LastModifiedTimeT&& value) {
+    SetLastModifiedTime(std::forward<LastModifiedTimeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The time the endpoint was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline bool CreationTimeHasBeenSet() const { return m_creationTimeHasBeenSet; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTimeHasBeenSet = true; m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTimeHasBeenSet = true; m_creationTime = std::move(value); }
-    inline Endpoint& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline Endpoint& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The last time the endpoint was modified.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastModifiedTime() const{ return m_lastModifiedTime; }
-    inline bool LastModifiedTimeHasBeenSet() const { return m_lastModifiedTimeHasBeenSet; }
-    inline void SetLastModifiedTime(const Aws::Utils::DateTime& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = value; }
-    inline void SetLastModifiedTime(Aws::Utils::DateTime&& value) { m_lastModifiedTimeHasBeenSet = true; m_lastModifiedTime = std::move(value); }
-    inline Endpoint& WithLastModifiedTime(const Aws::Utils::DateTime& value) { SetLastModifiedTime(value); return *this;}
-    inline Endpoint& WithLastModifiedTime(Aws::Utils::DateTime&& value) { SetLastModifiedTime(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_arn;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  RoutingConfig m_routingConfig;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  ReplicationConfig m_replicationConfig;
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::Vector<EndpointEventBus> m_eventBuses;
 
-    RoutingConfig m_routingConfig;
-    bool m_routingConfigHasBeenSet = false;
+  Aws::String m_roleArn;
 
-    ReplicationConfig m_replicationConfig;
-    bool m_replicationConfigHasBeenSet = false;
+  Aws::String m_endpointId;
 
-    Aws::Vector<EndpointEventBus> m_eventBuses;
-    bool m_eventBusesHasBeenSet = false;
+  Aws::String m_endpointUrl;
 
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
+  EndpointState m_state{EndpointState::NOT_SET};
 
-    Aws::String m_endpointId;
-    bool m_endpointIdHasBeenSet = false;
+  Aws::String m_stateReason;
 
-    Aws::String m_endpointUrl;
-    bool m_endpointUrlHasBeenSet = false;
+  Aws::Utils::DateTime m_creationTime{};
 
-    EndpointState m_state;
-    bool m_stateHasBeenSet = false;
+  Aws::Utils::DateTime m_lastModifiedTime{};
+  bool m_nameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_arnHasBeenSet = false;
+  bool m_routingConfigHasBeenSet = false;
+  bool m_replicationConfigHasBeenSet = false;
+  bool m_eventBusesHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_endpointIdHasBeenSet = false;
+  bool m_endpointUrlHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_stateReasonHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_lastModifiedTimeHasBeenSet = false;
+};
 
-    Aws::String m_stateReason;
-    bool m_stateReasonHasBeenSet = false;
-
-    Aws::Utils::DateTime m_creationTime;
-    bool m_creationTimeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_lastModifiedTime;
-    bool m_lastModifiedTimeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EventBridge
-} // namespace Aws
+}  // namespace Model
+}  // namespace EventBridge
+}  // namespace Aws

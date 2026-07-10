@@ -12,46 +12,26 @@ using namespace Aws::CodeDeploy::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RegisterApplicationRevisionRequest::RegisterApplicationRevisionRequest() : 
-    m_applicationNameHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_revisionHasBeenSet(false)
-{
-}
-
-Aws::String RegisterApplicationRevisionRequest::SerializePayload() const
-{
+Aws::String RegisterApplicationRevisionRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_applicationNameHasBeenSet)
-  {
-   payload.WithString("applicationName", m_applicationName);
-
+  if (m_applicationNameHasBeenSet) {
+    payload.WithString("applicationName", m_applicationName);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
-  if(m_revisionHasBeenSet)
-  {
-   payload.WithObject("revision", m_revision.Jsonize());
-
+  if (m_revisionHasBeenSet) {
+    payload.WithObject("revision", m_revision.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection RegisterApplicationRevisionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection RegisterApplicationRevisionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "CodeDeploy_20141006.RegisterApplicationRevision"));
   return headers;
-
 }
-
-
-
-

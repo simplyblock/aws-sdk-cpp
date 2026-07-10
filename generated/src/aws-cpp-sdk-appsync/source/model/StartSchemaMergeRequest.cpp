@@ -12,17 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartSchemaMergeRequest::StartSchemaMergeRequest() : 
-    m_associationIdHasBeenSet(false),
-    m_mergedApiIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String StartSchemaMergeRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StartSchemaMergeRequest::SerializePayload() const { return {}; }

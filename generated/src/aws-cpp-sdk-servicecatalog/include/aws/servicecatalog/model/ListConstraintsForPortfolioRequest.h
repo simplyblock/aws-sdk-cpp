@@ -4,121 +4,138 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
 
+/**
+ */
+class ListConstraintsForPortfolioRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API ListConstraintsForPortfolioRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListConstraintsForPortfolio"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class ListConstraintsForPortfolioRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API ListConstraintsForPortfolioRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  ListConstraintsForPortfolioRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListConstraintsForPortfolio"; }
+  ///@{
+  /**
+   * <p>The portfolio identifier.</p>
+   */
+  inline const Aws::String& GetPortfolioId() const { return m_portfolioId; }
+  inline bool PortfolioIdHasBeenSet() const { return m_portfolioIdHasBeenSet; }
+  template <typename PortfolioIdT = Aws::String>
+  void SetPortfolioId(PortfolioIdT&& value) {
+    m_portfolioIdHasBeenSet = true;
+    m_portfolioId = std::forward<PortfolioIdT>(value);
+  }
+  template <typename PortfolioIdT = Aws::String>
+  ListConstraintsForPortfolioRequest& WithPortfolioId(PortfolioIdT&& value) {
+    SetPortfolioId(std::forward<PortfolioIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The product identifier.</p>
+   */
+  inline const Aws::String& GetProductId() const { return m_productId; }
+  inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
+  template <typename ProductIdT = Aws::String>
+  void SetProductId(ProductIdT&& value) {
+    m_productIdHasBeenSet = true;
+    m_productId = std::forward<ProductIdT>(value);
+  }
+  template <typename ProductIdT = Aws::String>
+  ListConstraintsForPortfolioRequest& WithProductId(ProductIdT&& value) {
+    SetProductId(std::forward<ProductIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The maximum number of items to return with this call.</p>
+   */
+  inline int GetPageSize() const { return m_pageSize; }
+  inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
+  inline void SetPageSize(int value) {
+    m_pageSizeHasBeenSet = true;
+    m_pageSize = value;
+  }
+  inline ListConstraintsForPortfolioRequest& WithPageSize(int value) {
+    SetPageSize(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The page token for the next set of results. To retrieve the first set of
+   * results, use null.</p>
+   */
+  inline const Aws::String& GetPageToken() const { return m_pageToken; }
+  inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
+  template <typename PageTokenT = Aws::String>
+  void SetPageToken(PageTokenT&& value) {
+    m_pageTokenHasBeenSet = true;
+    m_pageToken = std::forward<PageTokenT>(value);
+  }
+  template <typename PageTokenT = Aws::String>
+  ListConstraintsForPortfolioRequest& WithPageToken(PageTokenT&& value) {
+    SetPageToken(std::forward<PageTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline ListConstraintsForPortfolioRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
+  Aws::String m_portfolioId;
 
-    ///@{
-    /**
-     * <p>The portfolio identifier.</p>
-     */
-    inline const Aws::String& GetPortfolioId() const{ return m_portfolioId; }
-    inline bool PortfolioIdHasBeenSet() const { return m_portfolioIdHasBeenSet; }
-    inline void SetPortfolioId(const Aws::String& value) { m_portfolioIdHasBeenSet = true; m_portfolioId = value; }
-    inline void SetPortfolioId(Aws::String&& value) { m_portfolioIdHasBeenSet = true; m_portfolioId = std::move(value); }
-    inline void SetPortfolioId(const char* value) { m_portfolioIdHasBeenSet = true; m_portfolioId.assign(value); }
-    inline ListConstraintsForPortfolioRequest& WithPortfolioId(const Aws::String& value) { SetPortfolioId(value); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithPortfolioId(Aws::String&& value) { SetPortfolioId(std::move(value)); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithPortfolioId(const char* value) { SetPortfolioId(value); return *this;}
-    ///@}
+  Aws::String m_productId;
 
-    ///@{
-    /**
-     * <p>The product identifier.</p>
-     */
-    inline const Aws::String& GetProductId() const{ return m_productId; }
-    inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
-    inline void SetProductId(const Aws::String& value) { m_productIdHasBeenSet = true; m_productId = value; }
-    inline void SetProductId(Aws::String&& value) { m_productIdHasBeenSet = true; m_productId = std::move(value); }
-    inline void SetProductId(const char* value) { m_productIdHasBeenSet = true; m_productId.assign(value); }
-    inline ListConstraintsForPortfolioRequest& WithProductId(const Aws::String& value) { SetProductId(value); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithProductId(Aws::String&& value) { SetProductId(std::move(value)); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithProductId(const char* value) { SetProductId(value); return *this;}
-    ///@}
+  int m_pageSize{0};
 
-    ///@{
-    /**
-     * <p>The maximum number of items to return with this call.</p>
-     */
-    inline int GetPageSize() const{ return m_pageSize; }
-    inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
-    inline void SetPageSize(int value) { m_pageSizeHasBeenSet = true; m_pageSize = value; }
-    inline ListConstraintsForPortfolioRequest& WithPageSize(int value) { SetPageSize(value); return *this;}
-    ///@}
+  Aws::String m_pageToken;
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_portfolioIdHasBeenSet = false;
+  bool m_productIdHasBeenSet = false;
+  bool m_pageSizeHasBeenSet = false;
+  bool m_pageTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The page token for the next set of results. To retrieve the first set of
-     * results, use null.</p>
-     */
-    inline const Aws::String& GetPageToken() const{ return m_pageToken; }
-    inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
-    inline void SetPageToken(const Aws::String& value) { m_pageTokenHasBeenSet = true; m_pageToken = value; }
-    inline void SetPageToken(Aws::String&& value) { m_pageTokenHasBeenSet = true; m_pageToken = std::move(value); }
-    inline void SetPageToken(const char* value) { m_pageTokenHasBeenSet = true; m_pageToken.assign(value); }
-    inline ListConstraintsForPortfolioRequest& WithPageToken(const Aws::String& value) { SetPageToken(value); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithPageToken(Aws::String&& value) { SetPageToken(std::move(value)); return *this;}
-    inline ListConstraintsForPortfolioRequest& WithPageToken(const char* value) { SetPageToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
-
-    Aws::String m_portfolioId;
-    bool m_portfolioIdHasBeenSet = false;
-
-    Aws::String m_productId;
-    bool m_productIdHasBeenSet = false;
-
-    int m_pageSize;
-    bool m_pageSizeHasBeenSet = false;
-
-    Aws::String m_pageToken;
-    bool m_pageTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

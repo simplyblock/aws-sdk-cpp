@@ -4,65 +4,72 @@
  */
 
 #pragma once
-#include <aws/drs/Drs_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/drs/Drs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace drs
-{
-namespace Model
-{
-  class ExportSourceNetworkCfnTemplateResult
-  {
-  public:
-    AWS_DRS_API ExportSourceNetworkCfnTemplateResult();
-    AWS_DRS_API ExportSourceNetworkCfnTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DRS_API ExportSourceNetworkCfnTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace drs {
+namespace Model {
+class ExportSourceNetworkCfnTemplateResult {
+ public:
+  AWS_DRS_API ExportSourceNetworkCfnTemplateResult() = default;
+  AWS_DRS_API ExportSourceNetworkCfnTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DRS_API ExportSourceNetworkCfnTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>S3 bucket URL where the Source Network CloudFormation template was exported
+   * to.</p>
+   */
+  inline const Aws::String& GetS3DestinationUrl() const { return m_s3DestinationUrl; }
+  template <typename S3DestinationUrlT = Aws::String>
+  void SetS3DestinationUrl(S3DestinationUrlT&& value) {
+    m_s3DestinationUrlHasBeenSet = true;
+    m_s3DestinationUrl = std::forward<S3DestinationUrlT>(value);
+  }
+  template <typename S3DestinationUrlT = Aws::String>
+  ExportSourceNetworkCfnTemplateResult& WithS3DestinationUrl(S3DestinationUrlT&& value) {
+    SetS3DestinationUrl(std::forward<S3DestinationUrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>S3 bucket URL where the Source Network CloudFormation template was exported
-     * to.</p>
-     */
-    inline const Aws::String& GetS3DestinationUrl() const{ return m_s3DestinationUrl; }
-    inline void SetS3DestinationUrl(const Aws::String& value) { m_s3DestinationUrl = value; }
-    inline void SetS3DestinationUrl(Aws::String&& value) { m_s3DestinationUrl = std::move(value); }
-    inline void SetS3DestinationUrl(const char* value) { m_s3DestinationUrl.assign(value); }
-    inline ExportSourceNetworkCfnTemplateResult& WithS3DestinationUrl(const Aws::String& value) { SetS3DestinationUrl(value); return *this;}
-    inline ExportSourceNetworkCfnTemplateResult& WithS3DestinationUrl(Aws::String&& value) { SetS3DestinationUrl(std::move(value)); return *this;}
-    inline ExportSourceNetworkCfnTemplateResult& WithS3DestinationUrl(const char* value) { SetS3DestinationUrl(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ExportSourceNetworkCfnTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ExportSourceNetworkCfnTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ExportSourceNetworkCfnTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ExportSourceNetworkCfnTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_s3DestinationUrl;
+ private:
+  Aws::String m_s3DestinationUrl;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_s3DestinationUrlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace drs
-} // namespace Aws
+}  // namespace Model
+}  // namespace drs
+}  // namespace Aws

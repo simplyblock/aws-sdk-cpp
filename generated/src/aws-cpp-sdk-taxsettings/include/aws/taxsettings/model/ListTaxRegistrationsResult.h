@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/taxsettings/TaxSettings_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/taxsettings/TaxSettings_EXPORTS.h>
 #include <aws/taxsettings/model/AccountDetails.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TaxSettings
-{
-namespace Model
-{
-  class ListTaxRegistrationsResult
-  {
-  public:
-    AWS_TAXSETTINGS_API ListTaxRegistrationsResult();
-    AWS_TAXSETTINGS_API ListTaxRegistrationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TAXSETTINGS_API ListTaxRegistrationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TaxSettings {
+namespace Model {
+class ListTaxRegistrationsResult {
+ public:
+  AWS_TAXSETTINGS_API ListTaxRegistrationsResult() = default;
+  AWS_TAXSETTINGS_API ListTaxRegistrationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TAXSETTINGS_API ListTaxRegistrationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of account details. This contains account Ids and TRN Information
+   * for each of the linked accounts. </p>
+   */
+  inline const Aws::Vector<AccountDetails>& GetAccountDetails() const { return m_accountDetails; }
+  template <typename AccountDetailsT = Aws::Vector<AccountDetails>>
+  void SetAccountDetails(AccountDetailsT&& value) {
+    m_accountDetailsHasBeenSet = true;
+    m_accountDetails = std::forward<AccountDetailsT>(value);
+  }
+  template <typename AccountDetailsT = Aws::Vector<AccountDetails>>
+  ListTaxRegistrationsResult& WithAccountDetails(AccountDetailsT&& value) {
+    SetAccountDetails(std::forward<AccountDetailsT>(value));
+    return *this;
+  }
+  template <typename AccountDetailsT = AccountDetails>
+  ListTaxRegistrationsResult& AddAccountDetails(AccountDetailsT&& value) {
+    m_accountDetailsHasBeenSet = true;
+    m_accountDetails.emplace_back(std::forward<AccountDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of account details. This contains account Ids and TRN Information
-     * for each of the linked accounts. </p>
-     */
-    inline const Aws::Vector<AccountDetails>& GetAccountDetails() const{ return m_accountDetails; }
-    inline void SetAccountDetails(const Aws::Vector<AccountDetails>& value) { m_accountDetails = value; }
-    inline void SetAccountDetails(Aws::Vector<AccountDetails>&& value) { m_accountDetails = std::move(value); }
-    inline ListTaxRegistrationsResult& WithAccountDetails(const Aws::Vector<AccountDetails>& value) { SetAccountDetails(value); return *this;}
-    inline ListTaxRegistrationsResult& WithAccountDetails(Aws::Vector<AccountDetails>&& value) { SetAccountDetails(std::move(value)); return *this;}
-    inline ListTaxRegistrationsResult& AddAccountDetails(const AccountDetails& value) { m_accountDetails.push_back(value); return *this; }
-    inline ListTaxRegistrationsResult& AddAccountDetails(AccountDetails&& value) { m_accountDetails.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> The token to retrieve the next set of results. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListTaxRegistrationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The token to retrieve the next set of results. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListTaxRegistrationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListTaxRegistrationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListTaxRegistrationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTaxRegistrationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTaxRegistrationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTaxRegistrationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTaxRegistrationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<AccountDetails> m_accountDetails;
+ private:
+  Aws::Vector<AccountDetails> m_accountDetails;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accountDetailsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TaxSettings
-} // namespace Aws
+}  // namespace Model
+}  // namespace TaxSettings
+}  // namespace Aws

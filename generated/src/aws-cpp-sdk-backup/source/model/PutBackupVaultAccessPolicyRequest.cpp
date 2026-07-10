@@ -12,25 +12,12 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutBackupVaultAccessPolicyRequest::PutBackupVaultAccessPolicyRequest() : 
-    m_backupVaultNameHasBeenSet(false),
-    m_policyHasBeenSet(false)
-{
-}
-
-Aws::String PutBackupVaultAccessPolicyRequest::SerializePayload() const
-{
+Aws::String PutBackupVaultAccessPolicyRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_policyHasBeenSet)
-  {
-   payload.WithString("Policy", m_policy);
-
+  if (m_policyHasBeenSet) {
+    payload.WithString("Policy", m_policy);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/pca-connector-ad/model/DeleteConnectorRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/pca-connector-ad/model/DeleteConnectorRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::PcaConnectorAd::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteConnectorRequest::DeleteConnectorRequest() : 
-    m_connectorArnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteConnectorRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteConnectorRequest::SerializePayload() const { return {}; }

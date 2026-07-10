@@ -4,98 +4,115 @@
  */
 
 #pragma once
-#include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/mediapackagev2/Mediapackagev2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace mediapackagev2
-{
-namespace Model
-{
-  class GetChannelPolicyResult
-  {
-  public:
-    AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult();
-    AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace mediapackagev2 {
+namespace Model {
+class GetChannelPolicyResult {
+ public:
+  AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult() = default;
+  AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDIAPACKAGEV2_API GetChannelPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name that describes the channel group. The name is the primary identifier
+   * for the channel group, and must be unique for your account in the AWS
+   * Region.</p>
+   */
+  inline const Aws::String& GetChannelGroupName() const { return m_channelGroupName; }
+  template <typename ChannelGroupNameT = Aws::String>
+  void SetChannelGroupName(ChannelGroupNameT&& value) {
+    m_channelGroupNameHasBeenSet = true;
+    m_channelGroupName = std::forward<ChannelGroupNameT>(value);
+  }
+  template <typename ChannelGroupNameT = Aws::String>
+  GetChannelPolicyResult& WithChannelGroupName(ChannelGroupNameT&& value) {
+    SetChannelGroupName(std::forward<ChannelGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name that describes the channel group. The name is the primary identifier
-     * for the channel group, and must be unique for your account in the AWS
-     * Region.</p>
-     */
-    inline const Aws::String& GetChannelGroupName() const{ return m_channelGroupName; }
-    inline void SetChannelGroupName(const Aws::String& value) { m_channelGroupName = value; }
-    inline void SetChannelGroupName(Aws::String&& value) { m_channelGroupName = std::move(value); }
-    inline void SetChannelGroupName(const char* value) { m_channelGroupName.assign(value); }
-    inline GetChannelPolicyResult& WithChannelGroupName(const Aws::String& value) { SetChannelGroupName(value); return *this;}
-    inline GetChannelPolicyResult& WithChannelGroupName(Aws::String&& value) { SetChannelGroupName(std::move(value)); return *this;}
-    inline GetChannelPolicyResult& WithChannelGroupName(const char* value) { SetChannelGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name that describes the channel. The name is the primary identifier for
+   * the channel, and must be unique for your account in the AWS Region and channel
+   * group.</p>
+   */
+  inline const Aws::String& GetChannelName() const { return m_channelName; }
+  template <typename ChannelNameT = Aws::String>
+  void SetChannelName(ChannelNameT&& value) {
+    m_channelNameHasBeenSet = true;
+    m_channelName = std::forward<ChannelNameT>(value);
+  }
+  template <typename ChannelNameT = Aws::String>
+  GetChannelPolicyResult& WithChannelName(ChannelNameT&& value) {
+    SetChannelName(std::forward<ChannelNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name that describes the channel. The name is the primary identifier for
-     * the channel, and must be unique for your account in the AWS Region and channel
-     * group.</p>
-     */
-    inline const Aws::String& GetChannelName() const{ return m_channelName; }
-    inline void SetChannelName(const Aws::String& value) { m_channelName = value; }
-    inline void SetChannelName(Aws::String&& value) { m_channelName = std::move(value); }
-    inline void SetChannelName(const char* value) { m_channelName.assign(value); }
-    inline GetChannelPolicyResult& WithChannelName(const Aws::String& value) { SetChannelName(value); return *this;}
-    inline GetChannelPolicyResult& WithChannelName(Aws::String&& value) { SetChannelName(std::move(value)); return *this;}
-    inline GetChannelPolicyResult& WithChannelName(const char* value) { SetChannelName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The policy assigned to the channel.</p>
+   */
+  inline const Aws::String& GetPolicy() const { return m_policy; }
+  template <typename PolicyT = Aws::String>
+  void SetPolicy(PolicyT&& value) {
+    m_policyHasBeenSet = true;
+    m_policy = std::forward<PolicyT>(value);
+  }
+  template <typename PolicyT = Aws::String>
+  GetChannelPolicyResult& WithPolicy(PolicyT&& value) {
+    SetPolicy(std::forward<PolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The policy assigned to the channel.</p>
-     */
-    inline const Aws::String& GetPolicy() const{ return m_policy; }
-    inline void SetPolicy(const Aws::String& value) { m_policy = value; }
-    inline void SetPolicy(Aws::String&& value) { m_policy = std::move(value); }
-    inline void SetPolicy(const char* value) { m_policy.assign(value); }
-    inline GetChannelPolicyResult& WithPolicy(const Aws::String& value) { SetPolicy(value); return *this;}
-    inline GetChannelPolicyResult& WithPolicy(Aws::String&& value) { SetPolicy(std::move(value)); return *this;}
-    inline GetChannelPolicyResult& WithPolicy(const char* value) { SetPolicy(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetChannelPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetChannelPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetChannelPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetChannelPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_channelGroupName;
+ private:
+  Aws::String m_channelGroupName;
 
-    Aws::String m_channelName;
+  Aws::String m_channelName;
 
-    Aws::String m_policy;
+  Aws::String m_policy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_channelGroupNameHasBeenSet = false;
+  bool m_channelNameHasBeenSet = false;
+  bool m_policyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace mediapackagev2
-} // namespace Aws
+}  // namespace Model
+}  // namespace mediapackagev2
+}  // namespace Aws

@@ -4,70 +4,87 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+#include <aws/elasticloadbalancing/ElasticLoadBalancing_EXPORTS.h>
 #include <aws/elasticloadbalancing/model/Instance.h>
+#include <aws/elasticloadbalancing/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancing
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancing {
+namespace Model {
+/**
+ * <p>Contains the output of DeregisterInstancesFromLoadBalancer.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DeregisterEndPointsOutput">AWS
+ * API Reference</a></p>
+ */
+class DeregisterInstancesFromLoadBalancerResult {
+ public:
+  AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult() = default;
+  AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the output of DeregisterInstancesFromLoadBalancer.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancing-2012-06-01/DeregisterEndPointsOutput">AWS
-   * API Reference</a></p>
+   * <p>The remaining instances registered with the load balancer.</p>
    */
-  class DeregisterInstancesFromLoadBalancerResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult();
-    AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCING_API DeregisterInstancesFromLoadBalancerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Instance>& GetInstances() const { return m_instances; }
+  template <typename InstancesT = Aws::Vector<Instance>>
+  void SetInstances(InstancesT&& value) {
+    m_instancesHasBeenSet = true;
+    m_instances = std::forward<InstancesT>(value);
+  }
+  template <typename InstancesT = Aws::Vector<Instance>>
+  DeregisterInstancesFromLoadBalancerResult& WithInstances(InstancesT&& value) {
+    SetInstances(std::forward<InstancesT>(value));
+    return *this;
+  }
+  template <typename InstancesT = Instance>
+  DeregisterInstancesFromLoadBalancerResult& AddInstances(InstancesT&& value) {
+    m_instancesHasBeenSet = true;
+    m_instances.emplace_back(std::forward<InstancesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The remaining instances registered with the load balancer.</p>
-     */
-    inline const Aws::Vector<Instance>& GetInstances() const{ return m_instances; }
-    inline void SetInstances(const Aws::Vector<Instance>& value) { m_instances = value; }
-    inline void SetInstances(Aws::Vector<Instance>&& value) { m_instances = std::move(value); }
-    inline DeregisterInstancesFromLoadBalancerResult& WithInstances(const Aws::Vector<Instance>& value) { SetInstances(value); return *this;}
-    inline DeregisterInstancesFromLoadBalancerResult& WithInstances(Aws::Vector<Instance>&& value) { SetInstances(std::move(value)); return *this;}
-    inline DeregisterInstancesFromLoadBalancerResult& AddInstances(const Instance& value) { m_instances.push_back(value); return *this; }
-    inline DeregisterInstancesFromLoadBalancerResult& AddInstances(Instance&& value) { m_instances.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DeregisterInstancesFromLoadBalancerResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DeregisterInstancesFromLoadBalancerResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DeregisterInstancesFromLoadBalancerResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Instance> m_instances;
 
-    Aws::Vector<Instance> m_instances;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instancesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticLoadBalancing
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancing
+}  // namespace Aws

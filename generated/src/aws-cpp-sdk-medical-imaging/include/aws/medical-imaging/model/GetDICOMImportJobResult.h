@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/medical-imaging/MedicalImaging_EXPORTS.h>
 #include <aws/medical-imaging/model/DICOMImportJobProperties.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MedicalImaging
-{
-namespace Model
-{
-  class GetDICOMImportJobResult
-  {
-  public:
-    AWS_MEDICALIMAGING_API GetDICOMImportJobResult();
-    AWS_MEDICALIMAGING_API GetDICOMImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEDICALIMAGING_API GetDICOMImportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MedicalImaging {
+namespace Model {
+class GetDICOMImportJobResult {
+ public:
+  AWS_MEDICALIMAGING_API GetDICOMImportJobResult() = default;
+  AWS_MEDICALIMAGING_API GetDICOMImportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEDICALIMAGING_API GetDICOMImportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The properties of the import job.</p>
+   */
+  inline const DICOMImportJobProperties& GetJobProperties() const { return m_jobProperties; }
+  template <typename JobPropertiesT = DICOMImportJobProperties>
+  void SetJobProperties(JobPropertiesT&& value) {
+    m_jobPropertiesHasBeenSet = true;
+    m_jobProperties = std::forward<JobPropertiesT>(value);
+  }
+  template <typename JobPropertiesT = DICOMImportJobProperties>
+  GetDICOMImportJobResult& WithJobProperties(JobPropertiesT&& value) {
+    SetJobProperties(std::forward<JobPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The properties of the import job.</p>
-     */
-    inline const DICOMImportJobProperties& GetJobProperties() const{ return m_jobProperties; }
-    inline void SetJobProperties(const DICOMImportJobProperties& value) { m_jobProperties = value; }
-    inline void SetJobProperties(DICOMImportJobProperties&& value) { m_jobProperties = std::move(value); }
-    inline GetDICOMImportJobResult& WithJobProperties(const DICOMImportJobProperties& value) { SetJobProperties(value); return *this;}
-    inline GetDICOMImportJobResult& WithJobProperties(DICOMImportJobProperties&& value) { SetJobProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDICOMImportJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDICOMImportJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDICOMImportJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDICOMImportJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DICOMImportJobProperties m_jobProperties;
+ private:
+  DICOMImportJobProperties m_jobProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobPropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MedicalImaging
-} // namespace Aws
+}  // namespace Model
+}  // namespace MedicalImaging
+}  // namespace Aws

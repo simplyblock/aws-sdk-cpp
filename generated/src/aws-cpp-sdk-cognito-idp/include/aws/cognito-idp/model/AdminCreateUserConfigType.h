@@ -6,93 +6,107 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/MessageTemplateType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
 
+/**
+ * <p>The settings for administrator creation of users in a user pool. Contains
+ * settings for allowing user sign-up, customizing invitation messages to new
+ * users, and the amount of time before temporary passwords expire.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/AdminCreateUserConfigType">AWS
+ * API Reference</a></p>
+ */
+class AdminCreateUserConfigType {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The configuration for creating a new user profile.</p><p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/AdminCreateUserConfigType">AWS
-   * API Reference</a></p>
+   * <p>The setting for allowing self-service sign-up. When <code>true</code>, only
+   * administrators can create new user profiles. When <code>false</code>, users can
+   * register themselves and create a new user profile with the <code>SignUp</code>
+   * operation.</p>
    */
-  class AdminCreateUserConfigType
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType();
-    AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COGNITOIDENTITYPROVIDER_API AdminCreateUserConfigType& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline bool GetAllowAdminCreateUserOnly() const { return m_allowAdminCreateUserOnly; }
+  inline bool AllowAdminCreateUserOnlyHasBeenSet() const { return m_allowAdminCreateUserOnlyHasBeenSet; }
+  inline void SetAllowAdminCreateUserOnly(bool value) {
+    m_allowAdminCreateUserOnlyHasBeenSet = true;
+    m_allowAdminCreateUserOnly = value;
+  }
+  inline AdminCreateUserConfigType& WithAllowAdminCreateUserOnly(bool value) {
+    SetAllowAdminCreateUserOnly(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>This parameter is no longer in use.</p> <p>The password expiration limit in
+   * days for administrator-created users. When this time expires, the user can't
+   * sign in with their temporary password. To reset the account after that time
+   * limit, you must call <code>AdminCreateUser</code> again, specifying
+   * <code>RESEND</code> for the <code>MessageAction</code> parameter. </p> <p>The
+   * default value for this parameter is 7.</p>
+   */
+  inline int GetUnusedAccountValidityDays() const { return m_unusedAccountValidityDays; }
+  inline bool UnusedAccountValidityDaysHasBeenSet() const { return m_unusedAccountValidityDaysHasBeenSet; }
+  inline void SetUnusedAccountValidityDays(int value) {
+    m_unusedAccountValidityDaysHasBeenSet = true;
+    m_unusedAccountValidityDays = value;
+  }
+  inline AdminCreateUserConfigType& WithUnusedAccountValidityDays(int value) {
+    SetUnusedAccountValidityDays(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Set to <code>True</code> if only the administrator is allowed to create user
-     * profiles. Set to <code>False</code> if users can sign themselves up via an
-     * app.</p>
-     */
-    inline bool GetAllowAdminCreateUserOnly() const{ return m_allowAdminCreateUserOnly; }
-    inline bool AllowAdminCreateUserOnlyHasBeenSet() const { return m_allowAdminCreateUserOnlyHasBeenSet; }
-    inline void SetAllowAdminCreateUserOnly(bool value) { m_allowAdminCreateUserOnlyHasBeenSet = true; m_allowAdminCreateUserOnly = value; }
-    inline AdminCreateUserConfigType& WithAllowAdminCreateUserOnly(bool value) { SetAllowAdminCreateUserOnly(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The template for the welcome message to new users. This template must include
+   * the <code>{####}</code> temporary password placeholder if you are creating users
+   * with passwords. If your users don't have passwords, you can omit the
+   * placeholder.</p> <p>See also <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization">Customizing
+   * User Invitation Messages</a>.</p>
+   */
+  inline const MessageTemplateType& GetInviteMessageTemplate() const { return m_inviteMessageTemplate; }
+  inline bool InviteMessageTemplateHasBeenSet() const { return m_inviteMessageTemplateHasBeenSet; }
+  template <typename InviteMessageTemplateT = MessageTemplateType>
+  void SetInviteMessageTemplate(InviteMessageTemplateT&& value) {
+    m_inviteMessageTemplateHasBeenSet = true;
+    m_inviteMessageTemplate = std::forward<InviteMessageTemplateT>(value);
+  }
+  template <typename InviteMessageTemplateT = MessageTemplateType>
+  AdminCreateUserConfigType& WithInviteMessageTemplate(InviteMessageTemplateT&& value) {
+    SetInviteMessageTemplate(std::forward<InviteMessageTemplateT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  bool m_allowAdminCreateUserOnly{false};
 
-    ///@{
-    /**
-     * <p>The user account expiration limit, in days, after which a new account that
-     * hasn't signed in is no longer usable. To reset the account after that time
-     * limit, you must call <code>AdminCreateUser</code> again, specifying
-     * <code>"RESEND"</code> for the <code>MessageAction</code> parameter. The default
-     * value for this parameter is 7.</p>  <p>If you set a value for
-     * <code>TemporaryPasswordValidityDays</code> in <code>PasswordPolicy</code>, that
-     * value will be used, and <code>UnusedAccountValidityDays</code> will be no longer
-     * be an available parameter for that user pool.</p> 
-     */
-    inline int GetUnusedAccountValidityDays() const{ return m_unusedAccountValidityDays; }
-    inline bool UnusedAccountValidityDaysHasBeenSet() const { return m_unusedAccountValidityDaysHasBeenSet; }
-    inline void SetUnusedAccountValidityDays(int value) { m_unusedAccountValidityDaysHasBeenSet = true; m_unusedAccountValidityDays = value; }
-    inline AdminCreateUserConfigType& WithUnusedAccountValidityDays(int value) { SetUnusedAccountValidityDays(value); return *this;}
-    ///@}
+  int m_unusedAccountValidityDays{0};
 
-    ///@{
-    /**
-     * <p>The message template to be used for the welcome message to new users.</p>
-     * <p>See also <a
-     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization">Customizing
-     * User Invitation Messages</a>.</p>
-     */
-    inline const MessageTemplateType& GetInviteMessageTemplate() const{ return m_inviteMessageTemplate; }
-    inline bool InviteMessageTemplateHasBeenSet() const { return m_inviteMessageTemplateHasBeenSet; }
-    inline void SetInviteMessageTemplate(const MessageTemplateType& value) { m_inviteMessageTemplateHasBeenSet = true; m_inviteMessageTemplate = value; }
-    inline void SetInviteMessageTemplate(MessageTemplateType&& value) { m_inviteMessageTemplateHasBeenSet = true; m_inviteMessageTemplate = std::move(value); }
-    inline AdminCreateUserConfigType& WithInviteMessageTemplate(const MessageTemplateType& value) { SetInviteMessageTemplate(value); return *this;}
-    inline AdminCreateUserConfigType& WithInviteMessageTemplate(MessageTemplateType&& value) { SetInviteMessageTemplate(std::move(value)); return *this;}
-    ///@}
-  private:
+  MessageTemplateType m_inviteMessageTemplate;
+  bool m_allowAdminCreateUserOnlyHasBeenSet = false;
+  bool m_unusedAccountValidityDaysHasBeenSet = false;
+  bool m_inviteMessageTemplateHasBeenSet = false;
+};
 
-    bool m_allowAdminCreateUserOnly;
-    bool m_allowAdminCreateUserOnlyHasBeenSet = false;
-
-    int m_unusedAccountValidityDays;
-    bool m_unusedAccountValidityDaysHasBeenSet = false;
-
-    MessageTemplateType m_inviteMessageTemplate;
-    bool m_inviteMessageTemplateHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

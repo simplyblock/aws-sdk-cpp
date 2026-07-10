@@ -12,31 +12,16 @@ using namespace Aws::Batch::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CancelJobRequest::CancelJobRequest() : 
-    m_jobIdHasBeenSet(false),
-    m_reasonHasBeenSet(false)
-{
-}
-
-Aws::String CancelJobRequest::SerializePayload() const
-{
+Aws::String CancelJobRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_jobIdHasBeenSet)
-  {
-   payload.WithString("jobId", m_jobId);
-
+  if (m_jobIdHasBeenSet) {
+    payload.WithString("jobId", m_jobId);
   }
 
-  if(m_reasonHasBeenSet)
-  {
-   payload.WithString("reason", m_reason);
-
+  if (m_reasonHasBeenSet) {
+    payload.WithString("reason", m_reason);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

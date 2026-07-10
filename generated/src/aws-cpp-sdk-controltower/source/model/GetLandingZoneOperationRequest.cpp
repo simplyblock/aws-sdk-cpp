@@ -12,24 +12,12 @@ using namespace Aws::ControlTower::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetLandingZoneOperationRequest::GetLandingZoneOperationRequest() : 
-    m_operationIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetLandingZoneOperationRequest::SerializePayload() const
-{
+Aws::String GetLandingZoneOperationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_operationIdentifierHasBeenSet)
-  {
-   payload.WithString("operationIdentifier", m_operationIdentifier);
-
+  if (m_operationIdentifierHasBeenSet) {
+    payload.WithString("operationIdentifier", m_operationIdentifier);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

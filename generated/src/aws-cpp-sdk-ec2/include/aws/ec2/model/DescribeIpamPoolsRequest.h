@@ -4,126 +4,159 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/Filter.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
+/**
+ */
+class DescribeIpamPoolsRequest : public EC2Request {
+ public:
+  AWS_EC2_API DescribeIpamPoolsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeIpamPools"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>A check for whether you have the required permissions for the action without
+   * actually making the request and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
-  class DescribeIpamPoolsRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API DescribeIpamPoolsRequest();
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline DescribeIpamPoolsRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeIpamPools"; }
+  ///@{
+  /**
+   * <p>One or more filters for the request. For more information about filtering,
+   * see <a
+   * href="https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html">Filtering
+   * CLI output</a>.</p>
+   */
+  inline const Aws::Vector<Filter>& GetFilters() const { return m_filters; }
+  inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  void SetFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters = std::forward<FiltersT>(value);
+  }
+  template <typename FiltersT = Aws::Vector<Filter>>
+  DescribeIpamPoolsRequest& WithFilters(FiltersT&& value) {
+    SetFilters(std::forward<FiltersT>(value));
+    return *this;
+  }
+  template <typename FiltersT = Filter>
+  DescribeIpamPoolsRequest& AddFilters(FiltersT&& value) {
+    m_filtersHasBeenSet = true;
+    m_filters.emplace_back(std::forward<FiltersT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The maximum number of items to return for this request. To get the next page
+   * of items, make another request with the token returned in the output. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination">Pagination</a>.</p>
+   */
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline DescribeIpamPoolsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The token for the next page of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeIpamPoolsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The IDs of the IPAM pools you would like information on.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetIpamPoolIds() const { return m_ipamPoolIds; }
+  inline bool IpamPoolIdsHasBeenSet() const { return m_ipamPoolIdsHasBeenSet; }
+  template <typename IpamPoolIdsT = Aws::Vector<Aws::String>>
+  void SetIpamPoolIds(IpamPoolIdsT&& value) {
+    m_ipamPoolIdsHasBeenSet = true;
+    m_ipamPoolIds = std::forward<IpamPoolIdsT>(value);
+  }
+  template <typename IpamPoolIdsT = Aws::Vector<Aws::String>>
+  DescribeIpamPoolsRequest& WithIpamPoolIds(IpamPoolIdsT&& value) {
+    SetIpamPoolIds(std::forward<IpamPoolIdsT>(value));
+    return *this;
+  }
+  template <typename IpamPoolIdsT = Aws::String>
+  DescribeIpamPoolsRequest& AddIpamPoolIds(IpamPoolIdsT&& value) {
+    m_ipamPoolIdsHasBeenSet = true;
+    m_ipamPoolIds.emplace_back(std::forward<IpamPoolIdsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  bool m_dryRun{false};
 
-    ///@{
-    /**
-     * <p>A check for whether you have the required permissions for the action without
-     * actually making the request and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline DescribeIpamPoolsRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
+  Aws::Vector<Filter> m_filters;
 
-    ///@{
-    /**
-     * <p>One or more filters for the request. For more information about filtering,
-     * see <a
-     * href="https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-filter.html">Filtering
-     * CLI output</a>.</p>
-     */
-    inline const Aws::Vector<Filter>& GetFilters() const{ return m_filters; }
-    inline bool FiltersHasBeenSet() const { return m_filtersHasBeenSet; }
-    inline void SetFilters(const Aws::Vector<Filter>& value) { m_filtersHasBeenSet = true; m_filters = value; }
-    inline void SetFilters(Aws::Vector<Filter>&& value) { m_filtersHasBeenSet = true; m_filters = std::move(value); }
-    inline DescribeIpamPoolsRequest& WithFilters(const Aws::Vector<Filter>& value) { SetFilters(value); return *this;}
-    inline DescribeIpamPoolsRequest& WithFilters(Aws::Vector<Filter>&& value) { SetFilters(std::move(value)); return *this;}
-    inline DescribeIpamPoolsRequest& AddFilters(const Filter& value) { m_filtersHasBeenSet = true; m_filters.push_back(value); return *this; }
-    inline DescribeIpamPoolsRequest& AddFilters(Filter&& value) { m_filtersHasBeenSet = true; m_filters.push_back(std::move(value)); return *this; }
-    ///@}
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>The maximum number of results to return in the request.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline DescribeIpamPoolsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>The token for the next page of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline DescribeIpamPoolsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeIpamPoolsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeIpamPoolsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_ipamPoolIds;
+  bool m_dryRunHasBeenSet = false;
+  bool m_filtersHasBeenSet = false;
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_ipamPoolIdsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The IDs of the IPAM pools you would like information on.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetIpamPoolIds() const{ return m_ipamPoolIds; }
-    inline bool IpamPoolIdsHasBeenSet() const { return m_ipamPoolIdsHasBeenSet; }
-    inline void SetIpamPoolIds(const Aws::Vector<Aws::String>& value) { m_ipamPoolIdsHasBeenSet = true; m_ipamPoolIds = value; }
-    inline void SetIpamPoolIds(Aws::Vector<Aws::String>&& value) { m_ipamPoolIdsHasBeenSet = true; m_ipamPoolIds = std::move(value); }
-    inline DescribeIpamPoolsRequest& WithIpamPoolIds(const Aws::Vector<Aws::String>& value) { SetIpamPoolIds(value); return *this;}
-    inline DescribeIpamPoolsRequest& WithIpamPoolIds(Aws::Vector<Aws::String>&& value) { SetIpamPoolIds(std::move(value)); return *this;}
-    inline DescribeIpamPoolsRequest& AddIpamPoolIds(const Aws::String& value) { m_ipamPoolIdsHasBeenSet = true; m_ipamPoolIds.push_back(value); return *this; }
-    inline DescribeIpamPoolsRequest& AddIpamPoolIds(Aws::String&& value) { m_ipamPoolIdsHasBeenSet = true; m_ipamPoolIds.push_back(std::move(value)); return *this; }
-    inline DescribeIpamPoolsRequest& AddIpamPoolIds(const char* value) { m_ipamPoolIdsHasBeenSet = true; m_ipamPoolIds.push_back(value); return *this; }
-    ///@}
-  private:
-
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
-
-    Aws::Vector<Filter> m_filters;
-    bool m_filtersHasBeenSet = false;
-
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_ipamPoolIds;
-    bool m_ipamPoolIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

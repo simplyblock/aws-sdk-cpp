@@ -3,52 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/monitoring/model/UntagResourceRequest.h>
-#include <aws/core/utils/StringUtils.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
+
+#include <utility>
 
 using namespace Aws::CloudWatch::Model;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UntagResourceRequest::UntagResourceRequest() : 
-    m_resourceARNHasBeenSet(false),
-    m_tagKeysHasBeenSet(false)
-{
-}
+Aws::String UntagResourceRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
 
-Aws::String UntagResourceRequest::SerializePayload() const
-{
-  Aws::StringStream ss;
-  ss << "Action=UntagResource&";
-  if(m_resourceARNHasBeenSet)
-  {
-    ss << "ResourceARN=" << StringUtils::URLEncode(m_resourceARN.c_str()) << "&";
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_resourceARNHasBeenSet) {
+    mapSize++;
+  }
+  if (m_tagKeysHasBeenSet) {
+    mapSize++;
   }
 
-  if(m_tagKeysHasBeenSet)
-  {
-    if (m_tagKeys.empty())
-    {
-      ss << "TagKeys=&";
-    }
-    else
-    {
-      unsigned tagKeysCount = 1;
-      for(auto& item : m_tagKeys)
-      {
-        ss << "TagKeys.member." << tagKeysCount << "="
-            << StringUtils::URLEncode(item.c_str()) << "&";
-        tagKeysCount++;
-      }
-    }
+  encoder.WriteMapStart(mapSize);
+
+  if (m_resourceARNHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("ResourceARN"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_resourceARN.c_str()));
   }
 
-  ss << "Version=2010-08-01";
-  return ss.str();
+  if (m_tagKeysHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TagKeys"));
+    encoder.WriteArrayStart(m_tagKeys.size());
+    for (const auto& item_0 : m_tagKeys) {
+      encoder.WriteText(Aws::Crt::ByteCursorFromCString(item_0.c_str()));
+    }
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-
-void  UntagResourceRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
+Aws::Http::HeaderValueCollection UntagResourceRequest::GetRequestSpecificHeaders() const {
+  Aws::Http::HeaderValueCollection headers;
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
+  return headers;
 }

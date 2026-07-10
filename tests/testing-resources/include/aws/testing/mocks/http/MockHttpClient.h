@@ -8,19 +8,26 @@
 #include <assert.h>
 #include <aws/core/client/ClientConfiguration.h>
 #include <aws/core/http/HttpClient.h>
+#include <aws/core/http/HttpClientFactory.h>
 #include <aws/core/http/URI.h>
 #include <aws/core/http/standard/StandardHttpRequest.h>
 #include <aws/core/http/standard/StandardHttpResponse.h>
-#include <aws/core/http/HttpClientFactory.h>
 #include <aws/core/utils/UnreferencedParam.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSQueue.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/testing/mocks/http/MockConnection.h>
 
 static const char MockHttpAllocationTag[] = "MockHttp";
+
 
 class MockHttpClient : public Aws::Http::HttpClient
 {
 public:
+    using ResponseCallbackTuple = std::pair<std::shared_ptr<Aws::Http::HttpResponse>, std::function<void (Aws::IOStream&)>>;
+    using ResponseAndRequestCallbackTuple = std::tuple<std::shared_ptr<Aws::Http::HttpResponse>,
+      std::function<void (Aws::IOStream&)>,
+      std::function<void (const std::shared_ptr<Aws::Http::HttpRequest>&)>>;
+
     std::shared_ptr<Aws::Http::HttpResponse> MakeRequest(const std::shared_ptr<Aws::Http::HttpRequest>& request,
                                                          Aws::Utils::RateLimits::RateLimiterInterface* readLimiter = nullptr,
                                                          Aws::Utils::RateLimits::RateLimiterInterface* writeLimiter = nullptr) const override
@@ -34,13 +41,24 @@ public:
 
         if (m_responsesToUse.size() > 0)
         {
-            std::shared_ptr<Aws::Http::HttpResponse> responseToUse = m_responsesToUse.front();
+            ResponseCallbackTuple responseToUse = m_responsesToUse.front();
             m_responsesToUse.pop();
-            if (responseToUse)
+            if (responseToUse.first)
             {
-                responseToUse->SetOriginatingRequest(request);
+                responseToUse.first->SetOriginatingRequest(request);
+                responseToUse.second(responseToUse.first->GetResponseBody());
             }
-            return responseToUse;
+            return responseToUse.first;
+        }
+        if (!m_responseAndRequestsCallback.empty()) {
+          auto responseToUse = m_responseAndRequestsCallback.front();
+          m_responseAndRequestsCallback.pop();
+          if (std::get<0>(responseToUse)) {
+            std::get<0>(responseToUse)->SetOriginatingRequest(request);
+            std::get<1>(responseToUse)(std::get<0>(responseToUse)->GetResponseBody());
+            std::get<2>(responseToUse)(request);
+          }
+          return std::get<0>(responseToUse);
         }
         return Aws::MakeShared<Aws::Http::Standard::StandardHttpResponse>(MockHttpAllocationTag, request);
     }
@@ -54,18 +72,37 @@ public:
 
     //these will be cleaned up by the aws client, so if you are testing an aws client, don't worry about freeing the memory
     //when you are finished.
-    void AddResponseToReturn(const std::shared_ptr<Aws::Http::HttpResponse>& response) { m_responsesToUse.push(response); }
+    void AddResponseToReturn(const std::shared_ptr<Aws::Http::HttpResponse>& response) { m_responsesToUse.emplace(response, [](Aws::IOStream&) -> void {}); }
+    void AddResponseToReturn(const std::shared_ptr<Aws::Http::HttpResponse>& response, const std::function<void (Aws::IOStream&)>& callbackFucntion) { m_responsesToUse.emplace(response, callbackFucntion); }
+    void AddResponseToReturn(const std::shared_ptr<Aws::Http::HttpResponse>& response,
+                             const std::function<void(Aws::IOStream&)>& callbackFucntion,
+                             const std::function<void(const std::shared_ptr<Aws::Http::HttpRequest>&)>& requestCallback) {
+      m_responseAndRequestsCallback.emplace(response, callbackFucntion, requestCallback);
+    }
 
     void Reset()
     {
         m_requestsMade.clear();
-        Aws::Queue<std::shared_ptr<Aws::Http::HttpResponse> > empty;
+        Aws::Queue<ResponseCallbackTuple> empty;
         std::swap(m_responsesToUse, empty);
     }
 
-private:
+  void SetConnectionTestCase(const ConnectionTestCase& testCase) { m_connectionTestCase = testCase; }
+
+  Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> AcquireConnection(
+        const std::shared_ptr<Aws::Http::HttpRequest>& request,
+        const std::function<void(std::shared_ptr<Aws::Http::Connection>, int)>& onClientConnectionAvailable) override {
+      AWS_UNREFERENCED_PARAM(request);
+      auto connection = Aws::MakeShared<MockConnection>(MockHttpAllocationTag, m_connectionTestCase);
+      onClientConnectionAvailable(connection, m_connectionTestCase.connectionErrorCode);
+      return m_connectionTestCase.connectionError;
+    }
+
+   private:
+    mutable ConnectionTestCase m_connectionTestCase;
     mutable Aws::Vector<Aws::Http::Standard::StandardHttpRequest> m_requestsMade;
-    mutable Aws::Queue< std::shared_ptr<Aws::Http::HttpResponse> > m_responsesToUse;
+    mutable Aws::Queue<ResponseCallbackTuple> m_responsesToUse;
+    mutable Aws::Queue<ResponseAndRequestCallbackTuple> m_responseAndRequestsCallback;
 };
 
 class MockHttpClientFactory : public Aws::Http::HttpClientFactory

@@ -4,66 +4,79 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/securityhub/model/StandardsSubscription.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
-  class BatchDisableStandardsResult
-  {
-  public:
-    AWS_SECURITYHUB_API BatchDisableStandardsResult();
-    AWS_SECURITYHUB_API BatchDisableStandardsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYHUB_API BatchDisableStandardsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
+class BatchDisableStandardsResult {
+ public:
+  AWS_SECURITYHUB_API BatchDisableStandardsResult() = default;
+  AWS_SECURITYHUB_API BatchDisableStandardsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYHUB_API BatchDisableStandardsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The details of the standards subscriptions that were disabled.</p>
+   */
+  inline const Aws::Vector<StandardsSubscription>& GetStandardsSubscriptions() const { return m_standardsSubscriptions; }
+  template <typename StandardsSubscriptionsT = Aws::Vector<StandardsSubscription>>
+  void SetStandardsSubscriptions(StandardsSubscriptionsT&& value) {
+    m_standardsSubscriptionsHasBeenSet = true;
+    m_standardsSubscriptions = std::forward<StandardsSubscriptionsT>(value);
+  }
+  template <typename StandardsSubscriptionsT = Aws::Vector<StandardsSubscription>>
+  BatchDisableStandardsResult& WithStandardsSubscriptions(StandardsSubscriptionsT&& value) {
+    SetStandardsSubscriptions(std::forward<StandardsSubscriptionsT>(value));
+    return *this;
+  }
+  template <typename StandardsSubscriptionsT = StandardsSubscription>
+  BatchDisableStandardsResult& AddStandardsSubscriptions(StandardsSubscriptionsT&& value) {
+    m_standardsSubscriptionsHasBeenSet = true;
+    m_standardsSubscriptions.emplace_back(std::forward<StandardsSubscriptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The details of the standards subscriptions that were disabled.</p>
-     */
-    inline const Aws::Vector<StandardsSubscription>& GetStandardsSubscriptions() const{ return m_standardsSubscriptions; }
-    inline void SetStandardsSubscriptions(const Aws::Vector<StandardsSubscription>& value) { m_standardsSubscriptions = value; }
-    inline void SetStandardsSubscriptions(Aws::Vector<StandardsSubscription>&& value) { m_standardsSubscriptions = std::move(value); }
-    inline BatchDisableStandardsResult& WithStandardsSubscriptions(const Aws::Vector<StandardsSubscription>& value) { SetStandardsSubscriptions(value); return *this;}
-    inline BatchDisableStandardsResult& WithStandardsSubscriptions(Aws::Vector<StandardsSubscription>&& value) { SetStandardsSubscriptions(std::move(value)); return *this;}
-    inline BatchDisableStandardsResult& AddStandardsSubscriptions(const StandardsSubscription& value) { m_standardsSubscriptions.push_back(value); return *this; }
-    inline BatchDisableStandardsResult& AddStandardsSubscriptions(StandardsSubscription&& value) { m_standardsSubscriptions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchDisableStandardsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchDisableStandardsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchDisableStandardsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchDisableStandardsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<StandardsSubscription> m_standardsSubscriptions;
+ private:
+  Aws::Vector<StandardsSubscription> m_standardsSubscriptions;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_standardsSubscriptionsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

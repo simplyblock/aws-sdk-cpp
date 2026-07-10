@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/codestar-connections/CodeStarconnections_EXPORTS.h>
 #include <aws/codestar-connections/CodeStarconnectionsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/codestar-connections/CodeStarconnections_EXPORTS.h>
 #include <aws/codestar-connections/model/SyncConfigurationType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CodeStarconnections
-{
-namespace Model
-{
+namespace Aws {
+namespace CodeStarconnections {
+namespace Model {
 
+/**
+ */
+class GetResourceSyncStatusRequest : public CodeStarconnectionsRequest {
+ public:
+  AWS_CODESTARCONNECTIONS_API GetResourceSyncStatusRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetResourceSyncStatus"; }
+
+  AWS_CODESTARCONNECTIONS_API Aws::String SerializePayload() const override;
+
+  AWS_CODESTARCONNECTIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the Amazon Web Services resource for the sync status with the Git
+   * repository.</p>
    */
-  class GetResourceSyncStatusRequest : public CodeStarconnectionsRequest
-  {
-  public:
-    AWS_CODESTARCONNECTIONS_API GetResourceSyncStatusRequest();
+  inline const Aws::String& GetResourceName() const { return m_resourceName; }
+  inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
+  template <typename ResourceNameT = Aws::String>
+  void SetResourceName(ResourceNameT&& value) {
+    m_resourceNameHasBeenSet = true;
+    m_resourceName = std::forward<ResourceNameT>(value);
+  }
+  template <typename ResourceNameT = Aws::String>
+  GetResourceSyncStatusRequest& WithResourceName(ResourceNameT&& value) {
+    SetResourceName(std::forward<ResourceNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetResourceSyncStatus"; }
+  ///@{
+  /**
+   * <p>The sync type for the sync status with the Git repository.</p>
+   */
+  inline SyncConfigurationType GetSyncType() const { return m_syncType; }
+  inline bool SyncTypeHasBeenSet() const { return m_syncTypeHasBeenSet; }
+  inline void SetSyncType(SyncConfigurationType value) {
+    m_syncTypeHasBeenSet = true;
+    m_syncType = value;
+  }
+  inline GetResourceSyncStatusRequest& WithSyncType(SyncConfigurationType value) {
+    SetSyncType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_resourceName;
 
-    AWS_CODESTARCONNECTIONS_API Aws::String SerializePayload() const override;
+  SyncConfigurationType m_syncType{SyncConfigurationType::NOT_SET};
+  bool m_resourceNameHasBeenSet = false;
+  bool m_syncTypeHasBeenSet = false;
+};
 
-    AWS_CODESTARCONNECTIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the Amazon Web Services resource for the sync status with the Git
-     * repository.</p>
-     */
-    inline const Aws::String& GetResourceName() const{ return m_resourceName; }
-    inline bool ResourceNameHasBeenSet() const { return m_resourceNameHasBeenSet; }
-    inline void SetResourceName(const Aws::String& value) { m_resourceNameHasBeenSet = true; m_resourceName = value; }
-    inline void SetResourceName(Aws::String&& value) { m_resourceNameHasBeenSet = true; m_resourceName = std::move(value); }
-    inline void SetResourceName(const char* value) { m_resourceNameHasBeenSet = true; m_resourceName.assign(value); }
-    inline GetResourceSyncStatusRequest& WithResourceName(const Aws::String& value) { SetResourceName(value); return *this;}
-    inline GetResourceSyncStatusRequest& WithResourceName(Aws::String&& value) { SetResourceName(std::move(value)); return *this;}
-    inline GetResourceSyncStatusRequest& WithResourceName(const char* value) { SetResourceName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The sync type for the sync status with the Git repository.</p>
-     */
-    inline const SyncConfigurationType& GetSyncType() const{ return m_syncType; }
-    inline bool SyncTypeHasBeenSet() const { return m_syncTypeHasBeenSet; }
-    inline void SetSyncType(const SyncConfigurationType& value) { m_syncTypeHasBeenSet = true; m_syncType = value; }
-    inline void SetSyncType(SyncConfigurationType&& value) { m_syncTypeHasBeenSet = true; m_syncType = std::move(value); }
-    inline GetResourceSyncStatusRequest& WithSyncType(const SyncConfigurationType& value) { SetSyncType(value); return *this;}
-    inline GetResourceSyncStatusRequest& WithSyncType(SyncConfigurationType&& value) { SetSyncType(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_resourceName;
-    bool m_resourceNameHasBeenSet = false;
-
-    SyncConfigurationType m_syncType;
-    bool m_syncTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeStarconnections
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeStarconnections
+}  // namespace Aws

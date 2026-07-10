@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/NetworkInsightsPath.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CreateNetworkInsightsPathResponse
-  {
-  public:
-    AWS_EC2_API CreateNetworkInsightsPathResponse();
-    AWS_EC2_API CreateNetworkInsightsPathResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateNetworkInsightsPathResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CreateNetworkInsightsPathResponse {
+ public:
+  AWS_EC2_API CreateNetworkInsightsPathResponse() = default;
+  AWS_EC2_API CreateNetworkInsightsPathResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateNetworkInsightsPathResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the path.</p>
+   */
+  inline const NetworkInsightsPath& GetNetworkInsightsPath() const { return m_networkInsightsPath; }
+  template <typename NetworkInsightsPathT = NetworkInsightsPath>
+  void SetNetworkInsightsPath(NetworkInsightsPathT&& value) {
+    m_networkInsightsPathHasBeenSet = true;
+    m_networkInsightsPath = std::forward<NetworkInsightsPathT>(value);
+  }
+  template <typename NetworkInsightsPathT = NetworkInsightsPath>
+  CreateNetworkInsightsPathResponse& WithNetworkInsightsPath(NetworkInsightsPathT&& value) {
+    SetNetworkInsightsPath(std::forward<NetworkInsightsPathT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the path.</p>
-     */
-    inline const NetworkInsightsPath& GetNetworkInsightsPath() const{ return m_networkInsightsPath; }
-    inline void SetNetworkInsightsPath(const NetworkInsightsPath& value) { m_networkInsightsPath = value; }
-    inline void SetNetworkInsightsPath(NetworkInsightsPath&& value) { m_networkInsightsPath = std::move(value); }
-    inline CreateNetworkInsightsPathResponse& WithNetworkInsightsPath(const NetworkInsightsPath& value) { SetNetworkInsightsPath(value); return *this;}
-    inline CreateNetworkInsightsPathResponse& WithNetworkInsightsPath(NetworkInsightsPath&& value) { SetNetworkInsightsPath(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateNetworkInsightsPathResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateNetworkInsightsPathResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateNetworkInsightsPathResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    NetworkInsightsPath m_networkInsightsPath;
+ private:
+  NetworkInsightsPath m_networkInsightsPath;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_networkInsightsPathHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -5,63 +5,71 @@
 
 #pragma once
 #include <aws/backup-gateway/BackupGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BackupGateway
-{
-namespace Model
-{
-  class PutHypervisorPropertyMappingsResult
-  {
-  public:
-    AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult();
-    AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BackupGateway {
+namespace Model {
+class PutHypervisorPropertyMappingsResult {
+ public:
+  AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult() = default;
+  AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUPGATEWAY_API PutHypervisorPropertyMappingsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the hypervisor.</p>
+   */
+  inline const Aws::String& GetHypervisorArn() const { return m_hypervisorArn; }
+  template <typename HypervisorArnT = Aws::String>
+  void SetHypervisorArn(HypervisorArnT&& value) {
+    m_hypervisorArnHasBeenSet = true;
+    m_hypervisorArn = std::forward<HypervisorArnT>(value);
+  }
+  template <typename HypervisorArnT = Aws::String>
+  PutHypervisorPropertyMappingsResult& WithHypervisorArn(HypervisorArnT&& value) {
+    SetHypervisorArn(std::forward<HypervisorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the hypervisor.</p>
-     */
-    inline const Aws::String& GetHypervisorArn() const{ return m_hypervisorArn; }
-    inline void SetHypervisorArn(const Aws::String& value) { m_hypervisorArn = value; }
-    inline void SetHypervisorArn(Aws::String&& value) { m_hypervisorArn = std::move(value); }
-    inline void SetHypervisorArn(const char* value) { m_hypervisorArn.assign(value); }
-    inline PutHypervisorPropertyMappingsResult& WithHypervisorArn(const Aws::String& value) { SetHypervisorArn(value); return *this;}
-    inline PutHypervisorPropertyMappingsResult& WithHypervisorArn(Aws::String&& value) { SetHypervisorArn(std::move(value)); return *this;}
-    inline PutHypervisorPropertyMappingsResult& WithHypervisorArn(const char* value) { SetHypervisorArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutHypervisorPropertyMappingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutHypervisorPropertyMappingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutHypervisorPropertyMappingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutHypervisorPropertyMappingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_hypervisorArn;
+ private:
+  Aws::String m_hypervisorArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hypervisorArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace BackupGateway
+}  // namespace Aws

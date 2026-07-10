@@ -4,118 +4,132 @@
  */
 
 #pragma once
-#include <aws/eks/EKS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/eks/EKS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EKS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EKS {
+namespace Model {
 
+/**
+ * <p>At least one of your specified cluster subnets is in an Availability Zone
+ * that does not support Amazon EKS. The exception output specifies the supported
+ * Availability Zones for your account, from which you can choose subnets for your
+ * cluster.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/UnsupportedAvailabilityZoneException">AWS
+ * API Reference</a></p>
+ */
+class UnsupportedAvailabilityZoneException {
+ public:
+  AWS_EKS_API UnsupportedAvailabilityZoneException() = default;
+  AWS_EKS_API UnsupportedAvailabilityZoneException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API UnsupportedAvailabilityZoneException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
    * <p>At least one of your specified cluster subnets is in an Availability Zone
    * that does not support Amazon EKS. The exception output specifies the supported
    * Availability Zones for your account, from which you can choose subnets for your
-   * cluster.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/UnsupportedAvailabilityZoneException">AWS
-   * API Reference</a></p>
+   * cluster.</p>
    */
-  class UnsupportedAvailabilityZoneException
-  {
-  public:
-    AWS_EKS_API UnsupportedAvailabilityZoneException();
-    AWS_EKS_API UnsupportedAvailabilityZoneException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API UnsupportedAvailabilityZoneException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  UnsupportedAvailabilityZoneException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon EKS cluster associated with the exception.</p>
+   */
+  inline const Aws::String& GetClusterName() const { return m_clusterName; }
+  inline bool ClusterNameHasBeenSet() const { return m_clusterNameHasBeenSet; }
+  template <typename ClusterNameT = Aws::String>
+  void SetClusterName(ClusterNameT&& value) {
+    m_clusterNameHasBeenSet = true;
+    m_clusterName = std::forward<ClusterNameT>(value);
+  }
+  template <typename ClusterNameT = Aws::String>
+  UnsupportedAvailabilityZoneException& WithClusterName(ClusterNameT&& value) {
+    SetClusterName(std::forward<ClusterNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>At least one of your specified cluster subnets is in an Availability Zone
-     * that does not support Amazon EKS. The exception output specifies the supported
-     * Availability Zones for your account, from which you can choose subnets for your
-     * cluster.</p>
-     */
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline UnsupportedAvailabilityZoneException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon EKS managed node group associated with the exception.</p>
+   */
+  inline const Aws::String& GetNodegroupName() const { return m_nodegroupName; }
+  inline bool NodegroupNameHasBeenSet() const { return m_nodegroupNameHasBeenSet; }
+  template <typename NodegroupNameT = Aws::String>
+  void SetNodegroupName(NodegroupNameT&& value) {
+    m_nodegroupNameHasBeenSet = true;
+    m_nodegroupName = std::forward<NodegroupNameT>(value);
+  }
+  template <typename NodegroupNameT = Aws::String>
+  UnsupportedAvailabilityZoneException& WithNodegroupName(NodegroupNameT&& value) {
+    SetNodegroupName(std::forward<NodegroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon EKS cluster associated with the exception.</p>
-     */
-    inline const Aws::String& GetClusterName() const{ return m_clusterName; }
-    inline bool ClusterNameHasBeenSet() const { return m_clusterNameHasBeenSet; }
-    inline void SetClusterName(const Aws::String& value) { m_clusterNameHasBeenSet = true; m_clusterName = value; }
-    inline void SetClusterName(Aws::String&& value) { m_clusterNameHasBeenSet = true; m_clusterName = std::move(value); }
-    inline void SetClusterName(const char* value) { m_clusterNameHasBeenSet = true; m_clusterName.assign(value); }
-    inline UnsupportedAvailabilityZoneException& WithClusterName(const Aws::String& value) { SetClusterName(value); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithClusterName(Aws::String&& value) { SetClusterName(std::move(value)); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithClusterName(const char* value) { SetClusterName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The supported Availability Zones for your account. Choose subnets in these
+   * Availability Zones for your cluster.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetValidZones() const { return m_validZones; }
+  inline bool ValidZonesHasBeenSet() const { return m_validZonesHasBeenSet; }
+  template <typename ValidZonesT = Aws::Vector<Aws::String>>
+  void SetValidZones(ValidZonesT&& value) {
+    m_validZonesHasBeenSet = true;
+    m_validZones = std::forward<ValidZonesT>(value);
+  }
+  template <typename ValidZonesT = Aws::Vector<Aws::String>>
+  UnsupportedAvailabilityZoneException& WithValidZones(ValidZonesT&& value) {
+    SetValidZones(std::forward<ValidZonesT>(value));
+    return *this;
+  }
+  template <typename ValidZonesT = Aws::String>
+  UnsupportedAvailabilityZoneException& AddValidZones(ValidZonesT&& value) {
+    m_validZonesHasBeenSet = true;
+    m_validZones.emplace_back(std::forward<ValidZonesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_message;
 
-    ///@{
-    /**
-     * <p>The Amazon EKS managed node group associated with the exception.</p>
-     */
-    inline const Aws::String& GetNodegroupName() const{ return m_nodegroupName; }
-    inline bool NodegroupNameHasBeenSet() const { return m_nodegroupNameHasBeenSet; }
-    inline void SetNodegroupName(const Aws::String& value) { m_nodegroupNameHasBeenSet = true; m_nodegroupName = value; }
-    inline void SetNodegroupName(Aws::String&& value) { m_nodegroupNameHasBeenSet = true; m_nodegroupName = std::move(value); }
-    inline void SetNodegroupName(const char* value) { m_nodegroupNameHasBeenSet = true; m_nodegroupName.assign(value); }
-    inline UnsupportedAvailabilityZoneException& WithNodegroupName(const Aws::String& value) { SetNodegroupName(value); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithNodegroupName(Aws::String&& value) { SetNodegroupName(std::move(value)); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithNodegroupName(const char* value) { SetNodegroupName(value); return *this;}
-    ///@}
+  Aws::String m_clusterName;
 
-    ///@{
-    /**
-     * <p>The supported Availability Zones for your account. Choose subnets in these
-     * Availability Zones for your cluster.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetValidZones() const{ return m_validZones; }
-    inline bool ValidZonesHasBeenSet() const { return m_validZonesHasBeenSet; }
-    inline void SetValidZones(const Aws::Vector<Aws::String>& value) { m_validZonesHasBeenSet = true; m_validZones = value; }
-    inline void SetValidZones(Aws::Vector<Aws::String>&& value) { m_validZonesHasBeenSet = true; m_validZones = std::move(value); }
-    inline UnsupportedAvailabilityZoneException& WithValidZones(const Aws::Vector<Aws::String>& value) { SetValidZones(value); return *this;}
-    inline UnsupportedAvailabilityZoneException& WithValidZones(Aws::Vector<Aws::String>&& value) { SetValidZones(std::move(value)); return *this;}
-    inline UnsupportedAvailabilityZoneException& AddValidZones(const Aws::String& value) { m_validZonesHasBeenSet = true; m_validZones.push_back(value); return *this; }
-    inline UnsupportedAvailabilityZoneException& AddValidZones(Aws::String&& value) { m_validZonesHasBeenSet = true; m_validZones.push_back(std::move(value)); return *this; }
-    inline UnsupportedAvailabilityZoneException& AddValidZones(const char* value) { m_validZonesHasBeenSet = true; m_validZones.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_nodegroupName;
 
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
+  Aws::Vector<Aws::String> m_validZones;
+  bool m_messageHasBeenSet = false;
+  bool m_clusterNameHasBeenSet = false;
+  bool m_nodegroupNameHasBeenSet = false;
+  bool m_validZonesHasBeenSet = false;
+};
 
-    Aws::String m_clusterName;
-    bool m_clusterNameHasBeenSet = false;
-
-    Aws::String m_nodegroupName;
-    bool m_nodegroupNameHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_validZones;
-    bool m_validZonesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

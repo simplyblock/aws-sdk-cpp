@@ -3,85 +3,62 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/opensearchserverless/model/DeleteCollectionDetail.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/opensearchserverless/model/DeleteCollectionDetail.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace OpenSearchServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace OpenSearchServerless {
+namespace Model {
 
-DeleteCollectionDetail::DeleteCollectionDetail() : 
-    m_idHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_status(CollectionStatus::NOT_SET),
-    m_statusHasBeenSet(false)
-{
-}
+DeleteCollectionDetail::DeleteCollectionDetail(JsonView jsonValue) { *this = jsonValue; }
 
-DeleteCollectionDetail::DeleteCollectionDetail(JsonView jsonValue)
-  : DeleteCollectionDetail()
-{
-  *this = jsonValue;
-}
-
-DeleteCollectionDetail& DeleteCollectionDetail::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("id"))
-  {
+DeleteCollectionDetail& DeleteCollectionDetail::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
     m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("status"))
-  {
+  if (jsonValue.ValueExists("status")) {
     m_status = CollectionStatusMapper::GetCollectionStatusForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("deletionProtection")) {
+    m_deletionProtection = DeletionProtectionMapper::GetDeletionProtectionForName(jsonValue.GetString("deletionProtection"));
+    m_deletionProtectionHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue DeleteCollectionDetail::Jsonize() const
-{
+JsonValue DeleteCollectionDetail::Jsonize() const {
   JsonValue payload;
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("id", m_id);
-
+  if (m_idHasBeenSet) {
+    payload.WithString("id", m_id);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", CollectionStatusMapper::GetNameForCollectionStatus(m_status));
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", CollectionStatusMapper::GetNameForCollectionStatus(m_status));
+  }
+
+  if (m_deletionProtectionHasBeenSet) {
+    payload.WithString("deletionProtection", DeletionProtectionMapper::GetNameForDeletionProtection(m_deletionProtection));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

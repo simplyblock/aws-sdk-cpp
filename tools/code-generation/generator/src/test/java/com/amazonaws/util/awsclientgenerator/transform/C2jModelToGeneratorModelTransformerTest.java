@@ -44,7 +44,7 @@ public class C2jModelToGeneratorModelTransformerTest {
         assertEquals(c2jMetadata.getApiVersion(), metadata.getApiVersion());
         assertEquals(c2jMetadata.getEndpointPrefix(), metadata.getEndpointPrefix());
         assertEquals(c2jMetadata.getJsonVersion(), metadata.getJsonVersion());
-        assertEquals(c2jMetadata.getProtocol(), metadata.getProtocol());
+        assertEquals(c2jMetadata.getProtocol(), metadata.findFirstSupportedProtocol());
         assertEquals("ServiceAbbr", metadata.getNamespace());
         assertEquals(c2jMetadata.getServiceFullName(), metadata.getServiceFullName());
         assertEquals(c2jMetadata.getSignatureVersion(), metadata.getSignatureVersion());
@@ -57,7 +57,7 @@ public class C2jModelToGeneratorModelTransformerTest {
         assertEquals(c2jMetadata.getApiVersion(), metadata.getApiVersion());
         assertEquals(c2jMetadata.getEndpointPrefix(), metadata.getEndpointPrefix());
         assertEquals(c2jMetadata.getJsonVersion(), metadata.getJsonVersion());
-        assertEquals(c2jMetadata.getProtocol(), metadata.getProtocol());
+        assertEquals(c2jMetadata.getProtocol(), metadata.findFirstSupportedProtocol());
         assertEquals("ServiceAbbr", metadata.getNamespace());
         assertEquals(c2jMetadata.getServiceFullName(), metadata.getServiceFullName());
         assertEquals(c2jMetadata.getSignatureVersion(), metadata.getSignatureVersion());
@@ -84,7 +84,7 @@ public class C2jModelToGeneratorModelTransformerTest {
         assertTrue(metadata.isStandalone());
         assertTrue(metadata.isApigateway());
         assertEquals("service-abbr.execute-api", metadata.getEndpointPrefix());
-        assertEquals("application-json", metadata.getProtocol());
+        assertEquals("application-json", metadata.findFirstSupportedProtocol());
     }
 
     @Test
@@ -437,15 +437,14 @@ public class C2jModelToGeneratorModelTransformerTest {
         assertTrue(shapes.get("EventStreamShape").isEventStream());
         assertEquals("EventShape", shapes.get("EventShape").getName());
         assertTrue(shapes.get("EventShape").isEvent());
-        assertEquals("blob", shapes.get("EventShape").getEventPayloadType());
-        assertEquals("BlobShape", shapes.get("EventShape").getEventPayloadMemberName());
+        assertEquals("structure", shapes.get("EventShape").getEventPayloadType());
         assertEquals("BlobShape", shapes.get("BlobShape").getName());
         assertEquals("blob", shapes.get("BlobShape").getType());
         assertEquals(2, shapes.get("EventStreamShape").getMembers().size());
         assertEquals("EventShape", shapes.get("EventStreamShape").getMembers().get("EventShape").getShape().getName());
         assertEquals(1, shapes.get("EventShape").getMembers().size());
         assertEquals("BlobShape", shapes.get("EventShape").getMembers().get("BlobShape").getShape().getName());
-        assertTrue(shapes.get("EventShape").getMembers().get("BlobShape").isEventPayload());
+        assertFalse(shapes.get("EventShape").getMembers().get("BlobShape").isEventPayload());
 
         assertFalse(shapes.get("EventEnumShape").getMembers().get("EnumShape").isEventPayload());
         assertEquals("structure", shapes.get("EventEnumShape").getEventPayloadType());

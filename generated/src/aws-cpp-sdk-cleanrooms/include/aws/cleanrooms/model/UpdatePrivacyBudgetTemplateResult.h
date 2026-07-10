@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/PrivacyBudgetTemplate.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class UpdatePrivacyBudgetTemplateResult
-  {
-  public:
-    AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult();
-    AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class UpdatePrivacyBudgetTemplateResult {
+ public:
+  AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult() = default;
+  AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API UpdatePrivacyBudgetTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Summary of the privacy budget template.</p>
+   */
+  inline const PrivacyBudgetTemplate& GetPrivacyBudgetTemplate() const { return m_privacyBudgetTemplate; }
+  template <typename PrivacyBudgetTemplateT = PrivacyBudgetTemplate>
+  void SetPrivacyBudgetTemplate(PrivacyBudgetTemplateT&& value) {
+    m_privacyBudgetTemplateHasBeenSet = true;
+    m_privacyBudgetTemplate = std::forward<PrivacyBudgetTemplateT>(value);
+  }
+  template <typename PrivacyBudgetTemplateT = PrivacyBudgetTemplate>
+  UpdatePrivacyBudgetTemplateResult& WithPrivacyBudgetTemplate(PrivacyBudgetTemplateT&& value) {
+    SetPrivacyBudgetTemplate(std::forward<PrivacyBudgetTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Summary of the privacy budget template.</p>
-     */
-    inline const PrivacyBudgetTemplate& GetPrivacyBudgetTemplate() const{ return m_privacyBudgetTemplate; }
-    inline void SetPrivacyBudgetTemplate(const PrivacyBudgetTemplate& value) { m_privacyBudgetTemplate = value; }
-    inline void SetPrivacyBudgetTemplate(PrivacyBudgetTemplate&& value) { m_privacyBudgetTemplate = std::move(value); }
-    inline UpdatePrivacyBudgetTemplateResult& WithPrivacyBudgetTemplate(const PrivacyBudgetTemplate& value) { SetPrivacyBudgetTemplate(value); return *this;}
-    inline UpdatePrivacyBudgetTemplateResult& WithPrivacyBudgetTemplate(PrivacyBudgetTemplate&& value) { SetPrivacyBudgetTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdatePrivacyBudgetTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdatePrivacyBudgetTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdatePrivacyBudgetTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdatePrivacyBudgetTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    PrivacyBudgetTemplate m_privacyBudgetTemplate;
+ private:
+  PrivacyBudgetTemplate m_privacyBudgetTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_privacyBudgetTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

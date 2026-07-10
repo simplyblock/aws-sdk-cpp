@@ -4,261 +4,356 @@
  */
 
 #pragma once
-#include <aws/s3-crt/S3Crt_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/s3-crt/model/ServerSideEncryption.h>
-#include <aws/s3-crt/model/RequestCharged.h>
+#include <aws/s3-crt/S3Crt_EXPORTS.h>
 #include <aws/s3-crt/model/ChecksumAlgorithm.h>
+#include <aws/s3-crt/model/ChecksumType.h>
+#include <aws/s3-crt/model/RequestCharged.h>
+#include <aws/s3-crt/model/ServerSideEncryption.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Crt
-{
-namespace Model
-{
-  class CreateMultipartUploadResult
-  {
-  public:
-    AWS_S3CRT_API CreateMultipartUploadResult();
-    AWS_S3CRT_API CreateMultipartUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CRT_API CreateMultipartUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Crt {
+namespace Model {
+class CreateMultipartUploadResult {
+ public:
+  AWS_S3CRT_API CreateMultipartUploadResult() = default;
+  AWS_S3CRT_API CreateMultipartUploadResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CRT_API CreateMultipartUploadResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>If the bucket has a lifecycle rule configured with an action to abort
+   * incomplete multipart uploads and the prefix in the lifecycle rule matches the
+   * object name in the request, the response includes this header. The header
+   * indicates when the initiated multipart upload becomes eligible for an abort
+   * operation. For more information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">
+   * Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a>
+   * in the <i>Amazon S3 User Guide</i>.</p> <p>The response also includes the
+   * <code>x-amz-abort-rule-id</code> header that provides the ID of the lifecycle
+   * configuration rule that defines the abort action.</p>  <p>This
+   * functionality is not supported for directory buckets.</p>
+   */
+  inline const Aws::Utils::DateTime& GetAbortDate() const { return m_abortDate; }
+  template <typename AbortDateT = Aws::Utils::DateTime>
+  void SetAbortDate(AbortDateT&& value) {
+    m_abortDateHasBeenSet = true;
+    m_abortDate = std::forward<AbortDateT>(value);
+  }
+  template <typename AbortDateT = Aws::Utils::DateTime>
+  CreateMultipartUploadResult& WithAbortDate(AbortDateT&& value) {
+    SetAbortDate(std::forward<AbortDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the bucket has a lifecycle rule configured with an action to abort
-     * incomplete multipart uploads and the prefix in the lifecycle rule matches the
-     * object name in the request, the response includes this header. The header
-     * indicates when the initiated multipart upload becomes eligible for an abort
-     * operation. For more information, see <a
-     * href="https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config">
-     * Aborting Incomplete Multipart Uploads Using a Bucket Lifecycle Configuration</a>
-     * in the <i>Amazon S3 User Guide</i>.</p> <p>The response also includes the
-     * <code>x-amz-abort-rule-id</code> header that provides the ID of the lifecycle
-     * configuration rule that defines the abort action.</p>  <p>This
-     * functionality is not supported for directory buckets.</p> 
-     */
-    inline const Aws::Utils::DateTime& GetAbortDate() const{ return m_abortDate; }
-    inline void SetAbortDate(const Aws::Utils::DateTime& value) { m_abortDate = value; }
-    inline void SetAbortDate(Aws::Utils::DateTime&& value) { m_abortDate = std::move(value); }
-    inline CreateMultipartUploadResult& WithAbortDate(const Aws::Utils::DateTime& value) { SetAbortDate(value); return *this;}
-    inline CreateMultipartUploadResult& WithAbortDate(Aws::Utils::DateTime&& value) { SetAbortDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>This header is returned along with the <code>x-amz-abort-date</code> header.
+   * It identifies the applicable lifecycle configuration rule that defines the
+   * action to abort incomplete multipart uploads.</p>  <p>This functionality
+   * is not supported for directory buckets.</p>
+   */
+  inline const Aws::String& GetAbortRuleId() const { return m_abortRuleId; }
+  template <typename AbortRuleIdT = Aws::String>
+  void SetAbortRuleId(AbortRuleIdT&& value) {
+    m_abortRuleIdHasBeenSet = true;
+    m_abortRuleId = std::forward<AbortRuleIdT>(value);
+  }
+  template <typename AbortRuleIdT = Aws::String>
+  CreateMultipartUploadResult& WithAbortRuleId(AbortRuleIdT&& value) {
+    SetAbortRuleId(std::forward<AbortRuleIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This header is returned along with the <code>x-amz-abort-date</code> header.
-     * It identifies the applicable lifecycle configuration rule that defines the
-     * action to abort incomplete multipart uploads.</p>  <p>This functionality
-     * is not supported for directory buckets.</p> 
-     */
-    inline const Aws::String& GetAbortRuleId() const{ return m_abortRuleId; }
-    inline void SetAbortRuleId(const Aws::String& value) { m_abortRuleId = value; }
-    inline void SetAbortRuleId(Aws::String&& value) { m_abortRuleId = std::move(value); }
-    inline void SetAbortRuleId(const char* value) { m_abortRuleId.assign(value); }
-    inline CreateMultipartUploadResult& WithAbortRuleId(const Aws::String& value) { SetAbortRuleId(value); return *this;}
-    inline CreateMultipartUploadResult& WithAbortRuleId(Aws::String&& value) { SetAbortRuleId(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithAbortRuleId(const char* value) { SetAbortRuleId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the bucket to which the multipart upload was initiated. Does not
+   * return the access point ARN or access point alias if used.</p>  <p>Access
+   * points are not supported by directory buckets.</p>
+   */
+  inline const Aws::String& GetBucket() const { return m_bucket; }
+  template <typename BucketT = Aws::String>
+  void SetBucket(BucketT&& value) {
+    m_bucketHasBeenSet = true;
+    m_bucket = std::forward<BucketT>(value);
+  }
+  template <typename BucketT = Aws::String>
+  CreateMultipartUploadResult& WithBucket(BucketT&& value) {
+    SetBucket(std::forward<BucketT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the bucket to which the multipart upload was initiated. Does not
-     * return the access point ARN or access point alias if used.</p>  <p>Access
-     * points are not supported by directory buckets.</p> 
-     */
-    inline const Aws::String& GetBucket() const{ return m_bucket; }
-    inline void SetBucket(const Aws::String& value) { m_bucket = value; }
-    inline void SetBucket(Aws::String&& value) { m_bucket = std::move(value); }
-    inline void SetBucket(const char* value) { m_bucket.assign(value); }
-    inline CreateMultipartUploadResult& WithBucket(const Aws::String& value) { SetBucket(value); return *this;}
-    inline CreateMultipartUploadResult& WithBucket(Aws::String&& value) { SetBucket(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithBucket(const char* value) { SetBucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Object key for which the multipart upload was initiated.</p>
+   */
+  inline const Aws::String& GetKey() const { return m_key; }
+  template <typename KeyT = Aws::String>
+  void SetKey(KeyT&& value) {
+    m_keyHasBeenSet = true;
+    m_key = std::forward<KeyT>(value);
+  }
+  template <typename KeyT = Aws::String>
+  CreateMultipartUploadResult& WithKey(KeyT&& value) {
+    SetKey(std::forward<KeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Object key for which the multipart upload was initiated.</p>
-     */
-    inline const Aws::String& GetKey() const{ return m_key; }
-    inline void SetKey(const Aws::String& value) { m_key = value; }
-    inline void SetKey(Aws::String&& value) { m_key = std::move(value); }
-    inline void SetKey(const char* value) { m_key.assign(value); }
-    inline CreateMultipartUploadResult& WithKey(const Aws::String& value) { SetKey(value); return *this;}
-    inline CreateMultipartUploadResult& WithKey(Aws::String&& value) { SetKey(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithKey(const char* value) { SetKey(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>ID for the initiated multipart upload.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  CreateMultipartUploadResult& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>ID for the initiated multipart upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadId.assign(value); }
-    inline CreateMultipartUploadResult& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline CreateMultipartUploadResult& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The server-side encryption algorithm used when you store this object in
+   * Amazon S3 or Amazon FSx.</p>  <p>When accessing data stored in Amazon FSx
+   * file systems using S3 access points, the only valid server side encryption
+   * option is <code>aws:fsx</code>.</p>
+   */
+  inline ServerSideEncryption GetServerSideEncryption() const { return m_serverSideEncryption; }
+  inline void SetServerSideEncryption(ServerSideEncryption value) {
+    m_serverSideEncryptionHasBeenSet = true;
+    m_serverSideEncryption = value;
+  }
+  inline CreateMultipartUploadResult& WithServerSideEncryption(ServerSideEncryption value) {
+    SetServerSideEncryption(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The server-side encryption algorithm used when you store this object in
-     * Amazon S3 (for example, <code>AES256</code>, <code>aws:kms</code>).</p>
-     */
-    inline const ServerSideEncryption& GetServerSideEncryption() const{ return m_serverSideEncryption; }
-    inline void SetServerSideEncryption(const ServerSideEncryption& value) { m_serverSideEncryption = value; }
-    inline void SetServerSideEncryption(ServerSideEncryption&& value) { m_serverSideEncryption = std::move(value); }
-    inline CreateMultipartUploadResult& WithServerSideEncryption(const ServerSideEncryption& value) { SetServerSideEncryption(value); return *this;}
-    inline CreateMultipartUploadResult& WithServerSideEncryption(ServerSideEncryption&& value) { SetServerSideEncryption(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If server-side encryption with a customer-provided encryption key was
+   * requested, the response will include this header to confirm the encryption
+   * algorithm that's used.</p>  <p>This functionality is not supported for
+   * directory buckets.</p>
+   */
+  inline const Aws::String& GetSSECustomerAlgorithm() const { return m_sSECustomerAlgorithm; }
+  template <typename SSECustomerAlgorithmT = Aws::String>
+  void SetSSECustomerAlgorithm(SSECustomerAlgorithmT&& value) {
+    m_sSECustomerAlgorithmHasBeenSet = true;
+    m_sSECustomerAlgorithm = std::forward<SSECustomerAlgorithmT>(value);
+  }
+  template <typename SSECustomerAlgorithmT = Aws::String>
+  CreateMultipartUploadResult& WithSSECustomerAlgorithm(SSECustomerAlgorithmT&& value) {
+    SetSSECustomerAlgorithm(std::forward<SSECustomerAlgorithmT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If server-side encryption with a customer-provided encryption key was
-     * requested, the response will include this header to confirm the encryption
-     * algorithm that's used.</p>  <p>This functionality is not supported for
-     * directory buckets.</p> 
-     */
-    inline const Aws::String& GetSSECustomerAlgorithm() const{ return m_sSECustomerAlgorithm; }
-    inline void SetSSECustomerAlgorithm(const Aws::String& value) { m_sSECustomerAlgorithm = value; }
-    inline void SetSSECustomerAlgorithm(Aws::String&& value) { m_sSECustomerAlgorithm = std::move(value); }
-    inline void SetSSECustomerAlgorithm(const char* value) { m_sSECustomerAlgorithm.assign(value); }
-    inline CreateMultipartUploadResult& WithSSECustomerAlgorithm(const Aws::String& value) { SetSSECustomerAlgorithm(value); return *this;}
-    inline CreateMultipartUploadResult& WithSSECustomerAlgorithm(Aws::String&& value) { SetSSECustomerAlgorithm(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithSSECustomerAlgorithm(const char* value) { SetSSECustomerAlgorithm(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If server-side encryption with a customer-provided encryption key was
+   * requested, the response will include this header to provide the round-trip
+   * message integrity verification of the customer-provided encryption key.</p>
+   *  <p>This functionality is not supported for directory buckets.</p>
+   */
+  inline const Aws::String& GetSSECustomerKeyMD5() const { return m_sSECustomerKeyMD5; }
+  template <typename SSECustomerKeyMD5T = Aws::String>
+  void SetSSECustomerKeyMD5(SSECustomerKeyMD5T&& value) {
+    m_sSECustomerKeyMD5HasBeenSet = true;
+    m_sSECustomerKeyMD5 = std::forward<SSECustomerKeyMD5T>(value);
+  }
+  template <typename SSECustomerKeyMD5T = Aws::String>
+  CreateMultipartUploadResult& WithSSECustomerKeyMD5(SSECustomerKeyMD5T&& value) {
+    SetSSECustomerKeyMD5(std::forward<SSECustomerKeyMD5T>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If server-side encryption with a customer-provided encryption key was
-     * requested, the response will include this header to provide the round-trip
-     * message integrity verification of the customer-provided encryption key.</p>
-     *  <p>This functionality is not supported for directory buckets.</p> 
-     */
-    inline const Aws::String& GetSSECustomerKeyMD5() const{ return m_sSECustomerKeyMD5; }
-    inline void SetSSECustomerKeyMD5(const Aws::String& value) { m_sSECustomerKeyMD5 = value; }
-    inline void SetSSECustomerKeyMD5(Aws::String&& value) { m_sSECustomerKeyMD5 = std::move(value); }
-    inline void SetSSECustomerKeyMD5(const char* value) { m_sSECustomerKeyMD5.assign(value); }
-    inline CreateMultipartUploadResult& WithSSECustomerKeyMD5(const Aws::String& value) { SetSSECustomerKeyMD5(value); return *this;}
-    inline CreateMultipartUploadResult& WithSSECustomerKeyMD5(Aws::String&& value) { SetSSECustomerKeyMD5(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithSSECustomerKeyMD5(const char* value) { SetSSECustomerKeyMD5(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If present, indicates the ID of the KMS key that was used for object
+   * encryption.</p>
+   */
+  inline const Aws::String& GetSSEKMSKeyId() const { return m_sSEKMSKeyId; }
+  template <typename SSEKMSKeyIdT = Aws::String>
+  void SetSSEKMSKeyId(SSEKMSKeyIdT&& value) {
+    m_sSEKMSKeyIdHasBeenSet = true;
+    m_sSEKMSKeyId = std::forward<SSEKMSKeyIdT>(value);
+  }
+  template <typename SSEKMSKeyIdT = Aws::String>
+  CreateMultipartUploadResult& WithSSEKMSKeyId(SSEKMSKeyIdT&& value) {
+    SetSSEKMSKeyId(std::forward<SSEKMSKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If present, indicates the ID of the KMS key that was used for object
-     * encryption.</p>
-     */
-    inline const Aws::String& GetSSEKMSKeyId() const{ return m_sSEKMSKeyId; }
-    inline void SetSSEKMSKeyId(const Aws::String& value) { m_sSEKMSKeyId = value; }
-    inline void SetSSEKMSKeyId(Aws::String&& value) { m_sSEKMSKeyId = std::move(value); }
-    inline void SetSSEKMSKeyId(const char* value) { m_sSEKMSKeyId.assign(value); }
-    inline CreateMultipartUploadResult& WithSSEKMSKeyId(const Aws::String& value) { SetSSEKMSKeyId(value); return *this;}
-    inline CreateMultipartUploadResult& WithSSEKMSKeyId(Aws::String&& value) { SetSSEKMSKeyId(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithSSEKMSKeyId(const char* value) { SetSSEKMSKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If present, indicates the Amazon Web Services KMS Encryption Context to use
+   * for object encryption. The value of this header is a Base64 encoded string of a
+   * UTF-8 encoded JSON, which contains the encryption context as key-value
+   * pairs.</p>
+   */
+  inline const Aws::String& GetSSEKMSEncryptionContext() const { return m_sSEKMSEncryptionContext; }
+  template <typename SSEKMSEncryptionContextT = Aws::String>
+  void SetSSEKMSEncryptionContext(SSEKMSEncryptionContextT&& value) {
+    m_sSEKMSEncryptionContextHasBeenSet = true;
+    m_sSEKMSEncryptionContext = std::forward<SSEKMSEncryptionContextT>(value);
+  }
+  template <typename SSEKMSEncryptionContextT = Aws::String>
+  CreateMultipartUploadResult& WithSSEKMSEncryptionContext(SSEKMSEncryptionContextT&& value) {
+    SetSSEKMSEncryptionContext(std::forward<SSEKMSEncryptionContextT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If present, indicates the Amazon Web Services KMS Encryption Context to use
-     * for object encryption. The value of this header is a Base64-encoded string of a
-     * UTF-8 encoded JSON, which contains the encryption context as key-value
-     * pairs.</p>
-     */
-    inline const Aws::String& GetSSEKMSEncryptionContext() const{ return m_sSEKMSEncryptionContext; }
-    inline void SetSSEKMSEncryptionContext(const Aws::String& value) { m_sSEKMSEncryptionContext = value; }
-    inline void SetSSEKMSEncryptionContext(Aws::String&& value) { m_sSEKMSEncryptionContext = std::move(value); }
-    inline void SetSSEKMSEncryptionContext(const char* value) { m_sSEKMSEncryptionContext.assign(value); }
-    inline CreateMultipartUploadResult& WithSSEKMSEncryptionContext(const Aws::String& value) { SetSSEKMSEncryptionContext(value); return *this;}
-    inline CreateMultipartUploadResult& WithSSEKMSEncryptionContext(Aws::String&& value) { SetSSEKMSEncryptionContext(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithSSEKMSEncryptionContext(const char* value) { SetSSEKMSEncryptionContext(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the multipart upload uses an S3 Bucket Key for server-side
+   * encryption with Key Management Service (KMS) keys (SSE-KMS).</p>
+   */
+  inline bool GetBucketKeyEnabled() const { return m_bucketKeyEnabled; }
+  inline void SetBucketKeyEnabled(bool value) {
+    m_bucketKeyEnabledHasBeenSet = true;
+    m_bucketKeyEnabled = value;
+  }
+  inline CreateMultipartUploadResult& WithBucketKeyEnabled(bool value) {
+    SetBucketKeyEnabled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether the multipart upload uses an S3 Bucket Key for server-side
-     * encryption with Key Management Service (KMS) keys (SSE-KMS).</p>
-     */
-    inline bool GetBucketKeyEnabled() const{ return m_bucketKeyEnabled; }
-    inline void SetBucketKeyEnabled(bool value) { m_bucketKeyEnabled = value; }
-    inline CreateMultipartUploadResult& WithBucketKeyEnabled(bool value) { SetBucketKeyEnabled(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const RequestCharged& GetRequestCharged() const{ return m_requestCharged; }
-    inline void SetRequestCharged(const RequestCharged& value) { m_requestCharged = value; }
-    inline void SetRequestCharged(RequestCharged&& value) { m_requestCharged = std::move(value); }
-    inline CreateMultipartUploadResult& WithRequestCharged(const RequestCharged& value) { SetRequestCharged(value); return *this;}
-    inline CreateMultipartUploadResult& WithRequestCharged(RequestCharged&& value) { SetRequestCharged(std::move(value)); return *this;}
-    ///@}
+  inline RequestCharged GetRequestCharged() const { return m_requestCharged; }
+  inline void SetRequestCharged(RequestCharged value) {
+    m_requestChargedHasBeenSet = true;
+    m_requestCharged = value;
+  }
+  inline CreateMultipartUploadResult& WithRequestCharged(RequestCharged value) {
+    SetRequestCharged(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The algorithm that was used to create a checksum of the object.</p>
-     */
-    inline const ChecksumAlgorithm& GetChecksumAlgorithm() const{ return m_checksumAlgorithm; }
-    inline void SetChecksumAlgorithm(const ChecksumAlgorithm& value) { m_checksumAlgorithm = value; }
-    inline void SetChecksumAlgorithm(ChecksumAlgorithm&& value) { m_checksumAlgorithm = std::move(value); }
-    inline CreateMultipartUploadResult& WithChecksumAlgorithm(const ChecksumAlgorithm& value) { SetChecksumAlgorithm(value); return *this;}
-    inline CreateMultipartUploadResult& WithChecksumAlgorithm(ChecksumAlgorithm&& value) { SetChecksumAlgorithm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The algorithm that was used to create a checksum of the object.</p>
+   */
+  inline ChecksumAlgorithm GetChecksumAlgorithm() const { return m_checksumAlgorithm; }
+  inline void SetChecksumAlgorithm(ChecksumAlgorithm value) {
+    m_checksumAlgorithmHasBeenSet = true;
+    m_checksumAlgorithm = value;
+  }
+  inline CreateMultipartUploadResult& WithChecksumAlgorithm(ChecksumAlgorithm value) {
+    SetChecksumAlgorithm(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateMultipartUploadResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateMultipartUploadResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateMultipartUploadResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p> Indicates the checksum type that you want Amazon S3 to use to calculate the
+   * object’s checksum value. For more information, see <a
+   * href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html">Checking
+   * object integrity in the Amazon S3 User Guide</a>.</p>
+   */
+  inline ChecksumType GetChecksumType() const { return m_checksumType; }
+  inline void SetChecksumType(ChecksumType value) {
+    m_checksumTypeHasBeenSet = true;
+    m_checksumType = value;
+  }
+  inline CreateMultipartUploadResult& WithChecksumType(ChecksumType value) {
+    SetChecksumType(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::Utils::DateTime m_abortDate;
+  ///@{
 
-    Aws::String m_abortRuleId;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateMultipartUploadResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_bucket;
+ private:
+  Aws::Utils::DateTime m_abortDate{};
 
-    Aws::String m_key;
+  Aws::String m_abortRuleId;
 
-    Aws::String m_uploadId;
+  Aws::String m_bucket;
 
-    ServerSideEncryption m_serverSideEncryption;
+  Aws::String m_key;
 
-    Aws::String m_sSECustomerAlgorithm;
+  Aws::String m_uploadId;
 
-    Aws::String m_sSECustomerKeyMD5;
+  ServerSideEncryption m_serverSideEncryption{ServerSideEncryption::NOT_SET};
 
-    Aws::String m_sSEKMSKeyId;
+  Aws::String m_sSECustomerAlgorithm;
 
-    Aws::String m_sSEKMSEncryptionContext;
+  Aws::String m_sSECustomerKeyMD5;
 
-    bool m_bucketKeyEnabled;
+  Aws::String m_sSEKMSKeyId;
 
-    RequestCharged m_requestCharged;
+  Aws::String m_sSEKMSEncryptionContext;
 
-    ChecksumAlgorithm m_checksumAlgorithm;
+  bool m_bucketKeyEnabled{false};
 
-    Aws::String m_requestId;
-  };
+  RequestCharged m_requestCharged{RequestCharged::NOT_SET};
 
-} // namespace Model
-} // namespace S3Crt
-} // namespace Aws
+  ChecksumAlgorithm m_checksumAlgorithm{ChecksumAlgorithm::NOT_SET};
+
+  ChecksumType m_checksumType{ChecksumType::NOT_SET};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_abortDateHasBeenSet = false;
+  bool m_abortRuleIdHasBeenSet = false;
+  bool m_bucketHasBeenSet = false;
+  bool m_keyHasBeenSet = false;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_serverSideEncryptionHasBeenSet = false;
+  bool m_sSECustomerAlgorithmHasBeenSet = false;
+  bool m_sSECustomerKeyMD5HasBeenSet = false;
+  bool m_sSEKMSKeyIdHasBeenSet = false;
+  bool m_sSEKMSEncryptionContextHasBeenSet = false;
+  bool m_bucketKeyEnabledHasBeenSet = false;
+  bool m_requestChargedHasBeenSet = false;
+  bool m_checksumAlgorithmHasBeenSet = false;
+  bool m_checksumTypeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Crt
+}  // namespace Aws

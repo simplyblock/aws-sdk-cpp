@@ -4,86 +4,104 @@
  */
 
 #pragma once
-#include <aws/memorydb/MemoryDB_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/memorydb/MemoryDB_EXPORTS.h>
 #include <aws/memorydb/model/SubnetGroup.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace MemoryDB
-{
-namespace Model
-{
-  class DescribeSubnetGroupsResult
-  {
-  public:
-    AWS_MEMORYDB_API DescribeSubnetGroupsResult();
-    AWS_MEMORYDB_API DescribeSubnetGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MEMORYDB_API DescribeSubnetGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace MemoryDB {
+namespace Model {
+class DescribeSubnetGroupsResult {
+ public:
+  AWS_MEMORYDB_API DescribeSubnetGroupsResult() = default;
+  AWS_MEMORYDB_API DescribeSubnetGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MEMORYDB_API DescribeSubnetGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An optional argument to pass in case the total number of records exceeds the
+   * value of MaxResults. If nextToken is returned, there are more results available.
+   * The value of nextToken is a unique pagination token for each page. Make the call
+   * again using the returned token to retrieve the next page. Keep all other
+   * arguments unchanged. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeSubnetGroupsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional argument to pass in case the total number of records exceeds the
-     * value of MaxResults. If nextToken is returned, there are more results available.
-     * The value of nextToken is a unique pagination token for each page. Make the call
-     * again using the returned token to retrieve the next page. Keep all other
-     * arguments unchanged. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeSubnetGroupsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeSubnetGroupsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeSubnetGroupsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of subnet groups. Each element in the list contains detailed
+   * information about one group.</p>
+   */
+  inline const Aws::Vector<SubnetGroup>& GetSubnetGroups() const { return m_subnetGroups; }
+  template <typename SubnetGroupsT = Aws::Vector<SubnetGroup>>
+  void SetSubnetGroups(SubnetGroupsT&& value) {
+    m_subnetGroupsHasBeenSet = true;
+    m_subnetGroups = std::forward<SubnetGroupsT>(value);
+  }
+  template <typename SubnetGroupsT = Aws::Vector<SubnetGroup>>
+  DescribeSubnetGroupsResult& WithSubnetGroups(SubnetGroupsT&& value) {
+    SetSubnetGroups(std::forward<SubnetGroupsT>(value));
+    return *this;
+  }
+  template <typename SubnetGroupsT = SubnetGroup>
+  DescribeSubnetGroupsResult& AddSubnetGroups(SubnetGroupsT&& value) {
+    m_subnetGroupsHasBeenSet = true;
+    m_subnetGroups.emplace_back(std::forward<SubnetGroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of subnet groups. Each element in the list contains detailed
-     * information about one group.</p>
-     */
-    inline const Aws::Vector<SubnetGroup>& GetSubnetGroups() const{ return m_subnetGroups; }
-    inline void SetSubnetGroups(const Aws::Vector<SubnetGroup>& value) { m_subnetGroups = value; }
-    inline void SetSubnetGroups(Aws::Vector<SubnetGroup>&& value) { m_subnetGroups = std::move(value); }
-    inline DescribeSubnetGroupsResult& WithSubnetGroups(const Aws::Vector<SubnetGroup>& value) { SetSubnetGroups(value); return *this;}
-    inline DescribeSubnetGroupsResult& WithSubnetGroups(Aws::Vector<SubnetGroup>&& value) { SetSubnetGroups(std::move(value)); return *this;}
-    inline DescribeSubnetGroupsResult& AddSubnetGroups(const SubnetGroup& value) { m_subnetGroups.push_back(value); return *this; }
-    inline DescribeSubnetGroupsResult& AddSubnetGroups(SubnetGroup&& value) { m_subnetGroups.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeSubnetGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeSubnetGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeSubnetGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeSubnetGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<SubnetGroup> m_subnetGroups;
+  Aws::Vector<SubnetGroup> m_subnetGroups;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_subnetGroupsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace MemoryDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace MemoryDB
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/dataexchange/model/UpdateAssetRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/dataexchange/model/UpdateAssetRequest.h>
 
 #include <utility>
 
@@ -12,27 +12,12 @@ using namespace Aws::DataExchange::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAssetRequest::UpdateAssetRequest() : 
-    m_assetIdHasBeenSet(false),
-    m_dataSetIdHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_revisionIdHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAssetRequest::SerializePayload() const
-{
+Aws::String UpdateAssetRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

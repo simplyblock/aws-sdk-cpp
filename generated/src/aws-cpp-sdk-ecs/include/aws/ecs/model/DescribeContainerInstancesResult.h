@@ -4,82 +4,111 @@
  */
 
 #pragma once
-#include <aws/ecs/ECS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ecs/ECS_EXPORTS.h>
 #include <aws/ecs/model/ContainerInstance.h>
 #include <aws/ecs/model/Failure.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
-  class DescribeContainerInstancesResult
-  {
-  public:
-    AWS_ECS_API DescribeContainerInstancesResult();
-    AWS_ECS_API DescribeContainerInstancesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ECS_API DescribeContainerInstancesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
+/**
+ * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DescribeContainerInstancesResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeContainerInstancesResult {
+ public:
+  AWS_ECS_API DescribeContainerInstancesResult() = default;
+  AWS_ECS_API DescribeContainerInstancesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ECS_API DescribeContainerInstancesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of container instances.</p>
+   */
+  inline const Aws::Vector<ContainerInstance>& GetContainerInstances() const { return m_containerInstances; }
+  template <typename ContainerInstancesT = Aws::Vector<ContainerInstance>>
+  void SetContainerInstances(ContainerInstancesT&& value) {
+    m_containerInstancesHasBeenSet = true;
+    m_containerInstances = std::forward<ContainerInstancesT>(value);
+  }
+  template <typename ContainerInstancesT = Aws::Vector<ContainerInstance>>
+  DescribeContainerInstancesResult& WithContainerInstances(ContainerInstancesT&& value) {
+    SetContainerInstances(std::forward<ContainerInstancesT>(value));
+    return *this;
+  }
+  template <typename ContainerInstancesT = ContainerInstance>
+  DescribeContainerInstancesResult& AddContainerInstances(ContainerInstancesT&& value) {
+    m_containerInstancesHasBeenSet = true;
+    m_containerInstances.emplace_back(std::forward<ContainerInstancesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of container instances.</p>
-     */
-    inline const Aws::Vector<ContainerInstance>& GetContainerInstances() const{ return m_containerInstances; }
-    inline void SetContainerInstances(const Aws::Vector<ContainerInstance>& value) { m_containerInstances = value; }
-    inline void SetContainerInstances(Aws::Vector<ContainerInstance>&& value) { m_containerInstances = std::move(value); }
-    inline DescribeContainerInstancesResult& WithContainerInstances(const Aws::Vector<ContainerInstance>& value) { SetContainerInstances(value); return *this;}
-    inline DescribeContainerInstancesResult& WithContainerInstances(Aws::Vector<ContainerInstance>&& value) { SetContainerInstances(std::move(value)); return *this;}
-    inline DescribeContainerInstancesResult& AddContainerInstances(const ContainerInstance& value) { m_containerInstances.push_back(value); return *this; }
-    inline DescribeContainerInstancesResult& AddContainerInstances(ContainerInstance&& value) { m_containerInstances.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Any failures associated with the call.</p>
+   */
+  inline const Aws::Vector<Failure>& GetFailures() const { return m_failures; }
+  template <typename FailuresT = Aws::Vector<Failure>>
+  void SetFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures = std::forward<FailuresT>(value);
+  }
+  template <typename FailuresT = Aws::Vector<Failure>>
+  DescribeContainerInstancesResult& WithFailures(FailuresT&& value) {
+    SetFailures(std::forward<FailuresT>(value));
+    return *this;
+  }
+  template <typename FailuresT = Failure>
+  DescribeContainerInstancesResult& AddFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures.emplace_back(std::forward<FailuresT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Any failures associated with the call.</p>
-     */
-    inline const Aws::Vector<Failure>& GetFailures() const{ return m_failures; }
-    inline void SetFailures(const Aws::Vector<Failure>& value) { m_failures = value; }
-    inline void SetFailures(Aws::Vector<Failure>&& value) { m_failures = std::move(value); }
-    inline DescribeContainerInstancesResult& WithFailures(const Aws::Vector<Failure>& value) { SetFailures(value); return *this;}
-    inline DescribeContainerInstancesResult& WithFailures(Aws::Vector<Failure>&& value) { SetFailures(std::move(value)); return *this;}
-    inline DescribeContainerInstancesResult& AddFailures(const Failure& value) { m_failures.push_back(value); return *this; }
-    inline DescribeContainerInstancesResult& AddFailures(Failure&& value) { m_failures.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeContainerInstancesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeContainerInstancesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeContainerInstancesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeContainerInstancesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ContainerInstance> m_containerInstances;
+ private:
+  Aws::Vector<ContainerInstance> m_containerInstances;
 
-    Aws::Vector<Failure> m_failures;
+  Aws::Vector<Failure> m_failures;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_containerInstancesHasBeenSet = false;
+  bool m_failuresHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

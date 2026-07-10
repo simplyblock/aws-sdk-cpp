@@ -4,70 +4,73 @@
  */
 
 #pragma once
-#include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/cloudfront/CloudFrontRequest.h>
+#include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CloudFront
-{
-namespace Model
-{
+namespace Aws {
+namespace CloudFront {
+namespace Model {
 
+/**
+ */
+class GetRealtimeLogConfig2020_05_31Request : public CloudFrontRequest {
+ public:
+  AWS_CLOUDFRONT_API GetRealtimeLogConfig2020_05_31Request() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetRealtimeLogConfig"; }
+
+  AWS_CLOUDFRONT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The name of the real-time log configuration to get.</p>
    */
-  class GetRealtimeLogConfig2020_05_31Request : public CloudFrontRequest
-  {
-  public:
-    AWS_CLOUDFRONT_API GetRealtimeLogConfig2020_05_31Request();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  GetRealtimeLogConfig2020_05_31Request& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetRealtimeLogConfig"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the real-time log configuration to get.</p>
+   */
+  inline const Aws::String& GetARN() const { return m_aRN; }
+  inline bool ARNHasBeenSet() const { return m_aRNHasBeenSet; }
+  template <typename ARNT = Aws::String>
+  void SetARN(ARNT&& value) {
+    m_aRNHasBeenSet = true;
+    m_aRN = std::forward<ARNT>(value);
+  }
+  template <typename ARNT = Aws::String>
+  GetRealtimeLogConfig2020_05_31Request& WithARN(ARNT&& value) {
+    SetARN(std::forward<ARNT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    AWS_CLOUDFRONT_API Aws::String SerializePayload() const override;
+  Aws::String m_aRN;
+  bool m_nameHasBeenSet = false;
+  bool m_aRNHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The name of the real-time log configuration to get.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline GetRealtimeLogConfig2020_05_31Request& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline GetRealtimeLogConfig2020_05_31Request& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline GetRealtimeLogConfig2020_05_31Request& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the real-time log configuration to get.</p>
-     */
-    inline const Aws::String& GetARN() const{ return m_aRN; }
-    inline bool ARNHasBeenSet() const { return m_aRNHasBeenSet; }
-    inline void SetARN(const Aws::String& value) { m_aRNHasBeenSet = true; m_aRN = value; }
-    inline void SetARN(Aws::String&& value) { m_aRNHasBeenSet = true; m_aRN = std::move(value); }
-    inline void SetARN(const char* value) { m_aRNHasBeenSet = true; m_aRN.assign(value); }
-    inline GetRealtimeLogConfig2020_05_31Request& WithARN(const Aws::String& value) { SetARN(value); return *this;}
-    inline GetRealtimeLogConfig2020_05_31Request& WithARN(Aws::String&& value) { SetARN(std::move(value)); return *this;}
-    inline GetRealtimeLogConfig2020_05_31Request& WithARN(const char* value) { SetARN(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_aRN;
-    bool m_aRNHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

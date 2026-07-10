@@ -4,114 +4,140 @@
  */
 
 #pragma once
-#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/glue/Glue_EXPORTS.h>
 #include <aws/glue/model/AggregateOperation.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Glue
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Glue {
+namespace Model {
 
+/**
+ * <p>Specifies a transform that groups rows by chosen fields and computes the
+ * aggregated value by specified function.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Aggregate">AWS API
+ * Reference</a></p>
+ */
+class Aggregate {
+ public:
+  AWS_GLUE_API Aggregate() = default;
+  AWS_GLUE_API Aggregate(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aggregate& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Specifies a transform that groups rows by chosen fields and computes the
-   * aggregated value by specified function.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Aggregate">AWS API
-   * Reference</a></p>
+   * <p>The name of the transform node.</p>
    */
-  class Aggregate
-  {
-  public:
-    AWS_GLUE_API Aggregate();
-    AWS_GLUE_API Aggregate(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aggregate& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GLUE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  Aggregate& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies the fields and rows to use as inputs for the aggregate
+   * transform.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetInputs() const { return m_inputs; }
+  inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  void SetInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs = std::forward<InputsT>(value);
+  }
+  template <typename InputsT = Aws::Vector<Aws::String>>
+  Aggregate& WithInputs(InputsT&& value) {
+    SetInputs(std::forward<InputsT>(value));
+    return *this;
+  }
+  template <typename InputsT = Aws::String>
+  Aggregate& AddInputs(InputsT&& value) {
+    m_inputsHasBeenSet = true;
+    m_inputs.emplace_back(std::forward<InputsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the transform node.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline Aggregate& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline Aggregate& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline Aggregate& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the fields to group by.</p>
+   */
+  inline const Aws::Vector<Aws::Vector<Aws::String>>& GetGroups() const { return m_groups; }
+  inline bool GroupsHasBeenSet() const { return m_groupsHasBeenSet; }
+  template <typename GroupsT = Aws::Vector<Aws::Vector<Aws::String>>>
+  void SetGroups(GroupsT&& value) {
+    m_groupsHasBeenSet = true;
+    m_groups = std::forward<GroupsT>(value);
+  }
+  template <typename GroupsT = Aws::Vector<Aws::Vector<Aws::String>>>
+  Aggregate& WithGroups(GroupsT&& value) {
+    SetGroups(std::forward<GroupsT>(value));
+    return *this;
+  }
+  template <typename GroupsT = Aws::Vector<Aws::String>>
+  Aggregate& AddGroups(GroupsT&& value) {
+    m_groupsHasBeenSet = true;
+    m_groups.emplace_back(std::forward<GroupsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies the fields and rows to use as inputs for the aggregate
-     * transform.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetInputs() const{ return m_inputs; }
-    inline bool InputsHasBeenSet() const { return m_inputsHasBeenSet; }
-    inline void SetInputs(const Aws::Vector<Aws::String>& value) { m_inputsHasBeenSet = true; m_inputs = value; }
-    inline void SetInputs(Aws::Vector<Aws::String>&& value) { m_inputsHasBeenSet = true; m_inputs = std::move(value); }
-    inline Aggregate& WithInputs(const Aws::Vector<Aws::String>& value) { SetInputs(value); return *this;}
-    inline Aggregate& WithInputs(Aws::Vector<Aws::String>&& value) { SetInputs(std::move(value)); return *this;}
-    inline Aggregate& AddInputs(const Aws::String& value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    inline Aggregate& AddInputs(Aws::String&& value) { m_inputsHasBeenSet = true; m_inputs.push_back(std::move(value)); return *this; }
-    inline Aggregate& AddInputs(const char* value) { m_inputsHasBeenSet = true; m_inputs.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the aggregate functions to be performed on specified fields. </p>
+   */
+  inline const Aws::Vector<AggregateOperation>& GetAggs() const { return m_aggs; }
+  inline bool AggsHasBeenSet() const { return m_aggsHasBeenSet; }
+  template <typename AggsT = Aws::Vector<AggregateOperation>>
+  void SetAggs(AggsT&& value) {
+    m_aggsHasBeenSet = true;
+    m_aggs = std::forward<AggsT>(value);
+  }
+  template <typename AggsT = Aws::Vector<AggregateOperation>>
+  Aggregate& WithAggs(AggsT&& value) {
+    SetAggs(std::forward<AggsT>(value));
+    return *this;
+  }
+  template <typename AggsT = AggregateOperation>
+  Aggregate& AddAggs(AggsT&& value) {
+    m_aggsHasBeenSet = true;
+    m_aggs.emplace_back(std::forward<AggsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>Specifies the fields to group by.</p>
-     */
-    inline const Aws::Vector<Aws::Vector<Aws::String>>& GetGroups() const{ return m_groups; }
-    inline bool GroupsHasBeenSet() const { return m_groupsHasBeenSet; }
-    inline void SetGroups(const Aws::Vector<Aws::Vector<Aws::String>>& value) { m_groupsHasBeenSet = true; m_groups = value; }
-    inline void SetGroups(Aws::Vector<Aws::Vector<Aws::String>>&& value) { m_groupsHasBeenSet = true; m_groups = std::move(value); }
-    inline Aggregate& WithGroups(const Aws::Vector<Aws::Vector<Aws::String>>& value) { SetGroups(value); return *this;}
-    inline Aggregate& WithGroups(Aws::Vector<Aws::Vector<Aws::String>>&& value) { SetGroups(std::move(value)); return *this;}
-    inline Aggregate& AddGroups(const Aws::Vector<Aws::String>& value) { m_groupsHasBeenSet = true; m_groups.push_back(value); return *this; }
-    inline Aggregate& AddGroups(Aws::Vector<Aws::String>&& value) { m_groupsHasBeenSet = true; m_groups.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<Aws::String> m_inputs;
 
-    ///@{
-    /**
-     * <p>Specifies the aggregate functions to be performed on specified fields. </p>
-     */
-    inline const Aws::Vector<AggregateOperation>& GetAggs() const{ return m_aggs; }
-    inline bool AggsHasBeenSet() const { return m_aggsHasBeenSet; }
-    inline void SetAggs(const Aws::Vector<AggregateOperation>& value) { m_aggsHasBeenSet = true; m_aggs = value; }
-    inline void SetAggs(Aws::Vector<AggregateOperation>&& value) { m_aggsHasBeenSet = true; m_aggs = std::move(value); }
-    inline Aggregate& WithAggs(const Aws::Vector<AggregateOperation>& value) { SetAggs(value); return *this;}
-    inline Aggregate& WithAggs(Aws::Vector<AggregateOperation>&& value) { SetAggs(std::move(value)); return *this;}
-    inline Aggregate& AddAggs(const AggregateOperation& value) { m_aggsHasBeenSet = true; m_aggs.push_back(value); return *this; }
-    inline Aggregate& AddAggs(AggregateOperation&& value) { m_aggsHasBeenSet = true; m_aggs.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<Aws::Vector<Aws::String>> m_groups;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::Vector<AggregateOperation> m_aggs;
+  bool m_nameHasBeenSet = false;
+  bool m_inputsHasBeenSet = false;
+  bool m_groupsHasBeenSet = false;
+  bool m_aggsHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_inputs;
-    bool m_inputsHasBeenSet = false;
-
-    Aws::Vector<Aws::Vector<Aws::String>> m_groups;
-    bool m_groupsHasBeenSet = false;
-
-    Aws::Vector<AggregateOperation> m_aggs;
-    bool m_aggsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Glue
-} // namespace Aws
+}  // namespace Model
+}  // namespace Glue
+}  // namespace Aws

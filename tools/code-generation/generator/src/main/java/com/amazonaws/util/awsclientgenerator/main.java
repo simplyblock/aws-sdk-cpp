@@ -30,6 +30,9 @@ public class main {
     static final String INPUT_FILE_NAME = "inputfile";
     static final String ENDPOINT_RULE_SET = "endpoint-rule-set";
     static final String ENDPOINT_TESTS = "endpoint-tests";
+    static final String PROTOCOL_TESTS = "protocol-tests";
+    static final String PROTOCOL_TESTS_TYPE = "protocol-tests-type"; // ex: "input" or "output"
+    static final String PROTOCOL_TESTS_NAME = "protocol-tests-name"; // ex: "xml" or "json", ...
     static final String OUTPUT_FILE_NAME = "outputfile";
     static final String ARBITRARY_OPTION = "arbitrary";
     static final String LANGUAGE_BINDING_OPTION = "language-binding";
@@ -41,6 +44,7 @@ public class main {
     static final String LICENSE_TEXT = "license-text";
     static final String STANDALONE_OPTION = "standalone";
     static final String ENABLE_VIRTUAL_OPERATIONS = "enable-virtual-operations";
+    static final String DISABLE_SMITHY_GENERATION = "disable-smithy-generation";
     static final String USE_SMITHY_CLIENT = "use-smithy-client";
 
     public static void main(String[] args) throws IOException {
@@ -57,9 +61,7 @@ public class main {
         //AWSClientGenerator --service myService --language-binding cpp < /home/henso/someC2jFile.normal.json
         if (argPairs.containsKey(ARBITRARY_OPTION) || argPairs.containsKey(INPUT_FILE_NAME)) {
             if (!argPairs.containsKey(LANGUAGE_BINDING_OPTION) || argPairs.get(LANGUAGE_BINDING_OPTION).isEmpty()) {
-                System.err.println("Error: A language binding must be specified with the --arbitrary option.");
-                System.exit(-1);
-                return;
+                argPairs.put(LANGUAGE_BINDING_OPTION, "cpp"); // legacy argument and in fact always cpp in this project
             }
             final Set<String> ALLOWED_OPTIONS = new HashSet<>(Arrays.asList(SERVICE_OPTION, DEFAULTS_OPTION, PARTITIONS_OPTION));
             Set<String> selectedOptions = ALLOWED_OPTIONS;
@@ -85,6 +87,7 @@ public class main {
             String languageBinding = argPairs.get(LANGUAGE_BINDING_OPTION);
             String serviceName = argPairs.get(SERVICE_OPTION);
             boolean enableVirtualOperations = argPairs.containsKey(ENABLE_VIRTUAL_OPERATIONS);
+            boolean disableSmithyGeneration = argPairs.containsKey(DISABLE_SMITHY_GENERATION);
 
             String arbitraryJson = readFile(argPairs.getOrDefault(INPUT_FILE_NAME, ""));
             String endpointRules = null;
@@ -94,6 +97,18 @@ public class main {
             String endpointRuleTests = null;
             if (argPairs.containsKey(ENDPOINT_TESTS)) {
                 endpointRuleTests = readFile(argPairs.get(ENDPOINT_TESTS));
+            }
+            String protocolTests = null;
+            if (argPairs.containsKey(PROTOCOL_TESTS)) {
+                protocolTests = readFile(argPairs.get(PROTOCOL_TESTS));
+            }
+            String protocolTestsType = "";
+            if (argPairs.containsKey(PROTOCOL_TESTS_TYPE) && !argPairs.get(PROTOCOL_TESTS_TYPE).isEmpty()) {
+                protocolTestsType = argPairs.get(PROTOCOL_TESTS_TYPE);
+            }
+            String protocolTestsName = "";
+            if (argPairs.containsKey(PROTOCOL_TESTS_NAME) && !argPairs.get(PROTOCOL_TESTS_NAME).isEmpty()) {
+                protocolTestsName = argPairs.get(PROTOCOL_TESTS_NAME);
             }
 
             String outputFileName = null;
@@ -111,14 +126,23 @@ public class main {
                     if (serviceName != null && !serviceName.isEmpty()) {
                         if (!generateTests) {
                             generated = generateService(arbitraryJson, endpointRules, endpointRuleTests, languageBinding, serviceName, namespace,
-                                    licenseText, generateStandalonePackage, enableVirtualOperations, useSmithyClient);
+                                    licenseText, generateStandalonePackage, enableVirtualOperations, disableSmithyGeneration, useSmithyClient);
 
                             componentOutputName = String.format("aws-cpp-sdk-%s", serviceName);
-                        } else {
+                        } else if (argPairs.containsKey(ENDPOINT_TESTS)) {
                             generated = generateServiceTest(arbitraryJson, endpointRules, endpointRuleTests, languageBinding, serviceName, namespace,
                                     licenseText);
 
                             componentOutputName = String.format("%s-gen-tests", serviceName);
+                        } else if (argPairs.containsKey(PROTOCOL_TESTS)) {
+                            generated = generateProtocolTest(arbitraryJson, protocolTests, protocolTestsType, protocolTestsName, serviceName);
+
+                            componentOutputName = String.format("%s", serviceName);
+                        } else {
+                            generated = new ByteArrayOutputStream();
+                            componentOutputName = "";
+                            System.out.println("Unknown component to generate!");
+                            System.exit(-1);
                         }
                     } else {
                         if (generateTests) {
@@ -128,10 +152,10 @@ public class main {
 
                         if (selectedOption.equalsIgnoreCase(DEFAULTS_OPTION)) {
                             generated = generateDefaults(arbitraryJson, languageBinding, serviceName, namespace,
-                                    licenseText, generateStandalonePackage, enableVirtualOperations);
+                                    licenseText, generateStandalonePackage, enableVirtualOperations, disableSmithyGeneration);
                         } else if (selectedOption.equalsIgnoreCase(PARTITIONS_OPTION)) {
                             generated = generatePartitions(arbitraryJson, languageBinding, serviceName, namespace,
-                                    licenseText, generateStandalonePackage, enableVirtualOperations);
+                                    licenseText, generateStandalonePackage, enableVirtualOperations, disableSmithyGeneration);
                         } else {
                             System.err.println(String.format("Unsupported core component %s requested for generation", selectedOption));
                             System.exit(-1);
@@ -183,6 +207,7 @@ public class main {
                                                          String licenseText,
                                                          boolean generateStandalonePackage,
                                                          boolean enableVirtualOperations,
+                                                         boolean disableSmithyGeneration,
                                                          boolean useSmithyClient) throws Exception {
         MainGenerator generator = new MainGenerator();
         DirectFromC2jGenerator directFromC2jGenerator = new DirectFromC2jGenerator(generator);
@@ -197,6 +222,7 @@ public class main {
                 licenseText,
                 generateStandalonePackage,
                 enableVirtualOperations,
+                disableSmithyGeneration,
                 useSmithyClient);
         return outputStream;
     }
@@ -222,9 +248,26 @@ public class main {
         return outputStream;
     }
 
+    private static ByteArrayOutputStream generateProtocolTest(String c2jModelJson,
+                                                              String protocolTestsJson,
+                                                              String protocolTestsType,
+                                                              String protocolTestsName,
+                                                              String serviceName) throws Exception {
+        MainGenerator generator = new MainGenerator();
+        DirectFromC2jGenerator directFromC2jGenerator = new DirectFromC2jGenerator(generator);
+
+        ByteArrayOutputStream outputStream = directFromC2jGenerator.generateProtocolTestSourceFromModels(
+                c2jModelJson,
+                protocolTestsJson,
+                protocolTestsType,
+                protocolTestsName,
+                serviceName);
+        return outputStream;
+    }
+
     private static ByteArrayOutputStream generateDefaults(String arbitraryJson, String languageBinding, String serviceName,
                                          String namespace, String licenseText,
-                                         boolean generateStandalonePackage, boolean enableVirtualOperations) throws Exception {
+                                         boolean generateStandalonePackage, boolean enableVirtualOperations, boolean disableSmithyGeneration) throws Exception {
         MainGenerator generator = new MainGenerator();
         DirectFromC2jGenerator defaultsGenerator = new DirectFromC2jGenerator(generator);
 
@@ -234,13 +277,14 @@ public class main {
                 namespace,
                 licenseText,
                 generateStandalonePackage,
-                enableVirtualOperations);
+                enableVirtualOperations,
+                disableSmithyGeneration);
         return outputStream;
     }
 
     private static ByteArrayOutputStream generatePartitions(String arbitraryJson, String languageBinding, String serviceName,
                                                            String namespace, String licenseText,
-                                                           boolean generateStandalonePackage, boolean enableVirtualOperations) throws Exception {
+                                                           boolean generateStandalonePackage, boolean enableVirtualOperations, boolean disableSmithyGeneration) throws Exception {
         MainGenerator generator = new MainGenerator();
         DirectFromC2jGenerator defaultsGenerator = new DirectFromC2jGenerator(generator);
 
@@ -250,7 +294,8 @@ public class main {
                 namespace,
                 licenseText,
                 generateStandalonePackage,
-                enableVirtualOperations);
+                enableVirtualOperations,
+                disableSmithyGeneration);
         return outputStream;
     }
 
@@ -291,6 +336,7 @@ public class main {
 
         System.out.println("\t\t--inputfile Reads the c2j model from the file.");
         System.out.println("\t\t--outputfile Writes the generated zip archive to the file.");
+        System.out.println("\t\t--disable-smithy-generation Disable smithy-based generation (default: enabled)");
 
     }
 

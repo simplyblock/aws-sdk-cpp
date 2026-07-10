@@ -16,224 +16,307 @@
 #include <aws/marketplace-agreement/model/SupportTerm.h>
 #include <aws/marketplace-agreement/model/UsageBasedPricingTerm.h>
 #include <aws/marketplace-agreement/model/ValidityTerm.h>
+#include <aws/marketplace-agreement/model/VariablePaymentTerm.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AgreementService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AgreementService {
+namespace Model {
 
+/**
+ * <p>A subset of terms proposed by the proposer, which have been accepted by the
+ * acceptor as part of agreement creation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/AcceptedTerm">AWS
+ * API Reference</a></p>
+ */
+class AcceptedTerm {
+ public:
+  AWS_AGREEMENTSERVICE_API AcceptedTerm() = default;
+  AWS_AGREEMENTSERVICE_API AcceptedTerm(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API AcceptedTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A subset of terms proposed by the proposer, which have been accepted by the
-   * acceptor as part of agreement creation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/AcceptedTerm">AWS
-   * API Reference</a></p>
+   * <p>Defines the list of text agreements proposed to the acceptors. An example is
+   * the end user license agreement (EULA).</p>
    */
-  class AcceptedTerm
-  {
-  public:
-    AWS_AGREEMENTSERVICE_API AcceptedTerm();
-    AWS_AGREEMENTSERVICE_API AcceptedTerm(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API AcceptedTerm& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const LegalTerm& GetLegalTerm() const { return m_legalTerm; }
+  inline bool LegalTermHasBeenSet() const { return m_legalTermHasBeenSet; }
+  template <typename LegalTermT = LegalTerm>
+  void SetLegalTerm(LegalTermT&& value) {
+    m_legalTermHasBeenSet = true;
+    m_legalTerm = std::forward<LegalTermT>(value);
+  }
+  template <typename LegalTermT = LegalTerm>
+  AcceptedTerm& WithLegalTerm(LegalTermT&& value) {
+    SetLegalTerm(std::forward<LegalTermT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Defines the customer support available for the acceptors when they purchase
+   * the software.</p>
+   */
+  inline const SupportTerm& GetSupportTerm() const { return m_supportTerm; }
+  inline bool SupportTermHasBeenSet() const { return m_supportTermHasBeenSet; }
+  template <typename SupportTermT = SupportTerm>
+  void SetSupportTerm(SupportTermT&& value) {
+    m_supportTermHasBeenSet = true;
+    m_supportTerm = std::forward<SupportTermT>(value);
+  }
+  template <typename SupportTermT = SupportTerm>
+  AcceptedTerm& WithSupportTerm(SupportTermT&& value) {
+    SetSupportTerm(std::forward<SupportTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Enables you and your customers to move your existing agreements to AWS
-     * Marketplace. The customer won't be charged for product usage in AWS Marketplace
-     * because they already paid for the product outside of AWS Marketplace.</p>
-     */
-    inline const ByolPricingTerm& GetByolPricingTerm() const{ return m_byolPricingTerm; }
-    inline bool ByolPricingTermHasBeenSet() const { return m_byolPricingTermHasBeenSet; }
-    inline void SetByolPricingTerm(const ByolPricingTerm& value) { m_byolPricingTermHasBeenSet = true; m_byolPricingTerm = value; }
-    inline void SetByolPricingTerm(ByolPricingTerm&& value) { m_byolPricingTermHasBeenSet = true; m_byolPricingTerm = std::move(value); }
-    inline AcceptedTerm& WithByolPricingTerm(const ByolPricingTerm& value) { SetByolPricingTerm(value); return *this;}
-    inline AcceptedTerm& WithByolPricingTerm(ByolPricingTerm&& value) { SetByolPricingTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines that on graceful expiration of the agreement (when the agreement ends
+   * on its pre-defined end date), a new agreement will be created using the accepted
+   * terms on the existing agreement. In other words, the agreement will be renewed.
+   * Presence of <code>RenewalTerm</code> in the offer document means that
+   * auto-renewal is allowed. Buyers will have the option to accept or decline
+   * auto-renewal at the offer acceptance/agreement creation. Buyers can also change
+   * this flag from <code>True</code> to <code>False</code> or <code>False</code> to
+   * <code>True</code> at anytime during the agreement's lifecycle.</p>
+   */
+  inline const RenewalTerm& GetRenewalTerm() const { return m_renewalTerm; }
+  inline bool RenewalTermHasBeenSet() const { return m_renewalTermHasBeenSet; }
+  template <typename RenewalTermT = RenewalTerm>
+  void SetRenewalTerm(RenewalTermT&& value) {
+    m_renewalTermHasBeenSet = true;
+    m_renewalTerm = std::forward<RenewalTermT>(value);
+  }
+  template <typename RenewalTermT = RenewalTerm>
+  AcceptedTerm& WithRenewalTerm(RenewalTermT&& value) {
+    SetRenewalTerm(std::forward<RenewalTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines a prepaid payment model that allows buyers to configure the
-     * entitlements they want to purchase and the duration.</p>
-     */
-    inline const ConfigurableUpfrontPricingTerm& GetConfigurableUpfrontPricingTerm() const{ return m_configurableUpfrontPricingTerm; }
-    inline bool ConfigurableUpfrontPricingTermHasBeenSet() const { return m_configurableUpfrontPricingTermHasBeenSet; }
-    inline void SetConfigurableUpfrontPricingTerm(const ConfigurableUpfrontPricingTerm& value) { m_configurableUpfrontPricingTermHasBeenSet = true; m_configurableUpfrontPricingTerm = value; }
-    inline void SetConfigurableUpfrontPricingTerm(ConfigurableUpfrontPricingTerm&& value) { m_configurableUpfrontPricingTermHasBeenSet = true; m_configurableUpfrontPricingTerm = std::move(value); }
-    inline AcceptedTerm& WithConfigurableUpfrontPricingTerm(const ConfigurableUpfrontPricingTerm& value) { SetConfigurableUpfrontPricingTerm(value); return *this;}
-    inline AcceptedTerm& WithConfigurableUpfrontPricingTerm(ConfigurableUpfrontPricingTerm&& value) { SetConfigurableUpfrontPricingTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a usage-based pricing model (typically, pay-as-you-go pricing), where
+   * the customers are charged based on product usage.</p>
+   */
+  inline const UsageBasedPricingTerm& GetUsageBasedPricingTerm() const { return m_usageBasedPricingTerm; }
+  inline bool UsageBasedPricingTermHasBeenSet() const { return m_usageBasedPricingTermHasBeenSet; }
+  template <typename UsageBasedPricingTermT = UsageBasedPricingTerm>
+  void SetUsageBasedPricingTerm(UsageBasedPricingTermT&& value) {
+    m_usageBasedPricingTermHasBeenSet = true;
+    m_usageBasedPricingTerm = std::forward<UsageBasedPricingTermT>(value);
+  }
+  template <typename UsageBasedPricingTermT = UsageBasedPricingTerm>
+  AcceptedTerm& WithUsageBasedPricingTerm(UsageBasedPricingTermT&& value) {
+    SetUsageBasedPricingTerm(std::forward<UsageBasedPricingTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines a pre-paid pricing model where the customers are charged a fixed
-     * upfront amount.</p>
-     */
-    inline const FixedUpfrontPricingTerm& GetFixedUpfrontPricingTerm() const{ return m_fixedUpfrontPricingTerm; }
-    inline bool FixedUpfrontPricingTermHasBeenSet() const { return m_fixedUpfrontPricingTermHasBeenSet; }
-    inline void SetFixedUpfrontPricingTerm(const FixedUpfrontPricingTerm& value) { m_fixedUpfrontPricingTermHasBeenSet = true; m_fixedUpfrontPricingTerm = value; }
-    inline void SetFixedUpfrontPricingTerm(FixedUpfrontPricingTerm&& value) { m_fixedUpfrontPricingTermHasBeenSet = true; m_fixedUpfrontPricingTerm = std::move(value); }
-    inline AcceptedTerm& WithFixedUpfrontPricingTerm(const FixedUpfrontPricingTerm& value) { SetFixedUpfrontPricingTerm(value); return *this;}
-    inline AcceptedTerm& WithFixedUpfrontPricingTerm(FixedUpfrontPricingTerm&& value) { SetFixedUpfrontPricingTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a prepaid payment model that allows buyers to configure the
+   * entitlements they want to purchase and the duration.</p>
+   */
+  inline const ConfigurableUpfrontPricingTerm& GetConfigurableUpfrontPricingTerm() const { return m_configurableUpfrontPricingTerm; }
+  inline bool ConfigurableUpfrontPricingTermHasBeenSet() const { return m_configurableUpfrontPricingTermHasBeenSet; }
+  template <typename ConfigurableUpfrontPricingTermT = ConfigurableUpfrontPricingTerm>
+  void SetConfigurableUpfrontPricingTerm(ConfigurableUpfrontPricingTermT&& value) {
+    m_configurableUpfrontPricingTermHasBeenSet = true;
+    m_configurableUpfrontPricingTerm = std::forward<ConfigurableUpfrontPricingTermT>(value);
+  }
+  template <typename ConfigurableUpfrontPricingTermT = ConfigurableUpfrontPricingTerm>
+  AcceptedTerm& WithConfigurableUpfrontPricingTerm(ConfigurableUpfrontPricingTermT&& value) {
+    SetConfigurableUpfrontPricingTerm(std::forward<ConfigurableUpfrontPricingTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines a short-term free pricing model where the buyers aren’t charged
-     * anything within a specified limit.</p>
-     */
-    inline const FreeTrialPricingTerm& GetFreeTrialPricingTerm() const{ return m_freeTrialPricingTerm; }
-    inline bool FreeTrialPricingTermHasBeenSet() const { return m_freeTrialPricingTermHasBeenSet; }
-    inline void SetFreeTrialPricingTerm(const FreeTrialPricingTerm& value) { m_freeTrialPricingTermHasBeenSet = true; m_freeTrialPricingTerm = value; }
-    inline void SetFreeTrialPricingTerm(FreeTrialPricingTerm&& value) { m_freeTrialPricingTermHasBeenSet = true; m_freeTrialPricingTerm = std::move(value); }
-    inline AcceptedTerm& WithFreeTrialPricingTerm(const FreeTrialPricingTerm& value) { SetFreeTrialPricingTerm(value); return *this;}
-    inline AcceptedTerm& WithFreeTrialPricingTerm(FreeTrialPricingTerm&& value) { SetFreeTrialPricingTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Enables you and your customers to move your existing agreements to AWS
+   * Marketplace. The customer won't be charged for product usage in AWS Marketplace
+   * because they already paid for the product outside of AWS Marketplace.</p>
+   */
+  inline const ByolPricingTerm& GetByolPricingTerm() const { return m_byolPricingTerm; }
+  inline bool ByolPricingTermHasBeenSet() const { return m_byolPricingTermHasBeenSet; }
+  template <typename ByolPricingTermT = ByolPricingTerm>
+  void SetByolPricingTerm(ByolPricingTermT&& value) {
+    m_byolPricingTermHasBeenSet = true;
+    m_byolPricingTerm = std::forward<ByolPricingTermT>(value);
+  }
+  template <typename ByolPricingTermT = ByolPricingTerm>
+  AcceptedTerm& WithByolPricingTerm(ByolPricingTermT&& value) {
+    SetByolPricingTerm(std::forward<ByolPricingTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines the list of text agreements proposed to the acceptors. An example is
-     * the end user license agreement (EULA).</p>
-     */
-    inline const LegalTerm& GetLegalTerm() const{ return m_legalTerm; }
-    inline bool LegalTermHasBeenSet() const { return m_legalTermHasBeenSet; }
-    inline void SetLegalTerm(const LegalTerm& value) { m_legalTermHasBeenSet = true; m_legalTerm = value; }
-    inline void SetLegalTerm(LegalTerm&& value) { m_legalTermHasBeenSet = true; m_legalTerm = std::move(value); }
-    inline AcceptedTerm& WithLegalTerm(const LegalTerm& value) { SetLegalTerm(value); return *this;}
-    inline AcceptedTerm& WithLegalTerm(LegalTerm&& value) { SetLegalTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a pricing model where customers are charged a fixed recurring price
+   * at the end of each billing period.</p>
+   */
+  inline const RecurringPaymentTerm& GetRecurringPaymentTerm() const { return m_recurringPaymentTerm; }
+  inline bool RecurringPaymentTermHasBeenSet() const { return m_recurringPaymentTermHasBeenSet; }
+  template <typename RecurringPaymentTermT = RecurringPaymentTerm>
+  void SetRecurringPaymentTerm(RecurringPaymentTermT&& value) {
+    m_recurringPaymentTermHasBeenSet = true;
+    m_recurringPaymentTerm = std::forward<RecurringPaymentTermT>(value);
+  }
+  template <typename RecurringPaymentTermT = RecurringPaymentTerm>
+  AcceptedTerm& WithRecurringPaymentTerm(RecurringPaymentTermT&& value) {
+    SetRecurringPaymentTerm(std::forward<RecurringPaymentTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines an installment-based pricing model where customers are charged a
-     * fixed price on different dates during the agreement validity period. This is
-     * used most commonly for flexible payment schedule pricing.</p>
-     */
-    inline const PaymentScheduleTerm& GetPaymentScheduleTerm() const{ return m_paymentScheduleTerm; }
-    inline bool PaymentScheduleTermHasBeenSet() const { return m_paymentScheduleTermHasBeenSet; }
-    inline void SetPaymentScheduleTerm(const PaymentScheduleTerm& value) { m_paymentScheduleTermHasBeenSet = true; m_paymentScheduleTerm = value; }
-    inline void SetPaymentScheduleTerm(PaymentScheduleTerm&& value) { m_paymentScheduleTermHasBeenSet = true; m_paymentScheduleTerm = std::move(value); }
-    inline AcceptedTerm& WithPaymentScheduleTerm(const PaymentScheduleTerm& value) { SetPaymentScheduleTerm(value); return *this;}
-    inline AcceptedTerm& WithPaymentScheduleTerm(PaymentScheduleTerm&& value) { SetPaymentScheduleTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines the conditions that will keep an agreement created from this offer
+   * valid.</p>
+   */
+  inline const ValidityTerm& GetValidityTerm() const { return m_validityTerm; }
+  inline bool ValidityTermHasBeenSet() const { return m_validityTermHasBeenSet; }
+  template <typename ValidityTermT = ValidityTerm>
+  void SetValidityTerm(ValidityTermT&& value) {
+    m_validityTermHasBeenSet = true;
+    m_validityTerm = std::forward<ValidityTermT>(value);
+  }
+  template <typename ValidityTermT = ValidityTerm>
+  AcceptedTerm& WithValidityTerm(ValidityTermT&& value) {
+    SetValidityTerm(std::forward<ValidityTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines a pricing model where customers are charged a fixed recurring price
-     * at the end of each billing period.</p>
-     */
-    inline const RecurringPaymentTerm& GetRecurringPaymentTerm() const{ return m_recurringPaymentTerm; }
-    inline bool RecurringPaymentTermHasBeenSet() const { return m_recurringPaymentTermHasBeenSet; }
-    inline void SetRecurringPaymentTerm(const RecurringPaymentTerm& value) { m_recurringPaymentTermHasBeenSet = true; m_recurringPaymentTerm = value; }
-    inline void SetRecurringPaymentTerm(RecurringPaymentTerm&& value) { m_recurringPaymentTermHasBeenSet = true; m_recurringPaymentTerm = std::move(value); }
-    inline AcceptedTerm& WithRecurringPaymentTerm(const RecurringPaymentTerm& value) { SetRecurringPaymentTerm(value); return *this;}
-    inline AcceptedTerm& WithRecurringPaymentTerm(RecurringPaymentTerm&& value) { SetRecurringPaymentTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines an installment-based pricing model where customers are charged a
+   * fixed price on different dates during the agreement validity period. This is
+   * used most commonly for flexible payment schedule pricing.</p>
+   */
+  inline const PaymentScheduleTerm& GetPaymentScheduleTerm() const { return m_paymentScheduleTerm; }
+  inline bool PaymentScheduleTermHasBeenSet() const { return m_paymentScheduleTermHasBeenSet; }
+  template <typename PaymentScheduleTermT = PaymentScheduleTerm>
+  void SetPaymentScheduleTerm(PaymentScheduleTermT&& value) {
+    m_paymentScheduleTermHasBeenSet = true;
+    m_paymentScheduleTerm = std::forward<PaymentScheduleTermT>(value);
+  }
+  template <typename PaymentScheduleTermT = PaymentScheduleTerm>
+  AcceptedTerm& WithPaymentScheduleTerm(PaymentScheduleTermT&& value) {
+    SetPaymentScheduleTerm(std::forward<PaymentScheduleTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines that on graceful expiration of the agreement (when the agreement ends
-     * on its pre-defined end date), a new agreement will be created using the accepted
-     * terms on the existing agreement. In other words, the agreement will be renewed.
-     * Presence of <code>RenewalTerm</code> in the offer document means that
-     * auto-renewal is allowed. Buyers will have the option to accept or decline
-     * auto-renewal at the offer acceptance/agreement creation. Buyers can also change
-     * this flag from <code>True</code> to <code>False</code> or <code>False</code> to
-     * <code>True</code> at anytime during the agreement's lifecycle.</p>
-     */
-    inline const RenewalTerm& GetRenewalTerm() const{ return m_renewalTerm; }
-    inline bool RenewalTermHasBeenSet() const { return m_renewalTermHasBeenSet; }
-    inline void SetRenewalTerm(const RenewalTerm& value) { m_renewalTermHasBeenSet = true; m_renewalTerm = value; }
-    inline void SetRenewalTerm(RenewalTerm&& value) { m_renewalTermHasBeenSet = true; m_renewalTerm = std::move(value); }
-    inline AcceptedTerm& WithRenewalTerm(const RenewalTerm& value) { SetRenewalTerm(value); return *this;}
-    inline AcceptedTerm& WithRenewalTerm(RenewalTerm&& value) { SetRenewalTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a short-term free pricing model where the buyers aren’t charged
+   * anything within a specified limit.</p>
+   */
+  inline const FreeTrialPricingTerm& GetFreeTrialPricingTerm() const { return m_freeTrialPricingTerm; }
+  inline bool FreeTrialPricingTermHasBeenSet() const { return m_freeTrialPricingTermHasBeenSet; }
+  template <typename FreeTrialPricingTermT = FreeTrialPricingTerm>
+  void SetFreeTrialPricingTerm(FreeTrialPricingTermT&& value) {
+    m_freeTrialPricingTermHasBeenSet = true;
+    m_freeTrialPricingTerm = std::forward<FreeTrialPricingTermT>(value);
+  }
+  template <typename FreeTrialPricingTermT = FreeTrialPricingTerm>
+  AcceptedTerm& WithFreeTrialPricingTerm(FreeTrialPricingTermT&& value) {
+    SetFreeTrialPricingTerm(std::forward<FreeTrialPricingTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines the customer support available for the acceptors when they purchase
-     * the software.</p>
-     */
-    inline const SupportTerm& GetSupportTerm() const{ return m_supportTerm; }
-    inline bool SupportTermHasBeenSet() const { return m_supportTermHasBeenSet; }
-    inline void SetSupportTerm(const SupportTerm& value) { m_supportTermHasBeenSet = true; m_supportTerm = value; }
-    inline void SetSupportTerm(SupportTerm&& value) { m_supportTermHasBeenSet = true; m_supportTerm = std::move(value); }
-    inline AcceptedTerm& WithSupportTerm(const SupportTerm& value) { SetSupportTerm(value); return *this;}
-    inline AcceptedTerm& WithSupportTerm(SupportTerm&& value) { SetSupportTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a pre-paid pricing model where the customers are charged a fixed
+   * upfront amount.</p>
+   */
+  inline const FixedUpfrontPricingTerm& GetFixedUpfrontPricingTerm() const { return m_fixedUpfrontPricingTerm; }
+  inline bool FixedUpfrontPricingTermHasBeenSet() const { return m_fixedUpfrontPricingTermHasBeenSet; }
+  template <typename FixedUpfrontPricingTermT = FixedUpfrontPricingTerm>
+  void SetFixedUpfrontPricingTerm(FixedUpfrontPricingTermT&& value) {
+    m_fixedUpfrontPricingTermHasBeenSet = true;
+    m_fixedUpfrontPricingTerm = std::forward<FixedUpfrontPricingTermT>(value);
+  }
+  template <typename FixedUpfrontPricingTermT = FixedUpfrontPricingTerm>
+  AcceptedTerm& WithFixedUpfrontPricingTerm(FixedUpfrontPricingTermT&& value) {
+    SetFixedUpfrontPricingTerm(std::forward<FixedUpfrontPricingTermT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Defines a usage-based pricing model (typically, pay-as-you-go pricing), where
-     * the customers are charged based on product usage.</p>
-     */
-    inline const UsageBasedPricingTerm& GetUsageBasedPricingTerm() const{ return m_usageBasedPricingTerm; }
-    inline bool UsageBasedPricingTermHasBeenSet() const { return m_usageBasedPricingTermHasBeenSet; }
-    inline void SetUsageBasedPricingTerm(const UsageBasedPricingTerm& value) { m_usageBasedPricingTermHasBeenSet = true; m_usageBasedPricingTerm = value; }
-    inline void SetUsageBasedPricingTerm(UsageBasedPricingTerm&& value) { m_usageBasedPricingTermHasBeenSet = true; m_usageBasedPricingTerm = std::move(value); }
-    inline AcceptedTerm& WithUsageBasedPricingTerm(const UsageBasedPricingTerm& value) { SetUsageBasedPricingTerm(value); return *this;}
-    inline AcceptedTerm& WithUsageBasedPricingTerm(UsageBasedPricingTerm&& value) { SetUsageBasedPricingTerm(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Defines a payment model where sellers can submit variable payment requests up
+   * to a maximum charge amount, with configurable approval strategies and expiration
+   * timelines.</p>
+   */
+  inline const VariablePaymentTerm& GetVariablePaymentTerm() const { return m_variablePaymentTerm; }
+  inline bool VariablePaymentTermHasBeenSet() const { return m_variablePaymentTermHasBeenSet; }
+  template <typename VariablePaymentTermT = VariablePaymentTerm>
+  void SetVariablePaymentTerm(VariablePaymentTermT&& value) {
+    m_variablePaymentTermHasBeenSet = true;
+    m_variablePaymentTerm = std::forward<VariablePaymentTermT>(value);
+  }
+  template <typename VariablePaymentTermT = VariablePaymentTerm>
+  AcceptedTerm& WithVariablePaymentTerm(VariablePaymentTermT&& value) {
+    SetVariablePaymentTerm(std::forward<VariablePaymentTermT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  LegalTerm m_legalTerm;
 
-    ///@{
-    /**
-     * <p>Defines the conditions that will keep an agreement created from this offer
-     * valid.</p>
-     */
-    inline const ValidityTerm& GetValidityTerm() const{ return m_validityTerm; }
-    inline bool ValidityTermHasBeenSet() const { return m_validityTermHasBeenSet; }
-    inline void SetValidityTerm(const ValidityTerm& value) { m_validityTermHasBeenSet = true; m_validityTerm = value; }
-    inline void SetValidityTerm(ValidityTerm&& value) { m_validityTermHasBeenSet = true; m_validityTerm = std::move(value); }
-    inline AcceptedTerm& WithValidityTerm(const ValidityTerm& value) { SetValidityTerm(value); return *this;}
-    inline AcceptedTerm& WithValidityTerm(ValidityTerm&& value) { SetValidityTerm(std::move(value)); return *this;}
-    ///@}
-  private:
+  SupportTerm m_supportTerm;
 
-    ByolPricingTerm m_byolPricingTerm;
-    bool m_byolPricingTermHasBeenSet = false;
+  RenewalTerm m_renewalTerm;
 
-    ConfigurableUpfrontPricingTerm m_configurableUpfrontPricingTerm;
-    bool m_configurableUpfrontPricingTermHasBeenSet = false;
+  UsageBasedPricingTerm m_usageBasedPricingTerm;
 
-    FixedUpfrontPricingTerm m_fixedUpfrontPricingTerm;
-    bool m_fixedUpfrontPricingTermHasBeenSet = false;
+  ConfigurableUpfrontPricingTerm m_configurableUpfrontPricingTerm;
 
-    FreeTrialPricingTerm m_freeTrialPricingTerm;
-    bool m_freeTrialPricingTermHasBeenSet = false;
+  ByolPricingTerm m_byolPricingTerm;
 
-    LegalTerm m_legalTerm;
-    bool m_legalTermHasBeenSet = false;
+  RecurringPaymentTerm m_recurringPaymentTerm;
 
-    PaymentScheduleTerm m_paymentScheduleTerm;
-    bool m_paymentScheduleTermHasBeenSet = false;
+  ValidityTerm m_validityTerm;
 
-    RecurringPaymentTerm m_recurringPaymentTerm;
-    bool m_recurringPaymentTermHasBeenSet = false;
+  PaymentScheduleTerm m_paymentScheduleTerm;
 
-    RenewalTerm m_renewalTerm;
-    bool m_renewalTermHasBeenSet = false;
+  FreeTrialPricingTerm m_freeTrialPricingTerm;
 
-    SupportTerm m_supportTerm;
-    bool m_supportTermHasBeenSet = false;
+  FixedUpfrontPricingTerm m_fixedUpfrontPricingTerm;
 
-    UsageBasedPricingTerm m_usageBasedPricingTerm;
-    bool m_usageBasedPricingTermHasBeenSet = false;
+  VariablePaymentTerm m_variablePaymentTerm;
+  bool m_legalTermHasBeenSet = false;
+  bool m_supportTermHasBeenSet = false;
+  bool m_renewalTermHasBeenSet = false;
+  bool m_usageBasedPricingTermHasBeenSet = false;
+  bool m_configurableUpfrontPricingTermHasBeenSet = false;
+  bool m_byolPricingTermHasBeenSet = false;
+  bool m_recurringPaymentTermHasBeenSet = false;
+  bool m_validityTermHasBeenSet = false;
+  bool m_paymentScheduleTermHasBeenSet = false;
+  bool m_freeTrialPricingTermHasBeenSet = false;
+  bool m_fixedUpfrontPricingTermHasBeenSet = false;
+  bool m_variablePaymentTermHasBeenSet = false;
+};
 
-    ValidityTerm m_validityTerm;
-    bool m_validityTermHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AgreementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AgreementService
+}  // namespace Aws

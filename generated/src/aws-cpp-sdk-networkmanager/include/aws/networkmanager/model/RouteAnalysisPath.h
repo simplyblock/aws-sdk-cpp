@@ -4,75 +4,84 @@
  */
 
 #pragma once
-#include <aws/networkmanager/NetworkManager_EXPORTS.h>
-#include <aws/networkmanager/model/RouteAnalysisCompletion.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/PathComponent.h>
+#include <aws/networkmanager/model/RouteAnalysisCompletion.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
 
+/**
+ * <p>Describes a route analysis path.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/RouteAnalysisPath">AWS
+ * API Reference</a></p>
+ */
+class RouteAnalysisPath {
+ public:
+  AWS_NETWORKMANAGER_API RouteAnalysisPath() = default;
+  AWS_NETWORKMANAGER_API RouteAnalysisPath(Aws::Utils::Json::JsonView jsonValue);
+  AWS_NETWORKMANAGER_API RouteAnalysisPath& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_NETWORKMANAGER_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Describes a route analysis path.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/RouteAnalysisPath">AWS
-   * API Reference</a></p>
+   * <p>The status of the analysis at completion.</p>
    */
-  class RouteAnalysisPath
-  {
-  public:
-    AWS_NETWORKMANAGER_API RouteAnalysisPath();
-    AWS_NETWORKMANAGER_API RouteAnalysisPath(Aws::Utils::Json::JsonView jsonValue);
-    AWS_NETWORKMANAGER_API RouteAnalysisPath& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_NETWORKMANAGER_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const RouteAnalysisCompletion& GetCompletionStatus() const { return m_completionStatus; }
+  inline bool CompletionStatusHasBeenSet() const { return m_completionStatusHasBeenSet; }
+  template <typename CompletionStatusT = RouteAnalysisCompletion>
+  void SetCompletionStatus(CompletionStatusT&& value) {
+    m_completionStatusHasBeenSet = true;
+    m_completionStatus = std::forward<CompletionStatusT>(value);
+  }
+  template <typename CompletionStatusT = RouteAnalysisCompletion>
+  RouteAnalysisPath& WithCompletionStatus(CompletionStatusT&& value) {
+    SetCompletionStatus(std::forward<CompletionStatusT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The route analysis path.</p>
+   */
+  inline const Aws::Vector<PathComponent>& GetPath() const { return m_path; }
+  inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
+  template <typename PathT = Aws::Vector<PathComponent>>
+  void SetPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path = std::forward<PathT>(value);
+  }
+  template <typename PathT = Aws::Vector<PathComponent>>
+  RouteAnalysisPath& WithPath(PathT&& value) {
+    SetPath(std::forward<PathT>(value));
+    return *this;
+  }
+  template <typename PathT = PathComponent>
+  RouteAnalysisPath& AddPath(PathT&& value) {
+    m_pathHasBeenSet = true;
+    m_path.emplace_back(std::forward<PathT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  RouteAnalysisCompletion m_completionStatus;
 
-    ///@{
-    /**
-     * <p>The status of the analysis at completion.</p>
-     */
-    inline const RouteAnalysisCompletion& GetCompletionStatus() const{ return m_completionStatus; }
-    inline bool CompletionStatusHasBeenSet() const { return m_completionStatusHasBeenSet; }
-    inline void SetCompletionStatus(const RouteAnalysisCompletion& value) { m_completionStatusHasBeenSet = true; m_completionStatus = value; }
-    inline void SetCompletionStatus(RouteAnalysisCompletion&& value) { m_completionStatusHasBeenSet = true; m_completionStatus = std::move(value); }
-    inline RouteAnalysisPath& WithCompletionStatus(const RouteAnalysisCompletion& value) { SetCompletionStatus(value); return *this;}
-    inline RouteAnalysisPath& WithCompletionStatus(RouteAnalysisCompletion&& value) { SetCompletionStatus(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<PathComponent> m_path;
+  bool m_completionStatusHasBeenSet = false;
+  bool m_pathHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The route analysis path.</p>
-     */
-    inline const Aws::Vector<PathComponent>& GetPath() const{ return m_path; }
-    inline bool PathHasBeenSet() const { return m_pathHasBeenSet; }
-    inline void SetPath(const Aws::Vector<PathComponent>& value) { m_pathHasBeenSet = true; m_path = value; }
-    inline void SetPath(Aws::Vector<PathComponent>&& value) { m_pathHasBeenSet = true; m_path = std::move(value); }
-    inline RouteAnalysisPath& WithPath(const Aws::Vector<PathComponent>& value) { SetPath(value); return *this;}
-    inline RouteAnalysisPath& WithPath(Aws::Vector<PathComponent>&& value) { SetPath(std::move(value)); return *this;}
-    inline RouteAnalysisPath& AddPath(const PathComponent& value) { m_pathHasBeenSet = true; m_path.push_back(value); return *this; }
-    inline RouteAnalysisPath& AddPath(PathComponent&& value) { m_pathHasBeenSet = true; m_path.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    RouteAnalysisCompletion m_completionStatus;
-    bool m_completionStatusHasBeenSet = false;
-
-    Aws::Vector<PathComponent> m_path;
-    bool m_pathHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

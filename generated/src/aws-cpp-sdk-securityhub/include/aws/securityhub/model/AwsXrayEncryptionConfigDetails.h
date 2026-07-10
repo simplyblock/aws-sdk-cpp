@@ -4,98 +4,103 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>Information about the encryption configuration for X-Ray.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsXrayEncryptionConfigDetails">AWS
+ * API Reference</a></p>
+ */
+class AwsXrayEncryptionConfigDetails {
+ public:
+  AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails() = default;
+  AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about the encryption configuration for X-Ray.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsXrayEncryptionConfigDetails">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the KMS key that is used for encryption. Provided if
+   * <code>Type</code> is <code>KMS</code>.</p>
    */
-  class AwsXrayEncryptionConfigDetails
-  {
-  public:
-    AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails();
-    AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API AwsXrayEncryptionConfigDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetKeyId() const { return m_keyId; }
+  inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
+  template <typename KeyIdT = Aws::String>
+  void SetKeyId(KeyIdT&& value) {
+    m_keyIdHasBeenSet = true;
+    m_keyId = std::forward<KeyIdT>(value);
+  }
+  template <typename KeyIdT = Aws::String>
+  AwsXrayEncryptionConfigDetails& WithKeyId(KeyIdT&& value) {
+    SetKeyId(std::forward<KeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The current status of the encryption configuration. Valid values are
+   * <code>ACTIVE</code> or <code>UPDATING</code>.</p> <p>When <code>Status</code> is
+   * equal to <code>UPDATING</code>, X-Ray might use both the old and new
+   * encryption.</p>
+   */
+  inline const Aws::String& GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  template <typename StatusT = Aws::String>
+  void SetStatus(StatusT&& value) {
+    m_statusHasBeenSet = true;
+    m_status = std::forward<StatusT>(value);
+  }
+  template <typename StatusT = Aws::String>
+  AwsXrayEncryptionConfigDetails& WithStatus(StatusT&& value) {
+    SetStatus(std::forward<StatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The identifier of the KMS key that is used for encryption. Provided if
-     * <code>Type</code> is <code>KMS</code>.</p>
-     */
-    inline const Aws::String& GetKeyId() const{ return m_keyId; }
-    inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
-    inline void SetKeyId(const Aws::String& value) { m_keyIdHasBeenSet = true; m_keyId = value; }
-    inline void SetKeyId(Aws::String&& value) { m_keyIdHasBeenSet = true; m_keyId = std::move(value); }
-    inline void SetKeyId(const char* value) { m_keyIdHasBeenSet = true; m_keyId.assign(value); }
-    inline AwsXrayEncryptionConfigDetails& WithKeyId(const Aws::String& value) { SetKeyId(value); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithKeyId(Aws::String&& value) { SetKeyId(std::move(value)); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithKeyId(const char* value) { SetKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of encryption. <code>KMS</code> indicates that the encryption uses
+   * KMS keys. <code>NONE</code> indicates the default encryption.</p>
+   */
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  AwsXrayEncryptionConfigDetails& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_keyId;
 
-    ///@{
-    /**
-     * <p>The current status of the encryption configuration. Valid values are
-     * <code>ACTIVE</code> or <code>UPDATING</code>.</p> <p>When <code>Status</code> is
-     * equal to <code>UPDATING</code>, X-Ray might use both the old and new
-     * encryption.</p>
-     */
-    inline const Aws::String& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const Aws::String& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(Aws::String&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline void SetStatus(const char* value) { m_statusHasBeenSet = true; m_status.assign(value); }
-    inline AwsXrayEncryptionConfigDetails& WithStatus(const Aws::String& value) { SetStatus(value); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithStatus(Aws::String&& value) { SetStatus(std::move(value)); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithStatus(const char* value) { SetStatus(value); return *this;}
-    ///@}
+  Aws::String m_status;
 
-    ///@{
-    /**
-     * <p>The type of encryption. <code>KMS</code> indicates that the encryption uses
-     * KMS keys. <code>NONE</code> indicates the default encryption.</p>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline AwsXrayEncryptionConfigDetails& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline AwsXrayEncryptionConfigDetails& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_type;
+  bool m_keyIdHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    Aws::String m_keyId;
-    bool m_keyIdHasBeenSet = false;
-
-    Aws::String m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

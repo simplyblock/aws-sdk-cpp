@@ -4,88 +4,119 @@
  */
 
 #pragma once
-#include <aws/quicksight/QuickSight_EXPORTS.h>
-#include <aws/quicksight/QuickSightRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/quicksight/QuickSightRequest.h>
+#include <aws/quicksight/QuickSight_EXPORTS.h>
+#include <aws/quicksight/model/CustomInstructions.h>
 #include <aws/quicksight/model/TopicDetails.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace QuickSight {
+namespace Model {
 
+/**
+ */
+class UpdateTopicRequest : public QuickSightRequest {
+ public:
+  AWS_QUICKSIGHT_API UpdateTopicRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateTopic"; }
+
+  AWS_QUICKSIGHT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID of the Amazon Web Services account that contains the topic that you
+   * want to update.</p>
    */
-  class UpdateTopicRequest : public QuickSightRequest
-  {
-  public:
-    AWS_QUICKSIGHT_API UpdateTopicRequest();
+  inline const Aws::String& GetAwsAccountId() const { return m_awsAccountId; }
+  inline bool AwsAccountIdHasBeenSet() const { return m_awsAccountIdHasBeenSet; }
+  template <typename AwsAccountIdT = Aws::String>
+  void SetAwsAccountId(AwsAccountIdT&& value) {
+    m_awsAccountIdHasBeenSet = true;
+    m_awsAccountId = std::forward<AwsAccountIdT>(value);
+  }
+  template <typename AwsAccountIdT = Aws::String>
+  UpdateTopicRequest& WithAwsAccountId(AwsAccountIdT&& value) {
+    SetAwsAccountId(std::forward<AwsAccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateTopic"; }
+  ///@{
+  /**
+   * <p>The ID of the topic that you want to modify. This ID is unique per Amazon Web
+   * Services Region for each Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetTopicId() const { return m_topicId; }
+  inline bool TopicIdHasBeenSet() const { return m_topicIdHasBeenSet; }
+  template <typename TopicIdT = Aws::String>
+  void SetTopicId(TopicIdT&& value) {
+    m_topicIdHasBeenSet = true;
+    m_topicId = std::forward<TopicIdT>(value);
+  }
+  template <typename TopicIdT = Aws::String>
+  UpdateTopicRequest& WithTopicId(TopicIdT&& value) {
+    SetTopicId(std::forward<TopicIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_QUICKSIGHT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The definition of the topic that you want to update.</p>
+   */
+  inline const TopicDetails& GetTopic() const { return m_topic; }
+  inline bool TopicHasBeenSet() const { return m_topicHasBeenSet; }
+  template <typename TopicT = TopicDetails>
+  void SetTopic(TopicT&& value) {
+    m_topicHasBeenSet = true;
+    m_topic = std::forward<TopicT>(value);
+  }
+  template <typename TopicT = TopicDetails>
+  UpdateTopicRequest& WithTopic(TopicT&& value) {
+    SetTopic(std::forward<TopicT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Custom instructions for the topic.</p>
+   */
+  inline const CustomInstructions& GetCustomInstructions() const { return m_customInstructions; }
+  inline bool CustomInstructionsHasBeenSet() const { return m_customInstructionsHasBeenSet; }
+  template <typename CustomInstructionsT = CustomInstructions>
+  void SetCustomInstructions(CustomInstructionsT&& value) {
+    m_customInstructionsHasBeenSet = true;
+    m_customInstructions = std::forward<CustomInstructionsT>(value);
+  }
+  template <typename CustomInstructionsT = CustomInstructions>
+  UpdateTopicRequest& WithCustomInstructions(CustomInstructionsT&& value) {
+    SetCustomInstructions(std::forward<CustomInstructionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_awsAccountId;
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon Web Services account that contains the topic that you
-     * want to update.</p>
-     */
-    inline const Aws::String& GetAwsAccountId() const{ return m_awsAccountId; }
-    inline bool AwsAccountIdHasBeenSet() const { return m_awsAccountIdHasBeenSet; }
-    inline void SetAwsAccountId(const Aws::String& value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId = value; }
-    inline void SetAwsAccountId(Aws::String&& value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId = std::move(value); }
-    inline void SetAwsAccountId(const char* value) { m_awsAccountIdHasBeenSet = true; m_awsAccountId.assign(value); }
-    inline UpdateTopicRequest& WithAwsAccountId(const Aws::String& value) { SetAwsAccountId(value); return *this;}
-    inline UpdateTopicRequest& WithAwsAccountId(Aws::String&& value) { SetAwsAccountId(std::move(value)); return *this;}
-    inline UpdateTopicRequest& WithAwsAccountId(const char* value) { SetAwsAccountId(value); return *this;}
-    ///@}
+  Aws::String m_topicId;
 
-    ///@{
-    /**
-     * <p>The ID of the topic that you want to modify. This ID is unique per Amazon Web
-     * Services Region for each Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetTopicId() const{ return m_topicId; }
-    inline bool TopicIdHasBeenSet() const { return m_topicIdHasBeenSet; }
-    inline void SetTopicId(const Aws::String& value) { m_topicIdHasBeenSet = true; m_topicId = value; }
-    inline void SetTopicId(Aws::String&& value) { m_topicIdHasBeenSet = true; m_topicId = std::move(value); }
-    inline void SetTopicId(const char* value) { m_topicIdHasBeenSet = true; m_topicId.assign(value); }
-    inline UpdateTopicRequest& WithTopicId(const Aws::String& value) { SetTopicId(value); return *this;}
-    inline UpdateTopicRequest& WithTopicId(Aws::String&& value) { SetTopicId(std::move(value)); return *this;}
-    inline UpdateTopicRequest& WithTopicId(const char* value) { SetTopicId(value); return *this;}
-    ///@}
+  TopicDetails m_topic;
 
-    ///@{
-    /**
-     * <p>The definition of the topic that you want to update.</p>
-     */
-    inline const TopicDetails& GetTopic() const{ return m_topic; }
-    inline bool TopicHasBeenSet() const { return m_topicHasBeenSet; }
-    inline void SetTopic(const TopicDetails& value) { m_topicHasBeenSet = true; m_topic = value; }
-    inline void SetTopic(TopicDetails&& value) { m_topicHasBeenSet = true; m_topic = std::move(value); }
-    inline UpdateTopicRequest& WithTopic(const TopicDetails& value) { SetTopic(value); return *this;}
-    inline UpdateTopicRequest& WithTopic(TopicDetails&& value) { SetTopic(std::move(value)); return *this;}
-    ///@}
-  private:
+  CustomInstructions m_customInstructions;
+  bool m_awsAccountIdHasBeenSet = false;
+  bool m_topicIdHasBeenSet = false;
+  bool m_topicHasBeenSet = false;
+  bool m_customInstructionsHasBeenSet = false;
+};
 
-    Aws::String m_awsAccountId;
-    bool m_awsAccountIdHasBeenSet = false;
-
-    Aws::String m_topicId;
-    bool m_topicIdHasBeenSet = false;
-
-    TopicDetails m_topic;
-    bool m_topicHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

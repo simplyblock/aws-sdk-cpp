@@ -11,79 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Comprehend
-{
-namespace Model
-{
+namespace Aws {
+namespace Comprehend {
+namespace Model {
 
-DocumentClass::DocumentClass() : 
-    m_nameHasBeenSet(false),
-    m_score(0.0),
-    m_scoreHasBeenSet(false),
-    m_page(0),
-    m_pageHasBeenSet(false)
-{
-}
+DocumentClass::DocumentClass(JsonView jsonValue) { *this = jsonValue; }
 
-DocumentClass::DocumentClass(JsonView jsonValue)
-  : DocumentClass()
-{
-  *this = jsonValue;
-}
-
-DocumentClass& DocumentClass::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Name"))
-  {
+DocumentClass& DocumentClass::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Score"))
-  {
+  if (jsonValue.ValueExists("Score")) {
     m_score = jsonValue.GetDouble("Score");
-
     m_scoreHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Page"))
-  {
+  if (jsonValue.ValueExists("Page")) {
     m_page = jsonValue.GetInteger("Page");
-
     m_pageHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue DocumentClass::Jsonize() const
-{
+JsonValue DocumentClass::Jsonize() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_scoreHasBeenSet)
-  {
-   payload.WithDouble("Score", m_score);
-
+  if (m_scoreHasBeenSet) {
+    payload.WithDouble("Score", m_score);
   }
 
-  if(m_pageHasBeenSet)
-  {
-   payload.WithInteger("Page", m_page);
-
+  if (m_pageHasBeenSet) {
+    payload.WithInteger("Page", m_page);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

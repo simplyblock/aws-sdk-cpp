@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/es/model/DeleteOutboundCrossClusterSearchConnectionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/es/model/DeleteOutboundCrossClusterSearchConnectionRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::ElasticsearchService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteOutboundCrossClusterSearchConnectionRequest::DeleteOutboundCrossClusterSearchConnectionRequest() : 
-    m_crossClusterSearchConnectionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteOutboundCrossClusterSearchConnectionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteOutboundCrossClusterSearchConnectionRequest::SerializePayload() const { return {}; }

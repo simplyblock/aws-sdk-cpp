@@ -3,55 +3,37 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DescribeDBShardGroupsRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/DescribeDBShardGroupsRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-DescribeDBShardGroupsRequest::DescribeDBShardGroupsRequest() : 
-    m_dBShardGroupIdentifierHasBeenSet(false),
-    m_filtersHasBeenSet(false),
-    m_markerHasBeenSet(false),
-    m_maxRecords(0),
-    m_maxRecordsHasBeenSet(false)
-{
-}
-
-Aws::String DescribeDBShardGroupsRequest::SerializePayload() const
-{
+Aws::String DescribeDBShardGroupsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DescribeDBShardGroups&";
-  if(m_dBShardGroupIdentifierHasBeenSet)
-  {
+  if (m_dBShardGroupIdentifierHasBeenSet) {
     ss << "DBShardGroupIdentifier=" << StringUtils::URLEncode(m_dBShardGroupIdentifier.c_str()) << "&";
   }
 
-  if(m_filtersHasBeenSet)
-  {
-    if (m_filters.empty())
-    {
+  if (m_filtersHasBeenSet) {
+    if (m_filters.empty()) {
       ss << "Filters=&";
-    }
-    else
-    {
+    } else {
       unsigned filtersCount = 1;
-      for(auto& item : m_filters)
-      {
-        item.OutputToStream(ss, "Filters.member.", filtersCount, "");
+      for (auto& item : m_filters) {
+        item.OutputToStream(ss, "Filters.Filter.", filtersCount, "");
         filtersCount++;
       }
     }
   }
 
-  if(m_markerHasBeenSet)
-  {
+  if (m_markerHasBeenSet) {
     ss << "Marker=" << StringUtils::URLEncode(m_marker.c_str()) << "&";
   }
 
-  if(m_maxRecordsHasBeenSet)
-  {
+  if (m_maxRecordsHasBeenSet) {
     ss << "MaxRecords=" << m_maxRecords << "&";
   }
 
@@ -59,8 +41,4 @@ Aws::String DescribeDBShardGroupsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DescribeDBShardGroupsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DescribeDBShardGroupsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

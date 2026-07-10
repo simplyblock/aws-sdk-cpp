@@ -6,61 +6,71 @@
 #pragma once
 #include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/cloudfront/model/RealtimeLogConfigs.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFront
-{
-namespace Model
-{
-  class ListRealtimeLogConfigs2020_05_31Result
-  {
-  public:
-    AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result();
-    AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFront {
+namespace Model {
+class ListRealtimeLogConfigs2020_05_31Result {
+ public:
+  AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result() = default;
+  AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_CLOUDFRONT_API ListRealtimeLogConfigs2020_05_31Result& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A list of real-time log configurations.</p>
+   */
+  inline const RealtimeLogConfigs& GetRealtimeLogConfigs() const { return m_realtimeLogConfigs; }
+  template <typename RealtimeLogConfigsT = RealtimeLogConfigs>
+  void SetRealtimeLogConfigs(RealtimeLogConfigsT&& value) {
+    m_realtimeLogConfigsHasBeenSet = true;
+    m_realtimeLogConfigs = std::forward<RealtimeLogConfigsT>(value);
+  }
+  template <typename RealtimeLogConfigsT = RealtimeLogConfigs>
+  ListRealtimeLogConfigs2020_05_31Result& WithRealtimeLogConfigs(RealtimeLogConfigsT&& value) {
+    SetRealtimeLogConfigs(std::forward<RealtimeLogConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of real-time log configurations.</p>
-     */
-    inline const RealtimeLogConfigs& GetRealtimeLogConfigs() const{ return m_realtimeLogConfigs; }
-    inline void SetRealtimeLogConfigs(const RealtimeLogConfigs& value) { m_realtimeLogConfigs = value; }
-    inline void SetRealtimeLogConfigs(RealtimeLogConfigs&& value) { m_realtimeLogConfigs = std::move(value); }
-    inline ListRealtimeLogConfigs2020_05_31Result& WithRealtimeLogConfigs(const RealtimeLogConfigs& value) { SetRealtimeLogConfigs(value); return *this;}
-    inline ListRealtimeLogConfigs2020_05_31Result& WithRealtimeLogConfigs(RealtimeLogConfigs&& value) { SetRealtimeLogConfigs(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListRealtimeLogConfigs2020_05_31Result& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListRealtimeLogConfigs2020_05_31Result& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListRealtimeLogConfigs2020_05_31Result& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListRealtimeLogConfigs2020_05_31Result& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RealtimeLogConfigs m_realtimeLogConfigs;
+ private:
+  RealtimeLogConfigs m_realtimeLogConfigs;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_realtimeLogConfigsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

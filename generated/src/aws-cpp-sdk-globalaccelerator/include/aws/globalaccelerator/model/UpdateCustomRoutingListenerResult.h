@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/globalaccelerator/GlobalAccelerator_EXPORTS.h>
 #include <aws/globalaccelerator/model/CustomRoutingListener.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GlobalAccelerator
-{
-namespace Model
-{
-  class UpdateCustomRoutingListenerResult
-  {
-  public:
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult();
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GlobalAccelerator {
+namespace Model {
+class UpdateCustomRoutingListenerResult {
+ public:
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult() = default;
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GLOBALACCELERATOR_API UpdateCustomRoutingListenerResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information for the updated listener for a custom routing accelerator.</p>
+   */
+  inline const CustomRoutingListener& GetListener() const { return m_listener; }
+  template <typename ListenerT = CustomRoutingListener>
+  void SetListener(ListenerT&& value) {
+    m_listenerHasBeenSet = true;
+    m_listener = std::forward<ListenerT>(value);
+  }
+  template <typename ListenerT = CustomRoutingListener>
+  UpdateCustomRoutingListenerResult& WithListener(ListenerT&& value) {
+    SetListener(std::forward<ListenerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information for the updated listener for a custom routing accelerator.</p>
-     */
-    inline const CustomRoutingListener& GetListener() const{ return m_listener; }
-    inline void SetListener(const CustomRoutingListener& value) { m_listener = value; }
-    inline void SetListener(CustomRoutingListener&& value) { m_listener = std::move(value); }
-    inline UpdateCustomRoutingListenerResult& WithListener(const CustomRoutingListener& value) { SetListener(value); return *this;}
-    inline UpdateCustomRoutingListenerResult& WithListener(CustomRoutingListener&& value) { SetListener(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateCustomRoutingListenerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateCustomRoutingListenerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateCustomRoutingListenerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateCustomRoutingListenerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CustomRoutingListener m_listener;
+ private:
+  CustomRoutingListener m_listener;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_listenerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GlobalAccelerator
-} // namespace Aws
+}  // namespace Model
+}  // namespace GlobalAccelerator
+}  // namespace Aws

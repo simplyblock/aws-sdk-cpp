@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/appfabric/AppFabric_EXPORTS.h>
 #include <aws/appfabric/model/Ingestion.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppFabric
-{
-namespace Model
-{
-  class GetIngestionResult
-  {
-  public:
-    AWS_APPFABRIC_API GetIngestionResult();
-    AWS_APPFABRIC_API GetIngestionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPFABRIC_API GetIngestionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppFabric {
+namespace Model {
+class GetIngestionResult {
+ public:
+  AWS_APPFABRIC_API GetIngestionResult() = default;
+  AWS_APPFABRIC_API GetIngestionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPFABRIC_API GetIngestionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains information about an ingestion.</p>
+   */
+  inline const Ingestion& GetIngestion() const { return m_ingestion; }
+  template <typename IngestionT = Ingestion>
+  void SetIngestion(IngestionT&& value) {
+    m_ingestionHasBeenSet = true;
+    m_ingestion = std::forward<IngestionT>(value);
+  }
+  template <typename IngestionT = Ingestion>
+  GetIngestionResult& WithIngestion(IngestionT&& value) {
+    SetIngestion(std::forward<IngestionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains information about an ingestion.</p>
-     */
-    inline const Ingestion& GetIngestion() const{ return m_ingestion; }
-    inline void SetIngestion(const Ingestion& value) { m_ingestion = value; }
-    inline void SetIngestion(Ingestion&& value) { m_ingestion = std::move(value); }
-    inline GetIngestionResult& WithIngestion(const Ingestion& value) { SetIngestion(value); return *this;}
-    inline GetIngestionResult& WithIngestion(Ingestion&& value) { SetIngestion(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetIngestionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetIngestionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetIngestionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetIngestionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Ingestion m_ingestion;
+ private:
+  Ingestion m_ingestion;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ingestionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppFabric
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppFabric
+}  // namespace Aws

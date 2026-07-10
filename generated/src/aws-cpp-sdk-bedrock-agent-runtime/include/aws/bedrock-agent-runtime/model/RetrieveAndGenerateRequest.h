@@ -4,109 +4,146 @@
  */
 
 #pragma once
-#include <aws/bedrock-agent-runtime/BedrockAgentRuntime_EXPORTS.h>
 #include <aws/bedrock-agent-runtime/BedrockAgentRuntimeRequest.h>
-#include <aws/bedrock-agent-runtime/model/RetrieveAndGenerateInput.h>
+#include <aws/bedrock-agent-runtime/BedrockAgentRuntime_EXPORTS.h>
 #include <aws/bedrock-agent-runtime/model/RetrieveAndGenerateConfiguration.h>
+#include <aws/bedrock-agent-runtime/model/RetrieveAndGenerateInput.h>
 #include <aws/bedrock-agent-runtime/model/RetrieveAndGenerateSessionConfiguration.h>
+#include <aws/bedrock-agent-runtime/model/UserContext.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
+/**
+ */
+class RetrieveAndGenerateRequest : public BedrockAgentRuntimeRequest {
+ public:
+  AWS_BEDROCKAGENTRUNTIME_API RetrieveAndGenerateRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "RetrieveAndGenerate"; }
+
+  AWS_BEDROCKAGENTRUNTIME_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>Contains the query to be made to the knowledge base.</p>
    */
-  class RetrieveAndGenerateRequest : public BedrockAgentRuntimeRequest
-  {
-  public:
-    AWS_BEDROCKAGENTRUNTIME_API RetrieveAndGenerateRequest();
+  inline const RetrieveAndGenerateInput& GetInput() const { return m_input; }
+  inline bool InputHasBeenSet() const { return m_inputHasBeenSet; }
+  template <typename InputT = RetrieveAndGenerateInput>
+  void SetInput(InputT&& value) {
+    m_inputHasBeenSet = true;
+    m_input = std::forward<InputT>(value);
+  }
+  template <typename InputT = RetrieveAndGenerateInput>
+  RetrieveAndGenerateRequest& WithInput(InputT&& value) {
+    SetInput(std::forward<InputT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "RetrieveAndGenerate"; }
+  ///@{
+  /**
+   * <p>Contains configurations for the knowledge base query and retrieval process.
+   * For more information, see <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html">Query
+   * configurations</a>.</p>
+   */
+  inline const RetrieveAndGenerateConfiguration& GetRetrieveAndGenerateConfiguration() const { return m_retrieveAndGenerateConfiguration; }
+  inline bool RetrieveAndGenerateConfigurationHasBeenSet() const { return m_retrieveAndGenerateConfigurationHasBeenSet; }
+  template <typename RetrieveAndGenerateConfigurationT = RetrieveAndGenerateConfiguration>
+  void SetRetrieveAndGenerateConfiguration(RetrieveAndGenerateConfigurationT&& value) {
+    m_retrieveAndGenerateConfigurationHasBeenSet = true;
+    m_retrieveAndGenerateConfiguration = std::forward<RetrieveAndGenerateConfigurationT>(value);
+  }
+  template <typename RetrieveAndGenerateConfigurationT = RetrieveAndGenerateConfiguration>
+  RetrieveAndGenerateRequest& WithRetrieveAndGenerateConfiguration(RetrieveAndGenerateConfigurationT&& value) {
+    SetRetrieveAndGenerateConfiguration(std::forward<RetrieveAndGenerateConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_BEDROCKAGENTRUNTIME_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Contains details about the session with the knowledge base.</p>
+   */
+  inline const RetrieveAndGenerateSessionConfiguration& GetSessionConfiguration() const { return m_sessionConfiguration; }
+  inline bool SessionConfigurationHasBeenSet() const { return m_sessionConfigurationHasBeenSet; }
+  template <typename SessionConfigurationT = RetrieveAndGenerateSessionConfiguration>
+  void SetSessionConfiguration(SessionConfigurationT&& value) {
+    m_sessionConfigurationHasBeenSet = true;
+    m_sessionConfiguration = std::forward<SessionConfigurationT>(value);
+  }
+  template <typename SessionConfigurationT = RetrieveAndGenerateSessionConfiguration>
+  RetrieveAndGenerateRequest& WithSessionConfiguration(SessionConfigurationT&& value) {
+    SetSessionConfiguration(std::forward<SessionConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The unique identifier of the session. When you first make a
+   * <code>RetrieveAndGenerate</code> request, Amazon Bedrock automatically generates
+   * this value. You must reuse this value for all subsequent requests in the same
+   * conversational session. This value allows Amazon Bedrock to maintain context and
+   * knowledge from previous interactions. You can't explicitly set the
+   * <code>sessionId</code> yourself.</p>
+   */
+  inline const Aws::String& GetSessionId() const { return m_sessionId; }
+  inline bool SessionIdHasBeenSet() const { return m_sessionIdHasBeenSet; }
+  template <typename SessionIdT = Aws::String>
+  void SetSessionId(SessionIdT&& value) {
+    m_sessionIdHasBeenSet = true;
+    m_sessionId = std::forward<SessionIdT>(value);
+  }
+  template <typename SessionIdT = Aws::String>
+  RetrieveAndGenerateRequest& WithSessionId(SessionIdT&& value) {
+    SetSessionId(std::forward<SessionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains the query to be made to the knowledge base.</p>
-     */
-    inline const RetrieveAndGenerateInput& GetInput() const{ return m_input; }
-    inline bool InputHasBeenSet() const { return m_inputHasBeenSet; }
-    inline void SetInput(const RetrieveAndGenerateInput& value) { m_inputHasBeenSet = true; m_input = value; }
-    inline void SetInput(RetrieveAndGenerateInput&& value) { m_inputHasBeenSet = true; m_input = std::move(value); }
-    inline RetrieveAndGenerateRequest& WithInput(const RetrieveAndGenerateInput& value) { SetInput(value); return *this;}
-    inline RetrieveAndGenerateRequest& WithInput(RetrieveAndGenerateInput&& value) { SetInput(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Contains configurations for the knowledge base query and retrieval process.
-     * For more information, see <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html">Query
-     * configurations</a>.</p>
-     */
-    inline const RetrieveAndGenerateConfiguration& GetRetrieveAndGenerateConfiguration() const{ return m_retrieveAndGenerateConfiguration; }
-    inline bool RetrieveAndGenerateConfigurationHasBeenSet() const { return m_retrieveAndGenerateConfigurationHasBeenSet; }
-    inline void SetRetrieveAndGenerateConfiguration(const RetrieveAndGenerateConfiguration& value) { m_retrieveAndGenerateConfigurationHasBeenSet = true; m_retrieveAndGenerateConfiguration = value; }
-    inline void SetRetrieveAndGenerateConfiguration(RetrieveAndGenerateConfiguration&& value) { m_retrieveAndGenerateConfigurationHasBeenSet = true; m_retrieveAndGenerateConfiguration = std::move(value); }
-    inline RetrieveAndGenerateRequest& WithRetrieveAndGenerateConfiguration(const RetrieveAndGenerateConfiguration& value) { SetRetrieveAndGenerateConfiguration(value); return *this;}
-    inline RetrieveAndGenerateRequest& WithRetrieveAndGenerateConfiguration(RetrieveAndGenerateConfiguration&& value) { SetRetrieveAndGenerateConfiguration(std::move(value)); return *this;}
-    ///@}
+  inline const UserContext& GetUserContext() const { return m_userContext; }
+  inline bool UserContextHasBeenSet() const { return m_userContextHasBeenSet; }
+  template <typename UserContextT = UserContext>
+  void SetUserContext(UserContextT&& value) {
+    m_userContextHasBeenSet = true;
+    m_userContext = std::forward<UserContextT>(value);
+  }
+  template <typename UserContextT = UserContext>
+  RetrieveAndGenerateRequest& WithUserContext(UserContextT&& value) {
+    SetUserContext(std::forward<UserContextT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  RetrieveAndGenerateInput m_input;
 
-    ///@{
-    /**
-     * <p>Contains details about the session with the knowledge base.</p>
-     */
-    inline const RetrieveAndGenerateSessionConfiguration& GetSessionConfiguration() const{ return m_sessionConfiguration; }
-    inline bool SessionConfigurationHasBeenSet() const { return m_sessionConfigurationHasBeenSet; }
-    inline void SetSessionConfiguration(const RetrieveAndGenerateSessionConfiguration& value) { m_sessionConfigurationHasBeenSet = true; m_sessionConfiguration = value; }
-    inline void SetSessionConfiguration(RetrieveAndGenerateSessionConfiguration&& value) { m_sessionConfigurationHasBeenSet = true; m_sessionConfiguration = std::move(value); }
-    inline RetrieveAndGenerateRequest& WithSessionConfiguration(const RetrieveAndGenerateSessionConfiguration& value) { SetSessionConfiguration(value); return *this;}
-    inline RetrieveAndGenerateRequest& WithSessionConfiguration(RetrieveAndGenerateSessionConfiguration&& value) { SetSessionConfiguration(std::move(value)); return *this;}
-    ///@}
+  RetrieveAndGenerateConfiguration m_retrieveAndGenerateConfiguration;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the session. When you first make a
-     * <code>RetrieveAndGenerate</code> request, Amazon Bedrock automatically generates
-     * this value. You must reuse this value for all subsequent requests in the same
-     * conversational session. This value allows Amazon Bedrock to maintain context and
-     * knowledge from previous interactions. You can't explicitly set the
-     * <code>sessionId</code> yourself.</p>
-     */
-    inline const Aws::String& GetSessionId() const{ return m_sessionId; }
-    inline bool SessionIdHasBeenSet() const { return m_sessionIdHasBeenSet; }
-    inline void SetSessionId(const Aws::String& value) { m_sessionIdHasBeenSet = true; m_sessionId = value; }
-    inline void SetSessionId(Aws::String&& value) { m_sessionIdHasBeenSet = true; m_sessionId = std::move(value); }
-    inline void SetSessionId(const char* value) { m_sessionIdHasBeenSet = true; m_sessionId.assign(value); }
-    inline RetrieveAndGenerateRequest& WithSessionId(const Aws::String& value) { SetSessionId(value); return *this;}
-    inline RetrieveAndGenerateRequest& WithSessionId(Aws::String&& value) { SetSessionId(std::move(value)); return *this;}
-    inline RetrieveAndGenerateRequest& WithSessionId(const char* value) { SetSessionId(value); return *this;}
-    ///@}
-  private:
+  RetrieveAndGenerateSessionConfiguration m_sessionConfiguration;
 
-    RetrieveAndGenerateInput m_input;
-    bool m_inputHasBeenSet = false;
+  Aws::String m_sessionId;
 
-    RetrieveAndGenerateConfiguration m_retrieveAndGenerateConfiguration;
-    bool m_retrieveAndGenerateConfigurationHasBeenSet = false;
+  UserContext m_userContext;
+  bool m_inputHasBeenSet = false;
+  bool m_retrieveAndGenerateConfigurationHasBeenSet = false;
+  bool m_sessionConfigurationHasBeenSet = false;
+  bool m_sessionIdHasBeenSet = false;
+  bool m_userContextHasBeenSet = false;
+};
 
-    RetrieveAndGenerateSessionConfiguration m_sessionConfiguration;
-    bool m_sessionConfigurationHasBeenSet = false;
-
-    Aws::String m_sessionId;
-    bool m_sessionIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

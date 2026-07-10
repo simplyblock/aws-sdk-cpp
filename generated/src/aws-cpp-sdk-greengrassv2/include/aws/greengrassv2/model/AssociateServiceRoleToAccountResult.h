@@ -4,65 +4,73 @@
  */
 
 #pragma once
-#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GreengrassV2
-{
-namespace Model
-{
-  class AssociateServiceRoleToAccountResult
-  {
-  public:
-    AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult();
-    AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GreengrassV2 {
+namespace Model {
+class AssociateServiceRoleToAccountResult {
+ public:
+  AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult() = default;
+  AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GREENGRASSV2_API AssociateServiceRoleToAccountResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The time when the service role was associated with IoT Greengrass for your
+   * Amazon Web Services account in this Amazon Web Services Region.</p>
+   */
+  inline const Aws::String& GetAssociatedAt() const { return m_associatedAt; }
+  template <typename AssociatedAtT = Aws::String>
+  void SetAssociatedAt(AssociatedAtT&& value) {
+    m_associatedAtHasBeenSet = true;
+    m_associatedAt = std::forward<AssociatedAtT>(value);
+  }
+  template <typename AssociatedAtT = Aws::String>
+  AssociateServiceRoleToAccountResult& WithAssociatedAt(AssociatedAtT&& value) {
+    SetAssociatedAt(std::forward<AssociatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the service role was associated with IoT Greengrass for your
-     * Amazon Web Services account in this Amazon Web Services Region.</p>
-     */
-    inline const Aws::String& GetAssociatedAt() const{ return m_associatedAt; }
-    inline void SetAssociatedAt(const Aws::String& value) { m_associatedAt = value; }
-    inline void SetAssociatedAt(Aws::String&& value) { m_associatedAt = std::move(value); }
-    inline void SetAssociatedAt(const char* value) { m_associatedAt.assign(value); }
-    inline AssociateServiceRoleToAccountResult& WithAssociatedAt(const Aws::String& value) { SetAssociatedAt(value); return *this;}
-    inline AssociateServiceRoleToAccountResult& WithAssociatedAt(Aws::String&& value) { SetAssociatedAt(std::move(value)); return *this;}
-    inline AssociateServiceRoleToAccountResult& WithAssociatedAt(const char* value) { SetAssociatedAt(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateServiceRoleToAccountResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateServiceRoleToAccountResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateServiceRoleToAccountResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateServiceRoleToAccountResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_associatedAt;
+ private:
+  Aws::String m_associatedAt;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_associatedAtHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GreengrassV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace GreengrassV2
+}  // namespace Aws

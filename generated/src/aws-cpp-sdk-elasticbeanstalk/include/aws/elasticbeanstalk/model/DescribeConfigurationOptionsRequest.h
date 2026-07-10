@@ -4,153 +4,178 @@
  */
 
 #pragma once
-#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
-#include <aws/elasticbeanstalk/ElasticBeanstalkRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticbeanstalk/ElasticBeanstalkRequest.h>
+#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
 #include <aws/elasticbeanstalk/model/OptionSpecification.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ElasticBeanstalk
-{
-namespace Model
-{
+namespace Aws {
+namespace ElasticBeanstalk {
+namespace Model {
 
+/**
+ * <p>Result message containing a list of application version
+ * descriptions.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/DescribeConfigurationOptionsMessage">AWS
+ * API Reference</a></p>
+ */
+class DescribeConfigurationOptionsRequest : public ElasticBeanstalkRequest {
+ public:
+  AWS_ELASTICBEANSTALK_API DescribeConfigurationOptionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeConfigurationOptions"; }
+
+  AWS_ELASTICBEANSTALK_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_ELASTICBEANSTALK_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p>Result message containing a list of application version
-   * descriptions.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/DescribeConfigurationOptionsMessage">AWS
-   * API Reference</a></p>
+   * <p>The name of the application associated with the configuration template or
+   * environment. Only needed if you want to describe the configuration options
+   * associated with either the configuration template or environment.</p>
    */
-  class DescribeConfigurationOptionsRequest : public ElasticBeanstalkRequest
-  {
-  public:
-    AWS_ELASTICBEANSTALK_API DescribeConfigurationOptionsRequest();
+  inline const Aws::String& GetApplicationName() const { return m_applicationName; }
+  inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
+  template <typename ApplicationNameT = Aws::String>
+  void SetApplicationName(ApplicationNameT&& value) {
+    m_applicationNameHasBeenSet = true;
+    m_applicationName = std::forward<ApplicationNameT>(value);
+  }
+  template <typename ApplicationNameT = Aws::String>
+  DescribeConfigurationOptionsRequest& WithApplicationName(ApplicationNameT&& value) {
+    SetApplicationName(std::forward<ApplicationNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeConfigurationOptions"; }
+  ///@{
+  /**
+   * <p>The name of the configuration template whose configuration options you want
+   * to describe.</p>
+   */
+  inline const Aws::String& GetTemplateName() const { return m_templateName; }
+  inline bool TemplateNameHasBeenSet() const { return m_templateNameHasBeenSet; }
+  template <typename TemplateNameT = Aws::String>
+  void SetTemplateName(TemplateNameT&& value) {
+    m_templateNameHasBeenSet = true;
+    m_templateName = std::forward<TemplateNameT>(value);
+  }
+  template <typename TemplateNameT = Aws::String>
+  DescribeConfigurationOptionsRequest& WithTemplateName(TemplateNameT&& value) {
+    SetTemplateName(std::forward<TemplateNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICBEANSTALK_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the environment whose configuration options you want to
+   * describe.</p>
+   */
+  inline const Aws::String& GetEnvironmentName() const { return m_environmentName; }
+  inline bool EnvironmentNameHasBeenSet() const { return m_environmentNameHasBeenSet; }
+  template <typename EnvironmentNameT = Aws::String>
+  void SetEnvironmentName(EnvironmentNameT&& value) {
+    m_environmentNameHasBeenSet = true;
+    m_environmentName = std::forward<EnvironmentNameT>(value);
+  }
+  template <typename EnvironmentNameT = Aws::String>
+  DescribeConfigurationOptionsRequest& WithEnvironmentName(EnvironmentNameT&& value) {
+    SetEnvironmentName(std::forward<EnvironmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_ELASTICBEANSTALK_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The name of the solution stack whose configuration options you want to
+   * describe.</p>
+   */
+  inline const Aws::String& GetSolutionStackName() const { return m_solutionStackName; }
+  inline bool SolutionStackNameHasBeenSet() const { return m_solutionStackNameHasBeenSet; }
+  template <typename SolutionStackNameT = Aws::String>
+  void SetSolutionStackName(SolutionStackNameT&& value) {
+    m_solutionStackNameHasBeenSet = true;
+    m_solutionStackName = std::forward<SolutionStackNameT>(value);
+  }
+  template <typename SolutionStackNameT = Aws::String>
+  DescribeConfigurationOptionsRequest& WithSolutionStackName(SolutionStackNameT&& value) {
+    SetSolutionStackName(std::forward<SolutionStackNameT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The ARN of the custom platform.</p>
+   */
+  inline const Aws::String& GetPlatformArn() const { return m_platformArn; }
+  inline bool PlatformArnHasBeenSet() const { return m_platformArnHasBeenSet; }
+  template <typename PlatformArnT = Aws::String>
+  void SetPlatformArn(PlatformArnT&& value) {
+    m_platformArnHasBeenSet = true;
+    m_platformArn = std::forward<PlatformArnT>(value);
+  }
+  template <typename PlatformArnT = Aws::String>
+  DescribeConfigurationOptionsRequest& WithPlatformArn(PlatformArnT&& value) {
+    SetPlatformArn(std::forward<PlatformArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the application associated with the configuration template or
-     * environment. Only needed if you want to describe the configuration options
-     * associated with either the configuration template or environment.</p>
-     */
-    inline const Aws::String& GetApplicationName() const{ return m_applicationName; }
-    inline bool ApplicationNameHasBeenSet() const { return m_applicationNameHasBeenSet; }
-    inline void SetApplicationName(const Aws::String& value) { m_applicationNameHasBeenSet = true; m_applicationName = value; }
-    inline void SetApplicationName(Aws::String&& value) { m_applicationNameHasBeenSet = true; m_applicationName = std::move(value); }
-    inline void SetApplicationName(const char* value) { m_applicationNameHasBeenSet = true; m_applicationName.assign(value); }
-    inline DescribeConfigurationOptionsRequest& WithApplicationName(const Aws::String& value) { SetApplicationName(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithApplicationName(Aws::String&& value) { SetApplicationName(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithApplicationName(const char* value) { SetApplicationName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If specified, restricts the descriptions to only the specified options.</p>
+   */
+  inline const Aws::Vector<OptionSpecification>& GetOptions() const { return m_options; }
+  inline bool OptionsHasBeenSet() const { return m_optionsHasBeenSet; }
+  template <typename OptionsT = Aws::Vector<OptionSpecification>>
+  void SetOptions(OptionsT&& value) {
+    m_optionsHasBeenSet = true;
+    m_options = std::forward<OptionsT>(value);
+  }
+  template <typename OptionsT = Aws::Vector<OptionSpecification>>
+  DescribeConfigurationOptionsRequest& WithOptions(OptionsT&& value) {
+    SetOptions(std::forward<OptionsT>(value));
+    return *this;
+  }
+  template <typename OptionsT = OptionSpecification>
+  DescribeConfigurationOptionsRequest& AddOptions(OptionsT&& value) {
+    m_optionsHasBeenSet = true;
+    m_options.emplace_back(std::forward<OptionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationName;
 
-    ///@{
-    /**
-     * <p>The name of the configuration template whose configuration options you want
-     * to describe.</p>
-     */
-    inline const Aws::String& GetTemplateName() const{ return m_templateName; }
-    inline bool TemplateNameHasBeenSet() const { return m_templateNameHasBeenSet; }
-    inline void SetTemplateName(const Aws::String& value) { m_templateNameHasBeenSet = true; m_templateName = value; }
-    inline void SetTemplateName(Aws::String&& value) { m_templateNameHasBeenSet = true; m_templateName = std::move(value); }
-    inline void SetTemplateName(const char* value) { m_templateNameHasBeenSet = true; m_templateName.assign(value); }
-    inline DescribeConfigurationOptionsRequest& WithTemplateName(const Aws::String& value) { SetTemplateName(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithTemplateName(Aws::String&& value) { SetTemplateName(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithTemplateName(const char* value) { SetTemplateName(value); return *this;}
-    ///@}
+  Aws::String m_templateName;
 
-    ///@{
-    /**
-     * <p>The name of the environment whose configuration options you want to
-     * describe.</p>
-     */
-    inline const Aws::String& GetEnvironmentName() const{ return m_environmentName; }
-    inline bool EnvironmentNameHasBeenSet() const { return m_environmentNameHasBeenSet; }
-    inline void SetEnvironmentName(const Aws::String& value) { m_environmentNameHasBeenSet = true; m_environmentName = value; }
-    inline void SetEnvironmentName(Aws::String&& value) { m_environmentNameHasBeenSet = true; m_environmentName = std::move(value); }
-    inline void SetEnvironmentName(const char* value) { m_environmentNameHasBeenSet = true; m_environmentName.assign(value); }
-    inline DescribeConfigurationOptionsRequest& WithEnvironmentName(const Aws::String& value) { SetEnvironmentName(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithEnvironmentName(Aws::String&& value) { SetEnvironmentName(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithEnvironmentName(const char* value) { SetEnvironmentName(value); return *this;}
-    ///@}
+  Aws::String m_environmentName;
 
-    ///@{
-    /**
-     * <p>The name of the solution stack whose configuration options you want to
-     * describe.</p>
-     */
-    inline const Aws::String& GetSolutionStackName() const{ return m_solutionStackName; }
-    inline bool SolutionStackNameHasBeenSet() const { return m_solutionStackNameHasBeenSet; }
-    inline void SetSolutionStackName(const Aws::String& value) { m_solutionStackNameHasBeenSet = true; m_solutionStackName = value; }
-    inline void SetSolutionStackName(Aws::String&& value) { m_solutionStackNameHasBeenSet = true; m_solutionStackName = std::move(value); }
-    inline void SetSolutionStackName(const char* value) { m_solutionStackNameHasBeenSet = true; m_solutionStackName.assign(value); }
-    inline DescribeConfigurationOptionsRequest& WithSolutionStackName(const Aws::String& value) { SetSolutionStackName(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithSolutionStackName(Aws::String&& value) { SetSolutionStackName(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithSolutionStackName(const char* value) { SetSolutionStackName(value); return *this;}
-    ///@}
+  Aws::String m_solutionStackName;
 
-    ///@{
-    /**
-     * <p>The ARN of the custom platform.</p>
-     */
-    inline const Aws::String& GetPlatformArn() const{ return m_platformArn; }
-    inline bool PlatformArnHasBeenSet() const { return m_platformArnHasBeenSet; }
-    inline void SetPlatformArn(const Aws::String& value) { m_platformArnHasBeenSet = true; m_platformArn = value; }
-    inline void SetPlatformArn(Aws::String&& value) { m_platformArnHasBeenSet = true; m_platformArn = std::move(value); }
-    inline void SetPlatformArn(const char* value) { m_platformArnHasBeenSet = true; m_platformArn.assign(value); }
-    inline DescribeConfigurationOptionsRequest& WithPlatformArn(const Aws::String& value) { SetPlatformArn(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithPlatformArn(Aws::String&& value) { SetPlatformArn(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithPlatformArn(const char* value) { SetPlatformArn(value); return *this;}
-    ///@}
+  Aws::String m_platformArn;
 
-    ///@{
-    /**
-     * <p>If specified, restricts the descriptions to only the specified options.</p>
-     */
-    inline const Aws::Vector<OptionSpecification>& GetOptions() const{ return m_options; }
-    inline bool OptionsHasBeenSet() const { return m_optionsHasBeenSet; }
-    inline void SetOptions(const Aws::Vector<OptionSpecification>& value) { m_optionsHasBeenSet = true; m_options = value; }
-    inline void SetOptions(Aws::Vector<OptionSpecification>&& value) { m_optionsHasBeenSet = true; m_options = std::move(value); }
-    inline DescribeConfigurationOptionsRequest& WithOptions(const Aws::Vector<OptionSpecification>& value) { SetOptions(value); return *this;}
-    inline DescribeConfigurationOptionsRequest& WithOptions(Aws::Vector<OptionSpecification>&& value) { SetOptions(std::move(value)); return *this;}
-    inline DescribeConfigurationOptionsRequest& AddOptions(const OptionSpecification& value) { m_optionsHasBeenSet = true; m_options.push_back(value); return *this; }
-    inline DescribeConfigurationOptionsRequest& AddOptions(OptionSpecification&& value) { m_optionsHasBeenSet = true; m_options.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<OptionSpecification> m_options;
+  bool m_applicationNameHasBeenSet = false;
+  bool m_templateNameHasBeenSet = false;
+  bool m_environmentNameHasBeenSet = false;
+  bool m_solutionStackNameHasBeenSet = false;
+  bool m_platformArnHasBeenSet = false;
+  bool m_optionsHasBeenSet = false;
+};
 
-    Aws::String m_applicationName;
-    bool m_applicationNameHasBeenSet = false;
-
-    Aws::String m_templateName;
-    bool m_templateNameHasBeenSet = false;
-
-    Aws::String m_environmentName;
-    bool m_environmentNameHasBeenSet = false;
-
-    Aws::String m_solutionStackName;
-    bool m_solutionStackNameHasBeenSet = false;
-
-    Aws::String m_platformArn;
-    bool m_platformArnHasBeenSet = false;
-
-    Aws::Vector<OptionSpecification> m_options;
-    bool m_optionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElasticBeanstalk
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticBeanstalk
+}  // namespace Aws

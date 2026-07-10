@@ -4,85 +4,103 @@
  */
 
 #pragma once
-#include <aws/voice-id/VoiceID_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/voice-id/model/FraudsterRegistrationJobSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
-  class ListFraudsterRegistrationJobsResult
-  {
-  public:
-    AWS_VOICEID_API ListFraudsterRegistrationJobsResult();
-    AWS_VOICEID_API ListFraudsterRegistrationJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_VOICEID_API ListFraudsterRegistrationJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
+class ListFraudsterRegistrationJobsResult {
+ public:
+  AWS_VOICEID_API ListFraudsterRegistrationJobsResult() = default;
+  AWS_VOICEID_API ListFraudsterRegistrationJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_VOICEID_API ListFraudsterRegistrationJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list containing details about each specified fraudster registration
+   * job.</p>
+   */
+  inline const Aws::Vector<FraudsterRegistrationJobSummary>& GetJobSummaries() const { return m_jobSummaries; }
+  template <typename JobSummariesT = Aws::Vector<FraudsterRegistrationJobSummary>>
+  void SetJobSummaries(JobSummariesT&& value) {
+    m_jobSummariesHasBeenSet = true;
+    m_jobSummaries = std::forward<JobSummariesT>(value);
+  }
+  template <typename JobSummariesT = Aws::Vector<FraudsterRegistrationJobSummary>>
+  ListFraudsterRegistrationJobsResult& WithJobSummaries(JobSummariesT&& value) {
+    SetJobSummaries(std::forward<JobSummariesT>(value));
+    return *this;
+  }
+  template <typename JobSummariesT = FraudsterRegistrationJobSummary>
+  ListFraudsterRegistrationJobsResult& AddJobSummaries(JobSummariesT&& value) {
+    m_jobSummariesHasBeenSet = true;
+    m_jobSummaries.emplace_back(std::forward<JobSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list containing details about each specified fraudster registration
-     * job.</p>
-     */
-    inline const Aws::Vector<FraudsterRegistrationJobSummary>& GetJobSummaries() const{ return m_jobSummaries; }
-    inline void SetJobSummaries(const Aws::Vector<FraudsterRegistrationJobSummary>& value) { m_jobSummaries = value; }
-    inline void SetJobSummaries(Aws::Vector<FraudsterRegistrationJobSummary>&& value) { m_jobSummaries = std::move(value); }
-    inline ListFraudsterRegistrationJobsResult& WithJobSummaries(const Aws::Vector<FraudsterRegistrationJobSummary>& value) { SetJobSummaries(value); return *this;}
-    inline ListFraudsterRegistrationJobsResult& WithJobSummaries(Aws::Vector<FraudsterRegistrationJobSummary>&& value) { SetJobSummaries(std::move(value)); return *this;}
-    inline ListFraudsterRegistrationJobsResult& AddJobSummaries(const FraudsterRegistrationJobSummary& value) { m_jobSummaries.push_back(value); return *this; }
-    inline ListFraudsterRegistrationJobsResult& AddJobSummaries(FraudsterRegistrationJobSummary&& value) { m_jobSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If <code>NextToken</code> is returned, there are more results available. The
+   * value of <code>NextToken</code> is a unique pagination token for each page. Make
+   * the call again using the returned token to retrieve the next page. Keep all
+   * other arguments unchanged. Each pagination token expires after 24 hours.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListFraudsterRegistrationJobsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If <code>NextToken</code> is returned, there are more results available. The
-     * value of <code>NextToken</code> is a unique pagination token for each page. Make
-     * the call again using the returned token to retrieve the next page. Keep all
-     * other arguments unchanged. Each pagination token expires after 24 hours.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListFraudsterRegistrationJobsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListFraudsterRegistrationJobsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListFraudsterRegistrationJobsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListFraudsterRegistrationJobsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListFraudsterRegistrationJobsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListFraudsterRegistrationJobsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListFraudsterRegistrationJobsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<FraudsterRegistrationJobSummary> m_jobSummaries;
+ private:
+  Aws::Vector<FraudsterRegistrationJobSummary> m_jobSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

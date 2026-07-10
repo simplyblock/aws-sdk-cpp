@@ -4,72 +4,86 @@
  */
 
 #pragma once
-#include <aws/ds/DirectoryService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ds/DirectoryService_EXPORTS.h>
 #include <aws/ds/model/ConditionalForwarder.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DirectoryService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DirectoryService {
+namespace Model {
+/**
+ * <p>The result of a DescribeConditionalForwarder request.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/DescribeConditionalForwardersResult">AWS
+ * API Reference</a></p>
+ */
+class DescribeConditionalForwardersResult {
+ public:
+  AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult() = default;
+  AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result of a DescribeConditionalForwarder request.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ds-2015-04-16/DescribeConditionalForwardersResult">AWS
-   * API Reference</a></p>
+   * <p>The list of conditional forwarders that have been created.</p>
    */
-  class DescribeConditionalForwardersResult
-  {
-  public:
-    AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult();
-    AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DIRECTORYSERVICE_API DescribeConditionalForwardersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<ConditionalForwarder>& GetConditionalForwarders() const { return m_conditionalForwarders; }
+  template <typename ConditionalForwardersT = Aws::Vector<ConditionalForwarder>>
+  void SetConditionalForwarders(ConditionalForwardersT&& value) {
+    m_conditionalForwardersHasBeenSet = true;
+    m_conditionalForwarders = std::forward<ConditionalForwardersT>(value);
+  }
+  template <typename ConditionalForwardersT = Aws::Vector<ConditionalForwarder>>
+  DescribeConditionalForwardersResult& WithConditionalForwarders(ConditionalForwardersT&& value) {
+    SetConditionalForwarders(std::forward<ConditionalForwardersT>(value));
+    return *this;
+  }
+  template <typename ConditionalForwardersT = ConditionalForwarder>
+  DescribeConditionalForwardersResult& AddConditionalForwarders(ConditionalForwardersT&& value) {
+    m_conditionalForwardersHasBeenSet = true;
+    m_conditionalForwarders.emplace_back(std::forward<ConditionalForwardersT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The list of conditional forwarders that have been created.</p>
-     */
-    inline const Aws::Vector<ConditionalForwarder>& GetConditionalForwarders() const{ return m_conditionalForwarders; }
-    inline void SetConditionalForwarders(const Aws::Vector<ConditionalForwarder>& value) { m_conditionalForwarders = value; }
-    inline void SetConditionalForwarders(Aws::Vector<ConditionalForwarder>&& value) { m_conditionalForwarders = std::move(value); }
-    inline DescribeConditionalForwardersResult& WithConditionalForwarders(const Aws::Vector<ConditionalForwarder>& value) { SetConditionalForwarders(value); return *this;}
-    inline DescribeConditionalForwardersResult& WithConditionalForwarders(Aws::Vector<ConditionalForwarder>&& value) { SetConditionalForwarders(std::move(value)); return *this;}
-    inline DescribeConditionalForwardersResult& AddConditionalForwarders(const ConditionalForwarder& value) { m_conditionalForwarders.push_back(value); return *this; }
-    inline DescribeConditionalForwardersResult& AddConditionalForwarders(ConditionalForwarder&& value) { m_conditionalForwarders.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeConditionalForwardersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeConditionalForwardersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeConditionalForwardersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeConditionalForwardersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<ConditionalForwarder> m_conditionalForwarders;
 
-    Aws::Vector<ConditionalForwarder> m_conditionalForwarders;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_conditionalForwardersHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DirectoryService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DirectoryService
+}  // namespace Aws

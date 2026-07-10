@@ -4,65 +4,73 @@
  */
 
 #pragma once
-#include <aws/kinesis-video-archived-media/KinesisVideoArchivedMedia_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kinesis-video-archived-media/KinesisVideoArchivedMedia_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace KinesisVideoArchivedMedia
-{
-namespace Model
-{
-  class GetHLSStreamingSessionURLResult
-  {
-  public:
-    AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult();
-    AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace KinesisVideoArchivedMedia {
+namespace Model {
+class GetHLSStreamingSessionURLResult {
+ public:
+  AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult() = default;
+  AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KINESISVIDEOARCHIVEDMEDIA_API GetHLSStreamingSessionURLResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The URL (containing the session token) that a media player can use to
+   * retrieve the HLS master playlist.</p>
+   */
+  inline const Aws::String& GetHLSStreamingSessionURL() const { return m_hLSStreamingSessionURL; }
+  template <typename HLSStreamingSessionURLT = Aws::String>
+  void SetHLSStreamingSessionURL(HLSStreamingSessionURLT&& value) {
+    m_hLSStreamingSessionURLHasBeenSet = true;
+    m_hLSStreamingSessionURL = std::forward<HLSStreamingSessionURLT>(value);
+  }
+  template <typename HLSStreamingSessionURLT = Aws::String>
+  GetHLSStreamingSessionURLResult& WithHLSStreamingSessionURL(HLSStreamingSessionURLT&& value) {
+    SetHLSStreamingSessionURL(std::forward<HLSStreamingSessionURLT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The URL (containing the session token) that a media player can use to
-     * retrieve the HLS master playlist.</p>
-     */
-    inline const Aws::String& GetHLSStreamingSessionURL() const{ return m_hLSStreamingSessionURL; }
-    inline void SetHLSStreamingSessionURL(const Aws::String& value) { m_hLSStreamingSessionURL = value; }
-    inline void SetHLSStreamingSessionURL(Aws::String&& value) { m_hLSStreamingSessionURL = std::move(value); }
-    inline void SetHLSStreamingSessionURL(const char* value) { m_hLSStreamingSessionURL.assign(value); }
-    inline GetHLSStreamingSessionURLResult& WithHLSStreamingSessionURL(const Aws::String& value) { SetHLSStreamingSessionURL(value); return *this;}
-    inline GetHLSStreamingSessionURLResult& WithHLSStreamingSessionURL(Aws::String&& value) { SetHLSStreamingSessionURL(std::move(value)); return *this;}
-    inline GetHLSStreamingSessionURLResult& WithHLSStreamingSessionURL(const char* value) { SetHLSStreamingSessionURL(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetHLSStreamingSessionURLResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetHLSStreamingSessionURLResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetHLSStreamingSessionURLResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetHLSStreamingSessionURLResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_hLSStreamingSessionURL;
+ private:
+  Aws::String m_hLSStreamingSessionURL;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_hLSStreamingSessionURLHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace KinesisVideoArchivedMedia
-} // namespace Aws
+}  // namespace Model
+}  // namespace KinesisVideoArchivedMedia
+}  // namespace Aws

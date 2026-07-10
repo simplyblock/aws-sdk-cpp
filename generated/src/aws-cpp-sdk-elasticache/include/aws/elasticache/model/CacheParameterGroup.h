@@ -4,130 +4,145 @@
  */
 
 #pragma once
-#include <aws/elasticache/ElastiCache_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticache/ElastiCache_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace ElastiCache
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElastiCache {
+namespace Model {
 
+/**
+ * <p>Represents the output of a <code>CreateCacheParameterGroup</code>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/CacheParameterGroup">AWS
+ * API Reference</a></p>
+ */
+class CacheParameterGroup {
+ public:
+  AWS_ELASTICACHE_API CacheParameterGroup() = default;
+  AWS_ELASTICACHE_API CacheParameterGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_ELASTICACHE_API CacheParameterGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Represents the output of a <code>CreateCacheParameterGroup</code>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/CacheParameterGroup">AWS
-   * API Reference</a></p>
+   * <p>The name of the cache parameter group.</p>
    */
-  class CacheParameterGroup
-  {
-  public:
-    AWS_ELASTICACHE_API CacheParameterGroup();
-    AWS_ELASTICACHE_API CacheParameterGroup(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_ELASTICACHE_API CacheParameterGroup& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetCacheParameterGroupName() const { return m_cacheParameterGroupName; }
+  inline bool CacheParameterGroupNameHasBeenSet() const { return m_cacheParameterGroupNameHasBeenSet; }
+  template <typename CacheParameterGroupNameT = Aws::String>
+  void SetCacheParameterGroupName(CacheParameterGroupNameT&& value) {
+    m_cacheParameterGroupNameHasBeenSet = true;
+    m_cacheParameterGroupName = std::forward<CacheParameterGroupNameT>(value);
+  }
+  template <typename CacheParameterGroupNameT = Aws::String>
+  CacheParameterGroup& WithCacheParameterGroupName(CacheParameterGroupNameT&& value) {
+    SetCacheParameterGroupName(std::forward<CacheParameterGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_ELASTICACHE_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The name of the cache parameter group family that this cache parameter group
+   * is compatible with.</p> <p>Valid values are: <code>memcached1.4</code> |
+   * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
+   * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
+   * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis7</code> </p>
+   */
+  inline const Aws::String& GetCacheParameterGroupFamily() const { return m_cacheParameterGroupFamily; }
+  inline bool CacheParameterGroupFamilyHasBeenSet() const { return m_cacheParameterGroupFamilyHasBeenSet; }
+  template <typename CacheParameterGroupFamilyT = Aws::String>
+  void SetCacheParameterGroupFamily(CacheParameterGroupFamilyT&& value) {
+    m_cacheParameterGroupFamilyHasBeenSet = true;
+    m_cacheParameterGroupFamily = std::forward<CacheParameterGroupFamilyT>(value);
+  }
+  template <typename CacheParameterGroupFamilyT = Aws::String>
+  CacheParameterGroup& WithCacheParameterGroupFamily(CacheParameterGroupFamilyT&& value) {
+    SetCacheParameterGroupFamily(std::forward<CacheParameterGroupFamilyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The description for this cache parameter group.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CacheParameterGroup& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the cache parameter group.</p>
-     */
-    inline const Aws::String& GetCacheParameterGroupName() const{ return m_cacheParameterGroupName; }
-    inline bool CacheParameterGroupNameHasBeenSet() const { return m_cacheParameterGroupNameHasBeenSet; }
-    inline void SetCacheParameterGroupName(const Aws::String& value) { m_cacheParameterGroupNameHasBeenSet = true; m_cacheParameterGroupName = value; }
-    inline void SetCacheParameterGroupName(Aws::String&& value) { m_cacheParameterGroupNameHasBeenSet = true; m_cacheParameterGroupName = std::move(value); }
-    inline void SetCacheParameterGroupName(const char* value) { m_cacheParameterGroupNameHasBeenSet = true; m_cacheParameterGroupName.assign(value); }
-    inline CacheParameterGroup& WithCacheParameterGroupName(const Aws::String& value) { SetCacheParameterGroupName(value); return *this;}
-    inline CacheParameterGroup& WithCacheParameterGroupName(Aws::String&& value) { SetCacheParameterGroupName(std::move(value)); return *this;}
-    inline CacheParameterGroup& WithCacheParameterGroupName(const char* value) { SetCacheParameterGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether the parameter group is associated with a Global
+   * datastore</p>
+   */
+  inline bool GetIsGlobal() const { return m_isGlobal; }
+  inline bool IsGlobalHasBeenSet() const { return m_isGlobalHasBeenSet; }
+  inline void SetIsGlobal(bool value) {
+    m_isGlobalHasBeenSet = true;
+    m_isGlobal = value;
+  }
+  inline CacheParameterGroup& WithIsGlobal(bool value) {
+    SetIsGlobal(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the cache parameter group family that this cache parameter group
-     * is compatible with.</p> <p>Valid values are: <code>memcached1.4</code> |
-     * <code>memcached1.5</code> | <code>memcached1.6</code> | <code>redis2.6</code> |
-     * <code>redis2.8</code> | <code>redis3.2</code> | <code>redis4.0</code> |
-     * <code>redis5.0</code> | <code>redis6.x</code> | <code>redis7</code> </p>
-     */
-    inline const Aws::String& GetCacheParameterGroupFamily() const{ return m_cacheParameterGroupFamily; }
-    inline bool CacheParameterGroupFamilyHasBeenSet() const { return m_cacheParameterGroupFamilyHasBeenSet; }
-    inline void SetCacheParameterGroupFamily(const Aws::String& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = value; }
-    inline void SetCacheParameterGroupFamily(Aws::String&& value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily = std::move(value); }
-    inline void SetCacheParameterGroupFamily(const char* value) { m_cacheParameterGroupFamilyHasBeenSet = true; m_cacheParameterGroupFamily.assign(value); }
-    inline CacheParameterGroup& WithCacheParameterGroupFamily(const Aws::String& value) { SetCacheParameterGroupFamily(value); return *this;}
-    inline CacheParameterGroup& WithCacheParameterGroupFamily(Aws::String&& value) { SetCacheParameterGroupFamily(std::move(value)); return *this;}
-    inline CacheParameterGroup& WithCacheParameterGroupFamily(const char* value) { SetCacheParameterGroupFamily(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN (Amazon Resource Name) of the cache parameter group.</p>
+   */
+  inline const Aws::String& GetARN() const { return m_aRN; }
+  inline bool ARNHasBeenSet() const { return m_aRNHasBeenSet; }
+  template <typename ARNT = Aws::String>
+  void SetARN(ARNT&& value) {
+    m_aRNHasBeenSet = true;
+    m_aRN = std::forward<ARNT>(value);
+  }
+  template <typename ARNT = Aws::String>
+  CacheParameterGroup& WithARN(ARNT&& value) {
+    SetARN(std::forward<ARNT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_cacheParameterGroupName;
 
-    ///@{
-    /**
-     * <p>The description for this cache parameter group.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CacheParameterGroup& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CacheParameterGroup& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CacheParameterGroup& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_cacheParameterGroupFamily;
 
-    ///@{
-    /**
-     * <p>Indicates whether the parameter group is associated with a Global
-     * datastore</p>
-     */
-    inline bool GetIsGlobal() const{ return m_isGlobal; }
-    inline bool IsGlobalHasBeenSet() const { return m_isGlobalHasBeenSet; }
-    inline void SetIsGlobal(bool value) { m_isGlobalHasBeenSet = true; m_isGlobal = value; }
-    inline CacheParameterGroup& WithIsGlobal(bool value) { SetIsGlobal(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The ARN (Amazon Resource Name) of the cache parameter group.</p>
-     */
-    inline const Aws::String& GetARN() const{ return m_aRN; }
-    inline bool ARNHasBeenSet() const { return m_aRNHasBeenSet; }
-    inline void SetARN(const Aws::String& value) { m_aRNHasBeenSet = true; m_aRN = value; }
-    inline void SetARN(Aws::String&& value) { m_aRNHasBeenSet = true; m_aRN = std::move(value); }
-    inline void SetARN(const char* value) { m_aRNHasBeenSet = true; m_aRN.assign(value); }
-    inline CacheParameterGroup& WithARN(const Aws::String& value) { SetARN(value); return *this;}
-    inline CacheParameterGroup& WithARN(Aws::String&& value) { SetARN(std::move(value)); return *this;}
-    inline CacheParameterGroup& WithARN(const char* value) { SetARN(value); return *this;}
-    ///@}
-  private:
+  bool m_isGlobal{false};
 
-    Aws::String m_cacheParameterGroupName;
-    bool m_cacheParameterGroupNameHasBeenSet = false;
+  Aws::String m_aRN;
+  bool m_cacheParameterGroupNameHasBeenSet = false;
+  bool m_cacheParameterGroupFamilyHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_isGlobalHasBeenSet = false;
+  bool m_aRNHasBeenSet = false;
+};
 
-    Aws::String m_cacheParameterGroupFamily;
-    bool m_cacheParameterGroupFamilyHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    bool m_isGlobal;
-    bool m_isGlobalHasBeenSet = false;
-
-    Aws::String m_aRN;
-    bool m_aRNHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ElastiCache
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElastiCache
+}  // namespace Aws

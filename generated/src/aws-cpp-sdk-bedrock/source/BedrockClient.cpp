@@ -3,75 +3,134 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/core/utils/Outcome.h>
-#include <aws/core/auth/AWSAuthSigner.h>
-#include <aws/core/client/CoreErrors.h>
-#include <aws/core/client/RetryStrategy.h>
-#include <aws/core/http/HttpClient.h>
-#include <aws/core/http/HttpResponse.h>
-#include <aws/core/http/HttpClientFactory.h>
-#include <aws/core/auth/AWSCredentialsProviderChain.h>
-#include <aws/core/utils/json/JsonSerializer.h>
-#include <aws/core/utils/memory/stl/AWSStringStream.h>
-#include <aws/core/utils/threading/Executor.h>
-#include <aws/core/utils/DNS.h>
-#include <aws/core/utils/logging/LogMacros.h>
-#include <aws/core/utils/logging/ErrorMacros.h>
-
+#include <aws/bedrock/BedrockAwsBearerTokenIdentityResolver.h>
 #include <aws/bedrock/BedrockClient.h>
-#include <aws/bedrock/BedrockErrorMarshaller.h>
 #include <aws/bedrock/BedrockEndpointProvider.h>
+#include <aws/bedrock/BedrockErrorMarshaller.h>
+#include <aws/bedrock/model/BatchDeleteAdvancedPromptOptimizationJobRequest.h>
 #include <aws/bedrock/model/BatchDeleteEvaluationJobRequest.h>
+#include <aws/bedrock/model/CancelAutomatedReasoningPolicyBuildWorkflowRequest.h>
+#include <aws/bedrock/model/CreateAdvancedPromptOptimizationJobRequest.h>
+#include <aws/bedrock/model/CreateAutomatedReasoningPolicyRequest.h>
+#include <aws/bedrock/model/CreateAutomatedReasoningPolicyTestCaseRequest.h>
+#include <aws/bedrock/model/CreateAutomatedReasoningPolicyVersionRequest.h>
+#include <aws/bedrock/model/CreateCustomModelDeploymentRequest.h>
+#include <aws/bedrock/model/CreateCustomModelRequest.h>
 #include <aws/bedrock/model/CreateEvaluationJobRequest.h>
+#include <aws/bedrock/model/CreateFoundationModelAgreementRequest.h>
 #include <aws/bedrock/model/CreateGuardrailRequest.h>
 #include <aws/bedrock/model/CreateGuardrailVersionRequest.h>
 #include <aws/bedrock/model/CreateInferenceProfileRequest.h>
+#include <aws/bedrock/model/CreateMarketplaceModelEndpointRequest.h>
 #include <aws/bedrock/model/CreateModelCopyJobRequest.h>
 #include <aws/bedrock/model/CreateModelCustomizationJobRequest.h>
 #include <aws/bedrock/model/CreateModelImportJobRequest.h>
 #include <aws/bedrock/model/CreateModelInvocationJobRequest.h>
+#include <aws/bedrock/model/CreatePromptRouterRequest.h>
 #include <aws/bedrock/model/CreateProvisionedModelThroughputRequest.h>
+#include <aws/bedrock/model/DeleteAutomatedReasoningPolicyBuildWorkflowRequest.h>
+#include <aws/bedrock/model/DeleteAutomatedReasoningPolicyRequest.h>
+#include <aws/bedrock/model/DeleteAutomatedReasoningPolicyTestCaseRequest.h>
+#include <aws/bedrock/model/DeleteCustomModelDeploymentRequest.h>
 #include <aws/bedrock/model/DeleteCustomModelRequest.h>
+#include <aws/bedrock/model/DeleteEnforcedGuardrailConfigurationRequest.h>
+#include <aws/bedrock/model/DeleteFoundationModelAgreementRequest.h>
 #include <aws/bedrock/model/DeleteGuardrailRequest.h>
 #include <aws/bedrock/model/DeleteImportedModelRequest.h>
 #include <aws/bedrock/model/DeleteInferenceProfileRequest.h>
+#include <aws/bedrock/model/DeleteMarketplaceModelEndpointRequest.h>
 #include <aws/bedrock/model/DeleteModelInvocationLoggingConfigurationRequest.h>
+#include <aws/bedrock/model/DeletePromptRouterRequest.h>
 #include <aws/bedrock/model/DeleteProvisionedModelThroughputRequest.h>
+#include <aws/bedrock/model/DeleteResourcePolicyRequest.h>
+#include <aws/bedrock/model/DeregisterMarketplaceModelEndpointRequest.h>
+#include <aws/bedrock/model/ExportAutomatedReasoningPolicyVersionRequest.h>
+#include <aws/bedrock/model/GetAccountDataRetentionRequest.h>
+#include <aws/bedrock/model/GetAdvancedPromptOptimizationJobRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyAnnotationsRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyBuildWorkflowRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyNextScenarioRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyTestCaseRequest.h>
+#include <aws/bedrock/model/GetAutomatedReasoningPolicyTestResultRequest.h>
+#include <aws/bedrock/model/GetCustomModelDeploymentRequest.h>
 #include <aws/bedrock/model/GetCustomModelRequest.h>
 #include <aws/bedrock/model/GetEvaluationJobRequest.h>
+#include <aws/bedrock/model/GetFoundationModelAvailabilityRequest.h>
 #include <aws/bedrock/model/GetFoundationModelRequest.h>
 #include <aws/bedrock/model/GetGuardrailRequest.h>
 #include <aws/bedrock/model/GetImportedModelRequest.h>
 #include <aws/bedrock/model/GetInferenceProfileRequest.h>
+#include <aws/bedrock/model/GetMarketplaceModelEndpointRequest.h>
 #include <aws/bedrock/model/GetModelCopyJobRequest.h>
 #include <aws/bedrock/model/GetModelCustomizationJobRequest.h>
 #include <aws/bedrock/model/GetModelImportJobRequest.h>
 #include <aws/bedrock/model/GetModelInvocationJobRequest.h>
 #include <aws/bedrock/model/GetModelInvocationLoggingConfigurationRequest.h>
+#include <aws/bedrock/model/GetPromptRouterRequest.h>
 #include <aws/bedrock/model/GetProvisionedModelThroughputRequest.h>
+#include <aws/bedrock/model/GetResourcePolicyRequest.h>
+#include <aws/bedrock/model/GetUseCaseForModelAccessRequest.h>
+#include <aws/bedrock/model/ListAdvancedPromptOptimizationJobsRequest.h>
+#include <aws/bedrock/model/ListAutomatedReasoningPoliciesRequest.h>
+#include <aws/bedrock/model/ListAutomatedReasoningPolicyBuildWorkflowsRequest.h>
+#include <aws/bedrock/model/ListAutomatedReasoningPolicyTestCasesRequest.h>
+#include <aws/bedrock/model/ListAutomatedReasoningPolicyTestResultsRequest.h>
+#include <aws/bedrock/model/ListCustomModelDeploymentsRequest.h>
 #include <aws/bedrock/model/ListCustomModelsRequest.h>
+#include <aws/bedrock/model/ListEnforcedGuardrailsConfigurationRequest.h>
 #include <aws/bedrock/model/ListEvaluationJobsRequest.h>
+#include <aws/bedrock/model/ListFoundationModelAgreementOffersRequest.h>
 #include <aws/bedrock/model/ListFoundationModelsRequest.h>
 #include <aws/bedrock/model/ListGuardrailsRequest.h>
 #include <aws/bedrock/model/ListImportedModelsRequest.h>
 #include <aws/bedrock/model/ListInferenceProfilesRequest.h>
+#include <aws/bedrock/model/ListMarketplaceModelEndpointsRequest.h>
 #include <aws/bedrock/model/ListModelCopyJobsRequest.h>
 #include <aws/bedrock/model/ListModelCustomizationJobsRequest.h>
 #include <aws/bedrock/model/ListModelImportJobsRequest.h>
 #include <aws/bedrock/model/ListModelInvocationJobsRequest.h>
+#include <aws/bedrock/model/ListPromptRoutersRequest.h>
 #include <aws/bedrock/model/ListProvisionedModelThroughputsRequest.h>
 #include <aws/bedrock/model/ListTagsForResourceRequest.h>
+#include <aws/bedrock/model/PutAccountDataRetentionRequest.h>
+#include <aws/bedrock/model/PutEnforcedGuardrailConfigurationRequest.h>
 #include <aws/bedrock/model/PutModelInvocationLoggingConfigurationRequest.h>
+#include <aws/bedrock/model/PutResourcePolicyRequest.h>
+#include <aws/bedrock/model/PutUseCaseForModelAccessRequest.h>
+#include <aws/bedrock/model/RegisterMarketplaceModelEndpointRequest.h>
+#include <aws/bedrock/model/StartAutomatedReasoningPolicyBuildWorkflowRequest.h>
+#include <aws/bedrock/model/StartAutomatedReasoningPolicyTestWorkflowRequest.h>
+#include <aws/bedrock/model/StopAdvancedPromptOptimizationJobRequest.h>
 #include <aws/bedrock/model/StopEvaluationJobRequest.h>
 #include <aws/bedrock/model/StopModelCustomizationJobRequest.h>
 #include <aws/bedrock/model/StopModelInvocationJobRequest.h>
 #include <aws/bedrock/model/TagResourceRequest.h>
 #include <aws/bedrock/model/UntagResourceRequest.h>
+#include <aws/bedrock/model/UpdateAutomatedReasoningPolicyAnnotationsRequest.h>
+#include <aws/bedrock/model/UpdateAutomatedReasoningPolicyRequest.h>
+#include <aws/bedrock/model/UpdateAutomatedReasoningPolicyTestCaseRequest.h>
+#include <aws/bedrock/model/UpdateCustomModelDeploymentRequest.h>
 #include <aws/bedrock/model/UpdateGuardrailRequest.h>
+#include <aws/bedrock/model/UpdateMarketplaceModelEndpointRequest.h>
 #include <aws/bedrock/model/UpdateProvisionedModelThroughputRequest.h>
-
+#include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <aws/core/auth/signer-provider/BearerTokenAuthSignerProvider.h>
+#include <aws/core/client/CoreErrors.h>
+#include <aws/core/client/RetryStrategy.h>
+#include <aws/core/http/HttpClient.h>
+#include <aws/core/http/HttpClientFactory.h>
+#include <aws/core/utils/DNS.h>
+#include <aws/core/utils/Outcome.h>
+#include <aws/core/utils/logging/ErrorMacros.h>
+#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/threading/Executor.h>
+#include <smithy/identity/resolver/built-in/AwsCredentialsProviderIdentityResolver.h>
+#include <smithy/identity/resolver/built-in/DefaultAwsCredentialIdentityResolver.h>
+#include <smithy/identity/resolver/built-in/SimpleAwsCredentialIdentityResolver.h>
 #include <smithy/tracing/TracingUtils.h>
-
 
 using namespace Aws;
 using namespace Aws::Auth;
@@ -83,1563 +142,1734 @@ using namespace Aws::Utils::Json;
 using namespace smithy::components::tracing;
 using ResolveEndpointOutcome = Aws::Endpoint::ResolveEndpointOutcome;
 
-namespace Aws
-{
-  namespace Bedrock
-  {
-    const char SERVICE_NAME[] = "bedrock";
-    const char ALLOCATION_TAG[] = "BedrockClient";
-  }
-}
-const char* BedrockClient::GetServiceName() {return SERVICE_NAME;}
-const char* BedrockClient::GetAllocationTag() {return ALLOCATION_TAG;}
+namespace Aws {
+namespace Bedrock {
+const char ALLOCATION_TAG[] = "BedrockClient";
+const char SERVICE_NAME[] = "bedrock";
+}  // namespace Bedrock
+}  // namespace Aws
+const char* BedrockClient::GetServiceName() { return SERVICE_NAME; }
+const char* BedrockClient::GetAllocationTag() { return ALLOCATION_TAG; }
+
+BedrockClient::BedrockClient(
+    const Aws::UnorderedMap<Aws::String, Aws::Crt::Variant<smithy::SigV4AuthScheme, smithy::BearerTokenAuthScheme>> authSchemeMap,
+    std::shared_ptr<BedrockEndpointProviderBase> endpointProvider, const Bedrock::BedrockClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          authSchemeMap) {}
 
 BedrockClient::BedrockClient(const Bedrock::BedrockClientConfiguration& clientConfiguration,
-                             std::shared_ptr<BedrockEndpointProviderBase> endpointProvider) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG),
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-  m_clientConfiguration(clientConfiguration),
-  m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                             std::shared_ptr<BedrockEndpointProviderBase> endpointProvider)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{GetServiceName(), clientConfiguration.region,
+                                       clientConfiguration.ResolveCredentialProviderConfig()}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
+          }) {}
 
-BedrockClient::BedrockClient(const AWSCredentials& credentials,
-                             std::shared_ptr<BedrockEndpointProviderBase> endpointProvider,
-                             const Bedrock::BedrockClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
-
-BedrockClient::BedrockClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
-                             std::shared_ptr<BedrockEndpointProviderBase> endpointProvider,
-                             const Bedrock::BedrockClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             credentialsProvider,
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(endpointProvider ? std::move(endpointProvider) : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
-
-    /* Legacy constructors due deprecation */
-  BedrockClient::BedrockClient(const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             Aws::MakeShared<DefaultAWSCredentialsProviderChain>(ALLOCATION_TAG),
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-  m_clientConfiguration(clientConfiguration),
-  m_endpointProvider(Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
-
-BedrockClient::BedrockClient(const AWSCredentials& credentials,
-                             const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             Aws::MakeShared<SimpleAWSCredentialsProvider>(ALLOCATION_TAG, credentials),
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+BedrockClient::BedrockClient(const AWSCredentials& credentials, std::shared_ptr<BedrockEndpointProviderBase> endpointProvider,
+                             const Bedrock::BedrockClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {{smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+            smithy::SigV4AuthScheme{Aws::MakeShared<smithy::SimpleAwsCredentialIdentityResolver>(ALLOCATION_TAG, credentials),
+                                    GetServiceName(), clientConfiguration.region}},
+           {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+            smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockAwsBearerTokenIdentityResolver>(
+                                              "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                          GetServiceName(), clientConfiguration.region}}}) {}
 
 BedrockClient::BedrockClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
-                             const Client::ClientConfiguration& clientConfiguration) :
-  BASECLASS(clientConfiguration,
-            Aws::MakeShared<AWSAuthV4Signer>(ALLOCATION_TAG,
-                                             credentialsProvider,
-                                             SERVICE_NAME,
-                                             Aws::Region::ComputeSignerRegion(clientConfiguration.region)),
-            Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG)),
-    m_clientConfiguration(clientConfiguration),
-    m_endpointProvider(Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG))
-{
-  init(m_clientConfiguration);
-}
+                             std::shared_ptr<BedrockEndpointProviderBase> endpointProvider,
+                             const Bedrock::BedrockClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG),
+          endpointProvider ? endpointProvider : Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{Aws::MakeShared<smithy::AwsCredentialsProviderIdentityResolver>(ALLOCATION_TAG, credentialsProvider),
+                                       GetServiceName(), clientConfiguration.region}},
+          }) {}
 
-    /* End of legacy constructors due deprecation */
-BedrockClient::~BedrockClient()
-{
-  ShutdownSdkClient(this, -1);
-}
+/* Legacy constructors due deprecation */
+BedrockClient::BedrockClient(const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{GetServiceName(), clientConfiguration.region,
+                                       clientConfiguration.ResolveCredentialProviderConfig()}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
+          }) {}
 
-std::shared_ptr<BedrockEndpointProviderBase>& BedrockClient::accessEndpointProvider()
-{
-  return m_endpointProvider;
-}
+BedrockClient::BedrockClient(const AWSCredentials& credentials, const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {
+              {smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+               smithy::SigV4AuthScheme{Aws::MakeShared<smithy::SimpleAwsCredentialIdentityResolver>(ALLOCATION_TAG, credentials),
+                                       GetServiceName(), clientConfiguration.region}},
+              {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+               smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockAwsBearerTokenIdentityResolver>(
+                                                 "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                             GetServiceName(), clientConfiguration.region}},
 
-void BedrockClient::init(const Bedrock::BedrockClientConfiguration& config)
-{
-  AWSClient::SetServiceClientName("Bedrock");
-  if (!m_clientConfiguration.executor) {
-    if (!m_clientConfiguration.configFactories.executorCreateFn()) {
-      AWS_LOGSTREAM_FATAL(ALLOCATION_TAG, "Failed to initialize client: config is missing Executor or executorCreateFn");
-      m_isInitialized = false;
-      return;
-    }
-    m_clientConfiguration.executor = m_clientConfiguration.configFactories.executorCreateFn();
-  }
+          }) {}
+
+BedrockClient::BedrockClient(const std::shared_ptr<AWSCredentialsProvider>& credentialsProvider,
+                             const Aws::Client::ClientConfiguration& clientConfiguration)
+    : AwsSmithyClientT(
+          clientConfiguration, GetServiceName(), "Bedrock", Aws::Http::CreateHttpClient(clientConfiguration),
+          Aws::MakeShared<BedrockErrorMarshaller>(ALLOCATION_TAG), Aws::MakeShared<BedrockEndpointProvider>(ALLOCATION_TAG),
+          Aws::MakeShared<smithy::GenericAuthSchemeResolver<>>(
+              ALLOCATION_TAG, Aws::Vector<smithy::AuthSchemeOption>({smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption,
+                                                                     smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption})),
+          {{smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption.schemeId,
+            smithy::SigV4AuthScheme{Aws::MakeShared<smithy::AwsCredentialsProviderIdentityResolver>(ALLOCATION_TAG, credentialsProvider),
+                                    GetServiceName(), clientConfiguration.region}},
+           {smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption.schemeId,
+            smithy::BearerTokenAuthScheme{Aws::MakeShared<BedrockAwsBearerTokenIdentityResolver>(
+                                              "BearerTokenAuthScheme", clientConfiguration.ResolveCredentialProviderConfig()),
+                                          GetServiceName(), clientConfiguration.region}}}) {}
+/* End of legacy constructors due deprecation */
+
+BedrockClient::~BedrockClient() { ShutdownSdkClient(this, -1); }
+
+std::shared_ptr<BedrockEndpointProviderBase>& BedrockClient::accessEndpointProvider() { return m_endpointProvider; }
+
+void BedrockClient::OverrideEndpoint(const Aws::String& endpoint) {
   AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
-  m_endpointProvider->InitBuiltInParameters(config);
-}
-
-void BedrockClient::OverrideEndpoint(const Aws::String& endpoint)
-{
-  AWS_CHECK_PTR(SERVICE_NAME, m_endpointProvider);
+  m_clientConfiguration.endpointOverride = endpoint;
   m_endpointProvider->OverrideEndpoint(endpoint);
 }
+BedrockClient::InvokeOperationOutcome BedrockClient::InvokeServiceOperation(
+    const AmazonWebServiceRequest& request, const std::function<void(Aws::Endpoint::AWSEndpoint&)>& resolveUri,
+    Aws::Http::HttpMethod httpMethod) const {
+  auto operationName = request.GetServiceRequestName();
+  auto serviceName = GetServiceClientName();
 
-BatchDeleteEvaluationJobOutcome BedrockClient::BatchDeleteEvaluationJob(const BatchDeleteEvaluationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(BatchDeleteEvaluationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, BatchDeleteEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, BatchDeleteEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, BatchDeleteEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".BatchDeleteEvaluationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<BatchDeleteEvaluationJobOutcome>(
-    [&]()-> BatchDeleteEvaluationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, BatchDeleteEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/evaluation-jobs/batch-delete");
-      return BatchDeleteEvaluationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  AWS_OPERATION_GUARD_DYNAMIC(operationName);
+
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(m_clientConfiguration.telemetryProvider, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto tracer = m_clientConfiguration.telemetryProvider->getTracer(serviceName, {});
+  auto meter = m_clientConfiguration.telemetryProvider->getMeter(serviceName, {});
+  AWS_OPERATION_CHECK_PTR_DYNAMIC(meter, operationName, CoreErrors, CoreErrors::NOT_INITIALIZED);
+
+  auto span = tracer->CreateSpan(Aws::String(serviceName) + "." + operationName,
+                                 {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName},
+                                  {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName},
+                                  {TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE}},
+                                 smithy::components::tracing::SpanKind::CLIENT);
+
+  return TracingUtils::MakeCallWithTiming<InvokeOperationOutcome>(
+      [&]() -> InvokeOperationOutcome {
+        auto result = MakeRequestDeserialize(&request, operationName, httpMethod,
+                                             [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) -> void { resolveUri(resolvedEndpoint); });
+        return result.IsSuccess() ? InvokeOperationOutcome(result.GetResultWithOwnership())
+                                  : InvokeOperationOutcome(std::move(result.GetError()));
+      },
+      TracingUtils::SMITHY_CLIENT_DURATION_METRIC, *meter,
+      {{TracingUtils::SMITHY_METHOD_DIMENSION, operationName}, {TracingUtils::SMITHY_SERVICE_DIMENSION, serviceName}});
 }
-
-CreateEvaluationJobOutcome BedrockClient::CreateEvaluationJob(const CreateEvaluationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateEvaluationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateEvaluationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateEvaluationJobOutcome>(
-    [&]()-> CreateEvaluationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/evaluation-jobs");
-      return CreateEvaluationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+BatchDeleteAdvancedPromptOptimizationJobOutcome BedrockClient::BatchDeleteAdvancedPromptOptimizationJob(
+    const BatchDeleteAdvancedPromptOptimizationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/advanced-prompt-optimization-job/batch-delete");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchDeleteAdvancedPromptOptimizationJobOutcome(result.GetResultWithOwnership())
+                            : BatchDeleteAdvancedPromptOptimizationJobOutcome(std::move(result.GetError()));
 }
-
-CreateGuardrailOutcome BedrockClient::CreateGuardrail(const CreateGuardrailRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateGuardrail);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateGuardrail",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateGuardrailOutcome>(
-    [&]()-> CreateGuardrailOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails");
-      return CreateGuardrailOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+BatchDeleteEvaluationJobOutcome BedrockClient::BatchDeleteEvaluationJob(const BatchDeleteEvaluationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/evaluation-jobs/batch-delete"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? BatchDeleteEvaluationJobOutcome(result.GetResultWithOwnership())
+                            : BatchDeleteEvaluationJobOutcome(std::move(result.GetError()));
 }
+CancelAutomatedReasoningPolicyBuildWorkflowOutcome BedrockClient::CancelAutomatedReasoningPolicyBuildWorkflow(
+    const CancelAutomatedReasoningPolicyBuildWorkflowRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CancelAutomatedReasoningPolicyBuildWorkflow", "Required field: PolicyArn, is not set");
+    return CancelAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CancelAutomatedReasoningPolicyBuildWorkflow", "Required field: BuildWorkflowId, is not set");
+    return CancelAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
 
-CreateGuardrailVersionOutcome BedrockClient::CreateGuardrailVersion(const CreateGuardrailVersionRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateGuardrailVersion);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateGuardrailVersion, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.GuardrailIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/cancel");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CancelAutomatedReasoningPolicyBuildWorkflowOutcome(result.GetResultWithOwnership())
+                            : CancelAutomatedReasoningPolicyBuildWorkflowOutcome(std::move(result.GetError()));
+}
+CreateAdvancedPromptOptimizationJobOutcome BedrockClient::CreateAdvancedPromptOptimizationJob(
+    const CreateAdvancedPromptOptimizationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/advanced-prompt-optimization-jobs"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateAdvancedPromptOptimizationJobOutcome(result.GetResultWithOwnership())
+                            : CreateAdvancedPromptOptimizationJobOutcome(std::move(result.GetError()));
+}
+CreateAutomatedReasoningPolicyOutcome BedrockClient::CreateAutomatedReasoningPolicy(
+    const CreateAutomatedReasoningPolicyRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/automated-reasoning-policies"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateAutomatedReasoningPolicyOutcome(result.GetResultWithOwnership())
+                            : CreateAutomatedReasoningPolicyOutcome(std::move(result.GetError()));
+}
+CreateAutomatedReasoningPolicyTestCaseOutcome BedrockClient::CreateAutomatedReasoningPolicyTestCase(
+    const CreateAutomatedReasoningPolicyTestCaseRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CreateAutomatedReasoningPolicyTestCase", "Required field: PolicyArn, is not set");
+    return CreateAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/test-cases");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateAutomatedReasoningPolicyTestCaseOutcome(result.GetResultWithOwnership())
+                            : CreateAutomatedReasoningPolicyTestCaseOutcome(std::move(result.GetError()));
+}
+CreateAutomatedReasoningPolicyVersionOutcome BedrockClient::CreateAutomatedReasoningPolicyVersion(
+    const CreateAutomatedReasoningPolicyVersionRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("CreateAutomatedReasoningPolicyVersion", "Required field: PolicyArn, is not set");
+    return CreateAutomatedReasoningPolicyVersionOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/versions");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateAutomatedReasoningPolicyVersionOutcome(result.GetResultWithOwnership())
+                            : CreateAutomatedReasoningPolicyVersionOutcome(std::move(result.GetError()));
+}
+CreateCustomModelOutcome BedrockClient::CreateCustomModel(const CreateCustomModelRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/custom-models/create-custom-model"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateCustomModelOutcome(result.GetResultWithOwnership())
+                            : CreateCustomModelOutcome(std::move(result.GetError()));
+}
+CreateCustomModelDeploymentOutcome BedrockClient::CreateCustomModelDeployment(const CreateCustomModelDeploymentRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization/custom-model-deployments");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateCustomModelDeploymentOutcome(result.GetResultWithOwnership())
+                            : CreateCustomModelDeploymentOutcome(std::move(result.GetError()));
+}
+CreateEvaluationJobOutcome BedrockClient::CreateEvaluationJob(const CreateEvaluationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/evaluation-jobs"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateEvaluationJobOutcome(result.GetResultWithOwnership())
+                            : CreateEvaluationJobOutcome(std::move(result.GetError()));
+}
+CreateFoundationModelAgreementOutcome BedrockClient::CreateFoundationModelAgreement(
+    const CreateFoundationModelAgreementRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/create-foundation-model-agreement"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateFoundationModelAgreementOutcome(result.GetResultWithOwnership())
+                            : CreateFoundationModelAgreementOutcome(std::move(result.GetError()));
+}
+CreateGuardrailOutcome BedrockClient::CreateGuardrail(const CreateGuardrailRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/guardrails"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateGuardrailOutcome(result.GetResultWithOwnership())
+                            : CreateGuardrailOutcome(std::move(result.GetError()));
+}
+CreateGuardrailVersionOutcome BedrockClient::CreateGuardrailVersion(const CreateGuardrailVersionRequest& request) const {
+  if (!request.GuardrailIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("CreateGuardrailVersion", "Required field: GuardrailIdentifier, is not set");
-    return CreateGuardrailVersionOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailIdentifier]", false));
+    return CreateGuardrailVersionOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                              "Missing required field [GuardrailIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateGuardrailVersion, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateGuardrailVersion, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateGuardrailVersion",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateGuardrailVersionOutcome>(
-    [&]()-> CreateGuardrailVersionOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateGuardrailVersion, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailIdentifier());
-      return CreateGuardrailVersionOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-CreateInferenceProfileOutcome BedrockClient::CreateInferenceProfile(const CreateInferenceProfileRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateInferenceProfile);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateInferenceProfile",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateInferenceProfileOutcome>(
-    [&]()-> CreateInferenceProfileOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/inference-profiles");
-      return CreateInferenceProfileOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/guardrails/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateGuardrailVersionOutcome(result.GetResultWithOwnership())
+                            : CreateGuardrailVersionOutcome(std::move(result.GetError()));
 }
-
-CreateModelCopyJobOutcome BedrockClient::CreateModelCopyJob(const CreateModelCopyJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateModelCopyJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateModelCopyJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateModelCopyJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateModelCopyJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateModelCopyJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateModelCopyJobOutcome>(
-    [&]()-> CreateModelCopyJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateModelCopyJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-copy-jobs");
-      return CreateModelCopyJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+CreateInferenceProfileOutcome BedrockClient::CreateInferenceProfile(const CreateInferenceProfileRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/inference-profiles"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateInferenceProfileOutcome(result.GetResultWithOwnership())
+                            : CreateInferenceProfileOutcome(std::move(result.GetError()));
 }
-
-CreateModelCustomizationJobOutcome BedrockClient::CreateModelCustomizationJob(const CreateModelCustomizationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateModelCustomizationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateModelCustomizationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateModelCustomizationJobOutcome>(
-    [&]()-> CreateModelCustomizationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-customization-jobs");
-      return CreateModelCustomizationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+CreateMarketplaceModelEndpointOutcome BedrockClient::CreateMarketplaceModelEndpoint(
+    const CreateMarketplaceModelEndpointRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : CreateMarketplaceModelEndpointOutcome(std::move(result.GetError()));
 }
-
-CreateModelImportJobOutcome BedrockClient::CreateModelImportJob(const CreateModelImportJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateModelImportJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateModelImportJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateModelImportJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateModelImportJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateModelImportJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateModelImportJobOutcome>(
-    [&]()-> CreateModelImportJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateModelImportJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-import-jobs");
-      return CreateModelImportJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+CreateModelCopyJobOutcome BedrockClient::CreateModelCopyJob(const CreateModelCopyJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-copy-jobs"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateModelCopyJobOutcome(result.GetResultWithOwnership())
+                            : CreateModelCopyJobOutcome(std::move(result.GetError()));
 }
-
-CreateModelInvocationJobOutcome BedrockClient::CreateModelInvocationJob(const CreateModelInvocationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateModelInvocationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateModelInvocationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateModelInvocationJobOutcome>(
-    [&]()-> CreateModelInvocationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-invocation-job");
-      return CreateModelInvocationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+CreateModelCustomizationJobOutcome BedrockClient::CreateModelCustomizationJob(const CreateModelCustomizationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-customization-jobs"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateModelCustomizationJobOutcome(result.GetResultWithOwnership())
+                            : CreateModelCustomizationJobOutcome(std::move(result.GetError()));
 }
-
-CreateProvisionedModelThroughputOutcome BedrockClient::CreateProvisionedModelThroughput(const CreateProvisionedModelThroughputRequest& request) const
-{
-  AWS_OPERATION_GUARD(CreateProvisionedModelThroughput);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, CreateProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, CreateProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, CreateProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".CreateProvisionedModelThroughput",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<CreateProvisionedModelThroughputOutcome>(
-    [&]()-> CreateProvisionedModelThroughputOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, CreateProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/provisioned-model-throughput");
-      return CreateProvisionedModelThroughputOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+CreateModelImportJobOutcome BedrockClient::CreateModelImportJob(const CreateModelImportJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-import-jobs"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateModelImportJobOutcome(result.GetResultWithOwnership())
+                            : CreateModelImportJobOutcome(std::move(result.GetError()));
 }
+CreateModelInvocationJobOutcome BedrockClient::CreateModelInvocationJob(const CreateModelInvocationJobRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-invocation-job"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateModelInvocationJobOutcome(result.GetResultWithOwnership())
+                            : CreateModelInvocationJobOutcome(std::move(result.GetError()));
+}
+CreatePromptRouterOutcome BedrockClient::CreatePromptRouter(const CreatePromptRouterRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/prompt-routers"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreatePromptRouterOutcome(result.GetResultWithOwnership())
+                            : CreatePromptRouterOutcome(std::move(result.GetError()));
+}
+CreateProvisionedModelThroughputOutcome BedrockClient::CreateProvisionedModelThroughput(
+    const CreateProvisionedModelThroughputRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/provisioned-model-throughput"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? CreateProvisionedModelThroughputOutcome(result.GetResultWithOwnership())
+                            : CreateProvisionedModelThroughputOutcome(std::move(result.GetError()));
+}
+DeleteAutomatedReasoningPolicyOutcome BedrockClient::DeleteAutomatedReasoningPolicy(
+    const DeleteAutomatedReasoningPolicyRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicy", "Required field: PolicyArn, is not set");
+    return DeleteAutomatedReasoningPolicyOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                      "Missing required field [PolicyArn]", false));
+  }
 
-DeleteCustomModelOutcome BedrockClient::DeleteCustomModel(const DeleteCustomModelRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteCustomModel);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteCustomModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteAutomatedReasoningPolicyOutcome(result.GetResultWithOwnership())
+                            : DeleteAutomatedReasoningPolicyOutcome(std::move(result.GetError()));
+}
+DeleteAutomatedReasoningPolicyBuildWorkflowOutcome BedrockClient::DeleteAutomatedReasoningPolicyBuildWorkflow(
+    const DeleteAutomatedReasoningPolicyBuildWorkflowRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyBuildWorkflow", "Required field: PolicyArn, is not set");
+    return DeleteAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyBuildWorkflow", "Required field: BuildWorkflowId, is not set");
+    return DeleteAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+  if (!request.LastUpdatedAtHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyBuildWorkflow", "Required field: LastUpdatedAt, is not set");
+    return DeleteAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [LastUpdatedAt]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteAutomatedReasoningPolicyBuildWorkflowOutcome(result.GetResultWithOwnership())
+                            : DeleteAutomatedReasoningPolicyBuildWorkflowOutcome(std::move(result.GetError()));
+}
+DeleteAutomatedReasoningPolicyTestCaseOutcome BedrockClient::DeleteAutomatedReasoningPolicyTestCase(
+    const DeleteAutomatedReasoningPolicyTestCaseRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyTestCase", "Required field: PolicyArn, is not set");
+    return DeleteAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.TestCaseIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyTestCase", "Required field: TestCaseId, is not set");
+    return DeleteAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [TestCaseId]", false));
+  }
+  if (!request.LastUpdatedAtHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteAutomatedReasoningPolicyTestCase", "Required field: LastUpdatedAt, is not set");
+    return DeleteAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [LastUpdatedAt]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/test-cases/");
+        resolvedEndpoint.AddPathSegment(request.GetTestCaseId());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteAutomatedReasoningPolicyTestCaseOutcome(result.GetResultWithOwnership())
+                            : DeleteAutomatedReasoningPolicyTestCaseOutcome(std::move(result.GetError()));
+}
+DeleteCustomModelOutcome BedrockClient::DeleteCustomModel(const DeleteCustomModelRequest& request) const {
+  if (!request.ModelIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteCustomModel", "Required field: ModelIdentifier, is not set");
-    return DeleteCustomModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelIdentifier]", false));
+    return DeleteCustomModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                         "Missing required field [ModelIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteCustomModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteCustomModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteCustomModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteCustomModelOutcome>(
-    [&]()-> DeleteCustomModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteCustomModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/custom-models/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelIdentifier());
-      return DeleteCustomModelOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-DeleteGuardrailOutcome BedrockClient::DeleteGuardrail(const DeleteGuardrailRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteGuardrail);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.GuardrailIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/custom-models/");
+        resolvedEndpoint.AddPathSegment(request.GetModelIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteCustomModelOutcome(result.GetResultWithOwnership())
+                            : DeleteCustomModelOutcome(std::move(result.GetError()));
+}
+DeleteCustomModelDeploymentOutcome BedrockClient::DeleteCustomModelDeployment(const DeleteCustomModelDeploymentRequest& request) const {
+  if (!request.CustomModelDeploymentIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteCustomModelDeployment", "Required field: CustomModelDeploymentIdentifier, is not set");
+    return DeleteCustomModelDeploymentOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CustomModelDeploymentIdentifier]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization/custom-model-deployments/");
+        resolvedEndpoint.AddPathSegment(request.GetCustomModelDeploymentIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteCustomModelDeploymentOutcome(result.GetResultWithOwnership())
+                            : DeleteCustomModelDeploymentOutcome(std::move(result.GetError()));
+}
+DeleteEnforcedGuardrailConfigurationOutcome BedrockClient::DeleteEnforcedGuardrailConfiguration(
+    const DeleteEnforcedGuardrailConfigurationRequest& request) const {
+  if (!request.ConfigIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteEnforcedGuardrailConfiguration", "Required field: ConfigId, is not set");
+    return DeleteEnforcedGuardrailConfigurationOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ConfigId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/enforcedGuardrailsConfiguration/");
+        resolvedEndpoint.AddPathSegment(request.GetConfigId());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteEnforcedGuardrailConfigurationOutcome(result.GetResultWithOwnership())
+                            : DeleteEnforcedGuardrailConfigurationOutcome(std::move(result.GetError()));
+}
+DeleteFoundationModelAgreementOutcome BedrockClient::DeleteFoundationModelAgreement(
+    const DeleteFoundationModelAgreementRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/delete-foundation-model-agreement"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? DeleteFoundationModelAgreementOutcome(result.GetResultWithOwnership())
+                            : DeleteFoundationModelAgreementOutcome(std::move(result.GetError()));
+}
+DeleteGuardrailOutcome BedrockClient::DeleteGuardrail(const DeleteGuardrailRequest& request) const {
+  if (!request.GuardrailIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteGuardrail", "Required field: GuardrailIdentifier, is not set");
-    return DeleteGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailIdentifier]", false));
+    return DeleteGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                       "Missing required field [GuardrailIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteGuardrail",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteGuardrailOutcome>(
-    [&]()-> DeleteGuardrailOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailIdentifier());
-      return DeleteGuardrailOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-DeleteImportedModelOutcome BedrockClient::DeleteImportedModel(const DeleteImportedModelRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteImportedModel);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteImportedModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/guardrails/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteGuardrailOutcome(result.GetResultWithOwnership())
+                            : DeleteGuardrailOutcome(std::move(result.GetError()));
+}
+DeleteImportedModelOutcome BedrockClient::DeleteImportedModel(const DeleteImportedModelRequest& request) const {
+  if (!request.ModelIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteImportedModel", "Required field: ModelIdentifier, is not set");
-    return DeleteImportedModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelIdentifier]", false));
+    return DeleteImportedModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                           "Missing required field [ModelIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteImportedModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteImportedModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteImportedModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteImportedModelOutcome>(
-    [&]()-> DeleteImportedModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteImportedModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/imported-models/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelIdentifier());
-      return DeleteImportedModelOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-DeleteInferenceProfileOutcome BedrockClient::DeleteInferenceProfile(const DeleteInferenceProfileRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteInferenceProfile);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.InferenceProfileIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/imported-models/");
+        resolvedEndpoint.AddPathSegment(request.GetModelIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteImportedModelOutcome(result.GetResultWithOwnership())
+                            : DeleteImportedModelOutcome(std::move(result.GetError()));
+}
+DeleteInferenceProfileOutcome BedrockClient::DeleteInferenceProfile(const DeleteInferenceProfileRequest& request) const {
+  if (!request.InferenceProfileIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteInferenceProfile", "Required field: InferenceProfileIdentifier, is not set");
-    return DeleteInferenceProfileOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [InferenceProfileIdentifier]", false));
+    return DeleteInferenceProfileOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [InferenceProfileIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteInferenceProfile",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteInferenceProfileOutcome>(
-    [&]()-> DeleteInferenceProfileOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/inference-profiles/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetInferenceProfileIdentifier());
-      return DeleteInferenceProfileOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-DeleteModelInvocationLoggingConfigurationOutcome BedrockClient::DeleteModelInvocationLoggingConfiguration(const DeleteModelInvocationLoggingConfigurationRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteModelInvocationLoggingConfiguration);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteModelInvocationLoggingConfiguration",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteModelInvocationLoggingConfigurationOutcome>(
-    [&]()-> DeleteModelInvocationLoggingConfigurationOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/logging/modelinvocations");
-      return DeleteModelInvocationLoggingConfigurationOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/inference-profiles/");
+        resolvedEndpoint.AddPathSegment(request.GetInferenceProfileIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteInferenceProfileOutcome(result.GetResultWithOwnership())
+                            : DeleteInferenceProfileOutcome(std::move(result.GetError()));
 }
+DeleteMarketplaceModelEndpointOutcome BedrockClient::DeleteMarketplaceModelEndpoint(
+    const DeleteMarketplaceModelEndpointRequest& request) const {
+  if (!request.EndpointArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteMarketplaceModelEndpoint", "Required field: EndpointArn, is not set");
+    return DeleteMarketplaceModelEndpointOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                      "Missing required field [EndpointArn]", false));
+  }
 
-DeleteProvisionedModelThroughputOutcome BedrockClient::DeleteProvisionedModelThroughput(const DeleteProvisionedModelThroughputRequest& request) const
-{
-  AWS_OPERATION_GUARD(DeleteProvisionedModelThroughput);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, DeleteProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ProvisionedModelIdHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints/");
+        resolvedEndpoint.AddPathSegment(request.GetEndpointArn());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : DeleteMarketplaceModelEndpointOutcome(std::move(result.GetError()));
+}
+DeleteModelInvocationLoggingConfigurationOutcome BedrockClient::DeleteModelInvocationLoggingConfiguration(
+    const DeleteModelInvocationLoggingConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/logging/modelinvocations"); },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteModelInvocationLoggingConfigurationOutcome(result.GetResultWithOwnership())
+                            : DeleteModelInvocationLoggingConfigurationOutcome(std::move(result.GetError()));
+}
+DeletePromptRouterOutcome BedrockClient::DeletePromptRouter(const DeletePromptRouterRequest& request) const {
+  if (!request.PromptRouterArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeletePromptRouter", "Required field: PromptRouterArn, is not set");
+    return DeletePromptRouterOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [PromptRouterArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/prompt-routers/");
+        resolvedEndpoint.AddPathSegment(request.GetPromptRouterArn());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeletePromptRouterOutcome(result.GetResultWithOwnership())
+                            : DeletePromptRouterOutcome(std::move(result.GetError()));
+}
+DeleteProvisionedModelThroughputOutcome BedrockClient::DeleteProvisionedModelThroughput(
+    const DeleteProvisionedModelThroughputRequest& request) const {
+  if (!request.ProvisionedModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("DeleteProvisionedModelThroughput", "Required field: ProvisionedModelId, is not set");
-    return DeleteProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProvisionedModelId]", false));
+    return DeleteProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProvisionedModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, DeleteProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, DeleteProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".DeleteProvisionedModelThroughput",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<DeleteProvisionedModelThroughputOutcome>(
-    [&]()-> DeleteProvisionedModelThroughputOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, DeleteProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/provisioned-model-throughput/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetProvisionedModelId());
-      return DeleteProvisionedModelThroughputOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_DELETE, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetCustomModelOutcome BedrockClient::GetCustomModel(const GetCustomModelRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetCustomModel);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetCustomModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/provisioned-model-throughput/");
+        resolvedEndpoint.AddPathSegment(request.GetProvisionedModelId());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteProvisionedModelThroughputOutcome(result.GetResultWithOwnership())
+                            : DeleteProvisionedModelThroughputOutcome(std::move(result.GetError()));
+}
+DeleteResourcePolicyOutcome BedrockClient::DeleteResourcePolicy(const DeleteResourcePolicyRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeleteResourcePolicy", "Required field: ResourceArn, is not set");
+    return DeleteResourcePolicyOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                            "Missing required field [ResourceArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/resource-policy/");
+        resolvedEndpoint.AddPathSegment(request.GetResourceArn());
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeleteResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : DeleteResourcePolicyOutcome(std::move(result.GetError()));
+}
+DeregisterMarketplaceModelEndpointOutcome BedrockClient::DeregisterMarketplaceModelEndpoint(
+    const DeregisterMarketplaceModelEndpointRequest& request) const {
+  if (!request.EndpointArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("DeregisterMarketplaceModelEndpoint", "Required field: EndpointArn, is not set");
+    return DeregisterMarketplaceModelEndpointOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [EndpointArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints/");
+        resolvedEndpoint.AddPathSegment(request.GetEndpointArn());
+        resolvedEndpoint.AddPathSegments("/registration");
+      },
+      Aws::Http::HttpMethod::HTTP_DELETE);
+  return result.IsSuccess() ? DeregisterMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : DeregisterMarketplaceModelEndpointOutcome(std::move(result.GetError()));
+}
+ExportAutomatedReasoningPolicyVersionOutcome BedrockClient::ExportAutomatedReasoningPolicyVersion(
+    const ExportAutomatedReasoningPolicyVersionRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ExportAutomatedReasoningPolicyVersion", "Required field: PolicyArn, is not set");
+    return ExportAutomatedReasoningPolicyVersionOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/export");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ExportAutomatedReasoningPolicyVersionOutcome(result.GetResultWithOwnership())
+                            : ExportAutomatedReasoningPolicyVersionOutcome(std::move(result.GetError()));
+}
+GetAccountDataRetentionOutcome BedrockClient::GetAccountDataRetention(const GetAccountDataRetentionRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/data-retention"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAccountDataRetentionOutcome(result.GetResultWithOwnership())
+                            : GetAccountDataRetentionOutcome(std::move(result.GetError()));
+}
+GetAdvancedPromptOptimizationJobOutcome BedrockClient::GetAdvancedPromptOptimizationJob(
+    const GetAdvancedPromptOptimizationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAdvancedPromptOptimizationJob", "Required field: JobIdentifier, is not set");
+    return GetAdvancedPromptOptimizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/advanced-prompt-optimization-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAdvancedPromptOptimizationJobOutcome(result.GetResultWithOwnership())
+                            : GetAdvancedPromptOptimizationJobOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyOutcome BedrockClient::GetAutomatedReasoningPolicy(const GetAutomatedReasoningPolicyRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicy", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                   "Missing required field [PolicyArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyAnnotationsOutcome BedrockClient::GetAutomatedReasoningPolicyAnnotations(
+    const GetAutomatedReasoningPolicyAnnotationsRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyAnnotations", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyAnnotationsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyAnnotations", "Required field: BuildWorkflowId, is not set");
+    return GetAutomatedReasoningPolicyAnnotationsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/annotations");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyAnnotationsOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyAnnotationsOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyBuildWorkflowOutcome BedrockClient::GetAutomatedReasoningPolicyBuildWorkflow(
+    const GetAutomatedReasoningPolicyBuildWorkflowRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyBuildWorkflow", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyBuildWorkflow", "Required field: BuildWorkflowId, is not set");
+    return GetAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyBuildWorkflowOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyBuildWorkflowOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome BedrockClient::GetAutomatedReasoningPolicyBuildWorkflowResultAssets(
+    const GetAutomatedReasoningPolicyBuildWorkflowResultAssetsRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyBuildWorkflowResultAssets", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyBuildWorkflowResultAssets", "Required field: BuildWorkflowId, is not set");
+    return GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+  if (!request.AssetTypeHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyBuildWorkflowResultAssets", "Required field: AssetType, is not set");
+    return GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [AssetType]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/result-assets");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyBuildWorkflowResultAssetsOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyNextScenarioOutcome BedrockClient::GetAutomatedReasoningPolicyNextScenario(
+    const GetAutomatedReasoningPolicyNextScenarioRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyNextScenario", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyNextScenarioOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyNextScenario", "Required field: BuildWorkflowId, is not set");
+    return GetAutomatedReasoningPolicyNextScenarioOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/scenarios");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyNextScenarioOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyNextScenarioOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyTestCaseOutcome BedrockClient::GetAutomatedReasoningPolicyTestCase(
+    const GetAutomatedReasoningPolicyTestCaseRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyTestCase", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.TestCaseIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyTestCase", "Required field: TestCaseId, is not set");
+    return GetAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [TestCaseId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/test-cases/");
+        resolvedEndpoint.AddPathSegment(request.GetTestCaseId());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyTestCaseOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyTestCaseOutcome(std::move(result.GetError()));
+}
+GetAutomatedReasoningPolicyTestResultOutcome BedrockClient::GetAutomatedReasoningPolicyTestResult(
+    const GetAutomatedReasoningPolicyTestResultRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyTestResult", "Required field: PolicyArn, is not set");
+    return GetAutomatedReasoningPolicyTestResultOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyTestResult", "Required field: BuildWorkflowId, is not set");
+    return GetAutomatedReasoningPolicyTestResultOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+  if (!request.TestCaseIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetAutomatedReasoningPolicyTestResult", "Required field: TestCaseId, is not set");
+    return GetAutomatedReasoningPolicyTestResultOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [TestCaseId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/test-cases/");
+        resolvedEndpoint.AddPathSegment(request.GetTestCaseId());
+        resolvedEndpoint.AddPathSegments("/test-results");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetAutomatedReasoningPolicyTestResultOutcome(result.GetResultWithOwnership())
+                            : GetAutomatedReasoningPolicyTestResultOutcome(std::move(result.GetError()));
+}
+GetCustomModelOutcome BedrockClient::GetCustomModel(const GetCustomModelRequest& request) const {
+  if (!request.ModelIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetCustomModel", "Required field: ModelIdentifier, is not set");
-    return GetCustomModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelIdentifier]", false));
+    return GetCustomModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                      "Missing required field [ModelIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetCustomModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetCustomModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetCustomModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetCustomModelOutcome>(
-    [&]()-> GetCustomModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetCustomModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/custom-models/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelIdentifier());
-      return GetCustomModelOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetEvaluationJobOutcome BedrockClient::GetEvaluationJob(const GetEvaluationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetEvaluationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/custom-models/");
+        resolvedEndpoint.AddPathSegment(request.GetModelIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetCustomModelOutcome(result.GetResultWithOwnership()) : GetCustomModelOutcome(std::move(result.GetError()));
+}
+GetCustomModelDeploymentOutcome BedrockClient::GetCustomModelDeployment(const GetCustomModelDeploymentRequest& request) const {
+  if (!request.CustomModelDeploymentIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetCustomModelDeployment", "Required field: CustomModelDeploymentIdentifier, is not set");
+    return GetCustomModelDeploymentOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CustomModelDeploymentIdentifier]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization/custom-model-deployments/");
+        resolvedEndpoint.AddPathSegment(request.GetCustomModelDeploymentIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetCustomModelDeploymentOutcome(result.GetResultWithOwnership())
+                            : GetCustomModelDeploymentOutcome(std::move(result.GetError()));
+}
+GetEvaluationJobOutcome BedrockClient::GetEvaluationJob(const GetEvaluationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetEvaluationJob", "Required field: JobIdentifier, is not set");
-    return GetEvaluationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return GetEvaluationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetEvaluationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetEvaluationJobOutcome>(
-    [&]()-> GetEvaluationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/evaluation-jobs/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      return GetEvaluationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetFoundationModelOutcome BedrockClient::GetFoundationModel(const GetFoundationModelRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetFoundationModel);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetFoundationModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/evaluation-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetEvaluationJobOutcome(result.GetResultWithOwnership())
+                            : GetEvaluationJobOutcome(std::move(result.GetError()));
+}
+GetFoundationModelOutcome BedrockClient::GetFoundationModel(const GetFoundationModelRequest& request) const {
+  if (!request.ModelIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetFoundationModel", "Required field: ModelIdentifier, is not set");
-    return GetFoundationModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelIdentifier]", false));
+    return GetFoundationModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                          "Missing required field [ModelIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetFoundationModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetFoundationModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetFoundationModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetFoundationModelOutcome>(
-    [&]()-> GetFoundationModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetFoundationModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/foundation-models/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelIdentifier());
-      return GetFoundationModelOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetGuardrailOutcome BedrockClient::GetGuardrail(const GetGuardrailRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetGuardrail);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.GuardrailIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/foundation-models/");
+        resolvedEndpoint.AddPathSegment(request.GetModelIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFoundationModelOutcome(result.GetResultWithOwnership())
+                            : GetFoundationModelOutcome(std::move(result.GetError()));
+}
+GetFoundationModelAvailabilityOutcome BedrockClient::GetFoundationModelAvailability(
+    const GetFoundationModelAvailabilityRequest& request) const {
+  if (!request.ModelIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetFoundationModelAvailability", "Required field: ModelId, is not set");
+    return GetFoundationModelAvailabilityOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                      "Missing required field [ModelId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/foundation-model-availability/");
+        resolvedEndpoint.AddPathSegment(request.GetModelId());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetFoundationModelAvailabilityOutcome(result.GetResultWithOwnership())
+                            : GetFoundationModelAvailabilityOutcome(std::move(result.GetError()));
+}
+GetGuardrailOutcome BedrockClient::GetGuardrail(const GetGuardrailRequest& request) const {
+  if (!request.GuardrailIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetGuardrail", "Required field: GuardrailIdentifier, is not set");
-    return GetGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailIdentifier]", false));
+    return GetGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                    "Missing required field [GuardrailIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetGuardrail",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetGuardrailOutcome>(
-    [&]()-> GetGuardrailOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailIdentifier());
-      return GetGuardrailOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetImportedModelOutcome BedrockClient::GetImportedModel(const GetImportedModelRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetImportedModel);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetImportedModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ModelIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/guardrails/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetGuardrailOutcome(result.GetResultWithOwnership()) : GetGuardrailOutcome(std::move(result.GetError()));
+}
+GetImportedModelOutcome BedrockClient::GetImportedModel(const GetImportedModelRequest& request) const {
+  if (!request.ModelIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetImportedModel", "Required field: ModelIdentifier, is not set");
-    return GetImportedModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelIdentifier]", false));
+    return GetImportedModelOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                        "Missing required field [ModelIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetImportedModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetImportedModel, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetImportedModel",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetImportedModelOutcome>(
-    [&]()-> GetImportedModelOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetImportedModel, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/imported-models/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetModelIdentifier());
-      return GetImportedModelOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetInferenceProfileOutcome BedrockClient::GetInferenceProfile(const GetInferenceProfileRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetInferenceProfile);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.InferenceProfileIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/imported-models/");
+        resolvedEndpoint.AddPathSegment(request.GetModelIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetImportedModelOutcome(result.GetResultWithOwnership())
+                            : GetImportedModelOutcome(std::move(result.GetError()));
+}
+GetInferenceProfileOutcome BedrockClient::GetInferenceProfile(const GetInferenceProfileRequest& request) const {
+  if (!request.InferenceProfileIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetInferenceProfile", "Required field: InferenceProfileIdentifier, is not set");
-    return GetInferenceProfileOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [InferenceProfileIdentifier]", false));
+    return GetInferenceProfileOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                           "Missing required field [InferenceProfileIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetInferenceProfile, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetInferenceProfile",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetInferenceProfileOutcome>(
-    [&]()-> GetInferenceProfileOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetInferenceProfile, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/inference-profiles/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetInferenceProfileIdentifier());
-      return GetInferenceProfileOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetModelCopyJobOutcome BedrockClient::GetModelCopyJob(const GetModelCopyJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetModelCopyJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetModelCopyJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobArnHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/inference-profiles/");
+        resolvedEndpoint.AddPathSegment(request.GetInferenceProfileIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetInferenceProfileOutcome(result.GetResultWithOwnership())
+                            : GetInferenceProfileOutcome(std::move(result.GetError()));
+}
+GetMarketplaceModelEndpointOutcome BedrockClient::GetMarketplaceModelEndpoint(const GetMarketplaceModelEndpointRequest& request) const {
+  if (!request.EndpointArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetMarketplaceModelEndpoint", "Required field: EndpointArn, is not set");
+    return GetMarketplaceModelEndpointOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                   "Missing required field [EndpointArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints/");
+        resolvedEndpoint.AddPathSegment(request.GetEndpointArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : GetMarketplaceModelEndpointOutcome(std::move(result.GetError()));
+}
+GetModelCopyJobOutcome BedrockClient::GetModelCopyJob(const GetModelCopyJobRequest& request) const {
+  if (!request.JobArnHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetModelCopyJob", "Required field: JobArn, is not set");
-    return GetModelCopyJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobArn]", false));
+    return GetModelCopyJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                       "Missing required field [JobArn]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetModelCopyJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetModelCopyJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetModelCopyJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetModelCopyJobOutcome>(
-    [&]()-> GetModelCopyJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetModelCopyJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-copy-jobs/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobArn());
-      return GetModelCopyJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetModelCustomizationJobOutcome BedrockClient::GetModelCustomizationJob(const GetModelCustomizationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetModelCustomizationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-copy-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetModelCopyJobOutcome(result.GetResultWithOwnership())
+                            : GetModelCopyJobOutcome(std::move(result.GetError()));
+}
+GetModelCustomizationJobOutcome BedrockClient::GetModelCustomizationJob(const GetModelCustomizationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetModelCustomizationJob", "Required field: JobIdentifier, is not set");
-    return GetModelCustomizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return GetModelCustomizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetModelCustomizationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetModelCustomizationJobOutcome>(
-    [&]()-> GetModelCustomizationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-customization-jobs/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      return GetModelCustomizationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetModelImportJobOutcome BedrockClient::GetModelImportJob(const GetModelImportJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetModelImportJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetModelImportJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetModelCustomizationJobOutcome(result.GetResultWithOwnership())
+                            : GetModelCustomizationJobOutcome(std::move(result.GetError()));
+}
+GetModelImportJobOutcome BedrockClient::GetModelImportJob(const GetModelImportJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetModelImportJob", "Required field: JobIdentifier, is not set");
-    return GetModelImportJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return GetModelImportJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                         "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetModelImportJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetModelImportJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetModelImportJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetModelImportJobOutcome>(
-    [&]()-> GetModelImportJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetModelImportJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-import-jobs/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      return GetModelImportJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetModelInvocationJobOutcome BedrockClient::GetModelInvocationJob(const GetModelInvocationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetModelInvocationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-import-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetModelImportJobOutcome(result.GetResultWithOwnership())
+                            : GetModelImportJobOutcome(std::move(result.GetError()));
+}
+GetModelInvocationJobOutcome BedrockClient::GetModelInvocationJob(const GetModelInvocationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetModelInvocationJob", "Required field: JobIdentifier, is not set");
-    return GetModelInvocationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return GetModelInvocationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                             "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetModelInvocationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetModelInvocationJobOutcome>(
-    [&]()-> GetModelInvocationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-invocation-job/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      return GetModelInvocationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-GetModelInvocationLoggingConfigurationOutcome BedrockClient::GetModelInvocationLoggingConfiguration(const GetModelInvocationLoggingConfigurationRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetModelInvocationLoggingConfiguration);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetModelInvocationLoggingConfiguration",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetModelInvocationLoggingConfigurationOutcome>(
-    [&]()-> GetModelInvocationLoggingConfigurationOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/logging/modelinvocations");
-      return GetModelInvocationLoggingConfigurationOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-invocation-job/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetModelInvocationJobOutcome(result.GetResultWithOwnership())
+                            : GetModelInvocationJobOutcome(std::move(result.GetError()));
 }
+GetModelInvocationLoggingConfigurationOutcome BedrockClient::GetModelInvocationLoggingConfiguration(
+    const GetModelInvocationLoggingConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/logging/modelinvocations"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetModelInvocationLoggingConfigurationOutcome(result.GetResultWithOwnership())
+                            : GetModelInvocationLoggingConfigurationOutcome(std::move(result.GetError()));
+}
+GetPromptRouterOutcome BedrockClient::GetPromptRouter(const GetPromptRouterRequest& request) const {
+  if (!request.PromptRouterArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetPromptRouter", "Required field: PromptRouterArn, is not set");
+    return GetPromptRouterOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                       "Missing required field [PromptRouterArn]", false));
+  }
 
-GetProvisionedModelThroughputOutcome BedrockClient::GetProvisionedModelThroughput(const GetProvisionedModelThroughputRequest& request) const
-{
-  AWS_OPERATION_GUARD(GetProvisionedModelThroughput);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, GetProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ProvisionedModelIdHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/prompt-routers/");
+        resolvedEndpoint.AddPathSegment(request.GetPromptRouterArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetPromptRouterOutcome(result.GetResultWithOwnership())
+                            : GetPromptRouterOutcome(std::move(result.GetError()));
+}
+GetProvisionedModelThroughputOutcome BedrockClient::GetProvisionedModelThroughput(
+    const GetProvisionedModelThroughputRequest& request) const {
+  if (!request.ProvisionedModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("GetProvisionedModelThroughput", "Required field: ProvisionedModelId, is not set");
-    return GetProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProvisionedModelId]", false));
+    return GetProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                     "Missing required field [ProvisionedModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, GetProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, GetProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".GetProvisionedModelThroughput",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<GetProvisionedModelThroughputOutcome>(
-    [&]()-> GetProvisionedModelThroughputOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, GetProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/provisioned-model-throughput/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetProvisionedModelId());
-      return GetProvisionedModelThroughputOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-ListCustomModelsOutcome BedrockClient::ListCustomModels(const ListCustomModelsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListCustomModels);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListCustomModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListCustomModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListCustomModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListCustomModels",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListCustomModelsOutcome>(
-    [&]()-> ListCustomModelsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListCustomModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/custom-models");
-      return ListCustomModelsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/provisioned-model-throughput/");
+        resolvedEndpoint.AddPathSegment(request.GetProvisionedModelId());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetProvisionedModelThroughputOutcome(result.GetResultWithOwnership())
+                            : GetProvisionedModelThroughputOutcome(std::move(result.GetError()));
 }
+GetResourcePolicyOutcome BedrockClient::GetResourcePolicy(const GetResourcePolicyRequest& request) const {
+  if (!request.ResourceArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("GetResourcePolicy", "Required field: ResourceArn, is not set");
+    return GetResourcePolicyOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                         "Missing required field [ResourceArn]", false));
+  }
 
-ListEvaluationJobsOutcome BedrockClient::ListEvaluationJobs(const ListEvaluationJobsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListEvaluationJobs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListEvaluationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListEvaluationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListEvaluationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListEvaluationJobs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListEvaluationJobsOutcome>(
-    [&]()-> ListEvaluationJobsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListEvaluationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/evaluation-jobs");
-      return ListEvaluationJobsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/resource-policy/");
+        resolvedEndpoint.AddPathSegment(request.GetResourceArn());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : GetResourcePolicyOutcome(std::move(result.GetError()));
 }
-
-ListFoundationModelsOutcome BedrockClient::ListFoundationModels(const ListFoundationModelsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListFoundationModels);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListFoundationModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListFoundationModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListFoundationModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListFoundationModels",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListFoundationModelsOutcome>(
-    [&]()-> ListFoundationModelsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListFoundationModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/foundation-models");
-      return ListFoundationModelsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+GetUseCaseForModelAccessOutcome BedrockClient::GetUseCaseForModelAccess(const GetUseCaseForModelAccessRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/use-case-for-model-access"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? GetUseCaseForModelAccessOutcome(result.GetResultWithOwnership())
+                            : GetUseCaseForModelAccessOutcome(std::move(result.GetError()));
 }
-
-ListGuardrailsOutcome BedrockClient::ListGuardrails(const ListGuardrailsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListGuardrails);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListGuardrails, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListGuardrails, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListGuardrails, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListGuardrails",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListGuardrailsOutcome>(
-    [&]()-> ListGuardrailsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListGuardrails, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails");
-      return ListGuardrailsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListAdvancedPromptOptimizationJobsOutcome BedrockClient::ListAdvancedPromptOptimizationJobs(
+    const ListAdvancedPromptOptimizationJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/advanced-prompt-optimization-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAdvancedPromptOptimizationJobsOutcome(result.GetResultWithOwnership())
+                            : ListAdvancedPromptOptimizationJobsOutcome(std::move(result.GetError()));
 }
-
-ListImportedModelsOutcome BedrockClient::ListImportedModels(const ListImportedModelsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListImportedModels);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListImportedModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListImportedModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListImportedModels, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListImportedModels",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListImportedModelsOutcome>(
-    [&]()-> ListImportedModelsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListImportedModels, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/imported-models");
-      return ListImportedModelsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListAutomatedReasoningPoliciesOutcome BedrockClient::ListAutomatedReasoningPolicies(
+    const ListAutomatedReasoningPoliciesRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/automated-reasoning-policies"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAutomatedReasoningPoliciesOutcome(result.GetResultWithOwnership())
+                            : ListAutomatedReasoningPoliciesOutcome(std::move(result.GetError()));
 }
+ListAutomatedReasoningPolicyBuildWorkflowsOutcome BedrockClient::ListAutomatedReasoningPolicyBuildWorkflows(
+    const ListAutomatedReasoningPolicyBuildWorkflowsRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAutomatedReasoningPolicyBuildWorkflows", "Required field: PolicyArn, is not set");
+    return ListAutomatedReasoningPolicyBuildWorkflowsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
 
-ListInferenceProfilesOutcome BedrockClient::ListInferenceProfiles(const ListInferenceProfilesRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListInferenceProfiles);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListInferenceProfiles, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListInferenceProfiles, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListInferenceProfiles, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListInferenceProfiles",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListInferenceProfilesOutcome>(
-    [&]()-> ListInferenceProfilesOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListInferenceProfiles, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/inference-profiles");
-      return ListInferenceProfilesOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAutomatedReasoningPolicyBuildWorkflowsOutcome(result.GetResultWithOwnership())
+                            : ListAutomatedReasoningPolicyBuildWorkflowsOutcome(std::move(result.GetError()));
 }
+ListAutomatedReasoningPolicyTestCasesOutcome BedrockClient::ListAutomatedReasoningPolicyTestCases(
+    const ListAutomatedReasoningPolicyTestCasesRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAutomatedReasoningPolicyTestCases", "Required field: PolicyArn, is not set");
+    return ListAutomatedReasoningPolicyTestCasesOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
 
-ListModelCopyJobsOutcome BedrockClient::ListModelCopyJobs(const ListModelCopyJobsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListModelCopyJobs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListModelCopyJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListModelCopyJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListModelCopyJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListModelCopyJobs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListModelCopyJobsOutcome>(
-    [&]()-> ListModelCopyJobsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListModelCopyJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-copy-jobs");
-      return ListModelCopyJobsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/test-cases");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAutomatedReasoningPolicyTestCasesOutcome(result.GetResultWithOwnership())
+                            : ListAutomatedReasoningPolicyTestCasesOutcome(std::move(result.GetError()));
 }
+ListAutomatedReasoningPolicyTestResultsOutcome BedrockClient::ListAutomatedReasoningPolicyTestResults(
+    const ListAutomatedReasoningPolicyTestResultsRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAutomatedReasoningPolicyTestResults", "Required field: PolicyArn, is not set");
+    return ListAutomatedReasoningPolicyTestResultsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListAutomatedReasoningPolicyTestResults", "Required field: BuildWorkflowId, is not set");
+    return ListAutomatedReasoningPolicyTestResultsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
 
-ListModelCustomizationJobsOutcome BedrockClient::ListModelCustomizationJobs(const ListModelCustomizationJobsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListModelCustomizationJobs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListModelCustomizationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListModelCustomizationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListModelCustomizationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListModelCustomizationJobs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListModelCustomizationJobsOutcome>(
-    [&]()-> ListModelCustomizationJobsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListModelCustomizationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-customization-jobs");
-      return ListModelCustomizationJobsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/test-results");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListAutomatedReasoningPolicyTestResultsOutcome(result.GetResultWithOwnership())
+                            : ListAutomatedReasoningPolicyTestResultsOutcome(std::move(result.GetError()));
 }
-
-ListModelImportJobsOutcome BedrockClient::ListModelImportJobs(const ListModelImportJobsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListModelImportJobs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListModelImportJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListModelImportJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListModelImportJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListModelImportJobs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListModelImportJobsOutcome>(
-    [&]()-> ListModelImportJobsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListModelImportJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-import-jobs");
-      return ListModelImportJobsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListCustomModelDeploymentsOutcome BedrockClient::ListCustomModelDeployments(const ListCustomModelDeploymentsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization/custom-model-deployments");
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListCustomModelDeploymentsOutcome(result.GetResultWithOwnership())
+                            : ListCustomModelDeploymentsOutcome(std::move(result.GetError()));
 }
-
-ListModelInvocationJobsOutcome BedrockClient::ListModelInvocationJobs(const ListModelInvocationJobsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListModelInvocationJobs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListModelInvocationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListModelInvocationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListModelInvocationJobs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListModelInvocationJobs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListModelInvocationJobsOutcome>(
-    [&]()-> ListModelInvocationJobsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListModelInvocationJobs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-invocation-jobs");
-      return ListModelInvocationJobsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListCustomModelsOutcome BedrockClient::ListCustomModels(const ListCustomModelsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/custom-models"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListCustomModelsOutcome(result.GetResultWithOwnership())
+                            : ListCustomModelsOutcome(std::move(result.GetError()));
 }
-
-ListProvisionedModelThroughputsOutcome BedrockClient::ListProvisionedModelThroughputs(const ListProvisionedModelThroughputsRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListProvisionedModelThroughputs);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListProvisionedModelThroughputs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListProvisionedModelThroughputs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListProvisionedModelThroughputs, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListProvisionedModelThroughputs",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListProvisionedModelThroughputsOutcome>(
-    [&]()-> ListProvisionedModelThroughputsOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListProvisionedModelThroughputs, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/provisioned-model-throughputs");
-      return ListProvisionedModelThroughputsOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_GET, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListEnforcedGuardrailsConfigurationOutcome BedrockClient::ListEnforcedGuardrailsConfiguration(
+    const ListEnforcedGuardrailsConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/enforcedGuardrailsConfiguration"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListEnforcedGuardrailsConfigurationOutcome(result.GetResultWithOwnership())
+                            : ListEnforcedGuardrailsConfigurationOutcome(std::move(result.GetError()));
 }
-
-ListTagsForResourceOutcome BedrockClient::ListTagsForResource(const ListTagsForResourceRequest& request) const
-{
-  AWS_OPERATION_GUARD(ListTagsForResource);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, ListTagsForResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, ListTagsForResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, ListTagsForResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".ListTagsForResource",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<ListTagsForResourceOutcome>(
-    [&]()-> ListTagsForResourceOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, ListTagsForResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/listTagsForResource");
-      return ListTagsForResourceOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+ListEvaluationJobsOutcome BedrockClient::ListEvaluationJobs(const ListEvaluationJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/evaluation-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListEvaluationJobsOutcome(result.GetResultWithOwnership())
+                            : ListEvaluationJobsOutcome(std::move(result.GetError()));
 }
+ListFoundationModelAgreementOffersOutcome BedrockClient::ListFoundationModelAgreementOffers(
+    const ListFoundationModelAgreementOffersRequest& request) const {
+  if (!request.ModelIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("ListFoundationModelAgreementOffers", "Required field: ModelId, is not set");
+    return ListFoundationModelAgreementOffersOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ModelId]", false));
+  }
 
-PutModelInvocationLoggingConfigurationOutcome BedrockClient::PutModelInvocationLoggingConfiguration(const PutModelInvocationLoggingConfigurationRequest& request) const
-{
-  AWS_OPERATION_GUARD(PutModelInvocationLoggingConfiguration);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, PutModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, PutModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, PutModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".PutModelInvocationLoggingConfiguration",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<PutModelInvocationLoggingConfigurationOutcome>(
-    [&]()-> PutModelInvocationLoggingConfigurationOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, PutModelInvocationLoggingConfiguration, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/logging/modelinvocations");
-      return PutModelInvocationLoggingConfigurationOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/list-foundation-model-agreement-offers/");
+        resolvedEndpoint.AddPathSegment(request.GetModelId());
+      },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListFoundationModelAgreementOffersOutcome(result.GetResultWithOwnership())
+                            : ListFoundationModelAgreementOffersOutcome(std::move(result.GetError()));
 }
+ListFoundationModelsOutcome BedrockClient::ListFoundationModels(const ListFoundationModelsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/foundation-models"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListFoundationModelsOutcome(result.GetResultWithOwnership())
+                            : ListFoundationModelsOutcome(std::move(result.GetError()));
+}
+ListGuardrailsOutcome BedrockClient::ListGuardrails(const ListGuardrailsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/guardrails"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListGuardrailsOutcome(result.GetResultWithOwnership()) : ListGuardrailsOutcome(std::move(result.GetError()));
+}
+ListImportedModelsOutcome BedrockClient::ListImportedModels(const ListImportedModelsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/imported-models"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListImportedModelsOutcome(result.GetResultWithOwnership())
+                            : ListImportedModelsOutcome(std::move(result.GetError()));
+}
+ListInferenceProfilesOutcome BedrockClient::ListInferenceProfiles(const ListInferenceProfilesRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/inference-profiles"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListInferenceProfilesOutcome(result.GetResultWithOwnership())
+                            : ListInferenceProfilesOutcome(std::move(result.GetError()));
+}
+ListMarketplaceModelEndpointsOutcome BedrockClient::ListMarketplaceModelEndpoints(
+    const ListMarketplaceModelEndpointsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListMarketplaceModelEndpointsOutcome(result.GetResultWithOwnership())
+                            : ListMarketplaceModelEndpointsOutcome(std::move(result.GetError()));
+}
+ListModelCopyJobsOutcome BedrockClient::ListModelCopyJobs(const ListModelCopyJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-copy-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListModelCopyJobsOutcome(result.GetResultWithOwnership())
+                            : ListModelCopyJobsOutcome(std::move(result.GetError()));
+}
+ListModelCustomizationJobsOutcome BedrockClient::ListModelCustomizationJobs(const ListModelCustomizationJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-customization-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListModelCustomizationJobsOutcome(result.GetResultWithOwnership())
+                            : ListModelCustomizationJobsOutcome(std::move(result.GetError()));
+}
+ListModelImportJobsOutcome BedrockClient::ListModelImportJobs(const ListModelImportJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-import-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListModelImportJobsOutcome(result.GetResultWithOwnership())
+                            : ListModelImportJobsOutcome(std::move(result.GetError()));
+}
+ListModelInvocationJobsOutcome BedrockClient::ListModelInvocationJobs(const ListModelInvocationJobsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/model-invocation-jobs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListModelInvocationJobsOutcome(result.GetResultWithOwnership())
+                            : ListModelInvocationJobsOutcome(std::move(result.GetError()));
+}
+ListPromptRoutersOutcome BedrockClient::ListPromptRouters(const ListPromptRoutersRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/prompt-routers"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListPromptRoutersOutcome(result.GetResultWithOwnership())
+                            : ListPromptRoutersOutcome(std::move(result.GetError()));
+}
+ListProvisionedModelThroughputsOutcome BedrockClient::ListProvisionedModelThroughputs(
+    const ListProvisionedModelThroughputsRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/provisioned-model-throughputs"); },
+      Aws::Http::HttpMethod::HTTP_GET);
+  return result.IsSuccess() ? ListProvisionedModelThroughputsOutcome(result.GetResultWithOwnership())
+                            : ListProvisionedModelThroughputsOutcome(std::move(result.GetError()));
+}
+ListTagsForResourceOutcome BedrockClient::ListTagsForResource(const ListTagsForResourceRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/listTagsForResource"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? ListTagsForResourceOutcome(result.GetResultWithOwnership())
+                            : ListTagsForResourceOutcome(std::move(result.GetError()));
+}
+PutAccountDataRetentionOutcome BedrockClient::PutAccountDataRetention(const PutAccountDataRetentionRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/data-retention"); },
+      Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutAccountDataRetentionOutcome(result.GetResultWithOwnership())
+                            : PutAccountDataRetentionOutcome(std::move(result.GetError()));
+}
+PutEnforcedGuardrailConfigurationOutcome BedrockClient::PutEnforcedGuardrailConfiguration(
+    const PutEnforcedGuardrailConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/enforcedGuardrailsConfiguration"); },
+      Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutEnforcedGuardrailConfigurationOutcome(result.GetResultWithOwnership())
+                            : PutEnforcedGuardrailConfigurationOutcome(std::move(result.GetError()));
+}
+PutModelInvocationLoggingConfigurationOutcome BedrockClient::PutModelInvocationLoggingConfiguration(
+    const PutModelInvocationLoggingConfigurationRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/logging/modelinvocations"); },
+      Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? PutModelInvocationLoggingConfigurationOutcome(result.GetResultWithOwnership())
+                            : PutModelInvocationLoggingConfigurationOutcome(std::move(result.GetError()));
+}
+PutResourcePolicyOutcome BedrockClient::PutResourcePolicy(const PutResourcePolicyRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/resource-policy"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PutResourcePolicyOutcome(result.GetResultWithOwnership())
+                            : PutResourcePolicyOutcome(std::move(result.GetError()));
+}
+PutUseCaseForModelAccessOutcome BedrockClient::PutUseCaseForModelAccess(const PutUseCaseForModelAccessRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/use-case-for-model-access"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? PutUseCaseForModelAccessOutcome(result.GetResultWithOwnership())
+                            : PutUseCaseForModelAccessOutcome(std::move(result.GetError()));
+}
+RegisterMarketplaceModelEndpointOutcome BedrockClient::RegisterMarketplaceModelEndpoint(
+    const RegisterMarketplaceModelEndpointRequest& request) const {
+  if (!request.EndpointIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("RegisterMarketplaceModelEndpoint", "Required field: EndpointIdentifier, is not set");
+    return RegisterMarketplaceModelEndpointOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [EndpointIdentifier]", false));
+  }
 
-StopEvaluationJobOutcome BedrockClient::StopEvaluationJob(const StopEvaluationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(StopEvaluationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, StopEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints/");
+        resolvedEndpoint.AddPathSegment(request.GetEndpointIdentifier());
+        resolvedEndpoint.AddPathSegments("/registration");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? RegisterMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : RegisterMarketplaceModelEndpointOutcome(std::move(result.GetError()));
+}
+StartAutomatedReasoningPolicyBuildWorkflowOutcome BedrockClient::StartAutomatedReasoningPolicyBuildWorkflow(
+    const StartAutomatedReasoningPolicyBuildWorkflowRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StartAutomatedReasoningPolicyBuildWorkflow", "Required field: PolicyArn, is not set");
+    return StartAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowTypeHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StartAutomatedReasoningPolicyBuildWorkflow", "Required field: BuildWorkflowType, is not set");
+    return StartAutomatedReasoningPolicyBuildWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowType]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(
+            AutomatedReasoningPolicyBuildWorkflowTypeMapper::GetNameForAutomatedReasoningPolicyBuildWorkflowType(
+                request.GetBuildWorkflowType()));
+        resolvedEndpoint.AddPathSegments("/start");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartAutomatedReasoningPolicyBuildWorkflowOutcome(result.GetResultWithOwnership())
+                            : StartAutomatedReasoningPolicyBuildWorkflowOutcome(std::move(result.GetError()));
+}
+StartAutomatedReasoningPolicyTestWorkflowOutcome BedrockClient::StartAutomatedReasoningPolicyTestWorkflow(
+    const StartAutomatedReasoningPolicyTestWorkflowRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StartAutomatedReasoningPolicyTestWorkflow", "Required field: PolicyArn, is not set");
+    return StartAutomatedReasoningPolicyTestWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StartAutomatedReasoningPolicyTestWorkflow", "Required field: BuildWorkflowId, is not set");
+    return StartAutomatedReasoningPolicyTestWorkflowOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/test-workflows");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StartAutomatedReasoningPolicyTestWorkflowOutcome(result.GetResultWithOwnership())
+                            : StartAutomatedReasoningPolicyTestWorkflowOutcome(std::move(result.GetError()));
+}
+StopAdvancedPromptOptimizationJobOutcome BedrockClient::StopAdvancedPromptOptimizationJob(
+    const StopAdvancedPromptOptimizationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("StopAdvancedPromptOptimizationJob", "Required field: JobIdentifier, is not set");
+    return StopAdvancedPromptOptimizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/advanced-prompt-optimization-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+        resolvedEndpoint.AddPathSegments("/stop");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StopAdvancedPromptOptimizationJobOutcome(result.GetResultWithOwnership())
+                            : StopAdvancedPromptOptimizationJobOutcome(std::move(result.GetError()));
+}
+StopEvaluationJobOutcome BedrockClient::StopEvaluationJob(const StopEvaluationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("StopEvaluationJob", "Required field: JobIdentifier, is not set");
-    return StopEvaluationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return StopEvaluationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                         "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, StopEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, StopEvaluationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".StopEvaluationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<StopEvaluationJobOutcome>(
-    [&]()-> StopEvaluationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, StopEvaluationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/evaluation-job/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/stop");
-      return StopEvaluationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-StopModelCustomizationJobOutcome BedrockClient::StopModelCustomizationJob(const StopModelCustomizationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(StopModelCustomizationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, StopModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/evaluation-job/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+        resolvedEndpoint.AddPathSegments("/stop");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StopEvaluationJobOutcome(result.GetResultWithOwnership())
+                            : StopEvaluationJobOutcome(std::move(result.GetError()));
+}
+StopModelCustomizationJobOutcome BedrockClient::StopModelCustomizationJob(const StopModelCustomizationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("StopModelCustomizationJob", "Required field: JobIdentifier, is not set");
-    return StopModelCustomizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return StopModelCustomizationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                 "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, StopModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, StopModelCustomizationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".StopModelCustomizationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<StopModelCustomizationJobOutcome>(
-    [&]()-> StopModelCustomizationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, StopModelCustomizationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-customization-jobs/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/stop");
-      return StopModelCustomizationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-StopModelInvocationJobOutcome BedrockClient::StopModelInvocationJob(const StopModelInvocationJobRequest& request) const
-{
-  AWS_OPERATION_GUARD(StopModelInvocationJob);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, StopModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.JobIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization-jobs/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+        resolvedEndpoint.AddPathSegments("/stop");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StopModelCustomizationJobOutcome(result.GetResultWithOwnership())
+                            : StopModelCustomizationJobOutcome(std::move(result.GetError()));
+}
+StopModelInvocationJobOutcome BedrockClient::StopModelInvocationJob(const StopModelInvocationJobRequest& request) const {
+  if (!request.JobIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("StopModelInvocationJob", "Required field: JobIdentifier, is not set");
-    return StopModelInvocationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [JobIdentifier]", false));
+    return StopModelInvocationJobOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                              "Missing required field [JobIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, StopModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, StopModelInvocationJob, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".StopModelInvocationJob",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<StopModelInvocationJobOutcome>(
-    [&]()-> StopModelInvocationJobOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, StopModelInvocationJob, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/model-invocation-job/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetJobIdentifier());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/stop");
-      return StopModelInvocationJobOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-TagResourceOutcome BedrockClient::TagResource(const TagResourceRequest& request) const
-{
-  AWS_OPERATION_GUARD(TagResource);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, TagResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, TagResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, TagResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".TagResource",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<TagResourceOutcome>(
-    [&]()-> TagResourceOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, TagResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/tagResource");
-      return TagResourceOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-invocation-job/");
+        resolvedEndpoint.AddPathSegment(request.GetJobIdentifier());
+        resolvedEndpoint.AddPathSegments("/stop");
+      },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? StopModelInvocationJobOutcome(result.GetResultWithOwnership())
+                            : StopModelInvocationJobOutcome(std::move(result.GetError()));
 }
-
-UntagResourceOutcome BedrockClient::UntagResource(const UntagResourceRequest& request) const
-{
-  AWS_OPERATION_GUARD(UntagResource);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, UntagResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, UntagResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, UntagResource, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".UntagResource",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<UntagResourceOutcome>(
-    [&]()-> UntagResourceOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, UntagResource, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/untagResource");
-      return UntagResourceOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_POST, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
+TagResourceOutcome BedrockClient::TagResource(const TagResourceRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/tagResource"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? TagResourceOutcome(result.GetResultWithOwnership()) : TagResourceOutcome(std::move(result.GetError()));
 }
+UntagResourceOutcome BedrockClient::UntagResource(const UntagResourceRequest& request) const {
+  auto result = InvokeServiceOperation(
+      request, [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) { resolvedEndpoint.AddPathSegments("/untagResource"); },
+      Aws::Http::HttpMethod::HTTP_POST);
+  return result.IsSuccess() ? UntagResourceOutcome(result.GetResultWithOwnership()) : UntagResourceOutcome(std::move(result.GetError()));
+}
+UpdateAutomatedReasoningPolicyOutcome BedrockClient::UpdateAutomatedReasoningPolicy(
+    const UpdateAutomatedReasoningPolicyRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAutomatedReasoningPolicy", "Required field: PolicyArn, is not set");
+    return UpdateAutomatedReasoningPolicyOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                      "Missing required field [PolicyArn]", false));
+  }
 
-UpdateGuardrailOutcome BedrockClient::UpdateGuardrail(const UpdateGuardrailRequest& request) const
-{
-  AWS_OPERATION_GUARD(UpdateGuardrail);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, UpdateGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.GuardrailIdentifierHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateAutomatedReasoningPolicyOutcome(result.GetResultWithOwnership())
+                            : UpdateAutomatedReasoningPolicyOutcome(std::move(result.GetError()));
+}
+UpdateAutomatedReasoningPolicyAnnotationsOutcome BedrockClient::UpdateAutomatedReasoningPolicyAnnotations(
+    const UpdateAutomatedReasoningPolicyAnnotationsRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAutomatedReasoningPolicyAnnotations", "Required field: PolicyArn, is not set");
+    return UpdateAutomatedReasoningPolicyAnnotationsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.BuildWorkflowIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAutomatedReasoningPolicyAnnotations", "Required field: BuildWorkflowId, is not set");
+    return UpdateAutomatedReasoningPolicyAnnotationsOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [BuildWorkflowId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/build-workflows/");
+        resolvedEndpoint.AddPathSegment(request.GetBuildWorkflowId());
+        resolvedEndpoint.AddPathSegments("/annotations");
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateAutomatedReasoningPolicyAnnotationsOutcome(result.GetResultWithOwnership())
+                            : UpdateAutomatedReasoningPolicyAnnotationsOutcome(std::move(result.GetError()));
+}
+UpdateAutomatedReasoningPolicyTestCaseOutcome BedrockClient::UpdateAutomatedReasoningPolicyTestCase(
+    const UpdateAutomatedReasoningPolicyTestCaseRequest& request) const {
+  if (!request.PolicyArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAutomatedReasoningPolicyTestCase", "Required field: PolicyArn, is not set");
+    return UpdateAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [PolicyArn]", false));
+  }
+  if (!request.TestCaseIdHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateAutomatedReasoningPolicyTestCase", "Required field: TestCaseId, is not set");
+    return UpdateAutomatedReasoningPolicyTestCaseOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [TestCaseId]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/automated-reasoning-policies/");
+        resolvedEndpoint.AddPathSegment(request.GetPolicyArn());
+        resolvedEndpoint.AddPathSegments("/test-cases/");
+        resolvedEndpoint.AddPathSegment(request.GetTestCaseId());
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateAutomatedReasoningPolicyTestCaseOutcome(result.GetResultWithOwnership())
+                            : UpdateAutomatedReasoningPolicyTestCaseOutcome(std::move(result.GetError()));
+}
+UpdateCustomModelDeploymentOutcome BedrockClient::UpdateCustomModelDeployment(const UpdateCustomModelDeploymentRequest& request) const {
+  if (!request.CustomModelDeploymentIdentifierHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateCustomModelDeployment", "Required field: CustomModelDeploymentIdentifier, is not set");
+    return UpdateCustomModelDeploymentOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [CustomModelDeploymentIdentifier]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/model-customization/custom-model-deployments/");
+        resolvedEndpoint.AddPathSegment(request.GetCustomModelDeploymentIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateCustomModelDeploymentOutcome(result.GetResultWithOwnership())
+                            : UpdateCustomModelDeploymentOutcome(std::move(result.GetError()));
+}
+UpdateGuardrailOutcome BedrockClient::UpdateGuardrail(const UpdateGuardrailRequest& request) const {
+  if (!request.GuardrailIdentifierHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("UpdateGuardrail", "Required field: GuardrailIdentifier, is not set");
-    return UpdateGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [GuardrailIdentifier]", false));
+    return UpdateGuardrailOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                       "Missing required field [GuardrailIdentifier]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, UpdateGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, UpdateGuardrail, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".UpdateGuardrail",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<UpdateGuardrailOutcome>(
-    [&]()-> UpdateGuardrailOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, UpdateGuardrail, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/guardrails/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetGuardrailIdentifier());
-      return UpdateGuardrailOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_PUT, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
-UpdateProvisionedModelThroughputOutcome BedrockClient::UpdateProvisionedModelThroughput(const UpdateProvisionedModelThroughputRequest& request) const
-{
-  AWS_OPERATION_GUARD(UpdateProvisionedModelThroughput);
-  AWS_OPERATION_CHECK_PTR(m_endpointProvider, UpdateProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE);
-  if (!request.ProvisionedModelIdHasBeenSet())
-  {
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/guardrails/");
+        resolvedEndpoint.AddPathSegment(request.GetGuardrailIdentifier());
+      },
+      Aws::Http::HttpMethod::HTTP_PUT);
+  return result.IsSuccess() ? UpdateGuardrailOutcome(result.GetResultWithOwnership())
+                            : UpdateGuardrailOutcome(std::move(result.GetError()));
+}
+UpdateMarketplaceModelEndpointOutcome BedrockClient::UpdateMarketplaceModelEndpoint(
+    const UpdateMarketplaceModelEndpointRequest& request) const {
+  if (!request.EndpointArnHasBeenSet()) {
+    AWS_LOGSTREAM_ERROR("UpdateMarketplaceModelEndpoint", "Required field: EndpointArn, is not set");
+    return UpdateMarketplaceModelEndpointOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER",
+                                                                                      "Missing required field [EndpointArn]", false));
+  }
+
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/marketplace-model/endpoints/");
+        resolvedEndpoint.AddPathSegment(request.GetEndpointArn());
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateMarketplaceModelEndpointOutcome(result.GetResultWithOwnership())
+                            : UpdateMarketplaceModelEndpointOutcome(std::move(result.GetError()));
+}
+UpdateProvisionedModelThroughputOutcome BedrockClient::UpdateProvisionedModelThroughput(
+    const UpdateProvisionedModelThroughputRequest& request) const {
+  if (!request.ProvisionedModelIdHasBeenSet()) {
     AWS_LOGSTREAM_ERROR("UpdateProvisionedModelThroughput", "Required field: ProvisionedModelId, is not set");
-    return UpdateProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProvisionedModelId]", false));
+    return UpdateProvisionedModelThroughputOutcome(Aws::Client::AWSError<BedrockErrors>(
+        BedrockErrors::MISSING_PARAMETER, "MISSING_PARAMETER", "Missing required field [ProvisionedModelId]", false));
   }
-  AWS_OPERATION_CHECK_PTR(m_telemetryProvider, UpdateProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto tracer = m_telemetryProvider->getTracer(this->GetServiceClientName(), {});
-  auto meter = m_telemetryProvider->getMeter(this->GetServiceClientName(), {});
-  AWS_OPERATION_CHECK_PTR(meter, UpdateProvisionedModelThroughput, CoreErrors, CoreErrors::NOT_INITIALIZED);
-  auto span = tracer->CreateSpan(Aws::String(this->GetServiceClientName()) + ".UpdateProvisionedModelThroughput",
-    {{ TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName() }, { TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName() }, { TracingUtils::SMITHY_SYSTEM_DIMENSION, TracingUtils::SMITHY_METHOD_AWS_VALUE }},
-    smithy::components::tracing::SpanKind::CLIENT);
-  return TracingUtils::MakeCallWithTiming<UpdateProvisionedModelThroughputOutcome>(
-    [&]()-> UpdateProvisionedModelThroughputOutcome {
-      auto endpointResolutionOutcome = TracingUtils::MakeCallWithTiming<ResolveEndpointOutcome>(
-          [&]() -> ResolveEndpointOutcome { return m_endpointProvider->ResolveEndpoint(request.GetEndpointContextParams()); },
-          TracingUtils::SMITHY_CLIENT_ENDPOINT_RESOLUTION_METRIC,
-          *meter,
-          {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-      AWS_OPERATION_CHECK_SUCCESS(endpointResolutionOutcome, UpdateProvisionedModelThroughput, CoreErrors, CoreErrors::ENDPOINT_RESOLUTION_FAILURE, endpointResolutionOutcome.GetError().GetMessage());
-      endpointResolutionOutcome.GetResult().AddPathSegments("/provisioned-model-throughput/");
-      endpointResolutionOutcome.GetResult().AddPathSegment(request.GetProvisionedModelId());
-      return UpdateProvisionedModelThroughputOutcome(MakeRequest(request, endpointResolutionOutcome.GetResult(), Aws::Http::HttpMethod::HTTP_PATCH, Aws::Auth::SIGV4_SIGNER));
-    },
-    TracingUtils::SMITHY_CLIENT_DURATION_METRIC,
-    *meter,
-    {{TracingUtils::SMITHY_METHOD_DIMENSION, request.GetServiceRequestName()}, {TracingUtils::SMITHY_SERVICE_DIMENSION, this->GetServiceClientName()}});
-}
 
+  auto result = InvokeServiceOperation(
+      request,
+      [&](Aws::Endpoint::AWSEndpoint& resolvedEndpoint) {
+        resolvedEndpoint.AddPathSegments("/provisioned-model-throughput/");
+        resolvedEndpoint.AddPathSegment(request.GetProvisionedModelId());
+      },
+      Aws::Http::HttpMethod::HTTP_PATCH);
+  return result.IsSuccess() ? UpdateProvisionedModelThroughputOutcome(result.GetResultWithOwnership())
+                            : UpdateProvisionedModelThroughputOutcome(std::move(result.GetError()));
+}

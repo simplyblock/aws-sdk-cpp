@@ -4,90 +4,141 @@
  */
 
 #pragma once
-#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
-#include <aws/opensearchserverless/OpenSearchServerlessRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/opensearchserverless/OpenSearchServerlessRequest.h>
+#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
+#include <aws/opensearchserverless/model/DeletionProtection.h>
+#include <aws/opensearchserverless/model/VectorOptions.h>
 
-namespace Aws
-{
-namespace OpenSearchServerless
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace OpenSearchServerless {
+namespace Model {
+
+/**
+ */
+class UpdateCollectionRequest : public OpenSearchServerlessRequest {
+ public:
+  AWS_OPENSEARCHSERVERLESS_API UpdateCollectionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateCollection"; }
+
+  AWS_OPENSEARCHSERVERLESS_API Aws::String SerializePayload() const override;
+
+  AWS_OPENSEARCHSERVERLESS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the collection.</p>
    */
-  class UpdateCollectionRequest : public OpenSearchServerlessRequest
-  {
-  public:
-    AWS_OPENSEARCHSERVERLESS_API UpdateCollectionRequest();
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  UpdateCollectionRequest& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateCollection"; }
+  ///@{
+  /**
+   * <p>A description of the collection.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateCollectionRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_OPENSEARCHSERVERLESS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Configuration options for vector search capabilities in the collection.</p>
+   */
+  inline const VectorOptions& GetVectorOptions() const { return m_vectorOptions; }
+  inline bool VectorOptionsHasBeenSet() const { return m_vectorOptionsHasBeenSet; }
+  template <typename VectorOptionsT = VectorOptions>
+  void SetVectorOptions(VectorOptionsT&& value) {
+    m_vectorOptionsHasBeenSet = true;
+    m_vectorOptions = std::forward<VectorOptionsT>(value);
+  }
+  template <typename VectorOptionsT = VectorOptions>
+  UpdateCollectionRequest& WithVectorOptions(VectorOptionsT&& value) {
+    SetVectorOptions(std::forward<VectorOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_OPENSEARCHSERVERLESS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Indicates whether to enable or disable deletion protection for the
+   * collection. When set to <code>ENABLED</code>, the collection cannot be
+   * deleted.</p>
+   */
+  inline DeletionProtection GetDeletionProtection() const { return m_deletionProtection; }
+  inline bool DeletionProtectionHasBeenSet() const { return m_deletionProtectionHasBeenSet; }
+  inline void SetDeletionProtection(DeletionProtection value) {
+    m_deletionProtectionHasBeenSet = true;
+    m_deletionProtection = value;
+  }
+  inline UpdateCollectionRequest& WithDeletionProtection(DeletionProtection value) {
+    SetDeletionProtection(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  UpdateCollectionRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline UpdateCollectionRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline UpdateCollectionRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline UpdateCollectionRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>A description of the collection.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateCollectionRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateCollectionRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateCollectionRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  VectorOptions m_vectorOptions;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the collection.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline UpdateCollectionRequest& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline UpdateCollectionRequest& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline UpdateCollectionRequest& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
-  private:
+  DeletionProtection m_deletionProtection{DeletionProtection::NOT_SET};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_idHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_vectorOptionsHasBeenSet = false;
+  bool m_deletionProtectionHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

@@ -4,72 +4,80 @@
  */
 
 #pragma once
-#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/CleanRoomsRequest.h>
+#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
+/**
+ */
+class GetConfiguredAudienceModelAssociationRequest : public CleanRoomsRequest {
+ public:
+  AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetConfiguredAudienceModelAssociation"; }
+
+  AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>A unique identifier for the configured audience model association that you
+   * want to retrieve.</p>
    */
-  class GetConfiguredAudienceModelAssociationRequest : public CleanRoomsRequest
-  {
-  public:
-    AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationRequest();
+  inline const Aws::String& GetConfiguredAudienceModelAssociationIdentifier() const {
+    return m_configuredAudienceModelAssociationIdentifier;
+  }
+  inline bool ConfiguredAudienceModelAssociationIdentifierHasBeenSet() const {
+    return m_configuredAudienceModelAssociationIdentifierHasBeenSet;
+  }
+  template <typename ConfiguredAudienceModelAssociationIdentifierT = Aws::String>
+  void SetConfiguredAudienceModelAssociationIdentifier(ConfiguredAudienceModelAssociationIdentifierT&& value) {
+    m_configuredAudienceModelAssociationIdentifierHasBeenSet = true;
+    m_configuredAudienceModelAssociationIdentifier = std::forward<ConfiguredAudienceModelAssociationIdentifierT>(value);
+  }
+  template <typename ConfiguredAudienceModelAssociationIdentifierT = Aws::String>
+  GetConfiguredAudienceModelAssociationRequest& WithConfiguredAudienceModelAssociationIdentifier(
+      ConfiguredAudienceModelAssociationIdentifierT&& value) {
+    SetConfiguredAudienceModelAssociationIdentifier(std::forward<ConfiguredAudienceModelAssociationIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetConfiguredAudienceModelAssociation"; }
+  ///@{
+  /**
+   * <p>A unique identifier for the membership that contains the configured audience
+   * model association that you want to retrieve.</p>
+   */
+  inline const Aws::String& GetMembershipIdentifier() const { return m_membershipIdentifier; }
+  inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
+  template <typename MembershipIdentifierT = Aws::String>
+  void SetMembershipIdentifier(MembershipIdentifierT&& value) {
+    m_membershipIdentifierHasBeenSet = true;
+    m_membershipIdentifier = std::forward<MembershipIdentifierT>(value);
+  }
+  template <typename MembershipIdentifierT = Aws::String>
+  GetConfiguredAudienceModelAssociationRequest& WithMembershipIdentifier(MembershipIdentifierT&& value) {
+    SetMembershipIdentifier(std::forward<MembershipIdentifierT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_configuredAudienceModelAssociationIdentifier;
 
-    AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+  Aws::String m_membershipIdentifier;
+  bool m_configuredAudienceModelAssociationIdentifierHasBeenSet = false;
+  bool m_membershipIdentifierHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>A unique identifier for the configured audience model association that you
-     * want to retrieve.</p>
-     */
-    inline const Aws::String& GetConfiguredAudienceModelAssociationIdentifier() const{ return m_configuredAudienceModelAssociationIdentifier; }
-    inline bool ConfiguredAudienceModelAssociationIdentifierHasBeenSet() const { return m_configuredAudienceModelAssociationIdentifierHasBeenSet; }
-    inline void SetConfiguredAudienceModelAssociationIdentifier(const Aws::String& value) { m_configuredAudienceModelAssociationIdentifierHasBeenSet = true; m_configuredAudienceModelAssociationIdentifier = value; }
-    inline void SetConfiguredAudienceModelAssociationIdentifier(Aws::String&& value) { m_configuredAudienceModelAssociationIdentifierHasBeenSet = true; m_configuredAudienceModelAssociationIdentifier = std::move(value); }
-    inline void SetConfiguredAudienceModelAssociationIdentifier(const char* value) { m_configuredAudienceModelAssociationIdentifierHasBeenSet = true; m_configuredAudienceModelAssociationIdentifier.assign(value); }
-    inline GetConfiguredAudienceModelAssociationRequest& WithConfiguredAudienceModelAssociationIdentifier(const Aws::String& value) { SetConfiguredAudienceModelAssociationIdentifier(value); return *this;}
-    inline GetConfiguredAudienceModelAssociationRequest& WithConfiguredAudienceModelAssociationIdentifier(Aws::String&& value) { SetConfiguredAudienceModelAssociationIdentifier(std::move(value)); return *this;}
-    inline GetConfiguredAudienceModelAssociationRequest& WithConfiguredAudienceModelAssociationIdentifier(const char* value) { SetConfiguredAudienceModelAssociationIdentifier(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A unique identifier for the membership that contains the configured audience
-     * model association that you want to retrieve.</p>
-     */
-    inline const Aws::String& GetMembershipIdentifier() const{ return m_membershipIdentifier; }
-    inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
-    inline void SetMembershipIdentifier(const Aws::String& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = value; }
-    inline void SetMembershipIdentifier(Aws::String&& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = std::move(value); }
-    inline void SetMembershipIdentifier(const char* value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier.assign(value); }
-    inline GetConfiguredAudienceModelAssociationRequest& WithMembershipIdentifier(const Aws::String& value) { SetMembershipIdentifier(value); return *this;}
-    inline GetConfiguredAudienceModelAssociationRequest& WithMembershipIdentifier(Aws::String&& value) { SetMembershipIdentifier(std::move(value)); return *this;}
-    inline GetConfiguredAudienceModelAssociationRequest& WithMembershipIdentifier(const char* value) { SetMembershipIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_configuredAudienceModelAssociationIdentifier;
-    bool m_configuredAudienceModelAssociationIdentifierHasBeenSet = false;
-
-    Aws::String m_membershipIdentifier;
-    bool m_membershipIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

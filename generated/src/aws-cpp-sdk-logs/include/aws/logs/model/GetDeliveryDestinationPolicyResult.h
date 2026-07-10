@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/Policy.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class GetDeliveryDestinationPolicyResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult();
-    AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class GetDeliveryDestinationPolicyResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult() = default;
+  AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API GetDeliveryDestinationPolicyResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The IAM policy for this delivery destination.</p>
+   */
+  inline const Policy& GetPolicy() const { return m_policy; }
+  template <typename PolicyT = Policy>
+  void SetPolicy(PolicyT&& value) {
+    m_policyHasBeenSet = true;
+    m_policy = std::forward<PolicyT>(value);
+  }
+  template <typename PolicyT = Policy>
+  GetDeliveryDestinationPolicyResult& WithPolicy(PolicyT&& value) {
+    SetPolicy(std::forward<PolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The IAM policy for this delivery destination.</p>
-     */
-    inline const Policy& GetPolicy() const{ return m_policy; }
-    inline void SetPolicy(const Policy& value) { m_policy = value; }
-    inline void SetPolicy(Policy&& value) { m_policy = std::move(value); }
-    inline GetDeliveryDestinationPolicyResult& WithPolicy(const Policy& value) { SetPolicy(value); return *this;}
-    inline GetDeliveryDestinationPolicyResult& WithPolicy(Policy&& value) { SetPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDeliveryDestinationPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDeliveryDestinationPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDeliveryDestinationPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDeliveryDestinationPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Policy m_policy;
+ private:
+  Policy m_policy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

@@ -6,63 +6,72 @@
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
 #include <aws/backup/model/ReportJob.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
-  class DescribeReportJobResult
-  {
-  public:
-    AWS_BACKUP_API DescribeReportJobResult();
-    AWS_BACKUP_API DescribeReportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BACKUP_API DescribeReportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
+class DescribeReportJobResult {
+ public:
+  AWS_BACKUP_API DescribeReportJobResult() = default;
+  AWS_BACKUP_API DescribeReportJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BACKUP_API DescribeReportJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The information about a report job, including its completion and creation
+   * times, report destination, unique report job ID, Amazon Resource Name (ARN),
+   * report template, status, and status message.</p>
+   */
+  inline const ReportJob& GetReportJob() const { return m_reportJob; }
+  template <typename ReportJobT = ReportJob>
+  void SetReportJob(ReportJobT&& value) {
+    m_reportJobHasBeenSet = true;
+    m_reportJob = std::forward<ReportJobT>(value);
+  }
+  template <typename ReportJobT = ReportJob>
+  DescribeReportJobResult& WithReportJob(ReportJobT&& value) {
+    SetReportJob(std::forward<ReportJobT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The information about a report job, including its completion and creation
-     * times, report destination, unique report job ID, Amazon Resource Name (ARN),
-     * report template, status, and status message.</p>
-     */
-    inline const ReportJob& GetReportJob() const{ return m_reportJob; }
-    inline void SetReportJob(const ReportJob& value) { m_reportJob = value; }
-    inline void SetReportJob(ReportJob&& value) { m_reportJob = std::move(value); }
-    inline DescribeReportJobResult& WithReportJob(const ReportJob& value) { SetReportJob(value); return *this;}
-    inline DescribeReportJobResult& WithReportJob(ReportJob&& value) { SetReportJob(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReportJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReportJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReportJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReportJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ReportJob m_reportJob;
+ private:
+  ReportJob m_reportJob;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_reportJobHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

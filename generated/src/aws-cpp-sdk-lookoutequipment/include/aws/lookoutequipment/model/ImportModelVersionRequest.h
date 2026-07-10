@@ -4,200 +4,239 @@
  */
 
 #pragma once
-#include <aws/lookoutequipment/LookoutEquipment_EXPORTS.h>
-#include <aws/lookoutequipment/LookoutEquipmentRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/lookoutequipment/model/LabelsInputConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/lookoutequipment/model/InferenceDataImportStrategy.h>
-#include <aws/lookoutequipment/model/Tag.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lookoutequipment/LookoutEquipmentRequest.h>
+#include <aws/lookoutequipment/LookoutEquipment_EXPORTS.h>
+#include <aws/lookoutequipment/model/InferenceDataImportStrategy.h>
+#include <aws/lookoutequipment/model/LabelsInputConfiguration.h>
+#include <aws/lookoutequipment/model/Tag.h>
 
-namespace Aws
-{
-namespace LookoutEquipment
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace LookoutEquipment {
+namespace Model {
+
+/**
+ */
+class ImportModelVersionRequest : public LookoutEquipmentRequest {
+ public:
+  AWS_LOOKOUTEQUIPMENT_API ImportModelVersionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ImportModelVersion"; }
+
+  AWS_LOOKOUTEQUIPMENT_API Aws::String SerializePayload() const override;
+
+  AWS_LOOKOUTEQUIPMENT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) of the model version to import.</p>
    */
-  class ImportModelVersionRequest : public LookoutEquipmentRequest
-  {
-  public:
-    AWS_LOOKOUTEQUIPMENT_API ImportModelVersionRequest();
+  inline const Aws::String& GetSourceModelVersionArn() const { return m_sourceModelVersionArn; }
+  inline bool SourceModelVersionArnHasBeenSet() const { return m_sourceModelVersionArnHasBeenSet; }
+  template <typename SourceModelVersionArnT = Aws::String>
+  void SetSourceModelVersionArn(SourceModelVersionArnT&& value) {
+    m_sourceModelVersionArnHasBeenSet = true;
+    m_sourceModelVersionArn = std::forward<SourceModelVersionArnT>(value);
+  }
+  template <typename SourceModelVersionArnT = Aws::String>
+  ImportModelVersionRequest& WithSourceModelVersionArn(SourceModelVersionArnT&& value) {
+    SetSourceModelVersionArn(std::forward<SourceModelVersionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ImportModelVersion"; }
+  ///@{
+  /**
+   * <p>The name for the machine learning model to be created. If the model already
+   * exists, Amazon Lookout for Equipment creates a new version. If you do not
+   * specify this field, it is filled with the name of the source model.</p>
+   */
+  inline const Aws::String& GetModelName() const { return m_modelName; }
+  inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
+  template <typename ModelNameT = Aws::String>
+  void SetModelName(ModelNameT&& value) {
+    m_modelNameHasBeenSet = true;
+    m_modelName = std::forward<ModelNameT>(value);
+  }
+  template <typename ModelNameT = Aws::String>
+  ImportModelVersionRequest& WithModelName(ModelNameT&& value) {
+    SetModelName(std::forward<ModelNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LOOKOUTEQUIPMENT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the dataset for the machine learning model being imported. </p>
+   */
+  inline const Aws::String& GetDatasetName() const { return m_datasetName; }
+  inline bool DatasetNameHasBeenSet() const { return m_datasetNameHasBeenSet; }
+  template <typename DatasetNameT = Aws::String>
+  void SetDatasetName(DatasetNameT&& value) {
+    m_datasetNameHasBeenSet = true;
+    m_datasetName = std::forward<DatasetNameT>(value);
+  }
+  template <typename DatasetNameT = Aws::String>
+  ImportModelVersionRequest& WithDatasetName(DatasetNameT&& value) {
+    SetDatasetName(std::forward<DatasetNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_LOOKOUTEQUIPMENT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
 
+  inline const LabelsInputConfiguration& GetLabelsInputConfiguration() const { return m_labelsInputConfiguration; }
+  inline bool LabelsInputConfigurationHasBeenSet() const { return m_labelsInputConfigurationHasBeenSet; }
+  template <typename LabelsInputConfigurationT = LabelsInputConfiguration>
+  void SetLabelsInputConfiguration(LabelsInputConfigurationT&& value) {
+    m_labelsInputConfigurationHasBeenSet = true;
+    m_labelsInputConfiguration = std::forward<LabelsInputConfigurationT>(value);
+  }
+  template <typename LabelsInputConfigurationT = LabelsInputConfiguration>
+  ImportModelVersionRequest& WithLabelsInputConfiguration(LabelsInputConfigurationT&& value) {
+    SetLabelsInputConfiguration(std::forward<LabelsInputConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the model version to import.</p>
-     */
-    inline const Aws::String& GetSourceModelVersionArn() const{ return m_sourceModelVersionArn; }
-    inline bool SourceModelVersionArnHasBeenSet() const { return m_sourceModelVersionArnHasBeenSet; }
-    inline void SetSourceModelVersionArn(const Aws::String& value) { m_sourceModelVersionArnHasBeenSet = true; m_sourceModelVersionArn = value; }
-    inline void SetSourceModelVersionArn(Aws::String&& value) { m_sourceModelVersionArnHasBeenSet = true; m_sourceModelVersionArn = std::move(value); }
-    inline void SetSourceModelVersionArn(const char* value) { m_sourceModelVersionArnHasBeenSet = true; m_sourceModelVersionArn.assign(value); }
-    inline ImportModelVersionRequest& WithSourceModelVersionArn(const Aws::String& value) { SetSourceModelVersionArn(value); return *this;}
-    inline ImportModelVersionRequest& WithSourceModelVersionArn(Aws::String&& value) { SetSourceModelVersionArn(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithSourceModelVersionArn(const char* value) { SetSourceModelVersionArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique identifier for the request. If you do not set the client request
+   * token, Amazon Lookout for Equipment generates one. </p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  ImportModelVersionRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name for the machine learning model to be created. If the model already
-     * exists, Amazon Lookout for Equipment creates a new version. If you do not
-     * specify this field, it is filled with the name of the source model.</p>
-     */
-    inline const Aws::String& GetModelName() const{ return m_modelName; }
-    inline bool ModelNameHasBeenSet() const { return m_modelNameHasBeenSet; }
-    inline void SetModelName(const Aws::String& value) { m_modelNameHasBeenSet = true; m_modelName = value; }
-    inline void SetModelName(Aws::String&& value) { m_modelNameHasBeenSet = true; m_modelName = std::move(value); }
-    inline void SetModelName(const char* value) { m_modelNameHasBeenSet = true; m_modelName.assign(value); }
-    inline ImportModelVersionRequest& WithModelName(const Aws::String& value) { SetModelName(value); return *this;}
-    inline ImportModelVersionRequest& WithModelName(Aws::String&& value) { SetModelName(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithModelName(const char* value) { SetModelName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of a role with permission to access the data
+   * source being used to create the machine learning model. </p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  ImportModelVersionRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the dataset for the machine learning model being imported. </p>
-     */
-    inline const Aws::String& GetDatasetName() const{ return m_datasetName; }
-    inline bool DatasetNameHasBeenSet() const { return m_datasetNameHasBeenSet; }
-    inline void SetDatasetName(const Aws::String& value) { m_datasetNameHasBeenSet = true; m_datasetName = value; }
-    inline void SetDatasetName(Aws::String&& value) { m_datasetNameHasBeenSet = true; m_datasetName = std::move(value); }
-    inline void SetDatasetName(const char* value) { m_datasetNameHasBeenSet = true; m_datasetName.assign(value); }
-    inline ImportModelVersionRequest& WithDatasetName(const Aws::String& value) { SetDatasetName(value); return *this;}
-    inline ImportModelVersionRequest& WithDatasetName(Aws::String&& value) { SetDatasetName(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithDatasetName(const char* value) { SetDatasetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Provides the identifier of the KMS key key used to encrypt model data by
+   * Amazon Lookout for Equipment. </p>
+   */
+  inline const Aws::String& GetServerSideKmsKeyId() const { return m_serverSideKmsKeyId; }
+  inline bool ServerSideKmsKeyIdHasBeenSet() const { return m_serverSideKmsKeyIdHasBeenSet; }
+  template <typename ServerSideKmsKeyIdT = Aws::String>
+  void SetServerSideKmsKeyId(ServerSideKmsKeyIdT&& value) {
+    m_serverSideKmsKeyIdHasBeenSet = true;
+    m_serverSideKmsKeyId = std::forward<ServerSideKmsKeyIdT>(value);
+  }
+  template <typename ServerSideKmsKeyIdT = Aws::String>
+  ImportModelVersionRequest& WithServerSideKmsKeyId(ServerSideKmsKeyIdT&& value) {
+    SetServerSideKmsKeyId(std::forward<ServerSideKmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const LabelsInputConfiguration& GetLabelsInputConfiguration() const{ return m_labelsInputConfiguration; }
-    inline bool LabelsInputConfigurationHasBeenSet() const { return m_labelsInputConfigurationHasBeenSet; }
-    inline void SetLabelsInputConfiguration(const LabelsInputConfiguration& value) { m_labelsInputConfigurationHasBeenSet = true; m_labelsInputConfiguration = value; }
-    inline void SetLabelsInputConfiguration(LabelsInputConfiguration&& value) { m_labelsInputConfigurationHasBeenSet = true; m_labelsInputConfiguration = std::move(value); }
-    inline ImportModelVersionRequest& WithLabelsInputConfiguration(const LabelsInputConfiguration& value) { SetLabelsInputConfiguration(value); return *this;}
-    inline ImportModelVersionRequest& WithLabelsInputConfiguration(LabelsInputConfiguration&& value) { SetLabelsInputConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags associated with the machine learning model to be created. </p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  ImportModelVersionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  ImportModelVersionRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the request. If you do not set the client request
-     * token, Amazon Lookout for Equipment generates one. </p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline ImportModelVersionRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline ImportModelVersionRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates how to import the accumulated inference data when a model version
+   * is imported. The possible values are as follows:</p> <ul> <li> <p>NO_IMPORT –
+   * Don't import the data.</p> </li> <li> <p>ADD_WHEN_EMPTY – Only import the data
+   * from the source model if there is no existing data in the target model.</p>
+   * </li> <li> <p>OVERWRITE – Import the data from the source model and overwrite
+   * the existing data in the target model.</p> </li> </ul>
+   */
+  inline InferenceDataImportStrategy GetInferenceDataImportStrategy() const { return m_inferenceDataImportStrategy; }
+  inline bool InferenceDataImportStrategyHasBeenSet() const { return m_inferenceDataImportStrategyHasBeenSet; }
+  inline void SetInferenceDataImportStrategy(InferenceDataImportStrategy value) {
+    m_inferenceDataImportStrategyHasBeenSet = true;
+    m_inferenceDataImportStrategy = value;
+  }
+  inline ImportModelVersionRequest& WithInferenceDataImportStrategy(InferenceDataImportStrategy value) {
+    SetInferenceDataImportStrategy(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_sourceModelVersionArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of a role with permission to access the data
-     * source being used to create the machine learning model. </p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline ImportModelVersionRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline ImportModelVersionRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  Aws::String m_modelName;
 
-    ///@{
-    /**
-     * <p>Provides the identifier of the KMS key key used to encrypt model data by
-     * Amazon Lookout for Equipment. </p>
-     */
-    inline const Aws::String& GetServerSideKmsKeyId() const{ return m_serverSideKmsKeyId; }
-    inline bool ServerSideKmsKeyIdHasBeenSet() const { return m_serverSideKmsKeyIdHasBeenSet; }
-    inline void SetServerSideKmsKeyId(const Aws::String& value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId = value; }
-    inline void SetServerSideKmsKeyId(Aws::String&& value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId = std::move(value); }
-    inline void SetServerSideKmsKeyId(const char* value) { m_serverSideKmsKeyIdHasBeenSet = true; m_serverSideKmsKeyId.assign(value); }
-    inline ImportModelVersionRequest& WithServerSideKmsKeyId(const Aws::String& value) { SetServerSideKmsKeyId(value); return *this;}
-    inline ImportModelVersionRequest& WithServerSideKmsKeyId(Aws::String&& value) { SetServerSideKmsKeyId(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& WithServerSideKmsKeyId(const char* value) { SetServerSideKmsKeyId(value); return *this;}
-    ///@}
+  Aws::String m_datasetName;
 
-    ///@{
-    /**
-     * <p>The tags associated with the machine learning model to be created. </p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ImportModelVersionRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline ImportModelVersionRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline ImportModelVersionRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline ImportModelVersionRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  LabelsInputConfiguration m_labelsInputConfiguration;
 
-    ///@{
-    /**
-     * <p>Indicates how to import the accumulated inference data when a model version
-     * is imported. The possible values are as follows:</p> <ul> <li> <p>NO_IMPORT –
-     * Don't import the data.</p> </li> <li> <p>ADD_WHEN_EMPTY – Only import the data
-     * from the source model if there is no existing data in the target model.</p>
-     * </li> <li> <p>OVERWRITE – Import the data from the source model and overwrite
-     * the existing data in the target model.</p> </li> </ul>
-     */
-    inline const InferenceDataImportStrategy& GetInferenceDataImportStrategy() const{ return m_inferenceDataImportStrategy; }
-    inline bool InferenceDataImportStrategyHasBeenSet() const { return m_inferenceDataImportStrategyHasBeenSet; }
-    inline void SetInferenceDataImportStrategy(const InferenceDataImportStrategy& value) { m_inferenceDataImportStrategyHasBeenSet = true; m_inferenceDataImportStrategy = value; }
-    inline void SetInferenceDataImportStrategy(InferenceDataImportStrategy&& value) { m_inferenceDataImportStrategyHasBeenSet = true; m_inferenceDataImportStrategy = std::move(value); }
-    inline ImportModelVersionRequest& WithInferenceDataImportStrategy(const InferenceDataImportStrategy& value) { SetInferenceDataImportStrategy(value); return *this;}
-    inline ImportModelVersionRequest& WithInferenceDataImportStrategy(InferenceDataImportStrategy&& value) { SetInferenceDataImportStrategy(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
 
-    Aws::String m_sourceModelVersionArn;
-    bool m_sourceModelVersionArnHasBeenSet = false;
+  Aws::String m_roleArn;
 
-    Aws::String m_modelName;
-    bool m_modelNameHasBeenSet = false;
+  Aws::String m_serverSideKmsKeyId;
 
-    Aws::String m_datasetName;
-    bool m_datasetNameHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    LabelsInputConfiguration m_labelsInputConfiguration;
-    bool m_labelsInputConfigurationHasBeenSet = false;
+  InferenceDataImportStrategy m_inferenceDataImportStrategy{InferenceDataImportStrategy::NOT_SET};
+  bool m_sourceModelVersionArnHasBeenSet = false;
+  bool m_modelNameHasBeenSet = false;
+  bool m_datasetNameHasBeenSet = false;
+  bool m_labelsInputConfigurationHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+  bool m_roleArnHasBeenSet = false;
+  bool m_serverSideKmsKeyIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_inferenceDataImportStrategyHasBeenSet = false;
+};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::String m_serverSideKmsKeyId;
-    bool m_serverSideKmsKeyIdHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    InferenceDataImportStrategy m_inferenceDataImportStrategy;
-    bool m_inferenceDataImportStrategyHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LookoutEquipment
-} // namespace Aws
+}  // namespace Model
+}  // namespace LookoutEquipment
+}  // namespace Aws

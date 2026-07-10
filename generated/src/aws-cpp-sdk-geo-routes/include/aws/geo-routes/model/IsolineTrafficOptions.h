@@ -6,73 +6,81 @@
 #pragma once
 #include <aws/geo-routes/GeoRoutes_EXPORTS.h>
 #include <aws/geo-routes/model/TrafficUsage.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace GeoRoutes
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace GeoRoutes {
+namespace Model {
 
+/**
+ * <p>Controls how real-time and historical traffic data is used when calculating
+ * reachable areas. This affects both the size and shape of isolines by accounting
+ * for expected travel speeds based on congestion patterns.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/IsolineTrafficOptions">AWS
+ * API Reference</a></p>
+ */
+class IsolineTrafficOptions {
+ public:
+  AWS_GEOROUTES_API IsolineTrafficOptions() = default;
+  AWS_GEOROUTES_API IsolineTrafficOptions(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API IsolineTrafficOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Options related to traffic.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/geo-routes-2020-11-19/IsolineTrafficOptions">AWS
-   * API Reference</a></p>
+   * <p>The duration in seconds that real-time congestion data is considered valid
+   * before reverting to historical traffic patterns. This helps balance between
+   * using current conditions and more predictable historical data when calculating
+   * travel times.</p> <p> <b>Unit</b>: <code>seconds</code> </p>
    */
-  class IsolineTrafficOptions
-  {
-  public:
-    AWS_GEOROUTES_API IsolineTrafficOptions();
-    AWS_GEOROUTES_API IsolineTrafficOptions(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API IsolineTrafficOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_GEOROUTES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline long long GetFlowEventThresholdOverride() const { return m_flowEventThresholdOverride; }
+  inline bool FlowEventThresholdOverrideHasBeenSet() const { return m_flowEventThresholdOverrideHasBeenSet; }
+  inline void SetFlowEventThresholdOverride(long long value) {
+    m_flowEventThresholdOverrideHasBeenSet = true;
+    m_flowEventThresholdOverride = value;
+  }
+  inline IsolineTrafficOptions& WithFlowEventThresholdOverride(long long value) {
+    SetFlowEventThresholdOverride(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Controls whether traffic data is used in calculations.
+   * <code>UseTrafficData</code> considers both real-time congestion and historical
+   * patterns, while <code>IgnoreTrafficData</code> calculates routes based solely on
+   * road types and speed limits. Using traffic data provides more accurate
+   * real-world estimates but may produce different results at different times of
+   * day.</p> <p>Default value: <code>UseTrafficData</code> </p>
+   */
+  inline TrafficUsage GetUsage() const { return m_usage; }
+  inline bool UsageHasBeenSet() const { return m_usageHasBeenSet; }
+  inline void SetUsage(TrafficUsage value) {
+    m_usageHasBeenSet = true;
+    m_usage = value;
+  }
+  inline IsolineTrafficOptions& WithUsage(TrafficUsage value) {
+    SetUsage(value);
+    return *this;
+  }
+  ///@}
+ private:
+  long long m_flowEventThresholdOverride{0};
 
-    ///@{
-    /**
-     * <p>Duration for which flow traffic is considered valid. For this period, the
-     * flow traffic is used over historical traffic data. Flow traffic refers to
-     * congestion, which changes very quickly. Duration in seconds for which flow
-     * traffic event would be considered valid. While flow traffic event is valid it
-     * will be used over the historical traffic data. </p> <p> <b>Unit</b>:
-     * <code>seconds</code> </p>
-     */
-    inline long long GetFlowEventThresholdOverride() const{ return m_flowEventThresholdOverride; }
-    inline bool FlowEventThresholdOverrideHasBeenSet() const { return m_flowEventThresholdOverrideHasBeenSet; }
-    inline void SetFlowEventThresholdOverride(long long value) { m_flowEventThresholdOverrideHasBeenSet = true; m_flowEventThresholdOverride = value; }
-    inline IsolineTrafficOptions& WithFlowEventThresholdOverride(long long value) { SetFlowEventThresholdOverride(value); return *this;}
-    ///@}
+  TrafficUsage m_usage{TrafficUsage::NOT_SET};
+  bool m_flowEventThresholdOverrideHasBeenSet = false;
+  bool m_usageHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Determines if traffic should be used or ignored while calculating the
-     * route.</p> <p>Default Value: <code>UseTrafficData</code> </p>
-     */
-    inline const TrafficUsage& GetUsage() const{ return m_usage; }
-    inline bool UsageHasBeenSet() const { return m_usageHasBeenSet; }
-    inline void SetUsage(const TrafficUsage& value) { m_usageHasBeenSet = true; m_usage = value; }
-    inline void SetUsage(TrafficUsage&& value) { m_usageHasBeenSet = true; m_usage = std::move(value); }
-    inline IsolineTrafficOptions& WithUsage(const TrafficUsage& value) { SetUsage(value); return *this;}
-    inline IsolineTrafficOptions& WithUsage(TrafficUsage&& value) { SetUsage(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    long long m_flowEventThresholdOverride;
-    bool m_flowEventThresholdOverrideHasBeenSet = false;
-
-    TrafficUsage m_usage;
-    bool m_usageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GeoRoutes
-} // namespace Aws
+}  // namespace Model
+}  // namespace GeoRoutes
+}  // namespace Aws

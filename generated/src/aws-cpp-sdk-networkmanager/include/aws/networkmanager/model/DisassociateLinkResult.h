@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/LinkAssociation.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkManager
-{
-namespace Model
-{
-  class DisassociateLinkResult
-  {
-  public:
-    AWS_NETWORKMANAGER_API DisassociateLinkResult();
-    AWS_NETWORKMANAGER_API DisassociateLinkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKMANAGER_API DisassociateLinkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkManager {
+namespace Model {
+class DisassociateLinkResult {
+ public:
+  AWS_NETWORKMANAGER_API DisassociateLinkResult() = default;
+  AWS_NETWORKMANAGER_API DisassociateLinkResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKMANAGER_API DisassociateLinkResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the link association.</p>
+   */
+  inline const LinkAssociation& GetLinkAssociation() const { return m_linkAssociation; }
+  template <typename LinkAssociationT = LinkAssociation>
+  void SetLinkAssociation(LinkAssociationT&& value) {
+    m_linkAssociationHasBeenSet = true;
+    m_linkAssociation = std::forward<LinkAssociationT>(value);
+  }
+  template <typename LinkAssociationT = LinkAssociation>
+  DisassociateLinkResult& WithLinkAssociation(LinkAssociationT&& value) {
+    SetLinkAssociation(std::forward<LinkAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the link association.</p>
-     */
-    inline const LinkAssociation& GetLinkAssociation() const{ return m_linkAssociation; }
-    inline void SetLinkAssociation(const LinkAssociation& value) { m_linkAssociation = value; }
-    inline void SetLinkAssociation(LinkAssociation&& value) { m_linkAssociation = std::move(value); }
-    inline DisassociateLinkResult& WithLinkAssociation(const LinkAssociation& value) { SetLinkAssociation(value); return *this;}
-    inline DisassociateLinkResult& WithLinkAssociation(LinkAssociation&& value) { SetLinkAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DisassociateLinkResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DisassociateLinkResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DisassociateLinkResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DisassociateLinkResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    LinkAssociation m_linkAssociation;
+ private:
+  LinkAssociation m_linkAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_linkAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

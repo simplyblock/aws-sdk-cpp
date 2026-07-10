@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/shield/Shield_EXPORTS.h>
 #include <aws/shield/model/AttackDetail.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Shield
-{
-namespace Model
-{
-  class DescribeAttackResult
-  {
-  public:
-    AWS_SHIELD_API DescribeAttackResult();
-    AWS_SHIELD_API DescribeAttackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SHIELD_API DescribeAttackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Shield {
+namespace Model {
+class DescribeAttackResult {
+ public:
+  AWS_SHIELD_API DescribeAttackResult() = default;
+  AWS_SHIELD_API DescribeAttackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SHIELD_API DescribeAttackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The attack that you requested. </p>
+   */
+  inline const AttackDetail& GetAttack() const { return m_attack; }
+  template <typename AttackT = AttackDetail>
+  void SetAttack(AttackT&& value) {
+    m_attackHasBeenSet = true;
+    m_attack = std::forward<AttackT>(value);
+  }
+  template <typename AttackT = AttackDetail>
+  DescribeAttackResult& WithAttack(AttackT&& value) {
+    SetAttack(std::forward<AttackT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The attack that you requested. </p>
-     */
-    inline const AttackDetail& GetAttack() const{ return m_attack; }
-    inline void SetAttack(const AttackDetail& value) { m_attack = value; }
-    inline void SetAttack(AttackDetail&& value) { m_attack = std::move(value); }
-    inline DescribeAttackResult& WithAttack(const AttackDetail& value) { SetAttack(value); return *this;}
-    inline DescribeAttackResult& WithAttack(AttackDetail&& value) { SetAttack(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeAttackResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeAttackResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeAttackResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeAttackResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AttackDetail m_attack;
+ private:
+  AttackDetail m_attack;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_attackHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Shield
-} // namespace Aws
+}  // namespace Model
+}  // namespace Shield
+}  // namespace Aws

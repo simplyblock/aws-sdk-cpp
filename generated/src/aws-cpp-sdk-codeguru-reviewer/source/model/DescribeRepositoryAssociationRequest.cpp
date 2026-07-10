@@ -12,16 +12,4 @@ using namespace Aws::CodeGuruReviewer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeRepositoryAssociationRequest::DescribeRepositoryAssociationRequest() : 
-    m_associationArnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeRepositoryAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeRepositoryAssociationRequest::SerializePayload() const { return {}; }

@@ -4,85 +4,103 @@
  */
 
 #pragma once
-#include <aws/voice-id/VoiceID_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/voice-id/VoiceID_EXPORTS.h>
 #include <aws/voice-id/model/SpeakerSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace VoiceID
-{
-namespace Model
-{
-  class ListSpeakersResult
-  {
-  public:
-    AWS_VOICEID_API ListSpeakersResult();
-    AWS_VOICEID_API ListSpeakersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_VOICEID_API ListSpeakersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace VoiceID {
+namespace Model {
+class ListSpeakersResult {
+ public:
+  AWS_VOICEID_API ListSpeakersResult() = default;
+  AWS_VOICEID_API ListSpeakersResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_VOICEID_API ListSpeakersResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>If <code>NextToken</code> is returned, there are more results available. The
+   * value of <code>NextToken</code> is a unique pagination token for each page. Make
+   * the call again using the returned token to retrieve the next page. Keep all
+   * other arguments unchanged. Each pagination token expires after 24 hours. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSpeakersResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If <code>NextToken</code> is returned, there are more results available. The
-     * value of <code>NextToken</code> is a unique pagination token for each page. Make
-     * the call again using the returned token to retrieve the next page. Keep all
-     * other arguments unchanged. Each pagination token expires after 24 hours. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSpeakersResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSpeakersResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSpeakersResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list containing details about each speaker in the Amazon Web Services
+   * account. </p>
+   */
+  inline const Aws::Vector<SpeakerSummary>& GetSpeakerSummaries() const { return m_speakerSummaries; }
+  template <typename SpeakerSummariesT = Aws::Vector<SpeakerSummary>>
+  void SetSpeakerSummaries(SpeakerSummariesT&& value) {
+    m_speakerSummariesHasBeenSet = true;
+    m_speakerSummaries = std::forward<SpeakerSummariesT>(value);
+  }
+  template <typename SpeakerSummariesT = Aws::Vector<SpeakerSummary>>
+  ListSpeakersResult& WithSpeakerSummaries(SpeakerSummariesT&& value) {
+    SetSpeakerSummaries(std::forward<SpeakerSummariesT>(value));
+    return *this;
+  }
+  template <typename SpeakerSummariesT = SpeakerSummary>
+  ListSpeakersResult& AddSpeakerSummaries(SpeakerSummariesT&& value) {
+    m_speakerSummariesHasBeenSet = true;
+    m_speakerSummaries.emplace_back(std::forward<SpeakerSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list containing details about each speaker in the Amazon Web Services
-     * account. </p>
-     */
-    inline const Aws::Vector<SpeakerSummary>& GetSpeakerSummaries() const{ return m_speakerSummaries; }
-    inline void SetSpeakerSummaries(const Aws::Vector<SpeakerSummary>& value) { m_speakerSummaries = value; }
-    inline void SetSpeakerSummaries(Aws::Vector<SpeakerSummary>&& value) { m_speakerSummaries = std::move(value); }
-    inline ListSpeakersResult& WithSpeakerSummaries(const Aws::Vector<SpeakerSummary>& value) { SetSpeakerSummaries(value); return *this;}
-    inline ListSpeakersResult& WithSpeakerSummaries(Aws::Vector<SpeakerSummary>&& value) { SetSpeakerSummaries(std::move(value)); return *this;}
-    inline ListSpeakersResult& AddSpeakerSummaries(const SpeakerSummary& value) { m_speakerSummaries.push_back(value); return *this; }
-    inline ListSpeakersResult& AddSpeakerSummaries(SpeakerSummary&& value) { m_speakerSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSpeakersResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSpeakersResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSpeakersResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSpeakersResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<SpeakerSummary> m_speakerSummaries;
+  Aws::Vector<SpeakerSummary> m_speakerSummaries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_speakerSummariesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

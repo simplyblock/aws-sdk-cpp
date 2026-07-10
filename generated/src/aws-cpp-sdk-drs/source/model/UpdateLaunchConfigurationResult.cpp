@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/drs/model/UpdateLaunchConfigurationResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/drs/model/UpdateLaunchConfigurationResult.h>
 
 #include <utility>
 
@@ -17,92 +17,59 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws;
 
-UpdateLaunchConfigurationResult::UpdateLaunchConfigurationResult() : 
-    m_copyPrivateIp(false),
-    m_copyTags(false),
-    m_launchDisposition(LaunchDisposition::NOT_SET),
-    m_postLaunchEnabled(false),
-    m_targetInstanceTypeRightSizingMethod(TargetInstanceTypeRightSizingMethod::NOT_SET)
-{
-}
+UpdateLaunchConfigurationResult::UpdateLaunchConfigurationResult(const Aws::AmazonWebServiceResult<JsonValue>& result) { *this = result; }
 
-UpdateLaunchConfigurationResult::UpdateLaunchConfigurationResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-  : UpdateLaunchConfigurationResult()
-{
-  *this = result;
-}
-
-UpdateLaunchConfigurationResult& UpdateLaunchConfigurationResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
+UpdateLaunchConfigurationResult& UpdateLaunchConfigurationResult::operator=(const Aws::AmazonWebServiceResult<JsonValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   JsonView jsonValue = result.GetPayload().View();
-  if(jsonValue.ValueExists("copyPrivateIp"))
-  {
-    m_copyPrivateIp = jsonValue.GetBool("copyPrivateIp");
-
-  }
-
-  if(jsonValue.ValueExists("copyTags"))
-  {
-    m_copyTags = jsonValue.GetBool("copyTags");
-
-  }
-
-  if(jsonValue.ValueExists("ec2LaunchTemplateID"))
-  {
-    m_ec2LaunchTemplateID = jsonValue.GetString("ec2LaunchTemplateID");
-
-  }
-
-  if(jsonValue.ValueExists("launchDisposition"))
-  {
-    m_launchDisposition = LaunchDispositionMapper::GetLaunchDispositionForName(jsonValue.GetString("launchDisposition"));
-
-  }
-
-  if(jsonValue.ValueExists("launchIntoInstanceProperties"))
-  {
-    m_launchIntoInstanceProperties = jsonValue.GetObject("launchIntoInstanceProperties");
-
-  }
-
-  if(jsonValue.ValueExists("licensing"))
-  {
-    m_licensing = jsonValue.GetObject("licensing");
-
-  }
-
-  if(jsonValue.ValueExists("name"))
-  {
-    m_name = jsonValue.GetString("name");
-
-  }
-
-  if(jsonValue.ValueExists("postLaunchEnabled"))
-  {
-    m_postLaunchEnabled = jsonValue.GetBool("postLaunchEnabled");
-
-  }
-
-  if(jsonValue.ValueExists("sourceServerID"))
-  {
+  if (jsonValue.ValueExists("sourceServerID")) {
     m_sourceServerID = jsonValue.GetString("sourceServerID");
-
+    m_sourceServerIDHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("targetInstanceTypeRightSizingMethod"))
-  {
-    m_targetInstanceTypeRightSizingMethod = TargetInstanceTypeRightSizingMethodMapper::GetTargetInstanceTypeRightSizingMethodForName(jsonValue.GetString("targetInstanceTypeRightSizingMethod"));
-
+  if (jsonValue.ValueExists("name")) {
+    m_name = jsonValue.GetString("name");
+    m_nameHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("ec2LaunchTemplateID")) {
+    m_ec2LaunchTemplateID = jsonValue.GetString("ec2LaunchTemplateID");
+    m_ec2LaunchTemplateIDHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("launchDisposition")) {
+    m_launchDisposition = LaunchDispositionMapper::GetLaunchDispositionForName(jsonValue.GetString("launchDisposition"));
+    m_launchDispositionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("targetInstanceTypeRightSizingMethod")) {
+    m_targetInstanceTypeRightSizingMethod = TargetInstanceTypeRightSizingMethodMapper::GetTargetInstanceTypeRightSizingMethodForName(
+        jsonValue.GetString("targetInstanceTypeRightSizingMethod"));
+    m_targetInstanceTypeRightSizingMethodHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("copyPrivateIp")) {
+    m_copyPrivateIp = jsonValue.GetBool("copyPrivateIp");
+    m_copyPrivateIpHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("copyTags")) {
+    m_copyTags = jsonValue.GetBool("copyTags");
+    m_copyTagsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("licensing")) {
+    m_licensing = jsonValue.GetObject("licensing");
+    m_licensingHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("postLaunchEnabled")) {
+    m_postLaunchEnabled = jsonValue.GetBool("postLaunchEnabled");
+    m_postLaunchEnabledHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("launchIntoInstanceProperties")) {
+    m_launchIntoInstanceProperties = jsonValue.GetObject("launchIntoInstanceProperties");
+    m_launchIntoInstancePropertiesHasBeenSet = true;
+  }
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

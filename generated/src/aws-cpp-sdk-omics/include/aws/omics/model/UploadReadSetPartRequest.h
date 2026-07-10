@@ -4,107 +4,119 @@
  */
 
 #pragma once
-#include <aws/omics/Omics_EXPORTS.h>
-#include <aws/omics/OmicsRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/omics/model/ReadSetPartSource.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/omics/OmicsRequest.h>
+#include <aws/omics/Omics_EXPORTS.h>
+#include <aws/omics/model/ReadSetPartSource.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace Omics
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace Omics {
+namespace Model {
 
+/**
+ */
+class UploadReadSetPartRequest : public StreamingOmicsRequest {
+ public:
+  AWS_OMICS_API UploadReadSetPartRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UploadReadSetPart"; }
+
+  AWS_OMICS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  AWS_OMICS_API bool SignBody() const override { return false; }
+
+  ///@{
   /**
+   * <p>The Sequence Store ID used for the multipart upload.</p>
    */
-  class UploadReadSetPartRequest : public StreamingOmicsRequest
-  {
-  public:
-    AWS_OMICS_API UploadReadSetPartRequest();
+  inline const Aws::String& GetSequenceStoreId() const { return m_sequenceStoreId; }
+  inline bool SequenceStoreIdHasBeenSet() const { return m_sequenceStoreIdHasBeenSet; }
+  template <typename SequenceStoreIdT = Aws::String>
+  void SetSequenceStoreId(SequenceStoreIdT&& value) {
+    m_sequenceStoreIdHasBeenSet = true;
+    m_sequenceStoreId = std::forward<SequenceStoreIdT>(value);
+  }
+  template <typename SequenceStoreIdT = Aws::String>
+  UploadReadSetPartRequest& WithSequenceStoreId(SequenceStoreIdT&& value) {
+    SetSequenceStoreId(std::forward<SequenceStoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UploadReadSetPart"; }
+  ///@{
+  /**
+   * <p>The ID for the initiated multipart upload.</p>
+   */
+  inline const Aws::String& GetUploadId() const { return m_uploadId; }
+  inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
+  template <typename UploadIdT = Aws::String>
+  void SetUploadId(UploadIdT&& value) {
+    m_uploadIdHasBeenSet = true;
+    m_uploadId = std::forward<UploadIdT>(value);
+  }
+  template <typename UploadIdT = Aws::String>
+  UploadReadSetPartRequest& WithUploadId(UploadIdT&& value) {
+    SetUploadId(std::forward<UploadIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_OMICS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>The source file for an upload part.</p>
+   */
+  inline ReadSetPartSource GetPartSource() const { return m_partSource; }
+  inline bool PartSourceHasBeenSet() const { return m_partSourceHasBeenSet; }
+  inline void SetPartSource(ReadSetPartSource value) {
+    m_partSourceHasBeenSet = true;
+    m_partSource = value;
+  }
+  inline UploadReadSetPartRequest& WithPartSource(ReadSetPartSource value) {
+    SetPartSource(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_OMICS_API bool SignBody() const override { return false; }
+  ///@{
+  /**
+   * <p>The number of the part being uploaded.</p>
+   */
+  inline int GetPartNumber() const { return m_partNumber; }
+  inline bool PartNumberHasBeenSet() const { return m_partNumberHasBeenSet; }
+  inline void SetPartNumber(int value) {
+    m_partNumberHasBeenSet = true;
+    m_partNumber = value;
+  }
+  inline UploadReadSetPartRequest& WithPartNumber(int value) {
+    SetPartNumber(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_sequenceStoreId;
 
+  Aws::String m_uploadId;
 
-    ///@{
-    /**
-     * <p>The Sequence Store ID used for the multipart upload.</p>
-     */
-    inline const Aws::String& GetSequenceStoreId() const{ return m_sequenceStoreId; }
-    inline bool SequenceStoreIdHasBeenSet() const { return m_sequenceStoreIdHasBeenSet; }
-    inline void SetSequenceStoreId(const Aws::String& value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId = value; }
-    inline void SetSequenceStoreId(Aws::String&& value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId = std::move(value); }
-    inline void SetSequenceStoreId(const char* value) { m_sequenceStoreIdHasBeenSet = true; m_sequenceStoreId.assign(value); }
-    inline UploadReadSetPartRequest& WithSequenceStoreId(const Aws::String& value) { SetSequenceStoreId(value); return *this;}
-    inline UploadReadSetPartRequest& WithSequenceStoreId(Aws::String&& value) { SetSequenceStoreId(std::move(value)); return *this;}
-    inline UploadReadSetPartRequest& WithSequenceStoreId(const char* value) { SetSequenceStoreId(value); return *this;}
-    ///@}
+  ReadSetPartSource m_partSource{ReadSetPartSource::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The ID for the initiated multipart upload.</p>
-     */
-    inline const Aws::String& GetUploadId() const{ return m_uploadId; }
-    inline bool UploadIdHasBeenSet() const { return m_uploadIdHasBeenSet; }
-    inline void SetUploadId(const Aws::String& value) { m_uploadIdHasBeenSet = true; m_uploadId = value; }
-    inline void SetUploadId(Aws::String&& value) { m_uploadIdHasBeenSet = true; m_uploadId = std::move(value); }
-    inline void SetUploadId(const char* value) { m_uploadIdHasBeenSet = true; m_uploadId.assign(value); }
-    inline UploadReadSetPartRequest& WithUploadId(const Aws::String& value) { SetUploadId(value); return *this;}
-    inline UploadReadSetPartRequest& WithUploadId(Aws::String&& value) { SetUploadId(std::move(value)); return *this;}
-    inline UploadReadSetPartRequest& WithUploadId(const char* value) { SetUploadId(value); return *this;}
-    ///@}
+  int m_partNumber{0};
 
-    ///@{
-    /**
-     * <p>The source file for an upload part.</p>
-     */
-    inline const ReadSetPartSource& GetPartSource() const{ return m_partSource; }
-    inline bool PartSourceHasBeenSet() const { return m_partSourceHasBeenSet; }
-    inline void SetPartSource(const ReadSetPartSource& value) { m_partSourceHasBeenSet = true; m_partSource = value; }
-    inline void SetPartSource(ReadSetPartSource&& value) { m_partSourceHasBeenSet = true; m_partSource = std::move(value); }
-    inline UploadReadSetPartRequest& WithPartSource(const ReadSetPartSource& value) { SetPartSource(value); return *this;}
-    inline UploadReadSetPartRequest& WithPartSource(ReadSetPartSource&& value) { SetPartSource(std::move(value)); return *this;}
-    ///@}
+  bool m_sequenceStoreIdHasBeenSet = false;
+  bool m_uploadIdHasBeenSet = false;
+  bool m_partSourceHasBeenSet = false;
+  bool m_partNumberHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The number of the part being uploaded.</p>
-     */
-    inline int GetPartNumber() const{ return m_partNumber; }
-    inline bool PartNumberHasBeenSet() const { return m_partNumberHasBeenSet; }
-    inline void SetPartNumber(int value) { m_partNumberHasBeenSet = true; m_partNumber = value; }
-    inline UploadReadSetPartRequest& WithPartNumber(int value) { SetPartNumber(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_sequenceStoreId;
-    bool m_sequenceStoreIdHasBeenSet = false;
-
-    Aws::String m_uploadId;
-    bool m_uploadIdHasBeenSet = false;
-
-    ReadSetPartSource m_partSource;
-    bool m_partSourceHasBeenSet = false;
-
-    int m_partNumber;
-    bool m_partNumberHasBeenSet = false;
-
-  };
-
-} // namespace Model
-} // namespace Omics
-} // namespace Aws
+}  // namespace Model
+}  // namespace Omics
+}  // namespace Aws

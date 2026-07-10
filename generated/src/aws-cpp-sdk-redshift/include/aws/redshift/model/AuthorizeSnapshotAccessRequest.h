@@ -4,119 +4,130 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/redshift/RedshiftRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/redshift/RedshiftRequest.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Redshift {
+namespace Model {
 
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/AuthorizeSnapshotAccessMessage">AWS
+ * API Reference</a></p>
+ */
+class AuthorizeSnapshotAccessRequest : public RedshiftRequest {
+ public:
+  AWS_REDSHIFT_API AuthorizeSnapshotAccessRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AuthorizeSnapshotAccess"; }
+
+  AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/AuthorizeSnapshotAccessMessage">AWS
-   * API Reference</a></p>
+   * <p>The identifier of the snapshot the account is authorized to restore.</p>
    */
-  class AuthorizeSnapshotAccessRequest : public RedshiftRequest
-  {
-  public:
-    AWS_REDSHIFT_API AuthorizeSnapshotAccessRequest();
+  inline const Aws::String& GetSnapshotIdentifier() const { return m_snapshotIdentifier; }
+  inline bool SnapshotIdentifierHasBeenSet() const { return m_snapshotIdentifierHasBeenSet; }
+  template <typename SnapshotIdentifierT = Aws::String>
+  void SetSnapshotIdentifier(SnapshotIdentifierT&& value) {
+    m_snapshotIdentifierHasBeenSet = true;
+    m_snapshotIdentifier = std::forward<SnapshotIdentifierT>(value);
+  }
+  template <typename SnapshotIdentifierT = Aws::String>
+  AuthorizeSnapshotAccessRequest& WithSnapshotIdentifier(SnapshotIdentifierT&& value) {
+    SetSnapshotIdentifier(std::forward<SnapshotIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AuthorizeSnapshotAccess"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the snapshot to authorize access to.</p>
+   */
+  inline const Aws::String& GetSnapshotArn() const { return m_snapshotArn; }
+  inline bool SnapshotArnHasBeenSet() const { return m_snapshotArnHasBeenSet; }
+  template <typename SnapshotArnT = Aws::String>
+  void SetSnapshotArn(SnapshotArnT&& value) {
+    m_snapshotArnHasBeenSet = true;
+    m_snapshotArn = std::forward<SnapshotArnT>(value);
+  }
+  template <typename SnapshotArnT = Aws::String>
+  AuthorizeSnapshotAccessRequest& WithSnapshotArn(SnapshotArnT&& value) {
+    SetSnapshotArn(std::forward<SnapshotArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The identifier of the cluster the snapshot was created from.</p> <ul> <li>
+   * <p> <i>If the snapshot to access doesn't exist and the associated IAM policy
+   * doesn't allow access to all (*) snapshots</i> - This parameter is required.
+   * Otherwise, permissions aren't available to check if the snapshot exists.</p>
+   * </li> <li> <p> <i>If the snapshot to access exists</i> - This parameter isn't
+   * required. Redshift can retrieve the cluster identifier and use it to validate
+   * snapshot authorization.</p> </li> </ul>
+   */
+  inline const Aws::String& GetSnapshotClusterIdentifier() const { return m_snapshotClusterIdentifier; }
+  inline bool SnapshotClusterIdentifierHasBeenSet() const { return m_snapshotClusterIdentifierHasBeenSet; }
+  template <typename SnapshotClusterIdentifierT = Aws::String>
+  void SetSnapshotClusterIdentifier(SnapshotClusterIdentifierT&& value) {
+    m_snapshotClusterIdentifierHasBeenSet = true;
+    m_snapshotClusterIdentifier = std::forward<SnapshotClusterIdentifierT>(value);
+  }
+  template <typename SnapshotClusterIdentifierT = Aws::String>
+  AuthorizeSnapshotAccessRequest& WithSnapshotClusterIdentifier(SnapshotClusterIdentifierT&& value) {
+    SetSnapshotClusterIdentifier(std::forward<SnapshotClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The identifier of the Amazon Web Services account authorized to restore the
+   * specified snapshot.</p> <p>To share a snapshot with Amazon Web Services Support,
+   * specify amazon-redshift-support.</p>
+   */
+  inline const Aws::String& GetAccountWithRestoreAccess() const { return m_accountWithRestoreAccess; }
+  inline bool AccountWithRestoreAccessHasBeenSet() const { return m_accountWithRestoreAccessHasBeenSet; }
+  template <typename AccountWithRestoreAccessT = Aws::String>
+  void SetAccountWithRestoreAccess(AccountWithRestoreAccessT&& value) {
+    m_accountWithRestoreAccessHasBeenSet = true;
+    m_accountWithRestoreAccess = std::forward<AccountWithRestoreAccessT>(value);
+  }
+  template <typename AccountWithRestoreAccessT = Aws::String>
+  AuthorizeSnapshotAccessRequest& WithAccountWithRestoreAccess(AccountWithRestoreAccessT&& value) {
+    SetAccountWithRestoreAccess(std::forward<AccountWithRestoreAccessT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_snapshotIdentifier;
 
-  public:
+  Aws::String m_snapshotArn;
 
-    ///@{
-    /**
-     * <p>The identifier of the snapshot the account is authorized to restore.</p>
-     */
-    inline const Aws::String& GetSnapshotIdentifier() const{ return m_snapshotIdentifier; }
-    inline bool SnapshotIdentifierHasBeenSet() const { return m_snapshotIdentifierHasBeenSet; }
-    inline void SetSnapshotIdentifier(const Aws::String& value) { m_snapshotIdentifierHasBeenSet = true; m_snapshotIdentifier = value; }
-    inline void SetSnapshotIdentifier(Aws::String&& value) { m_snapshotIdentifierHasBeenSet = true; m_snapshotIdentifier = std::move(value); }
-    inline void SetSnapshotIdentifier(const char* value) { m_snapshotIdentifierHasBeenSet = true; m_snapshotIdentifier.assign(value); }
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotIdentifier(const Aws::String& value) { SetSnapshotIdentifier(value); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotIdentifier(Aws::String&& value) { SetSnapshotIdentifier(std::move(value)); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotIdentifier(const char* value) { SetSnapshotIdentifier(value); return *this;}
-    ///@}
+  Aws::String m_snapshotClusterIdentifier;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the snapshot to authorize access to.</p>
-     */
-    inline const Aws::String& GetSnapshotArn() const{ return m_snapshotArn; }
-    inline bool SnapshotArnHasBeenSet() const { return m_snapshotArnHasBeenSet; }
-    inline void SetSnapshotArn(const Aws::String& value) { m_snapshotArnHasBeenSet = true; m_snapshotArn = value; }
-    inline void SetSnapshotArn(Aws::String&& value) { m_snapshotArnHasBeenSet = true; m_snapshotArn = std::move(value); }
-    inline void SetSnapshotArn(const char* value) { m_snapshotArnHasBeenSet = true; m_snapshotArn.assign(value); }
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotArn(const Aws::String& value) { SetSnapshotArn(value); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotArn(Aws::String&& value) { SetSnapshotArn(std::move(value)); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotArn(const char* value) { SetSnapshotArn(value); return *this;}
-    ///@}
+  Aws::String m_accountWithRestoreAccess;
+  bool m_snapshotIdentifierHasBeenSet = false;
+  bool m_snapshotArnHasBeenSet = false;
+  bool m_snapshotClusterIdentifierHasBeenSet = false;
+  bool m_accountWithRestoreAccessHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The identifier of the cluster the snapshot was created from.</p> <ul> <li>
-     * <p> <i>If the snapshot to access doesn't exist and the associated IAM policy
-     * doesn't allow access to all (*) snapshots</i> - This parameter is required.
-     * Otherwise, permissions aren't available to check if the snapshot exists.</p>
-     * </li> <li> <p> <i>If the snapshot to access exists</i> - This parameter isn't
-     * required. Redshift can retrieve the cluster identifier and use it to validate
-     * snapshot authorization.</p> </li> </ul>
-     */
-    inline const Aws::String& GetSnapshotClusterIdentifier() const{ return m_snapshotClusterIdentifier; }
-    inline bool SnapshotClusterIdentifierHasBeenSet() const { return m_snapshotClusterIdentifierHasBeenSet; }
-    inline void SetSnapshotClusterIdentifier(const Aws::String& value) { m_snapshotClusterIdentifierHasBeenSet = true; m_snapshotClusterIdentifier = value; }
-    inline void SetSnapshotClusterIdentifier(Aws::String&& value) { m_snapshotClusterIdentifierHasBeenSet = true; m_snapshotClusterIdentifier = std::move(value); }
-    inline void SetSnapshotClusterIdentifier(const char* value) { m_snapshotClusterIdentifierHasBeenSet = true; m_snapshotClusterIdentifier.assign(value); }
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotClusterIdentifier(const Aws::String& value) { SetSnapshotClusterIdentifier(value); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotClusterIdentifier(Aws::String&& value) { SetSnapshotClusterIdentifier(std::move(value)); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithSnapshotClusterIdentifier(const char* value) { SetSnapshotClusterIdentifier(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Web Services account authorized to restore the
-     * specified snapshot.</p> <p>To share a snapshot with Amazon Web Services Support,
-     * specify amazon-redshift-support.</p>
-     */
-    inline const Aws::String& GetAccountWithRestoreAccess() const{ return m_accountWithRestoreAccess; }
-    inline bool AccountWithRestoreAccessHasBeenSet() const { return m_accountWithRestoreAccessHasBeenSet; }
-    inline void SetAccountWithRestoreAccess(const Aws::String& value) { m_accountWithRestoreAccessHasBeenSet = true; m_accountWithRestoreAccess = value; }
-    inline void SetAccountWithRestoreAccess(Aws::String&& value) { m_accountWithRestoreAccessHasBeenSet = true; m_accountWithRestoreAccess = std::move(value); }
-    inline void SetAccountWithRestoreAccess(const char* value) { m_accountWithRestoreAccessHasBeenSet = true; m_accountWithRestoreAccess.assign(value); }
-    inline AuthorizeSnapshotAccessRequest& WithAccountWithRestoreAccess(const Aws::String& value) { SetAccountWithRestoreAccess(value); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithAccountWithRestoreAccess(Aws::String&& value) { SetAccountWithRestoreAccess(std::move(value)); return *this;}
-    inline AuthorizeSnapshotAccessRequest& WithAccountWithRestoreAccess(const char* value) { SetAccountWithRestoreAccess(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_snapshotIdentifier;
-    bool m_snapshotIdentifierHasBeenSet = false;
-
-    Aws::String m_snapshotArn;
-    bool m_snapshotArnHasBeenSet = false;
-
-    Aws::String m_snapshotClusterIdentifier;
-    bool m_snapshotClusterIdentifierHasBeenSet = false;
-
-    Aws::String m_accountWithRestoreAccess;
-    bool m_accountWithRestoreAccessHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

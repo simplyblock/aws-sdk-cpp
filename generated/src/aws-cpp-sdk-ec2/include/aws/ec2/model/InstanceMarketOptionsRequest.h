@@ -4,75 +4,78 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/MarketType.h>
 #include <aws/ec2/model/SpotMarketOptions.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes the market (purchasing) option for the instances.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceMarketOptionsRequest">AWS
+ * API Reference</a></p>
+ */
+class InstanceMarketOptionsRequest {
+ public:
+  AWS_EC2_API InstanceMarketOptionsRequest() = default;
+  AWS_EC2_API InstanceMarketOptionsRequest(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API InstanceMarketOptionsRequest& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes the market (purchasing) option for the instances.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceMarketOptionsRequest">AWS
-   * API Reference</a></p>
+   * <p>The market type.</p>
    */
-  class InstanceMarketOptionsRequest
-  {
-  public:
-    AWS_EC2_API InstanceMarketOptionsRequest();
-    AWS_EC2_API InstanceMarketOptionsRequest(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API InstanceMarketOptionsRequest& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline MarketType GetMarketType() const { return m_marketType; }
+  inline bool MarketTypeHasBeenSet() const { return m_marketTypeHasBeenSet; }
+  inline void SetMarketType(MarketType value) {
+    m_marketTypeHasBeenSet = true;
+    m_marketType = value;
+  }
+  inline InstanceMarketOptionsRequest& WithMarketType(MarketType value) {
+    SetMarketType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The options for Spot Instances.</p>
+   */
+  inline const SpotMarketOptions& GetSpotOptions() const { return m_spotOptions; }
+  inline bool SpotOptionsHasBeenSet() const { return m_spotOptionsHasBeenSet; }
+  template <typename SpotOptionsT = SpotMarketOptions>
+  void SetSpotOptions(SpotOptionsT&& value) {
+    m_spotOptionsHasBeenSet = true;
+    m_spotOptions = std::forward<SpotOptionsT>(value);
+  }
+  template <typename SpotOptionsT = SpotMarketOptions>
+  InstanceMarketOptionsRequest& WithSpotOptions(SpotOptionsT&& value) {
+    SetSpotOptions(std::forward<SpotOptionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  MarketType m_marketType{MarketType::NOT_SET};
 
+  SpotMarketOptions m_spotOptions;
+  bool m_marketTypeHasBeenSet = false;
+  bool m_spotOptionsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The market type.</p>
-     */
-    inline const MarketType& GetMarketType() const{ return m_marketType; }
-    inline bool MarketTypeHasBeenSet() const { return m_marketTypeHasBeenSet; }
-    inline void SetMarketType(const MarketType& value) { m_marketTypeHasBeenSet = true; m_marketType = value; }
-    inline void SetMarketType(MarketType&& value) { m_marketTypeHasBeenSet = true; m_marketType = std::move(value); }
-    inline InstanceMarketOptionsRequest& WithMarketType(const MarketType& value) { SetMarketType(value); return *this;}
-    inline InstanceMarketOptionsRequest& WithMarketType(MarketType&& value) { SetMarketType(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The options for Spot Instances.</p>
-     */
-    inline const SpotMarketOptions& GetSpotOptions() const{ return m_spotOptions; }
-    inline bool SpotOptionsHasBeenSet() const { return m_spotOptionsHasBeenSet; }
-    inline void SetSpotOptions(const SpotMarketOptions& value) { m_spotOptionsHasBeenSet = true; m_spotOptions = value; }
-    inline void SetSpotOptions(SpotMarketOptions&& value) { m_spotOptionsHasBeenSet = true; m_spotOptions = std::move(value); }
-    inline InstanceMarketOptionsRequest& WithSpotOptions(const SpotMarketOptions& value) { SetSpotOptions(value); return *this;}
-    inline InstanceMarketOptionsRequest& WithSpotOptions(SpotMarketOptions&& value) { SetSpotOptions(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    MarketType m_marketType;
-    bool m_marketTypeHasBeenSet = false;
-
-    SpotMarketOptions m_spotOptions;
-    bool m_spotOptionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

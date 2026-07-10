@@ -6,62 +6,74 @@
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/ConfiguredAudienceModelAssociation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class GetConfiguredAudienceModelAssociationResult
-  {
-  public:
-    AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult();
-    AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class GetConfiguredAudienceModelAssociationResult {
+ public:
+  AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult() = default;
+  AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API GetConfiguredAudienceModelAssociationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the configured audience model association that you
+   * requested.</p>
+   */
+  inline const ConfiguredAudienceModelAssociation& GetConfiguredAudienceModelAssociation() const {
+    return m_configuredAudienceModelAssociation;
+  }
+  template <typename ConfiguredAudienceModelAssociationT = ConfiguredAudienceModelAssociation>
+  void SetConfiguredAudienceModelAssociation(ConfiguredAudienceModelAssociationT&& value) {
+    m_configuredAudienceModelAssociationHasBeenSet = true;
+    m_configuredAudienceModelAssociation = std::forward<ConfiguredAudienceModelAssociationT>(value);
+  }
+  template <typename ConfiguredAudienceModelAssociationT = ConfiguredAudienceModelAssociation>
+  GetConfiguredAudienceModelAssociationResult& WithConfiguredAudienceModelAssociation(ConfiguredAudienceModelAssociationT&& value) {
+    SetConfiguredAudienceModelAssociation(std::forward<ConfiguredAudienceModelAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the configured audience model association that you
-     * requested.</p>
-     */
-    inline const ConfiguredAudienceModelAssociation& GetConfiguredAudienceModelAssociation() const{ return m_configuredAudienceModelAssociation; }
-    inline void SetConfiguredAudienceModelAssociation(const ConfiguredAudienceModelAssociation& value) { m_configuredAudienceModelAssociation = value; }
-    inline void SetConfiguredAudienceModelAssociation(ConfiguredAudienceModelAssociation&& value) { m_configuredAudienceModelAssociation = std::move(value); }
-    inline GetConfiguredAudienceModelAssociationResult& WithConfiguredAudienceModelAssociation(const ConfiguredAudienceModelAssociation& value) { SetConfiguredAudienceModelAssociation(value); return *this;}
-    inline GetConfiguredAudienceModelAssociationResult& WithConfiguredAudienceModelAssociation(ConfiguredAudienceModelAssociation&& value) { SetConfiguredAudienceModelAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetConfiguredAudienceModelAssociationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetConfiguredAudienceModelAssociationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetConfiguredAudienceModelAssociationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetConfiguredAudienceModelAssociationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ConfiguredAudienceModelAssociation m_configuredAudienceModelAssociation;
+ private:
+  ConfiguredAudienceModelAssociation m_configuredAudienceModelAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configuredAudienceModelAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

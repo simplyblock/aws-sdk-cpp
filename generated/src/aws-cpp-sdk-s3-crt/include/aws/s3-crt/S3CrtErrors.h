@@ -9,13 +9,10 @@
 #include <aws/core/client/CoreErrors.h>
 #include <aws/s3-crt/S3Crt_EXPORTS.h>
 
-namespace Aws
-{
-namespace S3Crt
-{
-enum class S3CrtErrors
-{
-  //From Core//
+namespace Aws {
+namespace S3Crt {
+enum class S3CrtErrors {
+  // From Core//
   //////////////////////////////////////////////////////////////////////////////////////////
   INCOMPLETE_SIGNATURE = 0,
   INTERNAL_FAILURE = 1,
@@ -24,9 +21,9 @@ enum class S3CrtErrors
   INVALID_PARAMETER_COMBINATION = 4,
   INVALID_QUERY_PARAMETER = 5,
   INVALID_PARAMETER_VALUE = 6,
-  MISSING_ACTION = 7, // SDK should never allow
-  MISSING_AUTHENTICATION_TOKEN = 8, // SDK should never allow
-  MISSING_PARAMETER = 9, // SDK should never allow
+  MISSING_ACTION = 7,                // SDK should never allow
+  MISSING_AUTHENTICATION_TOKEN = 8,  // SDK should never allow
+  MISSING_PARAMETER = 9,             // SDK should never allow
   OPT_IN_REQUIRED = 10,
   REQUEST_EXPIRED = 11,
   SERVICE_UNAVAILABLE = 12,
@@ -47,19 +44,29 @@ enum class S3CrtErrors
   UNKNOWN = 100,
   ///////////////////////////////////////////////////////////////////////////////////////////
 
-  BUCKET_ALREADY_EXISTS= static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ANNOTATION_LIMIT_EXCEEDED = static_cast<int>(Aws::Client::CoreErrors::SERVICE_EXTENSION_START_RANGE) + 1,
+  ANNOTATION_NAME_TOO_LONG,
+  BUCKET_ALREADY_EXISTS,
   BUCKET_ALREADY_OWNED_BY_YOU,
+  ENCRYPTION_TYPE_MISMATCH,
+  IDEMPOTENCY_PARAMETER_MISMATCH,
+  INVALID_ANNOTATION_NAME,
   INVALID_OBJECT_STATE,
+  INVALID_PREFIX,
+  INVALID_REQUEST,
+  INVALID_WRITE_OFFSET,
+  NO_SUCH_ANNOTATION,
   NO_SUCH_BUCKET,
   NO_SUCH_KEY,
   NO_SUCH_UPLOAD,
   OBJECT_ALREADY_IN_ACTIVE_TIER,
-  OBJECT_NOT_IN_ACTIVE_TIER
+  OBJECT_NOT_IN_ACTIVE_TIER,
+  TOO_MANY_PARTS,
+  UNSUPPORTED_MEDIA_TYPE
 };
 
-class AWS_S3CRT_API S3CrtError : public Aws::Client::AWSError<S3CrtErrors>
-{
-public:
+class AWS_S3CRT_API S3CrtError : public Aws::Client::AWSError<S3CrtErrors> {
+ public:
   S3CrtError() {}
   S3CrtError(const Aws::Client::AWSError<Aws::Client::CoreErrors>& rhs) : Aws::Client::AWSError<S3CrtErrors>(rhs) {}
   S3CrtError(Aws::Client::AWSError<Aws::Client::CoreErrors>&& rhs) : Aws::Client::AWSError<S3CrtErrors>(rhs) {}
@@ -70,10 +77,9 @@ public:
   T GetModeledError();
 };
 
-namespace S3CrtErrorMapper
-{
-  AWS_S3CRT_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
+namespace S3CrtErrorMapper {
+AWS_S3CRT_API Aws::Client::AWSError<Aws::Client::CoreErrors> GetErrorForName(const char* errorName);
 }
 
-} // namespace S3Crt
-} // namespace Aws
+}  // namespace S3Crt
+}  // namespace Aws

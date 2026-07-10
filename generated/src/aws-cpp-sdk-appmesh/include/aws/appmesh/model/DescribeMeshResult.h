@@ -6,66 +6,75 @@
 #pragma once
 #include <aws/appmesh/AppMesh_EXPORTS.h>
 #include <aws/appmesh/model/MeshData.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppMesh
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppMesh {
+namespace Model {
+/**
+ * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appmesh-2019-01-25/DescribeMeshOutput">AWS
+ * API Reference</a></p>
+ */
+class DescribeMeshResult {
+ public:
+  AWS_APPMESH_API DescribeMeshResult() = default;
+  AWS_APPMESH_API DescribeMeshResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPMESH_API DescribeMeshResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <zonbook></zonbook><xhtml></xhtml><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appmesh-2019-01-25/DescribeMeshOutput">AWS
-   * API Reference</a></p>
+   * <p>The full description of your service mesh.</p>
    */
-  class DescribeMeshResult
-  {
-  public:
-    AWS_APPMESH_API DescribeMeshResult();
-    AWS_APPMESH_API DescribeMeshResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPMESH_API DescribeMeshResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const MeshData& GetMesh() const { return m_mesh; }
+  template <typename MeshT = MeshData>
+  void SetMesh(MeshT&& value) {
+    m_meshHasBeenSet = true;
+    m_mesh = std::forward<MeshT>(value);
+  }
+  template <typename MeshT = MeshData>
+  DescribeMeshResult& WithMesh(MeshT&& value) {
+    SetMesh(std::forward<MeshT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The full description of your service mesh.</p>
-     */
-    inline const MeshData& GetMesh() const{ return m_mesh; }
-    inline void SetMesh(const MeshData& value) { m_mesh = value; }
-    inline void SetMesh(MeshData&& value) { m_mesh = std::move(value); }
-    inline DescribeMeshResult& WithMesh(const MeshData& value) { SetMesh(value); return *this;}
-    inline DescribeMeshResult& WithMesh(MeshData&& value) { SetMesh(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeMeshResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeMeshResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeMeshResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeMeshResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  MeshData m_mesh;
 
-    MeshData m_mesh;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_meshHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace AppMesh
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppMesh
+}  // namespace Aws

@@ -5,109 +5,123 @@
 
 #pragma once
 #include <aws/apigateway/APIGateway_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace APIGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace APIGateway {
+namespace Model {
 
+/**
+ * <p>Configuration settings of a canary deployment.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/CanarySettings">AWS
+ * API Reference</a></p>
+ */
+class CanarySettings {
+ public:
+  AWS_APIGATEWAY_API CanarySettings() = default;
+  AWS_APIGATEWAY_API CanarySettings(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APIGATEWAY_API CanarySettings& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APIGATEWAY_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Configuration settings of a canary deployment.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/CanarySettings">AWS
-   * API Reference</a></p>
+   * <p>The percent (0-100) of traffic diverted to a canary deployment.</p>
    */
-  class CanarySettings
-  {
-  public:
-    AWS_APIGATEWAY_API CanarySettings();
-    AWS_APIGATEWAY_API CanarySettings(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APIGATEWAY_API CanarySettings& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APIGATEWAY_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline double GetPercentTraffic() const { return m_percentTraffic; }
+  inline bool PercentTrafficHasBeenSet() const { return m_percentTrafficHasBeenSet; }
+  inline void SetPercentTraffic(double value) {
+    m_percentTrafficHasBeenSet = true;
+    m_percentTraffic = value;
+  }
+  inline CanarySettings& WithPercentTraffic(double value) {
+    SetPercentTraffic(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the canary deployment.</p>
+   */
+  inline const Aws::String& GetDeploymentId() const { return m_deploymentId; }
+  inline bool DeploymentIdHasBeenSet() const { return m_deploymentIdHasBeenSet; }
+  template <typename DeploymentIdT = Aws::String>
+  void SetDeploymentId(DeploymentIdT&& value) {
+    m_deploymentIdHasBeenSet = true;
+    m_deploymentId = std::forward<DeploymentIdT>(value);
+  }
+  template <typename DeploymentIdT = Aws::String>
+  CanarySettings& WithDeploymentId(DeploymentIdT&& value) {
+    SetDeploymentId(std::forward<DeploymentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The percent (0-100) of traffic diverted to a canary deployment.</p>
-     */
-    inline double GetPercentTraffic() const{ return m_percentTraffic; }
-    inline bool PercentTrafficHasBeenSet() const { return m_percentTrafficHasBeenSet; }
-    inline void SetPercentTraffic(double value) { m_percentTrafficHasBeenSet = true; m_percentTraffic = value; }
-    inline CanarySettings& WithPercentTraffic(double value) { SetPercentTraffic(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Stage variables overridden for a canary release deployment, including new
+   * stage variables introduced in the canary. These stage variables are represented
+   * as a string-to-string map between stage variable names and their values.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetStageVariableOverrides() const { return m_stageVariableOverrides; }
+  inline bool StageVariableOverridesHasBeenSet() const { return m_stageVariableOverridesHasBeenSet; }
+  template <typename StageVariableOverridesT = Aws::Map<Aws::String, Aws::String>>
+  void SetStageVariableOverrides(StageVariableOverridesT&& value) {
+    m_stageVariableOverridesHasBeenSet = true;
+    m_stageVariableOverrides = std::forward<StageVariableOverridesT>(value);
+  }
+  template <typename StageVariableOverridesT = Aws::Map<Aws::String, Aws::String>>
+  CanarySettings& WithStageVariableOverrides(StageVariableOverridesT&& value) {
+    SetStageVariableOverrides(std::forward<StageVariableOverridesT>(value));
+    return *this;
+  }
+  template <typename StageVariableOverridesKeyT = Aws::String, typename StageVariableOverridesValueT = Aws::String>
+  CanarySettings& AddStageVariableOverrides(StageVariableOverridesKeyT&& key, StageVariableOverridesValueT&& value) {
+    m_stageVariableOverridesHasBeenSet = true;
+    m_stageVariableOverrides.emplace(std::forward<StageVariableOverridesKeyT>(key), std::forward<StageVariableOverridesValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the canary deployment.</p>
-     */
-    inline const Aws::String& GetDeploymentId() const{ return m_deploymentId; }
-    inline bool DeploymentIdHasBeenSet() const { return m_deploymentIdHasBeenSet; }
-    inline void SetDeploymentId(const Aws::String& value) { m_deploymentIdHasBeenSet = true; m_deploymentId = value; }
-    inline void SetDeploymentId(Aws::String&& value) { m_deploymentIdHasBeenSet = true; m_deploymentId = std::move(value); }
-    inline void SetDeploymentId(const char* value) { m_deploymentIdHasBeenSet = true; m_deploymentId.assign(value); }
-    inline CanarySettings& WithDeploymentId(const Aws::String& value) { SetDeploymentId(value); return *this;}
-    inline CanarySettings& WithDeploymentId(Aws::String&& value) { SetDeploymentId(std::move(value)); return *this;}
-    inline CanarySettings& WithDeploymentId(const char* value) { SetDeploymentId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A Boolean flag to indicate whether the canary deployment uses the stage cache
+   * or not.</p>
+   */
+  inline bool GetUseStageCache() const { return m_useStageCache; }
+  inline bool UseStageCacheHasBeenSet() const { return m_useStageCacheHasBeenSet; }
+  inline void SetUseStageCache(bool value) {
+    m_useStageCacheHasBeenSet = true;
+    m_useStageCache = value;
+  }
+  inline CanarySettings& WithUseStageCache(bool value) {
+    SetUseStageCache(value);
+    return *this;
+  }
+  ///@}
+ private:
+  double m_percentTraffic{0.0};
 
-    ///@{
-    /**
-     * <p>Stage variables overridden for a canary release deployment, including new
-     * stage variables introduced in the canary. These stage variables are represented
-     * as a string-to-string map between stage variable names and their values.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetStageVariableOverrides() const{ return m_stageVariableOverrides; }
-    inline bool StageVariableOverridesHasBeenSet() const { return m_stageVariableOverridesHasBeenSet; }
-    inline void SetStageVariableOverrides(const Aws::Map<Aws::String, Aws::String>& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides = value; }
-    inline void SetStageVariableOverrides(Aws::Map<Aws::String, Aws::String>&& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides = std::move(value); }
-    inline CanarySettings& WithStageVariableOverrides(const Aws::Map<Aws::String, Aws::String>& value) { SetStageVariableOverrides(value); return *this;}
-    inline CanarySettings& WithStageVariableOverrides(Aws::Map<Aws::String, Aws::String>&& value) { SetStageVariableOverrides(std::move(value)); return *this;}
-    inline CanarySettings& AddStageVariableOverrides(const Aws::String& key, const Aws::String& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(key, value); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(Aws::String&& key, const Aws::String& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(std::move(key), value); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(const Aws::String& key, Aws::String&& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(key, std::move(value)); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(Aws::String&& key, Aws::String&& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(std::move(key), std::move(value)); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(const char* key, Aws::String&& value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(key, std::move(value)); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(Aws::String&& key, const char* value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(std::move(key), value); return *this; }
-    inline CanarySettings& AddStageVariableOverrides(const char* key, const char* value) { m_stageVariableOverridesHasBeenSet = true; m_stageVariableOverrides.emplace(key, value); return *this; }
-    ///@}
+  Aws::String m_deploymentId;
 
-    ///@{
-    /**
-     * <p>A Boolean flag to indicate whether the canary deployment uses the stage cache
-     * or not.</p>
-     */
-    inline bool GetUseStageCache() const{ return m_useStageCache; }
-    inline bool UseStageCacheHasBeenSet() const { return m_useStageCacheHasBeenSet; }
-    inline void SetUseStageCache(bool value) { m_useStageCacheHasBeenSet = true; m_useStageCache = value; }
-    inline CanarySettings& WithUseStageCache(bool value) { SetUseStageCache(value); return *this;}
-    ///@}
-  private:
+  Aws::Map<Aws::String, Aws::String> m_stageVariableOverrides;
 
-    double m_percentTraffic;
-    bool m_percentTrafficHasBeenSet = false;
+  bool m_useStageCache{false};
+  bool m_percentTrafficHasBeenSet = false;
+  bool m_deploymentIdHasBeenSet = false;
+  bool m_stageVariableOverridesHasBeenSet = false;
+  bool m_useStageCacheHasBeenSet = false;
+};
 
-    Aws::String m_deploymentId;
-    bool m_deploymentIdHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_stageVariableOverrides;
-    bool m_stageVariableOverridesHasBeenSet = false;
-
-    bool m_useStageCache;
-    bool m_useStageCacheHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace APIGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace APIGateway
+}  // namespace Aws

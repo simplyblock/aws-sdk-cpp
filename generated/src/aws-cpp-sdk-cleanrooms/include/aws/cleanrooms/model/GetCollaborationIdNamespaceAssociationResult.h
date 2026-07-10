@@ -6,61 +6,73 @@
 #pragma once
 #include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/model/CollaborationIdNamespaceAssociation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CleanRooms
-{
-namespace Model
-{
-  class GetCollaborationIdNamespaceAssociationResult
-  {
-  public:
-    AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult();
-    AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CleanRooms {
+namespace Model {
+class GetCollaborationIdNamespaceAssociationResult {
+ public:
+  AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult() = default;
+  AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLEANROOMS_API GetCollaborationIdNamespaceAssociationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID namespace association that you requested.</p>
+   */
+  inline const CollaborationIdNamespaceAssociation& GetCollaborationIdNamespaceAssociation() const {
+    return m_collaborationIdNamespaceAssociation;
+  }
+  template <typename CollaborationIdNamespaceAssociationT = CollaborationIdNamespaceAssociation>
+  void SetCollaborationIdNamespaceAssociation(CollaborationIdNamespaceAssociationT&& value) {
+    m_collaborationIdNamespaceAssociationHasBeenSet = true;
+    m_collaborationIdNamespaceAssociation = std::forward<CollaborationIdNamespaceAssociationT>(value);
+  }
+  template <typename CollaborationIdNamespaceAssociationT = CollaborationIdNamespaceAssociation>
+  GetCollaborationIdNamespaceAssociationResult& WithCollaborationIdNamespaceAssociation(CollaborationIdNamespaceAssociationT&& value) {
+    SetCollaborationIdNamespaceAssociation(std::forward<CollaborationIdNamespaceAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID namespace association that you requested.</p>
-     */
-    inline const CollaborationIdNamespaceAssociation& GetCollaborationIdNamespaceAssociation() const{ return m_collaborationIdNamespaceAssociation; }
-    inline void SetCollaborationIdNamespaceAssociation(const CollaborationIdNamespaceAssociation& value) { m_collaborationIdNamespaceAssociation = value; }
-    inline void SetCollaborationIdNamespaceAssociation(CollaborationIdNamespaceAssociation&& value) { m_collaborationIdNamespaceAssociation = std::move(value); }
-    inline GetCollaborationIdNamespaceAssociationResult& WithCollaborationIdNamespaceAssociation(const CollaborationIdNamespaceAssociation& value) { SetCollaborationIdNamespaceAssociation(value); return *this;}
-    inline GetCollaborationIdNamespaceAssociationResult& WithCollaborationIdNamespaceAssociation(CollaborationIdNamespaceAssociation&& value) { SetCollaborationIdNamespaceAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCollaborationIdNamespaceAssociationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCollaborationIdNamespaceAssociationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCollaborationIdNamespaceAssociationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCollaborationIdNamespaceAssociationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CollaborationIdNamespaceAssociation m_collaborationIdNamespaceAssociation;
+ private:
+  CollaborationIdNamespaceAssociation m_collaborationIdNamespaceAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_collaborationIdNamespaceAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

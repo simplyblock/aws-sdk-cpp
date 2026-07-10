@@ -12,32 +12,18 @@ using namespace Aws::AppRunner::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeObservabilityConfigurationRequest::DescribeObservabilityConfigurationRequest() : 
-    m_observabilityConfigurationArnHasBeenSet(false)
-{
-}
-
-Aws::String DescribeObservabilityConfigurationRequest::SerializePayload() const
-{
+Aws::String DescribeObservabilityConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_observabilityConfigurationArnHasBeenSet)
-  {
-   payload.WithString("ObservabilityConfigurationArn", m_observabilityConfigurationArn);
-
+  if (m_observabilityConfigurationArnHasBeenSet) {
+    payload.WithString("ObservabilityConfigurationArn", m_observabilityConfigurationArn);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DescribeObservabilityConfigurationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeObservabilityConfigurationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AppRunner.DescribeObservabilityConfiguration"));
   return headers;
-
 }
-
-
-
-

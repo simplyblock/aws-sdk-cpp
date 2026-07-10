@@ -4,60 +4,69 @@
  */
 
 #pragma once
-#include <aws/wafv2/WAFV2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/wafv2/WAFV2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WAFV2
-{
-namespace Model
-{
-  class CheckCapacityResult
-  {
-  public:
-    AWS_WAFV2_API CheckCapacityResult();
-    AWS_WAFV2_API CheckCapacityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WAFV2_API CheckCapacityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WAFV2 {
+namespace Model {
+class CheckCapacityResult {
+ public:
+  AWS_WAFV2_API CheckCapacityResult() = default;
+  AWS_WAFV2_API CheckCapacityResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WAFV2_API CheckCapacityResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The capacity required by the rules and scope.</p>
+   */
+  inline long long GetCapacity() const { return m_capacity; }
+  inline void SetCapacity(long long value) {
+    m_capacityHasBeenSet = true;
+    m_capacity = value;
+  }
+  inline CheckCapacityResult& WithCapacity(long long value) {
+    SetCapacity(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The capacity required by the rules and scope.</p>
-     */
-    inline long long GetCapacity() const{ return m_capacity; }
-    inline void SetCapacity(long long value) { m_capacity = value; }
-    inline CheckCapacityResult& WithCapacity(long long value) { SetCapacity(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CheckCapacityResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CheckCapacityResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CheckCapacityResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CheckCapacityResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    long long m_capacity;
+ private:
+  long long m_capacity{0};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_capacityHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WAFV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAFV2
+}  // namespace Aws

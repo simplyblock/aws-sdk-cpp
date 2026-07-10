@@ -6,57 +6,54 @@
 #pragma once
 #include <aws/connectcases/ConnectCases_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ConnectCases
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectCases {
+namespace Model {
 
+/**
+ * <p>An object that represents an Amazon Connect contact object. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/Contact">AWS
+ * API Reference</a></p>
+ */
+class Contact {
+ public:
+  AWS_CONNECTCASES_API Contact() = default;
+  AWS_CONNECTCASES_API Contact(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCASES_API Contact& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CONNECTCASES_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>An object that represents an Amazon Connect contact object. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/connectcases-2022-10-03/Contact">AWS
-   * API Reference</a></p>
+   * <p>A unique identifier of a contact in Amazon Connect.</p>
    */
-  class Contact
-  {
-  public:
-    AWS_CONNECTCASES_API Contact();
-    AWS_CONNECTCASES_API Contact(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCASES_API Contact& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CONNECTCASES_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetContactArn() const { return m_contactArn; }
+  inline bool ContactArnHasBeenSet() const { return m_contactArnHasBeenSet; }
+  template <typename ContactArnT = Aws::String>
+  void SetContactArn(ContactArnT&& value) {
+    m_contactArnHasBeenSet = true;
+    m_contactArn = std::forward<ContactArnT>(value);
+  }
+  template <typename ContactArnT = Aws::String>
+  Contact& WithContactArn(ContactArnT&& value) {
+    SetContactArn(std::forward<ContactArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_contactArn;
+  bool m_contactArnHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>A unique identifier of a contact in Amazon Connect.</p>
-     */
-    inline const Aws::String& GetContactArn() const{ return m_contactArn; }
-    inline bool ContactArnHasBeenSet() const { return m_contactArnHasBeenSet; }
-    inline void SetContactArn(const Aws::String& value) { m_contactArnHasBeenSet = true; m_contactArn = value; }
-    inline void SetContactArn(Aws::String&& value) { m_contactArnHasBeenSet = true; m_contactArn = std::move(value); }
-    inline void SetContactArn(const char* value) { m_contactArnHasBeenSet = true; m_contactArn.assign(value); }
-    inline Contact& WithContactArn(const Aws::String& value) { SetContactArn(value); return *this;}
-    inline Contact& WithContactArn(Aws::String&& value) { SetContactArn(std::move(value)); return *this;}
-    inline Contact& WithContactArn(const char* value) { SetContactArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_contactArn;
-    bool m_contactArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ConnectCases
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectCases
+}  // namespace Aws

@@ -4,68 +4,81 @@
  */
 
 #pragma once
-#include <aws/macie2/Macie2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/macie2/Macie2_EXPORTS.h>
 #include <aws/macie2/model/UnprocessedAccount.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Macie2
-{
-namespace Model
-{
-  class CreateInvitationsResult
-  {
-  public:
-    AWS_MACIE2_API CreateInvitationsResult();
-    AWS_MACIE2_API CreateInvitationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_MACIE2_API CreateInvitationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Macie2 {
+namespace Model {
+class CreateInvitationsResult {
+ public:
+  AWS_MACIE2_API CreateInvitationsResult() = default;
+  AWS_MACIE2_API CreateInvitationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_MACIE2_API CreateInvitationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An array of objects, one for each account whose invitation hasn't been
+   * processed. Each object identifies the account and explains why the invitation
+   * hasn't been processed for the account.</p>
+   */
+  inline const Aws::Vector<UnprocessedAccount>& GetUnprocessedAccounts() const { return m_unprocessedAccounts; }
+  template <typename UnprocessedAccountsT = Aws::Vector<UnprocessedAccount>>
+  void SetUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    m_unprocessedAccountsHasBeenSet = true;
+    m_unprocessedAccounts = std::forward<UnprocessedAccountsT>(value);
+  }
+  template <typename UnprocessedAccountsT = Aws::Vector<UnprocessedAccount>>
+  CreateInvitationsResult& WithUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    SetUnprocessedAccounts(std::forward<UnprocessedAccountsT>(value));
+    return *this;
+  }
+  template <typename UnprocessedAccountsT = UnprocessedAccount>
+  CreateInvitationsResult& AddUnprocessedAccounts(UnprocessedAccountsT&& value) {
+    m_unprocessedAccountsHasBeenSet = true;
+    m_unprocessedAccounts.emplace_back(std::forward<UnprocessedAccountsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of objects, one for each account whose invitation hasn't been
-     * processed. Each object identifies the account and explains why the invitation
-     * hasn't been processed for the account.</p>
-     */
-    inline const Aws::Vector<UnprocessedAccount>& GetUnprocessedAccounts() const{ return m_unprocessedAccounts; }
-    inline void SetUnprocessedAccounts(const Aws::Vector<UnprocessedAccount>& value) { m_unprocessedAccounts = value; }
-    inline void SetUnprocessedAccounts(Aws::Vector<UnprocessedAccount>&& value) { m_unprocessedAccounts = std::move(value); }
-    inline CreateInvitationsResult& WithUnprocessedAccounts(const Aws::Vector<UnprocessedAccount>& value) { SetUnprocessedAccounts(value); return *this;}
-    inline CreateInvitationsResult& WithUnprocessedAccounts(Aws::Vector<UnprocessedAccount>&& value) { SetUnprocessedAccounts(std::move(value)); return *this;}
-    inline CreateInvitationsResult& AddUnprocessedAccounts(const UnprocessedAccount& value) { m_unprocessedAccounts.push_back(value); return *this; }
-    inline CreateInvitationsResult& AddUnprocessedAccounts(UnprocessedAccount&& value) { m_unprocessedAccounts.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateInvitationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateInvitationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateInvitationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateInvitationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UnprocessedAccount> m_unprocessedAccounts;
+ private:
+  Aws::Vector<UnprocessedAccount> m_unprocessedAccounts;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_unprocessedAccountsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Macie2
-} // namespace Aws
+}  // namespace Model
+}  // namespace Macie2
+}  // namespace Aws

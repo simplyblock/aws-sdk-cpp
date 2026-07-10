@@ -4,163 +4,200 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/SageMakerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/HumanLoopRequestSource.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/SageMakerRequest.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/sagemaker/model/FlowDefinitionOutputConfig.h>
 #include <aws/sagemaker/model/HumanLoopActivationConfig.h>
 #include <aws/sagemaker/model/HumanLoopConfig.h>
-#include <aws/sagemaker/model/FlowDefinitionOutputConfig.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sagemaker/model/HumanLoopRequestSource.h>
 #include <aws/sagemaker/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
+/**
+ */
+class CreateFlowDefinitionRequest : public SageMakerRequest {
+ public:
+  AWS_SAGEMAKER_API CreateFlowDefinitionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateFlowDefinition"; }
+
+  AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+
+  AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of your flow definition.</p>
    */
-  class CreateFlowDefinitionRequest : public SageMakerRequest
-  {
-  public:
-    AWS_SAGEMAKER_API CreateFlowDefinitionRequest();
+  inline const Aws::String& GetFlowDefinitionName() const { return m_flowDefinitionName; }
+  inline bool FlowDefinitionNameHasBeenSet() const { return m_flowDefinitionNameHasBeenSet; }
+  template <typename FlowDefinitionNameT = Aws::String>
+  void SetFlowDefinitionName(FlowDefinitionNameT&& value) {
+    m_flowDefinitionNameHasBeenSet = true;
+    m_flowDefinitionName = std::forward<FlowDefinitionNameT>(value);
+  }
+  template <typename FlowDefinitionNameT = Aws::String>
+  CreateFlowDefinitionRequest& WithFlowDefinitionName(FlowDefinitionNameT&& value) {
+    SetFlowDefinitionName(std::forward<FlowDefinitionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateFlowDefinition"; }
+  ///@{
+  /**
+   * <p>Container for configuring the source of human task requests. Use to specify
+   * if Amazon Rekognition or Amazon Textract is used as an integration source.</p>
+   */
+  inline const HumanLoopRequestSource& GetHumanLoopRequestSource() const { return m_humanLoopRequestSource; }
+  inline bool HumanLoopRequestSourceHasBeenSet() const { return m_humanLoopRequestSourceHasBeenSet; }
+  template <typename HumanLoopRequestSourceT = HumanLoopRequestSource>
+  void SetHumanLoopRequestSource(HumanLoopRequestSourceT&& value) {
+    m_humanLoopRequestSourceHasBeenSet = true;
+    m_humanLoopRequestSource = std::forward<HumanLoopRequestSourceT>(value);
+  }
+  template <typename HumanLoopRequestSourceT = HumanLoopRequestSource>
+  CreateFlowDefinitionRequest& WithHumanLoopRequestSource(HumanLoopRequestSourceT&& value) {
+    SetHumanLoopRequestSource(std::forward<HumanLoopRequestSourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>An object containing information about the events that trigger a human
+   * workflow.</p>
+   */
+  inline const HumanLoopActivationConfig& GetHumanLoopActivationConfig() const { return m_humanLoopActivationConfig; }
+  inline bool HumanLoopActivationConfigHasBeenSet() const { return m_humanLoopActivationConfigHasBeenSet; }
+  template <typename HumanLoopActivationConfigT = HumanLoopActivationConfig>
+  void SetHumanLoopActivationConfig(HumanLoopActivationConfigT&& value) {
+    m_humanLoopActivationConfigHasBeenSet = true;
+    m_humanLoopActivationConfig = std::forward<HumanLoopActivationConfigT>(value);
+  }
+  template <typename HumanLoopActivationConfigT = HumanLoopActivationConfig>
+  CreateFlowDefinitionRequest& WithHumanLoopActivationConfig(HumanLoopActivationConfigT&& value) {
+    SetHumanLoopActivationConfig(std::forward<HumanLoopActivationConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>An object containing information about the tasks the human reviewers will
+   * perform.</p>
+   */
+  inline const HumanLoopConfig& GetHumanLoopConfig() const { return m_humanLoopConfig; }
+  inline bool HumanLoopConfigHasBeenSet() const { return m_humanLoopConfigHasBeenSet; }
+  template <typename HumanLoopConfigT = HumanLoopConfig>
+  void SetHumanLoopConfig(HumanLoopConfigT&& value) {
+    m_humanLoopConfigHasBeenSet = true;
+    m_humanLoopConfig = std::forward<HumanLoopConfigT>(value);
+  }
+  template <typename HumanLoopConfigT = HumanLoopConfig>
+  CreateFlowDefinitionRequest& WithHumanLoopConfig(HumanLoopConfigT&& value) {
+    SetHumanLoopConfig(std::forward<HumanLoopConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An object containing information about where the human review results will be
+   * uploaded.</p>
+   */
+  inline const FlowDefinitionOutputConfig& GetOutputConfig() const { return m_outputConfig; }
+  inline bool OutputConfigHasBeenSet() const { return m_outputConfigHasBeenSet; }
+  template <typename OutputConfigT = FlowDefinitionOutputConfig>
+  void SetOutputConfig(OutputConfigT&& value) {
+    m_outputConfigHasBeenSet = true;
+    m_outputConfig = std::forward<OutputConfigT>(value);
+  }
+  template <typename OutputConfigT = FlowDefinitionOutputConfig>
+  CreateFlowDefinitionRequest& WithOutputConfig(OutputConfigT&& value) {
+    SetOutputConfig(std::forward<OutputConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of your flow definition.</p>
-     */
-    inline const Aws::String& GetFlowDefinitionName() const{ return m_flowDefinitionName; }
-    inline bool FlowDefinitionNameHasBeenSet() const { return m_flowDefinitionNameHasBeenSet; }
-    inline void SetFlowDefinitionName(const Aws::String& value) { m_flowDefinitionNameHasBeenSet = true; m_flowDefinitionName = value; }
-    inline void SetFlowDefinitionName(Aws::String&& value) { m_flowDefinitionNameHasBeenSet = true; m_flowDefinitionName = std::move(value); }
-    inline void SetFlowDefinitionName(const char* value) { m_flowDefinitionNameHasBeenSet = true; m_flowDefinitionName.assign(value); }
-    inline CreateFlowDefinitionRequest& WithFlowDefinitionName(const Aws::String& value) { SetFlowDefinitionName(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithFlowDefinitionName(Aws::String&& value) { SetFlowDefinitionName(std::move(value)); return *this;}
-    inline CreateFlowDefinitionRequest& WithFlowDefinitionName(const char* value) { SetFlowDefinitionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the role needed to call other services on
+   * your behalf. For example,
+   * <code>arn:aws:iam::1234567890:role/service-role/AmazonSageMaker-ExecutionRole-20180111T151298</code>.</p>
+   */
+  inline const Aws::String& GetRoleArn() const { return m_roleArn; }
+  inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
+  template <typename RoleArnT = Aws::String>
+  void SetRoleArn(RoleArnT&& value) {
+    m_roleArnHasBeenSet = true;
+    m_roleArn = std::forward<RoleArnT>(value);
+  }
+  template <typename RoleArnT = Aws::String>
+  CreateFlowDefinitionRequest& WithRoleArn(RoleArnT&& value) {
+    SetRoleArn(std::forward<RoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Container for configuring the source of human task requests. Use to specify
-     * if Amazon Rekognition or Amazon Textract is used as an integration source.</p>
-     */
-    inline const HumanLoopRequestSource& GetHumanLoopRequestSource() const{ return m_humanLoopRequestSource; }
-    inline bool HumanLoopRequestSourceHasBeenSet() const { return m_humanLoopRequestSourceHasBeenSet; }
-    inline void SetHumanLoopRequestSource(const HumanLoopRequestSource& value) { m_humanLoopRequestSourceHasBeenSet = true; m_humanLoopRequestSource = value; }
-    inline void SetHumanLoopRequestSource(HumanLoopRequestSource&& value) { m_humanLoopRequestSourceHasBeenSet = true; m_humanLoopRequestSource = std::move(value); }
-    inline CreateFlowDefinitionRequest& WithHumanLoopRequestSource(const HumanLoopRequestSource& value) { SetHumanLoopRequestSource(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithHumanLoopRequestSource(HumanLoopRequestSource&& value) { SetHumanLoopRequestSource(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of key-value pairs that contain metadata to help you categorize and
+   * organize a flow definition. Each tag consists of a key and a value, both of
+   * which you define.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateFlowDefinitionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateFlowDefinitionRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_flowDefinitionName;
 
-    ///@{
-    /**
-     * <p>An object containing information about the events that trigger a human
-     * workflow.</p>
-     */
-    inline const HumanLoopActivationConfig& GetHumanLoopActivationConfig() const{ return m_humanLoopActivationConfig; }
-    inline bool HumanLoopActivationConfigHasBeenSet() const { return m_humanLoopActivationConfigHasBeenSet; }
-    inline void SetHumanLoopActivationConfig(const HumanLoopActivationConfig& value) { m_humanLoopActivationConfigHasBeenSet = true; m_humanLoopActivationConfig = value; }
-    inline void SetHumanLoopActivationConfig(HumanLoopActivationConfig&& value) { m_humanLoopActivationConfigHasBeenSet = true; m_humanLoopActivationConfig = std::move(value); }
-    inline CreateFlowDefinitionRequest& WithHumanLoopActivationConfig(const HumanLoopActivationConfig& value) { SetHumanLoopActivationConfig(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithHumanLoopActivationConfig(HumanLoopActivationConfig&& value) { SetHumanLoopActivationConfig(std::move(value)); return *this;}
-    ///@}
+  HumanLoopRequestSource m_humanLoopRequestSource;
 
-    ///@{
-    /**
-     * <p>An object containing information about the tasks the human reviewers will
-     * perform.</p>
-     */
-    inline const HumanLoopConfig& GetHumanLoopConfig() const{ return m_humanLoopConfig; }
-    inline bool HumanLoopConfigHasBeenSet() const { return m_humanLoopConfigHasBeenSet; }
-    inline void SetHumanLoopConfig(const HumanLoopConfig& value) { m_humanLoopConfigHasBeenSet = true; m_humanLoopConfig = value; }
-    inline void SetHumanLoopConfig(HumanLoopConfig&& value) { m_humanLoopConfigHasBeenSet = true; m_humanLoopConfig = std::move(value); }
-    inline CreateFlowDefinitionRequest& WithHumanLoopConfig(const HumanLoopConfig& value) { SetHumanLoopConfig(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithHumanLoopConfig(HumanLoopConfig&& value) { SetHumanLoopConfig(std::move(value)); return *this;}
-    ///@}
+  HumanLoopActivationConfig m_humanLoopActivationConfig;
 
-    ///@{
-    /**
-     * <p>An object containing information about where the human review results will be
-     * uploaded.</p>
-     */
-    inline const FlowDefinitionOutputConfig& GetOutputConfig() const{ return m_outputConfig; }
-    inline bool OutputConfigHasBeenSet() const { return m_outputConfigHasBeenSet; }
-    inline void SetOutputConfig(const FlowDefinitionOutputConfig& value) { m_outputConfigHasBeenSet = true; m_outputConfig = value; }
-    inline void SetOutputConfig(FlowDefinitionOutputConfig&& value) { m_outputConfigHasBeenSet = true; m_outputConfig = std::move(value); }
-    inline CreateFlowDefinitionRequest& WithOutputConfig(const FlowDefinitionOutputConfig& value) { SetOutputConfig(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithOutputConfig(FlowDefinitionOutputConfig&& value) { SetOutputConfig(std::move(value)); return *this;}
-    ///@}
+  HumanLoopConfig m_humanLoopConfig;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the role needed to call other services on
-     * your behalf. For example,
-     * <code>arn:aws:iam::1234567890:role/service-role/AmazonSageMaker-ExecutionRole-20180111T151298</code>.</p>
-     */
-    inline const Aws::String& GetRoleArn() const{ return m_roleArn; }
-    inline bool RoleArnHasBeenSet() const { return m_roleArnHasBeenSet; }
-    inline void SetRoleArn(const Aws::String& value) { m_roleArnHasBeenSet = true; m_roleArn = value; }
-    inline void SetRoleArn(Aws::String&& value) { m_roleArnHasBeenSet = true; m_roleArn = std::move(value); }
-    inline void SetRoleArn(const char* value) { m_roleArnHasBeenSet = true; m_roleArn.assign(value); }
-    inline CreateFlowDefinitionRequest& WithRoleArn(const Aws::String& value) { SetRoleArn(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithRoleArn(Aws::String&& value) { SetRoleArn(std::move(value)); return *this;}
-    inline CreateFlowDefinitionRequest& WithRoleArn(const char* value) { SetRoleArn(value); return *this;}
-    ///@}
+  FlowDefinitionOutputConfig m_outputConfig;
 
-    ///@{
-    /**
-     * <p>An array of key-value pairs that contain metadata to help you categorize and
-     * organize a flow definition. Each tag consists of a key and a value, both of
-     * which you define.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateFlowDefinitionRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateFlowDefinitionRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateFlowDefinitionRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateFlowDefinitionRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::String m_roleArn;
 
-    Aws::String m_flowDefinitionName;
-    bool m_flowDefinitionNameHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
+  bool m_flowDefinitionNameHasBeenSet = false;
+  bool m_humanLoopRequestSourceHasBeenSet = false;
+  bool m_humanLoopActivationConfigHasBeenSet = false;
+  bool m_humanLoopConfigHasBeenSet = false;
+  bool m_outputConfigHasBeenSet = false;
+  bool m_roleArnHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+};
 
-    HumanLoopRequestSource m_humanLoopRequestSource;
-    bool m_humanLoopRequestSourceHasBeenSet = false;
-
-    HumanLoopActivationConfig m_humanLoopActivationConfig;
-    bool m_humanLoopActivationConfigHasBeenSet = false;
-
-    HumanLoopConfig m_humanLoopConfig;
-    bool m_humanLoopConfigHasBeenSet = false;
-
-    FlowDefinitionOutputConfig m_outputConfig;
-    bool m_outputConfigHasBeenSet = false;
-
-    Aws::String m_roleArn;
-    bool m_roleArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/guardduty/model/CreatePublishingDestinationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/guardduty/model/CreatePublishingDestinationRequest.h>
 
 #include <utility>
 
@@ -12,40 +12,28 @@ using namespace Aws::GuardDuty::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreatePublishingDestinationRequest::CreatePublishingDestinationRequest() : 
-    m_detectorIdHasBeenSet(false),
-    m_destinationType(DestinationType::NOT_SET),
-    m_destinationTypeHasBeenSet(false),
-    m_destinationPropertiesHasBeenSet(false),
-    m_clientToken(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_clientTokenHasBeenSet(true)
-{
-}
-
-Aws::String CreatePublishingDestinationRequest::SerializePayload() const
-{
+Aws::String CreatePublishingDestinationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_destinationTypeHasBeenSet)
-  {
-   payload.WithString("destinationType", DestinationTypeMapper::GetNameForDestinationType(m_destinationType));
+  if (m_destinationTypeHasBeenSet) {
+    payload.WithString("destinationType", DestinationTypeMapper::GetNameForDestinationType(m_destinationType));
   }
 
-  if(m_destinationPropertiesHasBeenSet)
-  {
-   payload.WithObject("destinationProperties", m_destinationProperties.Jsonize());
-
+  if (m_destinationPropertiesHasBeenSet) {
+    payload.WithObject("destinationProperties", m_destinationProperties.Jsonize());
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("clientToken", m_clientToken);
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("clientToken", m_clientToken);
+  }
 
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

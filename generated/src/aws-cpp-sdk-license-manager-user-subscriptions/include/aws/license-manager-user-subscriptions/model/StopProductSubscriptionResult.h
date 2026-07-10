@@ -4,63 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/license-manager-user-subscriptions/LicenseManagerUserSubscriptions_EXPORTS.h>
 #include <aws/license-manager-user-subscriptions/model/ProductUserSummary.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LicenseManagerUserSubscriptions
-{
-namespace Model
-{
-  class StopProductSubscriptionResult
-  {
-  public:
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult();
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LicenseManagerUserSubscriptions {
+namespace Model {
+class StopProductSubscriptionResult {
+ public:
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult() = default;
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LICENSEMANAGERUSERSUBSCRIPTIONS_API StopProductSubscriptionResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Metadata that describes the start product subscription operation.</p>
+   */
+  inline const ProductUserSummary& GetProductUserSummary() const { return m_productUserSummary; }
+  template <typename ProductUserSummaryT = ProductUserSummary>
+  void SetProductUserSummary(ProductUserSummaryT&& value) {
+    m_productUserSummaryHasBeenSet = true;
+    m_productUserSummary = std::forward<ProductUserSummaryT>(value);
+  }
+  template <typename ProductUserSummaryT = ProductUserSummary>
+  StopProductSubscriptionResult& WithProductUserSummary(ProductUserSummaryT&& value) {
+    SetProductUserSummary(std::forward<ProductUserSummaryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Metadata that describes the start product subscription operation.</p>
-     */
-    inline const ProductUserSummary& GetProductUserSummary() const{ return m_productUserSummary; }
-    inline void SetProductUserSummary(const ProductUserSummary& value) { m_productUserSummary = value; }
-    inline void SetProductUserSummary(ProductUserSummary&& value) { m_productUserSummary = std::move(value); }
-    inline StopProductSubscriptionResult& WithProductUserSummary(const ProductUserSummary& value) { SetProductUserSummary(value); return *this;}
-    inline StopProductSubscriptionResult& WithProductUserSummary(ProductUserSummary&& value) { SetProductUserSummary(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StopProductSubscriptionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StopProductSubscriptionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StopProductSubscriptionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StopProductSubscriptionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ProductUserSummary m_productUserSummary;
+ private:
+  ProductUserSummary m_productUserSummary;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_productUserSummaryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LicenseManagerUserSubscriptions
-} // namespace Aws
+}  // namespace Model
+}  // namespace LicenseManagerUserSubscriptions
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetVoiceConnectorEmergencyCallingConfigurationRequest::GetVoiceConnectorEmergencyCallingConfigurationRequest() : 
-    m_voiceConnectorIdHasBeenSet(false)
-{
-}
-
-Aws::String GetVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetVoiceConnectorEmergencyCallingConfigurationRequest::SerializePayload() const { return {}; }

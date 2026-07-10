@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/DescribeTrafficMirrorTargetsResponse.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/DescribeTrafficMirrorTargetsResponse.h>
 
 #include <utility>
 
@@ -17,52 +17,47 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeTrafficMirrorTargetsResponse::DescribeTrafficMirrorTargetsResponse()
-{
-}
-
-DescribeTrafficMirrorTargetsResponse::DescribeTrafficMirrorTargetsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeTrafficMirrorTargetsResponse::DescribeTrafficMirrorTargetsResponse(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeTrafficMirrorTargetsResponse& DescribeTrafficMirrorTargetsResponse::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeTrafficMirrorTargetsResponse& DescribeTrafficMirrorTargetsResponse::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTrafficMirrorTargetsResponse"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTrafficMirrorTargetsResponse")) {
     resultNode = rootNode.FirstChild("DescribeTrafficMirrorTargetsResponse");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode trafficMirrorTargetsNode = resultNode.FirstChild("trafficMirrorTargetSet");
-    if(!trafficMirrorTargetsNode.IsNull())
-    {
+    if (!trafficMirrorTargetsNode.IsNull()) {
       XmlNode trafficMirrorTargetsMember = trafficMirrorTargetsNode.FirstChild("item");
-      while(!trafficMirrorTargetsMember.IsNull())
-      {
+      m_trafficMirrorTargetsHasBeenSet = !trafficMirrorTargetsMember.IsNull();
+      while (!trafficMirrorTargetsMember.IsNull()) {
         m_trafficMirrorTargets.push_back(trafficMirrorTargetsMember);
         trafficMirrorTargetsMember = trafficMirrorTargetsMember.NextNode("item");
       }
 
+      m_trafficMirrorTargetsHasBeenSet = true;
     }
     XmlNode nextTokenNode = resultNode.FirstChild("nextToken");
-    if(!nextTokenNode.IsNull())
-    {
+    if (!nextTokenNode.IsNull()) {
       m_nextToken = Aws::Utils::Xml::DecodeEscapedXmlText(nextTokenNode.GetText());
+      m_nextTokenHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode requestIdNode = rootNode.FirstChild("requestId");
-    if (!requestIdNode.IsNull())
-    {
+    if (!requestIdNode.IsNull()) {
       m_responseMetadata.SetRequestId(StringUtils::Trim(requestIdNode.GetText().c_str()));
+      m_responseMetadataHasBeenSet = true;
     }
-    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeTrafficMirrorTargetsResponse", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    AWS_LOGSTREAM_DEBUG("Aws::EC2::Model::DescribeTrafficMirrorTargetsResponse",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

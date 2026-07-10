@@ -4,79 +4,91 @@
  */
 
 #pragma once
-#include <aws/iot/IoT_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/iot/IoT_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace IoT
-{
-namespace Model
-{
-  class UpdateRoleAliasResult
-  {
-  public:
-    AWS_IOT_API UpdateRoleAliasResult();
-    AWS_IOT_API UpdateRoleAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IOT_API UpdateRoleAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace IoT {
+namespace Model {
+class UpdateRoleAliasResult {
+ public:
+  AWS_IOT_API UpdateRoleAliasResult() = default;
+  AWS_IOT_API UpdateRoleAliasResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IOT_API UpdateRoleAliasResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The role alias.</p>
+   */
+  inline const Aws::String& GetRoleAlias() const { return m_roleAlias; }
+  template <typename RoleAliasT = Aws::String>
+  void SetRoleAlias(RoleAliasT&& value) {
+    m_roleAliasHasBeenSet = true;
+    m_roleAlias = std::forward<RoleAliasT>(value);
+  }
+  template <typename RoleAliasT = Aws::String>
+  UpdateRoleAliasResult& WithRoleAlias(RoleAliasT&& value) {
+    SetRoleAlias(std::forward<RoleAliasT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The role alias.</p>
-     */
-    inline const Aws::String& GetRoleAlias() const{ return m_roleAlias; }
-    inline void SetRoleAlias(const Aws::String& value) { m_roleAlias = value; }
-    inline void SetRoleAlias(Aws::String&& value) { m_roleAlias = std::move(value); }
-    inline void SetRoleAlias(const char* value) { m_roleAlias.assign(value); }
-    inline UpdateRoleAliasResult& WithRoleAlias(const Aws::String& value) { SetRoleAlias(value); return *this;}
-    inline UpdateRoleAliasResult& WithRoleAlias(Aws::String&& value) { SetRoleAlias(std::move(value)); return *this;}
-    inline UpdateRoleAliasResult& WithRoleAlias(const char* value) { SetRoleAlias(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The role alias ARN.</p>
+   */
+  inline const Aws::String& GetRoleAliasArn() const { return m_roleAliasArn; }
+  template <typename RoleAliasArnT = Aws::String>
+  void SetRoleAliasArn(RoleAliasArnT&& value) {
+    m_roleAliasArnHasBeenSet = true;
+    m_roleAliasArn = std::forward<RoleAliasArnT>(value);
+  }
+  template <typename RoleAliasArnT = Aws::String>
+  UpdateRoleAliasResult& WithRoleAliasArn(RoleAliasArnT&& value) {
+    SetRoleAliasArn(std::forward<RoleAliasArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The role alias ARN.</p>
-     */
-    inline const Aws::String& GetRoleAliasArn() const{ return m_roleAliasArn; }
-    inline void SetRoleAliasArn(const Aws::String& value) { m_roleAliasArn = value; }
-    inline void SetRoleAliasArn(Aws::String&& value) { m_roleAliasArn = std::move(value); }
-    inline void SetRoleAliasArn(const char* value) { m_roleAliasArn.assign(value); }
-    inline UpdateRoleAliasResult& WithRoleAliasArn(const Aws::String& value) { SetRoleAliasArn(value); return *this;}
-    inline UpdateRoleAliasResult& WithRoleAliasArn(Aws::String&& value) { SetRoleAliasArn(std::move(value)); return *this;}
-    inline UpdateRoleAliasResult& WithRoleAliasArn(const char* value) { SetRoleAliasArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateRoleAliasResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateRoleAliasResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateRoleAliasResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateRoleAliasResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_roleAlias;
+ private:
+  Aws::String m_roleAlias;
 
-    Aws::String m_roleAliasArn;
+  Aws::String m_roleAliasArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_roleAliasHasBeenSet = false;
+  bool m_roleAliasArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace IoT
-} // namespace Aws
+}  // namespace Model
+}  // namespace IoT
+}  // namespace Aws

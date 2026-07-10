@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/rds/RDS_EXPORTS.h>
 #include <aws/rds/model/EventSubscription.h>
 #include <aws/rds/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace RDS
-{
-namespace Model
-{
-  class CreateEventSubscriptionResult
-  {
-  public:
-    AWS_RDS_API CreateEventSubscriptionResult();
-    AWS_RDS_API CreateEventSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_RDS_API CreateEventSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace RDS {
+namespace Model {
+class CreateEventSubscriptionResult {
+ public:
+  AWS_RDS_API CreateEventSubscriptionResult() = default;
+  AWS_RDS_API CreateEventSubscriptionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_RDS_API CreateEventSubscriptionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const EventSubscription& GetEventSubscription() const{ return m_eventSubscription; }
-    inline void SetEventSubscription(const EventSubscription& value) { m_eventSubscription = value; }
-    inline void SetEventSubscription(EventSubscription&& value) { m_eventSubscription = std::move(value); }
-    inline CreateEventSubscriptionResult& WithEventSubscription(const EventSubscription& value) { SetEventSubscription(value); return *this;}
-    inline CreateEventSubscriptionResult& WithEventSubscription(EventSubscription&& value) { SetEventSubscription(std::move(value)); return *this;}
-    ///@}
+  inline const EventSubscription& GetEventSubscription() const { return m_eventSubscription; }
+  template <typename EventSubscriptionT = EventSubscription>
+  void SetEventSubscription(EventSubscriptionT&& value) {
+    m_eventSubscriptionHasBeenSet = true;
+    m_eventSubscription = std::forward<EventSubscriptionT>(value);
+  }
+  template <typename EventSubscriptionT = EventSubscription>
+  CreateEventSubscriptionResult& WithEventSubscription(EventSubscriptionT&& value) {
+    SetEventSubscription(std::forward<EventSubscriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateEventSubscriptionResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateEventSubscriptionResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    EventSubscription m_eventSubscription;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateEventSubscriptionResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  EventSubscription m_eventSubscription;
 
-} // namespace Model
-} // namespace RDS
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventSubscriptionHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace RDS
+}  // namespace Aws

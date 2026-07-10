@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/medialive/model/DescribeChannelPlacementGroupRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/medialive/model/DescribeChannelPlacementGroupRequest.h>
 
 #include <utility>
 
@@ -12,17 +12,4 @@ using namespace Aws::MediaLive::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeChannelPlacementGroupRequest::DescribeChannelPlacementGroupRequest() : 
-    m_channelPlacementGroupIdHasBeenSet(false),
-    m_clusterIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeChannelPlacementGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeChannelPlacementGroupRequest::SerializePayload() const { return {}; }

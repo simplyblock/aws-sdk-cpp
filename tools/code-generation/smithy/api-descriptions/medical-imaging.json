@@ -80,8 +80,196 @@
                     }
                 },
                 "aws.protocols#restJson1": {},
-                "smithy.api#documentation": "<p>This is the <i>AWS HealthImaging API Reference</i>. AWS HealthImaging is a HIPAA eligible service\n            that empowers healthcare providers, life science organizations, and their software partners to store,\n            analyze, and share medical images in the cloud at petabyte scale. For an introduction to the service, see the\n            <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/what-is.html\">\n               <i>AWS HealthImaging Developer Guide</i>\n            </a>.</p>\n         <note>\n            <p>We recommend using one of the AWS Software Development Kits (SDKs) for your programming language, as\n                    they take care of request authentication, serialization, and connection management. For more information,\n                    see <a href=\"http://aws.amazon.com/developer/tools\">Tools to build on AWS</a>.</p>\n         </note>\n         <p>The following sections list AWS HealthImaging API actions categorized according to functionality. Links are \n             provided to actions within this Reference, along with links back to corresponding sections in the \n             <i>AWS HealthImaging Developer Guide</i> where you can view tested code examples.</p>\n         <p class=\"title\">\n            <b>Data store actions</b>\n         </p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_CreateDatastore.html\">CreateDatastore</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/create-data-store.html\">Creating a data store</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_GetDatastore.html\">GetDatastore</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/get-data-store.html\">Getting data store properties</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_ListDatastores.html\">ListDatastores</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/list-data-stores.html\">Listing data stores</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_DeleteDatastore.html\">DeleteDatastore</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/delete-data-store.html\">Deleting a data store</a>.</p>\n            </li>\n         </ul>\n         <p class=\"title\">\n            <b>Import job actions</b>\n         </p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_StartDICOMImportJob.html\">StartDICOMImportJob</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/start-dicom-import-job.html\">Starting an import job</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_GetDICOMImportJob.html\">GetDICOMImportJob</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/get-dicom-import-job.html\">Getting import job properties</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_ListDICOMImportJobs.html\">ListDICOMImportJobs</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/list-dicom-import-jobs.html\">Listing import jobs</a>.</p>\n            </li>\n         </ul>\n         <p class=\"title\">\n            <b>Image set access actions</b>\n         </p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_SearchImageSets.html\">SearchImageSets</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/search-image-sets.html\">Searching image sets</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_GetImageSet.html\">GetImageSet</a>\n                       – See \n                       <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/get-image-set-properties.html\">Getting image set properties</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_GetImageSetMetadata.html\">GetImageSetMetadata</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/get-image-set-metadata.html\">Getting image set metadata</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_GetImageFrame.html\">GetImageFrame</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/get-image-frame.html\">Getting image set pixel data</a>.</p>\n            </li>\n         </ul>\n         <p class=\"title\">\n            <b>Image set modification actions</b>\n         </p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_ListImageSetVersions.html\">ListImageSetVersions</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/list-image-set-versions.html\">Listing image set versions</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_UpdateImageSetMetadata.html\">UpdateImageSetMetadata</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/update-image-set-metadata.html\">Updating image set metadata</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_CopyImageSet.html\">CopyImageSet</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/copy-image-set.html\">Copying an image set</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_DeleteImageSet.html\">DeleteImageSet</a>\n                        – See \n                        <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/delete-image-set.html\">Deleting an image set</a>.</p>\n            </li>\n         </ul>\n         <p class=\"title\">\n            <b>Tagging actions</b>\n         </p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_TagResource.html\">TagResource</a>\n                        – See <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/tag-resource.html\">Tagging a resource</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_ListTagsForResource.html\">ListTagsForResource</a>\n                        – See <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/list-tag-resource.html\">Listing tags for a resource</a>.</p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/healthimaging/latest/APIReference/API_UntagResource.html\">UntagResource</a>\n                        – See <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/untag-resource.html\">Untagging a resource</a>.</p>\n            </li>\n         </ul>",
+                "smithy.api#documentation": "<p>This is the <i>AWS HealthImaging API Reference</i>. For an introduction to the service, see <a href=\"https://docs.aws.amazon.com/healthimaging/latest/devguide/what-is.html\">What is AWS HealthImaging?</a> in the <i>AWS HealthImaging Developer Guide</i>.</p>",
                 "smithy.api#title": "AWS Health Imaging",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://medical-imaging-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://medical-imaging-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://medical-imaging.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://medical-imaging.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -89,27 +277,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -591,17 +779,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -612,17 +789,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -639,17 +805,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -660,17 +815,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -778,6 +922,22 @@
                     "max": 12
                 },
                 "smithy.api#pattern": "^\\d+$"
+            }
+        },
+        "com.amazonaws.medicalimaging#BadRequestException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The request is invalid or malformed.</p>",
+                "smithy.api#error": "client",
+                "smithy.api#httpError": 400
             }
         },
         "com.amazonaws.medicalimaging#ClientToken": {
@@ -983,8 +1143,15 @@
                 "force": {
                     "target": "smithy.api#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>Setting this flag will force the <code>CopyImageSet</code> operation, even if Patient, Study, or Series level\n            metadata are mismatched across the <code>sourceImageSet</code> and <code>destinationImageSet</code>.</p>",
+                        "smithy.api#documentation": "<p>Providing this parameter will force completion of the <code>CopyImageSet</code> operation, even if there are inconsistent Patient, Study, and/or Series level metadata elements between the <code>sourceImageSet</code> and <code>destinationImageSet</code>.</p>",
                         "smithy.api#httpQuery": "force"
+                    }
+                },
+                "promoteToPrimary": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Providing this parameter will configure the <code>CopyImageSet</code> operation to promote the given image set to the primary DICOM hierarchy. If successful, a new primary image set ID will be returned as the destination image set.</p>",
+                        "smithy.api#httpQuery": "promoteToPrimary"
                     }
                 }
             },
@@ -1034,7 +1201,7 @@
                 "DICOMCopies": {
                     "target": "com.amazonaws.medicalimaging#MetadataCopies",
                     "traits": {
-                        "smithy.api#documentation": "<p>Contains <code>MetadataCopies</code> structure and wraps information related to specific copy use cases.\n            For example, when copying subsets.</p>"
+                        "smithy.api#documentation": "<p>Contains <code>MetadataCopies</code> structure and wraps information related to specific copy use cases. For example, when copying subsets.</p>"
                     }
                 }
             },
@@ -1113,6 +1280,9 @@
                     "target": "com.amazonaws.medicalimaging#InternalServerException"
                 },
                 {
+                    "target": "com.amazonaws.medicalimaging#ResourceNotFoundException"
+                },
+                {
                     "target": "com.amazonaws.medicalimaging#ServiceQuotaExceededException"
                 },
                 {
@@ -1163,6 +1333,18 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) assigned to the Key Management Service (KMS) key for accessing encrypted data.</p>"
                     }
+                },
+                "lambdaAuthorizerArn": {
+                    "target": "com.amazonaws.medicalimaging#LambdaArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The ARN of the authorizer's Lambda function.</p>"
+                    }
+                },
+                "losslessStorageFormat": {
+                    "target": "com.amazonaws.medicalimaging#LosslessStorageFormat",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The lossless storage format for the datastore.</p>"
+                    }
                 }
             },
             "traits": {
@@ -1196,7 +1378,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 256
+                    "max": 512
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1206,7 +1388,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 10000
+                    "max": 30000
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1279,6 +1461,12 @@
                     "target": "com.amazonaws.medicalimaging#Message",
                     "traits": {
                         "smithy.api#documentation": "<p>The error message thrown if an import job fails.</p>"
+                    }
+                },
+                "importConfiguration": {
+                    "target": "com.amazonaws.medicalimaging#ImportConfiguration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The object containing <code>DicomJsonMetadataImportConfiguration</code>.</p>"
                     }
                 }
             },
@@ -1358,7 +1546,7 @@
                 "smithy.api#default": 0,
                 "smithy.api#range": {
                     "min": 0,
-                    "max": 10000
+                    "max": 1000000
                 }
             }
         },
@@ -1377,7 +1565,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 18
+                    "max": 36
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1387,7 +1575,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 256
+                    "max": 512
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1397,7 +1585,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 256
+                    "max": 512
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1417,7 +1605,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 64
+                    "max": 128
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1427,9 +1615,9 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 256
+                    "max": 512
                 },
-                "smithy.api#pattern": "^(?:[0-9][0-9]*|0)(\\.(?:[1-9][0-9]*|0))*$",
+                "smithy.api#pattern": "^[0-9.]+$",
                 "smithy.api#sensitive": {}
             }
         },
@@ -1438,7 +1626,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 16
+                    "max": 32
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1458,7 +1646,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 18
+                    "max": 36
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1489,7 +1677,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 64
+                    "max": 512
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1499,7 +1687,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 16
+                    "max": 512
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1509,9 +1697,9 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 256
+                    "max": 512
                 },
-                "smithy.api#pattern": "^(?:[0-9][0-9]*|0)(\\.(?:[1-9][0-9]*|0))*$",
+                "smithy.api#pattern": "^[0-9.]+$",
                 "smithy.api#sensitive": {}
             }
         },
@@ -1520,7 +1708,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 0,
-                    "max": 28
+                    "max": 56
                 },
                 "smithy.api#sensitive": {}
             }
@@ -1628,7 +1816,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>The DICOM attributes returned as a part of a response. Each image set has these properties\n           as part of a search result.</p>"
+                "smithy.api#documentation": "<p>The DICOM attributes returned as a part of a response. Each image set has these properties as part of a search result.</p>"
             }
         },
         "com.amazonaws.medicalimaging#DICOMUpdates": {
@@ -1695,6 +1883,18 @@
                     "target": "com.amazonaws.medicalimaging#KmsKeyArn",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) assigned to the Key Management Service (KMS) key for accessing encrypted data.</p>"
+                    }
+                },
+                "lambdaAuthorizerArn": {
+                    "target": "com.amazonaws.medicalimaging#LambdaArn",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The ARN of the authorizer's Lambda function.</p>"
+                    }
+                },
+                "losslessStorageFormat": {
+                    "target": "com.amazonaws.medicalimaging#LosslessStorageFormat",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The datastore's lossless storage format.</p>"
                     }
                 },
                 "datastoreArn": {
@@ -1869,7 +2069,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Delete a data store.</p>\n         <note>\n            <p>Before a data store can be deleted, you must first delete all image sets within it.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Delete a data store.</p> <note> <p>Before a data store can be deleted, you must first delete all image sets within it.</p> </note>",
                 "smithy.api#http": {
                     "method": "DELETE",
                     "uri": "/datastore/{datastoreId}"
@@ -2015,6 +2215,61 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.medicalimaging#DicomJsonMetadataImportConfiguration": {
+            "type": "structure",
+            "members": {
+                "dicomMetadataMappings": {
+                    "target": "com.amazonaws.medicalimaging#DicomMetadataMappings",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Maps DCM files to their metadata.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The configuration parameters that are specific to DICOM JSON metadata import operations.</p>"
+            }
+        },
+        "com.amazonaws.medicalimaging#DicomMetadataMapping": {
+            "type": "structure",
+            "members": {
+                "studyInstanceUID": {
+                    "target": "com.amazonaws.medicalimaging#DICOMStudyInstanceUID",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Study Instance UID that identifies the study.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "seriesInstanceUID": {
+                    "target": "com.amazonaws.medicalimaging#DICOMSeriesInstanceUID",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Series Instance UID that identifies the series. This parameter is optional because the mapping might be at the study level.</p>"
+                    }
+                },
+                "metadataFilePath": {
+                    "target": "com.amazonaws.medicalimaging#MetadataFilePath",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The path to the JSON metadata file relative to inputS3Uri.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Maps DCM files to their metadata.</p>"
+            }
+        },
+        "com.amazonaws.medicalimaging#DicomMetadataMappings": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.medicalimaging#DicomMetadataMapping"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1000
+                }
+            }
+        },
         "com.amazonaws.medicalimaging#GetDICOMImportJob": {
             "type": "operation",
             "input": {
@@ -2044,7 +2299,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Get the import job properties to learn more about the job or job progress.</p>\n         <note>\n            <p>The <code>jobStatus</code> refers to the execution of the import job. Therefore, an import job can return a <code>jobStatus</code> as\n               <code>COMPLETED</code> even if validation issues are discovered during the import process. If a <code>jobStatus</code> returns\n               as <code>COMPLETED</code>, we still recommend you review the output manifests written to S3, as they provide details on the success\n               or failure of individual P10 object imports.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Get the import job properties to learn more about the job or job progress.</p> <note> <p>The <code>jobStatus</code> refers to the execution of the import job. Therefore, an import job can return a <code>jobStatus</code> as <code>COMPLETED</code> even if validation issues are discovered during the import process. If a <code>jobStatus</code> returns as <code>COMPLETED</code>, we still recommend you review the output manifests written to S3, as they provide details on the success or failure of individual P10 object imports.</p> </note>",
                 "smithy.api#http": {
                     "method": "GET",
                     "uri": "/getDICOMImportJob/datastore/{datastoreId}/job/{jobId}"
@@ -2169,10 +2424,16 @@
                     "target": "com.amazonaws.medicalimaging#AccessDeniedException"
                 },
                 {
+                    "target": "com.amazonaws.medicalimaging#BadRequestException"
+                },
+                {
                     "target": "com.amazonaws.medicalimaging#ConflictException"
                 },
                 {
                     "target": "com.amazonaws.medicalimaging#InternalServerException"
+                },
+                {
+                    "target": "com.amazonaws.medicalimaging#NotAcceptableException"
                 },
                 {
                     "target": "com.amazonaws.medicalimaging#ResourceNotFoundException"
@@ -2242,7 +2503,7 @@
                 "contentType": {
                     "target": "smithy.api#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>The format in which the image frame information is returned to the customer. Default is \n           <code>application/octet-stream</code>.</p>",
+                        "smithy.api#documentation": "<p>The format in which the image frame information is returned to the customer. Default is <code>application/octet-stream</code>.</p> <note> <ul> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.1</code>, the returned <code>contentType</code> is <code>application/octet-stream</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.4.50</code>, the returned <code>contentType</code> is <code>image/jpeg</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.4.91</code>, the returned <code>contentType</code> is <code>image/j2c</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is MPEG2, <code>1.2.840.10008.1.2.4.100</code>, <code>1.2.840.10008.1.2.4.100.1</code>, <code>1.2.840.10008.1.2.4.101</code>, or <code>1.2.840.10008.1.2.4.101.1</code>, the returned <code>contentType</code> is <code>video/mpeg</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is MPEG-4 AVC/H.264, UID <code>1.2.840.10008.1.2.4.102</code>, <code>1.2.840.10008.1.2.4.102.1</code>, <code>1.2.840.10008.1.2.4.103</code>, <code>1.2.840.10008.1.2.4.103.1</code>, <code>1.2.840.10008.1.2.4.104</code>, <code>1.2.840.10008.1.2.4.104.1</code>, <code>1.2.840.10008.1.2.4.105</code>, <code>1.2.840.10008.1.2.4.105.1</code>, <code>1.2.840.10008.1.2.4.106</code>, or <code>1.2.840.10008.1.2.4.106.1</code>, the returned <code>contentType</code> is <code>video/mp4</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is HEVC/H.265, UID <code>1.2.840.10008.1.2.4.107</code> or <code>1.2.840.10008.1.2.4.108</code>, the returned <code>contentType</code> is <code>video/H256</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.4.202</code> or if the stored transfer syntax is <i>missing</i>, the returned <code>contentType</code> is <code>image/jph</code>.</p> </li> </ul> <ul> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.4.203</code>, the returned contentType is <code>image/jphc</code>.</p> </li> <li> <p>If the stored transfer syntax is <code>1.2.840.10008.1.2.4.112</code> the returned <code>contentType</code> is <code>image/jxl</code>.</p> </li> </ul> </note>",
                         "smithy.api#httpHeader": "Content-Type"
                     }
                 }
@@ -2493,7 +2754,25 @@
                 "overrides": {
                     "target": "com.amazonaws.medicalimaging#Overrides",
                     "traits": {
-                        "smithy.api#documentation": "<p>This object contains the details of any overrides used while creating a specific image set version.\n            If an image set was copied or updated using the <code>force</code> flag, this object will contain the\n            <code>forced</code> flag.</p>"
+                        "smithy.api#documentation": "<p>This object contains the details of any overrides used while creating a specific image set version. If an image set was copied or updated using the <code>force</code> flag, this object will contain the <code>forced</code> flag.</p>"
+                    }
+                },
+                "isPrimary": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The flag to determine whether the image set is primary or not.</p>"
+                    }
+                },
+                "lastAccessedAt": {
+                    "target": "com.amazonaws.medicalimaging#Date",
+                    "traits": {
+                        "smithy.api#documentation": "<p>When the image set was last accessed.</p>"
+                    }
+                },
+                "storageTier": {
+                    "target": "com.amazonaws.medicalimaging#StorageTier",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The storage tier of the image set.</p>"
                     }
                 }
             },
@@ -2597,7 +2876,13 @@
                 "overrides": {
                     "target": "com.amazonaws.medicalimaging#Overrides",
                     "traits": {
-                        "smithy.api#documentation": "<p>Contains details on overrides used when creating the returned version of an image set.\n            For example, if <code>forced</code> exists, the <code>forced</code> flag was used when \n            creating the image set.</p>"
+                        "smithy.api#documentation": "<p>Contains details on overrides used when creating the returned version of an image set. For example, if <code>forced</code> exists, the <code>forced</code> flag was used when creating the image set.</p>"
+                    }
+                },
+                "isPrimary": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The flag to determine whether the image set is primary or not.</p>"
                     }
                 }
             },
@@ -2693,6 +2978,12 @@
                         "smithy.api#enumValue": "UPDATING"
                     }
                 },
+                "UPDATING_FOR_STUDY_CONSISTENCY": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "UPDATING_FOR_STUDY_CONSISTENCY"
+                    }
+                },
                 "UPDATED": {
                     "target": "smithy.api#Unit",
                     "traits": {
@@ -2715,6 +3006,24 @@
                     "target": "smithy.api#Unit",
                     "traits": {
                         "smithy.api#enumValue": "DELETED"
+                    }
+                },
+                "IMPORTING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "IMPORTING"
+                    }
+                },
+                "IMPORTED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "IMPORTED"
+                    }
+                },
+                "IMPORT_FAILED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "IMPORT_FAILED"
                     }
                 }
             }
@@ -2744,7 +3053,7 @@
                 "createdAt": {
                     "target": "com.amazonaws.medicalimaging#Date",
                     "traits": {
-                        "smithy.api#documentation": "<p>The time an image set is created. Sample creation \n            date is provided in <code>1985-04-12T23:20:50.52Z</code> format.</p>"
+                        "smithy.api#documentation": "<p>The time an image set is created. Sample creation date is provided in <code>1985-04-12T23:20:50.52Z</code> format.</p>"
                     }
                 },
                 "updatedAt": {
@@ -2753,15 +3062,44 @@
                         "smithy.api#documentation": "<p>The time an image set was last updated.</p>"
                     }
                 },
+                "lastAccessedAt": {
+                    "target": "com.amazonaws.medicalimaging#Date",
+                    "traits": {
+                        "smithy.api#documentation": "<p>When the image set was last accessed.</p>"
+                    }
+                },
+                "storageTier": {
+                    "target": "com.amazonaws.medicalimaging#StorageTier",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The image set's storage tier.</p>"
+                    }
+                },
                 "DICOMTags": {
                     "target": "com.amazonaws.medicalimaging#DICOMTags",
                     "traits": {
                         "smithy.api#documentation": "<p>The DICOM tags associated with the image set.</p>"
                     }
+                },
+                "isPrimary": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The flag to determine whether the image set is primary or not.</p>"
+                    }
                 }
             },
             "traits": {
                 "smithy.api#documentation": "<p>Summary of the image set metadata.</p>"
+            }
+        },
+        "com.amazonaws.medicalimaging#ImportConfiguration": {
+            "type": "union",
+            "members": {
+                "dicomJsonMetadataImportConfiguration": {
+                    "target": "com.amazonaws.medicalimaging#DicomJsonMetadataImportConfiguration"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The configuration options for different types of import operations.</p>"
             }
         },
         "com.amazonaws.medicalimaging#InternalServerException": {
@@ -2839,6 +3177,12 @@
                     "max": 512
                 },
                 "smithy.api#pattern": "^arn:aws[a-zA-Z-]{0,16}:kms:[a-z]{2}(-[a-z]{1,16}){1,3}-\\d{1}:\\d{12}:((key/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})|(alias/[a-zA-Z0-9:/_-]{1,256}))$"
+            }
+        },
+        "com.amazonaws.medicalimaging#LambdaArn": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^arn:(aws[a-zA-Z-]*)?:lambda:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+(:(\\$LATEST|[a-zA-Z0-9-_]+))?$"
             }
         },
         "com.amazonaws.medicalimaging#ListDICOMImportJobs": {
@@ -3210,6 +3554,23 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.medicalimaging#LosslessStorageFormat": {
+            "type": "enum",
+            "members": {
+                "HTJ2K": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "HTJ2K"
+                    }
+                },
+                "JPEG_2000_LOSSLESS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "JPEG_2000_LOSSLESS"
+                    }
+                }
+            }
+        },
         "com.amazonaws.medicalimaging#Message": {
             "type": "string",
             "traits": {
@@ -3217,7 +3578,7 @@
                     "min": 1,
                     "max": 2048
                 },
-                "smithy.api#pattern": "^[\\w -:]+$"
+                "smithy.api#pattern": "^[\\w -:`]+$"
             }
         },
         "com.amazonaws.medicalimaging#MetadataCopies": {
@@ -3232,7 +3593,17 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Contains copiable <code>Attributes</code> structure and wraps information related to specific copy use cases.\n            For example, when copying subsets.</p>"
+                "smithy.api#documentation": "<p>Contains copiable <code>Attributes</code> structure and wraps information related to specific copy use cases. For example, when copying subsets.</p>"
+            }
+        },
+        "com.amazonaws.medicalimaging#MetadataFilePath": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1024
+                },
+                "smithy.api#pattern": "^[a-zA-Z0-9!-~]+([a-zA-Z0-9!-~ ]*[a-zA-Z0-9!-~]+)*$"
             }
         },
         "com.amazonaws.medicalimaging#MetadataUpdates": {
@@ -3247,7 +3618,7 @@
                 "revertToVersionId": {
                     "target": "com.amazonaws.medicalimaging#ImageSetExternalVersionId",
                     "traits": {
-                        "smithy.api#documentation": "<p>Specifies the previous image set version ID to revert the current image set back to.</p>\n         <note>\n            <p>You must provide either <code>revertToVersionId</code> or <code>DICOMUpdates</code> in your request. A \n                <code>ValidationException</code> error is thrown if both parameters are provided at the same time.</p>\n         </note>"
+                        "smithy.api#documentation": "<p>Specifies the previous image set version ID to revert the current image set back to.</p> <note> <p>You must provide either <code>revertToVersionId</code> or <code>DICOMUpdates</code> in your request. A <code>ValidationException</code> error is thrown if both parameters are provided at the same time.</p> </note>"
                     }
                 }
             },
@@ -3263,6 +3634,22 @@
                     "max": 8192
                 },
                 "smithy.api#pattern": "^\\p{ASCII}{0,8192}$"
+            }
+        },
+        "com.amazonaws.medicalimaging#NotAcceptableException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The request content type or accept header is not supported.</p>",
+                "smithy.api#error": "client",
+                "smithy.api#httpError": 406
             }
         },
         "com.amazonaws.medicalimaging#Operator": {
@@ -3288,12 +3675,12 @@
                 "forced": {
                     "target": "smithy.api#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>Setting this flag will force the <code>CopyImageSet</code> and <code>UpdateImageSetMetadata</code>\n            operations, even if Patient, Study, or Series level metadata are mismatched.</p>"
+                        "smithy.api#documentation": "<p>Providing this parameter will force completion of the <code>CopyImageSet</code> and <code>UpdateImageSetMetadata</code> actions, even if metadata is inconsistent at the Patient, Study, and/or Series levels.</p>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>Specifies the overrides used in image set modification calls to <code>CopyImageSet</code> and \n                <code>UpdateImageSetMetadata</code>.</p>"
+                "smithy.api#documentation": "<p>Specifies the overrides used in image set modification calls to <code>CopyImageSet</code> and <code>UpdateImageSetMetadata</code>.</p>"
             }
         },
         "com.amazonaws.medicalimaging#PayloadBlob": {
@@ -3390,6 +3777,12 @@
                     "target": "com.amazonaws.medicalimaging#DICOMStudyDateAndTime",
                     "traits": {
                         "smithy.api#documentation": "<p>The aggregated structure containing DICOM study date and study time for search.</p>"
+                    }
+                },
+                "isPrimary": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The primary image set flag provided for search.</p>"
                     }
                 }
             },
@@ -3489,7 +3882,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Search image sets based on defined input attributes.</p>\n         <note>\n            <p>\n               <code>SearchImageSets</code> accepts a single search query parameter and returns a paginated\n               response of all image sets that have the matching criteria. All date range queries must be input\n               as <code>(lowerBound, upperBound)</code>.</p>\n            <p>By default, <code>SearchImageSets</code> uses the <code>updatedAt</code> field for sorting \n               in descending order from newest to oldest.</p>\n         </note>",
+                "smithy.api#documentation": "<p>Search image sets based on defined input attributes.</p> <note> <p> <code>SearchImageSets</code> accepts a single search query parameter and returns a paginated response of all image sets that have the matching criteria. All date range queries must be input as <code>(lowerBound, upperBound)</code>.</p> <p>By default, <code>SearchImageSets</code> uses the <code>updatedAt</code> field for sorting in descending order from newest to oldest.</p> </note>",
                 "smithy.api#endpoint": {
                     "hostPrefix": "runtime-"
                 },
@@ -3537,7 +3930,7 @@
                 "nextToken": {
                     "target": "com.amazonaws.medicalimaging#NextToken",
                     "traits": {
-                        "smithy.api#documentation": "<p>The token used for pagination of results returned in the response. Use the token returned from the previous\n           request to continue results where the previous request ended.</p>",
+                        "smithy.api#documentation": "<p>The token used for pagination of results returned in the response. Use the token returned from the previous request to continue results where the previous request ended.</p>",
                         "smithy.api#httpQuery": "nextToken"
                     }
                 }
@@ -3683,7 +4076,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Start importing bulk data into an <code>ACTIVE</code> data store. The import job imports DICOM P10 files\n           found in the S3 prefix specified by the <code>inputS3Uri</code> parameter. The import job stores\n           processing results in the file specified by the <code>outputS3Uri</code> parameter.</p>",
+                "smithy.api#documentation": "<p>Start importing bulk data into an <code>ACTIVE</code> data store. The import job imports DICOM P10 files or enhances existing DICOM files with JSON metadata. The <code>importConfiguration</code> parameter specifies the import type. The data is found in the S3 prefix specified by the <code>inputS3Uri</code> parameter. The import job stores processing results in the file specified by the <code>outputS3Uri</code> parameter.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/startDICOMImportJob/datastore/{datastoreId}"
@@ -3742,6 +4135,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The account ID of the source S3 bucket owner.</p>"
                     }
+                },
+                "importConfiguration": {
+                    "target": "com.amazonaws.medicalimaging#ImportConfiguration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The import configuration for the import job.</p>"
+                    }
                 }
             },
             "traits": {
@@ -3782,6 +4181,28 @@
             },
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.medicalimaging#StorageTier": {
+            "type": "enum",
+            "members": {
+                "FREQUENT_ACCESS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#documentation": "Frequent access storage tier for image sets that are accessed regularly",
+                        "smithy.api#enumValue": "FREQUENT_ACCESS"
+                    }
+                },
+                "ARCHIVE_INSTANT_ACCESS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#documentation": "Archive instant access storage tier for image sets that are accessed infrequently",
+                        "smithy.api#enumValue": "ARCHIVE_INSTANT_ACCESS"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Storage tier for image sets"
             }
         },
         "com.amazonaws.medicalimaging#TagKey": {
@@ -4078,8 +4499,15 @@
                 "force": {
                     "target": "smithy.api#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>Setting this flag will force the <code>UpdateImageSetMetadata</code> operation for the following attributes:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>Tag.StudyInstanceUID</code>, <code>Tag.SeriesInstanceUID</code>, <code>Tag.SOPInstanceUID</code>, and <code>Tag.StudyID</code>\n               </p>\n            </li>\n            <li>\n               <p>Adding, removing, or updating private tags for an individual SOP Instance</p>\n            </li>\n         </ul>",
+                        "smithy.api#documentation": "<p>Setting this flag will force the <code>UpdateImageSetMetadata</code> operation for the following attributes:</p> <ul> <li> <p> <code>Tag.StudyInstanceUID</code>, <code>Tag.SeriesInstanceUID</code>, <code>Tag.SOPInstanceUID</code>, and <code>Tag.StudyID</code> </p> </li> <li> <p>Adding, removing, or updating private tags for an individual SOP Instance</p> </li> </ul>",
                         "smithy.api#httpQuery": "force"
+                    }
+                },
+                "includeStudyImageSets": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Flag to apply the metadata updates to all image sets in the same Study as the requested image set ID.</p>",
+                        "smithy.api#httpQuery": "includeStudyImageSets"
                     }
                 },
                 "updateImageSetMetadataUpdates": {

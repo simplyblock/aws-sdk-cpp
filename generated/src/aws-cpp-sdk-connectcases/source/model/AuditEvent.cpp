@@ -11,126 +11,85 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace ConnectCases
-{
-namespace Model
-{
+namespace Aws {
+namespace ConnectCases {
+namespace Model {
 
-AuditEvent::AuditEvent() : 
-    m_eventIdHasBeenSet(false),
-    m_fieldsHasBeenSet(false),
-    m_performedByHasBeenSet(false),
-    m_performedTimeHasBeenSet(false),
-    m_relatedItemType(RelatedItemType::NOT_SET),
-    m_relatedItemTypeHasBeenSet(false),
-    m_type(AuditEventType::NOT_SET),
-    m_typeHasBeenSet(false)
-{
-}
+AuditEvent::AuditEvent(JsonView jsonValue) { *this = jsonValue; }
 
-AuditEvent::AuditEvent(JsonView jsonValue)
-  : AuditEvent()
-{
-  *this = jsonValue;
-}
-
-AuditEvent& AuditEvent::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("eventId"))
-  {
+AuditEvent& AuditEvent::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("eventId")) {
     m_eventId = jsonValue.GetString("eventId");
-
     m_eventIdHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("fields"))
-  {
+  if (jsonValue.ValueExists("type")) {
+    m_type = AuditEventTypeMapper::GetAuditEventTypeForName(jsonValue.GetString("type"));
+    m_typeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("relatedItemType")) {
+    m_relatedItemType = RelatedItemTypeMapper::GetRelatedItemTypeForName(jsonValue.GetString("relatedItemType"));
+    m_relatedItemTypeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("performedTime")) {
+    m_performedTime = jsonValue.GetString("performedTime");
+    m_performedTimeHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("fields")) {
     Aws::Utils::Array<JsonView> fieldsJsonList = jsonValue.GetArray("fields");
-    for(unsigned fieldsIndex = 0; fieldsIndex < fieldsJsonList.GetLength(); ++fieldsIndex)
-    {
-      m_fields.push_back(fieldsJsonList[fieldsIndex].AsObject());
+    for (unsigned fieldsIndex = 0; fieldsIndex < fieldsJsonList.GetLength(); ++fieldsIndex) {
+      if (fieldsJsonList[fieldsIndex].IsNull()) {
+        m_fields.emplace_back();
+        continue;
+      }
+      m_fields.emplace_back(fieldsJsonList[fieldsIndex].AsObject());
     }
     m_fieldsHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("performedBy"))
-  {
+  if (jsonValue.ValueExists("performedBy")) {
     m_performedBy = jsonValue.GetObject("performedBy");
-
     m_performedByHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("performedTime"))
-  {
-    m_performedTime = jsonValue.GetString("performedTime");
-
-    m_performedTimeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("relatedItemType"))
-  {
-    m_relatedItemType = RelatedItemTypeMapper::GetRelatedItemTypeForName(jsonValue.GetString("relatedItemType"));
-
-    m_relatedItemTypeHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("type"))
-  {
-    m_type = AuditEventTypeMapper::GetAuditEventTypeForName(jsonValue.GetString("type"));
-
-    m_typeHasBeenSet = true;
-  }
-
   return *this;
 }
 
-JsonValue AuditEvent::Jsonize() const
-{
+JsonValue AuditEvent::Jsonize() const {
   JsonValue payload;
 
-  if(m_eventIdHasBeenSet)
-  {
-   payload.WithString("eventId", m_eventId);
-
+  if (m_eventIdHasBeenSet) {
+    payload.WithString("eventId", m_eventId);
   }
 
-  if(m_fieldsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> fieldsJsonList(m_fields.size());
-   for(unsigned fieldsIndex = 0; fieldsIndex < fieldsJsonList.GetLength(); ++fieldsIndex)
-   {
-     fieldsJsonList[fieldsIndex].AsObject(m_fields[fieldsIndex].Jsonize());
-   }
-   payload.WithArray("fields", std::move(fieldsJsonList));
-
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", AuditEventTypeMapper::GetNameForAuditEventType(m_type));
   }
 
-  if(m_performedByHasBeenSet)
-  {
-   payload.WithObject("performedBy", m_performedBy.Jsonize());
-
+  if (m_relatedItemTypeHasBeenSet) {
+    payload.WithString("relatedItemType", RelatedItemTypeMapper::GetNameForRelatedItemType(m_relatedItemType));
   }
 
-  if(m_performedTimeHasBeenSet)
-  {
-   payload.WithString("performedTime", m_performedTime.ToGmtString(Aws::Utils::DateFormat::ISO_8601));
+  if (m_performedTimeHasBeenSet) {
+    payload.WithString("performedTime", m_performedTime.ToGmtString(Aws::Utils::DateFormat::ISO_8601));
   }
 
-  if(m_relatedItemTypeHasBeenSet)
-  {
-   payload.WithString("relatedItemType", RelatedItemTypeMapper::GetNameForRelatedItemType(m_relatedItemType));
+  if (m_fieldsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> fieldsJsonList(m_fields.size());
+    for (unsigned fieldsIndex = 0; fieldsIndex < fieldsJsonList.GetLength(); ++fieldsIndex) {
+      if (!m_fields[fieldsIndex].has_value()) {
+        fieldsJsonList[fieldsIndex].AsNull();
+        continue;
+      }
+      fieldsJsonList[fieldsIndex].AsObject(m_fields[fieldsIndex]->Jsonize());
+    }
+    payload.WithArray("fields", std::move(fieldsJsonList));
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", AuditEventTypeMapper::GetNameForAuditEventType(m_type));
+  if (m_performedByHasBeenSet) {
+    payload.WithObject("performedBy", m_performedBy.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace ConnectCases
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectCases
+}  // namespace Aws

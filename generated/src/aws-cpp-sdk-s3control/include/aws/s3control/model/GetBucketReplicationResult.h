@@ -4,65 +4,96 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3control/S3Control_EXPORTS.h>
 #include <aws/s3control/model/ReplicationConfiguration.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Control
-{
-namespace Model
-{
-  class GetBucketReplicationResult
-  {
-  public:
-    AWS_S3CONTROL_API GetBucketReplicationResult();
-    AWS_S3CONTROL_API GetBucketReplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CONTROL_API GetBucketReplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Control {
+namespace Model {
+class GetBucketReplicationResult {
+ public:
+  AWS_S3CONTROL_API GetBucketReplicationResult() = default;
+  AWS_S3CONTROL_API GetBucketReplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CONTROL_API GetBucketReplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>A container for one or more replication rules. A replication configuration
+   * must have at least one rule and you can add up to 100 rules. The maximum size of
+   * a replication configuration is 128 KB.</p>
+   */
+  inline const ReplicationConfiguration& GetReplicationConfiguration() const { return m_replicationConfiguration; }
+  template <typename ReplicationConfigurationT = ReplicationConfiguration>
+  void SetReplicationConfiguration(ReplicationConfigurationT&& value) {
+    m_replicationConfigurationHasBeenSet = true;
+    m_replicationConfiguration = std::forward<ReplicationConfigurationT>(value);
+  }
+  template <typename ReplicationConfigurationT = ReplicationConfiguration>
+  GetBucketReplicationResult& WithReplicationConfiguration(ReplicationConfigurationT&& value) {
+    SetReplicationConfiguration(std::forward<ReplicationConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A container for one or more replication rules. A replication configuration
-     * must have at least one rule and you can add up to 100 rules. The maximum size of
-     * a replication configuration is 128 KB.</p>
-     */
-    inline const ReplicationConfiguration& GetReplicationConfiguration() const{ return m_replicationConfiguration; }
-    inline void SetReplicationConfiguration(const ReplicationConfiguration& value) { m_replicationConfiguration = value; }
-    inline void SetReplicationConfiguration(ReplicationConfiguration&& value) { m_replicationConfiguration = std::move(value); }
-    inline GetBucketReplicationResult& WithReplicationConfiguration(const ReplicationConfiguration& value) { SetReplicationConfiguration(value); return *this;}
-    inline GetBucketReplicationResult& WithReplicationConfiguration(ReplicationConfiguration&& value) { SetReplicationConfiguration(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * AWS Request Id value
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetBucketReplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetBucketReplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetBucketReplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetBucketReplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * x-amz-id-2 header value, also known as Host Id
+   */
+  inline const Aws::String& GetHostId() const { return m_hostId; }
+  template <typename HostIdT = Aws::String>
+  void SetHostId(HostIdT&& value) {
+    m_hostIdHasBeenSet = true;
+    m_hostId = std::forward<HostIdT>(value);
+  }
+  template <typename HostIdT = Aws::String>
+  GetBucketReplicationResult& WithHostId(HostIdT&& value) {
+    SetHostId(std::forward<HostIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ReplicationConfiguration m_replicationConfiguration;
+ private:
+  ReplicationConfiguration m_replicationConfiguration;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+  Aws::String m_hostId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replicationConfigurationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_hostIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

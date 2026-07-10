@@ -5,68 +5,83 @@
 
 #pragma once
 #include <aws/autoscaling/AutoScaling_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/autoscaling/model/ResponseMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace AutoScaling
-{
-namespace Model
-{
-  class DescribeTerminationPolicyTypesResult
-  {
-  public:
-    AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult();
-    AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace AutoScaling {
+namespace Model {
+class DescribeTerminationPolicyTypesResult {
+ public:
+  AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult() = default;
+  AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_AUTOSCALING_API DescribeTerminationPolicyTypesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The termination policies supported by Amazon EC2 Auto Scaling:
+   * <code>OldestInstance</code>, <code>OldestLaunchConfiguration</code>,
+   * <code>NewestInstance</code>, <code>ClosestToNextInstanceHour</code>,
+   * <code>Default</code>, <code>OldestLaunchTemplate</code>, and
+   * <code>AllocationStrategy</code>.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetTerminationPolicyTypes() const { return m_terminationPolicyTypes; }
+  template <typename TerminationPolicyTypesT = Aws::Vector<Aws::String>>
+  void SetTerminationPolicyTypes(TerminationPolicyTypesT&& value) {
+    m_terminationPolicyTypesHasBeenSet = true;
+    m_terminationPolicyTypes = std::forward<TerminationPolicyTypesT>(value);
+  }
+  template <typename TerminationPolicyTypesT = Aws::Vector<Aws::String>>
+  DescribeTerminationPolicyTypesResult& WithTerminationPolicyTypes(TerminationPolicyTypesT&& value) {
+    SetTerminationPolicyTypes(std::forward<TerminationPolicyTypesT>(value));
+    return *this;
+  }
+  template <typename TerminationPolicyTypesT = Aws::String>
+  DescribeTerminationPolicyTypesResult& AddTerminationPolicyTypes(TerminationPolicyTypesT&& value) {
+    m_terminationPolicyTypesHasBeenSet = true;
+    m_terminationPolicyTypes.emplace_back(std::forward<TerminationPolicyTypesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The termination policies supported by Amazon EC2 Auto Scaling:
-     * <code>OldestInstance</code>, <code>OldestLaunchConfiguration</code>,
-     * <code>NewestInstance</code>, <code>ClosestToNextInstanceHour</code>,
-     * <code>Default</code>, <code>OldestLaunchTemplate</code>, and
-     * <code>AllocationStrategy</code>.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetTerminationPolicyTypes() const{ return m_terminationPolicyTypes; }
-    inline void SetTerminationPolicyTypes(const Aws::Vector<Aws::String>& value) { m_terminationPolicyTypes = value; }
-    inline void SetTerminationPolicyTypes(Aws::Vector<Aws::String>&& value) { m_terminationPolicyTypes = std::move(value); }
-    inline DescribeTerminationPolicyTypesResult& WithTerminationPolicyTypes(const Aws::Vector<Aws::String>& value) { SetTerminationPolicyTypes(value); return *this;}
-    inline DescribeTerminationPolicyTypesResult& WithTerminationPolicyTypes(Aws::Vector<Aws::String>&& value) { SetTerminationPolicyTypes(std::move(value)); return *this;}
-    inline DescribeTerminationPolicyTypesResult& AddTerminationPolicyTypes(const Aws::String& value) { m_terminationPolicyTypes.push_back(value); return *this; }
-    inline DescribeTerminationPolicyTypesResult& AddTerminationPolicyTypes(Aws::String&& value) { m_terminationPolicyTypes.push_back(std::move(value)); return *this; }
-    inline DescribeTerminationPolicyTypesResult& AddTerminationPolicyTypes(const char* value) { m_terminationPolicyTypes.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeTerminationPolicyTypesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeTerminationPolicyTypesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeTerminationPolicyTypesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_terminationPolicyTypes;
+ private:
+  Aws::Vector<Aws::String> m_terminationPolicyTypes;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_terminationPolicyTypesHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AutoScaling
-} // namespace Aws
+}  // namespace Model
+}  // namespace AutoScaling
+}  // namespace Aws

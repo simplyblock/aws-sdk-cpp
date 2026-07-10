@@ -12,32 +12,18 @@ using namespace Aws::CloudTrail::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetImportRequest::GetImportRequest() : 
-    m_importIdHasBeenSet(false)
-{
-}
-
-Aws::String GetImportRequest::SerializePayload() const
-{
+Aws::String GetImportRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_importIdHasBeenSet)
-  {
-   payload.WithString("ImportId", m_importId);
-
+  if (m_importIdHasBeenSet) {
+    payload.WithString("ImportId", m_importId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetImportRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetImportRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "com.amazonaws.cloudtrail.v20131101.CloudTrail_20131101.GetImport"));
   return headers;
-
 }
-
-
-
-

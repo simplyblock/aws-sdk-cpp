@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/deadline/model/GetQueueFleetAssociationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/deadline/model/GetQueueFleetAssociationRequest.h>
 
 #include <utility>
 
@@ -12,18 +12,4 @@ using namespace Aws::deadline::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetQueueFleetAssociationRequest::GetQueueFleetAssociationRequest() : 
-    m_farmIdHasBeenSet(false),
-    m_queueIdHasBeenSet(false),
-    m_fleetIdHasBeenSet(false)
-{
-}
-
-Aws::String GetQueueFleetAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetQueueFleetAssociationRequest::SerializePayload() const { return {}; }

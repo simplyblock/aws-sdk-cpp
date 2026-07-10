@@ -4,257 +4,294 @@
  */
 
 #pragma once
-#include <aws/swf/SWF_EXPORTS.h>
-#include <aws/swf/SWFRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/swf/model/TaskList.h>
+#include <aws/swf/SWFRequest.h>
+#include <aws/swf/SWF_EXPORTS.h>
 #include <aws/swf/model/ChildPolicy.h>
+#include <aws/swf/model/TaskList.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SWF
-{
-namespace Model
-{
+namespace Aws {
+namespace SWF {
+namespace Model {
 
+/**
+ */
+class RegisterWorkflowTypeRequest : public SWFRequest {
+ public:
+  AWS_SWF_API RegisterWorkflowTypeRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "RegisterWorkflowType"; }
+
+  AWS_SWF_API Aws::String SerializePayload() const override;
+
+  AWS_SWF_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the domain in which to register the workflow type.</p>
    */
-  class RegisterWorkflowTypeRequest : public SWFRequest
-  {
-  public:
-    AWS_SWF_API RegisterWorkflowTypeRequest();
+  inline const Aws::String& GetDomain() const { return m_domain; }
+  inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
+  template <typename DomainT = Aws::String>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "RegisterWorkflowType"; }
+  ///@{
+  /**
+   * <p>The name of the workflow type.</p> <p>The specified string must not contain a
+   * <code>:</code> (colon), <code>/</code> (slash), <code>|</code> (vertical bar),
+   * or any control characters (<code>\u0000-\u001f</code> |
+   * <code>\u007f-\u009f</code>). Also, it must <i>not</i> be the literal string
+   * <code>arn</code>.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  RegisterWorkflowTypeRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SWF_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The version of the workflow type.</p>  <p>The workflow type consists of
+   * the name and version, the combination of which must be unique within the domain.
+   * To get a list of all currently registered workflow types, use the
+   * <a>ListWorkflowTypes</a> action.</p>  <p>The specified string must not
+   * contain a <code>:</code> (colon), <code>/</code> (slash), <code>|</code>
+   * (vertical bar), or any control characters (<code>\u0000-\u001f</code> |
+   * <code>\u007f-\u009f</code>). Also, it must <i>not</i> be the literal string
+   * <code>arn</code>.</p>
+   */
+  inline const Aws::String& GetVersion() const { return m_version; }
+  inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
+  template <typename VersionT = Aws::String>
+  void SetVersion(VersionT&& value) {
+    m_versionHasBeenSet = true;
+    m_version = std::forward<VersionT>(value);
+  }
+  template <typename VersionT = Aws::String>
+  RegisterWorkflowTypeRequest& WithVersion(VersionT&& value) {
+    SetVersion(std::forward<VersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SWF_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Textual description of the workflow type.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>If set, specifies the default maximum duration of decision tasks for this
+   * workflow type. This default can be overridden when starting a workflow execution
+   * using the <a>StartWorkflowExecution</a> action or the
+   * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The duration is
+   * specified in seconds, an integer greater than or equal to <code>0</code>. You
+   * can use <code>NONE</code> to specify unlimited duration.</p>
+   */
+  inline const Aws::String& GetDefaultTaskStartToCloseTimeout() const { return m_defaultTaskStartToCloseTimeout; }
+  inline bool DefaultTaskStartToCloseTimeoutHasBeenSet() const { return m_defaultTaskStartToCloseTimeoutHasBeenSet; }
+  template <typename DefaultTaskStartToCloseTimeoutT = Aws::String>
+  void SetDefaultTaskStartToCloseTimeout(DefaultTaskStartToCloseTimeoutT&& value) {
+    m_defaultTaskStartToCloseTimeoutHasBeenSet = true;
+    m_defaultTaskStartToCloseTimeout = std::forward<DefaultTaskStartToCloseTimeoutT>(value);
+  }
+  template <typename DefaultTaskStartToCloseTimeoutT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDefaultTaskStartToCloseTimeout(DefaultTaskStartToCloseTimeoutT&& value) {
+    SetDefaultTaskStartToCloseTimeout(std::forward<DefaultTaskStartToCloseTimeoutT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the domain in which to register the workflow type.</p>
-     */
-    inline const Aws::String& GetDomain() const{ return m_domain; }
-    inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
-    inline void SetDomain(const Aws::String& value) { m_domainHasBeenSet = true; m_domain = value; }
-    inline void SetDomain(Aws::String&& value) { m_domainHasBeenSet = true; m_domain = std::move(value); }
-    inline void SetDomain(const char* value) { m_domainHasBeenSet = true; m_domain.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDomain(const Aws::String& value) { SetDomain(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDomain(Aws::String&& value) { SetDomain(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDomain(const char* value) { SetDomain(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If set, specifies the default maximum duration for executions of this
+   * workflow type. You can override this default when starting an execution through
+   * the <a>StartWorkflowExecution</a> Action or
+   * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The duration is
+   * specified in seconds; an integer greater than or equal to 0. Unlike some of the
+   * other timeout parameters in Amazon SWF, you cannot specify a value of "NONE" for
+   * <code>defaultExecutionStartToCloseTimeout</code>; there is a one-year max limit
+   * on the time that a workflow execution can run. Exceeding this limit always
+   * causes the workflow execution to time out.</p>
+   */
+  inline const Aws::String& GetDefaultExecutionStartToCloseTimeout() const { return m_defaultExecutionStartToCloseTimeout; }
+  inline bool DefaultExecutionStartToCloseTimeoutHasBeenSet() const { return m_defaultExecutionStartToCloseTimeoutHasBeenSet; }
+  template <typename DefaultExecutionStartToCloseTimeoutT = Aws::String>
+  void SetDefaultExecutionStartToCloseTimeout(DefaultExecutionStartToCloseTimeoutT&& value) {
+    m_defaultExecutionStartToCloseTimeoutHasBeenSet = true;
+    m_defaultExecutionStartToCloseTimeout = std::forward<DefaultExecutionStartToCloseTimeoutT>(value);
+  }
+  template <typename DefaultExecutionStartToCloseTimeoutT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDefaultExecutionStartToCloseTimeout(DefaultExecutionStartToCloseTimeoutT&& value) {
+    SetDefaultExecutionStartToCloseTimeout(std::forward<DefaultExecutionStartToCloseTimeoutT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the workflow type.</p> <p>The specified string must not contain a
-     * <code>:</code> (colon), <code>/</code> (slash), <code>|</code> (vertical bar),
-     * or any control characters (<code>\u0000-\u001f</code> |
-     * <code>\u007f-\u009f</code>). Also, it must <i>not</i> be the literal string
-     * <code>arn</code>.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If set, specifies the default task list to use for scheduling decision tasks
+   * for executions of this workflow type. This default is used only if a task list
+   * isn't provided when starting the execution through the
+   * <a>StartWorkflowExecution</a> Action or <code>StartChildWorkflowExecution</code>
+   * <a>Decision</a>.</p>
+   */
+  inline const TaskList& GetDefaultTaskList() const { return m_defaultTaskList; }
+  inline bool DefaultTaskListHasBeenSet() const { return m_defaultTaskListHasBeenSet; }
+  template <typename DefaultTaskListT = TaskList>
+  void SetDefaultTaskList(DefaultTaskListT&& value) {
+    m_defaultTaskListHasBeenSet = true;
+    m_defaultTaskList = std::forward<DefaultTaskListT>(value);
+  }
+  template <typename DefaultTaskListT = TaskList>
+  RegisterWorkflowTypeRequest& WithDefaultTaskList(DefaultTaskListT&& value) {
+    SetDefaultTaskList(std::forward<DefaultTaskListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the workflow type.</p>  <p>The workflow type consists of
-     * the name and version, the combination of which must be unique within the domain.
-     * To get a list of all currently registered workflow types, use the
-     * <a>ListWorkflowTypes</a> action.</p>  <p>The specified string must not
-     * contain a <code>:</code> (colon), <code>/</code> (slash), <code>|</code>
-     * (vertical bar), or any control characters (<code>\u0000-\u001f</code> |
-     * <code>\u007f-\u009f</code>). Also, it must <i>not</i> be the literal string
-     * <code>arn</code>.</p>
-     */
-    inline const Aws::String& GetVersion() const{ return m_version; }
-    inline bool VersionHasBeenSet() const { return m_versionHasBeenSet; }
-    inline void SetVersion(const Aws::String& value) { m_versionHasBeenSet = true; m_version = value; }
-    inline void SetVersion(Aws::String&& value) { m_versionHasBeenSet = true; m_version = std::move(value); }
-    inline void SetVersion(const char* value) { m_versionHasBeenSet = true; m_version.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithVersion(const Aws::String& value) { SetVersion(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithVersion(Aws::String&& value) { SetVersion(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithVersion(const char* value) { SetVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The default task priority to assign to the workflow type. If not assigned,
+   * then <code>0</code> is used. Valid values are integers that range from Java's
+   * <code>Integer.MIN_VALUE</code> (-2147483648) to <code>Integer.MAX_VALUE</code>
+   * (2147483647). Higher numbers indicate higher priority.</p> <p>For more
+   * information about setting task priority, see <a
+   * href="https://docs.aws.amazon.com/amazonswf/latest/developerguide/programming-priority.html">Setting
+   * Task Priority</a> in the <i>Amazon SWF Developer Guide</i>.</p>
+   */
+  inline const Aws::String& GetDefaultTaskPriority() const { return m_defaultTaskPriority; }
+  inline bool DefaultTaskPriorityHasBeenSet() const { return m_defaultTaskPriorityHasBeenSet; }
+  template <typename DefaultTaskPriorityT = Aws::String>
+  void SetDefaultTaskPriority(DefaultTaskPriorityT&& value) {
+    m_defaultTaskPriorityHasBeenSet = true;
+    m_defaultTaskPriority = std::forward<DefaultTaskPriorityT>(value);
+  }
+  template <typename DefaultTaskPriorityT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDefaultTaskPriority(DefaultTaskPriorityT&& value) {
+    SetDefaultTaskPriority(std::forward<DefaultTaskPriorityT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Textual description of the workflow type.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If set, specifies the default policy to use for the child workflow executions
+   * when a workflow execution of this type is terminated, by calling the
+   * <a>TerminateWorkflowExecution</a> action explicitly or due to an expired
+   * timeout. This default can be overridden when starting a workflow execution using
+   * the <a>StartWorkflowExecution</a> action or the
+   * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The supported
+   * child policies are:</p> <ul> <li> <p> <code>TERMINATE</code> – The child
+   * executions are terminated.</p> </li> <li> <p> <code>REQUEST_CANCEL</code> – A
+   * request to cancel is attempted for each child execution by recording a
+   * <code>WorkflowExecutionCancelRequested</code> event in its history. It is up to
+   * the decider to take appropriate actions when it receives an execution history
+   * with this event.</p> </li> <li> <p> <code>ABANDON</code> – No action is taken.
+   * The child executions continue to run.</p> </li> </ul>
+   */
+  inline ChildPolicy GetDefaultChildPolicy() const { return m_defaultChildPolicy; }
+  inline bool DefaultChildPolicyHasBeenSet() const { return m_defaultChildPolicyHasBeenSet; }
+  inline void SetDefaultChildPolicy(ChildPolicy value) {
+    m_defaultChildPolicyHasBeenSet = true;
+    m_defaultChildPolicy = value;
+  }
+  inline RegisterWorkflowTypeRequest& WithDefaultChildPolicy(ChildPolicy value) {
+    SetDefaultChildPolicy(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If set, specifies the default maximum duration of decision tasks for this
-     * workflow type. This default can be overridden when starting a workflow execution
-     * using the <a>StartWorkflowExecution</a> action or the
-     * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The duration is
-     * specified in seconds, an integer greater than or equal to <code>0</code>. You
-     * can use <code>NONE</code> to specify unlimited duration.</p>
-     */
-    inline const Aws::String& GetDefaultTaskStartToCloseTimeout() const{ return m_defaultTaskStartToCloseTimeout; }
-    inline bool DefaultTaskStartToCloseTimeoutHasBeenSet() const { return m_defaultTaskStartToCloseTimeoutHasBeenSet; }
-    inline void SetDefaultTaskStartToCloseTimeout(const Aws::String& value) { m_defaultTaskStartToCloseTimeoutHasBeenSet = true; m_defaultTaskStartToCloseTimeout = value; }
-    inline void SetDefaultTaskStartToCloseTimeout(Aws::String&& value) { m_defaultTaskStartToCloseTimeoutHasBeenSet = true; m_defaultTaskStartToCloseTimeout = std::move(value); }
-    inline void SetDefaultTaskStartToCloseTimeout(const char* value) { m_defaultTaskStartToCloseTimeoutHasBeenSet = true; m_defaultTaskStartToCloseTimeout.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskStartToCloseTimeout(const Aws::String& value) { SetDefaultTaskStartToCloseTimeout(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskStartToCloseTimeout(Aws::String&& value) { SetDefaultTaskStartToCloseTimeout(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskStartToCloseTimeout(const char* value) { SetDefaultTaskStartToCloseTimeout(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The default IAM role attached to this workflow type.</p>  <p>Executions
+   * of this workflow type need IAM roles to invoke Lambda functions. If you don't
+   * specify an IAM role when you start this workflow type, the default Lambda role
+   * is attached to the execution. For more information, see <a
+   * href="https://docs.aws.amazon.com/amazonswf/latest/developerguide/lambda-task.html">https://docs.aws.amazon.com/amazonswf/latest/developerguide/lambda-task.html</a>
+   * in the <i>Amazon SWF Developer Guide</i>.</p>
+   */
+  inline const Aws::String& GetDefaultLambdaRole() const { return m_defaultLambdaRole; }
+  inline bool DefaultLambdaRoleHasBeenSet() const { return m_defaultLambdaRoleHasBeenSet; }
+  template <typename DefaultLambdaRoleT = Aws::String>
+  void SetDefaultLambdaRole(DefaultLambdaRoleT&& value) {
+    m_defaultLambdaRoleHasBeenSet = true;
+    m_defaultLambdaRole = std::forward<DefaultLambdaRoleT>(value);
+  }
+  template <typename DefaultLambdaRoleT = Aws::String>
+  RegisterWorkflowTypeRequest& WithDefaultLambdaRole(DefaultLambdaRoleT&& value) {
+    SetDefaultLambdaRole(std::forward<DefaultLambdaRoleT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domain;
 
-    ///@{
-    /**
-     * <p>If set, specifies the default maximum duration for executions of this
-     * workflow type. You can override this default when starting an execution through
-     * the <a>StartWorkflowExecution</a> Action or
-     * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The duration is
-     * specified in seconds; an integer greater than or equal to 0. Unlike some of the
-     * other timeout parameters in Amazon SWF, you cannot specify a value of "NONE" for
-     * <code>defaultExecutionStartToCloseTimeout</code>; there is a one-year max limit
-     * on the time that a workflow execution can run. Exceeding this limit always
-     * causes the workflow execution to time out.</p>
-     */
-    inline const Aws::String& GetDefaultExecutionStartToCloseTimeout() const{ return m_defaultExecutionStartToCloseTimeout; }
-    inline bool DefaultExecutionStartToCloseTimeoutHasBeenSet() const { return m_defaultExecutionStartToCloseTimeoutHasBeenSet; }
-    inline void SetDefaultExecutionStartToCloseTimeout(const Aws::String& value) { m_defaultExecutionStartToCloseTimeoutHasBeenSet = true; m_defaultExecutionStartToCloseTimeout = value; }
-    inline void SetDefaultExecutionStartToCloseTimeout(Aws::String&& value) { m_defaultExecutionStartToCloseTimeoutHasBeenSet = true; m_defaultExecutionStartToCloseTimeout = std::move(value); }
-    inline void SetDefaultExecutionStartToCloseTimeout(const char* value) { m_defaultExecutionStartToCloseTimeoutHasBeenSet = true; m_defaultExecutionStartToCloseTimeout.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultExecutionStartToCloseTimeout(const Aws::String& value) { SetDefaultExecutionStartToCloseTimeout(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultExecutionStartToCloseTimeout(Aws::String&& value) { SetDefaultExecutionStartToCloseTimeout(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultExecutionStartToCloseTimeout(const char* value) { SetDefaultExecutionStartToCloseTimeout(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>If set, specifies the default task list to use for scheduling decision tasks
-     * for executions of this workflow type. This default is used only if a task list
-     * isn't provided when starting the execution through the
-     * <a>StartWorkflowExecution</a> Action or <code>StartChildWorkflowExecution</code>
-     * <a>Decision</a>.</p>
-     */
-    inline const TaskList& GetDefaultTaskList() const{ return m_defaultTaskList; }
-    inline bool DefaultTaskListHasBeenSet() const { return m_defaultTaskListHasBeenSet; }
-    inline void SetDefaultTaskList(const TaskList& value) { m_defaultTaskListHasBeenSet = true; m_defaultTaskList = value; }
-    inline void SetDefaultTaskList(TaskList&& value) { m_defaultTaskListHasBeenSet = true; m_defaultTaskList = std::move(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskList(const TaskList& value) { SetDefaultTaskList(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskList(TaskList&& value) { SetDefaultTaskList(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_version;
 
-    ///@{
-    /**
-     * <p>The default task priority to assign to the workflow type. If not assigned,
-     * then <code>0</code> is used. Valid values are integers that range from Java's
-     * <code>Integer.MIN_VALUE</code> (-2147483648) to <code>Integer.MAX_VALUE</code>
-     * (2147483647). Higher numbers indicate higher priority.</p> <p>For more
-     * information about setting task priority, see <a
-     * href="https://docs.aws.amazon.com/amazonswf/latest/developerguide/programming-priority.html">Setting
-     * Task Priority</a> in the <i>Amazon SWF Developer Guide</i>.</p>
-     */
-    inline const Aws::String& GetDefaultTaskPriority() const{ return m_defaultTaskPriority; }
-    inline bool DefaultTaskPriorityHasBeenSet() const { return m_defaultTaskPriorityHasBeenSet; }
-    inline void SetDefaultTaskPriority(const Aws::String& value) { m_defaultTaskPriorityHasBeenSet = true; m_defaultTaskPriority = value; }
-    inline void SetDefaultTaskPriority(Aws::String&& value) { m_defaultTaskPriorityHasBeenSet = true; m_defaultTaskPriority = std::move(value); }
-    inline void SetDefaultTaskPriority(const char* value) { m_defaultTaskPriorityHasBeenSet = true; m_defaultTaskPriority.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskPriority(const Aws::String& value) { SetDefaultTaskPriority(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskPriority(Aws::String&& value) { SetDefaultTaskPriority(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultTaskPriority(const char* value) { SetDefaultTaskPriority(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>If set, specifies the default policy to use for the child workflow executions
-     * when a workflow execution of this type is terminated, by calling the
-     * <a>TerminateWorkflowExecution</a> action explicitly or due to an expired
-     * timeout. This default can be overridden when starting a workflow execution using
-     * the <a>StartWorkflowExecution</a> action or the
-     * <code>StartChildWorkflowExecution</code> <a>Decision</a>.</p> <p>The supported
-     * child policies are:</p> <ul> <li> <p> <code>TERMINATE</code> – The child
-     * executions are terminated.</p> </li> <li> <p> <code>REQUEST_CANCEL</code> – A
-     * request to cancel is attempted for each child execution by recording a
-     * <code>WorkflowExecutionCancelRequested</code> event in its history. It is up to
-     * the decider to take appropriate actions when it receives an execution history
-     * with this event.</p> </li> <li> <p> <code>ABANDON</code> – No action is taken.
-     * The child executions continue to run.</p> </li> </ul>
-     */
-    inline const ChildPolicy& GetDefaultChildPolicy() const{ return m_defaultChildPolicy; }
-    inline bool DefaultChildPolicyHasBeenSet() const { return m_defaultChildPolicyHasBeenSet; }
-    inline void SetDefaultChildPolicy(const ChildPolicy& value) { m_defaultChildPolicyHasBeenSet = true; m_defaultChildPolicy = value; }
-    inline void SetDefaultChildPolicy(ChildPolicy&& value) { m_defaultChildPolicyHasBeenSet = true; m_defaultChildPolicy = std::move(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultChildPolicy(const ChildPolicy& value) { SetDefaultChildPolicy(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultChildPolicy(ChildPolicy&& value) { SetDefaultChildPolicy(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_defaultTaskStartToCloseTimeout;
 
-    ///@{
-    /**
-     * <p>The default IAM role attached to this workflow type.</p>  <p>Executions
-     * of this workflow type need IAM roles to invoke Lambda functions. If you don't
-     * specify an IAM role when you start this workflow type, the default Lambda role
-     * is attached to the execution. For more information, see <a
-     * href="https://docs.aws.amazon.com/amazonswf/latest/developerguide/lambda-task.html">https://docs.aws.amazon.com/amazonswf/latest/developerguide/lambda-task.html</a>
-     * in the <i>Amazon SWF Developer Guide</i>.</p> 
-     */
-    inline const Aws::String& GetDefaultLambdaRole() const{ return m_defaultLambdaRole; }
-    inline bool DefaultLambdaRoleHasBeenSet() const { return m_defaultLambdaRoleHasBeenSet; }
-    inline void SetDefaultLambdaRole(const Aws::String& value) { m_defaultLambdaRoleHasBeenSet = true; m_defaultLambdaRole = value; }
-    inline void SetDefaultLambdaRole(Aws::String&& value) { m_defaultLambdaRoleHasBeenSet = true; m_defaultLambdaRole = std::move(value); }
-    inline void SetDefaultLambdaRole(const char* value) { m_defaultLambdaRoleHasBeenSet = true; m_defaultLambdaRole.assign(value); }
-    inline RegisterWorkflowTypeRequest& WithDefaultLambdaRole(const Aws::String& value) { SetDefaultLambdaRole(value); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultLambdaRole(Aws::String&& value) { SetDefaultLambdaRole(std::move(value)); return *this;}
-    inline RegisterWorkflowTypeRequest& WithDefaultLambdaRole(const char* value) { SetDefaultLambdaRole(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_defaultExecutionStartToCloseTimeout;
 
-    Aws::String m_domain;
-    bool m_domainHasBeenSet = false;
+  TaskList m_defaultTaskList;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  Aws::String m_defaultTaskPriority;
 
-    Aws::String m_version;
-    bool m_versionHasBeenSet = false;
+  ChildPolicy m_defaultChildPolicy{ChildPolicy::NOT_SET};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::String m_defaultLambdaRole;
+  bool m_domainHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_versionHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_defaultTaskStartToCloseTimeoutHasBeenSet = false;
+  bool m_defaultExecutionStartToCloseTimeoutHasBeenSet = false;
+  bool m_defaultTaskListHasBeenSet = false;
+  bool m_defaultTaskPriorityHasBeenSet = false;
+  bool m_defaultChildPolicyHasBeenSet = false;
+  bool m_defaultLambdaRoleHasBeenSet = false;
+};
 
-    Aws::String m_defaultTaskStartToCloseTimeout;
-    bool m_defaultTaskStartToCloseTimeoutHasBeenSet = false;
-
-    Aws::String m_defaultExecutionStartToCloseTimeout;
-    bool m_defaultExecutionStartToCloseTimeoutHasBeenSet = false;
-
-    TaskList m_defaultTaskList;
-    bool m_defaultTaskListHasBeenSet = false;
-
-    Aws::String m_defaultTaskPriority;
-    bool m_defaultTaskPriorityHasBeenSet = false;
-
-    ChildPolicy m_defaultChildPolicy;
-    bool m_defaultChildPolicyHasBeenSet = false;
-
-    Aws::String m_defaultLambdaRole;
-    bool m_defaultLambdaRoleHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SWF
-} // namespace Aws
+}  // namespace Model
+}  // namespace SWF
+}  // namespace Aws

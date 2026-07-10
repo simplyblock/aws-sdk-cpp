@@ -4,142 +4,253 @@
  */
 
 #pragma once
-#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
-#include <aws/opensearchserverless/OpenSearchServerlessRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/opensearchserverless/model/StandbyReplicas.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/opensearchserverless/model/CollectionType.h>
-#include <aws/opensearchserverless/model/Tag.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/opensearchserverless/OpenSearchServerlessRequest.h>
+#include <aws/opensearchserverless/OpenSearchServerless_EXPORTS.h>
+#include <aws/opensearchserverless/model/CollectionType.h>
+#include <aws/opensearchserverless/model/DeletionProtection.h>
+#include <aws/opensearchserverless/model/EncryptionConfig.h>
+#include <aws/opensearchserverless/model/StandbyReplicas.h>
+#include <aws/opensearchserverless/model/Tag.h>
+#include <aws/opensearchserverless/model/VectorOptions.h>
 
-namespace Aws
-{
-namespace OpenSearchServerless
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace OpenSearchServerless {
+namespace Model {
+
+/**
+ */
+class CreateCollectionRequest : public OpenSearchServerlessRequest {
+ public:
+  AWS_OPENSEARCHSERVERLESS_API CreateCollectionRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateCollection"; }
+
+  AWS_OPENSEARCHSERVERLESS_API Aws::String SerializePayload() const override;
+
+  AWS_OPENSEARCHSERVERLESS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Name of the collection.</p>
    */
-  class CreateCollectionRequest : public OpenSearchServerlessRequest
-  {
-  public:
-    AWS_OPENSEARCHSERVERLESS_API CreateCollectionRequest();
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateCollectionRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateCollection"; }
+  ///@{
+  /**
+   * <p>The type of collection.</p>
+   */
+  inline CollectionType GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  inline void SetType(CollectionType value) {
+    m_typeHasBeenSet = true;
+    m_type = value;
+  }
+  inline CreateCollectionRequest& WithType(CollectionType value) {
+    SetType(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_OPENSEARCHSERVERLESS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Description of the collection.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CreateCollectionRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_OPENSEARCHSERVERLESS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch
+   * Serverless collection.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateCollectionRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateCollectionRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Indicates whether standby replicas should be used for a collection.</p>
+   */
+  inline StandbyReplicas GetStandbyReplicas() const { return m_standbyReplicas; }
+  inline bool StandbyReplicasHasBeenSet() const { return m_standbyReplicasHasBeenSet; }
+  inline void SetStandbyReplicas(StandbyReplicas value) {
+    m_standbyReplicasHasBeenSet = true;
+    m_standbyReplicas = value;
+  }
+  inline CreateCollectionRequest& WithStandbyReplicas(StandbyReplicas value) {
+    SetStandbyReplicas(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateCollectionRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateCollectionRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateCollectionRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Configuration options for vector search capabilities in the collection.</p>
+   */
+  inline const VectorOptions& GetVectorOptions() const { return m_vectorOptions; }
+  inline bool VectorOptionsHasBeenSet() const { return m_vectorOptionsHasBeenSet; }
+  template <typename VectorOptionsT = VectorOptions>
+  void SetVectorOptions(VectorOptionsT&& value) {
+    m_vectorOptionsHasBeenSet = true;
+    m_vectorOptions = std::forward<VectorOptionsT>(value);
+  }
+  template <typename VectorOptionsT = VectorOptions>
+  CreateCollectionRequest& WithVectorOptions(VectorOptionsT&& value) {
+    SetVectorOptions(std::forward<VectorOptionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Description of the collection.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CreateCollectionRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CreateCollectionRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CreateCollectionRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the collection group to associate with the collection.</p>
+   */
+  inline const Aws::String& GetCollectionGroupName() const { return m_collectionGroupName; }
+  inline bool CollectionGroupNameHasBeenSet() const { return m_collectionGroupNameHasBeenSet; }
+  template <typename CollectionGroupNameT = Aws::String>
+  void SetCollectionGroupName(CollectionGroupNameT&& value) {
+    m_collectionGroupNameHasBeenSet = true;
+    m_collectionGroupName = std::forward<CollectionGroupNameT>(value);
+  }
+  template <typename CollectionGroupNameT = Aws::String>
+  CreateCollectionRequest& WithCollectionGroupName(CollectionGroupNameT&& value) {
+    SetCollectionGroupName(std::forward<CollectionGroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of the collection.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CreateCollectionRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateCollectionRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateCollectionRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Encryption settings for the collection.</p>
+   */
+  inline const EncryptionConfig& GetEncryptionConfig() const { return m_encryptionConfig; }
+  inline bool EncryptionConfigHasBeenSet() const { return m_encryptionConfigHasBeenSet; }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  void SetEncryptionConfig(EncryptionConfigT&& value) {
+    m_encryptionConfigHasBeenSet = true;
+    m_encryptionConfig = std::forward<EncryptionConfigT>(value);
+  }
+  template <typename EncryptionConfigT = EncryptionConfig>
+  CreateCollectionRequest& WithEncryptionConfig(EncryptionConfigT&& value) {
+    SetEncryptionConfig(std::forward<EncryptionConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates whether standby replicas should be used for a collection.</p>
-     */
-    inline const StandbyReplicas& GetStandbyReplicas() const{ return m_standbyReplicas; }
-    inline bool StandbyReplicasHasBeenSet() const { return m_standbyReplicasHasBeenSet; }
-    inline void SetStandbyReplicas(const StandbyReplicas& value) { m_standbyReplicasHasBeenSet = true; m_standbyReplicas = value; }
-    inline void SetStandbyReplicas(StandbyReplicas&& value) { m_standbyReplicasHasBeenSet = true; m_standbyReplicas = std::move(value); }
-    inline CreateCollectionRequest& WithStandbyReplicas(const StandbyReplicas& value) { SetStandbyReplicas(value); return *this;}
-    inline CreateCollectionRequest& WithStandbyReplicas(StandbyReplicas&& value) { SetStandbyReplicas(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Indicates whether to enable deletion protection for the collection. When set
+   * to <code>ENABLED</code>, the collection cannot be deleted.</p>
+   */
+  inline DeletionProtection GetDeletionProtection() const { return m_deletionProtection; }
+  inline bool DeletionProtectionHasBeenSet() const { return m_deletionProtectionHasBeenSet; }
+  inline void SetDeletionProtection(DeletionProtection value) {
+    m_deletionProtectionHasBeenSet = true;
+    m_deletionProtection = value;
+  }
+  inline CreateCollectionRequest& WithDeletionProtection(DeletionProtection value) {
+    SetDeletionProtection(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An arbitrary set of tags (key–value pairs) to associate with the OpenSearch
-     * Serverless collection.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateCollectionRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateCollectionRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateCollectionRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateCollectionRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier to ensure idempotency of the request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateCollectionRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The type of collection.</p>
-     */
-    inline const CollectionType& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const CollectionType& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(CollectionType&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline CreateCollectionRequest& WithType(const CollectionType& value) { SetType(value); return *this;}
-    inline CreateCollectionRequest& WithType(CollectionType&& value) { SetType(std::move(value)); return *this;}
-    ///@}
-  private:
+  CollectionType m_type{CollectionType::NOT_SET};
 
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
+  Aws::String m_description;
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
+  StandbyReplicas m_standbyReplicas{StandbyReplicas::NOT_SET};
 
-    StandbyReplicas m_standbyReplicas;
-    bool m_standbyReplicasHasBeenSet = false;
+  VectorOptions m_vectorOptions;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  Aws::String m_collectionGroupName;
 
-    CollectionType m_type;
-    bool m_typeHasBeenSet = false;
-  };
+  EncryptionConfig m_encryptionConfig;
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+  DeletionProtection m_deletionProtection{DeletionProtection::NOT_SET};
+
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_nameHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_standbyReplicasHasBeenSet = false;
+  bool m_vectorOptionsHasBeenSet = false;
+  bool m_collectionGroupNameHasBeenSet = false;
+  bool m_encryptionConfigHasBeenSet = false;
+  bool m_deletionProtectionHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
+
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

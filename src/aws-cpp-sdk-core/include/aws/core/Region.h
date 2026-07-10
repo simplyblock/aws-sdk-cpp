@@ -17,6 +17,7 @@ namespace Aws
     {
         static const char AF_SOUTH_1[] = "af-south-1"; // Africa (Cape Town)
         static const char AP_EAST_1[] = "ap-east-1"; // Asia Pacific (Hong Kong)
+        static const char AP_EAST_2[] = "ap-east-2"; // Asia Pacific (Taipei)
         static const char AP_NORTHEAST_1[] = "ap-northeast-1"; // Asia Pacific (Tokyo)
         static const char AP_NORTHEAST_2[] = "ap-northeast-2"; // Asia Pacific (Seoul)
         static const char AP_NORTHEAST_3[] = "ap-northeast-3"; // Asia Pacific (Osaka)
@@ -27,11 +28,15 @@ namespace Aws
         static const char AP_SOUTHEAST_3[] = "ap-southeast-3"; // Asia Pacific (Jakarta)
         static const char AP_SOUTHEAST_4[] = "ap-southeast-4"; // Asia Pacific (Melbourne)
         static const char AP_SOUTHEAST_5[] = "ap-southeast-5"; // Asia Pacific (Malaysia)
-        static const char AWS_CN_GLOBAL[] = "aws-cn-global"; // AWS China global region
-        static const char AWS_GLOBAL[] = "aws-global"; // AWS Standard global region
-        static const char AWS_ISO_B_GLOBAL[] = "aws-iso-b-global"; // AWS ISOB (US) global region
-        static const char AWS_ISO_GLOBAL[] = "aws-iso-global"; // AWS ISO (US) global region
-        static const char AWS_US_GOV_GLOBAL[] = "aws-us-gov-global"; // AWS GovCloud (US) global region
+        static const char AP_SOUTHEAST_6[] = "ap-southeast-6"; // Asia Pacific (New Zealand)
+        static const char AP_SOUTHEAST_7[] = "ap-southeast-7"; // Asia Pacific (Thailand)
+        static const char AWS_CN_GLOBAL[] = "aws-cn-global"; // aws-cn global region
+        static const char AWS_GLOBAL[] = "aws-global"; // aws global region
+        static const char AWS_ISO_B_GLOBAL[] = "aws-iso-b-global"; // aws-iso-b global region
+        static const char AWS_ISO_E_GLOBAL[] = "aws-iso-e-global"; // aws-iso-e global region
+        static const char AWS_ISO_F_GLOBAL[] = "aws-iso-f-global"; // aws-iso-f global region
+        static const char AWS_ISO_GLOBAL[] = "aws-iso-global"; // aws-iso global region
+        static const char AWS_US_GOV_GLOBAL[] = "aws-us-gov-global"; // aws-us-gov global region
         static const char CA_CENTRAL_1[] = "ca-central-1"; // Canada (Central)
         static const char CA_WEST_1[] = "ca-west-1"; // Canada West (Calgary)
         static const char CN_NORTH_1[] = "cn-north-1"; // China (Beijing)
@@ -45,9 +50,11 @@ namespace Aws
         static const char EU_WEST_1[] = "eu-west-1"; // Europe (Ireland)
         static const char EU_WEST_2[] = "eu-west-2"; // Europe (London)
         static const char EU_WEST_3[] = "eu-west-3"; // Europe (Paris)
+        static const char EUSC_DE_EAST_1[] = "eusc-de-east-1"; // AWS European Sovereign Cloud (Germany)
         static const char IL_CENTRAL_1[] = "il-central-1"; // Israel (Tel Aviv)
         static const char ME_CENTRAL_1[] = "me-central-1"; // Middle East (UAE)
         static const char ME_SOUTH_1[] = "me-south-1"; // Middle East (Bahrain)
+        static const char MX_CENTRAL_1[] = "mx-central-1"; // Mexico (Central)
         static const char SA_EAST_1[] = "sa-east-1"; // South America (Sao Paulo)
         static const char US_EAST_1[] = "us-east-1"; // US East (N. Virginia)
         static const char US_EAST_2[] = "us-east-2"; // US East (Ohio)
@@ -56,6 +63,9 @@ namespace Aws
         static const char US_ISO_EAST_1[] = "us-iso-east-1"; // US ISO East
         static const char US_ISO_WEST_1[] = "us-iso-west-1"; // US ISO WEST
         static const char US_ISOB_EAST_1[] = "us-isob-east-1"; // US ISOB East (Ohio)
+        static const char US_ISOB_WEST_1[] = "us-isob-west-1"; // US ISOB West
+        static const char US_ISOF_EAST_1[] = "us-isof-east-1"; // US ISOF EAST
+        static const char US_ISOF_SOUTH_1[] = "us-isof-south-1"; // US ISOF SOUTH
         static const char US_WEST_1[] = "us-west-1"; // US West (N. California)
         static const char US_WEST_2[] = "us-west-2"; // US West (Oregon)
 

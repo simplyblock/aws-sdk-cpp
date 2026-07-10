@@ -12,17 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteEventsConfigurationRequest::DeleteEventsConfigurationRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_botIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteEventsConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteEventsConfigurationRequest::SerializePayload() const { return {}; }

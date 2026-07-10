@@ -64,6 +64,9 @@
                     "target": "com.amazonaws.lakeformation#CreateLFTag"
                 },
                 {
+                    "target": "com.amazonaws.lakeformation#CreateLFTagExpression"
+                },
+                {
                     "target": "com.amazonaws.lakeformation#DeleteDataCellsFilter"
                 },
                 {
@@ -74,6 +77,9 @@
                 },
                 {
                     "target": "com.amazonaws.lakeformation#DeleteLFTag"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#DeleteLFTagExpression"
                 },
                 {
                     "target": "com.amazonaws.lakeformation#DeleteObjectsOnCancel"
@@ -109,6 +115,9 @@
                     "target": "com.amazonaws.lakeformation#GetLFTag"
                 },
                 {
+                    "target": "com.amazonaws.lakeformation#GetLFTagExpression"
+                },
+                {
                     "target": "com.amazonaws.lakeformation#GetQueryState"
                 },
                 {
@@ -119,6 +128,9 @@
                 },
                 {
                     "target": "com.amazonaws.lakeformation#GetTableObjects"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentials"
                 },
                 {
                     "target": "com.amazonaws.lakeformation#GetTemporaryGluePartitionCredentials"
@@ -140,6 +152,9 @@
                 },
                 {
                     "target": "com.amazonaws.lakeformation#ListLakeFormationOptIns"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#ListLFTagExpressions"
                 },
                 {
                     "target": "com.amazonaws.lakeformation#ListLFTags"
@@ -190,6 +205,9 @@
                     "target": "com.amazonaws.lakeformation#UpdateLFTag"
                 },
                 {
+                    "target": "com.amazonaws.lakeformation#UpdateLFTagExpression"
+                },
+                {
                     "target": "com.amazonaws.lakeformation#UpdateResource"
                 },
                 {
@@ -213,6 +231,194 @@
                 "aws.protocols#restJson1": {},
                 "smithy.api#documentation": "<fullname>Lake Formation</fullname>\n         <p>Defines the public endpoint for the Lake Formation service.</p>",
                 "smithy.api#title": "AWS Lake Formation",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://lakeformation-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://lakeformation-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://lakeformation.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://lakeformation.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -220,27 +426,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -1024,17 +1230,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1045,17 +1240,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1072,17 +1256,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -1093,17 +1266,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -1199,6 +1361,12 @@
         },
         "com.amazonaws.lakeformation#AccessKeyIdString": {
             "type": "string"
+        },
+        "com.amazonaws.lakeformation#AccountIdString": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^\\d{12}$"
+            }
         },
         "com.amazonaws.lakeformation#AddLFTagsToResource": {
             "type": "operation",
@@ -1392,7 +1560,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups.  This API operation requires SAML federation setup in the caller’s account as it can only be called with valid SAML assertions.\n      Lake Formation does not scope down the permission of the assumed role.  All permissions attached to the role via the SAML federation setup will be included in the role session.\n    </p>\n         <p>\n      This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API <code>GetDataAccess</code>.  Therefore, all SAML roles that can be assumed via <code>AssumeDecoratedRoleWithSAML</code> must at a minimum include <code>lakeformation:GetDataAccess</code> in their role policies.  A typical IAM policy attached to such a role would look as follows:\n    </p>",
+                "smithy.api#documentation": "<p>Allows a caller to assume an IAM role decorated as the SAML user specified in the SAML assertion included in the request. This decoration allows Lake Formation to enforce access policies against the SAML users and groups.  This API operation requires SAML federation setup in the caller’s account as it can only be called with valid SAML assertions.\n      Lake Formation does not scope down the permission of the assumed role.  All permissions attached to the role via the SAML federation setup will be included in the role session.\n    </p>\n         <p>\n      This decorated role is expected to access data in Amazon S3 by getting temporary access from Lake Formation which is authorized via the virtual API <code>GetDataAccess</code>.\n      Therefore, all SAML roles that can be assumed via <code>AssumeDecoratedRoleWithSAML</code> must at a minimum include <code>lakeformation:GetDataAccess</code> in their role policies.\n      A typical IAM policy attached to such a role would include the following actions:\n    </p>\n         <ul>\n            <li>\n               <p>glue:*Database*</p>\n            </li>\n            <li>\n               <p>glue:*Table*</p>\n            </li>\n            <li>\n               <p>glue:*Partition*</p>\n            </li>\n            <li>\n               <p>glue:*UserDefinedFunction*</p>\n            </li>\n            <li>\n               <p>lakeformation:GetDataAccess</p>\n            </li>\n         </ul>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/AssumeDecoratedRoleWithSAML",
@@ -1611,6 +1779,9 @@
                         "smithy.api#documentation": "<p>The permissions to be granted.</p>"
                     }
                 },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition"
+                },
                 "PermissionsWithGrantOption": {
                     "target": "com.amazonaws.lakeformation#PermissionList",
                     "traits": {
@@ -1686,6 +1857,12 @@
             },
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.lakeformation#Boolean": {
+            "type": "boolean",
+            "traits": {
+                "smithy.api#default": false
             }
         },
         "com.amazonaws.lakeformation#BooleanNullable": {
@@ -1765,7 +1942,14 @@
         },
         "com.amazonaws.lakeformation#CatalogResource": {
             "type": "structure",
-            "members": {},
+            "members": {
+                "Id": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An identifier for the catalog resource.</p>"
+                    }
+                }
+            },
             "traits": {
                 "smithy.api#documentation": "<p>A structure for the catalog object.</p>"
             }
@@ -1968,6 +2152,35 @@
                 "smithy.api#error": "client"
             }
         },
+        "com.amazonaws.lakeformation#Condition": {
+            "type": "structure",
+            "members": {
+                "Expression": {
+                    "target": "com.amazonaws.lakeformation#ExpressionString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An expression written based on the Cedar Policy Language used to match the principal attributes.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#ConflictException": {
+            "type": "structure",
+            "members": {
+                "Message": {
+                    "target": "com.amazonaws.lakeformation#MessageString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A message describing the problem.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Multiple resources exist with the same Amazon S3 location</p>",
+                "smithy.api#error": "client"
+            }
+        },
         "com.amazonaws.lakeformation#ContextKey": {
             "type": "string",
             "traits": {
@@ -2085,6 +2298,84 @@
                 }
             }
         },
+        "com.amazonaws.lakeformation#CreateLFTagExpression": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#CreateLFTagExpressionRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#CreateLFTagExpressionResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#ResourceNumberLimitExceededException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Creates a new LF-Tag expression with the provided name, description, catalog ID, and\n      expression body. This call fails if a LF-Tag expression with the same name already exists in\n      the caller’s account or if the underlying LF-Tags don't exist. To call this API operation,\n      caller needs the following Lake Formation permissions:</p>\n         <p>\n            <code>CREATE_LF_TAG_EXPRESSION</code> on the root catalog resource.</p>\n         <p>\n            <code>GRANT_WITH_LF_TAG_EXPRESSION</code> on all underlying LF-Tag key:value pairs\n      included in the expression. </p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/CreateLFTagExpression",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#CreateLFTagExpressionRequest": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A name for the expression.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Description": {
+                    "target": "com.amazonaws.lakeformation#DescriptionString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A description with information about the LF-Tag expression.</p>"
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID. The Data Catalog is the persistent metadata store. It contains database definitions, table definitions, and other control information to manage your Lake Formation environment. </p>"
+                    }
+                },
+                "Expression": {
+                    "target": "com.amazonaws.lakeformation#Expression",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of LF-Tag conditions (key-value pairs).</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#CreateLFTagExpressionResponse": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.lakeformation#CreateLFTagRequest": {
             "type": "structure",
             "members": {
@@ -2183,6 +2474,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of Amazon Web Services account IDs and/or Amazon Web Services organization/organizational unit ARNs\n         that are allowed to access data managed by Lake Formation. </p>\n         <p>If the <code>ShareRecipients</code> list includes valid values, a resource share is created with the principals you want to have access to the resources.</p>\n         <p>If the <code>ShareRecipients</code> value is null or the list is empty, no resource share is created.</p>"
                     }
+                },
+                "ServiceIntegrations": {
+                    "target": "com.amazonaws.lakeformation#ServiceIntegrationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>"
+                    }
                 }
             },
             "traits": {
@@ -2229,6 +2526,9 @@
                 },
                 {
                     "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#ResourceNumberLimitExceededException"
                 }
             ],
             "traits": {
@@ -2254,6 +2554,9 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition"
                 }
             },
             "traits": {
@@ -2273,6 +2576,23 @@
                 "smithy.api#range": {
                     "min": 900,
                     "max": 43200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#CredentialsScope": {
+            "type": "enum",
+            "members": {
+                "READ": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "READ"
+                    }
+                },
+                "READWRITE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "READWRITE"
+                    }
                 }
             }
         },
@@ -2459,6 +2779,12 @@
                     "traits": {
                         "smithy.api#enumValue": "LF_TAG_POLICY_TABLE"
                     }
+                },
+                "LF_NAMED_TAG_EXPRESSION": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "LF_NAMED_TAG_EXPRESSION"
+                    }
                 }
             }
         },
@@ -2492,7 +2818,7 @@
                 "Parameters": {
                     "target": "com.amazonaws.lakeformation#ParametersMap",
                     "traits": {
-                        "smithy.api#documentation": "<p>A key-value map that provides an additional configuration on your data lake. CROSS_ACCOUNT_VERSION is the key you can configure in the Parameters field. Accepted values for the CrossAccountVersion key are 1, 2, 3, and 4.</p>"
+                        "smithy.api#documentation": "<p>A key-value map that provides an additional configuration on your data lake. The following key-value pairs are supported:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>CROSS_ACCOUNT_VERSION</code> - Accepted values are 1, 2, 3, 4, and 5.</p>\n            </li>\n            <li>\n               <p>\n                  <code>SET_SOURCE_IDENTITY</code> - Accepted values are <code>TRUE</code> and <code>FALSE</code>. When set to <code>TRUE</code>, Lake Formation includes the IAM role identifier that was used to query in the S3 data event CloudTrail logs for <code>s3:GetObject</code> calls. For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/cloudtrail-logging.html#source-identity-cloudtrail\">Tracking query engine IAM roles in S3 data events</a>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "TrustedResourceOwners": {
@@ -2683,12 +3009,74 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Deletes the specified LF-tag given a key name. If the input parameter tag key was not found, then the operation will throw an exception. When you delete an LF-tag, the <code>LFTagPolicy</code> attached to the LF-tag becomes invalid. If the deleted LF-tag was still assigned to any resource, the tag policy attach to the deleted LF-tag will no longer be applied to the resource.</p>",
+                "smithy.api#documentation": "<p> Deletes an LF-tag by its key name. The operation fails if the specified tag key doesn't\n      exist. When you delete an LF-Tag: </p>\n         <ul>\n            <li>\n               <p>The associated LF-Tag policy becomes invalid.</p>\n            </li>\n            <li>\n               <p>\n     Resources that had this tag assigned will no longer have the tag policy applied to\n     them.</p>\n            </li>\n         </ul>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/DeleteLFTag",
                     "code": 200
                 }
+            }
+        },
+        "com.amazonaws.lakeformation#DeleteLFTagExpression": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#DeleteLFTagExpressionRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#DeleteLFTagExpressionResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Deletes the LF-Tag expression. The caller must be a data lake admin or have <code>DROP</code> permissions on the LF-Tag expression.\n      Deleting a LF-Tag expression will also delete all <code>LFTagPolicy</code> permissions referencing the LF-Tag expression.</p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/DeleteLFTagExpression",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#DeleteLFTagExpressionRequest": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name for the LF-Tag expression.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID in which the LF-Tag expression is saved. </p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#DeleteLFTagExpressionResponse": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.lakeformation#DeleteLFTagRequest": {
@@ -2828,6 +3216,9 @@
                     "traits": {
                         "smithy.api#required": {}
                     }
+                },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition"
                 }
             },
             "traits": {
@@ -3092,6 +3483,12 @@
                     "target": "com.amazonaws.lakeformation#DataLakePrincipalList",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of Amazon Web Services account IDs or Amazon Web Services organization/organizational unit ARNs that\n         are allowed to access data managed by Lake Formation. </p>\n         <p>If the <code>ShareRecipients</code> list includes valid values, a resource share is created with the principals you want to have access to the resources as the <code>ShareRecipients</code>.</p>\n         <p>If the <code>ShareRecipients</code> value is null or the list is empty, no resource share is created.</p>"
+                    }
+                },
+                "ServiceIntegrations": {
+                    "target": "com.amazonaws.lakeformation#ServiceIntegrationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>"
                     }
                 },
                 "ResourceShare": {
@@ -3366,6 +3763,15 @@
             "type": "list",
             "member": {
                 "target": "com.amazonaws.lakeformation#LFTag"
+            }
+        },
+        "com.amazonaws.lakeformation#ExpressionString": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 3000
+                }
             }
         },
         "com.amazonaws.lakeformation#ExtendTransaction": {
@@ -3824,6 +4230,93 @@
                 }
             }
         },
+        "com.amazonaws.lakeformation#GetLFTagExpression": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#GetLFTagExpressionRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#GetLFTagExpressionResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the details about the LF-Tag expression. The caller must be a data lake admin or must have <code>DESCRIBE</code> permission on the LF-Tag expression resource.\n     </p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/GetLFTagExpression",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#GetLFTagExpressionRequest": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name for the LF-Tag expression</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#GetLFTagExpressionResponse": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name for the LF-Tag expression. </p>"
+                    }
+                },
+                "Description": {
+                    "target": "com.amazonaws.lakeformation#DescriptionString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The description with information about the LF-Tag expression.</p>"
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID in which the LF-Tag expression is saved.</p>"
+                    }
+                },
+                "Expression": {
+                    "target": "com.amazonaws.lakeformation#Expression",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The body of the LF-Tag expression. It is composed of one or more LF-Tag key-value pairs.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.lakeformation#GetLFTagRequest": {
             "type": "structure",
             "members": {
@@ -4251,6 +4744,98 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentials": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentialsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentialsResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#ConflictException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#GlueEncryptionException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Allows a user or application in a secure environment to access data in a specific Amazon S3 location registered with Lake Formation by providing temporary scoped credentials that are limited to the requested data location and\n      the caller's authorized access level.</p>\n         <p>\n            <code>GetDataAccess</code> is logged in CloudTrail whenever a principal requests temporary data location credentials to access data in a data lake location that is registered with Lake Formation.</p>\n         <p> The API operation returns an error in the following scenarios:</p>\n         <ul>\n            <li>\n               <p>The data location is not registered with Lake Formation. </p>\n            </li>\n            <li>\n               <p>No Glue table is associated with the data location.</p>\n            </li>\n            <li>\n               <p>The caller doesn't have required permissions on the associated table. The caller must have\n            <code>SELECT</code> or <code>SUPER</code> permissions on the associated table, and\n          credential vending for full table access must be enabled in the data lake settings. </p>\n               <p>For more information, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/full-table-credential-vending.html\">Application integration for full table access</a>.</p>\n            </li>\n            <li>\n               <p>The data location is in a different Amazon Web Services Region. Lake Formation doesn't\n          support cross-Region access when vending credentials for a data location. Lake Formation only supports Amazon S3 paths registered within the same Region as the API\n          call. </p>\n            </li>\n         </ul>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/GetTemporaryDataLocationCredentials",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentialsRequest": {
+            "type": "structure",
+            "members": {
+                "DurationSeconds": {
+                    "target": "com.amazonaws.lakeformation#CredentialTimeoutDurationSecondInteger",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The time period, between 900 and 43,200 seconds, for the timeout of the temporary credentials.</p>"
+                    }
+                },
+                "AuditContext": {
+                    "target": "com.amazonaws.lakeformation#AuditContext"
+                },
+                "DataLocations": {
+                    "target": "com.amazonaws.lakeformation#PathStringList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon S3 data location that you want to access.</p>"
+                    }
+                },
+                "CredentialsScope": {
+                    "target": "com.amazonaws.lakeformation#CredentialsScope",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The credential scope is determined by the caller's Lake Formation permission on the associated table. Credential scope can be either:</p>\n         <ul>\n            <li>\n               <p>READ - Provides read-only access to the data location.</p>\n            </li>\n            <li>\n               <p>READ_WRITE - Provides both read and write access to the data location.</p>\n            </li>\n         </ul>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#GetTemporaryDataLocationCredentialsResponse": {
+            "type": "structure",
+            "members": {
+                "Credentials": {
+                    "target": "com.amazonaws.lakeformation#TemporaryCredentials"
+                },
+                "AccessibleDataLocations": {
+                    "target": "com.amazonaws.lakeformation#PathStringList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Refers to the Amazon S3 locations that can be \n      accessed through the <code>GetTemporaryCredentialsForLocation</code> API operation.</p>"
+                    }
+                },
+                "CredentialsScope": {
+                    "target": "com.amazonaws.lakeformation#CredentialsScope",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The credential scope is determined by the caller's Lake Formation permission on the associated table. Credential scope can be either:</p>\n         <ul>\n            <li>\n               <p>READ - Provides read-only access to the data location.</p>\n            </li>\n            <li>\n               <p>READ_WRITE - Provides both read and write access to the data location.</p>\n            </li>\n         </ul>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.lakeformation#GetTemporaryGluePartitionCredentials": {
             "type": "operation",
             "input": {
@@ -4395,7 +4980,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p>",
+                "smithy.api#documentation": "<p>Allows a caller in a secure environment to assume a role with permission to access Amazon S3. In order to vend such credentials, Lake Formation assumes the role associated with a registered location, for example an Amazon S3 bucket, with a scope down policy which restricts the access to a single prefix.</p>\n         <p>To call this API, the role that the service assumes must have <code>lakeformation:GetDataAccess</code> permission on the resource.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/GetTemporaryGlueTableCredentials",
@@ -4775,6 +5360,9 @@
                         "smithy.api#required": {}
                     }
                 },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition"
+                },
                 "PermissionsWithGrantOption": {
                     "target": "com.amazonaws.lakeformation#PermissionList",
                     "traits": {
@@ -4920,6 +5508,65 @@
                 "target": "com.amazonaws.lakeformation#LFTagError"
             }
         },
+        "com.amazonaws.lakeformation#LFTagExpression": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name for saved the LF-Tag expression.</p>"
+                    }
+                },
+                "Description": {
+                    "target": "com.amazonaws.lakeformation#DescriptionString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A structure that contains information about the LF-Tag expression.</p>"
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID. </p>"
+                    }
+                },
+                "Expression": {
+                    "target": "com.amazonaws.lakeformation#Expression",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A logical expression composed of one or more LF-Tags.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A structure consists LF-Tag expression name and catalog ID.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#LFTagExpressionResource": {
+            "type": "structure",
+            "members": {
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID. </p>"
+                    }
+                },
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the LF-Tag expression to grant permissions on.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A structure containing a LF-Tag expression (keys and values).</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#LFTagExpressionsList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.lakeformation#LFTagExpression"
+            }
+        },
         "com.amazonaws.lakeformation#LFTagKey": {
             "type": "string",
             "traits": {
@@ -5005,13 +5652,20 @@
                 "Expression": {
                     "target": "com.amazonaws.lakeformation#Expression",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of LF-tag conditions that apply to the resource's LF-tag policy.</p>",
-                        "smithy.api#required": {}
+                        "smithy.api#addedDefault": {},
+                        "smithy.api#default": [],
+                        "smithy.api#documentation": "<p>A list of LF-tag conditions or a saved expression that apply to the resource's LF-tag policy.</p>"
+                    }
+                },
+                "ExpressionName": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If provided, permissions are granted to the Data Catalog resources whose assigned LF-Tags\n      match the expression body of the saved expression under the provided\n        <code>ExpressionName</code>.</p>"
                     }
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>A structure containing a list of LF-tag conditions that apply to a resource's LF-tag policy.</p>"
+                "smithy.api#documentation": "<p>A structure containing a list of LF-tag conditions or saved LF-Tag expressions that apply to a resource's LF-tag policy.</p>"
             }
         },
         "com.amazonaws.lakeformation#LFTagValue": {
@@ -5044,6 +5698,12 @@
                 },
                 "Principal": {
                     "target": "com.amazonaws.lakeformation#DataLakePrincipal"
+                },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
+                    }
                 },
                 "LastModified": {
                     "target": "com.amazonaws.lakeformation#LastModifiedTimestamp",
@@ -5147,6 +5807,92 @@
                     "target": "com.amazonaws.lakeformation#Token",
                     "traits": {
                         "smithy.api#documentation": "<p>A continuation token, if not all requested data cell filters have been returned.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.lakeformation#ListLFTagExpressions": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#ListLFTagExpressionsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#ListLFTagExpressionsResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Returns the LF-Tag expressions in caller’s account filtered based on caller's permissions. Data Lake and read only admins implicitly can see all tag expressions in their account, else caller needs DESCRIBE permissions on tag expression.</p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/ListLFTagExpressions",
+                    "code": 200
+                },
+                "smithy.api#paginated": {
+                    "inputToken": "NextToken",
+                    "outputToken": "NextToken",
+                    "items": "LFTagExpressions",
+                    "pageSize": "MaxResults"
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#ListLFTagExpressionsRequest": {
+            "type": "structure",
+            "members": {
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID. </p>"
+                    }
+                },
+                "MaxResults": {
+                    "target": "com.amazonaws.lakeformation#PageSize",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of results to return.</p>"
+                    }
+                },
+                "NextToken": {
+                    "target": "com.amazonaws.lakeformation#Token",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A continuation token, if this is not the first call to retrieve this list.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#ListLFTagExpressionsResponse": {
+            "type": "structure",
+            "members": {
+                "LFTagExpressions": {
+                    "target": "com.amazonaws.lakeformation#LFTagExpressionsList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Logical expressions composed of one more LF-Tag key-value pairs.</p>"
+                    }
+                },
+                "NextToken": {
+                    "target": "com.amazonaws.lakeformation#Token",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A continuation token, if this is not the first call to retrieve this list.</p>"
                     }
                 }
             },
@@ -5351,7 +6097,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p>\n         <p>This operation returns only those permissions that have been explicitly granted.</p>\n         <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
+                "smithy.api#documentation": "<p>Returns a list of the principal permissions on the resource, filtered by the permissions of the caller. For example, if you are granted an ALTER permission, you are able to see only the principal permissions for ALTER.</p>\n         <p>This operation returns only those permissions that have been explicitly granted. If both\n        <code>Principal</code> and <code>Resource</code> parameters are provided, the response\n      returns effective permissions rather than the explicitly granted permissions.</p>\n         <p>For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security and Access Control to Metadata and Data</a>.</p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/ListPermissions",
@@ -5406,7 +6152,7 @@
                 "IncludeRelated": {
                     "target": "com.amazonaws.lakeformation#TrueFalseString",
                     "traits": {
-                        "smithy.api#documentation": "<p>Indicates that related permissions should be included in the results.</p>"
+                        "smithy.api#documentation": "<p>Indicates that related permissions should be included in the results when listing permissions on a table resource.</p>\n         <p>Set the field to <code>TRUE</code> to show the cell filters on a table resource. Default\n      is <code>FALSE</code>. The Principal parameter must not be specified when requesting cell\n      filter information.</p>"
                     }
                 }
             },
@@ -5797,6 +6543,9 @@
             },
             "value": {
                 "target": "com.amazonaws.lakeformation#ParametersMapValue"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A key-value map that provides additional configuration for Lake Formation. Supported keys include:</p>\n    <ul>\n      <li><code>CROSS_ACCOUNT_VERSION</code> - Specifies the cross-account access version.</li>\n      <li><code>SET_SOURCE_IDENTITY</code> - When set to \"TRUE\", enables inclusion of the IAM role identifier that was used to query(sourceIdentity) in CloudTrail logs for S3 data access events. This helps track which IAM role (such as Athena or EMR job role) accessed table data. Requires the <code>sts:SetSourceIdentity</code> permission in the trust policy of the IAM role used to register S3 buckets with Lake Formation. Default is \"FALSE\".</li>\n    </ul>"
             }
         },
         "com.amazonaws.lakeformation#ParametersMapValue": {
@@ -5959,6 +6708,24 @@
                     "traits": {
                         "smithy.api#enumValue": "GRANT_WITH_LF_TAG_EXPRESSION"
                     }
+                },
+                "CREATE_LF_TAG_EXPRESSION": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CREATE_LF_TAG_EXPRESSION"
+                    }
+                },
+                "CREATE_CATALOG": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CREATE_CATALOG"
+                    }
+                },
+                "SUPER_USER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SUPER_USER"
+                    }
                 }
             }
         },
@@ -6109,6 +6876,12 @@
                     "target": "com.amazonaws.lakeformation#Resource",
                     "traits": {
                         "smithy.api#documentation": "<p>The resource where permissions are to be granted or revoked.</p>"
+                    }
+                },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A Lake Formation condition, which applies to permissions and opt-ins that contain an expression.</p>"
                     }
                 },
                 "Permissions": {
@@ -6300,7 +7073,7 @@
                 }
             },
             "traits": {
-                "smithy.api#documentation": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>"
+                "smithy.api#documentation": "<p>A structure used as a protocol between query engines and Lake Formation or Glue. Contains both a Lake Formation generated authorization identifier and information from the request's authorization context.</p>\n         <p>For more information about how to utilize QuerySessionContext, see\n        <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/api-overview.html\">Lake Formation workflow for application integration API operations</a> in the developer guide.</p>"
             }
         },
         "com.amazonaws.lakeformation#QueryStateString": {
@@ -6341,6 +7114,44 @@
         "com.amazonaws.lakeformation#RAMResourceShareArn": {
             "type": "string"
         },
+        "com.amazonaws.lakeformation#RedshiftConnect": {
+            "type": "structure",
+            "members": {
+                "Authorization": {
+                    "target": "com.amazonaws.lakeformation#ServiceAuthorization",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The authorization status for Redshift Connect. Valid values are ENABLED or DISABLED.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Configuration for enabling trusted identity propagation with Redshift Connect.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#RedshiftScopeUnion": {
+            "type": "union",
+            "members": {
+                "RedshiftConnect": {
+                    "target": "com.amazonaws.lakeformation#RedshiftConnect",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Configuration for Redshift Connect integration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A union structure representing different Redshift integration scopes.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#RedshiftServiceIntegrations": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.lakeformation#RedshiftScopeUnion"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A list of Redshift service integration configurations.</p>"
+            }
+        },
         "com.amazonaws.lakeformation#RegisterResource": {
             "type": "operation",
             "input": {
@@ -6373,7 +7184,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Registers the resource as managed by the Data Catalog.</p>\n         <p>To add or update data, Lake Formation needs read/write access to the chosen Amazon S3 path. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p>\n         <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p>\n         <p>\n            <code>ResourceArn = arn:aws:s3:::my-bucket\nUseServiceLinkedRole = true</code>\n         </p>\n         <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p>\n         <p>\n            <code>arn:aws:iam::12345:role/my-data-access-role</code>\n         </p>",
+                "smithy.api#documentation": "<p>Registers the resource as managed by the Data Catalog.</p>\n         <p>To add or update data, Lake Formation needs read/write access to the chosen data location. Choose a role that you know has permission to do this, or choose the AWSServiceRoleForLakeFormationDataAccess service-linked role. When you register the first Amazon S3 path, the service-linked role and a new inline policy are created on your behalf. Lake Formation adds the first path to the inline policy and attaches it to the service-linked role. When you register subsequent paths, Lake Formation adds the path to the existing policy.</p>\n         <p>The following request registers a new location and gives Lake Formation permission to use the service-linked role to access that location.</p>\n         <p>\n            <code>ResourceArn = arn:aws:s3:::my-bucket/\nUseServiceLinkedRole = true</code>\n         </p>\n         <p>If <code>UseServiceLinkedRole</code> is not set to true, you must provide or set the <code>RoleArn</code>:</p>\n         <p>\n            <code>arn:aws:iam::12345:role/my-data-access-role</code>\n         </p>",
                 "smithy.api#http": {
                     "method": "POST",
                     "uri": "/RegisterResource",
@@ -6413,6 +7224,19 @@
                     "target": "com.amazonaws.lakeformation#NullableBoolean",
                     "traits": {
                         "smithy.api#documentation": "<p>\n    Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.\n  </p>"
+                    }
+                },
+                "WithPrivilegedAccess": {
+                    "target": "com.amazonaws.lakeformation#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#documentation": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>"
+                    }
+                },
+                "ExpectedResourceOwnerAccount": {
+                    "target": "com.amazonaws.lakeformation#AccountIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations.\n    </p>"
                     }
                 }
             },
@@ -6551,13 +7375,19 @@
                 "LFTag": {
                     "target": "com.amazonaws.lakeformation#LFTagKeyResource",
                     "traits": {
-                        "smithy.api#documentation": "<p>The LF-tag key and values attached to a resource.</p>"
+                        "smithy.api#documentation": "<p>The LF-Tag key and values attached to a resource.</p>"
                     }
                 },
                 "LFTagPolicy": {
                     "target": "com.amazonaws.lakeformation#LFTagPolicyResource",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of LF-tag conditions that define a resource's LF-tag policy.</p>"
+                        "smithy.api#documentation": "<p>A list of LF-tag conditions or saved LF-Tag expressions that define a resource's LF-tag policy.</p>"
+                    }
+                },
+                "LFTagExpression": {
+                    "target": "com.amazonaws.lakeformation#LFTagExpressionResource",
+                    "traits": {
+                        "smithy.api#documentation": "<p>LF-Tag expression resource. A logical expression composed of one or more LF-Tag key:value pairs.</p>"
                     }
                 }
             },
@@ -6599,6 +7429,24 @@
                     "target": "com.amazonaws.lakeformation#NullableBoolean",
                     "traits": {
                         "smithy.api#documentation": "<p>\n      Indicates whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.\n    </p>"
+                    }
+                },
+                "WithPrivilegedAccess": {
+                    "target": "com.amazonaws.lakeformation#NullableBoolean",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Grants the calling principal the permissions to perform all supported Lake Formation operations on the registered data location. </p>"
+                    }
+                },
+                "VerificationStatus": {
+                    "target": "com.amazonaws.lakeformation#VerificationStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Indicates whether the registered role has sufficient permissions to access registered Amazon S3 location. Verification Status can be one of the following: </p>\n         <ul>\n            <li>\n               <p>VERIFIED - Registered role has sufficient permissions to access registered Amazon S3 location.</p>\n            </li>\n            <li>\n               <p>NOT_VERIFIED - Registered role does not have sufficient permissions to access registered Amazon S3 location.</p>\n            </li>\n            <li>\n               <p>VERIFICATION_FAILED - Unable to verify if the registered role can access the registered Amazon S3 location.</p>\n            </li>\n         </ul>"
+                    }
+                },
+                "ExpectedResourceOwnerAccount": {
+                    "target": "com.amazonaws.lakeformation#AccountIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations. </p>"
                     }
                 }
             },
@@ -6749,6 +7597,9 @@
                         "smithy.api#documentation": "<p>The permissions revoked to the principal on the resource. For information about permissions, see <a href=\"https://docs.aws.amazon.com/lake-formation/latest/dg/security-data-access.html\">Security\n      and Access Control to Metadata and Data</a>.</p>",
                         "smithy.api#required": {}
                     }
+                },
+                "Condition": {
+                    "target": "com.amazonaws.lakeformation#Condition"
                 },
                 "PermissionsWithGrantOption": {
                     "target": "com.amazonaws.lakeformation#PermissionList",
@@ -7009,6 +7860,49 @@
         },
         "com.amazonaws.lakeformation#SecretAccessKeyString": {
             "type": "string"
+        },
+        "com.amazonaws.lakeformation#ServiceAuthorization": {
+            "type": "enum",
+            "members": {
+                "ENABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "ENABLED"
+                    }
+                },
+                "DISABLED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "DISABLED"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Authorization status for service integrations. Specify a value of <code>ENABLED</code> or <code>DISABLED</code>.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#ServiceIntegrationList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.lakeformation#ServiceIntegrationUnion"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A list of service integrations for trusted identity propagation.</p>"
+            }
+        },
+        "com.amazonaws.lakeformation#ServiceIntegrationUnion": {
+            "type": "union",
+            "members": {
+                "Redshift": {
+                    "target": "com.amazonaws.lakeformation#RedshiftServiceIntegrations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Redshift service integration configuration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A union structure representing different service integration types.</p>"
+            }
         },
         "com.amazonaws.lakeformation#SessionTokenString": {
             "type": "string"
@@ -7432,6 +8326,38 @@
                 "smithy.api#documentation": "<p>A structure describing a table resource with LF-tags.</p>"
             }
         },
+        "com.amazonaws.lakeformation#TemporaryCredentials": {
+            "type": "structure",
+            "members": {
+                "AccessKeyId": {
+                    "target": "com.amazonaws.lakeformation#AccessKeyIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The access key ID for the temporary credentials.</p>"
+                    }
+                },
+                "SecretAccessKey": {
+                    "target": "com.amazonaws.lakeformation#SecretAccessKeyString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The secret key for the temporary credentials.</p>"
+                    }
+                },
+                "SessionToken": {
+                    "target": "com.amazonaws.lakeformation#SessionTokenString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The session token for the temporary credentials.</p>"
+                    }
+                },
+                "Expiration": {
+                    "target": "com.amazonaws.lakeformation#ExpirationTimestamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The date and time when the temporary credentials expire.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A temporary set of credentials for an Lake Formation user. These credentials are scoped down to only access the raw data sources that the user has access to. </p>\n         <p>The temporary security credentials consist of an access key and a session token. The access key consists of an access key ID and a secret key. When the credentials are created, they are associated with an IAM access control policy that limits what the user can do when using the credentials.</p>"
+            }
+        },
         "com.amazonaws.lakeformation#ThrottledException": {
             "type": "structure",
             "members": {
@@ -7765,6 +8691,84 @@
                 }
             }
         },
+        "com.amazonaws.lakeformation#UpdateLFTagExpression": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.lakeformation#UpdateLFTagExpressionRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.lakeformation#UpdateLFTagExpressionResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.lakeformation#AccessDeniedException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#EntityNotFoundException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InternalServiceException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#InvalidInputException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#OperationTimeoutException"
+                },
+                {
+                    "target": "com.amazonaws.lakeformation#ResourceNumberLimitExceededException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Updates the name of the LF-Tag expression to the new description and expression body provided.\n      Updating a LF-Tag expression immediately changes the permission boundaries of all existing <code>LFTagPolicy</code> permission grants that reference the given LF-Tag expression.</p>",
+                "smithy.api#http": {
+                    "method": "POST",
+                    "uri": "/UpdateLFTagExpression",
+                    "code": 200
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#UpdateLFTagExpressionRequest": {
+            "type": "structure",
+            "members": {
+                "Name": {
+                    "target": "com.amazonaws.lakeformation#NameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name for the LF-Tag expression.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Description": {
+                    "target": "com.amazonaws.lakeformation#DescriptionString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The description with information about the saved LF-Tag expression.</p>"
+                    }
+                },
+                "CatalogId": {
+                    "target": "com.amazonaws.lakeformation#CatalogIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for the Data Catalog. By default, the account ID. </p>"
+                    }
+                },
+                "Expression": {
+                    "target": "com.amazonaws.lakeformation#Expression",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The LF-Tag expression body composed of one more LF-Tag key-value pairs.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.lakeformation#UpdateLFTagExpressionResponse": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.lakeformation#UpdateLFTagRequest": {
             "type": "structure",
             "members": {
@@ -7857,6 +8861,12 @@
                         "smithy.api#documentation": "<p>A list of Amazon Web Services account IDs or Amazon Web Services organization/organizational unit ARNs that\n         are allowed to access to access data managed by Lake Formation. </p>\n         <p>If the <code>ShareRecipients</code> list includes valid values, then the resource share is updated with the principals you want to have access to the resources.</p>\n         <p>If the <code>ShareRecipients</code> value is null, both the list of share recipients and\n         the resource share remain unchanged.</p>\n         <p>If the <code>ShareRecipients</code> value is an empty list, then the existing share\n         recipients list will be cleared, and the resource share will be deleted.</p>"
                     }
                 },
+                "ServiceIntegrations": {
+                    "target": "com.amazonaws.lakeformation#ServiceIntegrationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of service integrations for enabling trusted identity propagation with external services such as Redshift.</p>"
+                    }
+                },
                 "ApplicationStatus": {
                     "target": "com.amazonaws.lakeformation#ApplicationStatus",
                     "traits": {
@@ -7939,6 +8949,12 @@
                     "target": "com.amazonaws.lakeformation#NullableBoolean",
                     "traits": {
                         "smithy.api#documentation": "<p>\n      Specifies whether the data access of tables pointing to the location can be managed by both Lake Formation permissions as well as Amazon S3 bucket policies.\n    </p>"
+                    }
+                },
+                "ExpectedResourceOwnerAccount": {
+                    "target": "com.amazonaws.lakeformation#AccountIdString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services account that owns the Glue tables associated with specific Amazon S3 locations.\n    </p>"
                     }
                 }
             },
@@ -8104,7 +9120,7 @@
                 "StorageOptimizerConfig": {
                     "target": "com.amazonaws.lakeformation#StorageOptimizerConfigMap",
                     "traits": {
-                        "smithy.api#documentation": "<p>Name of the table for which to enable the storage optimizer.</p>",
+                        "smithy.api#documentation": "<p>Name of the configuration for the storage optimizer.</p>",
                         "smithy.api#required": {}
                     }
                 }
@@ -8138,6 +9154,29 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1
+                }
+            }
+        },
+        "com.amazonaws.lakeformation#VerificationStatus": {
+            "type": "enum",
+            "members": {
+                "VERIFIED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "VERIFIED"
+                    }
+                },
+                "VERIFICATION_FAILED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "VERIFICATION_FAILED"
+                    }
+                },
+                "NOT_VERIFIED": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "NOT_VERIFIED"
+                    }
                 }
             }
         },

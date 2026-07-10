@@ -6,95 +6,100 @@
 #pragma once
 #include <aws/cloudfront/CloudFront_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace CloudFront
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace CloudFront {
+namespace Model {
 
+/**
+ * <p>Summary of the information about a CloudFront origin access
+ * identity.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CloudFrontOriginAccessIdentitySummary">AWS
+ * API Reference</a></p>
+ */
+class CloudFrontOriginAccessIdentitySummary {
+ public:
+  AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary() = default;
+  AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_CLOUDFRONT_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+
+  ///@{
   /**
-   * <p>Summary of the information about a CloudFront origin access
-   * identity.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CloudFrontOriginAccessIdentitySummary">AWS
-   * API Reference</a></p>
+   * <p>The ID for the origin access identity. For example:
+   * <code>E74FTE3AJFJ256A</code>.</p>
    */
-  class CloudFrontOriginAccessIdentitySummary
-  {
-  public:
-    AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary();
-    AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_CLOUDFRONT_API CloudFrontOriginAccessIdentitySummary& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  CloudFrontOriginAccessIdentitySummary& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDFRONT_API void AddToNode(Aws::Utils::Xml::XmlNode& parentNode) const;
+  ///@{
+  /**
+   * <p>The Amazon S3 canonical user ID for the origin access identity, which you use
+   * when giving the origin access identity read permission to an object in Amazon
+   * S3.</p>
+   */
+  inline const Aws::String& GetS3CanonicalUserId() const { return m_s3CanonicalUserId; }
+  inline bool S3CanonicalUserIdHasBeenSet() const { return m_s3CanonicalUserIdHasBeenSet; }
+  template <typename S3CanonicalUserIdT = Aws::String>
+  void SetS3CanonicalUserId(S3CanonicalUserIdT&& value) {
+    m_s3CanonicalUserIdHasBeenSet = true;
+    m_s3CanonicalUserId = std::forward<S3CanonicalUserIdT>(value);
+  }
+  template <typename S3CanonicalUserIdT = Aws::String>
+  CloudFrontOriginAccessIdentitySummary& WithS3CanonicalUserId(S3CanonicalUserIdT&& value) {
+    SetS3CanonicalUserId(std::forward<S3CanonicalUserIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The comment for this origin access identity, as originally specified when
+   * created.</p>
+   */
+  inline const Aws::String& GetComment() const { return m_comment; }
+  inline bool CommentHasBeenSet() const { return m_commentHasBeenSet; }
+  template <typename CommentT = Aws::String>
+  void SetComment(CommentT&& value) {
+    m_commentHasBeenSet = true;
+    m_comment = std::forward<CommentT>(value);
+  }
+  template <typename CommentT = Aws::String>
+  CloudFrontOriginAccessIdentitySummary& WithComment(CommentT&& value) {
+    SetComment(std::forward<CommentT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_id;
 
-    ///@{
-    /**
-     * <p>The ID for the origin access identity. For example:
-     * <code>E74FTE3AJFJ256A</code>.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline CloudFrontOriginAccessIdentitySummary& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  Aws::String m_s3CanonicalUserId;
 
-    ///@{
-    /**
-     * <p>The Amazon S3 canonical user ID for the origin access identity, which you use
-     * when giving the origin access identity read permission to an object in Amazon
-     * S3.</p>
-     */
-    inline const Aws::String& GetS3CanonicalUserId() const{ return m_s3CanonicalUserId; }
-    inline bool S3CanonicalUserIdHasBeenSet() const { return m_s3CanonicalUserIdHasBeenSet; }
-    inline void SetS3CanonicalUserId(const Aws::String& value) { m_s3CanonicalUserIdHasBeenSet = true; m_s3CanonicalUserId = value; }
-    inline void SetS3CanonicalUserId(Aws::String&& value) { m_s3CanonicalUserIdHasBeenSet = true; m_s3CanonicalUserId = std::move(value); }
-    inline void SetS3CanonicalUserId(const char* value) { m_s3CanonicalUserIdHasBeenSet = true; m_s3CanonicalUserId.assign(value); }
-    inline CloudFrontOriginAccessIdentitySummary& WithS3CanonicalUserId(const Aws::String& value) { SetS3CanonicalUserId(value); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithS3CanonicalUserId(Aws::String&& value) { SetS3CanonicalUserId(std::move(value)); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithS3CanonicalUserId(const char* value) { SetS3CanonicalUserId(value); return *this;}
-    ///@}
+  Aws::String m_comment;
+  bool m_idHasBeenSet = false;
+  bool m_s3CanonicalUserIdHasBeenSet = false;
+  bool m_commentHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The comment for this origin access identity, as originally specified when
-     * created.</p>
-     */
-    inline const Aws::String& GetComment() const{ return m_comment; }
-    inline bool CommentHasBeenSet() const { return m_commentHasBeenSet; }
-    inline void SetComment(const Aws::String& value) { m_commentHasBeenSet = true; m_comment = value; }
-    inline void SetComment(Aws::String&& value) { m_commentHasBeenSet = true; m_comment = std::move(value); }
-    inline void SetComment(const char* value) { m_commentHasBeenSet = true; m_comment.assign(value); }
-    inline CloudFrontOriginAccessIdentitySummary& WithComment(const Aws::String& value) { SetComment(value); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithComment(Aws::String&& value) { SetComment(std::move(value)); return *this;}
-    inline CloudFrontOriginAccessIdentitySummary& WithComment(const char* value) { SetComment(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
-
-    Aws::String m_s3CanonicalUserId;
-    bool m_s3CanonicalUserIdHasBeenSet = false;
-
-    Aws::String m_comment;
-    bool m_commentHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudFront
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudFront
+}  // namespace Aws

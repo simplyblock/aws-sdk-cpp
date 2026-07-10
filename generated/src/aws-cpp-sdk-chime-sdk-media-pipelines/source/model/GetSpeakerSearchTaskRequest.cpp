@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKMediaPipelines::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSpeakerSearchTaskRequest::GetSpeakerSearchTaskRequest() : 
-    m_identifierHasBeenSet(false),
-    m_speakerSearchTaskIdHasBeenSet(false)
-{
-}
-
-Aws::String GetSpeakerSearchTaskRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetSpeakerSearchTaskRequest::SerializePayload() const { return {}; }

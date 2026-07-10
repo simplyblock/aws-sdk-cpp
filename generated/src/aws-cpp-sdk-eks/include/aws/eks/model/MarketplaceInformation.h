@@ -4,76 +4,77 @@
  */
 
 #pragma once
-#include <aws/eks/EKS_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/eks/EKS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace EKS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace EKS {
+namespace Model {
 
+/**
+ * <p>Information about an Amazon EKS add-on from the Amazon Web Services
+ * Marketplace.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/MarketplaceInformation">AWS
+ * API Reference</a></p>
+ */
+class MarketplaceInformation {
+ public:
+  AWS_EKS_API MarketplaceInformation() = default;
+  AWS_EKS_API MarketplaceInformation(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API MarketplaceInformation& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about an Amazon EKS add-on from the Amazon Web Services
-   * Marketplace.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/MarketplaceInformation">AWS
-   * API Reference</a></p>
+   * <p>The product ID from the Amazon Web Services Marketplace.</p>
    */
-  class MarketplaceInformation
-  {
-  public:
-    AWS_EKS_API MarketplaceInformation();
-    AWS_EKS_API MarketplaceInformation(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API MarketplaceInformation& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_EKS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetProductId() const { return m_productId; }
+  inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
+  template <typename ProductIdT = Aws::String>
+  void SetProductId(ProductIdT&& value) {
+    m_productIdHasBeenSet = true;
+    m_productId = std::forward<ProductIdT>(value);
+  }
+  template <typename ProductIdT = Aws::String>
+  MarketplaceInformation& WithProductId(ProductIdT&& value) {
+    SetProductId(std::forward<ProductIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The product URL from the Amazon Web Services Marketplace.</p>
+   */
+  inline const Aws::String& GetProductUrl() const { return m_productUrl; }
+  inline bool ProductUrlHasBeenSet() const { return m_productUrlHasBeenSet; }
+  template <typename ProductUrlT = Aws::String>
+  void SetProductUrl(ProductUrlT&& value) {
+    m_productUrlHasBeenSet = true;
+    m_productUrl = std::forward<ProductUrlT>(value);
+  }
+  template <typename ProductUrlT = Aws::String>
+  MarketplaceInformation& WithProductUrl(ProductUrlT&& value) {
+    SetProductUrl(std::forward<ProductUrlT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_productId;
 
-    ///@{
-    /**
-     * <p>The product ID from the Amazon Web Services Marketplace.</p>
-     */
-    inline const Aws::String& GetProductId() const{ return m_productId; }
-    inline bool ProductIdHasBeenSet() const { return m_productIdHasBeenSet; }
-    inline void SetProductId(const Aws::String& value) { m_productIdHasBeenSet = true; m_productId = value; }
-    inline void SetProductId(Aws::String&& value) { m_productIdHasBeenSet = true; m_productId = std::move(value); }
-    inline void SetProductId(const char* value) { m_productIdHasBeenSet = true; m_productId.assign(value); }
-    inline MarketplaceInformation& WithProductId(const Aws::String& value) { SetProductId(value); return *this;}
-    inline MarketplaceInformation& WithProductId(Aws::String&& value) { SetProductId(std::move(value)); return *this;}
-    inline MarketplaceInformation& WithProductId(const char* value) { SetProductId(value); return *this;}
-    ///@}
+  Aws::String m_productUrl;
+  bool m_productIdHasBeenSet = false;
+  bool m_productUrlHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The product URL from the Amazon Web Services Marketplace.</p>
-     */
-    inline const Aws::String& GetProductUrl() const{ return m_productUrl; }
-    inline bool ProductUrlHasBeenSet() const { return m_productUrlHasBeenSet; }
-    inline void SetProductUrl(const Aws::String& value) { m_productUrlHasBeenSet = true; m_productUrl = value; }
-    inline void SetProductUrl(Aws::String&& value) { m_productUrlHasBeenSet = true; m_productUrl = std::move(value); }
-    inline void SetProductUrl(const char* value) { m_productUrlHasBeenSet = true; m_productUrl.assign(value); }
-    inline MarketplaceInformation& WithProductUrl(const Aws::String& value) { SetProductUrl(value); return *this;}
-    inline MarketplaceInformation& WithProductUrl(Aws::String&& value) { SetProductUrl(std::move(value)); return *this;}
-    inline MarketplaceInformation& WithProductUrl(const char* value) { SetProductUrl(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_productId;
-    bool m_productIdHasBeenSet = false;
-
-    Aws::String m_productUrl;
-    bool m_productUrlHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EKS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EKS
+}  // namespace Aws

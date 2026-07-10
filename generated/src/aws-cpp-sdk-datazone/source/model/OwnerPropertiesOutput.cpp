@@ -3,71 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/datazone/model/OwnerPropertiesOutput.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/datazone/model/OwnerPropertiesOutput.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace DataZone {
+namespace Model {
 
-OwnerPropertiesOutput::OwnerPropertiesOutput() : 
-    m_groupHasBeenSet(false),
-    m_userHasBeenSet(false)
-{
-}
+OwnerPropertiesOutput::OwnerPropertiesOutput(JsonView jsonValue) { *this = jsonValue; }
 
-OwnerPropertiesOutput::OwnerPropertiesOutput(JsonView jsonValue)
-  : OwnerPropertiesOutput()
-{
-  *this = jsonValue;
-}
-
-OwnerPropertiesOutput& OwnerPropertiesOutput::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("group"))
-  {
-    m_group = jsonValue.GetObject("group");
-
-    m_groupHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("user"))
-  {
+OwnerPropertiesOutput& OwnerPropertiesOutput::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("user")) {
     m_user = jsonValue.GetObject("user");
-
     m_userHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("group")) {
+    m_group = jsonValue.GetObject("group");
+    m_groupHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue OwnerPropertiesOutput::Jsonize() const
-{
+JsonValue OwnerPropertiesOutput::Jsonize() const {
   JsonValue payload;
 
-  if(m_groupHasBeenSet)
-  {
-   payload.WithObject("group", m_group.Jsonize());
-
+  if (m_userHasBeenSet) {
+    payload.WithObject("user", m_user.Jsonize());
   }
 
-  if(m_userHasBeenSet)
-  {
-   payload.WithObject("user", m_user.Jsonize());
-
+  if (m_groupHasBeenSet) {
+    payload.WithObject("group", m_group.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

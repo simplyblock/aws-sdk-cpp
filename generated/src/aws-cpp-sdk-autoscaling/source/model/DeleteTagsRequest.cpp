@@ -10,26 +10,15 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-DeleteTagsRequest::DeleteTagsRequest() : 
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String DeleteTagsRequest::SerializePayload() const
-{
+Aws::String DeleteTagsRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteTags&";
-  if(m_tagsHasBeenSet)
-  {
-    if (m_tags.empty())
-    {
+  if (m_tagsHasBeenSet) {
+    if (m_tags.empty()) {
       ss << "Tags=&";
-    }
-    else
-    {
+    } else {
       unsigned tagsCount = 1;
-      for(auto& item : m_tags)
-      {
+      for (auto& item : m_tags) {
         item.OutputToStream(ss, "Tags.member.", tagsCount, "");
         tagsCount++;
       }
@@ -40,8 +29,4 @@ Aws::String DeleteTagsRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteTagsRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteTagsRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

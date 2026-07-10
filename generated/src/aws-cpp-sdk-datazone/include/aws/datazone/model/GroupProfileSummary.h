@@ -4,108 +4,161 @@
  */
 
 #pragma once
-#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/datazone/DataZone_EXPORTS.h>
 #include <aws/datazone/model/GroupProfileStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace DataZone
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace DataZone {
+namespace Model {
 
+/**
+ * <p>The details of a group profile.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GroupProfileSummary">AWS
+ * API Reference</a></p>
+ */
+class GroupProfileSummary {
+ public:
+  AWS_DATAZONE_API GroupProfileSummary() = default;
+  AWS_DATAZONE_API GroupProfileSummary(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API GroupProfileSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The details of a group profile.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GroupProfileSummary">AWS
-   * API Reference</a></p>
+   * <p>The ID of the Amazon DataZone domain of a group profile.</p>
    */
-  class GroupProfileSummary
-  {
-  public:
-    AWS_DATAZONE_API GroupProfileSummary();
-    AWS_DATAZONE_API GroupProfileSummary(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API GroupProfileSummary& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_DATAZONE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  GroupProfileSummary& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of a group profile.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  GroupProfileSummary& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon DataZone domain of a group profile.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
-    inline void SetDomainId(const Aws::String& value) { m_domainIdHasBeenSet = true; m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainIdHasBeenSet = true; m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainIdHasBeenSet = true; m_domainId.assign(value); }
-    inline GroupProfileSummary& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline GroupProfileSummary& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline GroupProfileSummary& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of a group profile.</p>
+   */
+  inline GroupProfileStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(GroupProfileStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GroupProfileSummary& WithStatus(GroupProfileStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The group name of a group profile.</p>
-     */
-    inline const Aws::String& GetGroupName() const{ return m_groupName; }
-    inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
-    inline void SetGroupName(const Aws::String& value) { m_groupNameHasBeenSet = true; m_groupName = value; }
-    inline void SetGroupName(Aws::String&& value) { m_groupNameHasBeenSet = true; m_groupName = std::move(value); }
-    inline void SetGroupName(const char* value) { m_groupNameHasBeenSet = true; m_groupName.assign(value); }
-    inline GroupProfileSummary& WithGroupName(const Aws::String& value) { SetGroupName(value); return *this;}
-    inline GroupProfileSummary& WithGroupName(Aws::String&& value) { SetGroupName(std::move(value)); return *this;}
-    inline GroupProfileSummary& WithGroupName(const char* value) { SetGroupName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The group name of a group profile.</p>
+   */
+  inline const Aws::String& GetGroupName() const { return m_groupName; }
+  inline bool GroupNameHasBeenSet() const { return m_groupNameHasBeenSet; }
+  template <typename GroupNameT = Aws::String>
+  void SetGroupName(GroupNameT&& value) {
+    m_groupNameHasBeenSet = true;
+    m_groupName = std::forward<GroupNameT>(value);
+  }
+  template <typename GroupNameT = Aws::String>
+  GroupProfileSummary& WithGroupName(GroupNameT&& value) {
+    SetGroupName(std::forward<GroupNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of a group profile.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline GroupProfileSummary& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline GroupProfileSummary& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline GroupProfileSummary& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the IAM role principal. This role is associated with the group
+   * profile.</p>
+   */
+  inline const Aws::String& GetRolePrincipalArn() const { return m_rolePrincipalArn; }
+  inline bool RolePrincipalArnHasBeenSet() const { return m_rolePrincipalArnHasBeenSet; }
+  template <typename RolePrincipalArnT = Aws::String>
+  void SetRolePrincipalArn(RolePrincipalArnT&& value) {
+    m_rolePrincipalArnHasBeenSet = true;
+    m_rolePrincipalArn = std::forward<RolePrincipalArnT>(value);
+  }
+  template <typename RolePrincipalArnT = Aws::String>
+  GroupProfileSummary& WithRolePrincipalArn(RolePrincipalArnT&& value) {
+    SetRolePrincipalArn(std::forward<RolePrincipalArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of a group profile.</p>
-     */
-    inline const GroupProfileStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const GroupProfileStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(GroupProfileStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline GroupProfileSummary& WithStatus(const GroupProfileStatus& value) { SetStatus(value); return *this;}
-    inline GroupProfileSummary& WithStatus(GroupProfileStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The unique identifier of the IAM role principal. This principal is associated
+   * with the group profile.</p>
+   */
+  inline const Aws::String& GetRolePrincipalId() const { return m_rolePrincipalId; }
+  inline bool RolePrincipalIdHasBeenSet() const { return m_rolePrincipalIdHasBeenSet; }
+  template <typename RolePrincipalIdT = Aws::String>
+  void SetRolePrincipalId(RolePrincipalIdT&& value) {
+    m_rolePrincipalIdHasBeenSet = true;
+    m_rolePrincipalId = std::forward<RolePrincipalIdT>(value);
+  }
+  template <typename RolePrincipalIdT = Aws::String>
+  GroupProfileSummary& WithRolePrincipalId(RolePrincipalIdT&& value) {
+    SetRolePrincipalId(std::forward<RolePrincipalIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainId;
 
-    Aws::String m_domainId;
-    bool m_domainIdHasBeenSet = false;
+  Aws::String m_id;
 
-    Aws::String m_groupName;
-    bool m_groupNameHasBeenSet = false;
+  GroupProfileStatus m_status{GroupProfileStatus::NOT_SET};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  Aws::String m_groupName;
 
-    GroupProfileStatus m_status;
-    bool m_statusHasBeenSet = false;
-  };
+  Aws::String m_rolePrincipalArn;
 
-} // namespace Model
-} // namespace DataZone
-} // namespace Aws
+  Aws::String m_rolePrincipalId;
+  bool m_domainIdHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_groupNameHasBeenSet = false;
+  bool m_rolePrincipalArnHasBeenSet = false;
+  bool m_rolePrincipalIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DataZone
+}  // namespace Aws

@@ -4,59 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/redshift/Redshift_EXPORTS.h>
 #include <aws/redshift/model/Cluster.h>
 #include <aws/redshift/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Redshift
-{
-namespace Model
-{
-  class ModifyClusterIamRolesResult
-  {
-  public:
-    AWS_REDSHIFT_API ModifyClusterIamRolesResult();
-    AWS_REDSHIFT_API ModifyClusterIamRolesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_REDSHIFT_API ModifyClusterIamRolesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Redshift {
+namespace Model {
+class ModifyClusterIamRolesResult {
+ public:
+  AWS_REDSHIFT_API ModifyClusterIamRolesResult() = default;
+  AWS_REDSHIFT_API ModifyClusterIamRolesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_REDSHIFT_API ModifyClusterIamRolesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const Cluster& GetCluster() const{ return m_cluster; }
-    inline void SetCluster(const Cluster& value) { m_cluster = value; }
-    inline void SetCluster(Cluster&& value) { m_cluster = std::move(value); }
-    inline ModifyClusterIamRolesResult& WithCluster(const Cluster& value) { SetCluster(value); return *this;}
-    inline ModifyClusterIamRolesResult& WithCluster(Cluster&& value) { SetCluster(std::move(value)); return *this;}
-    ///@}
+  inline const Cluster& GetCluster() const { return m_cluster; }
+  template <typename ClusterT = Cluster>
+  void SetCluster(ClusterT&& value) {
+    m_clusterHasBeenSet = true;
+    m_cluster = std::forward<ClusterT>(value);
+  }
+  template <typename ClusterT = Cluster>
+  ModifyClusterIamRolesResult& WithCluster(ClusterT&& value) {
+    SetCluster(std::forward<ClusterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ModifyClusterIamRolesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ModifyClusterIamRolesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Cluster m_cluster;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ModifyClusterIamRolesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  Cluster m_cluster;
 
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_clusterHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

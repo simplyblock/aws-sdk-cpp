@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/finspace/Finspace_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/finspace/Finspace_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace finspace
-{
-namespace Model
-{
-  class GetKxConnectionStringResult
-  {
-  public:
-    AWS_FINSPACE_API GetKxConnectionStringResult();
-    AWS_FINSPACE_API GetKxConnectionStringResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_FINSPACE_API GetKxConnectionStringResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace finspace {
+namespace Model {
+class GetKxConnectionStringResult {
+ public:
+  AWS_FINSPACE_API GetKxConnectionStringResult() = default;
+  AWS_FINSPACE_API GetKxConnectionStringResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_FINSPACE_API GetKxConnectionStringResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The signed connection string that you can use to connect to clusters.</p>
+   */
+  inline const Aws::String& GetSignedConnectionString() const { return m_signedConnectionString; }
+  template <typename SignedConnectionStringT = Aws::String>
+  void SetSignedConnectionString(SignedConnectionStringT&& value) {
+    m_signedConnectionStringHasBeenSet = true;
+    m_signedConnectionString = std::forward<SignedConnectionStringT>(value);
+  }
+  template <typename SignedConnectionStringT = Aws::String>
+  GetKxConnectionStringResult& WithSignedConnectionString(SignedConnectionStringT&& value) {
+    SetSignedConnectionString(std::forward<SignedConnectionStringT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The signed connection string that you can use to connect to clusters.</p>
-     */
-    inline const Aws::String& GetSignedConnectionString() const{ return m_signedConnectionString; }
-    inline void SetSignedConnectionString(const Aws::String& value) { m_signedConnectionString = value; }
-    inline void SetSignedConnectionString(Aws::String&& value) { m_signedConnectionString = std::move(value); }
-    inline void SetSignedConnectionString(const char* value) { m_signedConnectionString.assign(value); }
-    inline GetKxConnectionStringResult& WithSignedConnectionString(const Aws::String& value) { SetSignedConnectionString(value); return *this;}
-    inline GetKxConnectionStringResult& WithSignedConnectionString(Aws::String&& value) { SetSignedConnectionString(std::move(value)); return *this;}
-    inline GetKxConnectionStringResult& WithSignedConnectionString(const char* value) { SetSignedConnectionString(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetKxConnectionStringResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetKxConnectionStringResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetKxConnectionStringResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetKxConnectionStringResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_signedConnectionString;
+ private:
+  Aws::String m_signedConnectionString;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_signedConnectionStringHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace finspace
-} // namespace Aws
+}  // namespace Model
+}  // namespace finspace
+}  // namespace Aws

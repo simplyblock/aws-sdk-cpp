@@ -3,40 +3,34 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/gamelift/model/AcceptMatchResult.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/cbor/CborValue.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/model/AcceptMatchResult.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
+using namespace Aws::Utils::Cbor;
 using namespace Aws;
 
-AcceptMatchResult::AcceptMatchResult()
-{
-}
+AcceptMatchResult::AcceptMatchResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result) { *this = result; }
 
-AcceptMatchResult::AcceptMatchResult(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  *this = result;
-}
-
-AcceptMatchResult& AcceptMatchResult::operator =(const Aws::AmazonWebServiceResult<JsonValue>& result)
-{
-  AWS_UNREFERENCED_PARAM(result);
+AcceptMatchResult& AcceptMatchResult::operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
 
   const auto& headers = result.GetHeaderValueCollection();
   const auto& requestIdIter = headers.find("x-amzn-requestid");
-  if(requestIdIter != headers.end())
-  {
+  if (requestIdIter != headers.end()) {
     m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
-
 
   return *this;
 }

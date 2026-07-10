@@ -4,84 +4,103 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/EngineVersion.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
-  class DescribeEngineVersionsResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult();
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+class DescribeEngineVersionsResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEngineVersionsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returned <code>EngineVersion</code> objects that describe the replication
+   * instance engine versions used in the project.</p>
+   */
+  inline const Aws::Vector<EngineVersion>& GetEngineVersions() const { return m_engineVersions; }
+  template <typename EngineVersionsT = Aws::Vector<EngineVersion>>
+  void SetEngineVersions(EngineVersionsT&& value) {
+    m_engineVersionsHasBeenSet = true;
+    m_engineVersions = std::forward<EngineVersionsT>(value);
+  }
+  template <typename EngineVersionsT = Aws::Vector<EngineVersion>>
+  DescribeEngineVersionsResult& WithEngineVersions(EngineVersionsT&& value) {
+    SetEngineVersions(std::forward<EngineVersionsT>(value));
+    return *this;
+  }
+  template <typename EngineVersionsT = EngineVersion>
+  DescribeEngineVersionsResult& AddEngineVersions(EngineVersionsT&& value) {
+    m_engineVersionsHasBeenSet = true;
+    m_engineVersions.emplace_back(std::forward<EngineVersionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returned <code>EngineVersion</code> objects that describe the replication
-     * instance engine versions used in the project.</p>
-     */
-    inline const Aws::Vector<EngineVersion>& GetEngineVersions() const{ return m_engineVersions; }
-    inline void SetEngineVersions(const Aws::Vector<EngineVersion>& value) { m_engineVersions = value; }
-    inline void SetEngineVersions(Aws::Vector<EngineVersion>&& value) { m_engineVersions = std::move(value); }
-    inline DescribeEngineVersionsResult& WithEngineVersions(const Aws::Vector<EngineVersion>& value) { SetEngineVersions(value); return *this;}
-    inline DescribeEngineVersionsResult& WithEngineVersions(Aws::Vector<EngineVersion>&& value) { SetEngineVersions(std::move(value)); return *this;}
-    inline DescribeEngineVersionsResult& AddEngineVersions(const EngineVersion& value) { m_engineVersions.push_back(value); return *this; }
-    inline DescribeEngineVersionsResult& AddEngineVersions(EngineVersion&& value) { m_engineVersions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An optional pagination token provided by a previous request. If this
+   * parameter is specified, the response includes only records beyond the marker, up
+   * to the value specified by <code>MaxRecords</code>. </p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeEngineVersionsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous request. If this
-     * parameter is specified, the response includes only records beyond the marker, up
-     * to the value specified by <code>MaxRecords</code>. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeEngineVersionsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeEngineVersionsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeEngineVersionsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeEngineVersionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeEngineVersionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeEngineVersionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeEngineVersionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<EngineVersion> m_engineVersions;
+ private:
+  Aws::Vector<EngineVersion> m_engineVersions;
 
-    Aws::String m_marker;
+  Aws::String m_marker;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_engineVersionsHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

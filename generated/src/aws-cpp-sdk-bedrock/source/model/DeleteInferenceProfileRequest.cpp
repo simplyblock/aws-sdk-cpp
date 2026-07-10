@@ -12,16 +12,4 @@ using namespace Aws::Bedrock::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteInferenceProfileRequest::DeleteInferenceProfileRequest() : 
-    m_inferenceProfileIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteInferenceProfileRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteInferenceProfileRequest::SerializePayload() const { return {}; }

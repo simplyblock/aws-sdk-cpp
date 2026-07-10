@@ -3,71 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/securityhub/model/StringFilter.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/securityhub/model/StringFilter.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace SecurityHub {
+namespace Model {
 
-StringFilter::StringFilter() : 
-    m_valueHasBeenSet(false),
-    m_comparison(StringFilterComparison::NOT_SET),
-    m_comparisonHasBeenSet(false)
-{
-}
+StringFilter::StringFilter(JsonView jsonValue) { *this = jsonValue; }
 
-StringFilter::StringFilter(JsonView jsonValue)
-  : StringFilter()
-{
-  *this = jsonValue;
-}
-
-StringFilter& StringFilter::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Value"))
-  {
+StringFilter& StringFilter::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Value")) {
     m_value = jsonValue.GetString("Value");
-
     m_valueHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Comparison"))
-  {
+  if (jsonValue.ValueExists("Comparison")) {
     m_comparison = StringFilterComparisonMapper::GetStringFilterComparisonForName(jsonValue.GetString("Comparison"));
-
     m_comparisonHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue StringFilter::Jsonize() const
-{
+JsonValue StringFilter::Jsonize() const {
   JsonValue payload;
 
-  if(m_valueHasBeenSet)
-  {
-   payload.WithString("Value", m_value);
-
+  if (m_valueHasBeenSet) {
+    payload.WithString("Value", m_value);
   }
 
-  if(m_comparisonHasBeenSet)
-  {
-   payload.WithString("Comparison", StringFilterComparisonMapper::GetNameForStringFilterComparison(m_comparison));
+  if (m_comparisonHasBeenSet) {
+    payload.WithString("Comparison", StringFilterComparisonMapper::GetNameForStringFilterComparison(m_comparison));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

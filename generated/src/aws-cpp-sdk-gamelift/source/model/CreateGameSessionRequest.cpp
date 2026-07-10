@@ -3,110 +3,113 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/CreateGameSessionRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-CreateGameSessionRequest::CreateGameSessionRequest() : 
-    m_fleetIdHasBeenSet(false),
-    m_aliasIdHasBeenSet(false),
-    m_maximumPlayerSessionCount(0),
-    m_maximumPlayerSessionCountHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_gamePropertiesHasBeenSet(false),
-    m_creatorIdHasBeenSet(false),
-    m_gameSessionIdHasBeenSet(false),
-    m_idempotencyTokenHasBeenSet(false),
-    m_gameSessionDataHasBeenSet(false),
-    m_locationHasBeenSet(false)
-{
+Aws::String CreateGameSessionRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_fleetIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_aliasIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_maximumPlayerSessionCountHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gamePropertiesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_creatorIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gameSessionIdHasBeenSet) {
+    mapSize++;
+  }
+  if (m_idempotencyTokenHasBeenSet) {
+    mapSize++;
+  }
+  if (m_gameSessionDataHasBeenSet) {
+    mapSize++;
+  }
+  if (m_locationHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_fleetIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FleetId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_fleetId.c_str()));
+  }
+
+  if (m_aliasIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("AliasId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_aliasId.c_str()));
+  }
+
+  if (m_maximumPlayerSessionCountHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("MaximumPlayerSessionCount"));
+    (m_maximumPlayerSessionCount >= 0) ? encoder.WriteUInt(m_maximumPlayerSessionCount) : encoder.WriteNegInt(m_maximumPlayerSessionCount);
+  }
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_gamePropertiesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GameProperties"));
+    encoder.WriteArrayStart(m_gameProperties.size());
+    for (const auto& item_0 : m_gameProperties) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_creatorIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CreatorId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_creatorId.c_str()));
+  }
+
+  if (m_gameSessionIdHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GameSessionId"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_gameSessionId.c_str()));
+  }
+
+  if (m_idempotencyTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("IdempotencyToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_idempotencyToken.c_str()));
+  }
+
+  if (m_gameSessionDataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("GameSessionData"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_gameSessionData.c_str()));
+  }
+
+  if (m_locationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Location"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_location.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String CreateGameSessionRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_fleetIdHasBeenSet)
-  {
-   payload.WithString("FleetId", m_fleetId);
-
-  }
-
-  if(m_aliasIdHasBeenSet)
-  {
-   payload.WithString("AliasId", m_aliasId);
-
-  }
-
-  if(m_maximumPlayerSessionCountHasBeenSet)
-  {
-   payload.WithInteger("MaximumPlayerSessionCount", m_maximumPlayerSessionCount);
-
-  }
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_gamePropertiesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> gamePropertiesJsonList(m_gameProperties.size());
-   for(unsigned gamePropertiesIndex = 0; gamePropertiesIndex < gamePropertiesJsonList.GetLength(); ++gamePropertiesIndex)
-   {
-     gamePropertiesJsonList[gamePropertiesIndex].AsObject(m_gameProperties[gamePropertiesIndex].Jsonize());
-   }
-   payload.WithArray("GameProperties", std::move(gamePropertiesJsonList));
-
-  }
-
-  if(m_creatorIdHasBeenSet)
-  {
-   payload.WithString("CreatorId", m_creatorId);
-
-  }
-
-  if(m_gameSessionIdHasBeenSet)
-  {
-   payload.WithString("GameSessionId", m_gameSessionId);
-
-  }
-
-  if(m_idempotencyTokenHasBeenSet)
-  {
-   payload.WithString("IdempotencyToken", m_idempotencyToken);
-
-  }
-
-  if(m_gameSessionDataHasBeenSet)
-  {
-   payload.WithString("GameSessionData", m_gameSessionData);
-
-  }
-
-  if(m_locationHasBeenSet)
-  {
-   payload.WithString("Location", m_location);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection CreateGameSessionRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection CreateGameSessionRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.CreateGameSession"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

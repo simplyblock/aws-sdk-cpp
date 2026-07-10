@@ -4,63 +4,95 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/s3control/S3Control_EXPORTS.h>
 #include <aws/s3control/model/MultiRegionAccessPointPolicyDocument.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace S3Control
-{
-namespace Model
-{
-  class GetMultiRegionAccessPointPolicyResult
-  {
-  public:
-    AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult();
-    AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace S3Control {
+namespace Model {
+class GetMultiRegionAccessPointPolicyResult {
+ public:
+  AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult() = default;
+  AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_S3CONTROL_API GetMultiRegionAccessPointPolicyResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The policy associated with the specified Multi-Region Access Point.</p>
+   */
+  inline const MultiRegionAccessPointPolicyDocument& GetPolicy() const { return m_policy; }
+  template <typename PolicyT = MultiRegionAccessPointPolicyDocument>
+  void SetPolicy(PolicyT&& value) {
+    m_policyHasBeenSet = true;
+    m_policy = std::forward<PolicyT>(value);
+  }
+  template <typename PolicyT = MultiRegionAccessPointPolicyDocument>
+  GetMultiRegionAccessPointPolicyResult& WithPolicy(PolicyT&& value) {
+    SetPolicy(std::forward<PolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The policy associated with the specified Multi-Region Access Point.</p>
-     */
-    inline const MultiRegionAccessPointPolicyDocument& GetPolicy() const{ return m_policy; }
-    inline void SetPolicy(const MultiRegionAccessPointPolicyDocument& value) { m_policy = value; }
-    inline void SetPolicy(MultiRegionAccessPointPolicyDocument&& value) { m_policy = std::move(value); }
-    inline GetMultiRegionAccessPointPolicyResult& WithPolicy(const MultiRegionAccessPointPolicyDocument& value) { SetPolicy(value); return *this;}
-    inline GetMultiRegionAccessPointPolicyResult& WithPolicy(MultiRegionAccessPointPolicyDocument&& value) { SetPolicy(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * AWS Request Id value
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMultiRegionAccessPointPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMultiRegionAccessPointPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMultiRegionAccessPointPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMultiRegionAccessPointPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * x-amz-id-2 header value, also known as Host Id
+   */
+  inline const Aws::String& GetHostId() const { return m_hostId; }
+  template <typename HostIdT = Aws::String>
+  void SetHostId(HostIdT&& value) {
+    m_hostIdHasBeenSet = true;
+    m_hostId = std::forward<HostIdT>(value);
+  }
+  template <typename HostIdT = Aws::String>
+  GetMultiRegionAccessPointPolicyResult& WithHostId(HostIdT&& value) {
+    SetHostId(std::forward<HostIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    MultiRegionAccessPointPolicyDocument m_policy;
+ private:
+  MultiRegionAccessPointPolicyDocument m_policy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
 
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+  Aws::String m_hostId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_hostIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

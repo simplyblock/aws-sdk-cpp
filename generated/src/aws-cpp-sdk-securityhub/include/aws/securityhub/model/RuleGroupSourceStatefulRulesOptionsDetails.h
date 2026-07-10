@@ -4,77 +4,83 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>A rule option for a stateful rule.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/RuleGroupSourceStatefulRulesOptionsDetails">AWS
+ * API Reference</a></p>
+ */
+class RuleGroupSourceStatefulRulesOptionsDetails {
+ public:
+  AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails() = default;
+  AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A rule option for a stateful rule.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/RuleGroupSourceStatefulRulesOptionsDetails">AWS
-   * API Reference</a></p>
+   * <p>A keyword to look for.</p>
    */
-  class RuleGroupSourceStatefulRulesOptionsDetails
-  {
-  public:
-    AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails();
-    AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API RuleGroupSourceStatefulRulesOptionsDetails& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetKeyword() const { return m_keyword; }
+  inline bool KeywordHasBeenSet() const { return m_keywordHasBeenSet; }
+  template <typename KeywordT = Aws::String>
+  void SetKeyword(KeywordT&& value) {
+    m_keywordHasBeenSet = true;
+    m_keyword = std::forward<KeywordT>(value);
+  }
+  template <typename KeywordT = Aws::String>
+  RuleGroupSourceStatefulRulesOptionsDetails& WithKeyword(KeywordT&& value) {
+    SetKeyword(std::forward<KeywordT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of settings.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetSettings() const { return m_settings; }
+  inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
+  template <typename SettingsT = Aws::Vector<Aws::String>>
+  void SetSettings(SettingsT&& value) {
+    m_settingsHasBeenSet = true;
+    m_settings = std::forward<SettingsT>(value);
+  }
+  template <typename SettingsT = Aws::Vector<Aws::String>>
+  RuleGroupSourceStatefulRulesOptionsDetails& WithSettings(SettingsT&& value) {
+    SetSettings(std::forward<SettingsT>(value));
+    return *this;
+  }
+  template <typename SettingsT = Aws::String>
+  RuleGroupSourceStatefulRulesOptionsDetails& AddSettings(SettingsT&& value) {
+    m_settingsHasBeenSet = true;
+    m_settings.emplace_back(std::forward<SettingsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_keyword;
 
-    ///@{
-    /**
-     * <p>A keyword to look for.</p>
-     */
-    inline const Aws::String& GetKeyword() const{ return m_keyword; }
-    inline bool KeywordHasBeenSet() const { return m_keywordHasBeenSet; }
-    inline void SetKeyword(const Aws::String& value) { m_keywordHasBeenSet = true; m_keyword = value; }
-    inline void SetKeyword(Aws::String&& value) { m_keywordHasBeenSet = true; m_keyword = std::move(value); }
-    inline void SetKeyword(const char* value) { m_keywordHasBeenSet = true; m_keyword.assign(value); }
-    inline RuleGroupSourceStatefulRulesOptionsDetails& WithKeyword(const Aws::String& value) { SetKeyword(value); return *this;}
-    inline RuleGroupSourceStatefulRulesOptionsDetails& WithKeyword(Aws::String&& value) { SetKeyword(std::move(value)); return *this;}
-    inline RuleGroupSourceStatefulRulesOptionsDetails& WithKeyword(const char* value) { SetKeyword(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_settings;
+  bool m_keywordHasBeenSet = false;
+  bool m_settingsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A list of settings.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetSettings() const{ return m_settings; }
-    inline bool SettingsHasBeenSet() const { return m_settingsHasBeenSet; }
-    inline void SetSettings(const Aws::Vector<Aws::String>& value) { m_settingsHasBeenSet = true; m_settings = value; }
-    inline void SetSettings(Aws::Vector<Aws::String>&& value) { m_settingsHasBeenSet = true; m_settings = std::move(value); }
-    inline RuleGroupSourceStatefulRulesOptionsDetails& WithSettings(const Aws::Vector<Aws::String>& value) { SetSettings(value); return *this;}
-    inline RuleGroupSourceStatefulRulesOptionsDetails& WithSettings(Aws::Vector<Aws::String>&& value) { SetSettings(std::move(value)); return *this;}
-    inline RuleGroupSourceStatefulRulesOptionsDetails& AddSettings(const Aws::String& value) { m_settingsHasBeenSet = true; m_settings.push_back(value); return *this; }
-    inline RuleGroupSourceStatefulRulesOptionsDetails& AddSettings(Aws::String&& value) { m_settingsHasBeenSet = true; m_settings.push_back(std::move(value)); return *this; }
-    inline RuleGroupSourceStatefulRulesOptionsDetails& AddSettings(const char* value) { m_settingsHasBeenSet = true; m_settings.push_back(value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_keyword;
-    bool m_keywordHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_settings;
-    bool m_settingsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

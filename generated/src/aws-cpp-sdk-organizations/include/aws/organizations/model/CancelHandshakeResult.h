@@ -4,63 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/organizations/Organizations_EXPORTS.h>
 #include <aws/organizations/model/Handshake.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Organizations
-{
-namespace Model
-{
-  class CancelHandshakeResult
-  {
-  public:
-    AWS_ORGANIZATIONS_API CancelHandshakeResult();
-    AWS_ORGANIZATIONS_API CancelHandshakeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_ORGANIZATIONS_API CancelHandshakeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Organizations {
+namespace Model {
+class CancelHandshakeResult {
+ public:
+  AWS_ORGANIZATIONS_API CancelHandshakeResult() = default;
+  AWS_ORGANIZATIONS_API CancelHandshakeResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_ORGANIZATIONS_API CancelHandshakeResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A <code>Handshake</code> object. Contains for the handshake that you
+   * canceled.</p>
+   */
+  inline const Handshake& GetHandshake() const { return m_handshake; }
+  template <typename HandshakeT = Handshake>
+  void SetHandshake(HandshakeT&& value) {
+    m_handshakeHasBeenSet = true;
+    m_handshake = std::forward<HandshakeT>(value);
+  }
+  template <typename HandshakeT = Handshake>
+  CancelHandshakeResult& WithHandshake(HandshakeT&& value) {
+    SetHandshake(std::forward<HandshakeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A structure that contains details about the handshake that you canceled.</p>
-     */
-    inline const Handshake& GetHandshake() const{ return m_handshake; }
-    inline void SetHandshake(const Handshake& value) { m_handshake = value; }
-    inline void SetHandshake(Handshake&& value) { m_handshake = std::move(value); }
-    inline CancelHandshakeResult& WithHandshake(const Handshake& value) { SetHandshake(value); return *this;}
-    inline CancelHandshakeResult& WithHandshake(Handshake&& value) { SetHandshake(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CancelHandshakeResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CancelHandshakeResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CancelHandshakeResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CancelHandshakeResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Handshake m_handshake;
+ private:
+  Handshake m_handshake;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_handshakeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Organizations
-} // namespace Aws
+}  // namespace Model
+}  // namespace Organizations
+}  // namespace Aws

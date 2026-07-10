@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/es/model/GetUpgradeStatusRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/es/model/GetUpgradeStatusRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::ElasticsearchService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetUpgradeStatusRequest::GetUpgradeStatusRequest() : 
-    m_domainNameHasBeenSet(false)
-{
-}
-
-Aws::String GetUpgradeStatusRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetUpgradeStatusRequest::SerializePayload() const { return {}; }

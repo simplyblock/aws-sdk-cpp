@@ -12,32 +12,18 @@ using namespace Aws::Comprehend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeEntitiesDetectionJobRequest::DescribeEntitiesDetectionJobRequest() : 
-    m_jobIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeEntitiesDetectionJobRequest::SerializePayload() const
-{
+Aws::String DescribeEntitiesDetectionJobRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_jobIdHasBeenSet)
-  {
-   payload.WithString("JobId", m_jobId);
-
+  if (m_jobIdHasBeenSet) {
+    payload.WithString("JobId", m_jobId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DescribeEntitiesDetectionJobRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DescribeEntitiesDetectionJobRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "Comprehend_20171127.DescribeEntitiesDetectionJob"));
   return headers;
-
 }
-
-
-
-

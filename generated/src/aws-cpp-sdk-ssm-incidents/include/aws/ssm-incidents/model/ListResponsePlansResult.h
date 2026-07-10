@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ssm-incidents/SSMIncidents_EXPORTS.h>
 #include <aws/ssm-incidents/model/ResponsePlanSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSMIncidents
-{
-namespace Model
-{
-  class ListResponsePlansResult
-  {
-  public:
-    AWS_SSMINCIDENTS_API ListResponsePlansResult();
-    AWS_SSMINCIDENTS_API ListResponsePlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSMINCIDENTS_API ListResponsePlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSMIncidents {
+namespace Model {
+class ListResponsePlansResult {
+ public:
+  AWS_SSMINCIDENTS_API ListResponsePlansResult() = default;
+  AWS_SSMINCIDENTS_API ListResponsePlansResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSMINCIDENTS_API ListResponsePlansResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The pagination token to use when requesting the next set of items. If there
+   * are no additional items to return, the string is null.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListResponsePlansResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token to use when requesting the next set of items. If there
-     * are no additional items to return, the string is null.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListResponsePlansResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListResponsePlansResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListResponsePlansResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Details of each response plan.</p>
+   */
+  inline const Aws::Vector<ResponsePlanSummary>& GetResponsePlanSummaries() const { return m_responsePlanSummaries; }
+  template <typename ResponsePlanSummariesT = Aws::Vector<ResponsePlanSummary>>
+  void SetResponsePlanSummaries(ResponsePlanSummariesT&& value) {
+    m_responsePlanSummariesHasBeenSet = true;
+    m_responsePlanSummaries = std::forward<ResponsePlanSummariesT>(value);
+  }
+  template <typename ResponsePlanSummariesT = Aws::Vector<ResponsePlanSummary>>
+  ListResponsePlansResult& WithResponsePlanSummaries(ResponsePlanSummariesT&& value) {
+    SetResponsePlanSummaries(std::forward<ResponsePlanSummariesT>(value));
+    return *this;
+  }
+  template <typename ResponsePlanSummariesT = ResponsePlanSummary>
+  ListResponsePlansResult& AddResponsePlanSummaries(ResponsePlanSummariesT&& value) {
+    m_responsePlanSummariesHasBeenSet = true;
+    m_responsePlanSummaries.emplace_back(std::forward<ResponsePlanSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Details of each response plan.</p>
-     */
-    inline const Aws::Vector<ResponsePlanSummary>& GetResponsePlanSummaries() const{ return m_responsePlanSummaries; }
-    inline void SetResponsePlanSummaries(const Aws::Vector<ResponsePlanSummary>& value) { m_responsePlanSummaries = value; }
-    inline void SetResponsePlanSummaries(Aws::Vector<ResponsePlanSummary>&& value) { m_responsePlanSummaries = std::move(value); }
-    inline ListResponsePlansResult& WithResponsePlanSummaries(const Aws::Vector<ResponsePlanSummary>& value) { SetResponsePlanSummaries(value); return *this;}
-    inline ListResponsePlansResult& WithResponsePlanSummaries(Aws::Vector<ResponsePlanSummary>&& value) { SetResponsePlanSummaries(std::move(value)); return *this;}
-    inline ListResponsePlansResult& AddResponsePlanSummaries(const ResponsePlanSummary& value) { m_responsePlanSummaries.push_back(value); return *this; }
-    inline ListResponsePlansResult& AddResponsePlanSummaries(ResponsePlanSummary&& value) { m_responsePlanSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListResponsePlansResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListResponsePlansResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListResponsePlansResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListResponsePlansResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<ResponsePlanSummary> m_responsePlanSummaries;
+  Aws::Vector<ResponsePlanSummary> m_responsePlanSummaries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responsePlanSummariesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSMIncidents
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSMIncidents
+}  // namespace Aws

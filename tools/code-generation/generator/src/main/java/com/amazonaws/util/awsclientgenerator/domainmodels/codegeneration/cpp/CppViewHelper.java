@@ -5,15 +5,17 @@
 
 package com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.cpp;
 
-import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.Metadata;
-import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.Shape;
-import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.ShapeMember;
+import com.amazonaws.util.awsclientgenerator.domainmodels.codegeneration.*;
+import com.amazonaws.util.awsclientgenerator.generators.cpp.CppClientGenerator;
 import com.amazonaws.util.awsclientgenerator.transform.CoreErrors;
 import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
 import java.lang.RuntimeException;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -25,12 +27,14 @@ import java.util.stream.Collectors;
 
 public class CppViewHelper {
     private static final Map<String, String> CORAL_TYPE_TO_CPP_TYPE_MAPPING = new HashMap<>();
+    private static final Map<String, String> CORAL_TYPE_TO_CBOR_CPP_TYPE_MAPPING = new HashMap<>();
     private static final Map<String, String> CORAL_TYPE_TO_JSON_CPP_TYPE_MAPPING = new HashMap<>();
     private static final Map<String, String> CORAL_TYPE_TO_XML_CONVERSION_MAPPING = new HashMap<>();
     private static final Map<String, String> CORAL_TYPE_TO_DEFAULT_VALUES = new HashMap<>();
     private static final Map<String, String> CORAL_PROTOCOL_TO_CONTENT_TYPE_MAPPING = new HashMap<>();
     private static final Map<String, String> CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING = new HashMap<>();
     private static final Map<String, String> C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT = new HashMap<>();
+    private static final Map<String, String> CORAL_AUTH_TO_SCHEME_MAPPING = new HashMap<>();
 
     private static final Set<String> FORBIDDEN_FUNCTION_NAMES =
             ImmutableSet.<String>builder()
@@ -53,6 +57,9 @@ public class CppViewHelper {
         CORAL_TYPE_TO_CPP_TYPE_MAPPING.put("sensitive_float", "double");
         CORAL_TYPE_TO_CPP_TYPE_MAPPING.put("sensitive_double", "double");
         CORAL_TYPE_TO_CPP_TYPE_MAPPING.put("sensitive_timestamp", "Aws::Utils::DateTime");
+
+        CORAL_TYPE_TO_CBOR_CPP_TYPE_MAPPING.put("integer", "int64_t");
+        CORAL_TYPE_TO_CBOR_CPP_TYPE_MAPPING.put("sensitive_integer", "int64_t");
 
         CORAL_TYPE_TO_JSON_CPP_TYPE_MAPPING.put("long", "Int64");
         CORAL_TYPE_TO_JSON_CPP_TYPE_MAPPING.put("integer", "Integer");
@@ -116,10 +123,25 @@ public class CppViewHelper {
         CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING.put("ec2", "xml");
         CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING.put("application-json", "json");
         CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING.put("api-gateway", "json");
+        CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING.put("smithy-rpc-v2-cbor", "smithy-rpc-v2-cbor");
 
         C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.put("rfc822", "RFC822");
         C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.put("iso8601", "ISO_8601");
+
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("aws.auth#sigv4", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("aws.auth#sigv4a", "smithy::SigV4aAuthSchemeOption::sigV4aAuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("smithy.api#httpBearerAuth", "smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("bearer", "smithy::BearerTokenAuthSchemeOption::bearerTokenAuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("v4", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("v2", "smithy::SigV4AuthSchemeOption::sigV4AuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("sigv4-s3express", "S3ExpressSigV4AuthSchemeOption::s3ExpressSigV4AuthSchemeOption");
+        CORAL_AUTH_TO_SCHEME_MAPPING.put("smithy.api#noAuth", "smithy::NoAuthSchemeOption::noAuthSchemeOption");
     }
+
+    private static final ImmutableMap<String, String> EVENT_STREAM_HEADER_ACCESSORS = ImmutableMap.of(
+            "string", "GetEventHeaderValueAsString()",
+            "boolean", "GetEventHeaderValueAsBoolean()"
+    );
 
     public static String computeExportValue(String classNamePrefix) {
         return String.format("AWS_%s_API", classNamePrefix.toUpperCase());
@@ -140,7 +162,7 @@ public class CppViewHelper {
     }
 
     public static String computeVariableName(String memberName) {
-        return memberName.substring(0, 1).toLowerCase() + memberName.substring(1);
+        return lowercasesFirstChar(memberName).replace("-", "_");
     }
 
     public static String convertToUpperCamel(String lowerCamel) {
@@ -187,9 +209,13 @@ public class CppViewHelper {
         return computeJsonizeString(shape, false);
     }
 
-    public static String computeCppType(Shape shape) {
+    static String computeCppTypeInternal(Shape shape, Map<String, String> typeMapping) {
+        return computeCppTypeInternal(shape, typeMapping, Collections.emptyMap());
+    }
+
+    static String computeCppTypeInternal(Shape shape, Map<String, String> typeMapping, Map<String, String> overrideMapping) {
         String sensitivePrefix = shape.isSensitive() ? "sensitive_" : "";
-        String cppType =  CORAL_TYPE_TO_CPP_TYPE_MAPPING.get(sensitivePrefix + shape.getType());
+        String cppType = overrideMapping.getOrDefault(sensitivePrefix + shape.getType(), typeMapping.get(sensitivePrefix + shape.getType()));
 
         //enum types show up as string
         if(cppType != null && !shape.isEnum()) {
@@ -207,19 +233,83 @@ public class CppViewHelper {
         }
 
         else if(shape.isList()) {
-            String type = computeCppType(shape.getListMember().getShape());
+            String type = computeCppTypeInternal(shape.getListMember().getShape(), typeMapping, overrideMapping);
+            type = shape.isSparse() ? String.format("Aws::Crt::Optional<%s>", type) : type;
             return String.format("Aws::Vector<%s>", type);
         }
 
         else if(shape.isMap()) {
-            String key = computeCppType(shape.getMapKey().getShape());
-            String value = computeCppType(shape.getMapValue().getShape());
+            String key = computeCppTypeInternal(shape.getMapKey().getShape(), typeMapping, overrideMapping);
+            String value = computeCppTypeInternal(shape.getMapValue().getShape(), typeMapping, overrideMapping);
+            value = shape.isSparse() ? String.format("Aws::Crt::Optional<%s>", value) : value;
             return String.format("Aws::Map<%s, %s>", key, value);
         }
 
         else {
             return "Aws::String";
         }
+    }
+
+    public static String computeCppType(Shape shape) {
+        return computeCppTypeInternal(shape, CORAL_TYPE_TO_CPP_TYPE_MAPPING);
+    }
+
+    public static String computeCborCppType(Shape shape) {
+        return computeCppTypeInternal(shape, CORAL_TYPE_TO_CPP_TYPE_MAPPING, CORAL_TYPE_TO_CBOR_CPP_TYPE_MAPPING);
+    }
+
+    public static String computeResultCppType(Shape shape, String protocol) {
+        return "smithy-rpc-v2-cbor".equals(protocol)
+                ? computeCborCppType(shape)
+                : computeCppType(shape);
+    }
+
+    public static boolean isStreamingPayloadMember(Shape parent, String member) {
+        if (!parent.getMembers().containsKey(member)) {
+            throw new RuntimeException("Parent shape " + parent.getName() +
+                    " does not contain member key " + member);
+        }
+        ShapeMember shapeMember = parent.getMembers().get(member);
+        Shape childShape = shapeMember.getShape();
+
+        if (parent.getPayload() != null && parent.getPayload().equals(member)) {
+            if (shapeMember.isStreaming() || childShape.isBlob() || childShape.isString()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String computeCppType(Shape parent, String member) {
+        if (!parent.getMembers().containsKey(member)) {
+            throw new RuntimeException("Parent shape " + parent.getName() +
+                    " does not contain member key " + member);
+        }
+        ShapeMember shapeMember = parent.getMembers().get(member);
+        Shape childShape = shapeMember.getShape();
+
+        if (parent.getPayload() != null && parent.getPayload().equals(member) && parent.isResult()) {
+            if (shapeMember.isStreaming() || childShape.isBlob() || childShape.isString()) {
+                return "Aws::Utils::Stream::ResponseStream";
+            }
+        }
+        return computeCppType(childShape);
+    }
+
+    public static String computeCborCppType(Shape parent, String member) {
+        if (!parent.getMembers().containsKey(member)) {
+            throw new RuntimeException("Parent shape " + parent.getName() +
+                    " does not contain member key " + member);
+        }
+        ShapeMember shapeMember = parent.getMembers().get(member);
+        Shape childShape = shapeMember.getShape();
+
+        if (parent.getPayload() != null && parent.getPayload().equals(member) && parent.isResult()) {
+            if (shapeMember.isStreaming() || childShape.isBlob() || childShape.isString()) {
+                return "Aws::Utils::Stream::ResponseStream";
+            }
+        }
+        return computeCborCppType(childShape);
     }
 
     public static String computeJsonCppType(Shape shape) {
@@ -234,7 +324,7 @@ public class CppViewHelper {
     }
 
     public static String computeRequestContentType(Metadata metadata) {
-        String protocolAndVersion = metadata.getProtocol();
+        String protocolAndVersion = metadata.findFirstSupportedProtocol();
 
         if(metadata.getJsonVersion() != null) {
             protocolAndVersion += metadata.getJsonVersion();
@@ -254,6 +344,13 @@ public class CppViewHelper {
         return CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING.get(protocol);
     }
 
+    public static String computeServicePayloadType(Collection<String> protocols) {
+        return protocols.stream().filter(CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING::containsKey)
+                .findFirst()
+                .map(CORAL_PROTOCOL_TO_PAYLOAD_TYPE_MAPPING::get)
+                .orElseThrow(() -> new RuntimeException("could not find any supported service protocol in " + String.join(",", protocols)));
+    }
+
     public static String computeTimestampFormatInHeader(Shape shape) {
         if (shape.getTimestampFormat() != null) {
             return C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.get(shape.getTimestampFormat().toLowerCase());
@@ -268,6 +365,21 @@ public class CppViewHelper {
         return C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.get("iso8601");
     }
 
+    public static String computeTimeStampAccessInQueryString(final Shape shape) {
+        if (shape.getTimestampFormat() != null) {
+            if (C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.containsKey(shape.getTimestampFormat().toLowerCase())) {
+                return String.format("ToGmtString(Aws::Utils::DateFormat::%s)",
+                        C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.get(shape.getTimestampFormat().toLowerCase()));
+            } else if (shape.getTimestampFormat().equalsIgnoreCase("unixtimestamp")) {
+                return "SecondsWithMSPrecision()";
+            } else {
+                throw new RuntimeException("Illegal timestamp format: " + shape.getTimestampFormat());
+            }
+        }
+        return String.format("ToGmtString(Aws::Utils::DateFormat::%s)",
+                C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.get("iso8601"));
+    }
+
     public static String computeTimestampFormatInXml(Shape shape) {
         if (shape.getTimestampFormat() != null) {
             return C2J_TIMESTAMP_FORMAT_TO_CPP_DATE_TIME_FORMAT.get(shape.getTimestampFormat().toLowerCase());
@@ -278,9 +390,16 @@ public class CppViewHelper {
     public static Set<String> computeHeaderIncludes(String projectName, Shape shape) {
         Set<String> headers = new LinkedHashSet<>();
         Set<String> visited = new LinkedHashSet<>();
+        if (shape.getMembers() == null) {
+            return headers;
+        }
         Queue<Shape> toVisit = shape.getMembers().values().stream().map(ShapeMember::getShape).collect(Collectors.toCollection(() -> new LinkedList<>()));
         boolean includeUtilityHeader = false;
         boolean includeMemoryHeader = false;
+
+        if(shape.isResult()){ //All result types will have a GetResponseCode function
+            headers.add("<aws/core/http/HttpResponse.h>");
+        }
 
         while(!toVisit.isEmpty()) {
             Shape next = toVisit.remove();
@@ -305,7 +424,15 @@ public class CppViewHelper {
                     headers.add(formatModelIncludeName(projectName, shapeInList));
                 }
             }
+            if (next.isSparse()) {
+                headers.add("<aws/crt/Optional.h>");
+            }
             if(!next.isPrimitive()) {
+                if (next.isException() && !next.isModeledException()) {
+                    // C++ SDK code generator skips generating exceptions that can be expressed using
+                    // a purely built-in C++ SDK Core exception class, so they must not be included.
+                    continue;
+                }
                 // if `next` is a direct member of a `shape` and they are mutually referenced
                 if(next.isMutuallyReferencedWith(shape) &&
                         shape.getMembers().values().parallelStream().anyMatch(member -> member.getShape().getName().equals(next.getName()))) {
@@ -324,11 +451,12 @@ public class CppViewHelper {
         if(shape.isEvent() && shape.getName().endsWith("InitialResponse")) {
             headers.add("<aws/core/http/HttpTypes.h>");
         }
+        if(includeMemoryHeader) {
+            // Aws::MakeShared and std::shared_ptr
+            headers.add("<aws/core/utils/memory/stl/AWSAllocator.h>");
+        }
         if(includeUtilityHeader) {
             headers.add("<utility>");
-        }
-        if(includeMemoryHeader) {
-            headers.add("<memory>");
         }
 
         headers.addAll(shape.getMembers().values().stream().filter(member -> member.isIdempotencyToken()).map(member -> "<aws/core/utils/UUID.h>").collect(Collectors.toList()));
@@ -338,6 +466,11 @@ public class CppViewHelper {
     public static Set<String> computeForwardDeclarations(Shape shape) {
         Set<String> forwardDeclarations = new LinkedHashSet<>();
         Set<String> visited = new LinkedHashSet<>();
+
+        if (shape.getMembers() == null) {
+            return forwardDeclarations;
+        }
+
         Queue<Shape> toVisit = shape.getMembers().values().stream().map(ShapeMember::getShape).collect(Collectors.toCollection(() -> new LinkedList<>()));
 
         while(!toVisit.isEmpty()) {
@@ -398,6 +531,9 @@ public class CppViewHelper {
     public static Set<String> computeSourceIncludes(String projectName, Shape shape) {
         Set<String> headers = new LinkedHashSet<>();
         Set<String> visited = new LinkedHashSet<>();
+        if (shape.getMembers() == null) {
+            return headers;
+        }
         Queue<Shape> toVisit = shape.getMembers().values().stream().map(ShapeMember::getShape).collect(Collectors.toCollection(() -> new LinkedList<>()));
 
         while(!toVisit.isEmpty()) {
@@ -459,12 +595,29 @@ public class CppViewHelper {
         return CoreErrors.VARIANTS.get(errorName);
     }
 
+    public static String lowercasesFirstChar(final String str) {
+        if (str.length() > 1) {
+            return str.substring(0,1).toLowerCase() + str.substring(1);
+        }
+        else {
+            return str.toLowerCase();
+        }
+    }
+
     public static String capitalizeFirstChar(final String str) {
         if (str.length() > 1) {
             return str.substring(0,1).toUpperCase() + str.substring(1);
         }
         else {
             return str.toUpperCase();
+        }
+    }
+
+    public static String ifNotNullOrEmpty(final String target, final String fallback) {
+        if (target != null && !target.isEmpty()){
+            return target;
+        } else {
+            return fallback;
         }
     }
 
@@ -492,5 +645,36 @@ public class CppViewHelper {
     public static boolean hasListMemberUsedForHeader(final Shape shape) {
         return shape.getMembers().values().stream()
                 .anyMatch(shapeMember -> shapeMember.getShape().isList() && shapeMember.isUsedForHeader());
+    }
+
+    public static String getEventStreamHeaderValue(final String variableName, final Shape shape) {
+        if (!EVENT_STREAM_HEADER_ACCESSORS.containsKey(shape.getType())) {
+            throw new RuntimeException("No event stream header accessor found for shape type: " + shape.getType());
+        }
+        final String value = String.format("%s->second.%s",
+                variableName,
+                EVENT_STREAM_HEADER_ACCESSORS.get(shape.getType()));
+        if (shape.isEnum()) {
+            return String.format("%sMapper::Get%sForName(%s)",
+                    shape.getName(),
+                    shape.getName(),
+                    value);
+        }
+        return value;
+    }
+
+    public static String computeAuthSchemes(final Operation op) {
+        if(op.getAuth() == null || op.getAuth().isEmpty()) {
+            return "";
+        }
+        return op.getAuth().stream()
+                .map(key -> {
+                    if (CORAL_AUTH_TO_SCHEME_MAPPING.containsKey(key)) {
+                        return CORAL_AUTH_TO_SCHEME_MAPPING.get(key);
+                    }
+                    else {
+                        throw new RuntimeException(String.format("Unknown auth scheme (%s) for operation: %s", op.getName(), key));
+                    }
+                }).collect(Collectors.joining(","));
     }
 }

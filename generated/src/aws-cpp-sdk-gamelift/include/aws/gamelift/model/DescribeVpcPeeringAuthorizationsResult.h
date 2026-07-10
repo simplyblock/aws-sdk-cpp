@@ -4,67 +4,81 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/VpcPeeringAuthorization.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class DescribeVpcPeeringAuthorizationsResult
-  {
-  public:
-    AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult();
-    AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class DescribeVpcPeeringAuthorizationsResult {
+ public:
+  AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult() = default;
+  AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API DescribeVpcPeeringAuthorizationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A collection of objects that describe all valid VPC peering operations for
+   * the current Amazon Web Services account.</p>
+   */
+  inline const Aws::Vector<VpcPeeringAuthorization>& GetVpcPeeringAuthorizations() const { return m_vpcPeeringAuthorizations; }
+  template <typename VpcPeeringAuthorizationsT = Aws::Vector<VpcPeeringAuthorization>>
+  void SetVpcPeeringAuthorizations(VpcPeeringAuthorizationsT&& value) {
+    m_vpcPeeringAuthorizationsHasBeenSet = true;
+    m_vpcPeeringAuthorizations = std::forward<VpcPeeringAuthorizationsT>(value);
+  }
+  template <typename VpcPeeringAuthorizationsT = Aws::Vector<VpcPeeringAuthorization>>
+  DescribeVpcPeeringAuthorizationsResult& WithVpcPeeringAuthorizations(VpcPeeringAuthorizationsT&& value) {
+    SetVpcPeeringAuthorizations(std::forward<VpcPeeringAuthorizationsT>(value));
+    return *this;
+  }
+  template <typename VpcPeeringAuthorizationsT = VpcPeeringAuthorization>
+  DescribeVpcPeeringAuthorizationsResult& AddVpcPeeringAuthorizations(VpcPeeringAuthorizationsT&& value) {
+    m_vpcPeeringAuthorizationsHasBeenSet = true;
+    m_vpcPeeringAuthorizations.emplace_back(std::forward<VpcPeeringAuthorizationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A collection of objects that describe all valid VPC peering operations for
-     * the current Amazon Web Services account.</p>
-     */
-    inline const Aws::Vector<VpcPeeringAuthorization>& GetVpcPeeringAuthorizations() const{ return m_vpcPeeringAuthorizations; }
-    inline void SetVpcPeeringAuthorizations(const Aws::Vector<VpcPeeringAuthorization>& value) { m_vpcPeeringAuthorizations = value; }
-    inline void SetVpcPeeringAuthorizations(Aws::Vector<VpcPeeringAuthorization>&& value) { m_vpcPeeringAuthorizations = std::move(value); }
-    inline DescribeVpcPeeringAuthorizationsResult& WithVpcPeeringAuthorizations(const Aws::Vector<VpcPeeringAuthorization>& value) { SetVpcPeeringAuthorizations(value); return *this;}
-    inline DescribeVpcPeeringAuthorizationsResult& WithVpcPeeringAuthorizations(Aws::Vector<VpcPeeringAuthorization>&& value) { SetVpcPeeringAuthorizations(std::move(value)); return *this;}
-    inline DescribeVpcPeeringAuthorizationsResult& AddVpcPeeringAuthorizations(const VpcPeeringAuthorization& value) { m_vpcPeeringAuthorizations.push_back(value); return *this; }
-    inline DescribeVpcPeeringAuthorizationsResult& AddVpcPeeringAuthorizations(VpcPeeringAuthorization&& value) { m_vpcPeeringAuthorizations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeVpcPeeringAuthorizationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeVpcPeeringAuthorizationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeVpcPeeringAuthorizationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeVpcPeeringAuthorizationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<VpcPeeringAuthorization> m_vpcPeeringAuthorizations;
+ private:
+  Aws::Vector<VpcPeeringAuthorization> m_vpcPeeringAuthorizations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcPeeringAuthorizationsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

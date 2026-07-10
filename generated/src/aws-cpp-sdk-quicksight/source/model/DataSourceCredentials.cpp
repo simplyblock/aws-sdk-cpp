@@ -3,85 +3,78 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/quicksight/model/DataSourceCredentials.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/quicksight/model/DataSourceCredentials.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace QuickSight
-{
-namespace Model
-{
+namespace Aws {
+namespace QuickSight {
+namespace Model {
 
-DataSourceCredentials::DataSourceCredentials() : 
-    m_credentialPairHasBeenSet(false),
-    m_copySourceArnHasBeenSet(false),
-    m_secretArnHasBeenSet(false)
-{
-}
+DataSourceCredentials::DataSourceCredentials(JsonView jsonValue) { *this = jsonValue; }
 
-DataSourceCredentials::DataSourceCredentials(JsonView jsonValue)
-  : DataSourceCredentials()
-{
-  *this = jsonValue;
-}
-
-DataSourceCredentials& DataSourceCredentials::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("CredentialPair"))
-  {
+DataSourceCredentials& DataSourceCredentials::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("CredentialPair")) {
     m_credentialPair = jsonValue.GetObject("CredentialPair");
-
     m_credentialPairHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CopySourceArn"))
-  {
+  if (jsonValue.ValueExists("CopySourceArn")) {
     m_copySourceArn = jsonValue.GetString("CopySourceArn");
-
     m_copySourceArnHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("SecretArn"))
-  {
+  if (jsonValue.ValueExists("SecretArn")) {
     m_secretArn = jsonValue.GetString("SecretArn");
-
     m_secretArnHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("KeyPairCredentials")) {
+    m_keyPairCredentials = jsonValue.GetObject("KeyPairCredentials");
+    m_keyPairCredentialsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("WebProxyCredentials")) {
+    m_webProxyCredentials = jsonValue.GetObject("WebProxyCredentials");
+    m_webProxyCredentialsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("OAuthClientCredentials")) {
+    m_oAuthClientCredentials = jsonValue.GetObject("OAuthClientCredentials");
+    m_oAuthClientCredentialsHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue DataSourceCredentials::Jsonize() const
-{
+JsonValue DataSourceCredentials::Jsonize() const {
   JsonValue payload;
 
-  if(m_credentialPairHasBeenSet)
-  {
-   payload.WithObject("CredentialPair", m_credentialPair.Jsonize());
-
+  if (m_credentialPairHasBeenSet) {
+    payload.WithObject("CredentialPair", m_credentialPair.Jsonize());
   }
 
-  if(m_copySourceArnHasBeenSet)
-  {
-   payload.WithString("CopySourceArn", m_copySourceArn);
-
+  if (m_copySourceArnHasBeenSet) {
+    payload.WithString("CopySourceArn", m_copySourceArn);
   }
 
-  if(m_secretArnHasBeenSet)
-  {
-   payload.WithString("SecretArn", m_secretArn);
+  if (m_secretArnHasBeenSet) {
+    payload.WithString("SecretArn", m_secretArn);
+  }
 
+  if (m_keyPairCredentialsHasBeenSet) {
+    payload.WithObject("KeyPairCredentials", m_keyPairCredentials.Jsonize());
+  }
+
+  if (m_webProxyCredentialsHasBeenSet) {
+    payload.WithObject("WebProxyCredentials", m_webProxyCredentials.Jsonize());
+  }
+
+  if (m_oAuthClientCredentialsHasBeenSet) {
+    payload.WithObject("OAuthClientCredentials", m_oAuthClientCredentials.Jsonize());
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace QuickSight
-} // namespace Aws
+}  // namespace Model
+}  // namespace QuickSight
+}  // namespace Aws

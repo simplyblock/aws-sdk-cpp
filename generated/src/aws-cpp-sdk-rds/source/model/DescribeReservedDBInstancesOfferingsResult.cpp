@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/DescribeReservedDBInstancesOfferingsResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/rds/model/DescribeReservedDBInstancesOfferingsResult.h>
 
 #include <utility>
 
@@ -17,49 +17,46 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeReservedDBInstancesOfferingsResult::DescribeReservedDBInstancesOfferingsResult()
-{
-}
-
-DescribeReservedDBInstancesOfferingsResult::DescribeReservedDBInstancesOfferingsResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeReservedDBInstancesOfferingsResult::DescribeReservedDBInstancesOfferingsResult(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeReservedDBInstancesOfferingsResult& DescribeReservedDBInstancesOfferingsResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeReservedDBInstancesOfferingsResult& DescribeReservedDBInstancesOfferingsResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeReservedDBInstancesOfferingsResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeReservedDBInstancesOfferingsResult")) {
     resultNode = rootNode.FirstChild("DescribeReservedDBInstancesOfferingsResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode markerNode = resultNode.FirstChild("Marker");
-    if(!markerNode.IsNull())
-    {
+    if (!markerNode.IsNull()) {
       m_marker = Aws::Utils::Xml::DecodeEscapedXmlText(markerNode.GetText());
+      m_markerHasBeenSet = true;
     }
     XmlNode reservedDBInstancesOfferingsNode = resultNode.FirstChild("ReservedDBInstancesOfferings");
-    if(!reservedDBInstancesOfferingsNode.IsNull())
-    {
+    if (!reservedDBInstancesOfferingsNode.IsNull()) {
       XmlNode reservedDBInstancesOfferingsMember = reservedDBInstancesOfferingsNode.FirstChild("ReservedDBInstancesOffering");
-      while(!reservedDBInstancesOfferingsMember.IsNull())
-      {
+      m_reservedDBInstancesOfferingsHasBeenSet = !reservedDBInstancesOfferingsMember.IsNull();
+      while (!reservedDBInstancesOfferingsMember.IsNull()) {
         m_reservedDBInstancesOfferings.push_back(reservedDBInstancesOfferingsMember);
         reservedDBInstancesOfferingsMember = reservedDBInstancesOfferingsMember.NextNode("ReservedDBInstancesOffering");
       }
 
+      m_reservedDBInstancesOfferingsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DescribeReservedDBInstancesOfferingsResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::RDS::Model::DescribeReservedDBInstancesOfferingsResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

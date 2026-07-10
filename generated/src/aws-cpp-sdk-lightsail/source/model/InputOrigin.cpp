@@ -3,100 +3,70 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/lightsail/model/InputOrigin.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/lightsail/model/InputOrigin.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Lightsail
-{
-namespace Model
-{
+namespace Aws {
+namespace Lightsail {
+namespace Model {
 
-InputOrigin::InputOrigin() : 
-    m_nameHasBeenSet(false),
-    m_regionName(RegionName::NOT_SET),
-    m_regionNameHasBeenSet(false),
-    m_protocolPolicy(OriginProtocolPolicyEnum::NOT_SET),
-    m_protocolPolicyHasBeenSet(false),
-    m_responseTimeout(0),
-    m_responseTimeoutHasBeenSet(false)
-{
-}
+InputOrigin::InputOrigin(JsonView jsonValue) { *this = jsonValue; }
 
-InputOrigin::InputOrigin(JsonView jsonValue)
-  : InputOrigin()
-{
-  *this = jsonValue;
-}
-
-InputOrigin& InputOrigin::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("name"))
-  {
+InputOrigin& InputOrigin::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("regionName"))
-  {
+  if (jsonValue.ValueExists("regionName")) {
     m_regionName = RegionNameMapper::GetRegionNameForName(jsonValue.GetString("regionName"));
-
     m_regionNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("protocolPolicy"))
-  {
+  if (jsonValue.ValueExists("protocolPolicy")) {
     m_protocolPolicy = OriginProtocolPolicyEnumMapper::GetOriginProtocolPolicyEnumForName(jsonValue.GetString("protocolPolicy"));
-
     m_protocolPolicyHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("responseTimeout"))
-  {
+  if (jsonValue.ValueExists("responseTimeout")) {
     m_responseTimeout = jsonValue.GetInteger("responseTimeout");
-
     m_responseTimeoutHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("ipAddressType")) {
+    m_ipAddressType = OriginIpAddressTypeEnumMapper::GetOriginIpAddressTypeEnumForName(jsonValue.GetString("ipAddressType"));
+    m_ipAddressTypeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue InputOrigin::Jsonize() const
-{
+JsonValue InputOrigin::Jsonize() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_regionNameHasBeenSet)
-  {
-   payload.WithString("regionName", RegionNameMapper::GetNameForRegionName(m_regionName));
+  if (m_regionNameHasBeenSet) {
+    payload.WithString("regionName", RegionNameMapper::GetNameForRegionName(m_regionName));
   }
 
-  if(m_protocolPolicyHasBeenSet)
-  {
-   payload.WithString("protocolPolicy", OriginProtocolPolicyEnumMapper::GetNameForOriginProtocolPolicyEnum(m_protocolPolicy));
+  if (m_protocolPolicyHasBeenSet) {
+    payload.WithString("protocolPolicy", OriginProtocolPolicyEnumMapper::GetNameForOriginProtocolPolicyEnum(m_protocolPolicy));
   }
 
-  if(m_responseTimeoutHasBeenSet)
-  {
-   payload.WithInteger("responseTimeout", m_responseTimeout);
+  if (m_responseTimeoutHasBeenSet) {
+    payload.WithInteger("responseTimeout", m_responseTimeout);
+  }
 
+  if (m_ipAddressTypeHasBeenSet) {
+    payload.WithString("ipAddressType", OriginIpAddressTypeEnumMapper::GetNameForOriginIpAddressTypeEnum(m_ipAddressType));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Lightsail
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lightsail
+}  // namespace Aws

@@ -5,71 +5,85 @@
 
 #pragma once
 #include <aws/config/ConfigService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/config/model/ConfigurationRecorderStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConfigService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConfigService {
+namespace Model {
+/**
+ * <p>The output for the <a>DescribeConfigurationRecorderStatus</a> action, in JSON
+ * format.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DescribeConfigurationRecorderStatusResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeConfigurationRecorderStatusResult {
+ public:
+  AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult() = default;
+  AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The output for the <a>DescribeConfigurationRecorderStatus</a> action, in JSON
-   * format.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DescribeConfigurationRecorderStatusResponse">AWS
-   * API Reference</a></p>
+   * <p>A list that contains status of the specified recorders.</p>
    */
-  class DescribeConfigurationRecorderStatusResult
-  {
-  public:
-    AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult();
-    AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONFIGSERVICE_API DescribeConfigurationRecorderStatusResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<ConfigurationRecorderStatus>& GetConfigurationRecordersStatus() const { return m_configurationRecordersStatus; }
+  template <typename ConfigurationRecordersStatusT = Aws::Vector<ConfigurationRecorderStatus>>
+  void SetConfigurationRecordersStatus(ConfigurationRecordersStatusT&& value) {
+    m_configurationRecordersStatusHasBeenSet = true;
+    m_configurationRecordersStatus = std::forward<ConfigurationRecordersStatusT>(value);
+  }
+  template <typename ConfigurationRecordersStatusT = Aws::Vector<ConfigurationRecorderStatus>>
+  DescribeConfigurationRecorderStatusResult& WithConfigurationRecordersStatus(ConfigurationRecordersStatusT&& value) {
+    SetConfigurationRecordersStatus(std::forward<ConfigurationRecordersStatusT>(value));
+    return *this;
+  }
+  template <typename ConfigurationRecordersStatusT = ConfigurationRecorderStatus>
+  DescribeConfigurationRecorderStatusResult& AddConfigurationRecordersStatus(ConfigurationRecordersStatusT&& value) {
+    m_configurationRecordersStatusHasBeenSet = true;
+    m_configurationRecordersStatus.emplace_back(std::forward<ConfigurationRecordersStatusT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list that contains status of the specified recorders.</p>
-     */
-    inline const Aws::Vector<ConfigurationRecorderStatus>& GetConfigurationRecordersStatus() const{ return m_configurationRecordersStatus; }
-    inline void SetConfigurationRecordersStatus(const Aws::Vector<ConfigurationRecorderStatus>& value) { m_configurationRecordersStatus = value; }
-    inline void SetConfigurationRecordersStatus(Aws::Vector<ConfigurationRecorderStatus>&& value) { m_configurationRecordersStatus = std::move(value); }
-    inline DescribeConfigurationRecorderStatusResult& WithConfigurationRecordersStatus(const Aws::Vector<ConfigurationRecorderStatus>& value) { SetConfigurationRecordersStatus(value); return *this;}
-    inline DescribeConfigurationRecorderStatusResult& WithConfigurationRecordersStatus(Aws::Vector<ConfigurationRecorderStatus>&& value) { SetConfigurationRecordersStatus(std::move(value)); return *this;}
-    inline DescribeConfigurationRecorderStatusResult& AddConfigurationRecordersStatus(const ConfigurationRecorderStatus& value) { m_configurationRecordersStatus.push_back(value); return *this; }
-    inline DescribeConfigurationRecorderStatusResult& AddConfigurationRecordersStatus(ConfigurationRecorderStatus&& value) { m_configurationRecordersStatus.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeConfigurationRecorderStatusResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeConfigurationRecorderStatusResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeConfigurationRecorderStatusResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeConfigurationRecorderStatusResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<ConfigurationRecorderStatus> m_configurationRecordersStatus;
 
-    Aws::Vector<ConfigurationRecorderStatus> m_configurationRecordersStatus;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_configurationRecordersStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace ConfigService
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConfigService
+}  // namespace Aws

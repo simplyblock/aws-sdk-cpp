@@ -12,39 +12,22 @@ using namespace Aws::Transfer::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteHostKeyRequest::DeleteHostKeyRequest() : 
-    m_serverIdHasBeenSet(false),
-    m_hostKeyIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteHostKeyRequest::SerializePayload() const
-{
+Aws::String DeleteHostKeyRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_serverIdHasBeenSet)
-  {
-   payload.WithString("ServerId", m_serverId);
-
+  if (m_serverIdHasBeenSet) {
+    payload.WithString("ServerId", m_serverId);
   }
 
-  if(m_hostKeyIdHasBeenSet)
-  {
-   payload.WithString("HostKeyId", m_hostKeyId);
-
+  if (m_hostKeyIdHasBeenSet) {
+    payload.WithString("HostKeyId", m_hostKeyId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteHostKeyRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteHostKeyRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "TransferService.DeleteHostKey"));
   return headers;
-
 }
-
-
-
-

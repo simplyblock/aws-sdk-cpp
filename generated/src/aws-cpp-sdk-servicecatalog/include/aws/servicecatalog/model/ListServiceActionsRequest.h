@@ -4,87 +4,96 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
 
+/**
+ */
+class ListServiceActionsRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API ListServiceActionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListServiceActions"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class ListServiceActionsRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API ListServiceActionsRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  ListServiceActionsRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListServiceActions"; }
+  ///@{
+  /**
+   * <p>The maximum number of items to return with this call.</p>
+   */
+  inline int GetPageSize() const { return m_pageSize; }
+  inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
+  inline void SetPageSize(int value) {
+    m_pageSizeHasBeenSet = true;
+    m_pageSize = value;
+  }
+  inline ListServiceActionsRequest& WithPageSize(int value) {
+    SetPageSize(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The page token for the next set of results. To retrieve the first set of
+   * results, use null.</p>
+   */
+  inline const Aws::String& GetPageToken() const { return m_pageToken; }
+  inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
+  template <typename PageTokenT = Aws::String>
+  void SetPageToken(PageTokenT&& value) {
+    m_pageTokenHasBeenSet = true;
+    m_pageToken = std::forward<PageTokenT>(value);
+  }
+  template <typename PageTokenT = Aws::String>
+  ListServiceActionsRequest& WithPageToken(PageTokenT&& value) {
+    SetPageToken(std::forward<PageTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  int m_pageSize{0};
 
+  Aws::String m_pageToken;
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_pageSizeHasBeenSet = false;
+  bool m_pageTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline ListServiceActionsRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline ListServiceActionsRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline ListServiceActionsRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of items to return with this call.</p>
-     */
-    inline int GetPageSize() const{ return m_pageSize; }
-    inline bool PageSizeHasBeenSet() const { return m_pageSizeHasBeenSet; }
-    inline void SetPageSize(int value) { m_pageSizeHasBeenSet = true; m_pageSize = value; }
-    inline ListServiceActionsRequest& WithPageSize(int value) { SetPageSize(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The page token for the next set of results. To retrieve the first set of
-     * results, use null.</p>
-     */
-    inline const Aws::String& GetPageToken() const{ return m_pageToken; }
-    inline bool PageTokenHasBeenSet() const { return m_pageTokenHasBeenSet; }
-    inline void SetPageToken(const Aws::String& value) { m_pageTokenHasBeenSet = true; m_pageToken = value; }
-    inline void SetPageToken(Aws::String&& value) { m_pageTokenHasBeenSet = true; m_pageToken = std::move(value); }
-    inline void SetPageToken(const char* value) { m_pageTokenHasBeenSet = true; m_pageToken.assign(value); }
-    inline ListServiceActionsRequest& WithPageToken(const Aws::String& value) { SetPageToken(value); return *this;}
-    inline ListServiceActionsRequest& WithPageToken(Aws::String&& value) { SetPageToken(std::move(value)); return *this;}
-    inline ListServiceActionsRequest& WithPageToken(const char* value) { SetPageToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
-
-    int m_pageSize;
-    bool m_pageSizeHasBeenSet = false;
-
-    Aws::String m_pageToken;
-    bool m_pageTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

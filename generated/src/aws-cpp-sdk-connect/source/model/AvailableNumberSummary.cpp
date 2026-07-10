@@ -11,77 +11,47 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-AvailableNumberSummary::AvailableNumberSummary() : 
-    m_phoneNumberHasBeenSet(false),
-    m_phoneNumberCountryCode(PhoneNumberCountryCode::NOT_SET),
-    m_phoneNumberCountryCodeHasBeenSet(false),
-    m_phoneNumberType(PhoneNumberType::NOT_SET),
-    m_phoneNumberTypeHasBeenSet(false)
-{
-}
+AvailableNumberSummary::AvailableNumberSummary(JsonView jsonValue) { *this = jsonValue; }
 
-AvailableNumberSummary::AvailableNumberSummary(JsonView jsonValue)
-  : AvailableNumberSummary()
-{
-  *this = jsonValue;
-}
-
-AvailableNumberSummary& AvailableNumberSummary::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("PhoneNumber"))
-  {
+AvailableNumberSummary& AvailableNumberSummary::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("PhoneNumber")) {
     m_phoneNumber = jsonValue.GetString("PhoneNumber");
-
     m_phoneNumberHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("PhoneNumberCountryCode"))
-  {
-    m_phoneNumberCountryCode = PhoneNumberCountryCodeMapper::GetPhoneNumberCountryCodeForName(jsonValue.GetString("PhoneNumberCountryCode"));
-
+  if (jsonValue.ValueExists("PhoneNumberCountryCode")) {
+    m_phoneNumberCountryCode =
+        PhoneNumberCountryCodeMapper::GetPhoneNumberCountryCodeForName(jsonValue.GetString("PhoneNumberCountryCode"));
     m_phoneNumberCountryCodeHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("PhoneNumberType"))
-  {
+  if (jsonValue.ValueExists("PhoneNumberType")) {
     m_phoneNumberType = PhoneNumberTypeMapper::GetPhoneNumberTypeForName(jsonValue.GetString("PhoneNumberType"));
-
     m_phoneNumberTypeHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue AvailableNumberSummary::Jsonize() const
-{
+JsonValue AvailableNumberSummary::Jsonize() const {
   JsonValue payload;
 
-  if(m_phoneNumberHasBeenSet)
-  {
-   payload.WithString("PhoneNumber", m_phoneNumber);
-
+  if (m_phoneNumberHasBeenSet) {
+    payload.WithString("PhoneNumber", m_phoneNumber);
   }
 
-  if(m_phoneNumberCountryCodeHasBeenSet)
-  {
-   payload.WithString("PhoneNumberCountryCode", PhoneNumberCountryCodeMapper::GetNameForPhoneNumberCountryCode(m_phoneNumberCountryCode));
+  if (m_phoneNumberCountryCodeHasBeenSet) {
+    payload.WithString("PhoneNumberCountryCode", PhoneNumberCountryCodeMapper::GetNameForPhoneNumberCountryCode(m_phoneNumberCountryCode));
   }
 
-  if(m_phoneNumberTypeHasBeenSet)
-  {
-   payload.WithString("PhoneNumberType", PhoneNumberTypeMapper::GetNameForPhoneNumberType(m_phoneNumberType));
+  if (m_phoneNumberTypeHasBeenSet) {
+    payload.WithString("PhoneNumberType", PhoneNumberTypeMapper::GetNameForPhoneNumberType(m_phoneNumberType));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

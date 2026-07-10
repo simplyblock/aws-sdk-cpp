@@ -4,265 +4,351 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/SageMakerRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/sagemaker/model/DataCaptureConfig.h>
+#include <aws/sagemaker/SageMakerRequest.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/AsyncInferenceConfig.h>
+#include <aws/sagemaker/model/DataCaptureConfig.h>
 #include <aws/sagemaker/model/ExplainerConfig.h>
-#include <aws/sagemaker/model/VpcConfig.h>
+#include <aws/sagemaker/model/MetricsConfig.h>
 #include <aws/sagemaker/model/ProductionVariant.h>
 #include <aws/sagemaker/model/Tag.h>
+#include <aws/sagemaker/model/VpcConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
+/**
+ */
+class CreateEndpointConfigRequest : public SageMakerRequest {
+ public:
+  AWS_SAGEMAKER_API CreateEndpointConfigRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateEndpointConfig"; }
+
+  AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+
+  AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the endpoint configuration. You specify this name in a <a
+   * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html">CreateEndpoint</a>
+   * request. </p>
    */
-  class CreateEndpointConfigRequest : public SageMakerRequest
-  {
-  public:
-    AWS_SAGEMAKER_API CreateEndpointConfigRequest();
+  inline const Aws::String& GetEndpointConfigName() const { return m_endpointConfigName; }
+  inline bool EndpointConfigNameHasBeenSet() const { return m_endpointConfigNameHasBeenSet; }
+  template <typename EndpointConfigNameT = Aws::String>
+  void SetEndpointConfigName(EndpointConfigNameT&& value) {
+    m_endpointConfigNameHasBeenSet = true;
+    m_endpointConfigName = std::forward<EndpointConfigNameT>(value);
+  }
+  template <typename EndpointConfigNameT = Aws::String>
+  CreateEndpointConfigRequest& WithEndpointConfigName(EndpointConfigNameT&& value) {
+    SetEndpointConfigName(std::forward<EndpointConfigNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateEndpointConfig"; }
+  ///@{
+  /**
+   * <p>An array of <code>ProductionVariant</code> objects, one for each model that
+   * you want to host at this endpoint.</p>
+   */
+  inline const Aws::Vector<ProductionVariant>& GetProductionVariants() const { return m_productionVariants; }
+  inline bool ProductionVariantsHasBeenSet() const { return m_productionVariantsHasBeenSet; }
+  template <typename ProductionVariantsT = Aws::Vector<ProductionVariant>>
+  void SetProductionVariants(ProductionVariantsT&& value) {
+    m_productionVariantsHasBeenSet = true;
+    m_productionVariants = std::forward<ProductionVariantsT>(value);
+  }
+  template <typename ProductionVariantsT = Aws::Vector<ProductionVariant>>
+  CreateEndpointConfigRequest& WithProductionVariants(ProductionVariantsT&& value) {
+    SetProductionVariants(std::forward<ProductionVariantsT>(value));
+    return *this;
+  }
+  template <typename ProductionVariantsT = ProductionVariant>
+  CreateEndpointConfigRequest& AddProductionVariants(ProductionVariantsT&& value) {
+    m_productionVariantsHasBeenSet = true;
+    m_productionVariants.emplace_back(std::forward<ProductionVariantsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+  ///@{
 
-    AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  inline const DataCaptureConfig& GetDataCaptureConfig() const { return m_dataCaptureConfig; }
+  inline bool DataCaptureConfigHasBeenSet() const { return m_dataCaptureConfigHasBeenSet; }
+  template <typename DataCaptureConfigT = DataCaptureConfig>
+  void SetDataCaptureConfig(DataCaptureConfigT&& value) {
+    m_dataCaptureConfigHasBeenSet = true;
+    m_dataCaptureConfig = std::forward<DataCaptureConfigT>(value);
+  }
+  template <typename DataCaptureConfigT = DataCaptureConfig>
+  CreateEndpointConfigRequest& WithDataCaptureConfig(DataCaptureConfigT&& value) {
+    SetDataCaptureConfig(std::forward<DataCaptureConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An array of key-value pairs. You can use tags to categorize your Amazon Web
+   * Services resources in different ways, for example, by purpose, owner, or
+   * environment. For more information, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
+   * Amazon Web Services Resources</a>.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateEndpointConfigRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateEndpointConfigRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the endpoint configuration. You specify this name in a <a
-     * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_CreateEndpoint.html">CreateEndpoint</a>
-     * request. </p>
-     */
-    inline const Aws::String& GetEndpointConfigName() const{ return m_endpointConfigName; }
-    inline bool EndpointConfigNameHasBeenSet() const { return m_endpointConfigNameHasBeenSet; }
-    inline void SetEndpointConfigName(const Aws::String& value) { m_endpointConfigNameHasBeenSet = true; m_endpointConfigName = value; }
-    inline void SetEndpointConfigName(Aws::String&& value) { m_endpointConfigNameHasBeenSet = true; m_endpointConfigName = std::move(value); }
-    inline void SetEndpointConfigName(const char* value) { m_endpointConfigNameHasBeenSet = true; m_endpointConfigName.assign(value); }
-    inline CreateEndpointConfigRequest& WithEndpointConfigName(const Aws::String& value) { SetEndpointConfigName(value); return *this;}
-    inline CreateEndpointConfigRequest& WithEndpointConfigName(Aws::String&& value) { SetEndpointConfigName(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& WithEndpointConfigName(const char* value) { SetEndpointConfigName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of a Amazon Web Services Key Management
+   * Service key that SageMaker uses to encrypt data on the storage volume attached
+   * to the ML compute instance that hosts the endpoint.</p> <p>The KmsKeyId can be
+   * any of the following formats: </p> <ul> <li> <p>Key ID:
+   * <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN:
+   * <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+   * </p> </li> <li> <p>Alias name: <code>alias/ExampleAlias</code> </p> </li> <li>
+   * <p>Alias name ARN:
+   * <code>arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias</code> </p> </li>
+   * </ul> <p>The KMS key policy must grant permission to the IAM role that you
+   * specify in your <code>CreateEndpoint</code>, <code>UpdateEndpoint</code>
+   * requests. For more information, refer to the Amazon Web Services Key Management
+   * Service section<a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html">
+   * Using Key Policies in Amazon Web Services KMS </a> </p>  <p>Certain
+   * Nitro-based instances include local storage, dependent on the instance type.
+   * Local storage volumes are encrypted using a hardware module on the instance. If
+   * any of the models that you specify in the <code>ProductionVariants</code>
+   * parameter use nitro-based instances with local storage, the
+   * <code>KmsKeyId</code> parameter does not encrypt instance local storage.</p>
+   * <p>For a list of instance types that support local instance storage, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes">Instance
+   * Store Volumes</a>.</p> <p>For more information about local instance storage
+   * encryption, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html">SSD
+   * Instance Store Volumes</a>.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  CreateEndpointConfigRequest& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>ProductionVariant</code> objects, one for each model that
-     * you want to host at this endpoint.</p>
-     */
-    inline const Aws::Vector<ProductionVariant>& GetProductionVariants() const{ return m_productionVariants; }
-    inline bool ProductionVariantsHasBeenSet() const { return m_productionVariantsHasBeenSet; }
-    inline void SetProductionVariants(const Aws::Vector<ProductionVariant>& value) { m_productionVariantsHasBeenSet = true; m_productionVariants = value; }
-    inline void SetProductionVariants(Aws::Vector<ProductionVariant>&& value) { m_productionVariantsHasBeenSet = true; m_productionVariants = std::move(value); }
-    inline CreateEndpointConfigRequest& WithProductionVariants(const Aws::Vector<ProductionVariant>& value) { SetProductionVariants(value); return *this;}
-    inline CreateEndpointConfigRequest& WithProductionVariants(Aws::Vector<ProductionVariant>&& value) { SetProductionVariants(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& AddProductionVariants(const ProductionVariant& value) { m_productionVariantsHasBeenSet = true; m_productionVariants.push_back(value); return *this; }
-    inline CreateEndpointConfigRequest& AddProductionVariants(ProductionVariant&& value) { m_productionVariantsHasBeenSet = true; m_productionVariants.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies configuration for how an endpoint performs asynchronous inference.
+   * This is a required field in order for your Endpoint to be invoked using <a
+   * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_runtime_InvokeEndpointAsync.html">InvokeEndpointAsync</a>.</p>
+   */
+  inline const AsyncInferenceConfig& GetAsyncInferenceConfig() const { return m_asyncInferenceConfig; }
+  inline bool AsyncInferenceConfigHasBeenSet() const { return m_asyncInferenceConfigHasBeenSet; }
+  template <typename AsyncInferenceConfigT = AsyncInferenceConfig>
+  void SetAsyncInferenceConfig(AsyncInferenceConfigT&& value) {
+    m_asyncInferenceConfigHasBeenSet = true;
+    m_asyncInferenceConfig = std::forward<AsyncInferenceConfigT>(value);
+  }
+  template <typename AsyncInferenceConfigT = AsyncInferenceConfig>
+  CreateEndpointConfigRequest& WithAsyncInferenceConfig(AsyncInferenceConfigT&& value) {
+    SetAsyncInferenceConfig(std::forward<AsyncInferenceConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const DataCaptureConfig& GetDataCaptureConfig() const{ return m_dataCaptureConfig; }
-    inline bool DataCaptureConfigHasBeenSet() const { return m_dataCaptureConfigHasBeenSet; }
-    inline void SetDataCaptureConfig(const DataCaptureConfig& value) { m_dataCaptureConfigHasBeenSet = true; m_dataCaptureConfig = value; }
-    inline void SetDataCaptureConfig(DataCaptureConfig&& value) { m_dataCaptureConfigHasBeenSet = true; m_dataCaptureConfig = std::move(value); }
-    inline CreateEndpointConfigRequest& WithDataCaptureConfig(const DataCaptureConfig& value) { SetDataCaptureConfig(value); return *this;}
-    inline CreateEndpointConfigRequest& WithDataCaptureConfig(DataCaptureConfig&& value) { SetDataCaptureConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A member of <code>CreateEndpointConfig</code> that enables explainers.</p>
+   */
+  inline const ExplainerConfig& GetExplainerConfig() const { return m_explainerConfig; }
+  inline bool ExplainerConfigHasBeenSet() const { return m_explainerConfigHasBeenSet; }
+  template <typename ExplainerConfigT = ExplainerConfig>
+  void SetExplainerConfig(ExplainerConfigT&& value) {
+    m_explainerConfigHasBeenSet = true;
+    m_explainerConfig = std::forward<ExplainerConfigT>(value);
+  }
+  template <typename ExplainerConfigT = ExplainerConfig>
+  CreateEndpointConfigRequest& WithExplainerConfig(ExplainerConfigT&& value) {
+    SetExplainerConfig(std::forward<ExplainerConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of key-value pairs. You can use tags to categorize your Amazon Web
-     * Services resources in different ways, for example, by purpose, owner, or
-     * environment. For more information, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html">Tagging
-     * Amazon Web Services Resources</a>.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateEndpointConfigRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateEndpointConfigRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateEndpointConfigRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>An array of <code>ProductionVariant</code> objects, one for each model that
+   * you want to host at this endpoint in shadow mode with production traffic
+   * replicated from the model specified on <code>ProductionVariants</code>. If you
+   * use this field, you can only specify one variant for
+   * <code>ProductionVariants</code> and one variant for
+   * <code>ShadowProductionVariants</code>.</p>
+   */
+  inline const Aws::Vector<ProductionVariant>& GetShadowProductionVariants() const { return m_shadowProductionVariants; }
+  inline bool ShadowProductionVariantsHasBeenSet() const { return m_shadowProductionVariantsHasBeenSet; }
+  template <typename ShadowProductionVariantsT = Aws::Vector<ProductionVariant>>
+  void SetShadowProductionVariants(ShadowProductionVariantsT&& value) {
+    m_shadowProductionVariantsHasBeenSet = true;
+    m_shadowProductionVariants = std::forward<ShadowProductionVariantsT>(value);
+  }
+  template <typename ShadowProductionVariantsT = Aws::Vector<ProductionVariant>>
+  CreateEndpointConfigRequest& WithShadowProductionVariants(ShadowProductionVariantsT&& value) {
+    SetShadowProductionVariants(std::forward<ShadowProductionVariantsT>(value));
+    return *this;
+  }
+  template <typename ShadowProductionVariantsT = ProductionVariant>
+  CreateEndpointConfigRequest& AddShadowProductionVariants(ShadowProductionVariantsT&& value) {
+    m_shadowProductionVariantsHasBeenSet = true;
+    m_shadowProductionVariants.emplace_back(std::forward<ShadowProductionVariantsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of a Amazon Web Services Key Management
-     * Service key that SageMaker uses to encrypt data on the storage volume attached
-     * to the ML compute instance that hosts the endpoint.</p> <p>The KmsKeyId can be
-     * any of the following formats: </p> <ul> <li> <p>Key ID:
-     * <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN:
-     * <code>arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
-     * </p> </li> <li> <p>Alias name: <code>alias/ExampleAlias</code> </p> </li> <li>
-     * <p>Alias name ARN:
-     * <code>arn:aws:kms:us-west-2:111122223333:alias/ExampleAlias</code> </p> </li>
-     * </ul> <p>The KMS key policy must grant permission to the IAM role that you
-     * specify in your <code>CreateEndpoint</code>, <code>UpdateEndpoint</code>
-     * requests. For more information, refer to the Amazon Web Services Key Management
-     * Service section<a
-     * href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html">
-     * Using Key Policies in Amazon Web Services KMS </a> </p>  <p>Certain
-     * Nitro-based instances include local storage, dependent on the instance type.
-     * Local storage volumes are encrypted using a hardware module on the instance. You
-     * can't request a <code>KmsKeyId</code> when using an instance type with local
-     * storage. If any of the models that you specify in the
-     * <code>ProductionVariants</code> parameter use nitro-based instances with local
-     * storage, do not specify a value for the <code>KmsKeyId</code> parameter. If you
-     * specify a value for <code>KmsKeyId</code> when using any nitro-based instances
-     * with local storage, the call to <code>CreateEndpointConfig</code> fails.</p>
-     * <p>For a list of instance types that support local instance storage, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#instance-store-volumes">Instance
-     * Store Volumes</a>.</p> <p>For more information about local instance storage
-     * encryption, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html">SSD
-     * Instance Store Volumes</a>.</p> 
-     */
-    inline const Aws::String& GetKmsKeyId() const{ return m_kmsKeyId; }
-    inline bool KmsKeyIdHasBeenSet() const { return m_kmsKeyIdHasBeenSet; }
-    inline void SetKmsKeyId(const Aws::String& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = value; }
-    inline void SetKmsKeyId(Aws::String&& value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId = std::move(value); }
-    inline void SetKmsKeyId(const char* value) { m_kmsKeyIdHasBeenSet = true; m_kmsKeyId.assign(value); }
-    inline CreateEndpointConfigRequest& WithKmsKeyId(const Aws::String& value) { SetKmsKeyId(value); return *this;}
-    inline CreateEndpointConfigRequest& WithKmsKeyId(Aws::String&& value) { SetKmsKeyId(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& WithKmsKeyId(const char* value) { SetKmsKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker AI can
+   * assume to perform actions on your behalf. For more information, see <a
+   * href="https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html">SageMaker
+   * AI Roles</a>. </p>  <p>To be able to pass this role to Amazon SageMaker
+   * AI, the caller of this action must have the <code>iam:PassRole</code>
+   * permission.</p>
+   */
+  inline const Aws::String& GetExecutionRoleArn() const { return m_executionRoleArn; }
+  inline bool ExecutionRoleArnHasBeenSet() const { return m_executionRoleArnHasBeenSet; }
+  template <typename ExecutionRoleArnT = Aws::String>
+  void SetExecutionRoleArn(ExecutionRoleArnT&& value) {
+    m_executionRoleArnHasBeenSet = true;
+    m_executionRoleArn = std::forward<ExecutionRoleArnT>(value);
+  }
+  template <typename ExecutionRoleArnT = Aws::String>
+  CreateEndpointConfigRequest& WithExecutionRoleArn(ExecutionRoleArnT&& value) {
+    SetExecutionRoleArn(std::forward<ExecutionRoleArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Specifies configuration for how an endpoint performs asynchronous inference.
-     * This is a required field in order for your Endpoint to be invoked using <a
-     * href="https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_runtime_InvokeEndpointAsync.html">InvokeEndpointAsync</a>.</p>
-     */
-    inline const AsyncInferenceConfig& GetAsyncInferenceConfig() const{ return m_asyncInferenceConfig; }
-    inline bool AsyncInferenceConfigHasBeenSet() const { return m_asyncInferenceConfigHasBeenSet; }
-    inline void SetAsyncInferenceConfig(const AsyncInferenceConfig& value) { m_asyncInferenceConfigHasBeenSet = true; m_asyncInferenceConfig = value; }
-    inline void SetAsyncInferenceConfig(AsyncInferenceConfig&& value) { m_asyncInferenceConfigHasBeenSet = true; m_asyncInferenceConfig = std::move(value); }
-    inline CreateEndpointConfigRequest& WithAsyncInferenceConfig(const AsyncInferenceConfig& value) { SetAsyncInferenceConfig(value); return *this;}
-    inline CreateEndpointConfigRequest& WithAsyncInferenceConfig(AsyncInferenceConfig&& value) { SetAsyncInferenceConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A member of <code>CreateEndpointConfig</code> that enables explainers.</p>
-     */
-    inline const ExplainerConfig& GetExplainerConfig() const{ return m_explainerConfig; }
-    inline bool ExplainerConfigHasBeenSet() const { return m_explainerConfigHasBeenSet; }
-    inline void SetExplainerConfig(const ExplainerConfig& value) { m_explainerConfigHasBeenSet = true; m_explainerConfig = value; }
-    inline void SetExplainerConfig(ExplainerConfig&& value) { m_explainerConfigHasBeenSet = true; m_explainerConfig = std::move(value); }
-    inline CreateEndpointConfigRequest& WithExplainerConfig(const ExplainerConfig& value) { SetExplainerConfig(value); return *this;}
-    inline CreateEndpointConfigRequest& WithExplainerConfig(ExplainerConfig&& value) { SetExplainerConfig(std::move(value)); return *this;}
-    ///@}
+  inline const VpcConfig& GetVpcConfig() const { return m_vpcConfig; }
+  inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
+  template <typename VpcConfigT = VpcConfig>
+  void SetVpcConfig(VpcConfigT&& value) {
+    m_vpcConfigHasBeenSet = true;
+    m_vpcConfig = std::forward<VpcConfigT>(value);
+  }
+  template <typename VpcConfigT = VpcConfig>
+  CreateEndpointConfigRequest& WithVpcConfig(VpcConfigT&& value) {
+    SetVpcConfig(std::forward<VpcConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of <code>ProductionVariant</code> objects, one for each model that
-     * you want to host at this endpoint in shadow mode with production traffic
-     * replicated from the model specified on <code>ProductionVariants</code>. If you
-     * use this field, you can only specify one variant for
-     * <code>ProductionVariants</code> and one variant for
-     * <code>ShadowProductionVariants</code>.</p>
-     */
-    inline const Aws::Vector<ProductionVariant>& GetShadowProductionVariants() const{ return m_shadowProductionVariants; }
-    inline bool ShadowProductionVariantsHasBeenSet() const { return m_shadowProductionVariantsHasBeenSet; }
-    inline void SetShadowProductionVariants(const Aws::Vector<ProductionVariant>& value) { m_shadowProductionVariantsHasBeenSet = true; m_shadowProductionVariants = value; }
-    inline void SetShadowProductionVariants(Aws::Vector<ProductionVariant>&& value) { m_shadowProductionVariantsHasBeenSet = true; m_shadowProductionVariants = std::move(value); }
-    inline CreateEndpointConfigRequest& WithShadowProductionVariants(const Aws::Vector<ProductionVariant>& value) { SetShadowProductionVariants(value); return *this;}
-    inline CreateEndpointConfigRequest& WithShadowProductionVariants(Aws::Vector<ProductionVariant>&& value) { SetShadowProductionVariants(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& AddShadowProductionVariants(const ProductionVariant& value) { m_shadowProductionVariantsHasBeenSet = true; m_shadowProductionVariants.push_back(value); return *this; }
-    inline CreateEndpointConfigRequest& AddShadowProductionVariants(ProductionVariant&& value) { m_shadowProductionVariantsHasBeenSet = true; m_shadowProductionVariants.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Sets whether all model containers deployed to the endpoint are isolated. If
+   * they are, no inbound or outbound network calls can be made to or from the model
+   * containers.</p>
+   */
+  inline bool GetEnableNetworkIsolation() const { return m_enableNetworkIsolation; }
+  inline bool EnableNetworkIsolationHasBeenSet() const { return m_enableNetworkIsolationHasBeenSet; }
+  inline void SetEnableNetworkIsolation(bool value) {
+    m_enableNetworkIsolationHasBeenSet = true;
+    m_enableNetworkIsolation = value;
+  }
+  inline CreateEndpointConfigRequest& WithEnableNetworkIsolation(bool value) {
+    SetEnableNetworkIsolation(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of an IAM role that Amazon SageMaker can
-     * assume to perform actions on your behalf. For more information, see <a
-     * href="https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-roles.html">SageMaker
-     * Roles</a>. </p>  <p>To be able to pass this role to Amazon SageMaker, the
-     * caller of this action must have the <code>iam:PassRole</code> permission.</p>
-     * 
-     */
-    inline const Aws::String& GetExecutionRoleArn() const{ return m_executionRoleArn; }
-    inline bool ExecutionRoleArnHasBeenSet() const { return m_executionRoleArnHasBeenSet; }
-    inline void SetExecutionRoleArn(const Aws::String& value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn = value; }
-    inline void SetExecutionRoleArn(Aws::String&& value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn = std::move(value); }
-    inline void SetExecutionRoleArn(const char* value) { m_executionRoleArnHasBeenSet = true; m_executionRoleArn.assign(value); }
-    inline CreateEndpointConfigRequest& WithExecutionRoleArn(const Aws::String& value) { SetExecutionRoleArn(value); return *this;}
-    inline CreateEndpointConfigRequest& WithExecutionRoleArn(Aws::String&& value) { SetExecutionRoleArn(std::move(value)); return *this;}
-    inline CreateEndpointConfigRequest& WithExecutionRoleArn(const char* value) { SetExecutionRoleArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The configuration parameters for utilization metrics.</p>
+   */
+  inline const MetricsConfig& GetMetricsConfig() const { return m_metricsConfig; }
+  inline bool MetricsConfigHasBeenSet() const { return m_metricsConfigHasBeenSet; }
+  template <typename MetricsConfigT = MetricsConfig>
+  void SetMetricsConfig(MetricsConfigT&& value) {
+    m_metricsConfigHasBeenSet = true;
+    m_metricsConfig = std::forward<MetricsConfigT>(value);
+  }
+  template <typename MetricsConfigT = MetricsConfig>
+  CreateEndpointConfigRequest& WithMetricsConfig(MetricsConfigT&& value) {
+    SetMetricsConfig(std::forward<MetricsConfigT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_endpointConfigName;
 
-    ///@{
-    
-    inline const VpcConfig& GetVpcConfig() const{ return m_vpcConfig; }
-    inline bool VpcConfigHasBeenSet() const { return m_vpcConfigHasBeenSet; }
-    inline void SetVpcConfig(const VpcConfig& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = value; }
-    inline void SetVpcConfig(VpcConfig&& value) { m_vpcConfigHasBeenSet = true; m_vpcConfig = std::move(value); }
-    inline CreateEndpointConfigRequest& WithVpcConfig(const VpcConfig& value) { SetVpcConfig(value); return *this;}
-    inline CreateEndpointConfigRequest& WithVpcConfig(VpcConfig&& value) { SetVpcConfig(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<ProductionVariant> m_productionVariants;
 
-    ///@{
-    /**
-     * <p>Sets whether all model containers deployed to the endpoint are isolated. If
-     * they are, no inbound or outbound network calls can be made to or from the model
-     * containers.</p>
-     */
-    inline bool GetEnableNetworkIsolation() const{ return m_enableNetworkIsolation; }
-    inline bool EnableNetworkIsolationHasBeenSet() const { return m_enableNetworkIsolationHasBeenSet; }
-    inline void SetEnableNetworkIsolation(bool value) { m_enableNetworkIsolationHasBeenSet = true; m_enableNetworkIsolation = value; }
-    inline CreateEndpointConfigRequest& WithEnableNetworkIsolation(bool value) { SetEnableNetworkIsolation(value); return *this;}
-    ///@}
-  private:
+  DataCaptureConfig m_dataCaptureConfig;
 
-    Aws::String m_endpointConfigName;
-    bool m_endpointConfigNameHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::Vector<ProductionVariant> m_productionVariants;
-    bool m_productionVariantsHasBeenSet = false;
+  Aws::String m_kmsKeyId;
 
-    DataCaptureConfig m_dataCaptureConfig;
-    bool m_dataCaptureConfigHasBeenSet = false;
+  AsyncInferenceConfig m_asyncInferenceConfig;
 
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
+  ExplainerConfig m_explainerConfig;
 
-    Aws::String m_kmsKeyId;
-    bool m_kmsKeyIdHasBeenSet = false;
+  Aws::Vector<ProductionVariant> m_shadowProductionVariants;
 
-    AsyncInferenceConfig m_asyncInferenceConfig;
-    bool m_asyncInferenceConfigHasBeenSet = false;
+  Aws::String m_executionRoleArn;
 
-    ExplainerConfig m_explainerConfig;
-    bool m_explainerConfigHasBeenSet = false;
+  VpcConfig m_vpcConfig;
 
-    Aws::Vector<ProductionVariant> m_shadowProductionVariants;
-    bool m_shadowProductionVariantsHasBeenSet = false;
+  bool m_enableNetworkIsolation{false};
 
-    Aws::String m_executionRoleArn;
-    bool m_executionRoleArnHasBeenSet = false;
+  MetricsConfig m_metricsConfig;
+  bool m_endpointConfigNameHasBeenSet = false;
+  bool m_productionVariantsHasBeenSet = false;
+  bool m_dataCaptureConfigHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
+  bool m_asyncInferenceConfigHasBeenSet = false;
+  bool m_explainerConfigHasBeenSet = false;
+  bool m_shadowProductionVariantsHasBeenSet = false;
+  bool m_executionRoleArnHasBeenSet = false;
+  bool m_vpcConfigHasBeenSet = false;
+  bool m_enableNetworkIsolationHasBeenSet = false;
+  bool m_metricsConfigHasBeenSet = false;
+};
 
-    VpcConfig m_vpcConfig;
-    bool m_vpcConfigHasBeenSet = false;
-
-    bool m_enableNetworkIsolation;
-    bool m_enableNetworkIsolationHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

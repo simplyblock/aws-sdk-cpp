@@ -4,81 +4,115 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/imagebuilder/model/LatestVersionReferences.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace imagebuilder
-{
-namespace Model
-{
-  class CreateComponentResult
-  {
-  public:
-    AWS_IMAGEBUILDER_API CreateComponentResult();
-    AWS_IMAGEBUILDER_API CreateComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_IMAGEBUILDER_API CreateComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace imagebuilder {
+namespace Model {
+class CreateComponentResult {
+ public:
+  AWS_IMAGEBUILDER_API CreateComponentResult() = default;
+  AWS_IMAGEBUILDER_API CreateComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_IMAGEBUILDER_API CreateComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The request ID that uniquely identifies this request.</p>
+   */
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateComponentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The request ID that uniquely identifies this request.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateComponentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateComponentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateComponentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The client token that uniquely identifies the request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateComponentResult& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The client token that uniquely identifies the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline void SetClientToken(const Aws::String& value) { m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientToken.assign(value); }
-    inline CreateComponentResult& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateComponentResult& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateComponentResult& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) of the component that the request created.</p>
+   */
+  inline const Aws::String& GetComponentBuildVersionArn() const { return m_componentBuildVersionArn; }
+  template <typename ComponentBuildVersionArnT = Aws::String>
+  void SetComponentBuildVersionArn(ComponentBuildVersionArnT&& value) {
+    m_componentBuildVersionArnHasBeenSet = true;
+    m_componentBuildVersionArn = std::forward<ComponentBuildVersionArnT>(value);
+  }
+  template <typename ComponentBuildVersionArnT = Aws::String>
+  CreateComponentResult& WithComponentBuildVersionArn(ComponentBuildVersionArnT&& value) {
+    SetComponentBuildVersionArn(std::forward<ComponentBuildVersionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the component that the request created.</p>
-     */
-    inline const Aws::String& GetComponentBuildVersionArn() const{ return m_componentBuildVersionArn; }
-    inline void SetComponentBuildVersionArn(const Aws::String& value) { m_componentBuildVersionArn = value; }
-    inline void SetComponentBuildVersionArn(Aws::String&& value) { m_componentBuildVersionArn = std::move(value); }
-    inline void SetComponentBuildVersionArn(const char* value) { m_componentBuildVersionArn.assign(value); }
-    inline CreateComponentResult& WithComponentBuildVersionArn(const Aws::String& value) { SetComponentBuildVersionArn(value); return *this;}
-    inline CreateComponentResult& WithComponentBuildVersionArn(Aws::String&& value) { SetComponentBuildVersionArn(std::move(value)); return *this;}
-    inline CreateComponentResult& WithComponentBuildVersionArn(const char* value) { SetComponentBuildVersionArn(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The resource ARNs with different wildcard variations of semantic
+   * versioning.</p>
+   */
+  inline const LatestVersionReferences& GetLatestVersionReferences() const { return m_latestVersionReferences; }
+  template <typename LatestVersionReferencesT = LatestVersionReferences>
+  void SetLatestVersionReferences(LatestVersionReferencesT&& value) {
+    m_latestVersionReferencesHasBeenSet = true;
+    m_latestVersionReferences = std::forward<LatestVersionReferencesT>(value);
+  }
+  template <typename LatestVersionReferencesT = LatestVersionReferences>
+  CreateComponentResult& WithLatestVersionReferences(LatestVersionReferencesT&& value) {
+    SetLatestVersionReferences(std::forward<LatestVersionReferencesT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
+ private:
+  Aws::String m_requestId;
 
-    Aws::String m_clientToken;
+  Aws::String m_clientToken;
 
-    Aws::String m_componentBuildVersionArn;
-  };
+  Aws::String m_componentBuildVersionArn;
 
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+  LatestVersionReferences m_latestVersionReferences;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_requestIdHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+  bool m_componentBuildVersionArnHasBeenSet = false;
+  bool m_latestVersionReferencesHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

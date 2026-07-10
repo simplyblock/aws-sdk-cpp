@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/wellarchitected/WellArchitected_EXPORTS.h>
 #include <aws/wellarchitected/model/ReviewTemplate.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WellArchitected
-{
-namespace Model
-{
-  class GetReviewTemplateResult
-  {
-  public:
-    AWS_WELLARCHITECTED_API GetReviewTemplateResult();
-    AWS_WELLARCHITECTED_API GetReviewTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WELLARCHITECTED_API GetReviewTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WellArchitected {
+namespace Model {
+class GetReviewTemplateResult {
+ public:
+  AWS_WELLARCHITECTED_API GetReviewTemplateResult() = default;
+  AWS_WELLARCHITECTED_API GetReviewTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WELLARCHITECTED_API GetReviewTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The review template.</p>
+   */
+  inline const ReviewTemplate& GetReviewTemplate() const { return m_reviewTemplate; }
+  template <typename ReviewTemplateT = ReviewTemplate>
+  void SetReviewTemplate(ReviewTemplateT&& value) {
+    m_reviewTemplateHasBeenSet = true;
+    m_reviewTemplate = std::forward<ReviewTemplateT>(value);
+  }
+  template <typename ReviewTemplateT = ReviewTemplate>
+  GetReviewTemplateResult& WithReviewTemplate(ReviewTemplateT&& value) {
+    SetReviewTemplate(std::forward<ReviewTemplateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The review template.</p>
-     */
-    inline const ReviewTemplate& GetReviewTemplate() const{ return m_reviewTemplate; }
-    inline void SetReviewTemplate(const ReviewTemplate& value) { m_reviewTemplate = value; }
-    inline void SetReviewTemplate(ReviewTemplate&& value) { m_reviewTemplate = std::move(value); }
-    inline GetReviewTemplateResult& WithReviewTemplate(const ReviewTemplate& value) { SetReviewTemplate(value); return *this;}
-    inline GetReviewTemplateResult& WithReviewTemplate(ReviewTemplate&& value) { SetReviewTemplate(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetReviewTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetReviewTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetReviewTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetReviewTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ReviewTemplate m_reviewTemplate;
+ private:
+  ReviewTemplate m_reviewTemplate;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_reviewTemplateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WellArchitected
-} // namespace Aws
+}  // namespace Model
+}  // namespace WellArchitected
+}  // namespace Aws

@@ -4,75 +4,78 @@
  */
 
 #pragma once
-#include <aws/sns/SNS_EXPORTS.h>
-#include <aws/sns/SNSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sns/SNSRequest.h>
+#include <aws/sns/SNS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SNS
-{
-namespace Model
-{
+namespace Aws {
+namespace SNS {
+namespace Model {
 
+/**
+ */
+class VerifySMSSandboxPhoneNumberRequest : public SNSRequest {
+ public:
+  AWS_SNS_API VerifySMSSandboxPhoneNumberRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "VerifySMSSandboxPhoneNumber"; }
+
+  AWS_SNS_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_SNS_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>The destination phone number to verify.</p>
    */
-  class VerifySMSSandboxPhoneNumberRequest : public SNSRequest
-  {
-  public:
-    AWS_SNS_API VerifySMSSandboxPhoneNumberRequest();
+  inline const Aws::String& GetPhoneNumber() const { return m_phoneNumber; }
+  inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
+  template <typename PhoneNumberT = Aws::String>
+  void SetPhoneNumber(PhoneNumberT&& value) {
+    m_phoneNumberHasBeenSet = true;
+    m_phoneNumber = std::forward<PhoneNumberT>(value);
+  }
+  template <typename PhoneNumberT = Aws::String>
+  VerifySMSSandboxPhoneNumberRequest& WithPhoneNumber(PhoneNumberT&& value) {
+    SetPhoneNumber(std::forward<PhoneNumberT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "VerifySMSSandboxPhoneNumber"; }
+  ///@{
+  /**
+   * <p>The OTP sent to the destination number from the
+   * <code>CreateSMSSandBoxPhoneNumber</code> call.</p>
+   */
+  inline const Aws::String& GetOneTimePassword() const { return m_oneTimePassword; }
+  inline bool OneTimePasswordHasBeenSet() const { return m_oneTimePasswordHasBeenSet; }
+  template <typename OneTimePasswordT = Aws::String>
+  void SetOneTimePassword(OneTimePasswordT&& value) {
+    m_oneTimePasswordHasBeenSet = true;
+    m_oneTimePassword = std::forward<OneTimePasswordT>(value);
+  }
+  template <typename OneTimePasswordT = Aws::String>
+  VerifySMSSandboxPhoneNumberRequest& WithOneTimePassword(OneTimePasswordT&& value) {
+    SetOneTimePassword(std::forward<OneTimePasswordT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_phoneNumber;
 
-    AWS_SNS_API Aws::String SerializePayload() const override;
+  Aws::String m_oneTimePassword;
+  bool m_phoneNumberHasBeenSet = false;
+  bool m_oneTimePasswordHasBeenSet = false;
+};
 
-  protected:
-    AWS_SNS_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
-
-  public:
-
-    ///@{
-    /**
-     * <p>The destination phone number to verify.</p>
-     */
-    inline const Aws::String& GetPhoneNumber() const{ return m_phoneNumber; }
-    inline bool PhoneNumberHasBeenSet() const { return m_phoneNumberHasBeenSet; }
-    inline void SetPhoneNumber(const Aws::String& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = value; }
-    inline void SetPhoneNumber(Aws::String&& value) { m_phoneNumberHasBeenSet = true; m_phoneNumber = std::move(value); }
-    inline void SetPhoneNumber(const char* value) { m_phoneNumberHasBeenSet = true; m_phoneNumber.assign(value); }
-    inline VerifySMSSandboxPhoneNumberRequest& WithPhoneNumber(const Aws::String& value) { SetPhoneNumber(value); return *this;}
-    inline VerifySMSSandboxPhoneNumberRequest& WithPhoneNumber(Aws::String&& value) { SetPhoneNumber(std::move(value)); return *this;}
-    inline VerifySMSSandboxPhoneNumberRequest& WithPhoneNumber(const char* value) { SetPhoneNumber(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The OTP sent to the destination number from the
-     * <code>CreateSMSSandBoxPhoneNumber</code> call.</p>
-     */
-    inline const Aws::String& GetOneTimePassword() const{ return m_oneTimePassword; }
-    inline bool OneTimePasswordHasBeenSet() const { return m_oneTimePasswordHasBeenSet; }
-    inline void SetOneTimePassword(const Aws::String& value) { m_oneTimePasswordHasBeenSet = true; m_oneTimePassword = value; }
-    inline void SetOneTimePassword(Aws::String&& value) { m_oneTimePasswordHasBeenSet = true; m_oneTimePassword = std::move(value); }
-    inline void SetOneTimePassword(const char* value) { m_oneTimePasswordHasBeenSet = true; m_oneTimePassword.assign(value); }
-    inline VerifySMSSandboxPhoneNumberRequest& WithOneTimePassword(const Aws::String& value) { SetOneTimePassword(value); return *this;}
-    inline VerifySMSSandboxPhoneNumberRequest& WithOneTimePassword(Aws::String&& value) { SetOneTimePassword(std::move(value)); return *this;}
-    inline VerifySMSSandboxPhoneNumberRequest& WithOneTimePassword(const char* value) { SetOneTimePassword(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_phoneNumber;
-    bool m_phoneNumberHasBeenSet = false;
-
-    Aws::String m_oneTimePassword;
-    bool m_oneTimePasswordHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SNS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SNS
+}  // namespace Aws

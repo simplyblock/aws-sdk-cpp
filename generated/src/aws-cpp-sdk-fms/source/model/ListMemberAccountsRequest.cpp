@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/fms/model/ListMemberAccountsRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/fms/model/ListMemberAccountsRequest.h>
 
 #include <utility>
 
@@ -12,40 +12,22 @@ using namespace Aws::FMS::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListMemberAccountsRequest::ListMemberAccountsRequest() : 
-    m_nextTokenHasBeenSet(false),
-    m_maxResults(0),
-    m_maxResultsHasBeenSet(false)
-{
-}
-
-Aws::String ListMemberAccountsRequest::SerializePayload() const
-{
+Aws::String ListMemberAccountsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
+  if (m_nextTokenHasBeenSet) {
+    payload.WithString("NextToken", m_nextToken);
   }
 
-  if(m_maxResultsHasBeenSet)
-  {
-   payload.WithInteger("MaxResults", m_maxResults);
-
+  if (m_maxResultsHasBeenSet) {
+    payload.WithInteger("MaxResults", m_maxResults);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection ListMemberAccountsRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListMemberAccountsRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSFMS_20180101.ListMemberAccounts"));
   return headers;
-
 }
-
-
-
-

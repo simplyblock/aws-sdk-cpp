@@ -6,76 +6,92 @@
 #pragma once
 #include <aws/chime/Chime_EXPORTS.h>
 #include <aws/chime/model/RetentionSettings.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Chime
-{
-namespace Model
-{
-  class GetRetentionSettingsResult
-  {
-  public:
-    AWS_CHIME_API GetRetentionSettingsResult();
-    AWS_CHIME_API GetRetentionSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CHIME_API GetRetentionSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Chime {
+namespace Model {
+class GetRetentionSettingsResult {
+ public:
+  AWS_CHIME_API GetRetentionSettingsResult() = default;
+  AWS_CHIME_API GetRetentionSettingsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CHIME_API GetRetentionSettingsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The retention settings.</p>
+   */
+  inline const RetentionSettings& GetRetentionSettings() const { return m_retentionSettings; }
+  template <typename RetentionSettingsT = RetentionSettings>
+  void SetRetentionSettings(RetentionSettingsT&& value) {
+    m_retentionSettingsHasBeenSet = true;
+    m_retentionSettings = std::forward<RetentionSettingsT>(value);
+  }
+  template <typename RetentionSettingsT = RetentionSettings>
+  GetRetentionSettingsResult& WithRetentionSettings(RetentionSettingsT&& value) {
+    SetRetentionSettings(std::forward<RetentionSettingsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The retention settings.</p>
-     */
-    inline const RetentionSettings& GetRetentionSettings() const{ return m_retentionSettings; }
-    inline void SetRetentionSettings(const RetentionSettings& value) { m_retentionSettings = value; }
-    inline void SetRetentionSettings(RetentionSettings&& value) { m_retentionSettings = std::move(value); }
-    inline GetRetentionSettingsResult& WithRetentionSettings(const RetentionSettings& value) { SetRetentionSettings(value); return *this;}
-    inline GetRetentionSettingsResult& WithRetentionSettings(RetentionSettings&& value) { SetRetentionSettings(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp representing the time at which the specified items are
+   * permanently deleted, in ISO 8601 format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetInitiateDeletionTimestamp() const { return m_initiateDeletionTimestamp; }
+  template <typename InitiateDeletionTimestampT = Aws::Utils::DateTime>
+  void SetInitiateDeletionTimestamp(InitiateDeletionTimestampT&& value) {
+    m_initiateDeletionTimestampHasBeenSet = true;
+    m_initiateDeletionTimestamp = std::forward<InitiateDeletionTimestampT>(value);
+  }
+  template <typename InitiateDeletionTimestampT = Aws::Utils::DateTime>
+  GetRetentionSettingsResult& WithInitiateDeletionTimestamp(InitiateDeletionTimestampT&& value) {
+    SetInitiateDeletionTimestamp(std::forward<InitiateDeletionTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp representing the time at which the specified items are
-     * permanently deleted, in ISO 8601 format.</p>
-     */
-    inline const Aws::Utils::DateTime& GetInitiateDeletionTimestamp() const{ return m_initiateDeletionTimestamp; }
-    inline void SetInitiateDeletionTimestamp(const Aws::Utils::DateTime& value) { m_initiateDeletionTimestamp = value; }
-    inline void SetInitiateDeletionTimestamp(Aws::Utils::DateTime&& value) { m_initiateDeletionTimestamp = std::move(value); }
-    inline GetRetentionSettingsResult& WithInitiateDeletionTimestamp(const Aws::Utils::DateTime& value) { SetInitiateDeletionTimestamp(value); return *this;}
-    inline GetRetentionSettingsResult& WithInitiateDeletionTimestamp(Aws::Utils::DateTime&& value) { SetInitiateDeletionTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetRetentionSettingsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetRetentionSettingsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetRetentionSettingsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetRetentionSettingsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    RetentionSettings m_retentionSettings;
+ private:
+  RetentionSettings m_retentionSettings;
 
-    Aws::Utils::DateTime m_initiateDeletionTimestamp;
+  Aws::Utils::DateTime m_initiateDeletionTimestamp{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_retentionSettingsHasBeenSet = false;
+  bool m_initiateDeletionTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Chime
-} // namespace Aws
+}  // namespace Model
+}  // namespace Chime
+}  // namespace Aws

@@ -4,82 +4,120 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/monitoring/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/ManagedRuleDescription.h>
-#include <utility>
+#include <aws/monitoring/model/ResponseMetadata.h>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
-  class ListManagedInsightRulesResult
-  {
-  public:
-    AWS_CLOUDWATCH_API ListManagedInsightRulesResult();
-    AWS_CLOUDWATCH_API ListManagedInsightRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_CLOUDWATCH_API ListManagedInsightRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
+class ListManagedInsightRulesResult {
+ public:
+  AWS_CLOUDWATCH_API ListManagedInsightRulesResult() = default;
+  AWS_CLOUDWATCH_API ListManagedInsightRulesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_CLOUDWATCH_API ListManagedInsightRulesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p> The managed rules that are available for the specified Amazon Web Services
+   * resource. </p>
+   */
+  inline const Aws::Vector<ManagedRuleDescription>& GetManagedRules() const { return m_managedRules; }
+  template <typename ManagedRulesT = Aws::Vector<ManagedRuleDescription>>
+  void SetManagedRules(ManagedRulesT&& value) {
+    m_managedRulesHasBeenSet = true;
+    m_managedRules = std::forward<ManagedRulesT>(value);
+  }
+  template <typename ManagedRulesT = Aws::Vector<ManagedRuleDescription>>
+  ListManagedInsightRulesResult& WithManagedRules(ManagedRulesT&& value) {
+    SetManagedRules(std::forward<ManagedRulesT>(value));
+    return *this;
+  }
+  template <typename ManagedRulesT = ManagedRuleDescription>
+  ListManagedInsightRulesResult& AddManagedRules(ManagedRulesT&& value) {
+    m_managedRulesHasBeenSet = true;
+    m_managedRules.emplace_back(std::forward<ManagedRulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The managed rules that are available for the specified Amazon Web Services
-     * resource. </p>
-     */
-    inline const Aws::Vector<ManagedRuleDescription>& GetManagedRules() const{ return m_managedRules; }
-    inline void SetManagedRules(const Aws::Vector<ManagedRuleDescription>& value) { m_managedRules = value; }
-    inline void SetManagedRules(Aws::Vector<ManagedRuleDescription>&& value) { m_managedRules = std::move(value); }
-    inline ListManagedInsightRulesResult& WithManagedRules(const Aws::Vector<ManagedRuleDescription>& value) { SetManagedRules(value); return *this;}
-    inline ListManagedInsightRulesResult& WithManagedRules(Aws::Vector<ManagedRuleDescription>&& value) { SetManagedRules(std::move(value)); return *this;}
-    inline ListManagedInsightRulesResult& AddManagedRules(const ManagedRuleDescription& value) { m_managedRules.push_back(value); return *this; }
-    inline ListManagedInsightRulesResult& AddManagedRules(ManagedRuleDescription&& value) { m_managedRules.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p> Include this value to get the next set of rules if the value was returned by
+   * the previous operation. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListManagedInsightRulesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Include this value to get the next set of rules if the value was returned by
-     * the previous operation. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListManagedInsightRulesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListManagedInsightRulesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListManagedInsightRulesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListManagedInsightRulesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListManagedInsightRulesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListManagedInsightRulesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<ManagedRuleDescription> m_managedRules;
+  ///@{
 
-    Aws::String m_nextToken;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListManagedInsightRulesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  Aws::Vector<ManagedRuleDescription> m_managedRules;
 
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+  Aws::String m_nextToken;
+
+  Aws::String m_requestId;
+
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_managedRulesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

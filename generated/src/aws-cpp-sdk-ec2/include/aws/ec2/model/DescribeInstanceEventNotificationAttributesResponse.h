@@ -4,61 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/InstanceTagNotificationAttribute.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeInstanceEventNotificationAttributesResponse
-  {
-  public:
-    AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse();
-    AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeInstanceEventNotificationAttributesResponse {
+ public:
+  AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse() = default;
+  AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeInstanceEventNotificationAttributesResponse& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the registered tag keys.</p>
+   */
+  inline const InstanceTagNotificationAttribute& GetInstanceTagAttribute() const { return m_instanceTagAttribute; }
+  template <typename InstanceTagAttributeT = InstanceTagNotificationAttribute>
+  void SetInstanceTagAttribute(InstanceTagAttributeT&& value) {
+    m_instanceTagAttributeHasBeenSet = true;
+    m_instanceTagAttribute = std::forward<InstanceTagAttributeT>(value);
+  }
+  template <typename InstanceTagAttributeT = InstanceTagNotificationAttribute>
+  DescribeInstanceEventNotificationAttributesResponse& WithInstanceTagAttribute(InstanceTagAttributeT&& value) {
+    SetInstanceTagAttribute(std::forward<InstanceTagAttributeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the registered tag keys.</p>
-     */
-    inline const InstanceTagNotificationAttribute& GetInstanceTagAttribute() const{ return m_instanceTagAttribute; }
-    inline void SetInstanceTagAttribute(const InstanceTagNotificationAttribute& value) { m_instanceTagAttribute = value; }
-    inline void SetInstanceTagAttribute(InstanceTagNotificationAttribute&& value) { m_instanceTagAttribute = std::move(value); }
-    inline DescribeInstanceEventNotificationAttributesResponse& WithInstanceTagAttribute(const InstanceTagNotificationAttribute& value) { SetInstanceTagAttribute(value); return *this;}
-    inline DescribeInstanceEventNotificationAttributesResponse& WithInstanceTagAttribute(InstanceTagNotificationAttribute&& value) { SetInstanceTagAttribute(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeInstanceEventNotificationAttributesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeInstanceEventNotificationAttributesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeInstanceEventNotificationAttributesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    InstanceTagNotificationAttribute m_instanceTagAttribute;
+ private:
+  InstanceTagNotificationAttribute m_instanceTagAttribute;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_instanceTagAttributeHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

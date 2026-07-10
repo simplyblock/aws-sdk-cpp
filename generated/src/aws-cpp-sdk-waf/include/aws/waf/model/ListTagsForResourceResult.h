@@ -4,78 +4,92 @@
  */
 
 #pragma once
-#include <aws/waf/WAF_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/waf/WAF_EXPORTS.h>
 #include <aws/waf/model/TagInfoForResource.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WAF
-{
-namespace Model
-{
-  class ListTagsForResourceResult
-  {
-  public:
-    AWS_WAF_API ListTagsForResourceResult();
-    AWS_WAF_API ListTagsForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WAF_API ListTagsForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WAF {
+namespace Model {
+class ListTagsForResourceResult {
+ public:
+  AWS_WAF_API ListTagsForResourceResult() = default;
+  AWS_WAF_API ListTagsForResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WAF_API ListTagsForResourceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p/>
+   */
+  inline const Aws::String& GetNextMarker() const { return m_nextMarker; }
+  template <typename NextMarkerT = Aws::String>
+  void SetNextMarker(NextMarkerT&& value) {
+    m_nextMarkerHasBeenSet = true;
+    m_nextMarker = std::forward<NextMarkerT>(value);
+  }
+  template <typename NextMarkerT = Aws::String>
+  ListTagsForResourceResult& WithNextMarker(NextMarkerT&& value) {
+    SetNextMarker(std::forward<NextMarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline const Aws::String& GetNextMarker() const{ return m_nextMarker; }
-    inline void SetNextMarker(const Aws::String& value) { m_nextMarker = value; }
-    inline void SetNextMarker(Aws::String&& value) { m_nextMarker = std::move(value); }
-    inline void SetNextMarker(const char* value) { m_nextMarker.assign(value); }
-    inline ListTagsForResourceResult& WithNextMarker(const Aws::String& value) { SetNextMarker(value); return *this;}
-    inline ListTagsForResourceResult& WithNextMarker(Aws::String&& value) { SetNextMarker(std::move(value)); return *this;}
-    inline ListTagsForResourceResult& WithNextMarker(const char* value) { SetNextMarker(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p/>
+   */
+  inline const TagInfoForResource& GetTagInfoForResource() const { return m_tagInfoForResource; }
+  template <typename TagInfoForResourceT = TagInfoForResource>
+  void SetTagInfoForResource(TagInfoForResourceT&& value) {
+    m_tagInfoForResourceHasBeenSet = true;
+    m_tagInfoForResource = std::forward<TagInfoForResourceT>(value);
+  }
+  template <typename TagInfoForResourceT = TagInfoForResource>
+  ListTagsForResourceResult& WithTagInfoForResource(TagInfoForResourceT&& value) {
+    SetTagInfoForResource(std::forward<TagInfoForResourceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline const TagInfoForResource& GetTagInfoForResource() const{ return m_tagInfoForResource; }
-    inline void SetTagInfoForResource(const TagInfoForResource& value) { m_tagInfoForResource = value; }
-    inline void SetTagInfoForResource(TagInfoForResource&& value) { m_tagInfoForResource = std::move(value); }
-    inline ListTagsForResourceResult& WithTagInfoForResource(const TagInfoForResource& value) { SetTagInfoForResource(value); return *this;}
-    inline ListTagsForResourceResult& WithTagInfoForResource(TagInfoForResource&& value) { SetTagInfoForResource(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListTagsForResourceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListTagsForResourceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListTagsForResourceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListTagsForResourceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextMarker;
+ private:
+  Aws::String m_nextMarker;
 
-    TagInfoForResource m_tagInfoForResource;
+  TagInfoForResource m_tagInfoForResource;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextMarkerHasBeenSet = false;
+  bool m_tagInfoForResourceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WAF
-} // namespace Aws
+}  // namespace Model
+}  // namespace WAF
+}  // namespace Aws

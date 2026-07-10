@@ -4,68 +4,84 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/securityhub/model/UnprocessedStandardsControlAssociationUpdate.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
-  class BatchUpdateStandardsControlAssociationsResult
-  {
-  public:
-    AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult();
-    AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
+class BatchUpdateStandardsControlAssociationsResult {
+ public:
+  AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult() = default;
+  AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SECURITYHUB_API BatchUpdateStandardsControlAssociationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> A security control (identified with <code>SecurityControlId</code>,
+   * <code>SecurityControlArn</code>, or a mix of both parameters) whose enablement
+   * status in a specified standard couldn't be updated. </p>
+   */
+  inline const Aws::Vector<UnprocessedStandardsControlAssociationUpdate>& GetUnprocessedAssociationUpdates() const {
+    return m_unprocessedAssociationUpdates;
+  }
+  template <typename UnprocessedAssociationUpdatesT = Aws::Vector<UnprocessedStandardsControlAssociationUpdate>>
+  void SetUnprocessedAssociationUpdates(UnprocessedAssociationUpdatesT&& value) {
+    m_unprocessedAssociationUpdatesHasBeenSet = true;
+    m_unprocessedAssociationUpdates = std::forward<UnprocessedAssociationUpdatesT>(value);
+  }
+  template <typename UnprocessedAssociationUpdatesT = Aws::Vector<UnprocessedStandardsControlAssociationUpdate>>
+  BatchUpdateStandardsControlAssociationsResult& WithUnprocessedAssociationUpdates(UnprocessedAssociationUpdatesT&& value) {
+    SetUnprocessedAssociationUpdates(std::forward<UnprocessedAssociationUpdatesT>(value));
+    return *this;
+  }
+  template <typename UnprocessedAssociationUpdatesT = UnprocessedStandardsControlAssociationUpdate>
+  BatchUpdateStandardsControlAssociationsResult& AddUnprocessedAssociationUpdates(UnprocessedAssociationUpdatesT&& value) {
+    m_unprocessedAssociationUpdatesHasBeenSet = true;
+    m_unprocessedAssociationUpdates.emplace_back(std::forward<UnprocessedAssociationUpdatesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> A security control (identified with <code>SecurityControlId</code>,
-     * <code>SecurityControlArn</code>, or a mix of both parameters) whose enablement
-     * status in a specified standard couldn't be updated. </p>
-     */
-    inline const Aws::Vector<UnprocessedStandardsControlAssociationUpdate>& GetUnprocessedAssociationUpdates() const{ return m_unprocessedAssociationUpdates; }
-    inline void SetUnprocessedAssociationUpdates(const Aws::Vector<UnprocessedStandardsControlAssociationUpdate>& value) { m_unprocessedAssociationUpdates = value; }
-    inline void SetUnprocessedAssociationUpdates(Aws::Vector<UnprocessedStandardsControlAssociationUpdate>&& value) { m_unprocessedAssociationUpdates = std::move(value); }
-    inline BatchUpdateStandardsControlAssociationsResult& WithUnprocessedAssociationUpdates(const Aws::Vector<UnprocessedStandardsControlAssociationUpdate>& value) { SetUnprocessedAssociationUpdates(value); return *this;}
-    inline BatchUpdateStandardsControlAssociationsResult& WithUnprocessedAssociationUpdates(Aws::Vector<UnprocessedStandardsControlAssociationUpdate>&& value) { SetUnprocessedAssociationUpdates(std::move(value)); return *this;}
-    inline BatchUpdateStandardsControlAssociationsResult& AddUnprocessedAssociationUpdates(const UnprocessedStandardsControlAssociationUpdate& value) { m_unprocessedAssociationUpdates.push_back(value); return *this; }
-    inline BatchUpdateStandardsControlAssociationsResult& AddUnprocessedAssociationUpdates(UnprocessedStandardsControlAssociationUpdate&& value) { m_unprocessedAssociationUpdates.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchUpdateStandardsControlAssociationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchUpdateStandardsControlAssociationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchUpdateStandardsControlAssociationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchUpdateStandardsControlAssociationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<UnprocessedStandardsControlAssociationUpdate> m_unprocessedAssociationUpdates;
+ private:
+  Aws::Vector<UnprocessedStandardsControlAssociationUpdate> m_unprocessedAssociationUpdates;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_unprocessedAssociationUpdatesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

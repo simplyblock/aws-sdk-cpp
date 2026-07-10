@@ -4,81 +4,101 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/MovingAddressStatus.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class DescribeMovingAddressesResponse
-  {
-  public:
-    AWS_EC2_API DescribeMovingAddressesResponse();
-    AWS_EC2_API DescribeMovingAddressesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API DescribeMovingAddressesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class DescribeMovingAddressesResponse {
+ public:
+  AWS_EC2_API DescribeMovingAddressesResponse() = default;
+  AWS_EC2_API DescribeMovingAddressesResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API DescribeMovingAddressesResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The status for each Elastic IP address.</p>
+   */
+  inline const Aws::Vector<MovingAddressStatus>& GetMovingAddressStatuses() const { return m_movingAddressStatuses; }
+  template <typename MovingAddressStatusesT = Aws::Vector<MovingAddressStatus>>
+  void SetMovingAddressStatuses(MovingAddressStatusesT&& value) {
+    m_movingAddressStatusesHasBeenSet = true;
+    m_movingAddressStatuses = std::forward<MovingAddressStatusesT>(value);
+  }
+  template <typename MovingAddressStatusesT = Aws::Vector<MovingAddressStatus>>
+  DescribeMovingAddressesResponse& WithMovingAddressStatuses(MovingAddressStatusesT&& value) {
+    SetMovingAddressStatuses(std::forward<MovingAddressStatusesT>(value));
+    return *this;
+  }
+  template <typename MovingAddressStatusesT = MovingAddressStatus>
+  DescribeMovingAddressesResponse& AddMovingAddressStatuses(MovingAddressStatusesT&& value) {
+    m_movingAddressStatusesHasBeenSet = true;
+    m_movingAddressStatuses.emplace_back(std::forward<MovingAddressStatusesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status for each Elastic IP address.</p>
-     */
-    inline const Aws::Vector<MovingAddressStatus>& GetMovingAddressStatuses() const{ return m_movingAddressStatuses; }
-    inline void SetMovingAddressStatuses(const Aws::Vector<MovingAddressStatus>& value) { m_movingAddressStatuses = value; }
-    inline void SetMovingAddressStatuses(Aws::Vector<MovingAddressStatus>&& value) { m_movingAddressStatuses = std::move(value); }
-    inline DescribeMovingAddressesResponse& WithMovingAddressStatuses(const Aws::Vector<MovingAddressStatus>& value) { SetMovingAddressStatuses(value); return *this;}
-    inline DescribeMovingAddressesResponse& WithMovingAddressStatuses(Aws::Vector<MovingAddressStatus>&& value) { SetMovingAddressStatuses(std::move(value)); return *this;}
-    inline DescribeMovingAddressesResponse& AddMovingAddressStatuses(const MovingAddressStatus& value) { m_movingAddressStatuses.push_back(value); return *this; }
-    inline DescribeMovingAddressesResponse& AddMovingAddressStatuses(MovingAddressStatus&& value) { m_movingAddressStatuses.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is
+   * <code>null</code> when there are no more results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeMovingAddressesResponse& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is
-     * <code>null</code> when there are no more results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeMovingAddressesResponse& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeMovingAddressesResponse& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeMovingAddressesResponse& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeMovingAddressesResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeMovingAddressesResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeMovingAddressesResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<MovingAddressStatus> m_movingAddressStatuses;
+ private:
+  Aws::Vector<MovingAddressStatus> m_movingAddressStatuses;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_movingAddressStatusesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

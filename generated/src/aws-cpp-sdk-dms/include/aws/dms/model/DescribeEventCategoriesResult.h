@@ -4,71 +4,85 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/EventCategoryGroup.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeEventCategoriesResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeEventCategoriesResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeEventCategoriesResponse">AWS
-   * API Reference</a></p>
+   * <p>A list of event categories.</p>
    */
-  class DescribeEventCategoriesResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult();
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeEventCategoriesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<EventCategoryGroup>& GetEventCategoryGroupList() const { return m_eventCategoryGroupList; }
+  template <typename EventCategoryGroupListT = Aws::Vector<EventCategoryGroup>>
+  void SetEventCategoryGroupList(EventCategoryGroupListT&& value) {
+    m_eventCategoryGroupListHasBeenSet = true;
+    m_eventCategoryGroupList = std::forward<EventCategoryGroupListT>(value);
+  }
+  template <typename EventCategoryGroupListT = Aws::Vector<EventCategoryGroup>>
+  DescribeEventCategoriesResult& WithEventCategoryGroupList(EventCategoryGroupListT&& value) {
+    SetEventCategoryGroupList(std::forward<EventCategoryGroupListT>(value));
+    return *this;
+  }
+  template <typename EventCategoryGroupListT = EventCategoryGroup>
+  DescribeEventCategoriesResult& AddEventCategoryGroupList(EventCategoryGroupListT&& value) {
+    m_eventCategoryGroupListHasBeenSet = true;
+    m_eventCategoryGroupList.emplace_back(std::forward<EventCategoryGroupListT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of event categories.</p>
-     */
-    inline const Aws::Vector<EventCategoryGroup>& GetEventCategoryGroupList() const{ return m_eventCategoryGroupList; }
-    inline void SetEventCategoryGroupList(const Aws::Vector<EventCategoryGroup>& value) { m_eventCategoryGroupList = value; }
-    inline void SetEventCategoryGroupList(Aws::Vector<EventCategoryGroup>&& value) { m_eventCategoryGroupList = std::move(value); }
-    inline DescribeEventCategoriesResult& WithEventCategoryGroupList(const Aws::Vector<EventCategoryGroup>& value) { SetEventCategoryGroupList(value); return *this;}
-    inline DescribeEventCategoriesResult& WithEventCategoryGroupList(Aws::Vector<EventCategoryGroup>&& value) { SetEventCategoryGroupList(std::move(value)); return *this;}
-    inline DescribeEventCategoriesResult& AddEventCategoryGroupList(const EventCategoryGroup& value) { m_eventCategoryGroupList.push_back(value); return *this; }
-    inline DescribeEventCategoriesResult& AddEventCategoryGroupList(EventCategoryGroup&& value) { m_eventCategoryGroupList.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeEventCategoriesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeEventCategoriesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeEventCategoriesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeEventCategoriesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<EventCategoryGroup> m_eventCategoryGroupList;
 
-    Aws::Vector<EventCategoryGroup> m_eventCategoryGroupList;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_eventCategoryGroupListHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

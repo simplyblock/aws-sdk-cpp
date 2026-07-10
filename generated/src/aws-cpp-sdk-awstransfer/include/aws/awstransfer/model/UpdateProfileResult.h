@@ -5,63 +5,70 @@
 
 #pragma once
 #include <aws/awstransfer/Transfer_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Transfer
-{
-namespace Model
-{
-  class UpdateProfileResult
-  {
-  public:
-    AWS_TRANSFER_API UpdateProfileResult();
-    AWS_TRANSFER_API UpdateProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSFER_API UpdateProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Transfer {
+namespace Model {
+class UpdateProfileResult {
+ public:
+  AWS_TRANSFER_API UpdateProfileResult() = default;
+  AWS_TRANSFER_API UpdateProfileResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSFER_API UpdateProfileResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Returns the identifier for the profile that's being updated.</p>
+   */
+  inline const Aws::String& GetProfileId() const { return m_profileId; }
+  template <typename ProfileIdT = Aws::String>
+  void SetProfileId(ProfileIdT&& value) {
+    m_profileIdHasBeenSet = true;
+    m_profileId = std::forward<ProfileIdT>(value);
+  }
+  template <typename ProfileIdT = Aws::String>
+  UpdateProfileResult& WithProfileId(ProfileIdT&& value) {
+    SetProfileId(std::forward<ProfileIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns the identifier for the profile that's being updated.</p>
-     */
-    inline const Aws::String& GetProfileId() const{ return m_profileId; }
-    inline void SetProfileId(const Aws::String& value) { m_profileId = value; }
-    inline void SetProfileId(Aws::String&& value) { m_profileId = std::move(value); }
-    inline void SetProfileId(const char* value) { m_profileId.assign(value); }
-    inline UpdateProfileResult& WithProfileId(const Aws::String& value) { SetProfileId(value); return *this;}
-    inline UpdateProfileResult& WithProfileId(Aws::String&& value) { SetProfileId(std::move(value)); return *this;}
-    inline UpdateProfileResult& WithProfileId(const char* value) { SetProfileId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateProfileResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateProfileResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateProfileResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateProfileResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_profileId;
+ private:
+  Aws::String m_profileId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_profileIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

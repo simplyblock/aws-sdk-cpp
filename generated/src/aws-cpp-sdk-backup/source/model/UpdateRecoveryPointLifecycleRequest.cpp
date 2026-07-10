@@ -12,26 +12,12 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateRecoveryPointLifecycleRequest::UpdateRecoveryPointLifecycleRequest() : 
-    m_backupVaultNameHasBeenSet(false),
-    m_recoveryPointArnHasBeenSet(false),
-    m_lifecycleHasBeenSet(false)
-{
-}
-
-Aws::String UpdateRecoveryPointLifecycleRequest::SerializePayload() const
-{
+Aws::String UpdateRecoveryPointLifecycleRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_lifecycleHasBeenSet)
-  {
-   payload.WithObject("Lifecycle", m_lifecycle.Jsonize());
-
+  if (m_lifecycleHasBeenSet) {
+    payload.WithObject("Lifecycle", m_lifecycle.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

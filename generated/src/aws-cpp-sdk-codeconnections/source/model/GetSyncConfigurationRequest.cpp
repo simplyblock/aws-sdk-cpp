@@ -12,39 +12,22 @@ using namespace Aws::CodeConnections::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetSyncConfigurationRequest::GetSyncConfigurationRequest() : 
-    m_syncType(SyncConfigurationType::NOT_SET),
-    m_syncTypeHasBeenSet(false),
-    m_resourceNameHasBeenSet(false)
-{
-}
-
-Aws::String GetSyncConfigurationRequest::SerializePayload() const
-{
+Aws::String GetSyncConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_syncTypeHasBeenSet)
-  {
-   payload.WithString("SyncType", SyncConfigurationTypeMapper::GetNameForSyncConfigurationType(m_syncType));
+  if (m_syncTypeHasBeenSet) {
+    payload.WithString("SyncType", SyncConfigurationTypeMapper::GetNameForSyncConfigurationType(m_syncType));
   }
 
-  if(m_resourceNameHasBeenSet)
-  {
-   payload.WithString("ResourceName", m_resourceName);
-
+  if (m_resourceNameHasBeenSet) {
+    payload.WithString("ResourceName", m_resourceName);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection GetSyncConfigurationRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection GetSyncConfigurationRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "com.amazonaws.codeconnections.CodeConnections_20231201.GetSyncConfiguration"));
   return headers;
-
 }
-
-
-
-

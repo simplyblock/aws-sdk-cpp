@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
-  class PutClusterPolicyResult
-  {
-  public:
-    AWS_KAFKA_API PutClusterPolicyResult();
-    AWS_KAFKA_API PutClusterPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KAFKA_API PutClusterPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
+class PutClusterPolicyResult {
+ public:
+  AWS_KAFKA_API PutClusterPolicyResult() = default;
+  AWS_KAFKA_API PutClusterPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KAFKA_API PutClusterPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   *
+          <p>The policy version.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The policy version.</p>
-         
-     */
-    inline const Aws::String& GetCurrentVersion() const{ return m_currentVersion; }
-    inline void SetCurrentVersion(const Aws::String& value) { m_currentVersion = value; }
-    inline void SetCurrentVersion(Aws::String&& value) { m_currentVersion = std::move(value); }
-    inline void SetCurrentVersion(const char* value) { m_currentVersion.assign(value); }
-    inline PutClusterPolicyResult& WithCurrentVersion(const Aws::String& value) { SetCurrentVersion(value); return *this;}
-    inline PutClusterPolicyResult& WithCurrentVersion(Aws::String&& value) { SetCurrentVersion(std::move(value)); return *this;}
-    inline PutClusterPolicyResult& WithCurrentVersion(const char* value) { SetCurrentVersion(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetCurrentVersion() const { return m_currentVersion; }
+  template <typename CurrentVersionT = Aws::String>
+  void SetCurrentVersion(CurrentVersionT&& value) {
+    m_currentVersionHasBeenSet = true;
+    m_currentVersion = std::forward<CurrentVersionT>(value);
+  }
+  template <typename CurrentVersionT = Aws::String>
+  PutClusterPolicyResult& WithCurrentVersion(CurrentVersionT&& value) {
+    SetCurrentVersion(std::forward<CurrentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline PutClusterPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline PutClusterPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline PutClusterPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_currentVersion;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  PutClusterPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_currentVersion;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_currentVersionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

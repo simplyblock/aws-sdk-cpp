@@ -4,61 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/IpamResourceDiscovery.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CreateIpamResourceDiscoveryResponse
-  {
-  public:
-    AWS_EC2_API CreateIpamResourceDiscoveryResponse();
-    AWS_EC2_API CreateIpamResourceDiscoveryResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CreateIpamResourceDiscoveryResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CreateIpamResourceDiscoveryResponse {
+ public:
+  AWS_EC2_API CreateIpamResourceDiscoveryResponse() = default;
+  AWS_EC2_API CreateIpamResourceDiscoveryResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CreateIpamResourceDiscoveryResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>An IPAM resource discovery.</p>
+   */
+  inline const IpamResourceDiscovery& GetIpamResourceDiscovery() const { return m_ipamResourceDiscovery; }
+  template <typename IpamResourceDiscoveryT = IpamResourceDiscovery>
+  void SetIpamResourceDiscovery(IpamResourceDiscoveryT&& value) {
+    m_ipamResourceDiscoveryHasBeenSet = true;
+    m_ipamResourceDiscovery = std::forward<IpamResourceDiscoveryT>(value);
+  }
+  template <typename IpamResourceDiscoveryT = IpamResourceDiscovery>
+  CreateIpamResourceDiscoveryResponse& WithIpamResourceDiscovery(IpamResourceDiscoveryT&& value) {
+    SetIpamResourceDiscovery(std::forward<IpamResourceDiscoveryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An IPAM resource discovery.</p>
-     */
-    inline const IpamResourceDiscovery& GetIpamResourceDiscovery() const{ return m_ipamResourceDiscovery; }
-    inline void SetIpamResourceDiscovery(const IpamResourceDiscovery& value) { m_ipamResourceDiscovery = value; }
-    inline void SetIpamResourceDiscovery(IpamResourceDiscovery&& value) { m_ipamResourceDiscovery = std::move(value); }
-    inline CreateIpamResourceDiscoveryResponse& WithIpamResourceDiscovery(const IpamResourceDiscovery& value) { SetIpamResourceDiscovery(value); return *this;}
-    inline CreateIpamResourceDiscoveryResponse& WithIpamResourceDiscovery(IpamResourceDiscovery&& value) { SetIpamResourceDiscovery(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateIpamResourceDiscoveryResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateIpamResourceDiscoveryResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateIpamResourceDiscoveryResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    IpamResourceDiscovery m_ipamResourceDiscovery;
+ private:
+  IpamResourceDiscovery m_ipamResourceDiscovery;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ipamResourceDiscoveryHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

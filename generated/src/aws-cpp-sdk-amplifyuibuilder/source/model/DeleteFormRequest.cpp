@@ -12,18 +12,4 @@ using namespace Aws::AmplifyUIBuilder::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteFormRequest::DeleteFormRequest() : 
-    m_appIdHasBeenSet(false),
-    m_environmentNameHasBeenSet(false),
-    m_idHasBeenSet(false)
-{
-}
-
-Aws::String DeleteFormRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteFormRequest::SerializePayload() const { return {}; }

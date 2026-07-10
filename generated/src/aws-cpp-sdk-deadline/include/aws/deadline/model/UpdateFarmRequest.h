@@ -4,93 +4,121 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
-#include <aws/deadline/DeadlineRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/deadline/DeadlineRequest.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace deadline
-{
-namespace Model
-{
+namespace Aws {
+namespace deadline {
+namespace Model {
 
+/**
+ */
+class UpdateFarmRequest : public DeadlineRequest {
+ public:
+  AWS_DEADLINE_API UpdateFarmRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateFarm"; }
+
+  AWS_DEADLINE_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The farm ID to update.</p>
    */
-  class UpdateFarmRequest : public DeadlineRequest
-  {
-  public:
-    AWS_DEADLINE_API UpdateFarmRequest();
+  inline const Aws::String& GetFarmId() const { return m_farmId; }
+  inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
+  template <typename FarmIdT = Aws::String>
+  void SetFarmId(FarmIdT&& value) {
+    m_farmIdHasBeenSet = true;
+    m_farmId = std::forward<FarmIdT>(value);
+  }
+  template <typename FarmIdT = Aws::String>
+  UpdateFarmRequest& WithFarmId(FarmIdT&& value) {
+    SetFarmId(std::forward<FarmIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateFarm"; }
+  ///@{
+  /**
+   * <p>The display name of the farm to update.</p>  <p>This field can
+   * store any content. Escape or encode this content before displaying it on a
+   * webpage or any other system that might interpret the content of this field.</p>
+   *
+   */
+  inline const Aws::String& GetDisplayName() const { return m_displayName; }
+  inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
+  template <typename DisplayNameT = Aws::String>
+  void SetDisplayName(DisplayNameT&& value) {
+    m_displayNameHasBeenSet = true;
+    m_displayName = std::forward<DisplayNameT>(value);
+  }
+  template <typename DisplayNameT = Aws::String>
+  UpdateFarmRequest& WithDisplayName(DisplayNameT&& value) {
+    SetDisplayName(std::forward<DisplayNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_DEADLINE_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The description of the farm to update.</p>  <p>This field can
+   * store any content. Escape or encode this content before displaying it on a
+   * webpage or any other system that might interpret the content of this field.</p>
+   *
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  UpdateFarmRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A multiplier applied to the farm's calculated costs for usage data and budget
+   * tracking. A value less than 1 represents a discount, a value greater than 1
+   * represents a premium, and a value of 1 represents no adjustment.</p>
+   */
+  inline double GetCostScaleFactor() const { return m_costScaleFactor; }
+  inline bool CostScaleFactorHasBeenSet() const { return m_costScaleFactorHasBeenSet; }
+  inline void SetCostScaleFactor(double value) {
+    m_costScaleFactorHasBeenSet = true;
+    m_costScaleFactor = value;
+  }
+  inline UpdateFarmRequest& WithCostScaleFactor(double value) {
+    SetCostScaleFactor(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_farmId;
 
-    ///@{
-    /**
-     * <p>The farm ID to update.</p>
-     */
-    inline const Aws::String& GetFarmId() const{ return m_farmId; }
-    inline bool FarmIdHasBeenSet() const { return m_farmIdHasBeenSet; }
-    inline void SetFarmId(const Aws::String& value) { m_farmIdHasBeenSet = true; m_farmId = value; }
-    inline void SetFarmId(Aws::String&& value) { m_farmIdHasBeenSet = true; m_farmId = std::move(value); }
-    inline void SetFarmId(const char* value) { m_farmIdHasBeenSet = true; m_farmId.assign(value); }
-    inline UpdateFarmRequest& WithFarmId(const Aws::String& value) { SetFarmId(value); return *this;}
-    inline UpdateFarmRequest& WithFarmId(Aws::String&& value) { SetFarmId(std::move(value)); return *this;}
-    inline UpdateFarmRequest& WithFarmId(const char* value) { SetFarmId(value); return *this;}
-    ///@}
+  Aws::String m_displayName;
 
-    ///@{
-    /**
-     * <p>The display name of the farm to update.</p>  <p>This field can
-     * store any content. Escape or encode this content before displaying it on a
-     * webpage or any other system that might interpret the content of this field.</p>
-     * 
-     */
-    inline const Aws::String& GetDisplayName() const{ return m_displayName; }
-    inline bool DisplayNameHasBeenSet() const { return m_displayNameHasBeenSet; }
-    inline void SetDisplayName(const Aws::String& value) { m_displayNameHasBeenSet = true; m_displayName = value; }
-    inline void SetDisplayName(Aws::String&& value) { m_displayNameHasBeenSet = true; m_displayName = std::move(value); }
-    inline void SetDisplayName(const char* value) { m_displayNameHasBeenSet = true; m_displayName.assign(value); }
-    inline UpdateFarmRequest& WithDisplayName(const Aws::String& value) { SetDisplayName(value); return *this;}
-    inline UpdateFarmRequest& WithDisplayName(Aws::String&& value) { SetDisplayName(std::move(value)); return *this;}
-    inline UpdateFarmRequest& WithDisplayName(const char* value) { SetDisplayName(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The description of the farm to update.</p>  <p>This field can
-     * store any content. Escape or encode this content before displaying it on a
-     * webpage or any other system that might interpret the content of this field.</p>
-     * 
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline UpdateFarmRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline UpdateFarmRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline UpdateFarmRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
-  private:
+  double m_costScaleFactor{0.0};
+  bool m_farmIdHasBeenSet = false;
+  bool m_displayNameHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_costScaleFactorHasBeenSet = false;
+};
 
-    Aws::String m_farmId;
-    bool m_farmIdHasBeenSet = false;
-
-    Aws::String m_displayName;
-    bool m_displayNameHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/tnb/Tnb_EXPORTS.h>
-#include <aws/tnb/TnbRequest.h>
-#include <aws/tnb/model/DescriptorContentType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/tnb/TnbRequest.h>
+#include <aws/tnb/Tnb_EXPORTS.h>
+#include <aws/tnb/model/DescriptorContentType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace tnb
-{
-namespace Model
-{
+namespace Aws {
+namespace tnb {
+namespace Model {
 
+/**
+ */
+class GetSolFunctionPackageDescriptorRequest : public TnbRequest {
+ public:
+  AWS_TNB_API GetSolFunctionPackageDescriptorRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetSolFunctionPackageDescriptor"; }
+
+  AWS_TNB_API Aws::String SerializePayload() const override;
+
+  AWS_TNB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Indicates which content types, expressed as MIME types, the client is able to
+   * understand.</p>
    */
-  class GetSolFunctionPackageDescriptorRequest : public TnbRequest
-  {
-  public:
-    AWS_TNB_API GetSolFunctionPackageDescriptorRequest();
+  inline DescriptorContentType GetAccept() const { return m_accept; }
+  inline bool AcceptHasBeenSet() const { return m_acceptHasBeenSet; }
+  inline void SetAccept(DescriptorContentType value) {
+    m_acceptHasBeenSet = true;
+    m_accept = value;
+  }
+  inline GetSolFunctionPackageDescriptorRequest& WithAccept(DescriptorContentType value) {
+    SetAccept(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetSolFunctionPackageDescriptor"; }
+  ///@{
+  /**
+   * <p>ID of the function package.</p>
+   */
+  inline const Aws::String& GetVnfPkgId() const { return m_vnfPkgId; }
+  inline bool VnfPkgIdHasBeenSet() const { return m_vnfPkgIdHasBeenSet; }
+  template <typename VnfPkgIdT = Aws::String>
+  void SetVnfPkgId(VnfPkgIdT&& value) {
+    m_vnfPkgIdHasBeenSet = true;
+    m_vnfPkgId = std::forward<VnfPkgIdT>(value);
+  }
+  template <typename VnfPkgIdT = Aws::String>
+  GetSolFunctionPackageDescriptorRequest& WithVnfPkgId(VnfPkgIdT&& value) {
+    SetVnfPkgId(std::forward<VnfPkgIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  DescriptorContentType m_accept{DescriptorContentType::NOT_SET};
 
-    AWS_TNB_API Aws::String SerializePayload() const override;
+  Aws::String m_vnfPkgId;
+  bool m_acceptHasBeenSet = false;
+  bool m_vnfPkgIdHasBeenSet = false;
+};
 
-    AWS_TNB_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>Indicates which content types, expressed as MIME types, the client is able to
-     * understand.</p>
-     */
-    inline const DescriptorContentType& GetAccept() const{ return m_accept; }
-    inline bool AcceptHasBeenSet() const { return m_acceptHasBeenSet; }
-    inline void SetAccept(const DescriptorContentType& value) { m_acceptHasBeenSet = true; m_accept = value; }
-    inline void SetAccept(DescriptorContentType&& value) { m_acceptHasBeenSet = true; m_accept = std::move(value); }
-    inline GetSolFunctionPackageDescriptorRequest& WithAccept(const DescriptorContentType& value) { SetAccept(value); return *this;}
-    inline GetSolFunctionPackageDescriptorRequest& WithAccept(DescriptorContentType&& value) { SetAccept(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>ID of the function package.</p>
-     */
-    inline const Aws::String& GetVnfPkgId() const{ return m_vnfPkgId; }
-    inline bool VnfPkgIdHasBeenSet() const { return m_vnfPkgIdHasBeenSet; }
-    inline void SetVnfPkgId(const Aws::String& value) { m_vnfPkgIdHasBeenSet = true; m_vnfPkgId = value; }
-    inline void SetVnfPkgId(Aws::String&& value) { m_vnfPkgIdHasBeenSet = true; m_vnfPkgId = std::move(value); }
-    inline void SetVnfPkgId(const char* value) { m_vnfPkgIdHasBeenSet = true; m_vnfPkgId.assign(value); }
-    inline GetSolFunctionPackageDescriptorRequest& WithVnfPkgId(const Aws::String& value) { SetVnfPkgId(value); return *this;}
-    inline GetSolFunctionPackageDescriptorRequest& WithVnfPkgId(Aws::String&& value) { SetVnfPkgId(std::move(value)); return *this;}
-    inline GetSolFunctionPackageDescriptorRequest& WithVnfPkgId(const char* value) { SetVnfPkgId(value); return *this;}
-    ///@}
-  private:
-
-    DescriptorContentType m_accept;
-    bool m_acceptHasBeenSet = false;
-
-    Aws::String m_vnfPkgId;
-    bool m_vnfPkgIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace tnb
-} // namespace Aws
+}  // namespace Model
+}  // namespace tnb
+}  // namespace Aws

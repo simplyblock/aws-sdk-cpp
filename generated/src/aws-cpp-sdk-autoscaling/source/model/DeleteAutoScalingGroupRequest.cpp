@@ -10,24 +10,14 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-DeleteAutoScalingGroupRequest::DeleteAutoScalingGroupRequest() : 
-    m_autoScalingGroupNameHasBeenSet(false),
-    m_forceDelete(false),
-    m_forceDeleteHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAutoScalingGroupRequest::SerializePayload() const
-{
+Aws::String DeleteAutoScalingGroupRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=DeleteAutoScalingGroup&";
-  if(m_autoScalingGroupNameHasBeenSet)
-  {
+  if (m_autoScalingGroupNameHasBeenSet) {
     ss << "AutoScalingGroupName=" << StringUtils::URLEncode(m_autoScalingGroupName.c_str()) << "&";
   }
 
-  if(m_forceDeleteHasBeenSet)
-  {
+  if (m_forceDeleteHasBeenSet) {
     ss << "ForceDelete=" << std::boolalpha << m_forceDelete << "&";
   }
 
@@ -35,8 +25,4 @@ Aws::String DeleteAutoScalingGroupRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  DeleteAutoScalingGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void DeleteAutoScalingGroupRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

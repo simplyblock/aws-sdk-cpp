@@ -5,136 +5,165 @@
 
 #pragma once
 #include <aws/apigateway/APIGateway_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace APIGateway
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace APIGateway {
+namespace Model {
+/**
+ * <p>Represents the usage data of a usage plan.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/Usage">AWS
+ * API Reference</a></p>
+ */
+class UpdateUsageResult {
+ public:
+  AWS_APIGATEWAY_API UpdateUsageResult() = default;
+  AWS_APIGATEWAY_API UpdateUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APIGATEWAY_API UpdateUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Represents the usage data of a usage plan.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/apigateway-2015-07-09/Usage">AWS
-   * API Reference</a></p>
+   * <p>The plan Id associated with this usage data.</p>
    */
-  class UpdateUsageResult
-  {
-  public:
-    AWS_APIGATEWAY_API UpdateUsageResult();
-    AWS_APIGATEWAY_API UpdateUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APIGATEWAY_API UpdateUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetUsagePlanId() const { return m_usagePlanId; }
+  template <typename UsagePlanIdT = Aws::String>
+  void SetUsagePlanId(UsagePlanIdT&& value) {
+    m_usagePlanIdHasBeenSet = true;
+    m_usagePlanId = std::forward<UsagePlanIdT>(value);
+  }
+  template <typename UsagePlanIdT = Aws::String>
+  UpdateUsageResult& WithUsagePlanId(UsagePlanIdT&& value) {
+    SetUsagePlanId(std::forward<UsagePlanIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The starting date of the usage data.</p>
+   */
+  inline const Aws::String& GetStartDate() const { return m_startDate; }
+  template <typename StartDateT = Aws::String>
+  void SetStartDate(StartDateT&& value) {
+    m_startDateHasBeenSet = true;
+    m_startDate = std::forward<StartDateT>(value);
+  }
+  template <typename StartDateT = Aws::String>
+  UpdateUsageResult& WithStartDate(StartDateT&& value) {
+    SetStartDate(std::forward<StartDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The plan Id associated with this usage data.</p>
-     */
-    inline const Aws::String& GetUsagePlanId() const{ return m_usagePlanId; }
-    inline void SetUsagePlanId(const Aws::String& value) { m_usagePlanId = value; }
-    inline void SetUsagePlanId(Aws::String&& value) { m_usagePlanId = std::move(value); }
-    inline void SetUsagePlanId(const char* value) { m_usagePlanId.assign(value); }
-    inline UpdateUsageResult& WithUsagePlanId(const Aws::String& value) { SetUsagePlanId(value); return *this;}
-    inline UpdateUsageResult& WithUsagePlanId(Aws::String&& value) { SetUsagePlanId(std::move(value)); return *this;}
-    inline UpdateUsageResult& WithUsagePlanId(const char* value) { SetUsagePlanId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ending date of the usage data.</p>
+   */
+  inline const Aws::String& GetEndDate() const { return m_endDate; }
+  template <typename EndDateT = Aws::String>
+  void SetEndDate(EndDateT&& value) {
+    m_endDateHasBeenSet = true;
+    m_endDate = std::forward<EndDateT>(value);
+  }
+  template <typename EndDateT = Aws::String>
+  UpdateUsageResult& WithEndDate(EndDateT&& value) {
+    SetEndDate(std::forward<EndDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The starting date of the usage data.</p>
-     */
-    inline const Aws::String& GetStartDate() const{ return m_startDate; }
-    inline void SetStartDate(const Aws::String& value) { m_startDate = value; }
-    inline void SetStartDate(Aws::String&& value) { m_startDate = std::move(value); }
-    inline void SetStartDate(const char* value) { m_startDate.assign(value); }
-    inline UpdateUsageResult& WithStartDate(const Aws::String& value) { SetStartDate(value); return *this;}
-    inline UpdateUsageResult& WithStartDate(Aws::String&& value) { SetStartDate(std::move(value)); return *this;}
-    inline UpdateUsageResult& WithStartDate(const char* value) { SetStartDate(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>The ending date of the usage data.</p>
-     */
-    inline const Aws::String& GetEndDate() const{ return m_endDate; }
-    inline void SetEndDate(const Aws::String& value) { m_endDate = value; }
-    inline void SetEndDate(Aws::String&& value) { m_endDate = std::move(value); }
-    inline void SetEndDate(const char* value) { m_endDate.assign(value); }
-    inline UpdateUsageResult& WithEndDate(const Aws::String& value) { SetEndDate(value); return *this;}
-    inline UpdateUsageResult& WithEndDate(Aws::String&& value) { SetEndDate(std::move(value)); return *this;}
-    inline UpdateUsageResult& WithEndDate(const char* value) { SetEndDate(value); return *this;}
-    ///@}
+  inline const Aws::String& GetPosition() const { return m_position; }
+  template <typename PositionT = Aws::String>
+  void SetPosition(PositionT&& value) {
+    m_positionHasBeenSet = true;
+    m_position = std::forward<PositionT>(value);
+  }
+  template <typename PositionT = Aws::String>
+  UpdateUsageResult& WithPosition(PositionT&& value) {
+    SetPosition(std::forward<PositionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetPosition() const{ return m_position; }
-    inline void SetPosition(const Aws::String& value) { m_position = value; }
-    inline void SetPosition(Aws::String&& value) { m_position = std::move(value); }
-    inline void SetPosition(const char* value) { m_position.assign(value); }
-    inline UpdateUsageResult& WithPosition(const Aws::String& value) { SetPosition(value); return *this;}
-    inline UpdateUsageResult& WithPosition(Aws::String&& value) { SetPosition(std::move(value)); return *this;}
-    inline UpdateUsageResult& WithPosition(const char* value) { SetPosition(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The usage data, as daily logs of used and remaining quotas, over the
+   * specified time interval indexed over the API keys in a usage plan. For example,
+   * <code>{..., "values" : { "{api_key}" : [ [0, 100], [10, 90], [100, 10]]}</code>,
+   * where <code>{api_key}</code> stands for an API key value and the daily log entry
+   * is of the format <code>[used quota, remaining quota]</code>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>& GetItems() const { return m_items; }
+  template <typename ItemsT = Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>>
+  void SetItems(ItemsT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items = std::forward<ItemsT>(value);
+  }
+  template <typename ItemsT = Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>>
+  UpdateUsageResult& WithItems(ItemsT&& value) {
+    SetItems(std::forward<ItemsT>(value));
+    return *this;
+  }
+  template <typename ItemsKeyT = Aws::String, typename ItemsValueT = Aws::Vector<Aws::Vector<long long>>>
+  UpdateUsageResult& AddItems(ItemsKeyT&& key, ItemsValueT&& value) {
+    m_itemsHasBeenSet = true;
+    m_items.emplace(std::forward<ItemsKeyT>(key), std::forward<ItemsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The usage data, as daily logs of used and remaining quotas, over the
-     * specified time interval indexed over the API keys in a usage plan. For example,
-     * <code>{..., "values" : { "{api_key}" : [ [0, 100], [10, 90], [100, 10]]}</code>,
-     * where <code>{api_key}</code> stands for an API key value and the daily log entry
-     * is of the format <code>[used quota, remaining quota]</code>.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>& GetItems() const{ return m_items; }
-    inline void SetItems(const Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>& value) { m_items = value; }
-    inline void SetItems(Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>&& value) { m_items = std::move(value); }
-    inline UpdateUsageResult& WithItems(const Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>& value) { SetItems(value); return *this;}
-    inline UpdateUsageResult& WithItems(Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>>&& value) { SetItems(std::move(value)); return *this;}
-    inline UpdateUsageResult& AddItems(const Aws::String& key, const Aws::Vector<Aws::Vector<long long>>& value) { m_items.emplace(key, value); return *this; }
-    inline UpdateUsageResult& AddItems(Aws::String&& key, const Aws::Vector<Aws::Vector<long long>>& value) { m_items.emplace(std::move(key), value); return *this; }
-    inline UpdateUsageResult& AddItems(const Aws::String& key, Aws::Vector<Aws::Vector<long long>>&& value) { m_items.emplace(key, std::move(value)); return *this; }
-    inline UpdateUsageResult& AddItems(Aws::String&& key, Aws::Vector<Aws::Vector<long long>>&& value) { m_items.emplace(std::move(key), std::move(value)); return *this; }
-    inline UpdateUsageResult& AddItems(const char* key, Aws::Vector<Aws::Vector<long long>>&& value) { m_items.emplace(key, std::move(value)); return *this; }
-    inline UpdateUsageResult& AddItems(const char* key, const Aws::Vector<Aws::Vector<long long>>& value) { m_items.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateUsageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateUsageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateUsageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateUsageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_usagePlanId;
+ private:
+  Aws::String m_usagePlanId;
 
-    Aws::String m_startDate;
+  Aws::String m_startDate;
 
-    Aws::String m_endDate;
+  Aws::String m_endDate;
 
-    Aws::String m_position;
+  Aws::String m_position;
 
-    Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>> m_items;
+  Aws::Map<Aws::String, Aws::Vector<Aws::Vector<long long>>> m_items;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_usagePlanIdHasBeenSet = false;
+  bool m_startDateHasBeenSet = false;
+  bool m_endDateHasBeenSet = false;
+  bool m_positionHasBeenSet = false;
+  bool m_itemsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace APIGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace APIGateway
+}  // namespace Aws

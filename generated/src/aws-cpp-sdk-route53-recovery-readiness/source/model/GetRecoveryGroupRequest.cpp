@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/route53-recovery-readiness/model/GetRecoveryGroupRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/route53-recovery-readiness/model/GetRecoveryGroupRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Route53RecoveryReadiness::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetRecoveryGroupRequest::GetRecoveryGroupRequest() : 
-    m_recoveryGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String GetRecoveryGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetRecoveryGroupRequest::SerializePayload() const { return {}; }

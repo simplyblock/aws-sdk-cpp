@@ -4,144 +4,191 @@
  */
 
 #pragma once
-#include <aws/groundstation/GroundStation_EXPORTS.h>
-#include <aws/groundstation/GroundStationRequest.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/groundstation/GroundStationRequest.h>
+#include <aws/groundstation/GroundStation_EXPORTS.h>
+#include <aws/groundstation/model/TrackingOverrides.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GroundStation
-{
-namespace Model
-{
+namespace Aws {
+namespace GroundStation {
+namespace Model {
 
+/**
+ * <p>Input for the <code>ReserveContact</code> operation. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ReserveContactRequest">AWS
+ * API Reference</a></p>
+ */
+class ReserveContactRequest : public GroundStationRequest {
+ public:
+  AWS_GROUNDSTATION_API ReserveContactRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ReserveContact"; }
+
+  AWS_GROUNDSTATION_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/ReserveContactRequest">AWS
-   * API Reference</a></p>
+   * <p>ARN of a mission profile.</p>
    */
-  class ReserveContactRequest : public GroundStationRequest
-  {
-  public:
-    AWS_GROUNDSTATION_API ReserveContactRequest();
+  inline const Aws::String& GetMissionProfileArn() const { return m_missionProfileArn; }
+  inline bool MissionProfileArnHasBeenSet() const { return m_missionProfileArnHasBeenSet; }
+  template <typename MissionProfileArnT = Aws::String>
+  void SetMissionProfileArn(MissionProfileArnT&& value) {
+    m_missionProfileArnHasBeenSet = true;
+    m_missionProfileArn = std::forward<MissionProfileArnT>(value);
+  }
+  template <typename MissionProfileArnT = Aws::String>
+  ReserveContactRequest& WithMissionProfileArn(MissionProfileArnT&& value) {
+    SetMissionProfileArn(std::forward<MissionProfileArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ReserveContact"; }
+  ///@{
+  /**
+   * <p>ARN of a satellite</p>
+   */
+  inline const Aws::String& GetSatelliteArn() const { return m_satelliteArn; }
+  inline bool SatelliteArnHasBeenSet() const { return m_satelliteArnHasBeenSet; }
+  template <typename SatelliteArnT = Aws::String>
+  void SetSatelliteArn(SatelliteArnT&& value) {
+    m_satelliteArnHasBeenSet = true;
+    m_satelliteArn = std::forward<SatelliteArnT>(value);
+  }
+  template <typename SatelliteArnT = Aws::String>
+  ReserveContactRequest& WithSatelliteArn(SatelliteArnT&& value) {
+    SetSatelliteArn(std::forward<SatelliteArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GROUNDSTATION_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Start time of a contact in UTC.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  ReserveContactRequest& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>End time of a contact in UTC.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  ReserveContactRequest& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>End time of a contact in UTC.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
-    inline ReserveContactRequest& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline ReserveContactRequest& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Name of a ground station.</p>
+   */
+  inline const Aws::String& GetGroundStation() const { return m_groundStation; }
+  inline bool GroundStationHasBeenSet() const { return m_groundStationHasBeenSet; }
+  template <typename GroundStationT = Aws::String>
+  void SetGroundStation(GroundStationT&& value) {
+    m_groundStationHasBeenSet = true;
+    m_groundStation = std::forward<GroundStationT>(value);
+  }
+  template <typename GroundStationT = Aws::String>
+  ReserveContactRequest& WithGroundStation(GroundStationT&& value) {
+    SetGroundStation(std::forward<GroundStationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Name of a ground station.</p>
-     */
-    inline const Aws::String& GetGroundStation() const{ return m_groundStation; }
-    inline bool GroundStationHasBeenSet() const { return m_groundStationHasBeenSet; }
-    inline void SetGroundStation(const Aws::String& value) { m_groundStationHasBeenSet = true; m_groundStation = value; }
-    inline void SetGroundStation(Aws::String&& value) { m_groundStationHasBeenSet = true; m_groundStation = std::move(value); }
-    inline void SetGroundStation(const char* value) { m_groundStationHasBeenSet = true; m_groundStation.assign(value); }
-    inline ReserveContactRequest& WithGroundStation(const Aws::String& value) { SetGroundStation(value); return *this;}
-    inline ReserveContactRequest& WithGroundStation(Aws::String&& value) { SetGroundStation(std::move(value)); return *this;}
-    inline ReserveContactRequest& WithGroundStation(const char* value) { SetGroundStation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Tags assigned to a contact.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  ReserveContactRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  ReserveContactRequest& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>ARN of a mission profile.</p>
-     */
-    inline const Aws::String& GetMissionProfileArn() const{ return m_missionProfileArn; }
-    inline bool MissionProfileArnHasBeenSet() const { return m_missionProfileArnHasBeenSet; }
-    inline void SetMissionProfileArn(const Aws::String& value) { m_missionProfileArnHasBeenSet = true; m_missionProfileArn = value; }
-    inline void SetMissionProfileArn(Aws::String&& value) { m_missionProfileArnHasBeenSet = true; m_missionProfileArn = std::move(value); }
-    inline void SetMissionProfileArn(const char* value) { m_missionProfileArnHasBeenSet = true; m_missionProfileArn.assign(value); }
-    inline ReserveContactRequest& WithMissionProfileArn(const Aws::String& value) { SetMissionProfileArn(value); return *this;}
-    inline ReserveContactRequest& WithMissionProfileArn(Aws::String&& value) { SetMissionProfileArn(std::move(value)); return *this;}
-    inline ReserveContactRequest& WithMissionProfileArn(const char* value) { SetMissionProfileArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Tracking configuration overrides for the contact.</p>
+   */
+  inline const TrackingOverrides& GetTrackingOverrides() const { return m_trackingOverrides; }
+  inline bool TrackingOverridesHasBeenSet() const { return m_trackingOverridesHasBeenSet; }
+  template <typename TrackingOverridesT = TrackingOverrides>
+  void SetTrackingOverrides(TrackingOverridesT&& value) {
+    m_trackingOverridesHasBeenSet = true;
+    m_trackingOverrides = std::forward<TrackingOverridesT>(value);
+  }
+  template <typename TrackingOverridesT = TrackingOverrides>
+  ReserveContactRequest& WithTrackingOverrides(TrackingOverridesT&& value) {
+    SetTrackingOverrides(std::forward<TrackingOverridesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_missionProfileArn;
 
-    ///@{
-    /**
-     * <p>ARN of a satellite</p>
-     */
-    inline const Aws::String& GetSatelliteArn() const{ return m_satelliteArn; }
-    inline bool SatelliteArnHasBeenSet() const { return m_satelliteArnHasBeenSet; }
-    inline void SetSatelliteArn(const Aws::String& value) { m_satelliteArnHasBeenSet = true; m_satelliteArn = value; }
-    inline void SetSatelliteArn(Aws::String&& value) { m_satelliteArnHasBeenSet = true; m_satelliteArn = std::move(value); }
-    inline void SetSatelliteArn(const char* value) { m_satelliteArnHasBeenSet = true; m_satelliteArn.assign(value); }
-    inline ReserveContactRequest& WithSatelliteArn(const Aws::String& value) { SetSatelliteArn(value); return *this;}
-    inline ReserveContactRequest& WithSatelliteArn(Aws::String&& value) { SetSatelliteArn(std::move(value)); return *this;}
-    inline ReserveContactRequest& WithSatelliteArn(const char* value) { SetSatelliteArn(value); return *this;}
-    ///@}
+  Aws::String m_satelliteArn;
 
-    ///@{
-    /**
-     * <p>Start time of a contact in UTC.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline ReserveContactRequest& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline ReserveContactRequest& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_startTime{};
 
-    ///@{
-    /**
-     * <p>Tags assigned to a contact.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline ReserveContactRequest& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline ReserveContactRequest& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline ReserveContactRequest& AddTags(const Aws::String& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    inline ReserveContactRequest& AddTags(Aws::String&& key, const Aws::String& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ReserveContactRequest& AddTags(const Aws::String& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ReserveContactRequest& AddTags(Aws::String&& key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline ReserveContactRequest& AddTags(const char* key, Aws::String&& value) { m_tagsHasBeenSet = true; m_tags.emplace(key, std::move(value)); return *this; }
-    inline ReserveContactRequest& AddTags(Aws::String&& key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(std::move(key), value); return *this; }
-    inline ReserveContactRequest& AddTags(const char* key, const char* value) { m_tagsHasBeenSet = true; m_tags.emplace(key, value); return *this; }
-    ///@}
-  private:
+  Aws::Utils::DateTime m_endTime{};
 
-    Aws::Utils::DateTime m_endTime;
-    bool m_endTimeHasBeenSet = false;
+  Aws::String m_groundStation;
 
-    Aws::String m_groundStation;
-    bool m_groundStationHasBeenSet = false;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_missionProfileArn;
-    bool m_missionProfileArnHasBeenSet = false;
+  TrackingOverrides m_trackingOverrides;
+  bool m_missionProfileArnHasBeenSet = false;
+  bool m_satelliteArnHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+  bool m_groundStationHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_trackingOverridesHasBeenSet = false;
+};
 
-    Aws::String m_satelliteArn;
-    bool m_satelliteArnHasBeenSet = false;
-
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_tags;
-    bool m_tagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

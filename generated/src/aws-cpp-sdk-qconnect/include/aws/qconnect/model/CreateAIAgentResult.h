@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/qconnect/QConnect_EXPORTS.h>
 #include <aws/qconnect/model/AIAgentData.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace QConnect
-{
-namespace Model
-{
-  class CreateAIAgentResult
-  {
-  public:
-    AWS_QCONNECT_API CreateAIAgentResult();
-    AWS_QCONNECT_API CreateAIAgentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_QCONNECT_API CreateAIAgentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace QConnect {
+namespace Model {
+class CreateAIAgentResult {
+ public:
+  AWS_QCONNECT_API CreateAIAgentResult() = default;
+  AWS_QCONNECT_API CreateAIAgentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_QCONNECT_API CreateAIAgentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The data of the created AI Agent.</p>
+   */
+  inline const AIAgentData& GetAiAgent() const { return m_aiAgent; }
+  template <typename AiAgentT = AIAgentData>
+  void SetAiAgent(AiAgentT&& value) {
+    m_aiAgentHasBeenSet = true;
+    m_aiAgent = std::forward<AiAgentT>(value);
+  }
+  template <typename AiAgentT = AIAgentData>
+  CreateAIAgentResult& WithAiAgent(AiAgentT&& value) {
+    SetAiAgent(std::forward<AiAgentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The data of the created AI Agent.</p>
-     */
-    inline const AIAgentData& GetAiAgent() const{ return m_aiAgent; }
-    inline void SetAiAgent(const AIAgentData& value) { m_aiAgent = value; }
-    inline void SetAiAgent(AIAgentData&& value) { m_aiAgent = std::move(value); }
-    inline CreateAIAgentResult& WithAiAgent(const AIAgentData& value) { SetAiAgent(value); return *this;}
-    inline CreateAIAgentResult& WithAiAgent(AIAgentData&& value) { SetAiAgent(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAIAgentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAIAgentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAIAgentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAIAgentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AIAgentData m_aiAgent;
+ private:
+  AIAgentData m_aiAgent;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_aiAgentHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace QConnect
-} // namespace Aws
+}  // namespace Model
+}  // namespace QConnect
+}  // namespace Aws

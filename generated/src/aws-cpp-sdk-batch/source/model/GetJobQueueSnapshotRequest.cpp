@@ -12,24 +12,12 @@ using namespace Aws::Batch::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetJobQueueSnapshotRequest::GetJobQueueSnapshotRequest() : 
-    m_jobQueueHasBeenSet(false)
-{
-}
-
-Aws::String GetJobQueueSnapshotRequest::SerializePayload() const
-{
+Aws::String GetJobQueueSnapshotRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_jobQueueHasBeenSet)
-  {
-   payload.WithString("jobQueue", m_jobQueue);
-
+  if (m_jobQueueHasBeenSet) {
+    payload.WithString("jobQueue", m_jobQueue);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

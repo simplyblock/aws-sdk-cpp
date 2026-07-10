@@ -4,227 +4,324 @@
  */
 
 #pragma once
-#include <aws/health/Health_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/health/model/EventTypeCategory.h>
-#include <aws/health/model/EventScopeCode.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/health/Health_EXPORTS.h>
+#include <aws/health/model/EventActionability.h>
+#include <aws/health/model/EventPersona.h>
+#include <aws/health/model/EventScopeCode.h>
 #include <aws/health/model/EventStatusCode.h>
+#include <aws/health/model/EventTypeCategory.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Health
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Health {
+namespace Model {
 
+/**
+ * <p>Summary information about an event, returned by the <a
+ * href="https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventsForOrganization.html">DescribeEventsForOrganization</a>
+ * operation.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/OrganizationEvent">AWS
+ * API Reference</a></p>
+ */
+class OrganizationEvent {
+ public:
+  AWS_HEALTH_API OrganizationEvent() = default;
+  AWS_HEALTH_API OrganizationEvent(Aws::Utils::Json::JsonView jsonValue);
+  AWS_HEALTH_API OrganizationEvent& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Summary information about an event, returned by the <a
-   * href="https://docs.aws.amazon.com/health/latest/APIReference/API_DescribeEventsForOrganization.html">DescribeEventsForOrganization</a>
-   * operation.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/OrganizationEvent">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for the event. The event ARN has the
+   * <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i>
+   * </code> format.</p> <p>For example, an event ARN might look like the
+   * following:</p> <p>
+   * <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code>
+   * </p>
    */
-  class OrganizationEvent
-  {
-  public:
-    AWS_HEALTH_API OrganizationEvent();
-    AWS_HEALTH_API OrganizationEvent(Aws::Utils::Json::JsonView jsonValue);
-    AWS_HEALTH_API OrganizationEvent& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_HEALTH_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetArn() const { return m_arn; }
+  inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
+  template <typename ArnT = Aws::String>
+  void SetArn(ArnT&& value) {
+    m_arnHasBeenSet = true;
+    m_arn = std::forward<ArnT>(value);
+  }
+  template <typename ArnT = Aws::String>
+  OrganizationEvent& WithArn(ArnT&& value) {
+    SetArn(std::forward<ArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The Amazon Web Services service that is affected by the event, such as EC2
+   * and RDS.</p>
+   */
+  inline const Aws::String& GetService() const { return m_service; }
+  inline bool ServiceHasBeenSet() const { return m_serviceHasBeenSet; }
+  template <typename ServiceT = Aws::String>
+  void SetService(ServiceT&& value) {
+    m_serviceHasBeenSet = true;
+    m_service = std::forward<ServiceT>(value);
+  }
+  template <typename ServiceT = Aws::String>
+  OrganizationEvent& WithService(ServiceT&& value) {
+    SetService(std::forward<ServiceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the event. The event ARN has the
-     * <code>arn:aws:health:<i>event-region</i>::event/<i>SERVICE</i>/<i>EVENT_TYPE_CODE</i>/<i>EVENT_TYPE_PLUS_ID</i>
-     * </code> format.</p> <p>For example, an event ARN might look like the
-     * following:</p> <p>
-     * <code>arn:aws:health:us-east-1::event/EC2/EC2_INSTANCE_RETIREMENT_SCHEDULED/EC2_INSTANCE_RETIREMENT_SCHEDULED_ABC123-DEF456</code>
-     * </p>
-     */
-    inline const Aws::String& GetArn() const{ return m_arn; }
-    inline bool ArnHasBeenSet() const { return m_arnHasBeenSet; }
-    inline void SetArn(const Aws::String& value) { m_arnHasBeenSet = true; m_arn = value; }
-    inline void SetArn(Aws::String&& value) { m_arnHasBeenSet = true; m_arn = std::move(value); }
-    inline void SetArn(const char* value) { m_arnHasBeenSet = true; m_arn.assign(value); }
-    inline OrganizationEvent& WithArn(const Aws::String& value) { SetArn(value); return *this;}
-    inline OrganizationEvent& WithArn(Aws::String&& value) { SetArn(std::move(value)); return *this;}
-    inline OrganizationEvent& WithArn(const char* value) { SetArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the event type. The format is
+   * <code>AWS_SERVICE_DESCRIPTION</code>. For example,
+   * <code>AWS_EC2_SYSTEM_MAINTENANCE_EVENT</code>.</p>
+   */
+  inline const Aws::String& GetEventTypeCode() const { return m_eventTypeCode; }
+  inline bool EventTypeCodeHasBeenSet() const { return m_eventTypeCodeHasBeenSet; }
+  template <typename EventTypeCodeT = Aws::String>
+  void SetEventTypeCode(EventTypeCodeT&& value) {
+    m_eventTypeCodeHasBeenSet = true;
+    m_eventTypeCode = std::forward<EventTypeCodeT>(value);
+  }
+  template <typename EventTypeCodeT = Aws::String>
+  OrganizationEvent& WithEventTypeCode(EventTypeCodeT&& value) {
+    SetEventTypeCode(std::forward<EventTypeCodeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Service that is affected by the event, such as EC2 and
-     * RDS.</p>
-     */
-    inline const Aws::String& GetService() const{ return m_service; }
-    inline bool ServiceHasBeenSet() const { return m_serviceHasBeenSet; }
-    inline void SetService(const Aws::String& value) { m_serviceHasBeenSet = true; m_service = value; }
-    inline void SetService(Aws::String&& value) { m_serviceHasBeenSet = true; m_service = std::move(value); }
-    inline void SetService(const char* value) { m_serviceHasBeenSet = true; m_service.assign(value); }
-    inline OrganizationEvent& WithService(const Aws::String& value) { SetService(value); return *this;}
-    inline OrganizationEvent& WithService(Aws::String&& value) { SetService(std::move(value)); return *this;}
-    inline OrganizationEvent& WithService(const char* value) { SetService(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of event type category codes. Possible values are <code>issue</code>,
+   * <code>accountNotification</code>, or <code>scheduledChange</code>. Currently,
+   * the <code>investigation</code> value isn't supported at this time.</p>
+   */
+  inline EventTypeCategory GetEventTypeCategory() const { return m_eventTypeCategory; }
+  inline bool EventTypeCategoryHasBeenSet() const { return m_eventTypeCategoryHasBeenSet; }
+  inline void SetEventTypeCategory(EventTypeCategory value) {
+    m_eventTypeCategoryHasBeenSet = true;
+    m_eventTypeCategory = value;
+  }
+  inline OrganizationEvent& WithEventTypeCategory(EventTypeCategory value) {
+    SetEventTypeCategory(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the event type. The format is
-     * <code>AWS_SERVICE_DESCRIPTION</code>. For example,
-     * <code>AWS_EC2_SYSTEM_MAINTENANCE_EVENT</code>.</p>
-     */
-    inline const Aws::String& GetEventTypeCode() const{ return m_eventTypeCode; }
-    inline bool EventTypeCodeHasBeenSet() const { return m_eventTypeCodeHasBeenSet; }
-    inline void SetEventTypeCode(const Aws::String& value) { m_eventTypeCodeHasBeenSet = true; m_eventTypeCode = value; }
-    inline void SetEventTypeCode(Aws::String&& value) { m_eventTypeCodeHasBeenSet = true; m_eventTypeCode = std::move(value); }
-    inline void SetEventTypeCode(const char* value) { m_eventTypeCodeHasBeenSet = true; m_eventTypeCode.assign(value); }
-    inline OrganizationEvent& WithEventTypeCode(const Aws::String& value) { SetEventTypeCode(value); return *this;}
-    inline OrganizationEvent& WithEventTypeCode(Aws::String&& value) { SetEventTypeCode(std::move(value)); return *this;}
-    inline OrganizationEvent& WithEventTypeCode(const char* value) { SetEventTypeCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>This parameter specifies if the Health event is a public Amazon Web Services
+   * service event or an account-specific event.</p> <ul> <li> <p>If the
+   * <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the
+   * <code>affectedAccounts</code> value is always empty.</p> </li> <li> <p>If the
+   * <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then the
+   * <code>affectedAccounts</code> value lists the affected Amazon Web Services
+   * accounts in your organization. For example, if an event affects a service such
+   * as Amazon Elastic Compute Cloud and you have Amazon Web Services accounts that
+   * use that service, those account IDs appear in the response.</p> </li> <li> <p>If
+   * the <code>eventScopeCode</code> value is <code>NONE</code>, then the
+   * <code>eventArn</code> that you specified in the request is invalid or doesn't
+   * exist.</p> </li> </ul>
+   */
+  inline EventScopeCode GetEventScopeCode() const { return m_eventScopeCode; }
+  inline bool EventScopeCodeHasBeenSet() const { return m_eventScopeCodeHasBeenSet; }
+  inline void SetEventScopeCode(EventScopeCode value) {
+    m_eventScopeCodeHasBeenSet = true;
+    m_eventScopeCode = value;
+  }
+  inline OrganizationEvent& WithEventScopeCode(EventScopeCode value) {
+    SetEventScopeCode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of event type category codes. Possible values are <code>issue</code>,
-     * <code>accountNotification</code>, or <code>scheduledChange</code>. Currently,
-     * the <code>investigation</code> value isn't supported at this time.</p>
-     */
-    inline const EventTypeCategory& GetEventTypeCategory() const{ return m_eventTypeCategory; }
-    inline bool EventTypeCategoryHasBeenSet() const { return m_eventTypeCategoryHasBeenSet; }
-    inline void SetEventTypeCategory(const EventTypeCategory& value) { m_eventTypeCategoryHasBeenSet = true; m_eventTypeCategory = value; }
-    inline void SetEventTypeCategory(EventTypeCategory&& value) { m_eventTypeCategoryHasBeenSet = true; m_eventTypeCategory = std::move(value); }
-    inline OrganizationEvent& WithEventTypeCategory(const EventTypeCategory& value) { SetEventTypeCategory(value); return *this;}
-    inline OrganizationEvent& WithEventTypeCategory(EventTypeCategory&& value) { SetEventTypeCategory(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Web Services Region name of the event.</p>
+   */
+  inline const Aws::String& GetRegion() const { return m_region; }
+  inline bool RegionHasBeenSet() const { return m_regionHasBeenSet; }
+  template <typename RegionT = Aws::String>
+  void SetRegion(RegionT&& value) {
+    m_regionHasBeenSet = true;
+    m_region = std::forward<RegionT>(value);
+  }
+  template <typename RegionT = Aws::String>
+  OrganizationEvent& WithRegion(RegionT&& value) {
+    SetRegion(std::forward<RegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>This parameter specifies if the Health event is a public Amazon Web Service
-     * event or an account-specific event.</p> <ul> <li> <p>If the
-     * <code>eventScopeCode</code> value is <code>PUBLIC</code>, then the
-     * <code>affectedAccounts</code> value is always empty.</p> </li> <li> <p>If the
-     * <code>eventScopeCode</code> value is <code>ACCOUNT_SPECIFIC</code>, then the
-     * <code>affectedAccounts</code> value lists the affected Amazon Web Services
-     * accounts in your organization. For example, if an event affects a service such
-     * as Amazon Elastic Compute Cloud and you have Amazon Web Services accounts that
-     * use that service, those account IDs appear in the response.</p> </li> <li> <p>If
-     * the <code>eventScopeCode</code> value is <code>NONE</code>, then the
-     * <code>eventArn</code> that you specified in the request is invalid or doesn't
-     * exist.</p> </li> </ul>
-     */
-    inline const EventScopeCode& GetEventScopeCode() const{ return m_eventScopeCode; }
-    inline bool EventScopeCodeHasBeenSet() const { return m_eventScopeCodeHasBeenSet; }
-    inline void SetEventScopeCode(const EventScopeCode& value) { m_eventScopeCodeHasBeenSet = true; m_eventScopeCode = value; }
-    inline void SetEventScopeCode(EventScopeCode&& value) { m_eventScopeCodeHasBeenSet = true; m_eventScopeCode = std::move(value); }
-    inline OrganizationEvent& WithEventScopeCode(const EventScopeCode& value) { SetEventScopeCode(value); return *this;}
-    inline OrganizationEvent& WithEventScopeCode(EventScopeCode&& value) { SetEventScopeCode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the event began.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  OrganizationEvent& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services Region name of the event.</p>
-     */
-    inline const Aws::String& GetRegion() const{ return m_region; }
-    inline bool RegionHasBeenSet() const { return m_regionHasBeenSet; }
-    inline void SetRegion(const Aws::String& value) { m_regionHasBeenSet = true; m_region = value; }
-    inline void SetRegion(Aws::String&& value) { m_regionHasBeenSet = true; m_region = std::move(value); }
-    inline void SetRegion(const char* value) { m_regionHasBeenSet = true; m_region.assign(value); }
-    inline OrganizationEvent& WithRegion(const Aws::String& value) { SetRegion(value); return *this;}
-    inline OrganizationEvent& WithRegion(Aws::String&& value) { SetRegion(std::move(value)); return *this;}
-    inline OrganizationEvent& WithRegion(const char* value) { SetRegion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time that the event ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndTime() const { return m_endTime; }
+  inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  void SetEndTime(EndTimeT&& value) {
+    m_endTimeHasBeenSet = true;
+    m_endTime = std::forward<EndTimeT>(value);
+  }
+  template <typename EndTimeT = Aws::Utils::DateTime>
+  OrganizationEvent& WithEndTime(EndTimeT&& value) {
+    SetEndTime(std::forward<EndTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the event began.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline OrganizationEvent& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline OrganizationEvent& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The most recent date and time that the event was updated.</p>
+   */
+  inline const Aws::Utils::DateTime& GetLastUpdatedTime() const { return m_lastUpdatedTime; }
+  inline bool LastUpdatedTimeHasBeenSet() const { return m_lastUpdatedTimeHasBeenSet; }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  void SetLastUpdatedTime(LastUpdatedTimeT&& value) {
+    m_lastUpdatedTimeHasBeenSet = true;
+    m_lastUpdatedTime = std::forward<LastUpdatedTimeT>(value);
+  }
+  template <typename LastUpdatedTimeT = Aws::Utils::DateTime>
+  OrganizationEvent& WithLastUpdatedTime(LastUpdatedTimeT&& value) {
+    SetLastUpdatedTime(std::forward<LastUpdatedTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time that the event ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndTime() const{ return m_endTime; }
-    inline bool EndTimeHasBeenSet() const { return m_endTimeHasBeenSet; }
-    inline void SetEndTime(const Aws::Utils::DateTime& value) { m_endTimeHasBeenSet = true; m_endTime = value; }
-    inline void SetEndTime(Aws::Utils::DateTime&& value) { m_endTimeHasBeenSet = true; m_endTime = std::move(value); }
-    inline OrganizationEvent& WithEndTime(const Aws::Utils::DateTime& value) { SetEndTime(value); return *this;}
-    inline OrganizationEvent& WithEndTime(Aws::Utils::DateTime&& value) { SetEndTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The most recent status of the event. Possible values are <code>open</code>,
+   * <code>closed</code>, and <code>upcoming</code>.</p>
+   */
+  inline EventStatusCode GetStatusCode() const { return m_statusCode; }
+  inline bool StatusCodeHasBeenSet() const { return m_statusCodeHasBeenSet; }
+  inline void SetStatusCode(EventStatusCode value) {
+    m_statusCodeHasBeenSet = true;
+    m_statusCode = value;
+  }
+  inline OrganizationEvent& WithStatusCode(EventStatusCode value) {
+    SetStatusCode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The most recent date and time that the event was updated.</p>
-     */
-    inline const Aws::Utils::DateTime& GetLastUpdatedTime() const{ return m_lastUpdatedTime; }
-    inline bool LastUpdatedTimeHasBeenSet() const { return m_lastUpdatedTimeHasBeenSet; }
-    inline void SetLastUpdatedTime(const Aws::Utils::DateTime& value) { m_lastUpdatedTimeHasBeenSet = true; m_lastUpdatedTime = value; }
-    inline void SetLastUpdatedTime(Aws::Utils::DateTime&& value) { m_lastUpdatedTimeHasBeenSet = true; m_lastUpdatedTime = std::move(value); }
-    inline OrganizationEvent& WithLastUpdatedTime(const Aws::Utils::DateTime& value) { SetLastUpdatedTime(value); return *this;}
-    inline OrganizationEvent& WithLastUpdatedTime(Aws::Utils::DateTime&& value) { SetLastUpdatedTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The actionability classification of the event. Possible values are
+   * <code>ACTION_REQUIRED</code>, <code>ACTION_MAY_BE_REQUIRED</code> and
+   * <code>INFORMATIONAL</code>. Events with <code>ACTION_REQUIRED</code>
+   * actionability require customer action to resolve or mitigate the event. Events
+   * with <code>ACTION_MAY_BE_REQUIRED</code> actionability indicates that the
+   * current status is unknown or conditional and inspection is needed to determine
+   * if action is required. Events with <code>INFORMATIONAL</code> actionability are
+   * provided for awareness and do not require immediate action.</p>
+   */
+  inline EventActionability GetActionability() const { return m_actionability; }
+  inline bool ActionabilityHasBeenSet() const { return m_actionabilityHasBeenSet; }
+  inline void SetActionability(EventActionability value) {
+    m_actionabilityHasBeenSet = true;
+    m_actionability = value;
+  }
+  inline OrganizationEvent& WithActionability(EventActionability value) {
+    SetActionability(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The most recent status of the event. Possible values are <code>open</code>,
-     * <code>closed</code>, and <code>upcoming</code>.</p>
-     */
-    inline const EventStatusCode& GetStatusCode() const{ return m_statusCode; }
-    inline bool StatusCodeHasBeenSet() const { return m_statusCodeHasBeenSet; }
-    inline void SetStatusCode(const EventStatusCode& value) { m_statusCodeHasBeenSet = true; m_statusCode = value; }
-    inline void SetStatusCode(EventStatusCode&& value) { m_statusCodeHasBeenSet = true; m_statusCode = std::move(value); }
-    inline OrganizationEvent& WithStatusCode(const EventStatusCode& value) { SetStatusCode(value); return *this;}
-    inline OrganizationEvent& WithStatusCode(EventStatusCode&& value) { SetStatusCode(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>A list of persona classifications that indicate the target audience for the
+   * event. Possible values are <code>OPERATIONS</code>, <code>SECURITY</code>, and
+   * <code>BILLING</code>. Events can be associated with multiple personas to
+   * indicate relevance to different teams or roles within an organization.</p>
+   */
+  inline const Aws::Vector<EventPersona>& GetPersonas() const { return m_personas; }
+  inline bool PersonasHasBeenSet() const { return m_personasHasBeenSet; }
+  template <typename PersonasT = Aws::Vector<EventPersona>>
+  void SetPersonas(PersonasT&& value) {
+    m_personasHasBeenSet = true;
+    m_personas = std::forward<PersonasT>(value);
+  }
+  template <typename PersonasT = Aws::Vector<EventPersona>>
+  OrganizationEvent& WithPersonas(PersonasT&& value) {
+    SetPersonas(std::forward<PersonasT>(value));
+    return *this;
+  }
+  inline OrganizationEvent& AddPersonas(EventPersona value) {
+    m_personasHasBeenSet = true;
+    m_personas.push_back(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_arn;
 
-    Aws::String m_arn;
-    bool m_arnHasBeenSet = false;
+  Aws::String m_service;
 
-    Aws::String m_service;
-    bool m_serviceHasBeenSet = false;
+  Aws::String m_eventTypeCode;
 
-    Aws::String m_eventTypeCode;
-    bool m_eventTypeCodeHasBeenSet = false;
+  EventTypeCategory m_eventTypeCategory{EventTypeCategory::NOT_SET};
 
-    EventTypeCategory m_eventTypeCategory;
-    bool m_eventTypeCategoryHasBeenSet = false;
+  EventScopeCode m_eventScopeCode{EventScopeCode::NOT_SET};
 
-    EventScopeCode m_eventScopeCode;
-    bool m_eventScopeCodeHasBeenSet = false;
+  Aws::String m_region;
 
-    Aws::String m_region;
-    bool m_regionHasBeenSet = false;
+  Aws::Utils::DateTime m_startTime{};
 
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_endTime{};
 
-    Aws::Utils::DateTime m_endTime;
-    bool m_endTimeHasBeenSet = false;
+  Aws::Utils::DateTime m_lastUpdatedTime{};
 
-    Aws::Utils::DateTime m_lastUpdatedTime;
-    bool m_lastUpdatedTimeHasBeenSet = false;
+  EventStatusCode m_statusCode{EventStatusCode::NOT_SET};
 
-    EventStatusCode m_statusCode;
-    bool m_statusCodeHasBeenSet = false;
-  };
+  EventActionability m_actionability{EventActionability::NOT_SET};
 
-} // namespace Model
-} // namespace Health
-} // namespace Aws
+  Aws::Vector<EventPersona> m_personas;
+  bool m_arnHasBeenSet = false;
+  bool m_serviceHasBeenSet = false;
+  bool m_eventTypeCodeHasBeenSet = false;
+  bool m_eventTypeCategoryHasBeenSet = false;
+  bool m_eventScopeCodeHasBeenSet = false;
+  bool m_regionHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_endTimeHasBeenSet = false;
+  bool m_lastUpdatedTimeHasBeenSet = false;
+  bool m_statusCodeHasBeenSet = false;
+  bool m_actionabilityHasBeenSet = false;
+  bool m_personasHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Health
+}  // namespace Aws

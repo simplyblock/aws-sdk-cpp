@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/iam/model/GetInstanceProfileRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/iam/model/GetInstanceProfileRequest.h>
 
 using namespace Aws::IAM::Model;
 using namespace Aws::Utils;
 
-GetInstanceProfileRequest::GetInstanceProfileRequest() : 
-    m_instanceProfileNameHasBeenSet(false)
-{
-}
-
-Aws::String GetInstanceProfileRequest::SerializePayload() const
-{
+Aws::String GetInstanceProfileRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=GetInstanceProfile&";
-  if(m_instanceProfileNameHasBeenSet)
-  {
+  if (m_instanceProfileNameHasBeenSet) {
     ss << "InstanceProfileName=" << StringUtils::URLEncode(m_instanceProfileName.c_str()) << "&";
   }
 
@@ -28,8 +21,4 @@ Aws::String GetInstanceProfileRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  GetInstanceProfileRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void GetInstanceProfileRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

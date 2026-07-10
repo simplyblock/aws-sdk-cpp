@@ -12,16 +12,4 @@ using namespace Aws::PrometheusService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeScraperRequest::DescribeScraperRequest() : 
-    m_scraperIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeScraperRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeScraperRequest::SerializePayload() const { return {}; }

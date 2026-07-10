@@ -4,82 +4,112 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/CapacityReservationFleetCancellationState.h>
 #include <aws/ec2/model/FailedCapacityReservationFleetCancellationResponse.h>
+#include <aws/ec2/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class CancelCapacityReservationFleetsResponse
-  {
-  public:
-    AWS_EC2_API CancelCapacityReservationFleetsResponse();
-    AWS_EC2_API CancelCapacityReservationFleetsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API CancelCapacityReservationFleetsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class CancelCapacityReservationFleetsResponse {
+ public:
+  AWS_EC2_API CancelCapacityReservationFleetsResponse() = default;
+  AWS_EC2_API CancelCapacityReservationFleetsResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API CancelCapacityReservationFleetsResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the Capacity Reservation Fleets that were successfully
+   * cancelled.</p>
+   */
+  inline const Aws::Vector<CapacityReservationFleetCancellationState>& GetSuccessfulFleetCancellations() const {
+    return m_successfulFleetCancellations;
+  }
+  template <typename SuccessfulFleetCancellationsT = Aws::Vector<CapacityReservationFleetCancellationState>>
+  void SetSuccessfulFleetCancellations(SuccessfulFleetCancellationsT&& value) {
+    m_successfulFleetCancellationsHasBeenSet = true;
+    m_successfulFleetCancellations = std::forward<SuccessfulFleetCancellationsT>(value);
+  }
+  template <typename SuccessfulFleetCancellationsT = Aws::Vector<CapacityReservationFleetCancellationState>>
+  CancelCapacityReservationFleetsResponse& WithSuccessfulFleetCancellations(SuccessfulFleetCancellationsT&& value) {
+    SetSuccessfulFleetCancellations(std::forward<SuccessfulFleetCancellationsT>(value));
+    return *this;
+  }
+  template <typename SuccessfulFleetCancellationsT = CapacityReservationFleetCancellationState>
+  CancelCapacityReservationFleetsResponse& AddSuccessfulFleetCancellations(SuccessfulFleetCancellationsT&& value) {
+    m_successfulFleetCancellationsHasBeenSet = true;
+    m_successfulFleetCancellations.emplace_back(std::forward<SuccessfulFleetCancellationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the Capacity Reservation Fleets that were successfully
-     * cancelled.</p>
-     */
-    inline const Aws::Vector<CapacityReservationFleetCancellationState>& GetSuccessfulFleetCancellations() const{ return m_successfulFleetCancellations; }
-    inline void SetSuccessfulFleetCancellations(const Aws::Vector<CapacityReservationFleetCancellationState>& value) { m_successfulFleetCancellations = value; }
-    inline void SetSuccessfulFleetCancellations(Aws::Vector<CapacityReservationFleetCancellationState>&& value) { m_successfulFleetCancellations = std::move(value); }
-    inline CancelCapacityReservationFleetsResponse& WithSuccessfulFleetCancellations(const Aws::Vector<CapacityReservationFleetCancellationState>& value) { SetSuccessfulFleetCancellations(value); return *this;}
-    inline CancelCapacityReservationFleetsResponse& WithSuccessfulFleetCancellations(Aws::Vector<CapacityReservationFleetCancellationState>&& value) { SetSuccessfulFleetCancellations(std::move(value)); return *this;}
-    inline CancelCapacityReservationFleetsResponse& AddSuccessfulFleetCancellations(const CapacityReservationFleetCancellationState& value) { m_successfulFleetCancellations.push_back(value); return *this; }
-    inline CancelCapacityReservationFleetsResponse& AddSuccessfulFleetCancellations(CapacityReservationFleetCancellationState&& value) { m_successfulFleetCancellations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Information about the Capacity Reservation Fleets that could not be
+   * cancelled.</p>
+   */
+  inline const Aws::Vector<FailedCapacityReservationFleetCancellationResponse>& GetFailedFleetCancellations() const {
+    return m_failedFleetCancellations;
+  }
+  template <typename FailedFleetCancellationsT = Aws::Vector<FailedCapacityReservationFleetCancellationResponse>>
+  void SetFailedFleetCancellations(FailedFleetCancellationsT&& value) {
+    m_failedFleetCancellationsHasBeenSet = true;
+    m_failedFleetCancellations = std::forward<FailedFleetCancellationsT>(value);
+  }
+  template <typename FailedFleetCancellationsT = Aws::Vector<FailedCapacityReservationFleetCancellationResponse>>
+  CancelCapacityReservationFleetsResponse& WithFailedFleetCancellations(FailedFleetCancellationsT&& value) {
+    SetFailedFleetCancellations(std::forward<FailedFleetCancellationsT>(value));
+    return *this;
+  }
+  template <typename FailedFleetCancellationsT = FailedCapacityReservationFleetCancellationResponse>
+  CancelCapacityReservationFleetsResponse& AddFailedFleetCancellations(FailedFleetCancellationsT&& value) {
+    m_failedFleetCancellationsHasBeenSet = true;
+    m_failedFleetCancellations.emplace_back(std::forward<FailedFleetCancellationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the Capacity Reservation Fleets that could not be
-     * cancelled.</p>
-     */
-    inline const Aws::Vector<FailedCapacityReservationFleetCancellationResponse>& GetFailedFleetCancellations() const{ return m_failedFleetCancellations; }
-    inline void SetFailedFleetCancellations(const Aws::Vector<FailedCapacityReservationFleetCancellationResponse>& value) { m_failedFleetCancellations = value; }
-    inline void SetFailedFleetCancellations(Aws::Vector<FailedCapacityReservationFleetCancellationResponse>&& value) { m_failedFleetCancellations = std::move(value); }
-    inline CancelCapacityReservationFleetsResponse& WithFailedFleetCancellations(const Aws::Vector<FailedCapacityReservationFleetCancellationResponse>& value) { SetFailedFleetCancellations(value); return *this;}
-    inline CancelCapacityReservationFleetsResponse& WithFailedFleetCancellations(Aws::Vector<FailedCapacityReservationFleetCancellationResponse>&& value) { SetFailedFleetCancellations(std::move(value)); return *this;}
-    inline CancelCapacityReservationFleetsResponse& AddFailedFleetCancellations(const FailedCapacityReservationFleetCancellationResponse& value) { m_failedFleetCancellations.push_back(value); return *this; }
-    inline CancelCapacityReservationFleetsResponse& AddFailedFleetCancellations(FailedCapacityReservationFleetCancellationResponse&& value) { m_failedFleetCancellations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CancelCapacityReservationFleetsResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CancelCapacityReservationFleetsResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CancelCapacityReservationFleetsResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<CapacityReservationFleetCancellationState> m_successfulFleetCancellations;
+ private:
+  Aws::Vector<CapacityReservationFleetCancellationState> m_successfulFleetCancellations;
 
-    Aws::Vector<FailedCapacityReservationFleetCancellationResponse> m_failedFleetCancellations;
+  Aws::Vector<FailedCapacityReservationFleetCancellationResponse> m_failedFleetCancellations;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_successfulFleetCancellationsHasBeenSet = false;
+  bool m_failedFleetCancellationsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

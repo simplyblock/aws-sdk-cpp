@@ -4,96 +4,105 @@
  */
 
 #pragma once
-#include <aws/monitoring/CloudWatch_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSStreamFwd.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/CloudWatch_EXPORTS.h>
 #include <aws/monitoring/model/Dimension.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace CloudWatch
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace CloudWatch {
+namespace Model {
 
+/**
+ * <p>Represents a specific metric.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/monitoring-2010-08-01/Metric">AWS
+ * API Reference</a></p>
+ */
+class Metric {
+ public:
+  AWS_CLOUDWATCH_API Metric() = default;
+  AWS_CLOUDWATCH_API Metric(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CLOUDWATCH_API Metric& operator=(const std::shared_ptr<Aws::Crt::Cbor::CborDecoder>& decoder);
+  AWS_CLOUDWATCH_API void CborEncode(Aws::Crt::Cbor::CborEncoder& encoder) const;
+
+  ///@{
   /**
-   * <p>Represents a specific metric.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/monitoring-2010-08-01/Metric">AWS
-   * API Reference</a></p>
+   * <p>The namespace of the metric.</p>
    */
-  class Metric
-  {
-  public:
-    AWS_CLOUDWATCH_API Metric();
-    AWS_CLOUDWATCH_API Metric(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_CLOUDWATCH_API Metric& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::String& GetNamespace() const { return m_namespace; }
+  inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
+  template <typename NamespaceT = Aws::String>
+  void SetNamespace(NamespaceT&& value) {
+    m_namespaceHasBeenSet = true;
+    m_namespace = std::forward<NamespaceT>(value);
+  }
+  template <typename NamespaceT = Aws::String>
+  Metric& WithNamespace(NamespaceT&& value) {
+    SetNamespace(std::forward<NamespaceT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLOUDWATCH_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_CLOUDWATCH_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>The name of the metric. This is a required field.</p>
+   */
+  inline const Aws::String& GetMetricName() const { return m_metricName; }
+  inline bool MetricNameHasBeenSet() const { return m_metricNameHasBeenSet; }
+  template <typename MetricNameT = Aws::String>
+  void SetMetricName(MetricNameT&& value) {
+    m_metricNameHasBeenSet = true;
+    m_metricName = std::forward<MetricNameT>(value);
+  }
+  template <typename MetricNameT = Aws::String>
+  Metric& WithMetricName(MetricNameT&& value) {
+    SetMetricName(std::forward<MetricNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The dimensions for the metric.</p>
+   */
+  inline const Aws::Vector<Dimension>& GetDimensions() const { return m_dimensions; }
+  inline bool DimensionsHasBeenSet() const { return m_dimensionsHasBeenSet; }
+  template <typename DimensionsT = Aws::Vector<Dimension>>
+  void SetDimensions(DimensionsT&& value) {
+    m_dimensionsHasBeenSet = true;
+    m_dimensions = std::forward<DimensionsT>(value);
+  }
+  template <typename DimensionsT = Aws::Vector<Dimension>>
+  Metric& WithDimensions(DimensionsT&& value) {
+    SetDimensions(std::forward<DimensionsT>(value));
+    return *this;
+  }
+  template <typename DimensionsT = Dimension>
+  Metric& AddDimensions(DimensionsT&& value) {
+    m_dimensionsHasBeenSet = true;
+    m_dimensions.emplace_back(std::forward<DimensionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_namespace;
 
-    ///@{
-    /**
-     * <p>The namespace of the metric.</p>
-     */
-    inline const Aws::String& GetNamespace() const{ return m_namespace; }
-    inline bool NamespaceHasBeenSet() const { return m_namespaceHasBeenSet; }
-    inline void SetNamespace(const Aws::String& value) { m_namespaceHasBeenSet = true; m_namespace = value; }
-    inline void SetNamespace(Aws::String&& value) { m_namespaceHasBeenSet = true; m_namespace = std::move(value); }
-    inline void SetNamespace(const char* value) { m_namespaceHasBeenSet = true; m_namespace.assign(value); }
-    inline Metric& WithNamespace(const Aws::String& value) { SetNamespace(value); return *this;}
-    inline Metric& WithNamespace(Aws::String&& value) { SetNamespace(std::move(value)); return *this;}
-    inline Metric& WithNamespace(const char* value) { SetNamespace(value); return *this;}
-    ///@}
+  Aws::String m_metricName;
 
-    ///@{
-    /**
-     * <p>The name of the metric. This is a required field.</p>
-     */
-    inline const Aws::String& GetMetricName() const{ return m_metricName; }
-    inline bool MetricNameHasBeenSet() const { return m_metricNameHasBeenSet; }
-    inline void SetMetricName(const Aws::String& value) { m_metricNameHasBeenSet = true; m_metricName = value; }
-    inline void SetMetricName(Aws::String&& value) { m_metricNameHasBeenSet = true; m_metricName = std::move(value); }
-    inline void SetMetricName(const char* value) { m_metricNameHasBeenSet = true; m_metricName.assign(value); }
-    inline Metric& WithMetricName(const Aws::String& value) { SetMetricName(value); return *this;}
-    inline Metric& WithMetricName(Aws::String&& value) { SetMetricName(std::move(value)); return *this;}
-    inline Metric& WithMetricName(const char* value) { SetMetricName(value); return *this;}
-    ///@}
+  Aws::Vector<Dimension> m_dimensions;
+  bool m_namespaceHasBeenSet = false;
+  bool m_metricNameHasBeenSet = false;
+  bool m_dimensionsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The dimensions for the metric.</p>
-     */
-    inline const Aws::Vector<Dimension>& GetDimensions() const{ return m_dimensions; }
-    inline bool DimensionsHasBeenSet() const { return m_dimensionsHasBeenSet; }
-    inline void SetDimensions(const Aws::Vector<Dimension>& value) { m_dimensionsHasBeenSet = true; m_dimensions = value; }
-    inline void SetDimensions(Aws::Vector<Dimension>&& value) { m_dimensionsHasBeenSet = true; m_dimensions = std::move(value); }
-    inline Metric& WithDimensions(const Aws::Vector<Dimension>& value) { SetDimensions(value); return *this;}
-    inline Metric& WithDimensions(Aws::Vector<Dimension>&& value) { SetDimensions(std::move(value)); return *this;}
-    inline Metric& AddDimensions(const Dimension& value) { m_dimensionsHasBeenSet = true; m_dimensions.push_back(value); return *this; }
-    inline Metric& AddDimensions(Dimension&& value) { m_dimensionsHasBeenSet = true; m_dimensions.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_namespace;
-    bool m_namespaceHasBeenSet = false;
-
-    Aws::String m_metricName;
-    bool m_metricNameHasBeenSet = false;
-
-    Aws::Vector<Dimension> m_dimensions;
-    bool m_dimensionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CloudWatch
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatch
+}  // namespace Aws

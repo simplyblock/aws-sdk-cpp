@@ -12,17 +12,4 @@ using namespace Aws::ChimeSDKIdentity::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeregisterAppInstanceUserEndpointRequest::DeregisterAppInstanceUserEndpointRequest() : 
-    m_appInstanceUserArnHasBeenSet(false),
-    m_endpointIdHasBeenSet(false)
-{
-}
-
-Aws::String DeregisterAppInstanceUserEndpointRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeregisterAppInstanceUserEndpointRequest::SerializePayload() const { return {}; }

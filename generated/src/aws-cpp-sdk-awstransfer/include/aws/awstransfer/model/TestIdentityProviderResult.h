@@ -5,108 +5,132 @@
 
 #pragma once
 #include <aws/awstransfer/Transfer_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Transfer
-{
-namespace Model
-{
-  class TestIdentityProviderResult
-  {
-  public:
-    AWS_TRANSFER_API TestIdentityProviderResult();
-    AWS_TRANSFER_API TestIdentityProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSFER_API TestIdentityProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Transfer {
+namespace Model {
+class TestIdentityProviderResult {
+ public:
+  AWS_TRANSFER_API TestIdentityProviderResult() = default;
+  AWS_TRANSFER_API TestIdentityProviderResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSFER_API TestIdentityProviderResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The response that is returned from your API Gateway or your Lambda
+   * function.</p>
+   */
+  inline const Aws::String& GetResponse() const { return m_response; }
+  template <typename ResponseT = Aws::String>
+  void SetResponse(ResponseT&& value) {
+    m_responseHasBeenSet = true;
+    m_response = std::forward<ResponseT>(value);
+  }
+  template <typename ResponseT = Aws::String>
+  TestIdentityProviderResult& WithResponse(ResponseT&& value) {
+    SetResponse(std::forward<ResponseT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The response that is returned from your API Gateway or your Lambda
-     * function.</p>
-     */
-    inline const Aws::String& GetResponse() const{ return m_response; }
-    inline void SetResponse(const Aws::String& value) { m_response = value; }
-    inline void SetResponse(Aws::String&& value) { m_response = std::move(value); }
-    inline void SetResponse(const char* value) { m_response.assign(value); }
-    inline TestIdentityProviderResult& WithResponse(const Aws::String& value) { SetResponse(value); return *this;}
-    inline TestIdentityProviderResult& WithResponse(Aws::String&& value) { SetResponse(std::move(value)); return *this;}
-    inline TestIdentityProviderResult& WithResponse(const char* value) { SetResponse(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The HTTP status code that is the response from your API Gateway or your
+   * Lambda function.</p>
+   */
+  inline int GetStatusCode() const { return m_statusCode; }
+  inline void SetStatusCode(int value) {
+    m_statusCodeHasBeenSet = true;
+    m_statusCode = value;
+  }
+  inline TestIdentityProviderResult& WithStatusCode(int value) {
+    SetStatusCode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The HTTP status code that is the response from your API Gateway or your
-     * Lambda function.</p>
-     */
-    inline int GetStatusCode() const{ return m_statusCode; }
-    inline void SetStatusCode(int value) { m_statusCode = value; }
-    inline TestIdentityProviderResult& WithStatusCode(int value) { SetStatusCode(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A message that indicates whether the test was successful or not.</p>
+   * <p>If an empty string is returned, the most likely cause is that the
+   * authentication failed due to an incorrect username or password.</p>
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  TestIdentityProviderResult& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A message that indicates whether the test was successful or not.</p> 
-     * <p>If an empty string is returned, the most likely cause is that the
-     * authentication failed due to an incorrect username or password.</p> 
-     */
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline void SetMessage(const Aws::String& value) { m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_message.assign(value); }
-    inline TestIdentityProviderResult& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline TestIdentityProviderResult& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline TestIdentityProviderResult& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The endpoint of the service used to authenticate a user.</p>
+   */
+  inline const Aws::String& GetUrl() const { return m_url; }
+  template <typename UrlT = Aws::String>
+  void SetUrl(UrlT&& value) {
+    m_urlHasBeenSet = true;
+    m_url = std::forward<UrlT>(value);
+  }
+  template <typename UrlT = Aws::String>
+  TestIdentityProviderResult& WithUrl(UrlT&& value) {
+    SetUrl(std::forward<UrlT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The endpoint of the service used to authenticate a user.</p>
-     */
-    inline const Aws::String& GetUrl() const{ return m_url; }
-    inline void SetUrl(const Aws::String& value) { m_url = value; }
-    inline void SetUrl(Aws::String&& value) { m_url = std::move(value); }
-    inline void SetUrl(const char* value) { m_url.assign(value); }
-    inline TestIdentityProviderResult& WithUrl(const Aws::String& value) { SetUrl(value); return *this;}
-    inline TestIdentityProviderResult& WithUrl(Aws::String&& value) { SetUrl(std::move(value)); return *this;}
-    inline TestIdentityProviderResult& WithUrl(const char* value) { SetUrl(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline TestIdentityProviderResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline TestIdentityProviderResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline TestIdentityProviderResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  TestIdentityProviderResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_response;
+ private:
+  Aws::String m_response;
 
-    int m_statusCode;
+  int m_statusCode{0};
 
-    Aws::String m_message;
+  Aws::String m_message;
 
-    Aws::String m_url;
+  Aws::String m_url;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_responseHasBeenSet = false;
+  bool m_statusCodeHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+  bool m_urlHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Transfer
-} // namespace Aws
+}  // namespace Model
+}  // namespace Transfer
+}  // namespace Aws

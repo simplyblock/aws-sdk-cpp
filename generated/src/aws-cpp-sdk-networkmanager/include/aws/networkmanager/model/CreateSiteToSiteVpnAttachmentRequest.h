@@ -4,108 +4,147 @@
  */
 
 #pragma once
-#include <aws/networkmanager/NetworkManager_EXPORTS.h>
-#include <aws/networkmanager/NetworkManagerRequest.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/networkmanager/NetworkManagerRequest.h>
+#include <aws/networkmanager/NetworkManager_EXPORTS.h>
 #include <aws/networkmanager/model/Tag.h>
+
 #include <utility>
-#include <aws/core/utils/UUID.h>
 
-namespace Aws
-{
-namespace NetworkManager
-{
-namespace Model
-{
+namespace Aws {
+namespace NetworkManager {
+namespace Model {
 
+/**
+ */
+class CreateSiteToSiteVpnAttachmentRequest : public NetworkManagerRequest {
+ public:
+  AWS_NETWORKMANAGER_API CreateSiteToSiteVpnAttachmentRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateSiteToSiteVpnAttachment"; }
+
+  AWS_NETWORKMANAGER_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The ID of a core network where you're creating a site-to-site VPN
+   * attachment.</p>
    */
-  class CreateSiteToSiteVpnAttachmentRequest : public NetworkManagerRequest
-  {
-  public:
-    AWS_NETWORKMANAGER_API CreateSiteToSiteVpnAttachmentRequest();
+  inline const Aws::String& GetCoreNetworkId() const { return m_coreNetworkId; }
+  inline bool CoreNetworkIdHasBeenSet() const { return m_coreNetworkIdHasBeenSet; }
+  template <typename CoreNetworkIdT = Aws::String>
+  void SetCoreNetworkId(CoreNetworkIdT&& value) {
+    m_coreNetworkIdHasBeenSet = true;
+    m_coreNetworkId = std::forward<CoreNetworkIdT>(value);
+  }
+  template <typename CoreNetworkIdT = Aws::String>
+  CreateSiteToSiteVpnAttachmentRequest& WithCoreNetworkId(CoreNetworkIdT&& value) {
+    SetCoreNetworkId(std::forward<CoreNetworkIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateSiteToSiteVpnAttachment"; }
+  ///@{
+  /**
+   * <p>The ARN identifying the VPN attachment.</p>
+   */
+  inline const Aws::String& GetVpnConnectionArn() const { return m_vpnConnectionArn; }
+  inline bool VpnConnectionArnHasBeenSet() const { return m_vpnConnectionArnHasBeenSet; }
+  template <typename VpnConnectionArnT = Aws::String>
+  void SetVpnConnectionArn(VpnConnectionArnT&& value) {
+    m_vpnConnectionArnHasBeenSet = true;
+    m_vpnConnectionArn = std::forward<VpnConnectionArnT>(value);
+  }
+  template <typename VpnConnectionArnT = Aws::String>
+  CreateSiteToSiteVpnAttachmentRequest& WithVpnConnectionArn(VpnConnectionArnT&& value) {
+    SetVpnConnectionArn(std::forward<VpnConnectionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_NETWORKMANAGER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The routing policy label to apply to the Site-to-Site VPN attachment for
+   * traffic routing decisions.</p>
+   */
+  inline const Aws::String& GetRoutingPolicyLabel() const { return m_routingPolicyLabel; }
+  inline bool RoutingPolicyLabelHasBeenSet() const { return m_routingPolicyLabelHasBeenSet; }
+  template <typename RoutingPolicyLabelT = Aws::String>
+  void SetRoutingPolicyLabel(RoutingPolicyLabelT&& value) {
+    m_routingPolicyLabelHasBeenSet = true;
+    m_routingPolicyLabel = std::forward<RoutingPolicyLabelT>(value);
+  }
+  template <typename RoutingPolicyLabelT = Aws::String>
+  CreateSiteToSiteVpnAttachmentRequest& WithRoutingPolicyLabel(RoutingPolicyLabelT&& value) {
+    SetRoutingPolicyLabel(std::forward<RoutingPolicyLabelT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The tags associated with the request.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateSiteToSiteVpnAttachmentRequest& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateSiteToSiteVpnAttachmentRequest& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of a core network where you're creating a site-to-site VPN
-     * attachment.</p>
-     */
-    inline const Aws::String& GetCoreNetworkId() const{ return m_coreNetworkId; }
-    inline bool CoreNetworkIdHasBeenSet() const { return m_coreNetworkIdHasBeenSet; }
-    inline void SetCoreNetworkId(const Aws::String& value) { m_coreNetworkIdHasBeenSet = true; m_coreNetworkId = value; }
-    inline void SetCoreNetworkId(Aws::String&& value) { m_coreNetworkIdHasBeenSet = true; m_coreNetworkId = std::move(value); }
-    inline void SetCoreNetworkId(const char* value) { m_coreNetworkIdHasBeenSet = true; m_coreNetworkId.assign(value); }
-    inline CreateSiteToSiteVpnAttachmentRequest& WithCoreNetworkId(const Aws::String& value) { SetCoreNetworkId(value); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithCoreNetworkId(Aws::String&& value) { SetCoreNetworkId(std::move(value)); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithCoreNetworkId(const char* value) { SetCoreNetworkId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The client token associated with the request.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CreateSiteToSiteVpnAttachmentRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_coreNetworkId;
 
-    ///@{
-    /**
-     * <p>The ARN identifying the VPN attachment.</p>
-     */
-    inline const Aws::String& GetVpnConnectionArn() const{ return m_vpnConnectionArn; }
-    inline bool VpnConnectionArnHasBeenSet() const { return m_vpnConnectionArnHasBeenSet; }
-    inline void SetVpnConnectionArn(const Aws::String& value) { m_vpnConnectionArnHasBeenSet = true; m_vpnConnectionArn = value; }
-    inline void SetVpnConnectionArn(Aws::String&& value) { m_vpnConnectionArnHasBeenSet = true; m_vpnConnectionArn = std::move(value); }
-    inline void SetVpnConnectionArn(const char* value) { m_vpnConnectionArnHasBeenSet = true; m_vpnConnectionArn.assign(value); }
-    inline CreateSiteToSiteVpnAttachmentRequest& WithVpnConnectionArn(const Aws::String& value) { SetVpnConnectionArn(value); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithVpnConnectionArn(Aws::String&& value) { SetVpnConnectionArn(std::move(value)); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithVpnConnectionArn(const char* value) { SetVpnConnectionArn(value); return *this;}
-    ///@}
+  Aws::String m_vpnConnectionArn;
 
-    ///@{
-    /**
-     * <p>The tags associated with the request.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline CreateSiteToSiteVpnAttachmentRequest& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline CreateSiteToSiteVpnAttachmentRequest& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::String m_routingPolicyLabel;
 
-    ///@{
-    /**
-     * <p>The client token associated with the request.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CreateSiteToSiteVpnAttachmentRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CreateSiteToSiteVpnAttachmentRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  Aws::Vector<Tag> m_tags;
 
-    Aws::String m_coreNetworkId;
-    bool m_coreNetworkIdHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_coreNetworkIdHasBeenSet = false;
+  bool m_vpnConnectionArnHasBeenSet = false;
+  bool m_routingPolicyLabelHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_vpnConnectionArn;
-    bool m_vpnConnectionArnHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace NetworkManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkManager
+}  // namespace Aws

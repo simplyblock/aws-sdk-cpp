@@ -3,31 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticloadbalancingv2/model/GetTrustStoreRevocationContentRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/elasticloadbalancingv2/model/GetTrustStoreRevocationContentRequest.h>
 
 using namespace Aws::ElasticLoadBalancingv2::Model;
 using namespace Aws::Utils;
 
-GetTrustStoreRevocationContentRequest::GetTrustStoreRevocationContentRequest() : 
-    m_trustStoreArnHasBeenSet(false),
-    m_revocationId(0),
-    m_revocationIdHasBeenSet(false)
-{
-}
-
-Aws::String GetTrustStoreRevocationContentRequest::SerializePayload() const
-{
+Aws::String GetTrustStoreRevocationContentRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=GetTrustStoreRevocationContent&";
-  if(m_trustStoreArnHasBeenSet)
-  {
+  if (m_trustStoreArnHasBeenSet) {
     ss << "TrustStoreArn=" << StringUtils::URLEncode(m_trustStoreArn.c_str()) << "&";
   }
 
-  if(m_revocationIdHasBeenSet)
-  {
+  if (m_revocationIdHasBeenSet) {
     ss << "RevocationId=" << m_revocationId << "&";
   }
 
@@ -35,8 +25,4 @@ Aws::String GetTrustStoreRevocationContentRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  GetTrustStoreRevocationContentRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void GetTrustStoreRevocationContentRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

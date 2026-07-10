@@ -12,52 +12,28 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateBackendRequest::CreateBackendRequest() : 
-    m_appIdHasBeenSet(false),
-    m_appNameHasBeenSet(false),
-    m_backendEnvironmentNameHasBeenSet(false),
-    m_resourceConfigHasBeenSet(false),
-    m_resourceNameHasBeenSet(false)
-{
-}
-
-Aws::String CreateBackendRequest::SerializePayload() const
-{
+Aws::String CreateBackendRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_appIdHasBeenSet)
-  {
-   payload.WithString("appId", m_appId);
-
+  if (m_appIdHasBeenSet) {
+    payload.WithString("appId", m_appId);
   }
 
-  if(m_appNameHasBeenSet)
-  {
-   payload.WithString("appName", m_appName);
-
+  if (m_appNameHasBeenSet) {
+    payload.WithString("appName", m_appName);
   }
 
-  if(m_backendEnvironmentNameHasBeenSet)
-  {
-   payload.WithString("backendEnvironmentName", m_backendEnvironmentName);
-
+  if (m_backendEnvironmentNameHasBeenSet) {
+    payload.WithString("backendEnvironmentName", m_backendEnvironmentName);
   }
 
-  if(m_resourceConfigHasBeenSet)
-  {
-   payload.WithObject("resourceConfig", m_resourceConfig.Jsonize());
-
+  if (m_resourceConfigHasBeenSet) {
+    payload.WithObject("resourceConfig", m_resourceConfig.Jsonize());
   }
 
-  if(m_resourceNameHasBeenSet)
-  {
-   payload.WithString("resourceName", m_resourceName);
-
+  if (m_resourceNameHasBeenSet) {
+    payload.WithString("resourceName", m_resourceName);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

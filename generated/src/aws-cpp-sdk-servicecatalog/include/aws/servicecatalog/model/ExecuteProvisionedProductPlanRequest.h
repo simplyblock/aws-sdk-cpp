@@ -4,93 +4,100 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/servicecatalog/ServiceCatalogRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/servicecatalog/ServiceCatalogRequest.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
 
-namespace Aws
-{
-namespace ServiceCatalog
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace ServiceCatalog {
+namespace Model {
+
+/**
+ */
+class ExecuteProvisionedProductPlanRequest : public ServiceCatalogRequest {
+ public:
+  AWS_SERVICECATALOG_API ExecuteProvisionedProductPlanRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ExecuteProvisionedProductPlan"; }
+
+  AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+
+  AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
+   * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
    */
-  class ExecuteProvisionedProductPlanRequest : public ServiceCatalogRequest
-  {
-  public:
-    AWS_SERVICECATALOG_API ExecuteProvisionedProductPlanRequest();
+  inline const Aws::String& GetAcceptLanguage() const { return m_acceptLanguage; }
+  inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
+  template <typename AcceptLanguageT = Aws::String>
+  void SetAcceptLanguage(AcceptLanguageT&& value) {
+    m_acceptLanguageHasBeenSet = true;
+    m_acceptLanguage = std::forward<AcceptLanguageT>(value);
+  }
+  template <typename AcceptLanguageT = Aws::String>
+  ExecuteProvisionedProductPlanRequest& WithAcceptLanguage(AcceptLanguageT&& value) {
+    SetAcceptLanguage(std::forward<AcceptLanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ExecuteProvisionedProductPlan"; }
+  ///@{
+  /**
+   * <p>The plan identifier.</p>
+   */
+  inline const Aws::String& GetPlanId() const { return m_planId; }
+  inline bool PlanIdHasBeenSet() const { return m_planIdHasBeenSet; }
+  template <typename PlanIdT = Aws::String>
+  void SetPlanId(PlanIdT&& value) {
+    m_planIdHasBeenSet = true;
+    m_planId = std::forward<PlanIdT>(value);
+  }
+  template <typename PlanIdT = Aws::String>
+  ExecuteProvisionedProductPlanRequest& WithPlanId(PlanIdT&& value) {
+    SetPlanId(std::forward<PlanIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SERVICECATALOG_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A unique identifier that you provide to ensure idempotency. If multiple
+   * requests differ only by the idempotency token, the same response is returned for
+   * each repeated request.</p>
+   */
+  inline const Aws::String& GetIdempotencyToken() const { return m_idempotencyToken; }
+  inline bool IdempotencyTokenHasBeenSet() const { return m_idempotencyTokenHasBeenSet; }
+  template <typename IdempotencyTokenT = Aws::String>
+  void SetIdempotencyToken(IdempotencyTokenT&& value) {
+    m_idempotencyTokenHasBeenSet = true;
+    m_idempotencyToken = std::forward<IdempotencyTokenT>(value);
+  }
+  template <typename IdempotencyTokenT = Aws::String>
+  ExecuteProvisionedProductPlanRequest& WithIdempotencyToken(IdempotencyTokenT&& value) {
+    SetIdempotencyToken(std::forward<IdempotencyTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_acceptLanguage;
 
-    AWS_SERVICECATALOG_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::String m_planId;
 
+  Aws::String m_idempotencyToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_acceptLanguageHasBeenSet = false;
+  bool m_planIdHasBeenSet = false;
+  bool m_idempotencyTokenHasBeenSet = true;
+};
 
-    ///@{
-    /**
-     * <p>The language code.</p> <ul> <li> <p> <code>jp</code> - Japanese</p> </li>
-     * <li> <p> <code>zh</code> - Chinese</p> </li> </ul>
-     */
-    inline const Aws::String& GetAcceptLanguage() const{ return m_acceptLanguage; }
-    inline bool AcceptLanguageHasBeenSet() const { return m_acceptLanguageHasBeenSet; }
-    inline void SetAcceptLanguage(const Aws::String& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = value; }
-    inline void SetAcceptLanguage(Aws::String&& value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage = std::move(value); }
-    inline void SetAcceptLanguage(const char* value) { m_acceptLanguageHasBeenSet = true; m_acceptLanguage.assign(value); }
-    inline ExecuteProvisionedProductPlanRequest& WithAcceptLanguage(const Aws::String& value) { SetAcceptLanguage(value); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithAcceptLanguage(Aws::String&& value) { SetAcceptLanguage(std::move(value)); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithAcceptLanguage(const char* value) { SetAcceptLanguage(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The plan identifier.</p>
-     */
-    inline const Aws::String& GetPlanId() const{ return m_planId; }
-    inline bool PlanIdHasBeenSet() const { return m_planIdHasBeenSet; }
-    inline void SetPlanId(const Aws::String& value) { m_planIdHasBeenSet = true; m_planId = value; }
-    inline void SetPlanId(Aws::String&& value) { m_planIdHasBeenSet = true; m_planId = std::move(value); }
-    inline void SetPlanId(const char* value) { m_planIdHasBeenSet = true; m_planId.assign(value); }
-    inline ExecuteProvisionedProductPlanRequest& WithPlanId(const Aws::String& value) { SetPlanId(value); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithPlanId(Aws::String&& value) { SetPlanId(std::move(value)); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithPlanId(const char* value) { SetPlanId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A unique identifier that you provide to ensure idempotency. If multiple
-     * requests differ only by the idempotency token, the same response is returned for
-     * each repeated request.</p>
-     */
-    inline const Aws::String& GetIdempotencyToken() const{ return m_idempotencyToken; }
-    inline bool IdempotencyTokenHasBeenSet() const { return m_idempotencyTokenHasBeenSet; }
-    inline void SetIdempotencyToken(const Aws::String& value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken = value; }
-    inline void SetIdempotencyToken(Aws::String&& value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken = std::move(value); }
-    inline void SetIdempotencyToken(const char* value) { m_idempotencyTokenHasBeenSet = true; m_idempotencyToken.assign(value); }
-    inline ExecuteProvisionedProductPlanRequest& WithIdempotencyToken(const Aws::String& value) { SetIdempotencyToken(value); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithIdempotencyToken(Aws::String&& value) { SetIdempotencyToken(std::move(value)); return *this;}
-    inline ExecuteProvisionedProductPlanRequest& WithIdempotencyToken(const char* value) { SetIdempotencyToken(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_acceptLanguage;
-    bool m_acceptLanguageHasBeenSet = false;
-
-    Aws::String m_planId;
-    bool m_planIdHasBeenSet = false;
-
-    Aws::String m_idempotencyToken;
-    bool m_idempotencyTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

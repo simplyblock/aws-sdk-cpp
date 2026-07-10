@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/greengrass/model/DeleteSubscriptionDefinitionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/greengrass/model/DeleteSubscriptionDefinitionRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Greengrass::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteSubscriptionDefinitionRequest::DeleteSubscriptionDefinitionRequest() : 
-    m_subscriptionDefinitionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteSubscriptionDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteSubscriptionDefinitionRequest::SerializePayload() const { return {}; }

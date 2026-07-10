@@ -4,92 +4,97 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/gamelift/GameLiftRequest.h>
-#include <aws/gamelift/model/ContainerSchedulingStrategy.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/gamelift/GameLiftRequest.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
+#include <aws/gamelift/model/ContainerGroupType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GameLift
-{
-namespace Model
-{
+namespace Aws {
+namespace GameLift {
+namespace Model {
 
+/**
+ */
+class ListContainerGroupDefinitionsRequest : public GameLiftRequest {
+ public:
+  AWS_GAMELIFT_API ListContainerGroupDefinitionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListContainerGroupDefinitions"; }
+
+  AWS_GAMELIFT_API Aws::String SerializePayload() const override;
+
+  AWS_GAMELIFT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The type of container group to retrieve. Container group type determines how
+   * Amazon GameLift Servers deploys the container group on each fleet instance.</p>
    */
-  class ListContainerGroupDefinitionsRequest : public GameLiftRequest
-  {
-  public:
-    AWS_GAMELIFT_API ListContainerGroupDefinitionsRequest();
+  inline ContainerGroupType GetContainerGroupType() const { return m_containerGroupType; }
+  inline bool ContainerGroupTypeHasBeenSet() const { return m_containerGroupTypeHasBeenSet; }
+  inline void SetContainerGroupType(ContainerGroupType value) {
+    m_containerGroupTypeHasBeenSet = true;
+    m_containerGroupType = value;
+  }
+  inline ListContainerGroupDefinitionsRequest& WithContainerGroupType(ContainerGroupType value) {
+    SetContainerGroupType(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListContainerGroupDefinitions"; }
+  ///@{
+  /**
+   * <p>The maximum number of results to return. Use this parameter with
+   * <code>NextToken</code> to get results as a set of sequential pages.</p>
+   */
+  inline int GetLimit() const { return m_limit; }
+  inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
+  inline void SetLimit(int value) {
+    m_limitHasBeenSet = true;
+    m_limit = value;
+  }
+  inline ListContainerGroupDefinitionsRequest& WithLimit(int value) {
+    SetLimit(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_GAMELIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A token that indicates the start of the next sequential page of results. Use
+   * the token that is returned with a previous call to this operation. To start at
+   * the beginning of the result set, do not specify a value.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListContainerGroupDefinitionsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  ContainerGroupType m_containerGroupType{ContainerGroupType::NOT_SET};
 
-    AWS_GAMELIFT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  int m_limit{0};
 
+  Aws::String m_nextToken;
+  bool m_containerGroupTypeHasBeenSet = false;
+  bool m_limitHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The type of container group definitions to retrieve.</p> <ul> <li> <p>
-     * <code>DAEMON</code> -- Daemon container groups run background processes and are
-     * deployed once per fleet instance.</p> </li> <li> <p> <code>REPLICA</code> --
-     * Replica container groups run your game server application and supporting
-     * software. Replica groups might be deployed multiple times per fleet
-     * instance.</p> </li> </ul>
-     */
-    inline const ContainerSchedulingStrategy& GetSchedulingStrategy() const{ return m_schedulingStrategy; }
-    inline bool SchedulingStrategyHasBeenSet() const { return m_schedulingStrategyHasBeenSet; }
-    inline void SetSchedulingStrategy(const ContainerSchedulingStrategy& value) { m_schedulingStrategyHasBeenSet = true; m_schedulingStrategy = value; }
-    inline void SetSchedulingStrategy(ContainerSchedulingStrategy&& value) { m_schedulingStrategyHasBeenSet = true; m_schedulingStrategy = std::move(value); }
-    inline ListContainerGroupDefinitionsRequest& WithSchedulingStrategy(const ContainerSchedulingStrategy& value) { SetSchedulingStrategy(value); return *this;}
-    inline ListContainerGroupDefinitionsRequest& WithSchedulingStrategy(ContainerSchedulingStrategy&& value) { SetSchedulingStrategy(std::move(value)); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The maximum number of results to return. Use this parameter with
-     * <code>NextToken</code> to get results as a set of sequential pages.</p>
-     */
-    inline int GetLimit() const{ return m_limit; }
-    inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
-    inline void SetLimit(int value) { m_limitHasBeenSet = true; m_limit = value; }
-    inline ListContainerGroupDefinitionsRequest& WithLimit(int value) { SetLimit(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A token that indicates the start of the next sequential page of results. Use
-     * the token that is returned with a previous call to this operation. To start at
-     * the beginning of the result set, do not specify a value.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListContainerGroupDefinitionsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListContainerGroupDefinitionsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListContainerGroupDefinitionsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
-  private:
-
-    ContainerSchedulingStrategy m_schedulingStrategy;
-    bool m_schedulingStrategyHasBeenSet = false;
-
-    int m_limit;
-    bool m_limitHasBeenSet = false;
-
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

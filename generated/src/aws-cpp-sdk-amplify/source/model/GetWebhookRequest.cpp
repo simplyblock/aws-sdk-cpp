@@ -12,16 +12,4 @@ using namespace Aws::Amplify::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetWebhookRequest::GetWebhookRequest() : 
-    m_webhookIdHasBeenSet(false)
-{
-}
-
-Aws::String GetWebhookRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetWebhookRequest::SerializePayload() const { return {}; }

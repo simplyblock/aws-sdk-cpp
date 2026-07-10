@@ -5,83 +5,101 @@
 
 #pragma once
 #include <aws/clouddirectory/CloudDirectory_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/clouddirectory/model/PolicyToPath.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudDirectory
-{
-namespace Model
-{
-  class LookupPolicyResult
-  {
-  public:
-    AWS_CLOUDDIRECTORY_API LookupPolicyResult();
-    AWS_CLOUDDIRECTORY_API LookupPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDDIRECTORY_API LookupPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudDirectory {
+namespace Model {
+class LookupPolicyResult {
+ public:
+  AWS_CLOUDDIRECTORY_API LookupPolicyResult() = default;
+  AWS_CLOUDDIRECTORY_API LookupPolicyResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDDIRECTORY_API LookupPolicyResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Provides list of path to policies. Policies contain <code>PolicyId</code>,
+   * <code>ObjectIdentifier</code>, and <code>PolicyType</code>. For more
+   * information, see <a
+   * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directory.html#key_concepts_policies">Policies</a>.</p>
+   */
+  inline const Aws::Vector<PolicyToPath>& GetPolicyToPathList() const { return m_policyToPathList; }
+  template <typename PolicyToPathListT = Aws::Vector<PolicyToPath>>
+  void SetPolicyToPathList(PolicyToPathListT&& value) {
+    m_policyToPathListHasBeenSet = true;
+    m_policyToPathList = std::forward<PolicyToPathListT>(value);
+  }
+  template <typename PolicyToPathListT = Aws::Vector<PolicyToPath>>
+  LookupPolicyResult& WithPolicyToPathList(PolicyToPathListT&& value) {
+    SetPolicyToPathList(std::forward<PolicyToPathListT>(value));
+    return *this;
+  }
+  template <typename PolicyToPathListT = PolicyToPath>
+  LookupPolicyResult& AddPolicyToPathList(PolicyToPathListT&& value) {
+    m_policyToPathListHasBeenSet = true;
+    m_policyToPathList.emplace_back(std::forward<PolicyToPathListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides list of path to policies. Policies contain <code>PolicyId</code>,
-     * <code>ObjectIdentifier</code>, and <code>PolicyType</code>. For more
-     * information, see <a
-     * href="https://docs.aws.amazon.com/clouddirectory/latest/developerguide/key_concepts_directory.html#key_concepts_policies">Policies</a>.</p>
-     */
-    inline const Aws::Vector<PolicyToPath>& GetPolicyToPathList() const{ return m_policyToPathList; }
-    inline void SetPolicyToPathList(const Aws::Vector<PolicyToPath>& value) { m_policyToPathList = value; }
-    inline void SetPolicyToPathList(Aws::Vector<PolicyToPath>&& value) { m_policyToPathList = std::move(value); }
-    inline LookupPolicyResult& WithPolicyToPathList(const Aws::Vector<PolicyToPath>& value) { SetPolicyToPathList(value); return *this;}
-    inline LookupPolicyResult& WithPolicyToPathList(Aws::Vector<PolicyToPath>&& value) { SetPolicyToPathList(std::move(value)); return *this;}
-    inline LookupPolicyResult& AddPolicyToPathList(const PolicyToPath& value) { m_policyToPathList.push_back(value); return *this; }
-    inline LookupPolicyResult& AddPolicyToPathList(PolicyToPath&& value) { m_policyToPathList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination token.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  LookupPolicyResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination token.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline LookupPolicyResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline LookupPolicyResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline LookupPolicyResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline LookupPolicyResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline LookupPolicyResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline LookupPolicyResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  LookupPolicyResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PolicyToPath> m_policyToPathList;
+ private:
+  Aws::Vector<PolicyToPath> m_policyToPathList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyToPathListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudDirectory
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudDirectory
+}  // namespace Aws

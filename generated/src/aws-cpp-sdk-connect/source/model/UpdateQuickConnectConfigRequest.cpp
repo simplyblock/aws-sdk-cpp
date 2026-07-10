@@ -12,26 +12,12 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateQuickConnectConfigRequest::UpdateQuickConnectConfigRequest() : 
-    m_instanceIdHasBeenSet(false),
-    m_quickConnectIdHasBeenSet(false),
-    m_quickConnectConfigHasBeenSet(false)
-{
-}
-
-Aws::String UpdateQuickConnectConfigRequest::SerializePayload() const
-{
+Aws::String UpdateQuickConnectConfigRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_quickConnectConfigHasBeenSet)
-  {
-   payload.WithObject("QuickConnectConfig", m_quickConnectConfig.Jsonize());
-
+  if (m_quickConnectConfigHasBeenSet) {
+    payload.WithObject("QuickConnectConfig", m_quickConnectConfig.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -4,70 +4,86 @@
  */
 
 #pragma once
-#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/elasticbeanstalk/model/ResponseMetadata.h>
+#include <aws/elasticbeanstalk/ElasticBeanstalk_EXPORTS.h>
 #include <aws/elasticbeanstalk/model/ManagedAction.h>
+#include <aws/elasticbeanstalk/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticBeanstalk
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticBeanstalk {
+namespace Model {
+/**
+ * <p>The result message containing a list of managed actions.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/DescribeEnvironmentManagedActionsResult">AWS
+ * API Reference</a></p>
+ */
+class DescribeEnvironmentManagedActionsResult {
+ public:
+  AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult() = default;
+  AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>The result message containing a list of managed actions.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticbeanstalk-2010-12-01/DescribeEnvironmentManagedActionsResult">AWS
-   * API Reference</a></p>
+   * <p>A list of upcoming and in-progress managed actions.</p>
    */
-  class DescribeEnvironmentManagedActionsResult
-  {
-  public:
-    AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult();
-    AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICBEANSTALK_API DescribeEnvironmentManagedActionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<ManagedAction>& GetManagedActions() const { return m_managedActions; }
+  template <typename ManagedActionsT = Aws::Vector<ManagedAction>>
+  void SetManagedActions(ManagedActionsT&& value) {
+    m_managedActionsHasBeenSet = true;
+    m_managedActions = std::forward<ManagedActionsT>(value);
+  }
+  template <typename ManagedActionsT = Aws::Vector<ManagedAction>>
+  DescribeEnvironmentManagedActionsResult& WithManagedActions(ManagedActionsT&& value) {
+    SetManagedActions(std::forward<ManagedActionsT>(value));
+    return *this;
+  }
+  template <typename ManagedActionsT = ManagedAction>
+  DescribeEnvironmentManagedActionsResult& AddManagedActions(ManagedActionsT&& value) {
+    m_managedActionsHasBeenSet = true;
+    m_managedActions.emplace_back(std::forward<ManagedActionsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of upcoming and in-progress managed actions.</p>
-     */
-    inline const Aws::Vector<ManagedAction>& GetManagedActions() const{ return m_managedActions; }
-    inline void SetManagedActions(const Aws::Vector<ManagedAction>& value) { m_managedActions = value; }
-    inline void SetManagedActions(Aws::Vector<ManagedAction>&& value) { m_managedActions = std::move(value); }
-    inline DescribeEnvironmentManagedActionsResult& WithManagedActions(const Aws::Vector<ManagedAction>& value) { SetManagedActions(value); return *this;}
-    inline DescribeEnvironmentManagedActionsResult& WithManagedActions(Aws::Vector<ManagedAction>&& value) { SetManagedActions(std::move(value)); return *this;}
-    inline DescribeEnvironmentManagedActionsResult& AddManagedActions(const ManagedAction& value) { m_managedActions.push_back(value); return *this; }
-    inline DescribeEnvironmentManagedActionsResult& AddManagedActions(ManagedAction&& value) { m_managedActions.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeEnvironmentManagedActionsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeEnvironmentManagedActionsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeEnvironmentManagedActionsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<ManagedAction> m_managedActions;
 
-    Aws::Vector<ManagedAction> m_managedActions;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_managedActionsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace ElasticBeanstalk
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticBeanstalk
+}  // namespace Aws

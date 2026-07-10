@@ -4,77 +4,91 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/Status.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/ResponseMetadata.h>
+#include <aws/ec2/model/Status.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
-  class RestoreAddressToClassicResponse
-  {
-  public:
-    AWS_EC2_API RestoreAddressToClassicResponse();
-    AWS_EC2_API RestoreAddressToClassicResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_EC2_API RestoreAddressToClassicResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
+class RestoreAddressToClassicResponse {
+ public:
+  AWS_EC2_API RestoreAddressToClassicResponse() = default;
+  AWS_EC2_API RestoreAddressToClassicResponse(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_EC2_API RestoreAddressToClassicResponse& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>The Elastic IP address.</p>
+   */
+  inline const Aws::String& GetPublicIp() const { return m_publicIp; }
+  template <typename PublicIpT = Aws::String>
+  void SetPublicIp(PublicIpT&& value) {
+    m_publicIpHasBeenSet = true;
+    m_publicIp = std::forward<PublicIpT>(value);
+  }
+  template <typename PublicIpT = Aws::String>
+  RestoreAddressToClassicResponse& WithPublicIp(PublicIpT&& value) {
+    SetPublicIp(std::forward<PublicIpT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Elastic IP address.</p>
-     */
-    inline const Aws::String& GetPublicIp() const{ return m_publicIp; }
-    inline void SetPublicIp(const Aws::String& value) { m_publicIp = value; }
-    inline void SetPublicIp(Aws::String&& value) { m_publicIp = std::move(value); }
-    inline void SetPublicIp(const char* value) { m_publicIp.assign(value); }
-    inline RestoreAddressToClassicResponse& WithPublicIp(const Aws::String& value) { SetPublicIp(value); return *this;}
-    inline RestoreAddressToClassicResponse& WithPublicIp(Aws::String&& value) { SetPublicIp(std::move(value)); return *this;}
-    inline RestoreAddressToClassicResponse& WithPublicIp(const char* value) { SetPublicIp(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The move status for the IP address.</p>
+   */
+  inline Status GetStatus() const { return m_status; }
+  inline void SetStatus(Status value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline RestoreAddressToClassicResponse& WithStatus(Status value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The move status for the IP address.</p>
-     */
-    inline const Status& GetStatus() const{ return m_status; }
-    inline void SetStatus(const Status& value) { m_status = value; }
-    inline void SetStatus(Status&& value) { m_status = std::move(value); }
-    inline RestoreAddressToClassicResponse& WithStatus(const Status& value) { SetStatus(value); return *this;}
-    inline RestoreAddressToClassicResponse& WithStatus(Status&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline RestoreAddressToClassicResponse& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline RestoreAddressToClassicResponse& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  RestoreAddressToClassicResponse& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_publicIp;
+ private:
+  Aws::String m_publicIp;
 
-    Status m_status;
+  Status m_status{Status::NOT_SET};
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_publicIpHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

@@ -4,86 +4,104 @@
  */
 
 #pragma once
-#include <aws/workspaces-thin-client/WorkSpacesThinClient_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workspaces-thin-client/WorkSpacesThinClient_EXPORTS.h>
 #include <aws/workspaces-thin-client/model/SoftwareSetSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesThinClient
-{
-namespace Model
-{
-  class ListSoftwareSetsResult
-  {
-  public:
-    AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult();
-    AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesThinClient {
+namespace Model {
+class ListSoftwareSetsResult {
+ public:
+  AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult() = default;
+  AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESTHINCLIENT_API ListSoftwareSetsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Describes software sets.</p>
+   */
+  inline const Aws::Vector<SoftwareSetSummary>& GetSoftwareSets() const { return m_softwareSets; }
+  template <typename SoftwareSetsT = Aws::Vector<SoftwareSetSummary>>
+  void SetSoftwareSets(SoftwareSetsT&& value) {
+    m_softwareSetsHasBeenSet = true;
+    m_softwareSets = std::forward<SoftwareSetsT>(value);
+  }
+  template <typename SoftwareSetsT = Aws::Vector<SoftwareSetSummary>>
+  ListSoftwareSetsResult& WithSoftwareSets(SoftwareSetsT&& value) {
+    SetSoftwareSets(std::forward<SoftwareSetsT>(value));
+    return *this;
+  }
+  template <typename SoftwareSetsT = SoftwareSetSummary>
+  ListSoftwareSetsResult& AddSoftwareSets(SoftwareSetsT&& value) {
+    m_softwareSetsHasBeenSet = true;
+    m_softwareSets.emplace_back(std::forward<SoftwareSetsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes software sets.</p>
-     */
-    inline const Aws::Vector<SoftwareSetSummary>& GetSoftwareSets() const{ return m_softwareSets; }
-    inline void SetSoftwareSets(const Aws::Vector<SoftwareSetSummary>& value) { m_softwareSets = value; }
-    inline void SetSoftwareSets(Aws::Vector<SoftwareSetSummary>&& value) { m_softwareSets = std::move(value); }
-    inline ListSoftwareSetsResult& WithSoftwareSets(const Aws::Vector<SoftwareSetSummary>& value) { SetSoftwareSets(value); return *this;}
-    inline ListSoftwareSetsResult& WithSoftwareSets(Aws::Vector<SoftwareSetSummary>&& value) { SetSoftwareSets(std::move(value)); return *this;}
-    inline ListSoftwareSetsResult& AddSoftwareSets(const SoftwareSetSummary& value) { m_softwareSets.push_back(value); return *this; }
-    inline ListSoftwareSetsResult& AddSoftwareSets(SoftwareSetSummary&& value) { m_softwareSets.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If <code>nextToken</code> is returned, there are more results available. The
+   * value of <code>nextToken</code> is a unique pagination token for each page. Make
+   * the call again using the returned token to retrieve the next page. Keep all
+   * other arguments unchanged. Each pagination token expires after 24 hours. Using
+   * an expired pagination token will return an <i>HTTP 400 InvalidToken
+   * error</i>.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSoftwareSetsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If <code>nextToken</code> is returned, there are more results available. The
-     * value of <code>nextToken</code> is a unique pagination token for each page. Make
-     * the call again using the returned token to retrieve the next page. Keep all
-     * other arguments unchanged. Each pagination token expires after 24 hours. Using
-     * an expired pagination token will return an <i>HTTP 400 InvalidToken
-     * error</i>.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSoftwareSetsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSoftwareSetsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSoftwareSetsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSoftwareSetsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSoftwareSetsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSoftwareSetsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSoftwareSetsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SoftwareSetSummary> m_softwareSets;
+ private:
+  Aws::Vector<SoftwareSetSummary> m_softwareSets;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_softwareSetsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesThinClient
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesThinClient
+}  // namespace Aws

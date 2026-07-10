@@ -4,82 +4,96 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/ram/RAM_EXPORTS.h>
 #include <aws/ram/model/ResourceShare.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RAM
-{
-namespace Model
-{
-  class UpdateResourceShareResult
-  {
-  public:
-    AWS_RAM_API UpdateResourceShareResult();
-    AWS_RAM_API UpdateResourceShareResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RAM_API UpdateResourceShareResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RAM {
+namespace Model {
+class UpdateResourceShareResult {
+ public:
+  AWS_RAM_API UpdateResourceShareResult() = default;
+  AWS_RAM_API UpdateResourceShareResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RAM_API UpdateResourceShareResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the resource share.</p>
+   */
+  inline const ResourceShare& GetResourceShare() const { return m_resourceShare; }
+  template <typename ResourceShareT = ResourceShare>
+  void SetResourceShare(ResourceShareT&& value) {
+    m_resourceShareHasBeenSet = true;
+    m_resourceShare = std::forward<ResourceShareT>(value);
+  }
+  template <typename ResourceShareT = ResourceShare>
+  UpdateResourceShareResult& WithResourceShare(ResourceShareT&& value) {
+    SetResourceShare(std::forward<ResourceShareT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the resource share.</p>
-     */
-    inline const ResourceShare& GetResourceShare() const{ return m_resourceShare; }
-    inline void SetResourceShare(const ResourceShare& value) { m_resourceShare = value; }
-    inline void SetResourceShare(ResourceShare&& value) { m_resourceShare = std::move(value); }
-    inline UpdateResourceShareResult& WithResourceShare(const ResourceShare& value) { SetResourceShare(value); return *this;}
-    inline UpdateResourceShareResult& WithResourceShare(ResourceShare&& value) { SetResourceShare(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The idempotency identifier associated with this request. If you want to
+   * repeat the same operation in an idempotent manner then you must include this
+   * value in the <code>clientToken</code> request parameter of that later call. All
+   * other parameters must also have the same values that you used in the first
+   * call.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  UpdateResourceShareResult& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The idempotency identifier associated with this request. If you want to
-     * repeat the same operation in an idempotent manner then you must include this
-     * value in the <code>clientToken</code> request parameter of that later call. All
-     * other parameters must also have the same values that you used in the first
-     * call.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline void SetClientToken(const Aws::String& value) { m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientToken.assign(value); }
-    inline UpdateResourceShareResult& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline UpdateResourceShareResult& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline UpdateResourceShareResult& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateResourceShareResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateResourceShareResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateResourceShareResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateResourceShareResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResourceShare m_resourceShare;
+ private:
+  ResourceShare m_resourceShare;
 
-    Aws::String m_clientToken;
+  Aws::String m_clientToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_resourceShareHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace RAM
+}  // namespace Aws

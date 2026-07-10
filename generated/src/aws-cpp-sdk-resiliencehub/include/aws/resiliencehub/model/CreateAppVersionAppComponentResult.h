@@ -4,99 +4,119 @@
  */
 
 #pragma once
-#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/resiliencehub/ResilienceHub_EXPORTS.h>
 #include <aws/resiliencehub/model/AppComponent.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ResilienceHub
-{
-namespace Model
-{
-  class CreateAppVersionAppComponentResult
-  {
-  public:
-    AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult();
-    AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ResilienceHub {
+namespace Model {
+class CreateAppVersionAppComponentResult {
+ public:
+  AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult() = default;
+  AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_RESILIENCEHUB_API CreateAppVersionAppComponentResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
+   * this ARN is:
+   * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
+   * For more information about ARNs, see <a
+   * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
+   * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
+   * Reference</i> guide.</p>
+   */
+  inline const Aws::String& GetAppArn() const { return m_appArn; }
+  template <typename AppArnT = Aws::String>
+  void SetAppArn(AppArnT&& value) {
+    m_appArnHasBeenSet = true;
+    m_appArn = std::forward<AppArnT>(value);
+  }
+  template <typename AppArnT = Aws::String>
+  CreateAppVersionAppComponentResult& WithAppArn(AppArnT&& value) {
+    SetAppArn(std::forward<AppArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the Resilience Hub application. The format for
-     * this ARN is:
-     * arn:<code>partition</code>:resiliencehub:<code>region</code>:<code>account</code>:app/<code>app-id</code>.
-     * For more information about ARNs, see <a
-     * href="https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">
-     * Amazon Resource Names (ARNs)</a> in the <i>Amazon Web Services General
-     * Reference</i> guide.</p>
-     */
-    inline const Aws::String& GetAppArn() const{ return m_appArn; }
-    inline void SetAppArn(const Aws::String& value) { m_appArn = value; }
-    inline void SetAppArn(Aws::String&& value) { m_appArn = std::move(value); }
-    inline void SetAppArn(const char* value) { m_appArn.assign(value); }
-    inline CreateAppVersionAppComponentResult& WithAppArn(const Aws::String& value) { SetAppArn(value); return *this;}
-    inline CreateAppVersionAppComponentResult& WithAppArn(Aws::String&& value) { SetAppArn(std::move(value)); return *this;}
-    inline CreateAppVersionAppComponentResult& WithAppArn(const char* value) { SetAppArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>List of Application Components that belong to this resource.</p>
+   */
+  inline const AppComponent& GetAppComponent() const { return m_appComponent; }
+  template <typename AppComponentT = AppComponent>
+  void SetAppComponent(AppComponentT&& value) {
+    m_appComponentHasBeenSet = true;
+    m_appComponent = std::forward<AppComponentT>(value);
+  }
+  template <typename AppComponentT = AppComponent>
+  CreateAppVersionAppComponentResult& WithAppComponent(AppComponentT&& value) {
+    SetAppComponent(std::forward<AppComponentT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>List of Application Components that belong to this resource.</p>
-     */
-    inline const AppComponent& GetAppComponent() const{ return m_appComponent; }
-    inline void SetAppComponent(const AppComponent& value) { m_appComponent = value; }
-    inline void SetAppComponent(AppComponent&& value) { m_appComponent = std::move(value); }
-    inline CreateAppVersionAppComponentResult& WithAppComponent(const AppComponent& value) { SetAppComponent(value); return *this;}
-    inline CreateAppVersionAppComponentResult& WithAppComponent(AppComponent&& value) { SetAppComponent(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Resilience Hub application version.</p>
+   */
+  inline const Aws::String& GetAppVersion() const { return m_appVersion; }
+  template <typename AppVersionT = Aws::String>
+  void SetAppVersion(AppVersionT&& value) {
+    m_appVersionHasBeenSet = true;
+    m_appVersion = std::forward<AppVersionT>(value);
+  }
+  template <typename AppVersionT = Aws::String>
+  CreateAppVersionAppComponentResult& WithAppVersion(AppVersionT&& value) {
+    SetAppVersion(std::forward<AppVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Resilience Hub application version.</p>
-     */
-    inline const Aws::String& GetAppVersion() const{ return m_appVersion; }
-    inline void SetAppVersion(const Aws::String& value) { m_appVersion = value; }
-    inline void SetAppVersion(Aws::String&& value) { m_appVersion = std::move(value); }
-    inline void SetAppVersion(const char* value) { m_appVersion.assign(value); }
-    inline CreateAppVersionAppComponentResult& WithAppVersion(const Aws::String& value) { SetAppVersion(value); return *this;}
-    inline CreateAppVersionAppComponentResult& WithAppVersion(Aws::String&& value) { SetAppVersion(std::move(value)); return *this;}
-    inline CreateAppVersionAppComponentResult& WithAppVersion(const char* value) { SetAppVersion(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateAppVersionAppComponentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateAppVersionAppComponentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateAppVersionAppComponentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateAppVersionAppComponentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_appArn;
+ private:
+  Aws::String m_appArn;
 
-    AppComponent m_appComponent;
+  AppComponent m_appComponent;
 
-    Aws::String m_appVersion;
+  Aws::String m_appVersion;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_appArnHasBeenSet = false;
+  bool m_appComponentHasBeenSet = false;
+  bool m_appVersionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ResilienceHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace ResilienceHub
+}  // namespace Aws

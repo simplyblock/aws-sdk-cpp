@@ -4,71 +4,106 @@
  */
 
 #pragma once
-#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
 #include <aws/cleanrooms/CleanRoomsRequest.h>
+#include <aws/cleanrooms/CleanRooms_EXPORTS.h>
+#include <aws/cleanrooms/model/JobType.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CleanRooms
-{
-namespace Model
-{
+namespace Aws {
+namespace CleanRooms {
+namespace Model {
 
+/**
+ */
+class PopulateIdMappingTableRequest : public CleanRoomsRequest {
+ public:
+  AWS_CLEANROOMS_API PopulateIdMappingTableRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PopulateIdMappingTable"; }
+
+  AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The unique identifier of the ID mapping table that you want to populate.</p>
    */
-  class PopulateIdMappingTableRequest : public CleanRoomsRequest
-  {
-  public:
-    AWS_CLEANROOMS_API PopulateIdMappingTableRequest();
+  inline const Aws::String& GetIdMappingTableIdentifier() const { return m_idMappingTableIdentifier; }
+  inline bool IdMappingTableIdentifierHasBeenSet() const { return m_idMappingTableIdentifierHasBeenSet; }
+  template <typename IdMappingTableIdentifierT = Aws::String>
+  void SetIdMappingTableIdentifier(IdMappingTableIdentifierT&& value) {
+    m_idMappingTableIdentifierHasBeenSet = true;
+    m_idMappingTableIdentifier = std::forward<IdMappingTableIdentifierT>(value);
+  }
+  template <typename IdMappingTableIdentifierT = Aws::String>
+  PopulateIdMappingTableRequest& WithIdMappingTableIdentifier(IdMappingTableIdentifierT&& value) {
+    SetIdMappingTableIdentifier(std::forward<IdMappingTableIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PopulateIdMappingTable"; }
+  ///@{
+  /**
+   * <p>The unique identifier of the membership that contains the ID mapping table
+   * that you want to populate.</p>
+   */
+  inline const Aws::String& GetMembershipIdentifier() const { return m_membershipIdentifier; }
+  inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
+  template <typename MembershipIdentifierT = Aws::String>
+  void SetMembershipIdentifier(MembershipIdentifierT&& value) {
+    m_membershipIdentifierHasBeenSet = true;
+    m_membershipIdentifier = std::forward<MembershipIdentifierT>(value);
+  }
+  template <typename MembershipIdentifierT = Aws::String>
+  PopulateIdMappingTableRequest& WithMembershipIdentifier(MembershipIdentifierT&& value) {
+    SetMembershipIdentifier(std::forward<MembershipIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CLEANROOMS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The job type of the rule-based ID mapping job. Valid values include:</p> <p>
+   * <code>INCREMENTAL</code>: Processes only new or changed data since the last job
+   * run. This is the default job type if the ID mapping workflow was created in
+   * Entity Resolution with <code>incrementalRunConfig</code> specified.</p> <p>
+   * <code>BATCH</code>: Processes all data from the input source, regardless of
+   * previous job runs. This is the default job type if the ID mapping workflow was
+   * created in Entity Resolution but <code>incrementalRunConfig</code> wasn't
+   * specified.</p> <p> <code>DELETE_ONLY</code>: Processes only deletion requests
+   * from <code>BatchDeleteUniqueId</code>, which is set in Entity Resolution.</p>
+   * <p>For more information about <code>incrementalRunConfig</code> and
+   * <code>BatchDeleteUniqueId</code>, see the <a
+   * href="https://docs.aws.amazon.com/entityresolution/latest/apireference/Welcome.html">Entity
+   * Resolution API Reference</a>.</p>
+   */
+  inline JobType GetJobType() const { return m_jobType; }
+  inline bool JobTypeHasBeenSet() const { return m_jobTypeHasBeenSet; }
+  inline void SetJobType(JobType value) {
+    m_jobTypeHasBeenSet = true;
+    m_jobType = value;
+  }
+  inline PopulateIdMappingTableRequest& WithJobType(JobType value) {
+    SetJobType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_idMappingTableIdentifier;
 
+  Aws::String m_membershipIdentifier;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the ID mapping table that you want to populate.</p>
-     */
-    inline const Aws::String& GetIdMappingTableIdentifier() const{ return m_idMappingTableIdentifier; }
-    inline bool IdMappingTableIdentifierHasBeenSet() const { return m_idMappingTableIdentifierHasBeenSet; }
-    inline void SetIdMappingTableIdentifier(const Aws::String& value) { m_idMappingTableIdentifierHasBeenSet = true; m_idMappingTableIdentifier = value; }
-    inline void SetIdMappingTableIdentifier(Aws::String&& value) { m_idMappingTableIdentifierHasBeenSet = true; m_idMappingTableIdentifier = std::move(value); }
-    inline void SetIdMappingTableIdentifier(const char* value) { m_idMappingTableIdentifierHasBeenSet = true; m_idMappingTableIdentifier.assign(value); }
-    inline PopulateIdMappingTableRequest& WithIdMappingTableIdentifier(const Aws::String& value) { SetIdMappingTableIdentifier(value); return *this;}
-    inline PopulateIdMappingTableRequest& WithIdMappingTableIdentifier(Aws::String&& value) { SetIdMappingTableIdentifier(std::move(value)); return *this;}
-    inline PopulateIdMappingTableRequest& WithIdMappingTableIdentifier(const char* value) { SetIdMappingTableIdentifier(value); return *this;}
-    ///@}
+  JobType m_jobType{JobType::NOT_SET};
+  bool m_idMappingTableIdentifierHasBeenSet = false;
+  bool m_membershipIdentifierHasBeenSet = false;
+  bool m_jobTypeHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The unique identifier of the membership that contains the ID mapping table
-     * that you want to populate.</p>
-     */
-    inline const Aws::String& GetMembershipIdentifier() const{ return m_membershipIdentifier; }
-    inline bool MembershipIdentifierHasBeenSet() const { return m_membershipIdentifierHasBeenSet; }
-    inline void SetMembershipIdentifier(const Aws::String& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = value; }
-    inline void SetMembershipIdentifier(Aws::String&& value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier = std::move(value); }
-    inline void SetMembershipIdentifier(const char* value) { m_membershipIdentifierHasBeenSet = true; m_membershipIdentifier.assign(value); }
-    inline PopulateIdMappingTableRequest& WithMembershipIdentifier(const Aws::String& value) { SetMembershipIdentifier(value); return *this;}
-    inline PopulateIdMappingTableRequest& WithMembershipIdentifier(Aws::String&& value) { SetMembershipIdentifier(std::move(value)); return *this;}
-    inline PopulateIdMappingTableRequest& WithMembershipIdentifier(const char* value) { SetMembershipIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_idMappingTableIdentifier;
-    bool m_idMappingTableIdentifierHasBeenSet = false;
-
-    Aws::String m_membershipIdentifier;
-    bool m_membershipIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CleanRooms
-} // namespace Aws
+}  // namespace Model
+}  // namespace CleanRooms
+}  // namespace Aws

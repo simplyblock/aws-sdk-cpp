@@ -4,144 +4,165 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
-#include <aws/ec2/EC2Request.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/ec2/EC2Request.h>
+#include <aws/ec2/EC2_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
+/**
+ */
+class CopyFpgaImageRequest : public EC2Request {
+ public:
+  AWS_EC2_API CopyFpgaImageRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CopyFpgaImage"; }
+
+  AWS_EC2_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
+   * <p>Checks whether you have the required permissions for the action, without
+   * actually making the request, and provides an error response. If you have the
+   * required permissions, the error response is <code>DryRunOperation</code>.
+   * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
    */
-  class CopyFpgaImageRequest : public EC2Request
-  {
-  public:
-    AWS_EC2_API CopyFpgaImageRequest();
+  inline bool GetDryRun() const { return m_dryRun; }
+  inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
+  inline void SetDryRun(bool value) {
+    m_dryRunHasBeenSet = true;
+    m_dryRun = value;
+  }
+  inline CopyFpgaImageRequest& WithDryRun(bool value) {
+    SetDryRun(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CopyFpgaImage"; }
+  ///@{
+  /**
+   * <p>The ID of the source AFI.</p>
+   */
+  inline const Aws::String& GetSourceFpgaImageId() const { return m_sourceFpgaImageId; }
+  inline bool SourceFpgaImageIdHasBeenSet() const { return m_sourceFpgaImageIdHasBeenSet; }
+  template <typename SourceFpgaImageIdT = Aws::String>
+  void SetSourceFpgaImageId(SourceFpgaImageIdT&& value) {
+    m_sourceFpgaImageIdHasBeenSet = true;
+    m_sourceFpgaImageId = std::forward<SourceFpgaImageIdT>(value);
+  }
+  template <typename SourceFpgaImageIdT = Aws::String>
+  CopyFpgaImageRequest& WithSourceFpgaImageId(SourceFpgaImageIdT&& value) {
+    SetSourceFpgaImageId(std::forward<SourceFpgaImageIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The description for the new AFI.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  CopyFpgaImageRequest& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_EC2_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The name for the new AFI. The default is the name of the source AFI.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CopyFpgaImageRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-  public:
+  ///@{
+  /**
+   * <p>The Region that contains the source AFI.</p>
+   */
+  inline const Aws::String& GetSourceRegion() const { return m_sourceRegion; }
+  inline bool SourceRegionHasBeenSet() const { return m_sourceRegionHasBeenSet; }
+  template <typename SourceRegionT = Aws::String>
+  void SetSourceRegion(SourceRegionT&& value) {
+    m_sourceRegionHasBeenSet = true;
+    m_sourceRegion = std::forward<SourceRegionT>(value);
+  }
+  template <typename SourceRegionT = Aws::String>
+  CopyFpgaImageRequest& WithSourceRegion(SourceRegionT&& value) {
+    SetSourceRegion(std::forward<SourceRegionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Checks whether you have the required permissions for the action, without
-     * actually making the request, and provides an error response. If you have the
-     * required permissions, the error response is <code>DryRunOperation</code>.
-     * Otherwise, it is <code>UnauthorizedOperation</code>.</p>
-     */
-    inline bool GetDryRun() const{ return m_dryRun; }
-    inline bool DryRunHasBeenSet() const { return m_dryRunHasBeenSet; }
-    inline void SetDryRun(bool value) { m_dryRunHasBeenSet = true; m_dryRun = value; }
-    inline CopyFpgaImageRequest& WithDryRun(bool value) { SetDryRun(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
+   * of the request. For more information, see <a
+   * href="https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html">Ensuring
+   * idempotency</a>.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  CopyFpgaImageRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  bool m_dryRun{false};
 
-    ///@{
-    /**
-     * <p>The ID of the source AFI.</p>
-     */
-    inline const Aws::String& GetSourceFpgaImageId() const{ return m_sourceFpgaImageId; }
-    inline bool SourceFpgaImageIdHasBeenSet() const { return m_sourceFpgaImageIdHasBeenSet; }
-    inline void SetSourceFpgaImageId(const Aws::String& value) { m_sourceFpgaImageIdHasBeenSet = true; m_sourceFpgaImageId = value; }
-    inline void SetSourceFpgaImageId(Aws::String&& value) { m_sourceFpgaImageIdHasBeenSet = true; m_sourceFpgaImageId = std::move(value); }
-    inline void SetSourceFpgaImageId(const char* value) { m_sourceFpgaImageIdHasBeenSet = true; m_sourceFpgaImageId.assign(value); }
-    inline CopyFpgaImageRequest& WithSourceFpgaImageId(const Aws::String& value) { SetSourceFpgaImageId(value); return *this;}
-    inline CopyFpgaImageRequest& WithSourceFpgaImageId(Aws::String&& value) { SetSourceFpgaImageId(std::move(value)); return *this;}
-    inline CopyFpgaImageRequest& WithSourceFpgaImageId(const char* value) { SetSourceFpgaImageId(value); return *this;}
-    ///@}
+  Aws::String m_sourceFpgaImageId;
 
-    ///@{
-    /**
-     * <p>The description for the new AFI.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline CopyFpgaImageRequest& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline CopyFpgaImageRequest& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline CopyFpgaImageRequest& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  Aws::String m_description;
 
-    ///@{
-    /**
-     * <p>The name for the new AFI. The default is the name of the source AFI.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline CopyFpgaImageRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CopyFpgaImageRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CopyFpgaImageRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The Region that contains the source AFI.</p>
-     */
-    inline const Aws::String& GetSourceRegion() const{ return m_sourceRegion; }
-    inline bool SourceRegionHasBeenSet() const { return m_sourceRegionHasBeenSet; }
-    inline void SetSourceRegion(const Aws::String& value) { m_sourceRegionHasBeenSet = true; m_sourceRegion = value; }
-    inline void SetSourceRegion(Aws::String&& value) { m_sourceRegionHasBeenSet = true; m_sourceRegion = std::move(value); }
-    inline void SetSourceRegion(const char* value) { m_sourceRegionHasBeenSet = true; m_sourceRegion.assign(value); }
-    inline CopyFpgaImageRequest& WithSourceRegion(const Aws::String& value) { SetSourceRegion(value); return *this;}
-    inline CopyFpgaImageRequest& WithSourceRegion(Aws::String&& value) { SetSourceRegion(std::move(value)); return *this;}
-    inline CopyFpgaImageRequest& WithSourceRegion(const char* value) { SetSourceRegion(value); return *this;}
-    ///@}
+  Aws::String m_sourceRegion;
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier that you provide to ensure the idempotency
-     * of the request. For more information, see <a
-     * href="https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html">Ensuring
-     * idempotency</a>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline CopyFpgaImageRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline CopyFpgaImageRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline CopyFpgaImageRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_clientToken;
+  bool m_dryRunHasBeenSet = false;
+  bool m_sourceFpgaImageIdHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_sourceRegionHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = false;
+};
 
-    bool m_dryRun;
-    bool m_dryRunHasBeenSet = false;
-
-    Aws::String m_sourceFpgaImageId;
-    bool m_sourceFpgaImageIdHasBeenSet = false;
-
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_sourceRegion;
-    bool m_sourceRegionHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

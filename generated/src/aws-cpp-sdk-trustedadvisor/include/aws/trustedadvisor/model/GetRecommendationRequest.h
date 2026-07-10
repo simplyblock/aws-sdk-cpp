@@ -4,53 +4,78 @@
  */
 
 #pragma once
-#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
-#include <aws/trustedadvisor/TrustedAdvisorRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/trustedadvisor/TrustedAdvisorRequest.h>
+#include <aws/trustedadvisor/TrustedAdvisor_EXPORTS.h>
+#include <aws/trustedadvisor/model/RecommendationLanguage.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace TrustedAdvisor
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace TrustedAdvisor {
+namespace Model {
 
+/**
+ */
+class GetRecommendationRequest : public TrustedAdvisorRequest {
+ public:
+  AWS_TRUSTEDADVISOR_API GetRecommendationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetRecommendation"; }
+
+  AWS_TRUSTEDADVISOR_API Aws::String SerializePayload() const override;
+
+  AWS_TRUSTEDADVISOR_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The Recommendation identifier</p>
    */
-  class GetRecommendationRequest : public TrustedAdvisorRequest
-  {
-  public:
-    AWS_TRUSTEDADVISOR_API GetRecommendationRequest();
+  inline const Aws::String& GetRecommendationIdentifier() const { return m_recommendationIdentifier; }
+  inline bool RecommendationIdentifierHasBeenSet() const { return m_recommendationIdentifierHasBeenSet; }
+  template <typename RecommendationIdentifierT = Aws::String>
+  void SetRecommendationIdentifier(RecommendationIdentifierT&& value) {
+    m_recommendationIdentifierHasBeenSet = true;
+    m_recommendationIdentifier = std::forward<RecommendationIdentifierT>(value);
+  }
+  template <typename RecommendationIdentifierT = Aws::String>
+  GetRecommendationRequest& WithRecommendationIdentifier(RecommendationIdentifierT&& value) {
+    SetRecommendationIdentifier(std::forward<RecommendationIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetRecommendation"; }
+  ///@{
+  /**
+   * <p>The ISO 639-1 code for the language that you want your recommendations to
+   * appear in.</p>
+   */
+  inline RecommendationLanguage GetLanguage() const { return m_language; }
+  inline bool LanguageHasBeenSet() const { return m_languageHasBeenSet; }
+  inline void SetLanguage(RecommendationLanguage value) {
+    m_languageHasBeenSet = true;
+    m_language = value;
+  }
+  inline GetRecommendationRequest& WithLanguage(RecommendationLanguage value) {
+    SetLanguage(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_recommendationIdentifier;
 
-    AWS_TRUSTEDADVISOR_API Aws::String SerializePayload() const override;
+  RecommendationLanguage m_language{RecommendationLanguage::NOT_SET};
+  bool m_recommendationIdentifierHasBeenSet = false;
+  bool m_languageHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The Recommendation identifier</p>
-     */
-    inline const Aws::String& GetRecommendationIdentifier() const{ return m_recommendationIdentifier; }
-    inline bool RecommendationIdentifierHasBeenSet() const { return m_recommendationIdentifierHasBeenSet; }
-    inline void SetRecommendationIdentifier(const Aws::String& value) { m_recommendationIdentifierHasBeenSet = true; m_recommendationIdentifier = value; }
-    inline void SetRecommendationIdentifier(Aws::String&& value) { m_recommendationIdentifierHasBeenSet = true; m_recommendationIdentifier = std::move(value); }
-    inline void SetRecommendationIdentifier(const char* value) { m_recommendationIdentifierHasBeenSet = true; m_recommendationIdentifier.assign(value); }
-    inline GetRecommendationRequest& WithRecommendationIdentifier(const Aws::String& value) { SetRecommendationIdentifier(value); return *this;}
-    inline GetRecommendationRequest& WithRecommendationIdentifier(Aws::String&& value) { SetRecommendationIdentifier(std::move(value)); return *this;}
-    inline GetRecommendationRequest& WithRecommendationIdentifier(const char* value) { SetRecommendationIdentifier(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_recommendationIdentifier;
-    bool m_recommendationIdentifierHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TrustedAdvisor
-} // namespace Aws
+}  // namespace Model
+}  // namespace TrustedAdvisor
+}  // namespace Aws

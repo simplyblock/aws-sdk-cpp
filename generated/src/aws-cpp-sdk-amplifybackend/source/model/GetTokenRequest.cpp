@@ -12,17 +12,4 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetTokenRequest::GetTokenRequest() : 
-    m_appIdHasBeenSet(false),
-    m_sessionIdHasBeenSet(false)
-{
-}
-
-Aws::String GetTokenRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetTokenRequest::SerializePayload() const { return {}; }

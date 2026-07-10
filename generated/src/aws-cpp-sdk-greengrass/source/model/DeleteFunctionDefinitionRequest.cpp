@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/greengrass/model/DeleteFunctionDefinitionRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/greengrass/model/DeleteFunctionDefinitionRequest.h>
 
 #include <utility>
 
@@ -12,16 +12,4 @@ using namespace Aws::Greengrass::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteFunctionDefinitionRequest::DeleteFunctionDefinitionRequest() : 
-    m_functionDefinitionIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteFunctionDefinitionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteFunctionDefinitionRequest::SerializePayload() const { return {}; }

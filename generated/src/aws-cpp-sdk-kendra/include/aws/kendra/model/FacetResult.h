@@ -4,98 +4,111 @@
  */
 
 #pragma once
-#include <aws/kendra/Kendra_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/kendra/model/DocumentAttributeValueType.h>
-#include <aws/kendra/model/DocumentAttributeValueCountPair.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/kendra/Kendra_EXPORTS.h>
+#include <aws/kendra/model/DocumentAttributeValueCountPair.h>
+#include <aws/kendra/model/DocumentAttributeValueType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace kendra
-{
-namespace Model
-{
-  class DocumentAttributeValueCountPair;
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace kendra {
+namespace Model {
+class DocumentAttributeValueCountPair;
 
+/**
+ * <p>The facet values for the documents in the response.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/FacetResult">AWS
+ * API Reference</a></p>
+ */
+class FacetResult {
+ public:
+  AWS_KENDRA_API FacetResult() = default;
+  AWS_KENDRA_API FacetResult(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API FacetResult& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The facet values for the documents in the response.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/FacetResult">AWS
-   * API Reference</a></p>
+   * <p>The key for the facet values. This is the same as the
+   * <code>DocumentAttributeKey</code> provided in the query.</p>
    */
-  class FacetResult
-  {
-  public:
-    AWS_KENDRA_API FacetResult();
-    AWS_KENDRA_API FacetResult(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API FacetResult& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_KENDRA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetDocumentAttributeKey() const { return m_documentAttributeKey; }
+  inline bool DocumentAttributeKeyHasBeenSet() const { return m_documentAttributeKeyHasBeenSet; }
+  template <typename DocumentAttributeKeyT = Aws::String>
+  void SetDocumentAttributeKey(DocumentAttributeKeyT&& value) {
+    m_documentAttributeKeyHasBeenSet = true;
+    m_documentAttributeKey = std::forward<DocumentAttributeKeyT>(value);
+  }
+  template <typename DocumentAttributeKeyT = Aws::String>
+  FacetResult& WithDocumentAttributeKey(DocumentAttributeKeyT&& value) {
+    SetDocumentAttributeKey(std::forward<DocumentAttributeKeyT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The data type of the facet value. This is the same as the type defined for
+   * the index field when it was created.</p>
+   */
+  inline DocumentAttributeValueType GetDocumentAttributeValueType() const { return m_documentAttributeValueType; }
+  inline bool DocumentAttributeValueTypeHasBeenSet() const { return m_documentAttributeValueTypeHasBeenSet; }
+  inline void SetDocumentAttributeValueType(DocumentAttributeValueType value) {
+    m_documentAttributeValueTypeHasBeenSet = true;
+    m_documentAttributeValueType = value;
+  }
+  inline FacetResult& WithDocumentAttributeValueType(DocumentAttributeValueType value) {
+    SetDocumentAttributeValueType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The key for the facet values. This is the same as the
-     * <code>DocumentAttributeKey</code> provided in the query.</p>
-     */
-    inline const Aws::String& GetDocumentAttributeKey() const{ return m_documentAttributeKey; }
-    inline bool DocumentAttributeKeyHasBeenSet() const { return m_documentAttributeKeyHasBeenSet; }
-    inline void SetDocumentAttributeKey(const Aws::String& value) { m_documentAttributeKeyHasBeenSet = true; m_documentAttributeKey = value; }
-    inline void SetDocumentAttributeKey(Aws::String&& value) { m_documentAttributeKeyHasBeenSet = true; m_documentAttributeKey = std::move(value); }
-    inline void SetDocumentAttributeKey(const char* value) { m_documentAttributeKeyHasBeenSet = true; m_documentAttributeKey.assign(value); }
-    inline FacetResult& WithDocumentAttributeKey(const Aws::String& value) { SetDocumentAttributeKey(value); return *this;}
-    inline FacetResult& WithDocumentAttributeKey(Aws::String&& value) { SetDocumentAttributeKey(std::move(value)); return *this;}
-    inline FacetResult& WithDocumentAttributeKey(const char* value) { SetDocumentAttributeKey(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of key/value pairs, where the key is the value of the attribute and
+   * the count is the number of documents that share the key value.</p>
+   */
+  inline const Aws::Vector<DocumentAttributeValueCountPair>& GetDocumentAttributeValueCountPairs() const {
+    return m_documentAttributeValueCountPairs;
+  }
+  inline bool DocumentAttributeValueCountPairsHasBeenSet() const { return m_documentAttributeValueCountPairsHasBeenSet; }
+  template <typename DocumentAttributeValueCountPairsT = Aws::Vector<DocumentAttributeValueCountPair>>
+  void SetDocumentAttributeValueCountPairs(DocumentAttributeValueCountPairsT&& value) {
+    m_documentAttributeValueCountPairsHasBeenSet = true;
+    m_documentAttributeValueCountPairs = std::forward<DocumentAttributeValueCountPairsT>(value);
+  }
+  template <typename DocumentAttributeValueCountPairsT = Aws::Vector<DocumentAttributeValueCountPair>>
+  FacetResult& WithDocumentAttributeValueCountPairs(DocumentAttributeValueCountPairsT&& value) {
+    SetDocumentAttributeValueCountPairs(std::forward<DocumentAttributeValueCountPairsT>(value));
+    return *this;
+  }
+  template <typename DocumentAttributeValueCountPairsT = DocumentAttributeValueCountPair>
+  FacetResult& AddDocumentAttributeValueCountPairs(DocumentAttributeValueCountPairsT&& value) {
+    m_documentAttributeValueCountPairsHasBeenSet = true;
+    m_documentAttributeValueCountPairs.emplace_back(std::forward<DocumentAttributeValueCountPairsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_documentAttributeKey;
 
-    ///@{
-    /**
-     * <p>The data type of the facet value. This is the same as the type defined for
-     * the index field when it was created.</p>
-     */
-    inline const DocumentAttributeValueType& GetDocumentAttributeValueType() const{ return m_documentAttributeValueType; }
-    inline bool DocumentAttributeValueTypeHasBeenSet() const { return m_documentAttributeValueTypeHasBeenSet; }
-    inline void SetDocumentAttributeValueType(const DocumentAttributeValueType& value) { m_documentAttributeValueTypeHasBeenSet = true; m_documentAttributeValueType = value; }
-    inline void SetDocumentAttributeValueType(DocumentAttributeValueType&& value) { m_documentAttributeValueTypeHasBeenSet = true; m_documentAttributeValueType = std::move(value); }
-    inline FacetResult& WithDocumentAttributeValueType(const DocumentAttributeValueType& value) { SetDocumentAttributeValueType(value); return *this;}
-    inline FacetResult& WithDocumentAttributeValueType(DocumentAttributeValueType&& value) { SetDocumentAttributeValueType(std::move(value)); return *this;}
-    ///@}
+  DocumentAttributeValueType m_documentAttributeValueType{DocumentAttributeValueType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>An array of key/value pairs, where the key is the value of the attribute and
-     * the count is the number of documents that share the key value.</p>
-     */
-    inline const Aws::Vector<DocumentAttributeValueCountPair>& GetDocumentAttributeValueCountPairs() const{ return m_documentAttributeValueCountPairs; }
-    inline bool DocumentAttributeValueCountPairsHasBeenSet() const { return m_documentAttributeValueCountPairsHasBeenSet; }
-    inline void SetDocumentAttributeValueCountPairs(const Aws::Vector<DocumentAttributeValueCountPair>& value) { m_documentAttributeValueCountPairsHasBeenSet = true; m_documentAttributeValueCountPairs = value; }
-    inline void SetDocumentAttributeValueCountPairs(Aws::Vector<DocumentAttributeValueCountPair>&& value) { m_documentAttributeValueCountPairsHasBeenSet = true; m_documentAttributeValueCountPairs = std::move(value); }
-    inline FacetResult& WithDocumentAttributeValueCountPairs(const Aws::Vector<DocumentAttributeValueCountPair>& value) { SetDocumentAttributeValueCountPairs(value); return *this;}
-    inline FacetResult& WithDocumentAttributeValueCountPairs(Aws::Vector<DocumentAttributeValueCountPair>&& value) { SetDocumentAttributeValueCountPairs(std::move(value)); return *this;}
-    inline FacetResult& AddDocumentAttributeValueCountPairs(const DocumentAttributeValueCountPair& value) { m_documentAttributeValueCountPairsHasBeenSet = true; m_documentAttributeValueCountPairs.push_back(value); return *this; }
-    inline FacetResult& AddDocumentAttributeValueCountPairs(DocumentAttributeValueCountPair&& value) { m_documentAttributeValueCountPairsHasBeenSet = true; m_documentAttributeValueCountPairs.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
+  Aws::Vector<DocumentAttributeValueCountPair> m_documentAttributeValueCountPairs;
+  bool m_documentAttributeKeyHasBeenSet = false;
+  bool m_documentAttributeValueTypeHasBeenSet = false;
+  bool m_documentAttributeValueCountPairsHasBeenSet = false;
+};
 
-    Aws::String m_documentAttributeKey;
-    bool m_documentAttributeKeyHasBeenSet = false;
-
-    DocumentAttributeValueType m_documentAttributeValueType;
-    bool m_documentAttributeValueTypeHasBeenSet = false;
-
-    Aws::Vector<DocumentAttributeValueCountPair> m_documentAttributeValueCountPairs;
-    bool m_documentAttributeValueCountPairsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace kendra
-} // namespace Aws
+}  // namespace Model
+}  // namespace kendra
+}  // namespace Aws

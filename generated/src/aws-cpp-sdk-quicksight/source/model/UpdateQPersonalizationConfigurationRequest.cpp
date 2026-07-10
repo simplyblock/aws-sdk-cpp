@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/quicksight/model/UpdateQPersonalizationConfigurationRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/quicksight/model/UpdateQPersonalizationConfigurationRequest.h>
 
 #include <utility>
 
@@ -12,25 +12,12 @@ using namespace Aws::QuickSight::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateQPersonalizationConfigurationRequest::UpdateQPersonalizationConfigurationRequest() : 
-    m_awsAccountIdHasBeenSet(false),
-    m_personalizationMode(PersonalizationMode::NOT_SET),
-    m_personalizationModeHasBeenSet(false)
-{
-}
-
-Aws::String UpdateQPersonalizationConfigurationRequest::SerializePayload() const
-{
+Aws::String UpdateQPersonalizationConfigurationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_personalizationModeHasBeenSet)
-  {
-   payload.WithString("PersonalizationMode", PersonalizationModeMapper::GetNameForPersonalizationMode(m_personalizationMode));
+  if (m_personalizationModeHasBeenSet) {
+    payload.WithString("PersonalizationMode", PersonalizationModeMapper::GetNameForPersonalizationMode(m_personalizationMode));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -5,80 +5,101 @@
 
 #pragma once
 #include <aws/comprehend/Comprehend_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/comprehend/model/DocumentClassificationJobProperties.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Comprehend
-{
-namespace Model
-{
-  class ListDocumentClassificationJobsResult
-  {
-  public:
-    AWS_COMPREHEND_API ListDocumentClassificationJobsResult();
-    AWS_COMPREHEND_API ListDocumentClassificationJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COMPREHEND_API ListDocumentClassificationJobsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Comprehend {
+namespace Model {
+class ListDocumentClassificationJobsResult {
+ public:
+  AWS_COMPREHEND_API ListDocumentClassificationJobsResult() = default;
+  AWS_COMPREHEND_API ListDocumentClassificationJobsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COMPREHEND_API ListDocumentClassificationJobsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list containing the properties of each job returned.</p>
+   */
+  inline const Aws::Vector<DocumentClassificationJobProperties>& GetDocumentClassificationJobPropertiesList() const {
+    return m_documentClassificationJobPropertiesList;
+  }
+  template <typename DocumentClassificationJobPropertiesListT = Aws::Vector<DocumentClassificationJobProperties>>
+  void SetDocumentClassificationJobPropertiesList(DocumentClassificationJobPropertiesListT&& value) {
+    m_documentClassificationJobPropertiesListHasBeenSet = true;
+    m_documentClassificationJobPropertiesList = std::forward<DocumentClassificationJobPropertiesListT>(value);
+  }
+  template <typename DocumentClassificationJobPropertiesListT = Aws::Vector<DocumentClassificationJobProperties>>
+  ListDocumentClassificationJobsResult& WithDocumentClassificationJobPropertiesList(DocumentClassificationJobPropertiesListT&& value) {
+    SetDocumentClassificationJobPropertiesList(std::forward<DocumentClassificationJobPropertiesListT>(value));
+    return *this;
+  }
+  template <typename DocumentClassificationJobPropertiesListT = DocumentClassificationJobProperties>
+  ListDocumentClassificationJobsResult& AddDocumentClassificationJobPropertiesList(DocumentClassificationJobPropertiesListT&& value) {
+    m_documentClassificationJobPropertiesListHasBeenSet = true;
+    m_documentClassificationJobPropertiesList.emplace_back(std::forward<DocumentClassificationJobPropertiesListT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list containing the properties of each job returned.</p>
-     */
-    inline const Aws::Vector<DocumentClassificationJobProperties>& GetDocumentClassificationJobPropertiesList() const{ return m_documentClassificationJobPropertiesList; }
-    inline void SetDocumentClassificationJobPropertiesList(const Aws::Vector<DocumentClassificationJobProperties>& value) { m_documentClassificationJobPropertiesList = value; }
-    inline void SetDocumentClassificationJobPropertiesList(Aws::Vector<DocumentClassificationJobProperties>&& value) { m_documentClassificationJobPropertiesList = std::move(value); }
-    inline ListDocumentClassificationJobsResult& WithDocumentClassificationJobPropertiesList(const Aws::Vector<DocumentClassificationJobProperties>& value) { SetDocumentClassificationJobPropertiesList(value); return *this;}
-    inline ListDocumentClassificationJobsResult& WithDocumentClassificationJobPropertiesList(Aws::Vector<DocumentClassificationJobProperties>&& value) { SetDocumentClassificationJobPropertiesList(std::move(value)); return *this;}
-    inline ListDocumentClassificationJobsResult& AddDocumentClassificationJobPropertiesList(const DocumentClassificationJobProperties& value) { m_documentClassificationJobPropertiesList.push_back(value); return *this; }
-    inline ListDocumentClassificationJobsResult& AddDocumentClassificationJobPropertiesList(DocumentClassificationJobProperties&& value) { m_documentClassificationJobPropertiesList.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Identifies the next page of results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDocumentClassificationJobsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Identifies the next page of results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDocumentClassificationJobsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDocumentClassificationJobsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDocumentClassificationJobsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDocumentClassificationJobsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDocumentClassificationJobsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDocumentClassificationJobsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDocumentClassificationJobsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DocumentClassificationJobProperties> m_documentClassificationJobPropertiesList;
+ private:
+  Aws::Vector<DocumentClassificationJobProperties> m_documentClassificationJobPropertiesList;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_documentClassificationJobPropertiesListHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Comprehend
-} // namespace Aws
+}  // namespace Model
+}  // namespace Comprehend
+}  // namespace Aws

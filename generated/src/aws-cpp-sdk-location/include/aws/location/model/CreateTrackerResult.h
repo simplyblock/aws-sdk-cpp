@@ -4,98 +4,117 @@
  */
 
 #pragma once
-#include <aws/location/LocationService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/location/LocationService_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace LocationService
-{
-namespace Model
-{
-  class CreateTrackerResult
-  {
-  public:
-    AWS_LOCATIONSERVICE_API CreateTrackerResult();
-    AWS_LOCATIONSERVICE_API CreateTrackerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LOCATIONSERVICE_API CreateTrackerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace LocationService {
+namespace Model {
+class CreateTrackerResult {
+ public:
+  AWS_LOCATIONSERVICE_API CreateTrackerResult() = default;
+  AWS_LOCATIONSERVICE_API CreateTrackerResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LOCATIONSERVICE_API CreateTrackerResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name of the tracker resource.</p>
+   */
+  inline const Aws::String& GetTrackerName() const { return m_trackerName; }
+  template <typename TrackerNameT = Aws::String>
+  void SetTrackerName(TrackerNameT&& value) {
+    m_trackerNameHasBeenSet = true;
+    m_trackerName = std::forward<TrackerNameT>(value);
+  }
+  template <typename TrackerNameT = Aws::String>
+  CreateTrackerResult& WithTrackerName(TrackerNameT&& value) {
+    SetTrackerName(std::forward<TrackerNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the tracker resource.</p>
-     */
-    inline const Aws::String& GetTrackerName() const{ return m_trackerName; }
-    inline void SetTrackerName(const Aws::String& value) { m_trackerName = value; }
-    inline void SetTrackerName(Aws::String&& value) { m_trackerName = std::move(value); }
-    inline void SetTrackerName(const char* value) { m_trackerName.assign(value); }
-    inline CreateTrackerResult& WithTrackerName(const Aws::String& value) { SetTrackerName(value); return *this;}
-    inline CreateTrackerResult& WithTrackerName(Aws::String&& value) { SetTrackerName(std::move(value)); return *this;}
-    inline CreateTrackerResult& WithTrackerName(const char* value) { SetTrackerName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need
+   * to specify a resource across all Amazon Web Services.</p> <ul> <li> <p>Format
+   * example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code> </p>
+   * </li> </ul>
+   */
+  inline const Aws::String& GetTrackerArn() const { return m_trackerArn; }
+  template <typename TrackerArnT = Aws::String>
+  void SetTrackerArn(TrackerArnT&& value) {
+    m_trackerArnHasBeenSet = true;
+    m_trackerArn = std::forward<TrackerArnT>(value);
+  }
+  template <typename TrackerArnT = Aws::String>
+  CreateTrackerResult& WithTrackerArn(TrackerArnT&& value) {
+    SetTrackerArn(std::forward<TrackerArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the tracker resource. Used when you need
-     * to specify a resource across all Amazon Web Services.</p> <ul> <li> <p>Format
-     * example: <code>arn:aws:geo:region:account-id:tracker/ExampleTracker</code> </p>
-     * </li> </ul>
-     */
-    inline const Aws::String& GetTrackerArn() const{ return m_trackerArn; }
-    inline void SetTrackerArn(const Aws::String& value) { m_trackerArn = value; }
-    inline void SetTrackerArn(Aws::String&& value) { m_trackerArn = std::move(value); }
-    inline void SetTrackerArn(const char* value) { m_trackerArn.assign(value); }
-    inline CreateTrackerResult& WithTrackerArn(const Aws::String& value) { SetTrackerArn(value); return *this;}
-    inline CreateTrackerResult& WithTrackerArn(Aws::String&& value) { SetTrackerArn(std::move(value)); return *this;}
-    inline CreateTrackerResult& WithTrackerArn(const char* value) { SetTrackerArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The timestamp for when the tracker resource was created in <a
+   * href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a>
+   * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
+   */
+  inline const Aws::Utils::DateTime& GetCreateTime() const { return m_createTime; }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  void SetCreateTime(CreateTimeT&& value) {
+    m_createTimeHasBeenSet = true;
+    m_createTime = std::forward<CreateTimeT>(value);
+  }
+  template <typename CreateTimeT = Aws::Utils::DateTime>
+  CreateTrackerResult& WithCreateTime(CreateTimeT&& value) {
+    SetCreateTime(std::forward<CreateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The timestamp for when the tracker resource was created in <a
-     * href="https://www.iso.org/iso-8601-date-and-time-format.html"> ISO 8601</a>
-     * format: <code>YYYY-MM-DDThh:mm:ss.sssZ</code>. </p>
-     */
-    inline const Aws::Utils::DateTime& GetCreateTime() const{ return m_createTime; }
-    inline void SetCreateTime(const Aws::Utils::DateTime& value) { m_createTime = value; }
-    inline void SetCreateTime(Aws::Utils::DateTime&& value) { m_createTime = std::move(value); }
-    inline CreateTrackerResult& WithCreateTime(const Aws::Utils::DateTime& value) { SetCreateTime(value); return *this;}
-    inline CreateTrackerResult& WithCreateTime(Aws::Utils::DateTime&& value) { SetCreateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTrackerResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTrackerResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTrackerResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTrackerResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_trackerName;
+ private:
+  Aws::String m_trackerName;
 
-    Aws::String m_trackerArn;
+  Aws::String m_trackerArn;
 
-    Aws::Utils::DateTime m_createTime;
+  Aws::Utils::DateTime m_createTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trackerNameHasBeenSet = false;
+  bool m_trackerArnHasBeenSet = false;
+  bool m_createTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace LocationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace LocationService
+}  // namespace Aws

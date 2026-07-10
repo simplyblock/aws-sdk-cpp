@@ -12,16 +12,4 @@ using namespace Aws::AppSync::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteApiRequest::DeleteApiRequest() : 
-    m_apiIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteApiRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteApiRequest::SerializePayload() const { return {}; }

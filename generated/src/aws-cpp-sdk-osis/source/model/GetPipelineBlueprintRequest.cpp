@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/osis/model/GetPipelineBlueprintRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/http/URI.h>
+#include <aws/core/utils/json/JsonSerializer.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/osis/model/GetPipelineBlueprintRequest.h>
 
 #include <utility>
 
@@ -15,28 +15,13 @@ using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 using namespace Aws::Http;
 
-GetPipelineBlueprintRequest::GetPipelineBlueprintRequest() : 
-    m_blueprintNameHasBeenSet(false),
-    m_formatHasBeenSet(false)
-{
+Aws::String GetPipelineBlueprintRequest::SerializePayload() const { return {}; }
+
+void GetPipelineBlueprintRequest::AddQueryStringParameters(URI& uri) const {
+  Aws::StringStream ss;
+  if (m_formatHasBeenSet) {
+    ss << m_format;
+    uri.AddQueryStringParameter("format", ss.str());
+    ss.str("");
+  }
 }
-
-Aws::String GetPipelineBlueprintRequest::SerializePayload() const
-{
-  return {};
-}
-
-void GetPipelineBlueprintRequest::AddQueryStringParameters(URI& uri) const
-{
-    Aws::StringStream ss;
-    if(m_formatHasBeenSet)
-    {
-      ss << m_format;
-      uri.AddQueryStringParameter("format", ss.str());
-      ss.str("");
-    }
-
-}
-
-
-

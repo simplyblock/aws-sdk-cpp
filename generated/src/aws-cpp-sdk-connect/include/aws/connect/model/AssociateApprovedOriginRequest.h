@@ -4,72 +4,101 @@
  */
 
 #pragma once
-#include <aws/connect/Connect_EXPORTS.h>
 #include <aws/connect/ConnectRequest.h>
+#include <aws/connect/Connect_EXPORTS.h>
+#include <aws/core/utils/UUID.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
+/**
+ */
+class AssociateApprovedOriginRequest : public ConnectRequest {
+ public:
+  AWS_CONNECT_API AssociateApprovedOriginRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "AssociateApprovedOrigin"; }
+
+  AWS_CONNECT_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the Connect Customer instance. You can <a
+   * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
+   * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
    */
-  class AssociateApprovedOriginRequest : public ConnectRequest
-  {
-  public:
-    AWS_CONNECT_API AssociateApprovedOriginRequest();
+  inline const Aws::String& GetInstanceId() const { return m_instanceId; }
+  inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
+  template <typename InstanceIdT = Aws::String>
+  void SetInstanceId(InstanceIdT&& value) {
+    m_instanceIdHasBeenSet = true;
+    m_instanceId = std::forward<InstanceIdT>(value);
+  }
+  template <typename InstanceIdT = Aws::String>
+  AssociateApprovedOriginRequest& WithInstanceId(InstanceIdT&& value) {
+    SetInstanceId(std::forward<InstanceIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "AssociateApprovedOrigin"; }
+  ///@{
+  /**
+   * <p>The domain to add to your allow list.</p>
+   */
+  inline const Aws::String& GetOrigin() const { return m_origin; }
+  inline bool OriginHasBeenSet() const { return m_originHasBeenSet; }
+  template <typename OriginT = Aws::String>
+  void SetOrigin(OriginT&& value) {
+    m_originHasBeenSet = true;
+    m_origin = std::forward<OriginT>(value);
+  }
+  template <typename OriginT = Aws::String>
+  AssociateApprovedOriginRequest& WithOrigin(OriginT&& value) {
+    SetOrigin(std::forward<OriginT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_CONNECT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A unique, case-sensitive identifier that you provide to ensure the
+   * idempotency of the request. If not provided, the Amazon Web Services SDK
+   * populates this field. For more information about idempotency, see <a
+   * href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making
+   * retries safe with idempotent APIs</a>.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  AssociateApprovedOriginRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_instanceId;
 
+  Aws::String m_origin;
 
-    ///@{
-    /**
-     * <p>The identifier of the Amazon Connect instance. You can <a
-     * href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find
-     * the instance ID</a> in the Amazon Resource Name (ARN) of the instance.</p>
-     */
-    inline const Aws::String& GetInstanceId() const{ return m_instanceId; }
-    inline bool InstanceIdHasBeenSet() const { return m_instanceIdHasBeenSet; }
-    inline void SetInstanceId(const Aws::String& value) { m_instanceIdHasBeenSet = true; m_instanceId = value; }
-    inline void SetInstanceId(Aws::String&& value) { m_instanceIdHasBeenSet = true; m_instanceId = std::move(value); }
-    inline void SetInstanceId(const char* value) { m_instanceIdHasBeenSet = true; m_instanceId.assign(value); }
-    inline AssociateApprovedOriginRequest& WithInstanceId(const Aws::String& value) { SetInstanceId(value); return *this;}
-    inline AssociateApprovedOriginRequest& WithInstanceId(Aws::String&& value) { SetInstanceId(std::move(value)); return *this;}
-    inline AssociateApprovedOriginRequest& WithInstanceId(const char* value) { SetInstanceId(value); return *this;}
-    ///@}
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_instanceIdHasBeenSet = false;
+  bool m_originHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    ///@{
-    /**
-     * <p>The domain to add to your allow list.</p>
-     */
-    inline const Aws::String& GetOrigin() const{ return m_origin; }
-    inline bool OriginHasBeenSet() const { return m_originHasBeenSet; }
-    inline void SetOrigin(const Aws::String& value) { m_originHasBeenSet = true; m_origin = value; }
-    inline void SetOrigin(Aws::String&& value) { m_originHasBeenSet = true; m_origin = std::move(value); }
-    inline void SetOrigin(const char* value) { m_originHasBeenSet = true; m_origin.assign(value); }
-    inline AssociateApprovedOriginRequest& WithOrigin(const Aws::String& value) { SetOrigin(value); return *this;}
-    inline AssociateApprovedOriginRequest& WithOrigin(Aws::String&& value) { SetOrigin(std::move(value)); return *this;}
-    inline AssociateApprovedOriginRequest& WithOrigin(const char* value) { SetOrigin(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_instanceId;
-    bool m_instanceIdHasBeenSet = false;
-
-    Aws::String m_origin;
-    bool m_originHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

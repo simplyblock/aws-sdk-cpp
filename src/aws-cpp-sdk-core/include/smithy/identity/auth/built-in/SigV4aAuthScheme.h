@@ -15,7 +15,7 @@
 
 namespace smithy {
     constexpr char SIGV4A[] = "aws.auth#sigv4a";
-    
+
 
     class SigV4aAuthScheme : public AuthScheme<AwsCredentialIdentityBase>
     {
@@ -25,15 +25,24 @@ namespace smithy {
         using SigV4aAuthSchemeParameters = DefaultAuthSchemeResolverParameters;
 
         //This allows to override the identity resolver
-        explicit SigV4aAuthScheme(std::shared_ptr<AwsCredentialIdentityResolverT> identityResolver, 
+        explicit SigV4aAuthScheme(std::shared_ptr<AwsCredentialIdentityResolverT> identityResolver,
                                   const Aws::String& serviceName,
                                   const Aws::String& region)
-            : AuthScheme(SIGV4A), 
-            m_identityResolver{identityResolver}, 
+            : AuthScheme(SIGV4A),
+            m_identityResolver{identityResolver},
             m_signer{Aws::MakeShared<AwsSigV4aSigner>("SigV4aAuthScheme", serviceName, region)}
         {
             assert(m_identityResolver);
             assert(m_signer);
+        }
+
+        explicit SigV4aAuthScheme(const Aws::String& serviceName, const Aws::String& region,
+                                  const Aws::Client::ClientConfiguration::CredentialProviderConfiguration& config)
+            : SigV4aAuthScheme(
+                  Aws::MakeShared<DefaultAwsCredentialIdentityResolver>("SigV4aAuthScheme", config),
+                  serviceName, region) {
+          assert(m_identityResolver);
+          assert(m_signer);
         }
 
         explicit SigV4aAuthScheme(const Aws::String& serviceName,
@@ -41,9 +50,14 @@ namespace smithy {
             : SigV4aAuthScheme(Aws::MakeShared<DefaultAwsCredentialIdentityResolver>("SigV4aAuthScheme"), serviceName, region)
         {
             assert(m_identityResolver);
-
             assert(m_signer);
         }
+
+        //legacy constructors
+        explicit SigV4aAuthScheme(std::shared_ptr<AwsCredentialIdentityResolverT> identityResolver, const Aws::String& serviceName, const Aws::String& region, Aws::Client::AWSAuthV4Signer::PayloadSigningPolicy policy, bool urlEscape)
+            :  AuthScheme(SIGV4A),
+            m_identityResolver{identityResolver},
+            m_signer{Aws::MakeShared<AwsSigV4aSigner>("SigV4aAuthScheme", serviceName, region, policy, urlEscape)}{}
 
         virtual ~SigV4aAuthScheme() = default;
 

@@ -12,19 +12,4 @@ using namespace Aws::CodeCatalyst::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopDevEnvironmentSessionRequest::StopDevEnvironmentSessionRequest() : 
-    m_spaceNameHasBeenSet(false),
-    m_projectNameHasBeenSet(false),
-    m_idHasBeenSet(false),
-    m_sessionIdHasBeenSet(false)
-{
-}
-
-Aws::String StopDevEnvironmentSessionRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StopDevEnvironmentSessionRequest::SerializePayload() const { return {}; }

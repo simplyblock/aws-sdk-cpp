@@ -3,68 +3,45 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/CreateLaunchTemplateVersionRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/ec2/model/CreateLaunchTemplateVersionRequest.h>
 
 using namespace Aws::EC2::Model;
 using namespace Aws::Utils;
 
-CreateLaunchTemplateVersionRequest::CreateLaunchTemplateVersionRequest() : 
-    m_dryRun(false),
-    m_dryRunHasBeenSet(false),
-    m_clientTokenHasBeenSet(false),
-    m_launchTemplateIdHasBeenSet(false),
-    m_launchTemplateNameHasBeenSet(false),
-    m_sourceVersionHasBeenSet(false),
-    m_versionDescriptionHasBeenSet(false),
-    m_launchTemplateDataHasBeenSet(false),
-    m_resolveAlias(false),
-    m_resolveAliasHasBeenSet(false)
-{
-}
-
-Aws::String CreateLaunchTemplateVersionRequest::SerializePayload() const
-{
+Aws::String CreateLaunchTemplateVersionRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CreateLaunchTemplateVersion&";
-  if(m_dryRunHasBeenSet)
-  {
+  if (m_dryRunHasBeenSet) {
     ss << "DryRun=" << std::boolalpha << m_dryRun << "&";
   }
 
-  if(m_clientTokenHasBeenSet)
-  {
+  if (m_clientTokenHasBeenSet) {
     ss << "ClientToken=" << StringUtils::URLEncode(m_clientToken.c_str()) << "&";
   }
 
-  if(m_launchTemplateIdHasBeenSet)
-  {
+  if (m_launchTemplateIdHasBeenSet) {
     ss << "LaunchTemplateId=" << StringUtils::URLEncode(m_launchTemplateId.c_str()) << "&";
   }
 
-  if(m_launchTemplateNameHasBeenSet)
-  {
+  if (m_launchTemplateNameHasBeenSet) {
     ss << "LaunchTemplateName=" << StringUtils::URLEncode(m_launchTemplateName.c_str()) << "&";
   }
 
-  if(m_sourceVersionHasBeenSet)
-  {
+  if (m_sourceVersionHasBeenSet) {
     ss << "SourceVersion=" << StringUtils::URLEncode(m_sourceVersion.c_str()) << "&";
   }
 
-  if(m_versionDescriptionHasBeenSet)
-  {
+  if (m_versionDescriptionHasBeenSet) {
     ss << "VersionDescription=" << StringUtils::URLEncode(m_versionDescription.c_str()) << "&";
   }
 
-  if(m_launchTemplateDataHasBeenSet)
-  {
+  if (m_launchTemplateDataHasBeenSet) {
     m_launchTemplateData.OutputToStream(ss, "LaunchTemplateData");
   }
 
-  if(m_resolveAliasHasBeenSet)
-  {
+  if (m_resolveAliasHasBeenSet) {
     ss << "ResolveAlias=" << std::boolalpha << m_resolveAlias << "&";
   }
 
@@ -72,8 +49,4 @@ Aws::String CreateLaunchTemplateVersionRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  CreateLaunchTemplateVersionRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CreateLaunchTemplateVersionRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

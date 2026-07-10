@@ -4,81 +4,101 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/network-firewall/NetworkFirewall_EXPORTS.h>
 #include <aws/network-firewall/model/Firewall.h>
 #include <aws/network-firewall/model/FirewallStatus.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace NetworkFirewall
-{
-namespace Model
-{
-  class CreateFirewallResult
-  {
-  public:
-    AWS_NETWORKFIREWALL_API CreateFirewallResult();
-    AWS_NETWORKFIREWALL_API CreateFirewallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_NETWORKFIREWALL_API CreateFirewallResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace NetworkFirewall {
+namespace Model {
+class CreateFirewallResult {
+ public:
+  AWS_NETWORKFIREWALL_API CreateFirewallResult() = default;
+  AWS_NETWORKFIREWALL_API CreateFirewallResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_NETWORKFIREWALL_API CreateFirewallResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The configuration settings for the firewall. These settings include the
+   * firewall policy and the subnets in your VPC to use for the firewall endpoints.
+   * </p>
+   */
+  inline const Firewall& GetFirewall() const { return m_firewall; }
+  template <typename FirewallT = Firewall>
+  void SetFirewall(FirewallT&& value) {
+    m_firewallHasBeenSet = true;
+    m_firewall = std::forward<FirewallT>(value);
+  }
+  template <typename FirewallT = Firewall>
+  CreateFirewallResult& WithFirewall(FirewallT&& value) {
+    SetFirewall(std::forward<FirewallT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The configuration settings for the firewall. These settings include the
-     * firewall policy and the subnets in your VPC to use for the firewall endpoints.
-     * </p>
-     */
-    inline const Firewall& GetFirewall() const{ return m_firewall; }
-    inline void SetFirewall(const Firewall& value) { m_firewall = value; }
-    inline void SetFirewall(Firewall&& value) { m_firewall = std::move(value); }
-    inline CreateFirewallResult& WithFirewall(const Firewall& value) { SetFirewall(value); return *this;}
-    inline CreateFirewallResult& WithFirewall(Firewall&& value) { SetFirewall(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Detailed information about the current status of a <a>Firewall</a>. You can
+   * retrieve this for a firewall by calling <a>DescribeFirewall</a> and providing
+   * the firewall name and ARN.</p> <p>The firewall status indicates a combined
+   * status. It indicates whether all subnets are up-to-date with the latest firewall
+   * configurations, which is based on the sync states config values, and also
+   * whether all subnets have their endpoints fully enabled, based on their sync
+   * states attachment values. </p>
+   */
+  inline const FirewallStatus& GetFirewallStatus() const { return m_firewallStatus; }
+  template <typename FirewallStatusT = FirewallStatus>
+  void SetFirewallStatus(FirewallStatusT&& value) {
+    m_firewallStatusHasBeenSet = true;
+    m_firewallStatus = std::forward<FirewallStatusT>(value);
+  }
+  template <typename FirewallStatusT = FirewallStatus>
+  CreateFirewallResult& WithFirewallStatus(FirewallStatusT&& value) {
+    SetFirewallStatus(std::forward<FirewallStatusT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Detailed information about the current status of a <a>Firewall</a>. You can
-     * retrieve this for a firewall by calling <a>DescribeFirewall</a> and providing
-     * the firewall name and ARN.</p>
-     */
-    inline const FirewallStatus& GetFirewallStatus() const{ return m_firewallStatus; }
-    inline void SetFirewallStatus(const FirewallStatus& value) { m_firewallStatus = value; }
-    inline void SetFirewallStatus(FirewallStatus&& value) { m_firewallStatus = std::move(value); }
-    inline CreateFirewallResult& WithFirewallStatus(const FirewallStatus& value) { SetFirewallStatus(value); return *this;}
-    inline CreateFirewallResult& WithFirewallStatus(FirewallStatus&& value) { SetFirewallStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateFirewallResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateFirewallResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateFirewallResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateFirewallResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Firewall m_firewall;
+ private:
+  Firewall m_firewall;
 
-    FirewallStatus m_firewallStatus;
+  FirewallStatus m_firewallStatus;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_firewallHasBeenSet = false;
+  bool m_firewallStatusHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace NetworkFirewall
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkFirewall
+}  // namespace Aws

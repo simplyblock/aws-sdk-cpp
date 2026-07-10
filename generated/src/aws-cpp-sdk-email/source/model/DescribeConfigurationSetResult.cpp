@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/email/model/DescribeConfigurationSetResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/email/model/DescribeConfigurationSetResult.h>
 
 #include <utility>
 
@@ -17,64 +17,56 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeConfigurationSetResult::DescribeConfigurationSetResult()
-{
-}
+DescribeConfigurationSetResult::DescribeConfigurationSetResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) { *this = result; }
 
-DescribeConfigurationSetResult::DescribeConfigurationSetResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
-
-DescribeConfigurationSetResult& DescribeConfigurationSetResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeConfigurationSetResult& DescribeConfigurationSetResult::operator=(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeConfigurationSetResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeConfigurationSetResult")) {
     resultNode = rootNode.FirstChild("DescribeConfigurationSetResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode configurationSetNode = resultNode.FirstChild("ConfigurationSet");
-    if(!configurationSetNode.IsNull())
-    {
+    if (!configurationSetNode.IsNull()) {
       m_configurationSet = configurationSetNode;
+      m_configurationSetHasBeenSet = true;
     }
     XmlNode eventDestinationsNode = resultNode.FirstChild("EventDestinations");
-    if(!eventDestinationsNode.IsNull())
-    {
+    if (!eventDestinationsNode.IsNull()) {
       XmlNode eventDestinationsMember = eventDestinationsNode.FirstChild("member");
-      while(!eventDestinationsMember.IsNull())
-      {
+      m_eventDestinationsHasBeenSet = !eventDestinationsMember.IsNull();
+      while (!eventDestinationsMember.IsNull()) {
         m_eventDestinations.push_back(eventDestinationsMember);
         eventDestinationsMember = eventDestinationsMember.NextNode("member");
       }
 
+      m_eventDestinationsHasBeenSet = true;
     }
     XmlNode trackingOptionsNode = resultNode.FirstChild("TrackingOptions");
-    if(!trackingOptionsNode.IsNull())
-    {
+    if (!trackingOptionsNode.IsNull()) {
       m_trackingOptions = trackingOptionsNode;
+      m_trackingOptionsHasBeenSet = true;
     }
     XmlNode deliveryOptionsNode = resultNode.FirstChild("DeliveryOptions");
-    if(!deliveryOptionsNode.IsNull())
-    {
+    if (!deliveryOptionsNode.IsNull()) {
       m_deliveryOptions = deliveryOptionsNode;
+      m_deliveryOptionsHasBeenSet = true;
     }
     XmlNode reputationOptionsNode = resultNode.FirstChild("ReputationOptions");
-    if(!reputationOptionsNode.IsNull())
-    {
+    if (!reputationOptionsNode.IsNull()) {
       m_reputationOptions = reputationOptionsNode;
+      m_reputationOptionsHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::SES::Model::DescribeConfigurationSetResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::SES::Model::DescribeConfigurationSetResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

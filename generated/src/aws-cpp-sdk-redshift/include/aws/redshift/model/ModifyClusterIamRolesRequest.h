@@ -4,117 +4,138 @@
  */
 
 #pragma once
-#include <aws/redshift/Redshift_EXPORTS.h>
-#include <aws/redshift/RedshiftRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/redshift/RedshiftRequest.h>
+#include <aws/redshift/Redshift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Redshift
-{
-namespace Model
-{
+namespace Aws {
+namespace Redshift {
+namespace Model {
 
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyClusterIamRolesMessage">AWS
+ * API Reference</a></p>
+ */
+class ModifyClusterIamRolesRequest : public RedshiftRequest {
+ public:
+  AWS_REDSHIFT_API ModifyClusterIamRolesRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ModifyClusterIamRoles"; }
+
+  AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+
+ protected:
+  AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri) const override;
+
+ public:
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyClusterIamRolesMessage">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier of the cluster for which you want to associate or
+   * disassociate IAM roles.</p>
    */
-  class ModifyClusterIamRolesRequest : public RedshiftRequest
-  {
-  public:
-    AWS_REDSHIFT_API ModifyClusterIamRolesRequest();
+  inline const Aws::String& GetClusterIdentifier() const { return m_clusterIdentifier; }
+  inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
+  template <typename ClusterIdentifierT = Aws::String>
+  void SetClusterIdentifier(ClusterIdentifierT&& value) {
+    m_clusterIdentifierHasBeenSet = true;
+    m_clusterIdentifier = std::forward<ClusterIdentifierT>(value);
+  }
+  template <typename ClusterIdentifierT = Aws::String>
+  ModifyClusterIamRolesRequest& WithClusterIdentifier(ClusterIdentifierT&& value) {
+    SetClusterIdentifier(std::forward<ClusterIdentifierT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ModifyClusterIamRoles"; }
+  ///@{
+  /**
+   * <p>Zero or more IAM roles to associate with the cluster. The roles must be in
+   * their Amazon Resource Name (ARN) format. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetAddIamRoles() const { return m_addIamRoles; }
+  inline bool AddIamRolesHasBeenSet() const { return m_addIamRolesHasBeenSet; }
+  template <typename AddIamRolesT = Aws::Vector<Aws::String>>
+  void SetAddIamRoles(AddIamRolesT&& value) {
+    m_addIamRolesHasBeenSet = true;
+    m_addIamRoles = std::forward<AddIamRolesT>(value);
+  }
+  template <typename AddIamRolesT = Aws::Vector<Aws::String>>
+  ModifyClusterIamRolesRequest& WithAddIamRoles(AddIamRolesT&& value) {
+    SetAddIamRoles(std::forward<AddIamRolesT>(value));
+    return *this;
+  }
+  template <typename AddIamRolesT = Aws::String>
+  ModifyClusterIamRolesRequest& AddAddIamRoles(AddIamRolesT&& value) {
+    m_addIamRolesHasBeenSet = true;
+    m_addIamRoles.emplace_back(std::forward<AddIamRolesT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_REDSHIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Zero or more IAM roles in ARN format to disassociate from the cluster. </p>
+   */
+  inline const Aws::Vector<Aws::String>& GetRemoveIamRoles() const { return m_removeIamRoles; }
+  inline bool RemoveIamRolesHasBeenSet() const { return m_removeIamRolesHasBeenSet; }
+  template <typename RemoveIamRolesT = Aws::Vector<Aws::String>>
+  void SetRemoveIamRoles(RemoveIamRolesT&& value) {
+    m_removeIamRolesHasBeenSet = true;
+    m_removeIamRoles = std::forward<RemoveIamRolesT>(value);
+  }
+  template <typename RemoveIamRolesT = Aws::Vector<Aws::String>>
+  ModifyClusterIamRolesRequest& WithRemoveIamRoles(RemoveIamRolesT&& value) {
+    SetRemoveIamRoles(std::forward<RemoveIamRolesT>(value));
+    return *this;
+  }
+  template <typename RemoveIamRolesT = Aws::String>
+  ModifyClusterIamRolesRequest& AddRemoveIamRoles(RemoveIamRolesT&& value) {
+    m_removeIamRolesHasBeenSet = true;
+    m_removeIamRoles.emplace_back(std::forward<RemoveIamRolesT>(value));
+    return *this;
+  }
+  ///@}
 
-  protected:
-    AWS_REDSHIFT_API void DumpBodyToUrl(Aws::Http::URI& uri ) const override;
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the IAM role that was set as default for
+   * the cluster when the cluster was last modified.</p>
+   */
+  inline const Aws::String& GetDefaultIamRoleArn() const { return m_defaultIamRoleArn; }
+  inline bool DefaultIamRoleArnHasBeenSet() const { return m_defaultIamRoleArnHasBeenSet; }
+  template <typename DefaultIamRoleArnT = Aws::String>
+  void SetDefaultIamRoleArn(DefaultIamRoleArnT&& value) {
+    m_defaultIamRoleArnHasBeenSet = true;
+    m_defaultIamRoleArn = std::forward<DefaultIamRoleArnT>(value);
+  }
+  template <typename DefaultIamRoleArnT = Aws::String>
+  ModifyClusterIamRolesRequest& WithDefaultIamRoleArn(DefaultIamRoleArnT&& value) {
+    SetDefaultIamRoleArn(std::forward<DefaultIamRoleArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_clusterIdentifier;
 
-  public:
+  Aws::Vector<Aws::String> m_addIamRoles;
 
-    ///@{
-    /**
-     * <p>The unique identifier of the cluster for which you want to associate or
-     * disassociate IAM roles.</p>
-     */
-    inline const Aws::String& GetClusterIdentifier() const{ return m_clusterIdentifier; }
-    inline bool ClusterIdentifierHasBeenSet() const { return m_clusterIdentifierHasBeenSet; }
-    inline void SetClusterIdentifier(const Aws::String& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = value; }
-    inline void SetClusterIdentifier(Aws::String&& value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier = std::move(value); }
-    inline void SetClusterIdentifier(const char* value) { m_clusterIdentifierHasBeenSet = true; m_clusterIdentifier.assign(value); }
-    inline ModifyClusterIamRolesRequest& WithClusterIdentifier(const Aws::String& value) { SetClusterIdentifier(value); return *this;}
-    inline ModifyClusterIamRolesRequest& WithClusterIdentifier(Aws::String&& value) { SetClusterIdentifier(std::move(value)); return *this;}
-    inline ModifyClusterIamRolesRequest& WithClusterIdentifier(const char* value) { SetClusterIdentifier(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_removeIamRoles;
 
-    ///@{
-    /**
-     * <p>Zero or more IAM roles to associate with the cluster. The roles must be in
-     * their Amazon Resource Name (ARN) format. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetAddIamRoles() const{ return m_addIamRoles; }
-    inline bool AddIamRolesHasBeenSet() const { return m_addIamRolesHasBeenSet; }
-    inline void SetAddIamRoles(const Aws::Vector<Aws::String>& value) { m_addIamRolesHasBeenSet = true; m_addIamRoles = value; }
-    inline void SetAddIamRoles(Aws::Vector<Aws::String>&& value) { m_addIamRolesHasBeenSet = true; m_addIamRoles = std::move(value); }
-    inline ModifyClusterIamRolesRequest& WithAddIamRoles(const Aws::Vector<Aws::String>& value) { SetAddIamRoles(value); return *this;}
-    inline ModifyClusterIamRolesRequest& WithAddIamRoles(Aws::Vector<Aws::String>&& value) { SetAddIamRoles(std::move(value)); return *this;}
-    inline ModifyClusterIamRolesRequest& AddAddIamRoles(const Aws::String& value) { m_addIamRolesHasBeenSet = true; m_addIamRoles.push_back(value); return *this; }
-    inline ModifyClusterIamRolesRequest& AddAddIamRoles(Aws::String&& value) { m_addIamRolesHasBeenSet = true; m_addIamRoles.push_back(std::move(value)); return *this; }
-    inline ModifyClusterIamRolesRequest& AddAddIamRoles(const char* value) { m_addIamRolesHasBeenSet = true; m_addIamRoles.push_back(value); return *this; }
-    ///@}
+  Aws::String m_defaultIamRoleArn;
+  bool m_clusterIdentifierHasBeenSet = false;
+  bool m_addIamRolesHasBeenSet = false;
+  bool m_removeIamRolesHasBeenSet = false;
+  bool m_defaultIamRoleArnHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Zero or more IAM roles in ARN format to disassociate from the cluster. </p>
-     */
-    inline const Aws::Vector<Aws::String>& GetRemoveIamRoles() const{ return m_removeIamRoles; }
-    inline bool RemoveIamRolesHasBeenSet() const { return m_removeIamRolesHasBeenSet; }
-    inline void SetRemoveIamRoles(const Aws::Vector<Aws::String>& value) { m_removeIamRolesHasBeenSet = true; m_removeIamRoles = value; }
-    inline void SetRemoveIamRoles(Aws::Vector<Aws::String>&& value) { m_removeIamRolesHasBeenSet = true; m_removeIamRoles = std::move(value); }
-    inline ModifyClusterIamRolesRequest& WithRemoveIamRoles(const Aws::Vector<Aws::String>& value) { SetRemoveIamRoles(value); return *this;}
-    inline ModifyClusterIamRolesRequest& WithRemoveIamRoles(Aws::Vector<Aws::String>&& value) { SetRemoveIamRoles(std::move(value)); return *this;}
-    inline ModifyClusterIamRolesRequest& AddRemoveIamRoles(const Aws::String& value) { m_removeIamRolesHasBeenSet = true; m_removeIamRoles.push_back(value); return *this; }
-    inline ModifyClusterIamRolesRequest& AddRemoveIamRoles(Aws::String&& value) { m_removeIamRolesHasBeenSet = true; m_removeIamRoles.push_back(std::move(value)); return *this; }
-    inline ModifyClusterIamRolesRequest& AddRemoveIamRoles(const char* value) { m_removeIamRolesHasBeenSet = true; m_removeIamRoles.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the IAM role that was set as default for
-     * the cluster when the cluster was last modified.</p>
-     */
-    inline const Aws::String& GetDefaultIamRoleArn() const{ return m_defaultIamRoleArn; }
-    inline bool DefaultIamRoleArnHasBeenSet() const { return m_defaultIamRoleArnHasBeenSet; }
-    inline void SetDefaultIamRoleArn(const Aws::String& value) { m_defaultIamRoleArnHasBeenSet = true; m_defaultIamRoleArn = value; }
-    inline void SetDefaultIamRoleArn(Aws::String&& value) { m_defaultIamRoleArnHasBeenSet = true; m_defaultIamRoleArn = std::move(value); }
-    inline void SetDefaultIamRoleArn(const char* value) { m_defaultIamRoleArnHasBeenSet = true; m_defaultIamRoleArn.assign(value); }
-    inline ModifyClusterIamRolesRequest& WithDefaultIamRoleArn(const Aws::String& value) { SetDefaultIamRoleArn(value); return *this;}
-    inline ModifyClusterIamRolesRequest& WithDefaultIamRoleArn(Aws::String&& value) { SetDefaultIamRoleArn(std::move(value)); return *this;}
-    inline ModifyClusterIamRolesRequest& WithDefaultIamRoleArn(const char* value) { SetDefaultIamRoleArn(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_clusterIdentifier;
-    bool m_clusterIdentifierHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_addIamRoles;
-    bool m_addIamRolesHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_removeIamRoles;
-    bool m_removeIamRolesHasBeenSet = false;
-
-    Aws::String m_defaultIamRoleArn;
-    bool m_defaultIamRoleArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Redshift
-} // namespace Aws
+}  // namespace Model
+}  // namespace Redshift
+}  // namespace Aws

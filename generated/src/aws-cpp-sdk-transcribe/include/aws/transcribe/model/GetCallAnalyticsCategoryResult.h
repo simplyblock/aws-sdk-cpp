@@ -4,64 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/transcribe/TranscribeService_EXPORTS.h>
 #include <aws/transcribe/model/CategoryProperties.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace TranscribeService
-{
-namespace Model
-{
-  class GetCallAnalyticsCategoryResult
-  {
-  public:
-    AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult();
-    AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace TranscribeService {
+namespace Model {
+class GetCallAnalyticsCategoryResult {
+ public:
+  AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult() = default;
+  AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TRANSCRIBESERVICE_API GetCallAnalyticsCategoryResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Provides you with the properties of the Call Analytics category you specified
+   * in your <code>GetCallAnalyticsCategory</code> request.</p>
+   */
+  inline const CategoryProperties& GetCategoryProperties() const { return m_categoryProperties; }
+  template <typename CategoryPropertiesT = CategoryProperties>
+  void SetCategoryProperties(CategoryPropertiesT&& value) {
+    m_categoryPropertiesHasBeenSet = true;
+    m_categoryProperties = std::forward<CategoryPropertiesT>(value);
+  }
+  template <typename CategoryPropertiesT = CategoryProperties>
+  GetCallAnalyticsCategoryResult& WithCategoryProperties(CategoryPropertiesT&& value) {
+    SetCategoryProperties(std::forward<CategoryPropertiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Provides you with the properties of the Call Analytics category you specified
-     * in your <code>GetCallAnalyticsCategory</code> request.</p>
-     */
-    inline const CategoryProperties& GetCategoryProperties() const{ return m_categoryProperties; }
-    inline void SetCategoryProperties(const CategoryProperties& value) { m_categoryProperties = value; }
-    inline void SetCategoryProperties(CategoryProperties&& value) { m_categoryProperties = std::move(value); }
-    inline GetCallAnalyticsCategoryResult& WithCategoryProperties(const CategoryProperties& value) { SetCategoryProperties(value); return *this;}
-    inline GetCallAnalyticsCategoryResult& WithCategoryProperties(CategoryProperties&& value) { SetCategoryProperties(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCallAnalyticsCategoryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCallAnalyticsCategoryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCallAnalyticsCategoryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCallAnalyticsCategoryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    CategoryProperties m_categoryProperties;
+ private:
+  CategoryProperties m_categoryProperties;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_categoryPropertiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace TranscribeService
-} // namespace Aws
+}  // namespace Model
+}  // namespace TranscribeService
+}  // namespace Aws

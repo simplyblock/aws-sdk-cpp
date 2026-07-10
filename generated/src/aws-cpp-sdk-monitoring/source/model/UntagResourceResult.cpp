@@ -3,47 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/monitoring/model/UntagResourceResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
-#include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/UnreferencedParam.h>
+#include <aws/core/utils/cbor/CborValue.h>
+#include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/monitoring/model/UntagResourceResult.h>
 
 #include <utility>
 
 using namespace Aws::CloudWatch::Model;
-using namespace Aws::Utils::Xml;
-using namespace Aws::Utils::Logging;
+using namespace Aws::Crt;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
+using namespace Aws::Utils::Cbor;
 using namespace Aws;
 
-UntagResourceResult::UntagResourceResult()
-{
-}
+UntagResourceResult::UntagResourceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result) { *this = result; }
 
-UntagResourceResult::UntagResourceResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  *this = result;
-}
+UntagResourceResult& UntagResourceResult::operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
 
-UntagResourceResult& UntagResourceResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
-  const XmlDocument& xmlDocument = result.GetPayload();
-  XmlNode rootNode = xmlDocument.GetRootElement();
-  XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "UntagResourceResult"))
-  {
-    resultNode = rootNode.FirstChild("UntagResourceResult");
+  const auto& headers = result.GetHeaderValueCollection();
+  const auto& requestIdIter = headers.find("x-amzn-requestid");
+  if (requestIdIter != headers.end()) {
+    m_requestId = requestIdIter->second;
+    m_requestIdHasBeenSet = true;
   }
 
-  if(!resultNode.IsNull())
-  {
+  const auto& responseMetadataIter = headers.find("x-amzn-requestid");
+  if (responseMetadataIter != headers.end()) {
+    m_responseMetadataHasBeenSet = true;
+    // for backward compatibility for customers used to an old XML Client interface
+    m_responseMetadata.SetRequestId(responseMetadataIter->second);
   }
 
-  if (!rootNode.IsNull()) {
-    XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
-    m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::CloudWatch::Model::UntagResourceResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
-  }
   return *this;
 }

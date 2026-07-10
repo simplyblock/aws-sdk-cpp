@@ -4,79 +4,91 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
-  class AddLayerVersionPermissionResult
-  {
-  public:
-    AWS_LAMBDA_API AddLayerVersionPermissionResult();
-    AWS_LAMBDA_API AddLayerVersionPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_LAMBDA_API AddLayerVersionPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
+class AddLayerVersionPermissionResult {
+ public:
+  AWS_LAMBDA_API AddLayerVersionPermissionResult() = default;
+  AWS_LAMBDA_API AddLayerVersionPermissionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_LAMBDA_API AddLayerVersionPermissionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The permission statement.</p>
+   */
+  inline const Aws::String& GetStatement() const { return m_statement; }
+  template <typename StatementT = Aws::String>
+  void SetStatement(StatementT&& value) {
+    m_statementHasBeenSet = true;
+    m_statement = std::forward<StatementT>(value);
+  }
+  template <typename StatementT = Aws::String>
+  AddLayerVersionPermissionResult& WithStatement(StatementT&& value) {
+    SetStatement(std::forward<StatementT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The permission statement.</p>
-     */
-    inline const Aws::String& GetStatement() const{ return m_statement; }
-    inline void SetStatement(const Aws::String& value) { m_statement = value; }
-    inline void SetStatement(Aws::String&& value) { m_statement = std::move(value); }
-    inline void SetStatement(const char* value) { m_statement.assign(value); }
-    inline AddLayerVersionPermissionResult& WithStatement(const Aws::String& value) { SetStatement(value); return *this;}
-    inline AddLayerVersionPermissionResult& WithStatement(Aws::String&& value) { SetStatement(std::move(value)); return *this;}
-    inline AddLayerVersionPermissionResult& WithStatement(const char* value) { SetStatement(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique identifier for the current revision of the policy.</p>
+   */
+  inline const Aws::String& GetRevisionId() const { return m_revisionId; }
+  template <typename RevisionIdT = Aws::String>
+  void SetRevisionId(RevisionIdT&& value) {
+    m_revisionIdHasBeenSet = true;
+    m_revisionId = std::forward<RevisionIdT>(value);
+  }
+  template <typename RevisionIdT = Aws::String>
+  AddLayerVersionPermissionResult& WithRevisionId(RevisionIdT&& value) {
+    SetRevisionId(std::forward<RevisionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A unique identifier for the current revision of the policy.</p>
-     */
-    inline const Aws::String& GetRevisionId() const{ return m_revisionId; }
-    inline void SetRevisionId(const Aws::String& value) { m_revisionId = value; }
-    inline void SetRevisionId(Aws::String&& value) { m_revisionId = std::move(value); }
-    inline void SetRevisionId(const char* value) { m_revisionId.assign(value); }
-    inline AddLayerVersionPermissionResult& WithRevisionId(const Aws::String& value) { SetRevisionId(value); return *this;}
-    inline AddLayerVersionPermissionResult& WithRevisionId(Aws::String&& value) { SetRevisionId(std::move(value)); return *this;}
-    inline AddLayerVersionPermissionResult& WithRevisionId(const char* value) { SetRevisionId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AddLayerVersionPermissionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AddLayerVersionPermissionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AddLayerVersionPermissionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AddLayerVersionPermissionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_statement;
+ private:
+  Aws::String m_statement;
 
-    Aws::String m_revisionId;
+  Aws::String m_revisionId;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_statementHasBeenSet = false;
+  bool m_revisionIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

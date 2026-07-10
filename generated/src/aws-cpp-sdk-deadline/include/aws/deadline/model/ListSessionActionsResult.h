@@ -4,87 +4,111 @@
  */
 
 #pragma once
-#include <aws/deadline/Deadline_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/deadline/Deadline_EXPORTS.h>
 #include <aws/deadline/model/SessionActionSummary.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace deadline
-{
-namespace Model
-{
-  class ListSessionActionsResult
-  {
-  public:
-    AWS_DEADLINE_API ListSessionActionsResult();
-    AWS_DEADLINE_API ListSessionActionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEADLINE_API ListSessionActionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace deadline {
+namespace Model {
+/**
+ * <p>Shared pagination field for List operation outputs (nextToken).</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/deadline-2023-10-12/ListSessionActionsResponse">AWS
+ * API Reference</a></p>
+ */
+class ListSessionActionsResult {
+ public:
+  AWS_DEADLINE_API ListSessionActionsResult() = default;
+  AWS_DEADLINE_API ListSessionActionsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEADLINE_API ListSessionActionsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The session actions.</p>
+   */
+  inline const Aws::Vector<SessionActionSummary>& GetSessionActions() const { return m_sessionActions; }
+  template <typename SessionActionsT = Aws::Vector<SessionActionSummary>>
+  void SetSessionActions(SessionActionsT&& value) {
+    m_sessionActionsHasBeenSet = true;
+    m_sessionActions = std::forward<SessionActionsT>(value);
+  }
+  template <typename SessionActionsT = Aws::Vector<SessionActionSummary>>
+  ListSessionActionsResult& WithSessionActions(SessionActionsT&& value) {
+    SetSessionActions(std::forward<SessionActionsT>(value));
+    return *this;
+  }
+  template <typename SessionActionsT = SessionActionSummary>
+  ListSessionActionsResult& AddSessionActions(SessionActionsT&& value) {
+    m_sessionActionsHasBeenSet = true;
+    m_sessionActions.emplace_back(std::forward<SessionActionsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The session actions.</p>
-     */
-    inline const Aws::Vector<SessionActionSummary>& GetSessionActions() const{ return m_sessionActions; }
-    inline void SetSessionActions(const Aws::Vector<SessionActionSummary>& value) { m_sessionActions = value; }
-    inline void SetSessionActions(Aws::Vector<SessionActionSummary>&& value) { m_sessionActions = std::move(value); }
-    inline ListSessionActionsResult& WithSessionActions(const Aws::Vector<SessionActionSummary>& value) { SetSessionActions(value); return *this;}
-    inline ListSessionActionsResult& WithSessionActions(Aws::Vector<SessionActionSummary>&& value) { SetSessionActions(std::move(value)); return *this;}
-    inline ListSessionActionsResult& AddSessionActions(const SessionActionSummary& value) { m_sessionActions.push_back(value); return *this; }
-    inline ListSessionActionsResult& AddSessionActions(SessionActionSummary&& value) { m_sessionActions.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If Deadline Cloud returns <code>nextToken</code>, then there are more results
+   * available. The value of <code>nextToken</code> is a unique pagination token for
+   * each page. To retrieve the next page, call the operation again using the
+   * returned token. Keep all other arguments unchanged. If no results remain, then
+   * <code>nextToken</code> is set to <code>null</code>. Each pagination token
+   * expires after 24 hours. If you provide a token that isn't valid, then you
+   * receive an HTTP 400 <code>ValidationException</code> error.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListSessionActionsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If Deadline Cloud returns <code>nextToken</code>, then there are more results
-     * available. The value of <code>nextToken</code> is a unique pagination token for
-     * each page. To retrieve the next page, call the operation again using the
-     * returned token. Keep all other arguments unchanged. If no results remain, then
-     * <code>nextToken</code> is set to <code>null</code>. Each pagination token
-     * expires after 24 hours. If you provide a token that isn't valid, then you
-     * receive an HTTP 400 <code>ValidationException</code> error.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListSessionActionsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListSessionActionsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListSessionActionsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListSessionActionsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListSessionActionsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListSessionActionsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListSessionActionsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<SessionActionSummary> m_sessionActions;
+ private:
+  Aws::Vector<SessionActionSummary> m_sessionActions;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_sessionActionsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace deadline
-} // namespace Aws
+}  // namespace Model
+}  // namespace deadline
+}  // namespace Aws

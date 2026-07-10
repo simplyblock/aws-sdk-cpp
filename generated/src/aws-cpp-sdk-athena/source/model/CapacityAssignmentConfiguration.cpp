@@ -11,71 +11,47 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Athena
-{
-namespace Model
-{
+namespace Aws {
+namespace Athena {
+namespace Model {
 
-CapacityAssignmentConfiguration::CapacityAssignmentConfiguration() : 
-    m_capacityReservationNameHasBeenSet(false),
-    m_capacityAssignmentsHasBeenSet(false)
-{
-}
+CapacityAssignmentConfiguration::CapacityAssignmentConfiguration(JsonView jsonValue) { *this = jsonValue; }
 
-CapacityAssignmentConfiguration::CapacityAssignmentConfiguration(JsonView jsonValue)
-  : CapacityAssignmentConfiguration()
-{
-  *this = jsonValue;
-}
-
-CapacityAssignmentConfiguration& CapacityAssignmentConfiguration::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("CapacityReservationName"))
-  {
+CapacityAssignmentConfiguration& CapacityAssignmentConfiguration::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("CapacityReservationName")) {
     m_capacityReservationName = jsonValue.GetString("CapacityReservationName");
-
     m_capacityReservationNameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CapacityAssignments"))
-  {
+  if (jsonValue.ValueExists("CapacityAssignments")) {
     Aws::Utils::Array<JsonView> capacityAssignmentsJsonList = jsonValue.GetArray("CapacityAssignments");
-    for(unsigned capacityAssignmentsIndex = 0; capacityAssignmentsIndex < capacityAssignmentsJsonList.GetLength(); ++capacityAssignmentsIndex)
-    {
+    for (unsigned capacityAssignmentsIndex = 0; capacityAssignmentsIndex < capacityAssignmentsJsonList.GetLength();
+         ++capacityAssignmentsIndex) {
       m_capacityAssignments.push_back(capacityAssignmentsJsonList[capacityAssignmentsIndex].AsObject());
     }
     m_capacityAssignmentsHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue CapacityAssignmentConfiguration::Jsonize() const
-{
+JsonValue CapacityAssignmentConfiguration::Jsonize() const {
   JsonValue payload;
 
-  if(m_capacityReservationNameHasBeenSet)
-  {
-   payload.WithString("CapacityReservationName", m_capacityReservationName);
-
+  if (m_capacityReservationNameHasBeenSet) {
+    payload.WithString("CapacityReservationName", m_capacityReservationName);
   }
 
-  if(m_capacityAssignmentsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> capacityAssignmentsJsonList(m_capacityAssignments.size());
-   for(unsigned capacityAssignmentsIndex = 0; capacityAssignmentsIndex < capacityAssignmentsJsonList.GetLength(); ++capacityAssignmentsIndex)
-   {
-     capacityAssignmentsJsonList[capacityAssignmentsIndex].AsObject(m_capacityAssignments[capacityAssignmentsIndex].Jsonize());
-   }
-   payload.WithArray("CapacityAssignments", std::move(capacityAssignmentsJsonList));
-
+  if (m_capacityAssignmentsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> capacityAssignmentsJsonList(m_capacityAssignments.size());
+    for (unsigned capacityAssignmentsIndex = 0; capacityAssignmentsIndex < capacityAssignmentsJsonList.GetLength();
+         ++capacityAssignmentsIndex) {
+      capacityAssignmentsJsonList[capacityAssignmentsIndex].AsObject(m_capacityAssignments[capacityAssignmentsIndex].Jsonize());
+    }
+    payload.WithArray("CapacityAssignments", std::move(capacityAssignmentsJsonList));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Athena
-} // namespace Aws
+}  // namespace Model
+}  // namespace Athena
+}  // namespace Aws

@@ -12,16 +12,4 @@ using namespace Aws::Backup::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DescribeReportJobRequest::DescribeReportJobRequest() : 
-    m_reportJobIdHasBeenSet(false)
-{
-}
-
-Aws::String DescribeReportJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DescribeReportJobRequest::SerializePayload() const { return {}; }

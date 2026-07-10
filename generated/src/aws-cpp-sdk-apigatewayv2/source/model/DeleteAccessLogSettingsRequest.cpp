@@ -12,17 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteAccessLogSettingsRequest::DeleteAccessLogSettingsRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_stageNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteAccessLogSettingsRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteAccessLogSettingsRequest::SerializePayload() const { return {}; }

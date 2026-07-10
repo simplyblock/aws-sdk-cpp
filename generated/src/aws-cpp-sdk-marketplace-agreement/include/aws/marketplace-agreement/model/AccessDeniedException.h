@@ -4,74 +4,97 @@
  */
 
 #pragma once
-#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/marketplace-agreement/AgreementService_EXPORTS.h>
+#include <aws/marketplace-agreement/model/AccessDeniedExceptionReason.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace AgreementService
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace AgreementService {
+namespace Model {
 
+/**
+ * <p>User does not have sufficient access to perform this action.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/AccessDeniedException">AWS
+ * API Reference</a></p>
+ */
+class AccessDeniedException {
+ public:
+  AWS_AGREEMENTSERVICE_API AccessDeniedException() = default;
+  AWS_AGREEMENTSERVICE_API AccessDeniedException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API AccessDeniedException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>User does not have sufficient access to perform this action.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/marketplace-agreement-2020-03-01/AccessDeniedException">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for the error.</p>
    */
-  class AccessDeniedException
-  {
-  public:
-    AWS_AGREEMENTSERVICE_API AccessDeniedException();
-    AWS_AGREEMENTSERVICE_API AccessDeniedException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API AccessDeniedException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_AGREEMENTSERVICE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  inline bool RequestIdHasBeenSet() const { return m_requestIdHasBeenSet; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AccessDeniedException& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Description of the error.</p>
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  AccessDeniedException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetMessage() const{ return m_message; }
-    inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
-    inline void SetMessage(const Aws::String& value) { m_messageHasBeenSet = true; m_message = value; }
-    inline void SetMessage(Aws::String&& value) { m_messageHasBeenSet = true; m_message = std::move(value); }
-    inline void SetMessage(const char* value) { m_messageHasBeenSet = true; m_message.assign(value); }
-    inline AccessDeniedException& WithMessage(const Aws::String& value) { SetMessage(value); return *this;}
-    inline AccessDeniedException& WithMessage(Aws::String&& value) { SetMessage(std::move(value)); return *this;}
-    inline AccessDeniedException& WithMessage(const char* value) { SetMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason for the access denied exception.</p>
+   */
+  inline AccessDeniedExceptionReason GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  inline void SetReason(AccessDeniedExceptionReason value) {
+    m_reasonHasBeenSet = true;
+    m_reason = value;
+  }
+  inline AccessDeniedException& WithReason(AccessDeniedExceptionReason value) {
+    SetReason(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_requestId;
 
-    ///@{
-    /**
-     * <p>The unique identifier for the error.</p>
-     */
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline bool RequestIdHasBeenSet() const { return m_requestIdHasBeenSet; }
-    inline void SetRequestId(const Aws::String& value) { m_requestIdHasBeenSet = true; m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestIdHasBeenSet = true; m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestIdHasBeenSet = true; m_requestId.assign(value); }
-    inline AccessDeniedException& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AccessDeniedException& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AccessDeniedException& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_message;
 
-    Aws::String m_message;
-    bool m_messageHasBeenSet = false;
+  AccessDeniedExceptionReason m_reason{AccessDeniedExceptionReason::NOT_SET};
+  bool m_requestIdHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-    bool m_requestIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace AgreementService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AgreementService
+}  // namespace Aws

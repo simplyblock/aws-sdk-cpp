@@ -4,72 +4,75 @@
  */
 
 #pragma once
-#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
-#include <aws/timestream-write/TimestreamWriteRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/timestream-write/TimestreamWriteRequest.h>
+#include <aws/timestream-write/TimestreamWrite_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace TimestreamWrite
-{
-namespace Model
-{
+namespace Aws {
+namespace TimestreamWrite {
+namespace Model {
 
+/**
+ */
+class DescribeTableRequest : public TimestreamWriteRequest {
+ public:
+  AWS_TIMESTREAMWRITE_API DescribeTableRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeTable"; }
+
+  AWS_TIMESTREAMWRITE_API Aws::String SerializePayload() const override;
+
+  AWS_TIMESTREAMWRITE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The name of the Timestream database.</p>
    */
-  class DescribeTableRequest : public TimestreamWriteRequest
-  {
-  public:
-    AWS_TIMESTREAMWRITE_API DescribeTableRequest();
+  inline const Aws::String& GetDatabaseName() const { return m_databaseName; }
+  inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
+  template <typename DatabaseNameT = Aws::String>
+  void SetDatabaseName(DatabaseNameT&& value) {
+    m_databaseNameHasBeenSet = true;
+    m_databaseName = std::forward<DatabaseNameT>(value);
+  }
+  template <typename DatabaseNameT = Aws::String>
+  DescribeTableRequest& WithDatabaseName(DatabaseNameT&& value) {
+    SetDatabaseName(std::forward<DatabaseNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeTable"; }
+  ///@{
+  /**
+   * <p>The name of the Timestream table.</p>
+   */
+  inline const Aws::String& GetTableName() const { return m_tableName; }
+  inline bool TableNameHasBeenSet() const { return m_tableNameHasBeenSet; }
+  template <typename TableNameT = Aws::String>
+  void SetTableName(TableNameT&& value) {
+    m_tableNameHasBeenSet = true;
+    m_tableName = std::forward<TableNameT>(value);
+  }
+  template <typename TableNameT = Aws::String>
+  DescribeTableRequest& WithTableName(TableNameT&& value) {
+    SetTableName(std::forward<TableNameT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_databaseName;
 
-    AWS_TIMESTREAMWRITE_API Aws::String SerializePayload() const override;
+  Aws::String m_tableName;
+  bool m_databaseNameHasBeenSet = false;
+  bool m_tableNameHasBeenSet = false;
+};
 
-    AWS_TIMESTREAMWRITE_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The name of the Timestream database.</p>
-     */
-    inline const Aws::String& GetDatabaseName() const{ return m_databaseName; }
-    inline bool DatabaseNameHasBeenSet() const { return m_databaseNameHasBeenSet; }
-    inline void SetDatabaseName(const Aws::String& value) { m_databaseNameHasBeenSet = true; m_databaseName = value; }
-    inline void SetDatabaseName(Aws::String&& value) { m_databaseNameHasBeenSet = true; m_databaseName = std::move(value); }
-    inline void SetDatabaseName(const char* value) { m_databaseNameHasBeenSet = true; m_databaseName.assign(value); }
-    inline DescribeTableRequest& WithDatabaseName(const Aws::String& value) { SetDatabaseName(value); return *this;}
-    inline DescribeTableRequest& WithDatabaseName(Aws::String&& value) { SetDatabaseName(std::move(value)); return *this;}
-    inline DescribeTableRequest& WithDatabaseName(const char* value) { SetDatabaseName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The name of the Timestream table.</p>
-     */
-    inline const Aws::String& GetTableName() const{ return m_tableName; }
-    inline bool TableNameHasBeenSet() const { return m_tableNameHasBeenSet; }
-    inline void SetTableName(const Aws::String& value) { m_tableNameHasBeenSet = true; m_tableName = value; }
-    inline void SetTableName(Aws::String&& value) { m_tableNameHasBeenSet = true; m_tableName = std::move(value); }
-    inline void SetTableName(const char* value) { m_tableNameHasBeenSet = true; m_tableName.assign(value); }
-    inline DescribeTableRequest& WithTableName(const Aws::String& value) { SetTableName(value); return *this;}
-    inline DescribeTableRequest& WithTableName(Aws::String&& value) { SetTableName(std::move(value)); return *this;}
-    inline DescribeTableRequest& WithTableName(const char* value) { SetTableName(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_databaseName;
-    bool m_databaseNameHasBeenSet = false;
-
-    Aws::String m_tableName;
-    bool m_tableNameHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace TimestreamWrite
-} // namespace Aws
+}  // namespace Model
+}  // namespace TimestreamWrite
+}  // namespace Aws

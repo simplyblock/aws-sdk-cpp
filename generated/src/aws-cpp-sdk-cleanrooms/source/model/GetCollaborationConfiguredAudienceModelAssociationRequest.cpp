@@ -12,17 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCollaborationConfiguredAudienceModelAssociationRequest::GetCollaborationConfiguredAudienceModelAssociationRequest() : 
-    m_collaborationIdentifierHasBeenSet(false),
-    m_configuredAudienceModelAssociationIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String GetCollaborationConfiguredAudienceModelAssociationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCollaborationConfiguredAudienceModelAssociationRequest::SerializePayload() const { return {}; }

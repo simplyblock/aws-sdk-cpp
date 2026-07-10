@@ -12,15 +12,4 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetGlobalSettingsRequest::GetGlobalSettingsRequest()
-{
-}
-
-Aws::String GetGlobalSettingsRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetGlobalSettingsRequest::SerializePayload() const { return {}; }

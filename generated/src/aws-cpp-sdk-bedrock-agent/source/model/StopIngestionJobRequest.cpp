@@ -12,18 +12,4 @@ using namespace Aws::BedrockAgent::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StopIngestionJobRequest::StopIngestionJobRequest() : 
-    m_dataSourceIdHasBeenSet(false),
-    m_ingestionJobIdHasBeenSet(false),
-    m_knowledgeBaseIdHasBeenSet(false)
-{
-}
-
-Aws::String StopIngestionJobRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String StopIngestionJobRequest::SerializePayload() const { return {}; }

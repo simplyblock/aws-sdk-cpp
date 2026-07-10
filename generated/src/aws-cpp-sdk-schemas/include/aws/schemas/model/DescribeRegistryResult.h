@@ -4,115 +4,138 @@
  */
 
 #pragma once
-#include <aws/schemas/Schemas_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/schemas/Schemas_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Schemas
-{
-namespace Model
-{
-  class DescribeRegistryResult
-  {
-  public:
-    AWS_SCHEMAS_API DescribeRegistryResult();
-    AWS_SCHEMAS_API DescribeRegistryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SCHEMAS_API DescribeRegistryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Schemas {
+namespace Model {
+class DescribeRegistryResult {
+ public:
+  AWS_SCHEMAS_API DescribeRegistryResult() = default;
+  AWS_SCHEMAS_API DescribeRegistryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SCHEMAS_API DescribeRegistryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The description of the registry.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  DescribeRegistryResult& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The description of the registry.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline void SetDescription(const Aws::String& value) { m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_description.assign(value); }
-    inline DescribeRegistryResult& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline DescribeRegistryResult& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline DescribeRegistryResult& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the registry.</p>
+   */
+  inline const Aws::String& GetRegistryArn() const { return m_registryArn; }
+  template <typename RegistryArnT = Aws::String>
+  void SetRegistryArn(RegistryArnT&& value) {
+    m_registryArnHasBeenSet = true;
+    m_registryArn = std::forward<RegistryArnT>(value);
+  }
+  template <typename RegistryArnT = Aws::String>
+  DescribeRegistryResult& WithRegistryArn(RegistryArnT&& value) {
+    SetRegistryArn(std::forward<RegistryArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the registry.</p>
-     */
-    inline const Aws::String& GetRegistryArn() const{ return m_registryArn; }
-    inline void SetRegistryArn(const Aws::String& value) { m_registryArn = value; }
-    inline void SetRegistryArn(Aws::String&& value) { m_registryArn = std::move(value); }
-    inline void SetRegistryArn(const char* value) { m_registryArn.assign(value); }
-    inline DescribeRegistryResult& WithRegistryArn(const Aws::String& value) { SetRegistryArn(value); return *this;}
-    inline DescribeRegistryResult& WithRegistryArn(Aws::String&& value) { SetRegistryArn(std::move(value)); return *this;}
-    inline DescribeRegistryResult& WithRegistryArn(const char* value) { SetRegistryArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The name of the registry.</p>
+   */
+  inline const Aws::String& GetRegistryName() const { return m_registryName; }
+  template <typename RegistryNameT = Aws::String>
+  void SetRegistryName(RegistryNameT&& value) {
+    m_registryNameHasBeenSet = true;
+    m_registryName = std::forward<RegistryNameT>(value);
+  }
+  template <typename RegistryNameT = Aws::String>
+  DescribeRegistryResult& WithRegistryName(RegistryNameT&& value) {
+    SetRegistryName(std::forward<RegistryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the registry.</p>
-     */
-    inline const Aws::String& GetRegistryName() const{ return m_registryName; }
-    inline void SetRegistryName(const Aws::String& value) { m_registryName = value; }
-    inline void SetRegistryName(Aws::String&& value) { m_registryName = std::move(value); }
-    inline void SetRegistryName(const char* value) { m_registryName.assign(value); }
-    inline DescribeRegistryResult& WithRegistryName(const Aws::String& value) { SetRegistryName(value); return *this;}
-    inline DescribeRegistryResult& WithRegistryName(Aws::String&& value) { SetRegistryName(std::move(value)); return *this;}
-    inline DescribeRegistryResult& WithRegistryName(const char* value) { SetRegistryName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Tags associated with the registry.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  DescribeRegistryResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  DescribeRegistryResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Tags associated with the registry.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline DescribeRegistryResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline DescribeRegistryResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline DescribeRegistryResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline DescribeRegistryResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeRegistryResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeRegistryResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline DescribeRegistryResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline DescribeRegistryResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline DescribeRegistryResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeRegistryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeRegistryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeRegistryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeRegistryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_description;
+ private:
+  Aws::String m_description;
 
-    Aws::String m_registryArn;
+  Aws::String m_registryArn;
 
-    Aws::String m_registryName;
+  Aws::String m_registryName;
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_descriptionHasBeenSet = false;
+  bool m_registryArnHasBeenSet = false;
+  bool m_registryNameHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Schemas
-} // namespace Aws
+}  // namespace Model
+}  // namespace Schemas
+}  // namespace Aws

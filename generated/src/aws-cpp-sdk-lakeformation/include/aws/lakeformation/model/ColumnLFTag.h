@@ -4,78 +4,85 @@
  */
 
 #pragma once
-#include <aws/lakeformation/LakeFormation_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/lakeformation/LakeFormation_EXPORTS.h>
 #include <aws/lakeformation/model/LFTagPair.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace LakeFormation
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace LakeFormation {
+namespace Model {
 
+/**
+ * <p>A structure containing the name of a column resource and the LF-tags attached
+ * to it.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/ColumnLFTag">AWS
+ * API Reference</a></p>
+ */
+class ColumnLFTag {
+ public:
+  AWS_LAKEFORMATION_API ColumnLFTag() = default;
+  AWS_LAKEFORMATION_API ColumnLFTag(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAKEFORMATION_API ColumnLFTag& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAKEFORMATION_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A structure containing the name of a column resource and the LF-tags attached
-   * to it.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/ColumnLFTag">AWS
-   * API Reference</a></p>
+   * <p>The name of a column resource.</p>
    */
-  class ColumnLFTag
-  {
-  public:
-    AWS_LAKEFORMATION_API ColumnLFTag();
-    AWS_LAKEFORMATION_API ColumnLFTag(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAKEFORMATION_API ColumnLFTag& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAKEFORMATION_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  ColumnLFTag& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The LF-tags attached to a column resource.</p>
+   */
+  inline const Aws::Vector<LFTagPair>& GetLFTags() const { return m_lFTags; }
+  inline bool LFTagsHasBeenSet() const { return m_lFTagsHasBeenSet; }
+  template <typename LFTagsT = Aws::Vector<LFTagPair>>
+  void SetLFTags(LFTagsT&& value) {
+    m_lFTagsHasBeenSet = true;
+    m_lFTags = std::forward<LFTagsT>(value);
+  }
+  template <typename LFTagsT = Aws::Vector<LFTagPair>>
+  ColumnLFTag& WithLFTags(LFTagsT&& value) {
+    SetLFTags(std::forward<LFTagsT>(value));
+    return *this;
+  }
+  template <typename LFTagsT = LFTagPair>
+  ColumnLFTag& AddLFTags(LFTagsT&& value) {
+    m_lFTagsHasBeenSet = true;
+    m_lFTags.emplace_back(std::forward<LFTagsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    ///@{
-    /**
-     * <p>The name of a column resource.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline ColumnLFTag& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline ColumnLFTag& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline ColumnLFTag& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  Aws::Vector<LFTagPair> m_lFTags;
+  bool m_nameHasBeenSet = false;
+  bool m_lFTagsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The LF-tags attached to a column resource.</p>
-     */
-    inline const Aws::Vector<LFTagPair>& GetLFTags() const{ return m_lFTags; }
-    inline bool LFTagsHasBeenSet() const { return m_lFTagsHasBeenSet; }
-    inline void SetLFTags(const Aws::Vector<LFTagPair>& value) { m_lFTagsHasBeenSet = true; m_lFTags = value; }
-    inline void SetLFTags(Aws::Vector<LFTagPair>&& value) { m_lFTagsHasBeenSet = true; m_lFTags = std::move(value); }
-    inline ColumnLFTag& WithLFTags(const Aws::Vector<LFTagPair>& value) { SetLFTags(value); return *this;}
-    inline ColumnLFTag& WithLFTags(Aws::Vector<LFTagPair>&& value) { SetLFTags(std::move(value)); return *this;}
-    inline ColumnLFTag& AddLFTags(const LFTagPair& value) { m_lFTagsHasBeenSet = true; m_lFTags.push_back(value); return *this; }
-    inline ColumnLFTag& AddLFTags(LFTagPair&& value) { m_lFTagsHasBeenSet = true; m_lFTags.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::Vector<LFTagPair> m_lFTags;
-    bool m_lFTagsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace LakeFormation
-} // namespace Aws
+}  // namespace Model
+}  // namespace LakeFormation
+}  // namespace Aws

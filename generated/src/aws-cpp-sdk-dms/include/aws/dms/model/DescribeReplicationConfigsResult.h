@@ -4,89 +4,108 @@
  */
 
 #pragma once
-#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/ReplicationConfig.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeReplicationConfigsResponse">AWS
+ * API Reference</a></p>
+ */
+class DescribeReplicationConfigsResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeReplicationConfigsResponse">AWS
-   * API Reference</a></p>
+   * <p>An optional pagination token provided by a previous request. If this
+   * parameter is specified, the response includes only records beyond the marker, up
+   * to the value specified by <code>MaxRecords</code>. </p>
    */
-  class DescribeReplicationConfigsResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult();
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API DescribeReplicationConfigsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  DescribeReplicationConfigsResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Returned configuration parameters that describe each provisioned DMS
+   * Serverless replication.</p>
+   */
+  inline const Aws::Vector<ReplicationConfig>& GetReplicationConfigs() const { return m_replicationConfigs; }
+  template <typename ReplicationConfigsT = Aws::Vector<ReplicationConfig>>
+  void SetReplicationConfigs(ReplicationConfigsT&& value) {
+    m_replicationConfigsHasBeenSet = true;
+    m_replicationConfigs = std::forward<ReplicationConfigsT>(value);
+  }
+  template <typename ReplicationConfigsT = Aws::Vector<ReplicationConfig>>
+  DescribeReplicationConfigsResult& WithReplicationConfigs(ReplicationConfigsT&& value) {
+    SetReplicationConfigs(std::forward<ReplicationConfigsT>(value));
+    return *this;
+  }
+  template <typename ReplicationConfigsT = ReplicationConfig>
+  DescribeReplicationConfigsResult& AddReplicationConfigs(ReplicationConfigsT&& value) {
+    m_replicationConfigsHasBeenSet = true;
+    m_replicationConfigs.emplace_back(std::forward<ReplicationConfigsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An optional pagination token provided by a previous request. If this
-     * parameter is specified, the response includes only records beyond the marker, up
-     * to the value specified by <code>MaxRecords</code>. </p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline DescribeReplicationConfigsResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline DescribeReplicationConfigsResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline DescribeReplicationConfigsResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Returned configuration parameters that describe each provisioned DMS
-     * Serverless replication.</p>
-     */
-    inline const Aws::Vector<ReplicationConfig>& GetReplicationConfigs() const{ return m_replicationConfigs; }
-    inline void SetReplicationConfigs(const Aws::Vector<ReplicationConfig>& value) { m_replicationConfigs = value; }
-    inline void SetReplicationConfigs(Aws::Vector<ReplicationConfig>&& value) { m_replicationConfigs = std::move(value); }
-    inline DescribeReplicationConfigsResult& WithReplicationConfigs(const Aws::Vector<ReplicationConfig>& value) { SetReplicationConfigs(value); return *this;}
-    inline DescribeReplicationConfigsResult& WithReplicationConfigs(Aws::Vector<ReplicationConfig>&& value) { SetReplicationConfigs(std::move(value)); return *this;}
-    inline DescribeReplicationConfigsResult& AddReplicationConfigs(const ReplicationConfig& value) { m_replicationConfigs.push_back(value); return *this; }
-    inline DescribeReplicationConfigsResult& AddReplicationConfigs(ReplicationConfig&& value) { m_replicationConfigs.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeReplicationConfigsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeReplicationConfigsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeReplicationConfigsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeReplicationConfigsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  Aws::Vector<ReplicationConfig> m_replicationConfigs;
 
-    Aws::Vector<ReplicationConfig> m_replicationConfigs;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_markerHasBeenSet = false;
+  bool m_replicationConfigsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

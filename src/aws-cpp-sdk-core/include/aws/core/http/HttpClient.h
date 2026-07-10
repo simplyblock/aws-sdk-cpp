@@ -6,11 +6,14 @@
 #pragma once
 
 #include <aws/core/Core_EXPORTS.h>
+#include <aws/core/http/HttpConnection.h>
+#include <aws/core/utils/Outcome.h>
+#include <aws/core/client/AWSError.h>
 
-#include <memory>
 #include <atomic>
-#include <mutex>
 #include <condition_variable>
+#include <memory>
+#include <mutex>
 
 namespace Aws
 {
@@ -49,6 +52,11 @@ namespace Aws
             virtual bool SupportsChunkedTransferEncoding() const { return true; }
 
             /**
+             * Returns true if this is a default AWS SDK HTTP client implementation.
+             */
+            virtual bool IsDefaultAwsHttpClient() const { return false; }
+
+            /**
              * Stops all requests in progress and prevents any others from initiating.
              */
             void DisableRequestProcessing();
@@ -70,6 +78,17 @@ namespace Aws
             explicit operator bool() const
             {
                return !m_bad;
+            }
+
+            virtual Aws::Crt::Optional<Aws::Client::AWSError<Aws::Client::CoreErrors>> AcquireConnection(
+                const std::shared_ptr<HttpRequest>& request,
+                const std::function<void(std::shared_ptr<Aws::Http::Connection>, int)>& onClientConnectionAvailable) {
+              AWS_UNREFERENCED_PARAM(request);
+              AWS_UNREFERENCED_PARAM(onClientConnectionAvailable);
+              return Aws::Client::AWSError<Aws::Client::CoreErrors>{Aws::Client::CoreErrors::NOT_IMPLEMENTED,
+                "NotImplemented",
+                "creating a connection is not supported on this http client",
+                false};
             }
 
         protected:

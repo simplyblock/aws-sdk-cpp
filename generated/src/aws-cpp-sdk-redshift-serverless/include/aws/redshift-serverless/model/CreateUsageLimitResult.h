@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/redshift-serverless/RedshiftServerless_EXPORTS.h>
 #include <aws/redshift-serverless/model/UsageLimit.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace RedshiftServerless
-{
-namespace Model
-{
-  class CreateUsageLimitResult
-  {
-  public:
-    AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult();
-    AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace RedshiftServerless {
+namespace Model {
+class CreateUsageLimitResult {
+ public:
+  AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult() = default;
+  AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_REDSHIFTSERVERLESS_API CreateUsageLimitResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The returned usage limit object.</p>
+   */
+  inline const UsageLimit& GetUsageLimit() const { return m_usageLimit; }
+  template <typename UsageLimitT = UsageLimit>
+  void SetUsageLimit(UsageLimitT&& value) {
+    m_usageLimitHasBeenSet = true;
+    m_usageLimit = std::forward<UsageLimitT>(value);
+  }
+  template <typename UsageLimitT = UsageLimit>
+  CreateUsageLimitResult& WithUsageLimit(UsageLimitT&& value) {
+    SetUsageLimit(std::forward<UsageLimitT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The returned usage limit object.</p>
-     */
-    inline const UsageLimit& GetUsageLimit() const{ return m_usageLimit; }
-    inline void SetUsageLimit(const UsageLimit& value) { m_usageLimit = value; }
-    inline void SetUsageLimit(UsageLimit&& value) { m_usageLimit = std::move(value); }
-    inline CreateUsageLimitResult& WithUsageLimit(const UsageLimit& value) { SetUsageLimit(value); return *this;}
-    inline CreateUsageLimitResult& WithUsageLimit(UsageLimit&& value) { SetUsageLimit(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateUsageLimitResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateUsageLimitResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateUsageLimitResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateUsageLimitResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    UsageLimit m_usageLimit;
+ private:
+  UsageLimit m_usageLimit;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_usageLimitHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace RedshiftServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace RedshiftServerless
+}  // namespace Aws

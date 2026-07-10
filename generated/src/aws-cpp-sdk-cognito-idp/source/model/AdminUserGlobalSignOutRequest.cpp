@@ -12,39 +12,22 @@ using namespace Aws::CognitoIdentityProvider::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-AdminUserGlobalSignOutRequest::AdminUserGlobalSignOutRequest() : 
-    m_userPoolIdHasBeenSet(false),
-    m_usernameHasBeenSet(false)
-{
-}
-
-Aws::String AdminUserGlobalSignOutRequest::SerializePayload() const
-{
+Aws::String AdminUserGlobalSignOutRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_userPoolIdHasBeenSet)
-  {
-   payload.WithString("UserPoolId", m_userPoolId);
-
+  if (m_userPoolIdHasBeenSet) {
+    payload.WithString("UserPoolId", m_userPoolId);
   }
 
-  if(m_usernameHasBeenSet)
-  {
-   payload.WithString("Username", m_username);
-
+  if (m_usernameHasBeenSet) {
+    payload.WithString("Username", m_username);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection AdminUserGlobalSignOutRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection AdminUserGlobalSignOutRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AWSCognitoIdentityProviderService.AdminUserGlobalSignOut"));
   return headers;
-
 }
-
-
-
-

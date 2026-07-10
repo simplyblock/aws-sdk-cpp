@@ -12,16 +12,4 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetCaseEventConfigurationRequest::GetCaseEventConfigurationRequest() : 
-    m_domainIdHasBeenSet(false)
-{
-}
-
-Aws::String GetCaseEventConfigurationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetCaseEventConfigurationRequest::SerializePayload() const { return {}; }

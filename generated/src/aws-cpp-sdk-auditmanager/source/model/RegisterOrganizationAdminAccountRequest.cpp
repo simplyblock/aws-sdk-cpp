@@ -12,24 +12,12 @@ using namespace Aws::AuditManager::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RegisterOrganizationAdminAccountRequest::RegisterOrganizationAdminAccountRequest() : 
-    m_adminAccountIdHasBeenSet(false)
-{
-}
-
-Aws::String RegisterOrganizationAdminAccountRequest::SerializePayload() const
-{
+Aws::String RegisterOrganizationAdminAccountRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_adminAccountIdHasBeenSet)
-  {
-   payload.WithString("adminAccountId", m_adminAccountId);
-
+  if (m_adminAccountIdHasBeenSet) {
+    payload.WithString("adminAccountId", m_adminAccountId);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

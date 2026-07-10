@@ -4,130 +4,200 @@
  */
 
 #pragma once
-#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/medialive/MediaLive_EXPORTS.h>
+#include <aws/medialive/model/ChannelEngineVersionResponse.h>
+#include <aws/medialive/model/MediaConnectRouterOutputConnection.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace MediaLive
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace MediaLive {
+namespace Model {
 
+/**
+ * Runtime details of a pipeline when a channel is running.<p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/PipelineDetail">AWS
+ * API Reference</a></p>
+ */
+class PipelineDetail {
+ public:
+  AWS_MEDIALIVE_API PipelineDetail() = default;
+  AWS_MEDIALIVE_API PipelineDetail(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API PipelineDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * Runtime details of a pipeline when a channel is running.<p><h3>See Also:</h3>  
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/PipelineDetail">AWS
-   * API Reference</a></p>
+   * The name of the active input attachment currently being ingested by this
+   * pipeline.
    */
-  class PipelineDetail
-  {
-  public:
-    AWS_MEDIALIVE_API PipelineDetail();
-    AWS_MEDIALIVE_API PipelineDetail(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API PipelineDetail& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_MEDIALIVE_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetActiveInputAttachmentName() const { return m_activeInputAttachmentName; }
+  inline bool ActiveInputAttachmentNameHasBeenSet() const { return m_activeInputAttachmentNameHasBeenSet; }
+  template <typename ActiveInputAttachmentNameT = Aws::String>
+  void SetActiveInputAttachmentName(ActiveInputAttachmentNameT&& value) {
+    m_activeInputAttachmentNameHasBeenSet = true;
+    m_activeInputAttachmentName = std::forward<ActiveInputAttachmentNameT>(value);
+  }
+  template <typename ActiveInputAttachmentNameT = Aws::String>
+  PipelineDetail& WithActiveInputAttachmentName(ActiveInputAttachmentNameT&& value) {
+    SetActiveInputAttachmentName(std::forward<ActiveInputAttachmentNameT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * The name of the input switch schedule action that occurred most recently and
+   * that resulted in the switch to the current input attachment for this pipeline.
+   */
+  inline const Aws::String& GetActiveInputSwitchActionName() const { return m_activeInputSwitchActionName; }
+  inline bool ActiveInputSwitchActionNameHasBeenSet() const { return m_activeInputSwitchActionNameHasBeenSet; }
+  template <typename ActiveInputSwitchActionNameT = Aws::String>
+  void SetActiveInputSwitchActionName(ActiveInputSwitchActionNameT&& value) {
+    m_activeInputSwitchActionNameHasBeenSet = true;
+    m_activeInputSwitchActionName = std::forward<ActiveInputSwitchActionNameT>(value);
+  }
+  template <typename ActiveInputSwitchActionNameT = Aws::String>
+  PipelineDetail& WithActiveInputSwitchActionName(ActiveInputSwitchActionNameT&& value) {
+    SetActiveInputSwitchActionName(std::forward<ActiveInputSwitchActionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the active input attachment currently being ingested by this
-     * pipeline.
-     */
-    inline const Aws::String& GetActiveInputAttachmentName() const{ return m_activeInputAttachmentName; }
-    inline bool ActiveInputAttachmentNameHasBeenSet() const { return m_activeInputAttachmentNameHasBeenSet; }
-    inline void SetActiveInputAttachmentName(const Aws::String& value) { m_activeInputAttachmentNameHasBeenSet = true; m_activeInputAttachmentName = value; }
-    inline void SetActiveInputAttachmentName(Aws::String&& value) { m_activeInputAttachmentNameHasBeenSet = true; m_activeInputAttachmentName = std::move(value); }
-    inline void SetActiveInputAttachmentName(const char* value) { m_activeInputAttachmentNameHasBeenSet = true; m_activeInputAttachmentName.assign(value); }
-    inline PipelineDetail& WithActiveInputAttachmentName(const Aws::String& value) { SetActiveInputAttachmentName(value); return *this;}
-    inline PipelineDetail& WithActiveInputAttachmentName(Aws::String&& value) { SetActiveInputAttachmentName(std::move(value)); return *this;}
-    inline PipelineDetail& WithActiveInputAttachmentName(const char* value) { SetActiveInputAttachmentName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The name of the motion graphics activate action that occurred most recently and
+   * that resulted in the current graphics URI for this pipeline.
+   */
+  inline const Aws::String& GetActiveMotionGraphicsActionName() const { return m_activeMotionGraphicsActionName; }
+  inline bool ActiveMotionGraphicsActionNameHasBeenSet() const { return m_activeMotionGraphicsActionNameHasBeenSet; }
+  template <typename ActiveMotionGraphicsActionNameT = Aws::String>
+  void SetActiveMotionGraphicsActionName(ActiveMotionGraphicsActionNameT&& value) {
+    m_activeMotionGraphicsActionNameHasBeenSet = true;
+    m_activeMotionGraphicsActionName = std::forward<ActiveMotionGraphicsActionNameT>(value);
+  }
+  template <typename ActiveMotionGraphicsActionNameT = Aws::String>
+  PipelineDetail& WithActiveMotionGraphicsActionName(ActiveMotionGraphicsActionNameT&& value) {
+    SetActiveMotionGraphicsActionName(std::forward<ActiveMotionGraphicsActionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the input switch schedule action that occurred most recently and
-     * that resulted in the switch to the current input attachment for this pipeline.
-     */
-    inline const Aws::String& GetActiveInputSwitchActionName() const{ return m_activeInputSwitchActionName; }
-    inline bool ActiveInputSwitchActionNameHasBeenSet() const { return m_activeInputSwitchActionNameHasBeenSet; }
-    inline void SetActiveInputSwitchActionName(const Aws::String& value) { m_activeInputSwitchActionNameHasBeenSet = true; m_activeInputSwitchActionName = value; }
-    inline void SetActiveInputSwitchActionName(Aws::String&& value) { m_activeInputSwitchActionNameHasBeenSet = true; m_activeInputSwitchActionName = std::move(value); }
-    inline void SetActiveInputSwitchActionName(const char* value) { m_activeInputSwitchActionNameHasBeenSet = true; m_activeInputSwitchActionName.assign(value); }
-    inline PipelineDetail& WithActiveInputSwitchActionName(const Aws::String& value) { SetActiveInputSwitchActionName(value); return *this;}
-    inline PipelineDetail& WithActiveInputSwitchActionName(Aws::String&& value) { SetActiveInputSwitchActionName(std::move(value)); return *this;}
-    inline PipelineDetail& WithActiveInputSwitchActionName(const char* value) { SetActiveInputSwitchActionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * The current URI being used for HTML5 motion graphics for this pipeline.
+   */
+  inline const Aws::String& GetActiveMotionGraphicsUri() const { return m_activeMotionGraphicsUri; }
+  inline bool ActiveMotionGraphicsUriHasBeenSet() const { return m_activeMotionGraphicsUriHasBeenSet; }
+  template <typename ActiveMotionGraphicsUriT = Aws::String>
+  void SetActiveMotionGraphicsUri(ActiveMotionGraphicsUriT&& value) {
+    m_activeMotionGraphicsUriHasBeenSet = true;
+    m_activeMotionGraphicsUri = std::forward<ActiveMotionGraphicsUriT>(value);
+  }
+  template <typename ActiveMotionGraphicsUriT = Aws::String>
+  PipelineDetail& WithActiveMotionGraphicsUri(ActiveMotionGraphicsUriT&& value) {
+    SetActiveMotionGraphicsUri(std::forward<ActiveMotionGraphicsUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The name of the motion graphics activate action that occurred most recently and
-     * that resulted in the current graphics URI for this pipeline.
-     */
-    inline const Aws::String& GetActiveMotionGraphicsActionName() const{ return m_activeMotionGraphicsActionName; }
-    inline bool ActiveMotionGraphicsActionNameHasBeenSet() const { return m_activeMotionGraphicsActionNameHasBeenSet; }
-    inline void SetActiveMotionGraphicsActionName(const Aws::String& value) { m_activeMotionGraphicsActionNameHasBeenSet = true; m_activeMotionGraphicsActionName = value; }
-    inline void SetActiveMotionGraphicsActionName(Aws::String&& value) { m_activeMotionGraphicsActionNameHasBeenSet = true; m_activeMotionGraphicsActionName = std::move(value); }
-    inline void SetActiveMotionGraphicsActionName(const char* value) { m_activeMotionGraphicsActionNameHasBeenSet = true; m_activeMotionGraphicsActionName.assign(value); }
-    inline PipelineDetail& WithActiveMotionGraphicsActionName(const Aws::String& value) { SetActiveMotionGraphicsActionName(value); return *this;}
-    inline PipelineDetail& WithActiveMotionGraphicsActionName(Aws::String&& value) { SetActiveMotionGraphicsActionName(std::move(value)); return *this;}
-    inline PipelineDetail& WithActiveMotionGraphicsActionName(const char* value) { SetActiveMotionGraphicsActionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Pipeline ID
+   */
+  inline const Aws::String& GetPipelineId() const { return m_pipelineId; }
+  inline bool PipelineIdHasBeenSet() const { return m_pipelineIdHasBeenSet; }
+  template <typename PipelineIdT = Aws::String>
+  void SetPipelineId(PipelineIdT&& value) {
+    m_pipelineIdHasBeenSet = true;
+    m_pipelineId = std::forward<PipelineIdT>(value);
+  }
+  template <typename PipelineIdT = Aws::String>
+  PipelineDetail& WithPipelineId(PipelineIdT&& value) {
+    SetPipelineId(std::forward<PipelineIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * The current URI being used for HTML5 motion graphics for this pipeline.
-     */
-    inline const Aws::String& GetActiveMotionGraphicsUri() const{ return m_activeMotionGraphicsUri; }
-    inline bool ActiveMotionGraphicsUriHasBeenSet() const { return m_activeMotionGraphicsUriHasBeenSet; }
-    inline void SetActiveMotionGraphicsUri(const Aws::String& value) { m_activeMotionGraphicsUriHasBeenSet = true; m_activeMotionGraphicsUri = value; }
-    inline void SetActiveMotionGraphicsUri(Aws::String&& value) { m_activeMotionGraphicsUriHasBeenSet = true; m_activeMotionGraphicsUri = std::move(value); }
-    inline void SetActiveMotionGraphicsUri(const char* value) { m_activeMotionGraphicsUriHasBeenSet = true; m_activeMotionGraphicsUri.assign(value); }
-    inline PipelineDetail& WithActiveMotionGraphicsUri(const Aws::String& value) { SetActiveMotionGraphicsUri(value); return *this;}
-    inline PipelineDetail& WithActiveMotionGraphicsUri(Aws::String&& value) { SetActiveMotionGraphicsUri(std::move(value)); return *this;}
-    inline PipelineDetail& WithActiveMotionGraphicsUri(const char* value) { SetActiveMotionGraphicsUri(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * Current engine version of the encoder for this pipeline.
+   */
+  inline const ChannelEngineVersionResponse& GetChannelEngineVersion() const { return m_channelEngineVersion; }
+  inline bool ChannelEngineVersionHasBeenSet() const { return m_channelEngineVersionHasBeenSet; }
+  template <typename ChannelEngineVersionT = ChannelEngineVersionResponse>
+  void SetChannelEngineVersion(ChannelEngineVersionT&& value) {
+    m_channelEngineVersionHasBeenSet = true;
+    m_channelEngineVersion = std::forward<ChannelEngineVersionT>(value);
+  }
+  template <typename ChannelEngineVersionT = ChannelEngineVersionResponse>
+  PipelineDetail& WithChannelEngineVersion(ChannelEngineVersionT&& value) {
+    SetChannelEngineVersion(std::forward<ChannelEngineVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * Pipeline ID
-     */
-    inline const Aws::String& GetPipelineId() const{ return m_pipelineId; }
-    inline bool PipelineIdHasBeenSet() const { return m_pipelineIdHasBeenSet; }
-    inline void SetPipelineId(const Aws::String& value) { m_pipelineIdHasBeenSet = true; m_pipelineId = value; }
-    inline void SetPipelineId(Aws::String&& value) { m_pipelineIdHasBeenSet = true; m_pipelineId = std::move(value); }
-    inline void SetPipelineId(const char* value) { m_pipelineIdHasBeenSet = true; m_pipelineId.assign(value); }
-    inline PipelineDetail& WithPipelineId(const Aws::String& value) { SetPipelineId(value); return *this;}
-    inline PipelineDetail& WithPipelineId(Aws::String&& value) { SetPipelineId(std::move(value)); return *this;}
-    inline PipelineDetail& WithPipelineId(const char* value) { SetPipelineId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * A map of output names to the MediaConnect Router connection for this pipeline.
+   * Only present for channels with MediaConnect Router outputs.
+   */
+  inline const Aws::Map<Aws::String, MediaConnectRouterOutputConnection>& GetMediaConnectRouterOutputConnectionMap() const {
+    return m_mediaConnectRouterOutputConnectionMap;
+  }
+  inline bool MediaConnectRouterOutputConnectionMapHasBeenSet() const { return m_mediaConnectRouterOutputConnectionMapHasBeenSet; }
+  template <typename MediaConnectRouterOutputConnectionMapT = Aws::Map<Aws::String, MediaConnectRouterOutputConnection>>
+  void SetMediaConnectRouterOutputConnectionMap(MediaConnectRouterOutputConnectionMapT&& value) {
+    m_mediaConnectRouterOutputConnectionMapHasBeenSet = true;
+    m_mediaConnectRouterOutputConnectionMap = std::forward<MediaConnectRouterOutputConnectionMapT>(value);
+  }
+  template <typename MediaConnectRouterOutputConnectionMapT = Aws::Map<Aws::String, MediaConnectRouterOutputConnection>>
+  PipelineDetail& WithMediaConnectRouterOutputConnectionMap(MediaConnectRouterOutputConnectionMapT&& value) {
+    SetMediaConnectRouterOutputConnectionMap(std::forward<MediaConnectRouterOutputConnectionMapT>(value));
+    return *this;
+  }
+  template <typename MediaConnectRouterOutputConnectionMapKeyT = Aws::String,
+            typename MediaConnectRouterOutputConnectionMapValueT = MediaConnectRouterOutputConnection>
+  PipelineDetail& AddMediaConnectRouterOutputConnectionMap(MediaConnectRouterOutputConnectionMapKeyT&& key,
+                                                           MediaConnectRouterOutputConnectionMapValueT&& value) {
+    m_mediaConnectRouterOutputConnectionMapHasBeenSet = true;
+    m_mediaConnectRouterOutputConnectionMap.emplace(std::forward<MediaConnectRouterOutputConnectionMapKeyT>(key),
+                                                    std::forward<MediaConnectRouterOutputConnectionMapValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_activeInputAttachmentName;
 
-    Aws::String m_activeInputAttachmentName;
-    bool m_activeInputAttachmentNameHasBeenSet = false;
+  Aws::String m_activeInputSwitchActionName;
 
-    Aws::String m_activeInputSwitchActionName;
-    bool m_activeInputSwitchActionNameHasBeenSet = false;
+  Aws::String m_activeMotionGraphicsActionName;
 
-    Aws::String m_activeMotionGraphicsActionName;
-    bool m_activeMotionGraphicsActionNameHasBeenSet = false;
+  Aws::String m_activeMotionGraphicsUri;
 
-    Aws::String m_activeMotionGraphicsUri;
-    bool m_activeMotionGraphicsUriHasBeenSet = false;
+  Aws::String m_pipelineId;
 
-    Aws::String m_pipelineId;
-    bool m_pipelineIdHasBeenSet = false;
-  };
+  ChannelEngineVersionResponse m_channelEngineVersion;
 
-} // namespace Model
-} // namespace MediaLive
-} // namespace Aws
+  Aws::Map<Aws::String, MediaConnectRouterOutputConnection> m_mediaConnectRouterOutputConnectionMap;
+  bool m_activeInputAttachmentNameHasBeenSet = false;
+  bool m_activeInputSwitchActionNameHasBeenSet = false;
+  bool m_activeMotionGraphicsActionNameHasBeenSet = false;
+  bool m_activeMotionGraphicsUriHasBeenSet = false;
+  bool m_pipelineIdHasBeenSet = false;
+  bool m_channelEngineVersionHasBeenSet = false;
+  bool m_mediaConnectRouterOutputConnectionMapHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace MediaLive
+}  // namespace Aws

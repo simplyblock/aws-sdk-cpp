@@ -12,17 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetAuthorizerRequest::GetAuthorizerRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_authorizerIdHasBeenSet(false)
-{
-}
-
-Aws::String GetAuthorizerRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetAuthorizerRequest::SerializePayload() const { return {}; }

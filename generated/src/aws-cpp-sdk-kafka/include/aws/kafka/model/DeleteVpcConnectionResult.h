@@ -4,83 +4,95 @@
  */
 
 #pragma once
-#include <aws/kafka/Kafka_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kafka/Kafka_EXPORTS.h>
 #include <aws/kafka/model/VpcConnectionState.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Kafka
-{
-namespace Model
-{
-  class DeleteVpcConnectionResult
-  {
-  public:
-    AWS_KAFKA_API DeleteVpcConnectionResult();
-    AWS_KAFKA_API DeleteVpcConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_KAFKA_API DeleteVpcConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Kafka {
+namespace Model {
+class DeleteVpcConnectionResult {
+ public:
+  AWS_KAFKA_API DeleteVpcConnectionResult() = default;
+  AWS_KAFKA_API DeleteVpcConnectionResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_KAFKA_API DeleteVpcConnectionResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   *
+          <p>The Amazon Resource Name (ARN) that uniquely identifies an MSK
+   * VPC connection.</p>
 
-    ///@{
-    /**
-     * 
-            <p>The Amazon Resource Name (ARN) that uniquely identifies an MSK
-     * VPC connection.</p>
-         
-     */
-    inline const Aws::String& GetVpcConnectionArn() const{ return m_vpcConnectionArn; }
-    inline void SetVpcConnectionArn(const Aws::String& value) { m_vpcConnectionArn = value; }
-    inline void SetVpcConnectionArn(Aws::String&& value) { m_vpcConnectionArn = std::move(value); }
-    inline void SetVpcConnectionArn(const char* value) { m_vpcConnectionArn.assign(value); }
-    inline DeleteVpcConnectionResult& WithVpcConnectionArn(const Aws::String& value) { SetVpcConnectionArn(value); return *this;}
-    inline DeleteVpcConnectionResult& WithVpcConnectionArn(Aws::String&& value) { SetVpcConnectionArn(std::move(value)); return *this;}
-    inline DeleteVpcConnectionResult& WithVpcConnectionArn(const char* value) { SetVpcConnectionArn(value); return *this;}
-    ///@}
+   */
+  inline const Aws::String& GetVpcConnectionArn() const { return m_vpcConnectionArn; }
+  template <typename VpcConnectionArnT = Aws::String>
+  void SetVpcConnectionArn(VpcConnectionArnT&& value) {
+    m_vpcConnectionArnHasBeenSet = true;
+    m_vpcConnectionArn = std::forward<VpcConnectionArnT>(value);
+  }
+  template <typename VpcConnectionArnT = Aws::String>
+  DeleteVpcConnectionResult& WithVpcConnectionArn(VpcConnectionArnT&& value) {
+    SetVpcConnectionArn(std::forward<VpcConnectionArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * 
-            <p>The state of the VPC connection.</p>
-         
-     */
-    inline const VpcConnectionState& GetState() const{ return m_state; }
-    inline void SetState(const VpcConnectionState& value) { m_state = value; }
-    inline void SetState(VpcConnectionState&& value) { m_state = std::move(value); }
-    inline DeleteVpcConnectionResult& WithState(const VpcConnectionState& value) { SetState(value); return *this;}
-    inline DeleteVpcConnectionResult& WithState(VpcConnectionState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   *
+          <p>The state of the VPC connection.</p>
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteVpcConnectionResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteVpcConnectionResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteVpcConnectionResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+   */
+  inline VpcConnectionState GetState() const { return m_state; }
+  inline void SetState(VpcConnectionState value) {
+    m_stateHasBeenSet = true;
+    m_state = value;
+  }
+  inline DeleteVpcConnectionResult& WithState(VpcConnectionState value) {
+    SetState(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_vpcConnectionArn;
+  ///@{
 
-    VpcConnectionState m_state;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteVpcConnectionResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  Aws::String m_vpcConnectionArn;
 
-} // namespace Model
-} // namespace Kafka
-} // namespace Aws
+  VpcConnectionState m_state{VpcConnectionState::NOT_SET};
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_vpcConnectionArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Kafka
+}  // namespace Aws

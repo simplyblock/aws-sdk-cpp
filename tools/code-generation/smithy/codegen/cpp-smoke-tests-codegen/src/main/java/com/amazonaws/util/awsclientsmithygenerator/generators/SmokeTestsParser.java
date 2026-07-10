@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.Comparator;
 
 import software.amazon.smithy.build.PluginContext;
 import software.amazon.smithy.aws.smoketests.model.AwsSmokeTestModel;
@@ -114,7 +115,7 @@ public class SmokeTestsParser implements Runnable{
 
     private String getServiceName(ServiceShape serviceShape)
     {   
-        if(serviceShape.getTrait(ServiceTrait.class).isEmpty())
+        if(!serviceShape.getTrait(ServiceTrait.class).isPresent())
         {
             throw new RuntimeException(String.format("No service trait detected in service shape with name=%s",serviceShape.getId().getName()));
         }
@@ -234,16 +235,16 @@ public class SmokeTestsParser implements Runnable{
             }
 
             //get configuration properties
-            if(AwsSmokeTestModel.hasAwsVendorParams(testcase))
-            {
+            if(AwsSmokeTestModel.hasAwsVendorParams(testcase)) {
                 ClientConfiguration config = new ClientConfiguration(AwsSmokeTestModel.getAwsVendorParams(testcase).get());
                 test.setConfig(config);
-            }
-            else if (serviceShape.getId().getName().equalsIgnoreCase("s3") && 
-                AwsSmokeTestModel.hasS3VendorParams(testcase))
-            {
+            } else if (serviceShape.getId().getName().equalsIgnoreCase("s3") && AwsSmokeTestModel.hasS3VendorParams(testcase)) {
                 ClientConfiguration config = new ClientConfiguration(AwsSmokeTestModel.getS3VendorParams(testcase).get());
                 test.setConfig(config);               
+            } else {
+                throw testcase.getVendorParamsShape()
+                        .map(shapeId -> new RuntimeException(String.format("Unsupported vendor shape %s, must be aws.test#AwsVendorParams or aws.test#S3VendorParams", shapeId.getName())))
+                        .orElseThrow(() -> new RuntimeException("No Vendor parameter shape found, must be aws.test#AwsVendorParams or aws.test#S3VendorParams"));
             }
             test.setTestcaseName(testcase.getId());
 
@@ -280,6 +281,7 @@ public class SmokeTestsParser implements Runnable{
         filter(operationShape -> operationShape.getInput().isPresent()).
         filter(operationShape -> operationShape.getTrait(SmokeTestsTrait.class).isPresent() ).
         filter(operationShape ->  operationToServiceMap.containsKey(operationShape.getId()) ).
+        sorted(Comparator.comparing(OperationShape::getId)).
         forEach(operationShape -> {
             SmokeTestsTrait smokeTestsTrait = operationShape.getTrait(SmokeTestsTrait.class).get();
             //get serviceShape

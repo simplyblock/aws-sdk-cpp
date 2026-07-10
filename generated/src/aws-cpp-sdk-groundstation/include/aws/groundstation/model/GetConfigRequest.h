@@ -4,72 +4,76 @@
  */
 
 #pragma once
-#include <aws/groundstation/GroundStation_EXPORTS.h>
-#include <aws/groundstation/GroundStationRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/groundstation/GroundStationRequest.h>
+#include <aws/groundstation/GroundStation_EXPORTS.h>
 #include <aws/groundstation/model/ConfigCapabilityType.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GroundStation
-{
-namespace Model
-{
+namespace Aws {
+namespace GroundStation {
+namespace Model {
 
+/**
+ * <p>Input for the <code>GetConfig</code> operation. </p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/GetConfigRequest">AWS
+ * API Reference</a></p>
+ */
+class GetConfigRequest : public GroundStationRequest {
+ public:
+  AWS_GROUNDSTATION_API GetConfigRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "GetConfig"; }
+
+  AWS_GROUNDSTATION_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/GetConfigRequest">AWS
-   * API Reference</a></p>
+   * <p>UUID of a <code>Config</code>.</p>
    */
-  class GetConfigRequest : public GroundStationRequest
-  {
-  public:
-    AWS_GROUNDSTATION_API GetConfigRequest();
+  inline const Aws::String& GetConfigId() const { return m_configId; }
+  inline bool ConfigIdHasBeenSet() const { return m_configIdHasBeenSet; }
+  template <typename ConfigIdT = Aws::String>
+  void SetConfigId(ConfigIdT&& value) {
+    m_configIdHasBeenSet = true;
+    m_configId = std::forward<ConfigIdT>(value);
+  }
+  template <typename ConfigIdT = Aws::String>
+  GetConfigRequest& WithConfigId(ConfigIdT&& value) {
+    SetConfigId(std::forward<ConfigIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "GetConfig"; }
+  ///@{
+  /**
+   * <p>Type of a <code>Config</code>.</p>
+   */
+  inline ConfigCapabilityType GetConfigType() const { return m_configType; }
+  inline bool ConfigTypeHasBeenSet() const { return m_configTypeHasBeenSet; }
+  inline void SetConfigType(ConfigCapabilityType value) {
+    m_configTypeHasBeenSet = true;
+    m_configType = value;
+  }
+  inline GetConfigRequest& WithConfigType(ConfigCapabilityType value) {
+    SetConfigType(value);
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_configId;
 
-    AWS_GROUNDSTATION_API Aws::String SerializePayload() const override;
+  ConfigCapabilityType m_configType{ConfigCapabilityType::NOT_SET};
+  bool m_configIdHasBeenSet = false;
+  bool m_configTypeHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>UUID of a <code>Config</code>.</p>
-     */
-    inline const Aws::String& GetConfigId() const{ return m_configId; }
-    inline bool ConfigIdHasBeenSet() const { return m_configIdHasBeenSet; }
-    inline void SetConfigId(const Aws::String& value) { m_configIdHasBeenSet = true; m_configId = value; }
-    inline void SetConfigId(Aws::String&& value) { m_configIdHasBeenSet = true; m_configId = std::move(value); }
-    inline void SetConfigId(const char* value) { m_configIdHasBeenSet = true; m_configId.assign(value); }
-    inline GetConfigRequest& WithConfigId(const Aws::String& value) { SetConfigId(value); return *this;}
-    inline GetConfigRequest& WithConfigId(Aws::String&& value) { SetConfigId(std::move(value)); return *this;}
-    inline GetConfigRequest& WithConfigId(const char* value) { SetConfigId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Type of a <code>Config</code>.</p>
-     */
-    inline const ConfigCapabilityType& GetConfigType() const{ return m_configType; }
-    inline bool ConfigTypeHasBeenSet() const { return m_configTypeHasBeenSet; }
-    inline void SetConfigType(const ConfigCapabilityType& value) { m_configTypeHasBeenSet = true; m_configType = value; }
-    inline void SetConfigType(ConfigCapabilityType&& value) { m_configTypeHasBeenSet = true; m_configType = std::move(value); }
-    inline GetConfigRequest& WithConfigType(const ConfigCapabilityType& value) { SetConfigType(value); return *this;}
-    inline GetConfigRequest& WithConfigType(ConfigCapabilityType&& value) { SetConfigType(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_configId;
-    bool m_configIdHasBeenSet = false;
-
-    ConfigCapabilityType m_configType;
-    bool m_configTypeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

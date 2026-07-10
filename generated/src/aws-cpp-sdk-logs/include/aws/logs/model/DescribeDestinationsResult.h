@@ -4,79 +4,97 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
 #include <aws/logs/model/Destination.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class DescribeDestinationsResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult();
-    AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class DescribeDestinationsResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult() = default;
+  AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API DescribeDestinationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The destinations.</p>
+   */
+  inline const Aws::Vector<Destination>& GetDestinations() const { return m_destinations; }
+  template <typename DestinationsT = Aws::Vector<Destination>>
+  void SetDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations = std::forward<DestinationsT>(value);
+  }
+  template <typename DestinationsT = Aws::Vector<Destination>>
+  DescribeDestinationsResult& WithDestinations(DestinationsT&& value) {
+    SetDestinations(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  template <typename DestinationsT = Destination>
+  DescribeDestinationsResult& AddDestinations(DestinationsT&& value) {
+    m_destinationsHasBeenSet = true;
+    m_destinations.emplace_back(std::forward<DestinationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The destinations.</p>
-     */
-    inline const Aws::Vector<Destination>& GetDestinations() const{ return m_destinations; }
-    inline void SetDestinations(const Aws::Vector<Destination>& value) { m_destinations = value; }
-    inline void SetDestinations(Aws::Vector<Destination>&& value) { m_destinations = std::move(value); }
-    inline DescribeDestinationsResult& WithDestinations(const Aws::Vector<Destination>& value) { SetDestinations(value); return *this;}
-    inline DescribeDestinationsResult& WithDestinations(Aws::Vector<Destination>&& value) { SetDestinations(std::move(value)); return *this;}
-    inline DescribeDestinationsResult& AddDestinations(const Destination& value) { m_destinations.push_back(value); return *this; }
-    inline DescribeDestinationsResult& AddDestinations(Destination&& value) { m_destinations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeDestinationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeDestinationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeDestinationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeDestinationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeDestinationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeDestinationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeDestinationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::Vector<Destination> m_destinations;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeDestinationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::Vector<Destination> m_destinations;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_nextToken;
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_destinationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

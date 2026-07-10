@@ -4,92 +4,102 @@
  */
 
 #pragma once
-#include <aws/s3control/S3Control_EXPORTS.h>
-#include <aws/s3control/S3ControlRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/s3control/S3ControlRequest.h>
+#include <aws/s3control/S3Control_EXPORTS.h>
 #include <aws/s3control/model/StorageLensGroup.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace S3Control
-{
-namespace Model
-{
+namespace Aws {
+namespace S3Control {
+namespace Model {
+
+/**
+ */
+class UpdateStorageLensGroupRequest : public S3ControlRequest {
+ public:
+  AWS_S3CONTROL_API UpdateStorageLensGroupRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateStorageLensGroup"; }
+
+  AWS_S3CONTROL_API Aws::String SerializePayload() const override;
+
+  AWS_S3CONTROL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
   /**
+   * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
    */
-  class UpdateStorageLensGroupRequest : public S3ControlRequest
-  {
-  public:
-    AWS_S3CONTROL_API UpdateStorageLensGroupRequest();
+  AWS_S3CONTROL_API EndpointParameters GetEndpointContextParams() const override;
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateStorageLensGroup"; }
+  ///@{
+  /**
+   * <p> The name of the Storage Lens group that you want to update. </p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  UpdateStorageLensGroupRequest& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_S3CONTROL_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p> The Amazon Web Services account ID of the Storage Lens group owner. </p>
+   */
+  inline const Aws::String& GetAccountId() const { return m_accountId; }
+  inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
+  template <typename AccountIdT = Aws::String>
+  void SetAccountId(AccountIdT&& value) {
+    m_accountIdHasBeenSet = true;
+    m_accountId = std::forward<AccountIdT>(value);
+  }
+  template <typename AccountIdT = Aws::String>
+  UpdateStorageLensGroupRequest& WithAccountId(AccountIdT&& value) {
+    SetAccountId(std::forward<AccountIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_S3CONTROL_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p> The JSON file that contains the Storage Lens group configuration. </p>
+   */
+  inline const StorageLensGroup& GetStorageLensGroup() const { return m_storageLensGroup; }
+  inline bool StorageLensGroupHasBeenSet() const { return m_storageLensGroupHasBeenSet; }
+  template <typename StorageLensGroupT = StorageLensGroup>
+  void SetStorageLensGroup(StorageLensGroupT&& value) {
+    m_storageLensGroupHasBeenSet = true;
+    m_storageLensGroup = std::forward<StorageLensGroupT>(value);
+  }
+  template <typename StorageLensGroupT = StorageLensGroup>
+  UpdateStorageLensGroupRequest& WithStorageLensGroup(StorageLensGroupT&& value) {
+    SetStorageLensGroup(std::forward<StorageLensGroupT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_name;
 
-    /**
-     * Helper function to collect parameters (configurable and static hardcoded) required for endpoint computation.
-     */
-    AWS_S3CONTROL_API EndpointParameters GetEndpointContextParams() const override;
+  Aws::String m_accountId;
 
-    ///@{
-    /**
-     * <p> The name of the Storage Lens group that you want to update. </p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline bool NameHasBeenSet() const { return m_nameHasBeenSet; }
-    inline void SetName(const Aws::String& value) { m_nameHasBeenSet = true; m_name = value; }
-    inline void SetName(Aws::String&& value) { m_nameHasBeenSet = true; m_name = std::move(value); }
-    inline void SetName(const char* value) { m_nameHasBeenSet = true; m_name.assign(value); }
-    inline UpdateStorageLensGroupRequest& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline UpdateStorageLensGroupRequest& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline UpdateStorageLensGroupRequest& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  StorageLensGroup m_storageLensGroup;
+  bool m_nameHasBeenSet = false;
+  bool m_accountIdHasBeenSet = false;
+  bool m_storageLensGroupHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> The Amazon Web Services account ID of the Storage Lens group owner. </p>
-     */
-    inline const Aws::String& GetAccountId() const{ return m_accountId; }
-    inline bool AccountIdHasBeenSet() const { return m_accountIdHasBeenSet; }
-    inline void SetAccountId(const Aws::String& value) { m_accountIdHasBeenSet = true; m_accountId = value; }
-    inline void SetAccountId(Aws::String&& value) { m_accountIdHasBeenSet = true; m_accountId = std::move(value); }
-    inline void SetAccountId(const char* value) { m_accountIdHasBeenSet = true; m_accountId.assign(value); }
-    inline UpdateStorageLensGroupRequest& WithAccountId(const Aws::String& value) { SetAccountId(value); return *this;}
-    inline UpdateStorageLensGroupRequest& WithAccountId(Aws::String&& value) { SetAccountId(std::move(value)); return *this;}
-    inline UpdateStorageLensGroupRequest& WithAccountId(const char* value) { SetAccountId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p> The JSON file that contains the Storage Lens group configuration. </p>
-     */
-    inline const StorageLensGroup& GetStorageLensGroup() const{ return m_storageLensGroup; }
-    inline bool StorageLensGroupHasBeenSet() const { return m_storageLensGroupHasBeenSet; }
-    inline void SetStorageLensGroup(const StorageLensGroup& value) { m_storageLensGroupHasBeenSet = true; m_storageLensGroup = value; }
-    inline void SetStorageLensGroup(StorageLensGroup&& value) { m_storageLensGroupHasBeenSet = true; m_storageLensGroup = std::move(value); }
-    inline UpdateStorageLensGroupRequest& WithStorageLensGroup(const StorageLensGroup& value) { SetStorageLensGroup(value); return *this;}
-    inline UpdateStorageLensGroupRequest& WithStorageLensGroup(StorageLensGroup&& value) { SetStorageLensGroup(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_name;
-    bool m_nameHasBeenSet = false;
-
-    Aws::String m_accountId;
-    bool m_accountIdHasBeenSet = false;
-
-    StorageLensGroup m_storageLensGroup;
-    bool m_storageLensGroupHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace S3Control
-} // namespace Aws
+}  // namespace Model
+}  // namespace S3Control
+}  // namespace Aws

@@ -4,132 +4,195 @@
  */
 
 #pragma once
-#include <aws/lambda/Lambda_EXPORTS.h>
 #include <aws/core/utils/Array.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/lambda/Lambda_EXPORTS.h>
+#include <aws/lambda/model/S3ObjectStorageMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Lambda
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Lambda {
+namespace Model {
 
+/**
+ * <p>The code for the Lambda function. You can either specify an object in Amazon
+ * S3, upload a .zip file archive deployment package directly, or specify the URI
+ * of a container image.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/FunctionCode">AWS
+ * API Reference</a></p>
+ */
+class FunctionCode {
+ public:
+  AWS_LAMBDA_API FunctionCode() = default;
+  AWS_LAMBDA_API FunctionCode(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API FunctionCode& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_LAMBDA_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The code for the Lambda function. You can either specify an object in Amazon
-   * S3, upload a .zip file archive deployment package directly, or specify the URI
-   * of a container image.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/FunctionCode">AWS
-   * API Reference</a></p>
+   * <p>The base64-encoded contents of the deployment package. Amazon Web Services
+   * SDK and CLI clients handle the encoding for you.</p>
    */
-  class FunctionCode
-  {
-  public:
-    AWS_LAMBDA_API FunctionCode();
-    AWS_LAMBDA_API FunctionCode(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAMBDA_API FunctionCode& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_LAMBDA_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Utils::CryptoBuffer& GetZipFile() const { return m_zipFile; }
+  inline bool ZipFileHasBeenSet() const { return m_zipFileHasBeenSet; }
+  template <typename ZipFileT = Aws::Utils::CryptoBuffer>
+  void SetZipFile(ZipFileT&& value) {
+    m_zipFileHasBeenSet = true;
+    m_zipFile = std::forward<ZipFileT>(value);
+  }
+  template <typename ZipFileT = Aws::Utils::CryptoBuffer>
+  FunctionCode& WithZipFile(ZipFileT&& value) {
+    SetZipFile(std::forward<ZipFileT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>An Amazon S3 bucket in the same Amazon Web Services Region as your function.
+   * The bucket can be in a different Amazon Web Services account.</p>
+   */
+  inline const Aws::String& GetS3Bucket() const { return m_s3Bucket; }
+  inline bool S3BucketHasBeenSet() const { return m_s3BucketHasBeenSet; }
+  template <typename S3BucketT = Aws::String>
+  void SetS3Bucket(S3BucketT&& value) {
+    m_s3BucketHasBeenSet = true;
+    m_s3Bucket = std::forward<S3BucketT>(value);
+  }
+  template <typename S3BucketT = Aws::String>
+  FunctionCode& WithS3Bucket(S3BucketT&& value) {
+    SetS3Bucket(std::forward<S3BucketT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The base64-encoded contents of the deployment package. Amazon Web Services
-     * SDK and CLI clients handle the encoding for you.</p>
-     */
-    inline const Aws::Utils::CryptoBuffer& GetZipFile() const{ return m_zipFile; }
-    inline bool ZipFileHasBeenSet() const { return m_zipFileHasBeenSet; }
-    inline void SetZipFile(const Aws::Utils::CryptoBuffer& value) { m_zipFileHasBeenSet = true; m_zipFile = value; }
-    inline void SetZipFile(Aws::Utils::CryptoBuffer&& value) { m_zipFileHasBeenSet = true; m_zipFile = std::move(value); }
-    inline FunctionCode& WithZipFile(const Aws::Utils::CryptoBuffer& value) { SetZipFile(value); return *this;}
-    inline FunctionCode& WithZipFile(Aws::Utils::CryptoBuffer&& value) { SetZipFile(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon S3 key of the deployment package.</p>
+   */
+  inline const Aws::String& GetS3Key() const { return m_s3Key; }
+  inline bool S3KeyHasBeenSet() const { return m_s3KeyHasBeenSet; }
+  template <typename S3KeyT = Aws::String>
+  void SetS3Key(S3KeyT&& value) {
+    m_s3KeyHasBeenSet = true;
+    m_s3Key = std::forward<S3KeyT>(value);
+  }
+  template <typename S3KeyT = Aws::String>
+  FunctionCode& WithS3Key(S3KeyT&& value) {
+    SetS3Key(std::forward<S3KeyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An Amazon S3 bucket in the same Amazon Web Services Region as your function.
-     * The bucket can be in a different Amazon Web Services account.</p>
-     */
-    inline const Aws::String& GetS3Bucket() const{ return m_s3Bucket; }
-    inline bool S3BucketHasBeenSet() const { return m_s3BucketHasBeenSet; }
-    inline void SetS3Bucket(const Aws::String& value) { m_s3BucketHasBeenSet = true; m_s3Bucket = value; }
-    inline void SetS3Bucket(Aws::String&& value) { m_s3BucketHasBeenSet = true; m_s3Bucket = std::move(value); }
-    inline void SetS3Bucket(const char* value) { m_s3BucketHasBeenSet = true; m_s3Bucket.assign(value); }
-    inline FunctionCode& WithS3Bucket(const Aws::String& value) { SetS3Bucket(value); return *this;}
-    inline FunctionCode& WithS3Bucket(Aws::String&& value) { SetS3Bucket(std::move(value)); return *this;}
-    inline FunctionCode& WithS3Bucket(const char* value) { SetS3Bucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>For versioned objects, the version of the deployment package object to
+   * use.</p>
+   */
+  inline const Aws::String& GetS3ObjectVersion() const { return m_s3ObjectVersion; }
+  inline bool S3ObjectVersionHasBeenSet() const { return m_s3ObjectVersionHasBeenSet; }
+  template <typename S3ObjectVersionT = Aws::String>
+  void SetS3ObjectVersion(S3ObjectVersionT&& value) {
+    m_s3ObjectVersionHasBeenSet = true;
+    m_s3ObjectVersion = std::forward<S3ObjectVersionT>(value);
+  }
+  template <typename S3ObjectVersionT = Aws::String>
+  FunctionCode& WithS3ObjectVersion(S3ObjectVersionT&& value) {
+    SetS3ObjectVersion(std::forward<S3ObjectVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon S3 key of the deployment package.</p>
-     */
-    inline const Aws::String& GetS3Key() const{ return m_s3Key; }
-    inline bool S3KeyHasBeenSet() const { return m_s3KeyHasBeenSet; }
-    inline void SetS3Key(const Aws::String& value) { m_s3KeyHasBeenSet = true; m_s3Key = value; }
-    inline void SetS3Key(Aws::String&& value) { m_s3KeyHasBeenSet = true; m_s3Key = std::move(value); }
-    inline void SetS3Key(const char* value) { m_s3KeyHasBeenSet = true; m_s3Key.assign(value); }
-    inline FunctionCode& WithS3Key(const Aws::String& value) { SetS3Key(value); return *this;}
-    inline FunctionCode& WithS3Key(Aws::String&& value) { SetS3Key(std::move(value)); return *this;}
-    inline FunctionCode& WithS3Key(const char* value) { SetS3Key(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies how the deployment package is stored. Use <code>COPY</code>
+   * (default) to upload a copy of your deployment package to Lambda. Use
+   * <code>REFERENCE</code> to have Lambda reference the deployment package from the
+   * specified Amazon S3 bucket.</p>
+   */
+  inline S3ObjectStorageMode GetS3ObjectStorageMode() const { return m_s3ObjectStorageMode; }
+  inline bool S3ObjectStorageModeHasBeenSet() const { return m_s3ObjectStorageModeHasBeenSet; }
+  inline void SetS3ObjectStorageMode(S3ObjectStorageMode value) {
+    m_s3ObjectStorageModeHasBeenSet = true;
+    m_s3ObjectStorageMode = value;
+  }
+  inline FunctionCode& WithS3ObjectStorageMode(S3ObjectStorageMode value) {
+    SetS3ObjectStorageMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>For versioned objects, the version of the deployment package object to
-     * use.</p>
-     */
-    inline const Aws::String& GetS3ObjectVersion() const{ return m_s3ObjectVersion; }
-    inline bool S3ObjectVersionHasBeenSet() const { return m_s3ObjectVersionHasBeenSet; }
-    inline void SetS3ObjectVersion(const Aws::String& value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion = value; }
-    inline void SetS3ObjectVersion(Aws::String&& value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion = std::move(value); }
-    inline void SetS3ObjectVersion(const char* value) { m_s3ObjectVersionHasBeenSet = true; m_s3ObjectVersion.assign(value); }
-    inline FunctionCode& WithS3ObjectVersion(const Aws::String& value) { SetS3ObjectVersion(value); return *this;}
-    inline FunctionCode& WithS3ObjectVersion(Aws::String&& value) { SetS3ObjectVersion(std::move(value)); return *this;}
-    inline FunctionCode& WithS3ObjectVersion(const char* value) { SetS3ObjectVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>URI of a <a
+   * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html">container
+   * image</a> in the Amazon ECR registry.</p>
+   */
+  inline const Aws::String& GetImageUri() const { return m_imageUri; }
+  inline bool ImageUriHasBeenSet() const { return m_imageUriHasBeenSet; }
+  template <typename ImageUriT = Aws::String>
+  void SetImageUri(ImageUriT&& value) {
+    m_imageUriHasBeenSet = true;
+    m_imageUri = std::forward<ImageUriT>(value);
+  }
+  template <typename ImageUriT = Aws::String>
+  FunctionCode& WithImageUri(ImageUriT&& value) {
+    SetImageUri(std::forward<ImageUriT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>URI of a <a
-     * href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-images.html">container
-     * image</a> in the Amazon ECR registry.</p>
-     */
-    inline const Aws::String& GetImageUri() const{ return m_imageUri; }
-    inline bool ImageUriHasBeenSet() const { return m_imageUriHasBeenSet; }
-    inline void SetImageUri(const Aws::String& value) { m_imageUriHasBeenSet = true; m_imageUri = value; }
-    inline void SetImageUri(Aws::String&& value) { m_imageUriHasBeenSet = true; m_imageUri = std::move(value); }
-    inline void SetImageUri(const char* value) { m_imageUriHasBeenSet = true; m_imageUri.assign(value); }
-    inline FunctionCode& WithImageUri(const Aws::String& value) { SetImageUri(value); return *this;}
-    inline FunctionCode& WithImageUri(Aws::String&& value) { SetImageUri(std::move(value)); return *this;}
-    inline FunctionCode& WithImageUri(const char* value) { SetImageUri(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The ARN of the Key Management Service (KMS) customer managed key that's used
+   * to encrypt your function's .zip deployment package. If you don't provide a
+   * customer managed key, Lambda uses an <a
+   * href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk">Amazon
+   * Web Services owned key</a>.</p>
+   */
+  inline const Aws::String& GetSourceKMSKeyArn() const { return m_sourceKMSKeyArn; }
+  inline bool SourceKMSKeyArnHasBeenSet() const { return m_sourceKMSKeyArnHasBeenSet; }
+  template <typename SourceKMSKeyArnT = Aws::String>
+  void SetSourceKMSKeyArn(SourceKMSKeyArnT&& value) {
+    m_sourceKMSKeyArnHasBeenSet = true;
+    m_sourceKMSKeyArn = std::forward<SourceKMSKeyArnT>(value);
+  }
+  template <typename SourceKMSKeyArnT = Aws::String>
+  FunctionCode& WithSourceKMSKeyArn(SourceKMSKeyArnT&& value) {
+    SetSourceKMSKeyArn(std::forward<SourceKMSKeyArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Utils::CryptoBuffer m_zipFile{};
 
-    Aws::Utils::CryptoBuffer m_zipFile;
-    bool m_zipFileHasBeenSet = false;
+  Aws::String m_s3Bucket;
 
-    Aws::String m_s3Bucket;
-    bool m_s3BucketHasBeenSet = false;
+  Aws::String m_s3Key;
 
-    Aws::String m_s3Key;
-    bool m_s3KeyHasBeenSet = false;
+  Aws::String m_s3ObjectVersion;
 
-    Aws::String m_s3ObjectVersion;
-    bool m_s3ObjectVersionHasBeenSet = false;
+  S3ObjectStorageMode m_s3ObjectStorageMode{S3ObjectStorageMode::NOT_SET};
 
-    Aws::String m_imageUri;
-    bool m_imageUriHasBeenSet = false;
-  };
+  Aws::String m_imageUri;
 
-} // namespace Model
-} // namespace Lambda
-} // namespace Aws
+  Aws::String m_sourceKMSKeyArn;
+  bool m_zipFileHasBeenSet = false;
+  bool m_s3BucketHasBeenSet = false;
+  bool m_s3KeyHasBeenSet = false;
+  bool m_s3ObjectVersionHasBeenSet = false;
+  bool m_s3ObjectStorageModeHasBeenSet = false;
+  bool m_imageUriHasBeenSet = false;
+  bool m_sourceKMSKeyArnHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Lambda
+}  // namespace Aws

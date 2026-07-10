@@ -3,157 +3,110 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/opensearchserverless/model/UpdateCollectionDetail.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/opensearchserverless/model/UpdateCollectionDetail.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace OpenSearchServerless
-{
-namespace Model
-{
+namespace Aws {
+namespace OpenSearchServerless {
+namespace Model {
 
-UpdateCollectionDetail::UpdateCollectionDetail() : 
-    m_arnHasBeenSet(false),
-    m_createdDate(0),
-    m_createdDateHasBeenSet(false),
-    m_descriptionHasBeenSet(false),
-    m_idHasBeenSet(false),
-    m_lastModifiedDate(0),
-    m_lastModifiedDateHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_status(CollectionStatus::NOT_SET),
-    m_statusHasBeenSet(false),
-    m_type(CollectionType::NOT_SET),
-    m_typeHasBeenSet(false)
-{
-}
+UpdateCollectionDetail::UpdateCollectionDetail(JsonView jsonValue) { *this = jsonValue; }
 
-UpdateCollectionDetail::UpdateCollectionDetail(JsonView jsonValue)
-  : UpdateCollectionDetail()
-{
-  *this = jsonValue;
-}
-
-UpdateCollectionDetail& UpdateCollectionDetail::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("arn"))
-  {
-    m_arn = jsonValue.GetString("arn");
-
-    m_arnHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("createdDate"))
-  {
-    m_createdDate = jsonValue.GetInt64("createdDate");
-
-    m_createdDateHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("description"))
-  {
-    m_description = jsonValue.GetString("description");
-
-    m_descriptionHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("id"))
-  {
+UpdateCollectionDetail& UpdateCollectionDetail::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("id")) {
     m_id = jsonValue.GetString("id");
-
     m_idHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("lastModifiedDate"))
-  {
-    m_lastModifiedDate = jsonValue.GetInt64("lastModifiedDate");
-
-    m_lastModifiedDateHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("name"))
-  {
+  if (jsonValue.ValueExists("name")) {
     m_name = jsonValue.GetString("name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("status"))
-  {
+  if (jsonValue.ValueExists("status")) {
     m_status = CollectionStatusMapper::GetCollectionStatusForName(jsonValue.GetString("status"));
-
     m_statusHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("type"))
-  {
+  if (jsonValue.ValueExists("type")) {
     m_type = CollectionTypeMapper::GetCollectionTypeForName(jsonValue.GetString("type"));
-
     m_typeHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("description")) {
+    m_description = jsonValue.GetString("description");
+    m_descriptionHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("vectorOptions")) {
+    m_vectorOptions = jsonValue.GetObject("vectorOptions");
+    m_vectorOptionsHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("arn")) {
+    m_arn = jsonValue.GetString("arn");
+    m_arnHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("createdDate")) {
+    m_createdDate = jsonValue.GetInt64("createdDate");
+    m_createdDateHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("lastModifiedDate")) {
+    m_lastModifiedDate = jsonValue.GetInt64("lastModifiedDate");
+    m_lastModifiedDateHasBeenSet = true;
+  }
+  if (jsonValue.ValueExists("deletionProtection")) {
+    m_deletionProtection = DeletionProtectionMapper::GetDeletionProtectionForName(jsonValue.GetString("deletionProtection"));
+    m_deletionProtectionHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue UpdateCollectionDetail::Jsonize() const
-{
+JsonValue UpdateCollectionDetail::Jsonize() const {
   JsonValue payload;
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("arn", m_arn);
-
+  if (m_idHasBeenSet) {
+    payload.WithString("id", m_id);
   }
 
-  if(m_createdDateHasBeenSet)
-  {
-   payload.WithInt64("createdDate", m_createdDate);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_descriptionHasBeenSet)
-  {
-   payload.WithString("description", m_description);
-
+  if (m_statusHasBeenSet) {
+    payload.WithString("status", CollectionStatusMapper::GetNameForCollectionStatus(m_status));
   }
 
-  if(m_idHasBeenSet)
-  {
-   payload.WithString("id", m_id);
-
+  if (m_typeHasBeenSet) {
+    payload.WithString("type", CollectionTypeMapper::GetNameForCollectionType(m_type));
   }
 
-  if(m_lastModifiedDateHasBeenSet)
-  {
-   payload.WithInt64("lastModifiedDate", m_lastModifiedDate);
-
+  if (m_descriptionHasBeenSet) {
+    payload.WithString("description", m_description);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_vectorOptionsHasBeenSet) {
+    payload.WithObject("vectorOptions", m_vectorOptions.Jsonize());
   }
 
-  if(m_statusHasBeenSet)
-  {
-   payload.WithString("status", CollectionStatusMapper::GetNameForCollectionStatus(m_status));
+  if (m_arnHasBeenSet) {
+    payload.WithString("arn", m_arn);
   }
 
-  if(m_typeHasBeenSet)
-  {
-   payload.WithString("type", CollectionTypeMapper::GetNameForCollectionType(m_type));
+  if (m_createdDateHasBeenSet) {
+    payload.WithInt64("createdDate", m_createdDate);
+  }
+
+  if (m_lastModifiedDateHasBeenSet) {
+    payload.WithInt64("lastModifiedDate", m_lastModifiedDate);
+  }
+
+  if (m_deletionProtectionHasBeenSet) {
+    payload.WithString("deletionProtection", DeletionProtectionMapper::GetNameForDeletionProtection(m_deletionProtection));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace OpenSearchServerless
-} // namespace Aws
+}  // namespace Model
+}  // namespace OpenSearchServerless
+}  // namespace Aws

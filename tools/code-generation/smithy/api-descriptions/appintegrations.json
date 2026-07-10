@@ -128,8 +128,196 @@
                     "name": "app-integrations"
                 },
                 "aws.protocols#restJson1": {},
-                "smithy.api#documentation": "<ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_AppIntegrations_Service.html\">Amazon AppIntegrations\n            actions</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_AppIntegrations_Service.html\">Amazon AppIntegrations\n            data types</a>\n               </p>\n            </li>\n         </ul>\n         <p>The Amazon AppIntegrations service enables you to configure and reuse connections to external\n      applications.</p>\n         <p>For information about how you can use external applications with Amazon Connect, see\n      the following topics in the <i>Amazon Connect Administrator\n      Guide</i>:</p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/3p-apps.html\">Third-party\n            applications (3p apps) in the agent workspace</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-q-connect.html\">Use\n            Amazon Q in Connect for generative AI–powered agent assistance in\n          real-time</a>\n               </p>\n            </li>\n         </ul>",
+                "smithy.api#documentation": "<ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Operations_Amazon_AppIntegrations_Service.html\">Amazon AppIntegrations\n            actions</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/APIReference/API_Types_Amazon_AppIntegrations_Service.html\">Amazon AppIntegrations\n            data types</a>\n               </p>\n            </li>\n         </ul>\n         <p>The Amazon AppIntegrations service enables you to configure and reuse connections to external\n      applications.</p>\n         <p>For information about how you can use external applications with Connect Customer, see\n      the following topics in the <i>Connect Customer Administrator\n      Guide</i>:</p>\n         <ul>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/3p-apps.html\">Third-party\n            applications (3p apps) in the agent workspace</a>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/amazon-q-connect.html\">Use\n            Amazon Q in Connect for generative AI–powered agent assistance in\n          real-time</a>\n               </p>\n            </li>\n         </ul>",
                 "smithy.api#title": "Amazon AppIntegrations Service",
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://app-integrations-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://app-integrations-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://app-integrations.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://app-integrations.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -137,27 +325,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -720,17 +908,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -741,17 +918,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -768,17 +934,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -789,17 +944,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -927,6 +1071,20 @@
                 }
             }
         },
+        "com.amazonaws.appintegrations#ApplicationConfig": {
+            "type": "structure",
+            "members": {
+                "ContactHandling": {
+                    "target": "com.amazonaws.appintegrations#ContactHandling",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The contact handling configuration for the application.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The configuration settings for the application.</p>"
+            }
+        },
         "com.amazonaws.appintegrations#ApplicationName": {
             "type": "string",
             "traits": {
@@ -942,7 +1100,7 @@
             "traits": {
                 "smithy.api#length": {
                     "min": 1,
-                    "max": 32
+                    "max": 211
                 },
                 "smithy.api#pattern": "^[a-zA-Z0-9\\/\\._\\-]+$"
             }
@@ -999,6 +1157,23 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The time when the application was last modified.</p>"
                     }
+                },
+                "IsService": {
+                    "target": "com.amazonaws.appintegrations#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#deprecated": {
+                            "since": "2025-12-01",
+                            "message": "IsService has been deprecated in favor of ApplicationType"
+                        },
+                        "smithy.api#documentation": "<p>Indicates whether the application is a service.</p>"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.appintegrations#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application.</p>"
+                    }
                 }
             },
             "traits": {
@@ -1013,6 +1188,32 @@
                     "max": 128
                 },
                 "smithy.api#pattern": "^\\w+\\:\\/\\/.*$"
+            }
+        },
+        "com.amazonaws.appintegrations#ApplicationType": {
+            "type": "enum",
+            "members": {
+                "STANDARD": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "STANDARD"
+                    }
+                },
+                "SERVICE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "SERVICE"
+                    }
+                },
+                "MCP_SERVER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "MCP_SERVER"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<value>The type of application</value>"
             }
         },
         "com.amazonaws.appintegrations#ApplicationsList": {
@@ -1047,6 +1248,12 @@
                 "smithy.api#pattern": "^(arn:aws:[A-Za-z0-9][A-Za-z0-9_/.-]{0,62}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9_/.-]{0,63}:[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,1023}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})(:[\\w\\$]+)?$"
             }
         },
+        "com.amazonaws.appintegrations#Boolean": {
+            "type": "boolean",
+            "traits": {
+                "smithy.api#default": false
+            }
+        },
         "com.amazonaws.appintegrations#ClientAssociationMetadata": {
             "type": "map",
             "key": {
@@ -1064,6 +1271,37 @@
                     "max": 255
                 },
                 "smithy.api#pattern": ".*"
+            }
+        },
+        "com.amazonaws.appintegrations#ContactHandling": {
+            "type": "structure",
+            "members": {
+                "Scope": {
+                    "target": "com.amazonaws.appintegrations#ContactHandlingScope",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Indicates whether the application refreshes for each contact or refreshes only with each new browser session.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The contact handling configuration for the application.</p>"
+            }
+        },
+        "com.amazonaws.appintegrations#ContactHandlingScope": {
+            "type": "enum",
+            "members": {
+                "CROSS_CONTACTS": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "CROSS_CONTACTS"
+                    }
+                },
+                "PER_CONTACT": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "PER_CONTACT"
+                    }
+                }
             }
         },
         "com.amazonaws.appintegrations#CreateApplication": {
@@ -1191,6 +1429,41 @@
                     "target": "com.amazonaws.appintegrations#PermissionList",
                     "traits": {
                         "smithy.api#documentation": "<p>The configuration of events or requests that the application has access to.</p>"
+                    }
+                },
+                "IsService": {
+                    "target": "com.amazonaws.appintegrations#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#deprecated": {
+                            "since": "2025-12-01",
+                            "message": "IsService has been deprecated in favor of ApplicationType"
+                        },
+                        "smithy.api#documentation": "<p>Indicates whether the application is a service.</p>"
+                    }
+                },
+                "InitializationTimeout": {
+                    "target": "com.amazonaws.appintegrations#InitializationTimeout",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>"
+                    }
+                },
+                "ApplicationConfig": {
+                    "target": "com.amazonaws.appintegrations#ApplicationConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The configuration settings for the application.</p>"
+                    }
+                },
+                "IframeConfig": {
+                    "target": "com.amazonaws.appintegrations#IframeConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The iframe configuration for the application.</p>"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.appintegrations#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application.</p>"
                     }
                 }
             },
@@ -2367,6 +2640,41 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The configuration of events or requests that the application has access to.</p>"
                     }
+                },
+                "IsService": {
+                    "target": "com.amazonaws.appintegrations#Boolean",
+                    "traits": {
+                        "smithy.api#default": false,
+                        "smithy.api#deprecated": {
+                            "since": "2025-12-01",
+                            "message": "IsService has been deprecated in favor of ApplicationType"
+                        },
+                        "smithy.api#documentation": "<p>Indicates whether the application is a service.</p>"
+                    }
+                },
+                "InitializationTimeout": {
+                    "target": "com.amazonaws.appintegrations#InitializationTimeout",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>"
+                    }
+                },
+                "ApplicationConfig": {
+                    "target": "com.amazonaws.appintegrations#ApplicationConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The configuration settings for the application.</p>"
+                    }
+                },
+                "IframeConfig": {
+                    "target": "com.amazonaws.appintegrations#IframeConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The iframe configuration for the application.</p>"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.appintegrations#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application.</p>"
+                    }
                 }
             },
             "traits": {
@@ -2605,6 +2913,59 @@
                 "smithy.api#pattern": "\\S"
             }
         },
+        "com.amazonaws.appintegrations#IframeConfig": {
+            "type": "structure",
+            "members": {
+                "Allow": {
+                    "target": "com.amazonaws.appintegrations#IframePermissionList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of features that are allowed in the iframe.</p>"
+                    }
+                },
+                "Sandbox": {
+                    "target": "com.amazonaws.appintegrations#IframePermissionList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of sandbox attributes for the iframe.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The iframe configuration for the application.</p>"
+            }
+        },
+        "com.amazonaws.appintegrations#IframePermission": {
+            "type": "string",
+            "traits": {
+                "smithy.api#documentation": "<p>A permission for the iframe.</p>",
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 100
+                },
+                "smithy.api#pattern": "^[a-z-]+$"
+            }
+        },
+        "com.amazonaws.appintegrations#IframePermissionList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.appintegrations#IframePermission"
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A list of permissions for the iframe.</p>",
+                "smithy.api#length": {
+                    "min": 0,
+                    "max": 25
+                }
+            }
+        },
+        "com.amazonaws.appintegrations#InitializationTimeout": {
+            "type": "integer",
+            "traits": {
+                "smithy.api#range": {
+                    "min": 1,
+                    "max": 600000
+                }
+            }
+        },
         "com.amazonaws.appintegrations#InternalServiceError": {
             "type": "structure",
             "members": {
@@ -2832,6 +3193,13 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The maximum number of results to return per page.</p>",
                         "smithy.api#httpQuery": "maxResults"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.appintegrations#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application.</p>",
+                        "smithy.api#httpQuery": "applicationType"
                     }
                 }
             },
@@ -3476,7 +3844,7 @@
                     "min": 1,
                     "max": 256
                 },
-                "smithy.api#pattern": "^aws\\.partner\\/.*$"
+                "smithy.api#pattern": "^(aws\\.(partner\\/.*|cases|cases\\-test))|Pipe\\s.[a-zA-Z0-9\\/\\._\\-]+$|app\\-integrations\\.webhooks\\/[a-zA-Z0-9\\-_.\\/]+$"
             }
         },
         "com.amazonaws.appintegrations#SourceURI": {
@@ -3835,6 +4203,41 @@
                     "target": "com.amazonaws.appintegrations#PermissionList",
                     "traits": {
                         "smithy.api#documentation": "<p>The configuration of events or requests that the application has access to.</p>"
+                    }
+                },
+                "IsService": {
+                    "target": "com.amazonaws.appintegrations#Boolean",
+                    "traits": {
+                        "smithy.api#default": null,
+                        "smithy.api#deprecated": {
+                            "since": "2025-12-01",
+                            "message": "IsService has been deprecated in favor of ApplicationType"
+                        },
+                        "smithy.api#documentation": "<p>Indicates whether the application is a service.</p>"
+                    }
+                },
+                "InitializationTimeout": {
+                    "target": "com.amazonaws.appintegrations#InitializationTimeout",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum time in milliseconds allowed to establish a connection with the workspace.</p>"
+                    }
+                },
+                "ApplicationConfig": {
+                    "target": "com.amazonaws.appintegrations#ApplicationConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The configuration settings for the application.</p>"
+                    }
+                },
+                "IframeConfig": {
+                    "target": "com.amazonaws.appintegrations#IframeConfig",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The iframe configuration for the application.</p>"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.appintegrations#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application.</p>"
                     }
                 }
             },

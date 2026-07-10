@@ -4,64 +4,74 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
 #include <aws/pca-connector-ad/model/AccessControlEntry.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorAd
-{
-namespace Model
-{
-  class GetTemplateGroupAccessControlEntryResult
-  {
-  public:
-    AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult();
-    AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorAd {
+namespace Model {
+class GetTemplateGroupAccessControlEntryResult {
+ public:
+  AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult() = default;
+  AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORAD_API GetTemplateGroupAccessControlEntryResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>An access control entry allows or denies an Active Directory group from
+   * enrolling and/or autoenrolling with a template.</p>
+   */
+  inline const AccessControlEntry& GetAccessControlEntry() const { return m_accessControlEntry; }
+  template <typename AccessControlEntryT = AccessControlEntry>
+  void SetAccessControlEntry(AccessControlEntryT&& value) {
+    m_accessControlEntryHasBeenSet = true;
+    m_accessControlEntry = std::forward<AccessControlEntryT>(value);
+  }
+  template <typename AccessControlEntryT = AccessControlEntry>
+  GetTemplateGroupAccessControlEntryResult& WithAccessControlEntry(AccessControlEntryT&& value) {
+    SetAccessControlEntry(std::forward<AccessControlEntryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An access control entry allows or denies an Active Directory group from
-     * enrolling and/or autoenrolling with a template.</p>
-     */
-    inline const AccessControlEntry& GetAccessControlEntry() const{ return m_accessControlEntry; }
-    inline void SetAccessControlEntry(const AccessControlEntry& value) { m_accessControlEntry = value; }
-    inline void SetAccessControlEntry(AccessControlEntry&& value) { m_accessControlEntry = std::move(value); }
-    inline GetTemplateGroupAccessControlEntryResult& WithAccessControlEntry(const AccessControlEntry& value) { SetAccessControlEntry(value); return *this;}
-    inline GetTemplateGroupAccessControlEntryResult& WithAccessControlEntry(AccessControlEntry&& value) { SetAccessControlEntry(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTemplateGroupAccessControlEntryResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTemplateGroupAccessControlEntryResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTemplateGroupAccessControlEntryResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTemplateGroupAccessControlEntryResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    AccessControlEntry m_accessControlEntry;
+ private:
+  AccessControlEntry m_accessControlEntry;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_accessControlEntryHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorAd
+}  // namespace Aws

@@ -12,53 +12,29 @@ using namespace Aws::ChimeSDKVoice::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-PutVoiceConnectorProxyRequest::PutVoiceConnectorProxyRequest() : 
-    m_voiceConnectorIdHasBeenSet(false),
-    m_defaultSessionExpiryMinutes(0),
-    m_defaultSessionExpiryMinutesHasBeenSet(false),
-    m_phoneNumberPoolCountriesHasBeenSet(false),
-    m_fallBackPhoneNumberHasBeenSet(false),
-    m_disabled(false),
-    m_disabledHasBeenSet(false)
-{
-}
-
-Aws::String PutVoiceConnectorProxyRequest::SerializePayload() const
-{
+Aws::String PutVoiceConnectorProxyRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_defaultSessionExpiryMinutesHasBeenSet)
-  {
-   payload.WithInteger("DefaultSessionExpiryMinutes", m_defaultSessionExpiryMinutes);
-
+  if (m_defaultSessionExpiryMinutesHasBeenSet) {
+    payload.WithInteger("DefaultSessionExpiryMinutes", m_defaultSessionExpiryMinutes);
   }
 
-  if(m_phoneNumberPoolCountriesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> phoneNumberPoolCountriesJsonList(m_phoneNumberPoolCountries.size());
-   for(unsigned phoneNumberPoolCountriesIndex = 0; phoneNumberPoolCountriesIndex < phoneNumberPoolCountriesJsonList.GetLength(); ++phoneNumberPoolCountriesIndex)
-   {
-     phoneNumberPoolCountriesJsonList[phoneNumberPoolCountriesIndex].AsString(m_phoneNumberPoolCountries[phoneNumberPoolCountriesIndex]);
-   }
-   payload.WithArray("PhoneNumberPoolCountries", std::move(phoneNumberPoolCountriesJsonList));
-
+  if (m_phoneNumberPoolCountriesHasBeenSet) {
+    Aws::Utils::Array<JsonValue> phoneNumberPoolCountriesJsonList(m_phoneNumberPoolCountries.size());
+    for (unsigned phoneNumberPoolCountriesIndex = 0; phoneNumberPoolCountriesIndex < phoneNumberPoolCountriesJsonList.GetLength();
+         ++phoneNumberPoolCountriesIndex) {
+      phoneNumberPoolCountriesJsonList[phoneNumberPoolCountriesIndex].AsString(m_phoneNumberPoolCountries[phoneNumberPoolCountriesIndex]);
+    }
+    payload.WithArray("PhoneNumberPoolCountries", std::move(phoneNumberPoolCountriesJsonList));
   }
 
-  if(m_fallBackPhoneNumberHasBeenSet)
-  {
-   payload.WithString("FallBackPhoneNumber", m_fallBackPhoneNumber);
-
+  if (m_fallBackPhoneNumberHasBeenSet) {
+    payload.WithString("FallBackPhoneNumber", m_fallBackPhoneNumber);
   }
 
-  if(m_disabledHasBeenSet)
-  {
-   payload.WithBool("Disabled", m_disabled);
-
+  if (m_disabledHasBeenSet) {
+    payload.WithBool("Disabled", m_disabled);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

@@ -245,6 +245,23 @@
                 "smithy.api#documentation": "<p>Adds a partner integration to a cluster.\n            This operation authorizes a partner to push status updates for the specified database. \n            To complete the integration, you also set up the integration on the partner website.</p>"
             }
         },
+        "com.amazonaws.redshift#ApplicationType": {
+            "type": "enum",
+            "members": {
+                "NONE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "None"
+                    }
+                },
+                "LAKEHOUSE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Lakehouse"
+                    }
+                }
+            }
+        },
         "com.amazonaws.redshift#AquaConfiguration": {
             "type": "structure",
             "members": {
@@ -889,7 +906,7 @@
                 "AuthorizedAudiencesList": {
                     "target": "com.amazonaws.redshift#AuthorizedAudienceList",
                     "traits": {
-                        "smithy.api#documentation": "<p>The list of audiences for the authorized token issuer for integrating Amazon Redshift \n            with IDC Identity Center.</p>"
+                        "smithy.api#documentation": "<p>The list of audiences for the authorized token issuer for integrating Amazon Redshift\n            with IDC Identity Center.</p>"
                     }
                 }
             },
@@ -1170,6 +1187,16 @@
                 "smithy.api#input": {}
             }
         },
+        "com.amazonaws.redshift#CatalogNameString": {
+            "type": "string",
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 64
+                },
+                "smithy.api#pattern": "^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$"
+            }
+        },
         "com.amazonaws.redshift#CertificateAssociation": {
             "type": "structure",
             "members": {
@@ -1337,7 +1364,7 @@
                 "PubliclyAccessible": {
                     "target": "com.amazonaws.redshift#Boolean",
                     "traits": {
-                        "smithy.api#documentation": "<p>A boolean value that, if <code>true</code>, indicates that the cluster can be\n            accessed from a public network.</p>"
+                        "smithy.api#documentation": "<p>A boolean value that, if <code>true</code>, indicates that the cluster can be\n            accessed from a public network.</p>\n         <p>Default: false</p>"
                     }
                 },
                 "Encrypted": {
@@ -1561,6 +1588,24 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The secondary compute unit of a cluster, if Multi-AZ deployment is turned on.</p>"
                     }
+                },
+                "LakehouseRegistrationStatus": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The status of the lakehouse registration for the cluster. Indicates whether the cluster is successfully registered with Amazon Redshift federated permissions.</p>"
+                    }
+                },
+                "CatalogArn": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the Glue data catalog associated with the cluster enabled with Amazon Redshift federated permissions.</p>"
+                    }
+                },
+                "ExtraComputeForAutomaticOptimization": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A boolean value that, if <code>true</code>, indicates that the cluster allocates additional compute resources to run automatic optimization operations.</p>\n         <p>Default: false</p>"
+                    }
                 }
             },
             "traits": {
@@ -1746,6 +1791,15 @@
                 "target": "com.amazonaws.redshift#ClusterIamRole",
                 "traits": {
                     "smithy.api#xmlName": "ClusterIamRole"
+                }
+            }
+        },
+        "com.amazonaws.redshift#ClusterIdentifierList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.redshift#String",
+                "traits": {
+                    "smithy.api#xmlName": "ClusterIdentifier"
                 }
             }
         },
@@ -2534,6 +2588,34 @@
                 "smithy.api#httpError": 409
             }
         },
+        "com.amazonaws.redshift#Connect": {
+            "type": "structure",
+            "members": {
+                "Authorization": {
+                    "target": "com.amazonaws.redshift#ServiceAuthorization",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>Determines whether the Amazon Redshift connect integration is enabled or disabled for the application.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A structure that defines the Amazon Redshift connect service integration scope.</p>"
+            }
+        },
+        "com.amazonaws.redshift#ConsumerIdentifierList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.redshift#String"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1,
+                    "max": 1
+                }
+            }
+        },
         "com.amazonaws.redshift#CopyClusterSnapshot": {
             "type": "operation",
             "input": {
@@ -2723,7 +2805,13 @@
                     "target": "com.amazonaws.redshift#ClusterSubnetGroupNotFoundFault"
                 },
                 {
+                    "target": "com.amazonaws.redshift#DependentServiceAccessDeniedFault"
+                },
+                {
                     "target": "com.amazonaws.redshift#DependentServiceRequestThrottlingFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#DependentServiceUnavailableFault"
                 },
                 {
                     "target": "com.amazonaws.redshift#HsmClientCertificateNotFoundFault"
@@ -2784,7 +2872,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a new cluster with the specified parameters.</p>\n         <p>To create a cluster in Virtual Private Cloud (VPC), you must provide a cluster\n            subnet group name. The cluster subnet group identifies the subnets of your VPC that\n            Amazon Redshift uses when creating the cluster. \nFor more information about managing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>"
+                "smithy.api#documentation": "<p>Creates a new cluster with the specified parameters.</p>\n         <p>To create a cluster in Virtual Private Cloud (VPC), you must provide a cluster\n            subnet group name. The cluster subnet group identifies the subnets of your VPC that\n            Amazon Redshift uses when creating the cluster. \nFor more information about managing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>\n         <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that\n            you own in a Region from reaching or being reached from the internet through internet\n            gateways and egress-only internet gateways. If a subnet group for a\n            provisioned cluster is in an account with VPC BPA turned on, the following capabilities\n            are blocked:</p>\n         <ul>\n            <li>\n               <p>Creating a public cluster</p>\n            </li>\n            <li>\n               <p>Restoring a public cluster</p>\n            </li>\n            <li>\n               <p>Modifying a private cluster to be public</p>\n            </li>\n            <li>\n               <p>Adding a subnet with VPC BPA turned on to the subnet group when there's at\n                    least one public cluster within the group</p>\n            </li>\n         </ul>\n         <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and\n            subnets</a> in the <i>Amazon VPC User Guide</i>.</p>"
             }
         },
         "com.amazonaws.redshift#CreateClusterMessage": {
@@ -2814,7 +2902,7 @@
                     "target": "com.amazonaws.redshift#String",
                     "traits": {
                         "smithy.api#clientOptional": {},
-                        "smithy.api#documentation": "<p>The node type to be provisioned for the cluster. For information about node types,\n            go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes\"> Working with\n                Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>\n         <p>Valid Values: \n            <code>dc2.large</code> | <code>dc2.8xlarge</code> | \n            <code>ra3.large</code> |  <code>ra3.xlplus</code> |  <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code>\n         </p>",
+                        "smithy.api#documentation": "<p>The node type to be provisioned for the cluster. For information about node types,\n            go to <a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes\"> Working with\n                Clusters</a> in the <i>Amazon Redshift Cluster Management Guide</i>. </p>\n         <p>Valid Values: \n            <code>dc2.large</code> | <code>dc2.8xlarge</code>| <code>rg.xlarge</code> | <code>rg.4xlarge</code> | \n            <code>ra3.large</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code>\n         </p>",
                         "smithy.api#required": {}
                     }
                 },
@@ -2871,7 +2959,7 @@
                 "AutomatedSnapshotRetentionPeriod": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>You can't disable automated snapshots for RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: <code>1</code>\n         </p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
+                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>You can't disable automated snapshots for RG or RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: <code>1</code>\n         </p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
                     }
                 },
                 "ManualSnapshotRetentionPeriod": {
@@ -2883,7 +2971,7 @@
                 "Port": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The port number on which the cluster accepts incoming connections.</p>\n         <p>The cluster is accessible only via the JDBC and ODBC connection strings. Part of\n            the connection string requires the port on which the cluster will listen for incoming\n            connections.</p>\n         <p>Default: <code>5439</code>\n         </p>\n         <p>Valid Values:\n        </p>\n         <ul>\n            <li>\n               <p>For clusters with ra3 nodes - Select a port within the ranges <code>5431-5455</code> or <code>8191-8215</code>. (If you have an existing cluster \n                with ra3 nodes, it isn't required that you change the port to these ranges.)</p>\n            </li>\n            <li>\n               <p>For clusters with dc2 nodes - Select a port within the range <code>1150-65535</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>The port number on which the cluster accepts incoming connections.</p>\n         <p>The cluster is accessible only via the JDBC and ODBC connection strings. Part of\n            the connection string requires the port on which the cluster will listen for incoming\n            connections.</p>\n         <p>Default: <code>5439</code>\n         </p>\n         <p>Valid Values:\n        </p>\n         <ul>\n            <li>\n               <p>For clusters with RG or RA3 nodes - Select a port within the ranges <code>5431-5455</code> or <code>8191-8215</code>. (If you have an existing cluster \n                with RG or RA3 nodes, it isn't required that you change the port to these ranges.)</p>\n            </li>\n            <li>\n               <p>For clusters with dc2 nodes - Select a port within the range <code>1150-65535</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "ClusterVersion": {
@@ -2907,13 +2995,13 @@
                 "PubliclyAccessible": {
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. </p>"
+                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. </p>\n         <p>Default: false</p>"
                     }
                 },
                 "Encrypted": {
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>If <code>true</code>, the data in the cluster is encrypted at rest. </p>\n         <p>Default: false</p>"
+                        "smithy.api#documentation": "<p>If <code>true</code>, the data in the cluster is encrypted at rest. \n            If you set the value on this parameter to <code>false</code>, the request will fail.</p>\n         <p>Default: true</p>"
                     }
                 },
                 "HsmClientCertificateIdentifier": {
@@ -3028,6 +3116,18 @@
                     "target": "com.amazonaws.redshift#String",
                     "traits": {
                         "smithy.api#documentation": "<p>The Amazon resource name (ARN) of the Amazon Redshift IAM Identity Center application.</p>"
+                    }
+                },
+                "CatalogName": {
+                    "target": "com.amazonaws.redshift#CatalogNameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the Glue data catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p>\n         <p>Constraints:</p>\n         <ul>\n            <li>\n               <p>Must contain at least one lowercase letter.</p>\n            </li>\n            <li>\n               <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p>\n            </li>\n         </ul>\n         <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code>\n         </p>\n         <p>Example: <code>my-catalog_01</code>\n         </p>"
+                    }
+                },
+                "ExtraComputeForAutomaticOptimization": {
+                    "target": "com.amazonaws.redshift#BooleanOptional",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If <code>true</code>, allocates additional compute resources for running automatic optimization operations.</p>\n         <p>Default: false</p>"
                     }
                 }
             },
@@ -3927,10 +4027,16 @@
                     "target": "com.amazonaws.redshift#DependentServiceUnavailableFault"
                 },
                 {
+                    "target": "com.amazonaws.redshift#InvalidTagFault"
+                },
+                {
                     "target": "com.amazonaws.redshift#RedshiftIdcApplicationAlreadyExistsFault"
                 },
                 {
                     "target": "com.amazonaws.redshift#RedshiftIdcApplicationQuotaExceededFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#TagLimitExceededFault"
                 },
                 {
                     "target": "com.amazonaws.redshift#UnsupportedOperationFault"
@@ -3991,6 +4097,24 @@
                     "target": "com.amazonaws.redshift#ServiceIntegrationList",
                     "traits": {
                         "smithy.api#documentation": "<p>A collection of service integrations for the Redshift IAM Identity Center application.</p>"
+                    }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.redshift#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application being created. Valid values are <code>None</code> or <code>Lakehouse</code>. Use <code>Lakehouse</code> to enable Amazon Redshift federated permissions on cluster.</p>"
+                    }
+                },
+                "Tags": {
+                    "target": "com.amazonaws.redshift#TagList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of tags.</p>"
+                    }
+                },
+                "SsoTagKeys": {
+                    "target": "com.amazonaws.redshift#TagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of tags keys that Redshift Identity Center applications copy to IAM Identity\n            Center. For each input key, the tag corresponding to the key-value pair is\n            propagated.</p>"
                     }
                 }
             },
@@ -4368,7 +4492,7 @@
                     "target": "com.amazonaws.redshift#UsageLimitLimitType",
                     "traits": {
                         "smithy.api#clientOptional": {},
-                        "smithy.api#documentation": "<p>The type of limit. Depending on the feature type, this can be based on a time duration or data size.\n            If <code>FeatureType</code> is <code>spectrum</code>, then <code>LimitType</code> must be <code>data-scanned</code>.\n            If <code>FeatureType</code> is <code>concurrency-scaling</code>, then <code>LimitType</code> must be <code>time</code>.\n            If <code>FeatureType</code> is <code>cross-region-datasharing</code>, then <code>LimitType</code> must be <code>data-scanned</code>.\n           </p>",
+                        "smithy.api#documentation": "<p>The type of limit. Depending on the feature type, this can be based on a time duration or data size.\n            If <code>FeatureType</code> is <code>spectrum</code>, then <code>LimitType</code> must be <code>data-scanned</code>.\n            If <code>FeatureType</code> is <code>concurrency-scaling</code>, then <code>LimitType</code> must be <code>time</code>.\n            If <code>FeatureType</code> is <code>cross-region-datasharing</code>, then <code>LimitType</code> must be <code>data-scanned</code>.\n            If <code>FeatureType</code> is <code>extra-compute-for-automatic-optimization</code>, then <code>LimitType</code> must be <code>time</code>.\n           </p>",
                         "smithy.api#required": {}
                     }
                 },
@@ -4529,6 +4653,12 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The identifier of a datashare to show its managing entity.</p>"
                     }
+                },
+                "DataShareType": {
+                    "target": "com.amazonaws.redshift#DataShareType",
+                    "traits": {
+                        "smithy.api#documentation": "<p> The type of the datashare created by RegisterNamespace.</p>"
+                    }
                 }
             }
         },
@@ -4683,6 +4813,17 @@
                     "target": "smithy.api#Unit",
                     "traits": {
                         "smithy.api#enumValue": "REJECTED"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.redshift#DataShareType": {
+            "type": "enum",
+            "members": {
+                "INTERNAL": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "INTERNAL"
                     }
                 }
             }
@@ -5734,6 +5875,67 @@
                 "smithy.api#documentation": "<p>Your request cannot be completed because a dependent internal service is\n            temporarily unavailable. Wait 30 to 60 seconds and try again.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 400
+            }
+        },
+        "com.amazonaws.redshift#DeregisterNamespace": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.redshift#DeregisterNamespaceInputMessage"
+            },
+            "output": {
+                "target": "com.amazonaws.redshift#DeregisterNamespaceOutputMessage"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.redshift#ClusterNotFoundFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidClusterStateFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidNamespaceFault"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Deregisters a cluster or serverless namespace from the Amazon Web Services Glue Data Catalog.</p>"
+            }
+        },
+        "com.amazonaws.redshift#DeregisterNamespaceInputMessage": {
+            "type": "structure",
+            "members": {
+                "NamespaceIdentifier": {
+                    "target": "com.amazonaws.redshift#NamespaceIdentifierUnion",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier of the cluster or \n            serverless namespace that you want to deregister.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "ConsumerIdentifiers": {
+                    "target": "com.amazonaws.redshift#ConsumerIdentifierList",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>An array containing the ID of the consumer account \n            that you want to deregister the cluster or serverless namespace from.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.redshift#DeregisterNamespaceOutputMessage": {
+            "type": "structure",
+            "members": {
+                "Status": {
+                    "target": "com.amazonaws.redshift#NamespaceRegistrationStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The registration status of the cluster or \n            serverless namespace.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.redshift#DescribeAccountAttributes": {
@@ -9711,6 +9913,70 @@
                 "smithy.api#input": {}
             }
         },
+        "com.amazonaws.redshift#GetIdentityCenterAuthToken": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.redshift#GetIdentityCenterAuthTokenRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.redshift#GetIdentityCenterAuthTokenResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.redshift#ClusterNotFoundFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidClusterStateFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#RedshiftInvalidParameterFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#UnsupportedOperationFault"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Generates an encrypted authentication token that propagates the caller's \n            Amazon Web Services IAM Identity Center identity to Amazon Redshift clusters. This API extracts the \n            Amazon Web Services IAM Identity Center identity from enhanced credentials and creates a secure token \n            that Amazon Redshift drivers can use for authentication.</p>\n         <p>The token is encrypted using Key Management Service (KMS) and can only be \n            decrypted by the specified Amazon Redshift clusters. The token contains the caller's \n            Amazon Web Services IAM Identity Center identity information and is valid for a limited time period.</p>\n         <p>This API is exclusively for use with Amazon Web Services IAM Identity Center enhanced credentials. If the \n            caller is not using enhanced credentials with embedded Amazon Web Services IAM Identity Center identity, the API will \n            return an error.</p>"
+            }
+        },
+        "com.amazonaws.redshift#GetIdentityCenterAuthTokenRequest": {
+            "type": "structure",
+            "members": {
+                "ClusterIds": {
+                    "target": "com.amazonaws.redshift#ClusterIdentifierList",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>A list of cluster identifiers that the generated token can be used with. \n            The token will be scoped to only allow authentication to the specified clusters.</p>\n         <p>Constraints:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>ClusterIds</code> must contain at least 1 cluster identifier.</p>\n            </li>\n            <li>\n               <p>\n                  <code>ClusterIds</code> can hold a maximum of 20 cluster identifiers.</p>\n            </li>\n            <li>\n               <p>Cluster identifiers must be 1 to 63 characters in length.</p>\n            </li>\n            <li>\n               <p>The characters accepted for cluster identifiers are the following:</p>\n               <ul>\n                  <li>\n                     <p>Alphanumeric characters</p>\n                  </li>\n                  <li>\n                     <p>Hyphens</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>Cluster identifiers must start with a letter.</p>\n            </li>\n            <li>\n               <p>Cluster identifiers can't end with a hyphen or contain two consecutive hyphens.</p>\n            </li>\n         </ul>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The request parameters for <code>GetIdentityCenterAuthToken</code>.</p>",
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.redshift#GetIdentityCenterAuthTokenResponse": {
+            "type": "structure",
+            "members": {
+                "Token": {
+                    "target": "com.amazonaws.redshift#SensitiveString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The encrypted authentication token containing the caller's Amazon Web Services IAM Identity Center identity information. \n            This token is encrypted using Key Management Service and can only be decrypted by the specified Amazon Redshift clusters. \n            Use this token with Amazon Redshift drivers to authenticate using your Amazon Web Services IAM Identity Center identity.</p>"
+                    }
+                },
+                "ExpirationTime": {
+                    "target": "com.amazonaws.redshift#TStamp",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The time (UTC) when the token expires. After this timestamp, \n            the token will no longer be valid for authentication.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The response from GetIdentityCenterAuthToken containing the encrypted authentication token and expiration time.</p>",
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.redshift#GetReservedNodeExchangeConfigurationOptions": {
             "type": "operation",
             "input": {
@@ -11329,6 +11595,72 @@
                 "target": "com.amazonaws.redshift#LakeFormationScopeUnion"
             }
         },
+        "com.amazonaws.redshift#LakehouseConfiguration": {
+            "type": "structure",
+            "members": {
+                "ClusterIdentifier": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The unique identifier of the cluster associated with this lakehouse configuration.</p>"
+                    }
+                },
+                "LakehouseIdcApplicationArn": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>"
+                    }
+                },
+                "LakehouseRegistrationStatus": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The current status of the lakehouse registration. Indicates whether the cluster is successfully registered with the lakehouse.</p>"
+                    }
+                },
+                "CatalogArn": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the Glue data catalog associated with the lakehouse configuration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Contains configuration information for lakehouse integration, including the cluster identifier, catalog ARN, and registration status.</p>"
+            }
+        },
+        "com.amazonaws.redshift#LakehouseIdcRegistration": {
+            "type": "enum",
+            "members": {
+                "ASSOCIATE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Associate"
+                    }
+                },
+                "DISASSOCIATE": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Disassociate"
+                    }
+                }
+            }
+        },
+        "com.amazonaws.redshift#LakehouseRegistration": {
+            "type": "enum",
+            "members": {
+                "REGISTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Register"
+                    }
+                },
+                "DEREGISTER": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Deregister"
+                    }
+                }
+            }
+        },
         "com.amazonaws.redshift#LimitExceededFault": {
             "type": "structure",
             "members": {
@@ -11755,7 +12087,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Modifies the settings for a cluster.</p>\n         <p>You can also change node type and the number of nodes to scale up or down the\n            cluster. When resizing a cluster, you must specify both the number of nodes and the node\n            type even if one of the parameters does not change.</p>\n         <p>You can add another security or\n            parameter group, or change the admin user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying a parameter group requires a reboot for parameters to take effect. \nFor more information about managing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>"
+                "smithy.api#documentation": "<p>Modifies the settings for a cluster.</p>\n         <p>You can also change node type and the number of nodes to scale up or down the\n            cluster. When resizing a cluster, you must specify both the number of nodes and the node\n            type even if one of the parameters does not change.</p>\n         <p>You can add another security or\n            parameter group, or change the admin user password. Resetting a cluster password or modifying the security groups associated with a cluster do not need a reboot. However, modifying a parameter group requires a reboot for parameters to take effect. \nFor more information about managing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html\">Amazon Redshift Clusters</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>\n         <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that\n            you own in a Region from reaching or being reached from the internet through internet\n            gateways and egress-only internet gateways. If a subnet group for a\n            provisioned cluster is in an account with VPC BPA turned on, the following capabilities\n            are blocked:</p>\n         <ul>\n            <li>\n               <p>Creating a public cluster</p>\n            </li>\n            <li>\n               <p>Restoring a public cluster</p>\n            </li>\n            <li>\n               <p>Modifying a private cluster to be public</p>\n            </li>\n            <li>\n               <p>Adding a subnet with VPC BPA turned on to the subnet group when there's at\n                    least one public cluster within the group</p>\n            </li>\n         </ul>\n         <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and\n            subnets</a> in the <i>Amazon VPC User Guide</i>.</p>"
             }
         },
         "com.amazonaws.redshift#ModifyClusterDbRevision": {
@@ -11943,7 +12275,7 @@
                 "DeferMaintenanceDuration": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>An integer indicating the duration of the maintenance window in days. If you specify a\n            duration, you can't specify an end time. The duration must be 45 days or less.</p>"
+                        "smithy.api#documentation": "<p>An integer indicating the duration of the maintenance window in days. If you specify a\n            duration, you can't specify an end time. The duration must be 60 days or less.</p>"
                     }
                 }
             },
@@ -11982,7 +12314,7 @@
                 "NodeType": {
                     "target": "com.amazonaws.redshift#String",
                     "traits": {
-                        "smithy.api#documentation": "<p>The new node type of the cluster. If you specify a new node type, you must also\n            specify the number of nodes parameter.</p>\n         <p>\nFor more information about resizing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/rs-resize-tutorial.html\">Resizing Clusters in Amazon Redshift</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>\n         <p>Valid Values: \n            <code>dc2.large</code> | <code>dc2.8xlarge</code> | \n            <code>ra3.large</code> |  <code>ra3.xlplus</code> |  <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code>\n         </p>"
+                        "smithy.api#documentation": "<p>The new node type of the cluster. If you specify a new node type, you must also\n            specify the number of nodes parameter.</p>\n         <p>\nFor more information about resizing clusters, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/rs-resize-tutorial.html\">Resizing Clusters in Amazon Redshift</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>\n         <p>Valid Values: \n            <code>dc2.large</code> | <code>dc2.8xlarge</code>| <code>rg.xlarge</code> | <code>rg.4xlarge</code> | \n            <code>ra3.large</code> | <code>ra3.xlplus</code> | <code>ra3.4xlarge</code> | <code>ra3.16xlarge</code>\n         </p>"
                     }
                 },
                 "NumberOfNodes": {
@@ -12018,7 +12350,7 @@
                 "AutomatedSnapshotRetentionPeriod": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>If you decrease the automated snapshot retention period from its current value,\n            existing automated snapshots that fall outside of the new retention period will be\n            immediately deleted.</p>\n         <p>You can't disable automated snapshots for RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: Uses existing setting.</p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
+                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>If you decrease the automated snapshot retention period from its current value,\n            existing automated snapshots that fall outside of the new retention period will be\n            immediately deleted.</p>\n         <p>You can't disable automated snapshots for RG or RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: Uses existing setting.</p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
                     }
                 },
                 "ManualSnapshotRetentionPeriod": {
@@ -12066,7 +12398,7 @@
                 "PubliclyAccessible": {
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. Only\n            clusters in VPCs can be set to be publicly available.</p>"
+                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. Only\n            clusters in VPCs can be set to be publicly available.</p>\n         <p>Default: false</p>"
                     }
                 },
                 "ElasticIp": {
@@ -12114,7 +12446,7 @@
                 "Port": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The option to change the port of an Amazon Redshift cluster.</p>\n         <p>Valid Values:\n        </p>\n         <ul>\n            <li>\n               <p>For clusters with ra3 nodes - Select a port within the ranges <code>5431-5455</code> or <code>8191-8215</code>. (If you have an existing cluster \n                with ra3 nodes, it isn't required that you change the port to these ranges.)</p>\n            </li>\n            <li>\n               <p>For clusters with dc2 nodes - Select a port within the range <code>1150-65535</code>.</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>The option to change the port of an Amazon Redshift cluster.</p>\n         <p>Valid Values:\n        </p>\n         <ul>\n            <li>\n               <p>For clusters with RG or RA3 nodes - Select a port within the ranges <code>5431-5455</code> or <code>8191-8215</code>. (If you have an existing cluster \n                with RG or RA3 nodes, it isn't required that you change the port to these ranges.)</p>\n            </li>\n            <li>\n               <p>For clusters with dc2 nodes - Select a port within the range <code>1150-65535</code>.</p>\n            </li>\n         </ul>"
                     }
                 },
                 "ManageMasterPassword": {
@@ -12139,6 +12471,12 @@
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
                         "smithy.api#documentation": "<p>If true and the cluster is currently only deployed in a single Availability Zone, the cluster will be modified to be deployed in two Availability Zones.</p>"
+                    }
+                },
+                "ExtraComputeForAutomaticOptimization": {
+                    "target": "com.amazonaws.redshift#BooleanOptional",
+                    "traits": {
+                        "smithy.api#documentation": "<p>If <code>true</code>, allocates additional compute resources for running automatic optimization operations.</p>\n         <p>Default: false</p>"
                     }
                 }
             },
@@ -12345,7 +12683,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Modifies a cluster subnet group to include the specified list of VPC subnets. The\n            operation replaces the existing list of subnets with the new list of subnets.</p>"
+                "smithy.api#documentation": "<p>Modifies a cluster subnet group to include the specified list of VPC subnets. The\n            operation replaces the existing list of subnets with the new list of subnets.</p>\n         <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that\n            you own in a Region from reaching or being reached from the internet through internet\n            gateways and egress-only internet gateways. If a subnet group for a\n            provisioned cluster is in an account with VPC BPA turned on, the following capabilities\n            are blocked:</p>\n         <ul>\n            <li>\n               <p>Creating a public cluster</p>\n            </li>\n            <li>\n               <p>Restoring a public cluster</p>\n            </li>\n            <li>\n               <p>Modifying a private cluster to be public</p>\n            </li>\n            <li>\n               <p>Adding a subnet with VPC BPA turned on to the subnet group when there's at\n                    least one public cluster within the group</p>\n            </li>\n         </ul>\n         <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and\n            subnets</a> in the <i>Amazon VPC User Guide</i>.</p>"
             }
         },
         "com.amazonaws.redshift#ModifyClusterSubnetGroupMessage": {
@@ -12696,6 +13034,87 @@
                 "smithy.api#input": {}
             }
         },
+        "com.amazonaws.redshift#ModifyLakehouseConfiguration": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.redshift#ModifyLakehouseConfigurationMessage"
+            },
+            "output": {
+                "target": "com.amazonaws.redshift#LakehouseConfiguration"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.redshift#ClusterNotFoundFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#DependentServiceAccessDeniedFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#DependentServiceUnavailableFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidClusterStateFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#RedshiftIdcApplicationNotExistsFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#UnauthorizedOperation"
+                },
+                {
+                    "target": "com.amazonaws.redshift#UnsupportedOperationFault"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Modifies the lakehouse configuration for a cluster. This operation allows you to manage Amazon Redshift federated permissions and Amazon Web Services IAM Identity Center trusted identity propagation.</p>"
+            }
+        },
+        "com.amazonaws.redshift#ModifyLakehouseConfigurationMessage": {
+            "type": "structure",
+            "members": {
+                "ClusterIdentifier": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier of the cluster whose lakehouse configuration you want to modify.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "LakehouseRegistration": {
+                    "target": "com.amazonaws.redshift#LakehouseRegistration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Specifies whether to register or deregister the cluster with Amazon Redshift federated permissions. Valid values are <code>Register</code> or <code>Deregister</code>.</p>"
+                    }
+                },
+                "CatalogName": {
+                    "target": "com.amazonaws.redshift#CatalogNameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the Glue data catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p>\n         <p>Constraints:</p>\n         <ul>\n            <li>\n               <p>Must contain at least one lowercase letter.</p>\n            </li>\n            <li>\n               <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p>\n            </li>\n         </ul>\n         <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code>\n         </p>\n         <p>Example: <code>my-catalog_01</code>\n         </p>"
+                    }
+                },
+                "LakehouseIdcRegistration": {
+                    "target": "com.amazonaws.redshift#LakehouseIdcRegistration",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Modifies the Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions. Valid values are <code>Associate</code> or <code>Disassociate</code>.</p>"
+                    }
+                },
+                "LakehouseIdcApplicationArn": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>"
+                    }
+                },
+                "DryRun": {
+                    "target": "com.amazonaws.redshift#BooleanOptional",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A boolean value that, if <code>true</code>, validates the request without actually modifying the lakehouse configuration. Use this to check for errors before making changes.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
         "com.amazonaws.redshift#ModifyRedshiftIdcApplication": {
             "type": "operation",
             "input": {
@@ -13039,6 +13458,43 @@
             },
             "traits": {
                 "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.redshift#NamespaceIdentifierUnion": {
+            "type": "union",
+            "members": {
+                "ServerlessIdentifier": {
+                    "target": "com.amazonaws.redshift#ServerlessIdentifier",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for a serverless namespace.</p>"
+                    }
+                },
+                "ProvisionedIdentifier": {
+                    "target": "com.amazonaws.redshift#ProvisionedIdentifier",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The identifier for a provisioned cluster.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>Object to store union of values for a \n            provisioned cluster or serverless namespace’s identifier.</p>"
+            }
+        },
+        "com.amazonaws.redshift#NamespaceRegistrationStatus": {
+            "type": "enum",
+            "members": {
+                "REGISTERING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Registering"
+                    }
+                },
+                "DEREGISTERING": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "Deregistering"
+                    }
+                }
             }
         },
         "com.amazonaws.redshift#NetworkInterface": {
@@ -13787,6 +14243,22 @@
                 "smithy.api#documentation": "<p>Describes cluster attributes that are in a pending state. A change to one or more\n            the attributes was requested and is in progress or will be applied.</p>"
             }
         },
+        "com.amazonaws.redshift#ProvisionedIdentifier": {
+            "type": "structure",
+            "members": {
+                "ClusterIdentifier": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier for the provisioned cluster.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The identifier for a provisioned cluster.</p>"
+            }
+        },
         "com.amazonaws.redshift#PurchaseReservedNodeOffering": {
             "type": "operation",
             "input": {
@@ -13909,6 +14381,22 @@
             },
             "traits": {
                 "smithy.api#output": {}
+            }
+        },
+        "com.amazonaws.redshift#ReadWriteAccess": {
+            "type": "structure",
+            "members": {
+                "Authorization": {
+                    "target": "com.amazonaws.redshift#ServiceAuthorization",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>Determines whether the read/write scope is enabled or disabled.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The S3 Access Grants scope.</p>"
             }
         },
         "com.amazonaws.redshift#RebootCluster": {
@@ -14197,6 +14685,24 @@
                     "traits": {
                         "smithy.api#documentation": "<p>A list of service integrations for the Redshift IAM Identity Center application.</p>"
                     }
+                },
+                "ApplicationType": {
+                    "target": "com.amazonaws.redshift#ApplicationType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The type of application being created. Valid values are <code>None</code> or <code>Lakehouse</code>. Use <code>Lakehouse</code> to enable Amazon Redshift federated permissions on cluster.</p>"
+                    }
+                },
+                "Tags": {
+                    "target": "com.amazonaws.redshift#TagList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of tags.</p>"
+                    }
+                },
+                "SsoTagKeys": {
+                    "target": "com.amazonaws.redshift#TagKeyList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of tags keys that Redshift Identity Center applications copy to IAM Identity\n            Center. For each input key, the tag corresponding to the key-value pair is\n            propagated.</p>"
+                    }
                 }
             },
             "traits": {
@@ -14268,6 +14774,43 @@
                 "smithy.api#documentation": "<p>The maximum number of Redshift IAM Identity Center applications was exceeded.</p>",
                 "smithy.api#error": "client",
                 "smithy.api#httpError": 400
+            }
+        },
+        "com.amazonaws.redshift#RedshiftInvalidParameterFault": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "target": "com.amazonaws.redshift#ExceptionMessage"
+                }
+            },
+            "traits": {
+                "aws.protocols#awsQueryError": {
+                    "code": "RedshiftInvalidParameter",
+                    "httpResponseCode": 400
+                },
+                "smithy.api#documentation": "<p>The request contains one or more invalid parameters. \n            This error occurs when required parameters are missing, \n            parameter values are outside acceptable ranges, \n            or parameter formats are incorrect.</p>",
+                "smithy.api#error": "client",
+                "smithy.api#httpError": 400
+            }
+        },
+        "com.amazonaws.redshift#RedshiftScopeUnion": {
+            "type": "union",
+            "members": {
+                "Connect": {
+                    "target": "com.amazonaws.redshift#Connect",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Redshift connect integration scope configuration. Defines authorization settings for Amazon Redshift connect service integration.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A union structure that defines the scope of Amazon Redshift service integrations. Contains configuration for different integration types such as Amazon Redshift.</p>"
+            }
+        },
+        "com.amazonaws.redshift#RedshiftServiceIntegrations": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.redshift#RedshiftScopeUnion"
             }
         },
         "com.amazonaws.redshift#RedshiftServiceVersion20121201": {
@@ -14425,6 +14968,9 @@
                     "target": "com.amazonaws.redshift#DeleteUsageLimit"
                 },
                 {
+                    "target": "com.amazonaws.redshift#DeregisterNamespace"
+                },
+                {
                     "target": "com.amazonaws.redshift#DescribeAccountAttributes"
                 },
                 {
@@ -14572,6 +15118,9 @@
                     "target": "com.amazonaws.redshift#GetClusterCredentialsWithIAM"
                 },
                 {
+                    "target": "com.amazonaws.redshift#GetIdentityCenterAuthToken"
+                },
+                {
                     "target": "com.amazonaws.redshift#GetReservedNodeExchangeConfigurationOptions"
                 },
                 {
@@ -14626,6 +15175,9 @@
                     "target": "com.amazonaws.redshift#ModifyIntegration"
                 },
                 {
+                    "target": "com.amazonaws.redshift#ModifyLakehouseConfiguration"
+                },
+                {
                     "target": "com.amazonaws.redshift#ModifyRedshiftIdcApplication"
                 },
                 {
@@ -14651,6 +15203,9 @@
                 },
                 {
                     "target": "com.amazonaws.redshift#RebootCluster"
+                },
+                {
+                    "target": "com.amazonaws.redshift#RegisterNamespace"
                 },
                 {
                     "target": "com.amazonaws.redshift#RejectDataShare"
@@ -14703,6 +15258,218 @@
                 "smithy.api#xmlNamespace": {
                     "uri": "http://redshift.amazonaws.com/doc/2012-12-01/"
                 },
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "stringEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "name"
+                                    ]
+                                },
+                                "aws-us-gov"
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://redshift-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://redshift.{Region}.amazonaws.com",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://redshift-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://redshift.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://redshift.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 14,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAA0AAAADAAAAAQAAAAQF9eEMAAAAAgAAAAUF9eEMAAAAAwAAAAgAAAAGAAAABAAAAAcF9eELAAAABQX14QkF9eEKAAAABAAAAAsAAAAJAAAABgAAAAoF9eEIAAAABwX14QYF9eEHAAAABQAAAAwF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAAOAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -14710,27 +15477,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -15591,17 +16358,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -15612,17 +16368,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -15639,17 +16384,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -15660,17 +16394,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -15762,6 +16485,67 @@
                 "traits": {
                     "smithy.api#xmlName": "ReferenceLink"
                 }
+            }
+        },
+        "com.amazonaws.redshift#RegisterNamespace": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.redshift#RegisterNamespaceInputMessage"
+            },
+            "output": {
+                "target": "com.amazonaws.redshift#RegisterNamespaceOutputMessage"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.redshift#ClusterNotFoundFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidClusterStateFault"
+                },
+                {
+                    "target": "com.amazonaws.redshift#InvalidNamespaceFault"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Registers a cluster or serverless namespace to the Amazon Web Services Glue Data Catalog.</p>"
+            }
+        },
+        "com.amazonaws.redshift#RegisterNamespaceInputMessage": {
+            "type": "structure",
+            "members": {
+                "NamespaceIdentifier": {
+                    "target": "com.amazonaws.redshift#NamespaceIdentifierUnion",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier of the cluster or \n            serverless namespace that you want to register. </p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "ConsumerIdentifiers": {
+                    "target": "com.amazonaws.redshift#ConsumerIdentifierList",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>An array containing the ID of the consumer account \n            that you want to register the namespace to.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.redshift#RegisterNamespaceOutputMessage": {
+            "type": "structure",
+            "members": {
+                "Status": {
+                    "target": "com.amazonaws.redshift#NamespaceRegistrationStatus",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The registration status of the cluster or \n            serverless namespace.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
             }
         },
         "com.amazonaws.redshift#RejectDataShare": {
@@ -16387,7 +17171,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Changes the size of the cluster. You can change the cluster's type, or change the\n            number or type of nodes. The default behavior is to use the elastic resize method. With\n            an elastic resize, your cluster is available for read and write operations more quickly\n            than with the classic resize method. </p>\n         <p>Elastic resize operations have the following restrictions:</p>\n         <ul>\n            <li>\n               <p>You can only resize clusters of the following types:</p>\n               <ul>\n                  <li>\n                     <p>dc2.large</p>\n                  </li>\n                  <li>\n                     <p>dc2.8xlarge</p>\n                  </li>\n                  <li>\n                     <p>ra3.large</p>\n                  </li>\n                  <li>\n                     <p>ra3.xlplus</p>\n                  </li>\n                  <li>\n                     <p>ra3.4xlarge</p>\n                  </li>\n                  <li>\n                     <p>ra3.16xlarge</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>The type of nodes that you add must match the node type for the\n                    cluster.</p>\n            </li>\n         </ul>"
+                "smithy.api#documentation": "<p>Changes the size of the cluster. You can change the cluster's type, or change the\n            number or type of nodes. The default behavior is to use the elastic resize method. With\n            an elastic resize, your cluster is available for read and write operations more quickly\n            than with the classic resize method. </p>\n         <p>Elastic resize operations have the following restrictions:</p>\n         <ul>\n            <li>\n               <p>You can only resize clusters of the following types:</p>\n               <ul>\n                  <li>\n                     <p>dc2.large</p>\n                  </li>\n                  <li>\n                     <p>dc2.8xlarge</p>\n                  </li>\n                  <li>\n                     <p>rg.xlarge</p>\n                  </li>\n                  <li>\n                     <p>rg.4xlarge</p>\n                  </li>\n                  <li>\n                     <p>ra3.large</p>\n                  </li>\n                  <li>\n                     <p>ra3.xlplus</p>\n                  </li>\n                  <li>\n                     <p>ra3.4xlarge</p>\n                  </li>\n                  <li>\n                     <p>ra3.16xlarge</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>The type of nodes that you add must match the node type for the\n                    cluster.</p>\n            </li>\n         </ul>"
             }
         },
         "com.amazonaws.redshift#ResizeClusterMessage": {
@@ -16671,6 +17455,9 @@
                     "target": "com.amazonaws.redshift#ClusterSubnetGroupNotFoundFault"
                 },
                 {
+                    "target": "com.amazonaws.redshift#DependentServiceAccessDeniedFault"
+                },
+                {
                     "target": "com.amazonaws.redshift#DependentServiceRequestThrottlingFault"
                 },
                 {
@@ -16725,6 +17512,9 @@
                     "target": "com.amazonaws.redshift#NumberOfNodesQuotaExceededFault"
                 },
                 {
+                    "target": "com.amazonaws.redshift#RedshiftIdcApplicationNotExistsFault"
+                },
+                {
                     "target": "com.amazonaws.redshift#ReservedNodeAlreadyExistsFault"
                 },
                 {
@@ -16750,7 +17540,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Creates a new cluster from a snapshot. By default, Amazon Redshift creates the resulting\n            cluster with the same configuration as the original cluster from which the snapshot was\n            created, except that the new cluster is created with the default cluster security and\n            parameter groups. After Amazon Redshift creates the cluster, you can use the <a>ModifyCluster</a> API to associate a different security group and different\n            parameter group with the restored cluster. If you are using a DS node type, you can also\n            choose to change to another DS node type of the same size during restore.</p>\n         <p>If you restore a cluster into a VPC, you must provide a cluster subnet group where\n            you want the cluster restored.</p>\n         <p>\nFor more information about working with snapshots, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html\">Amazon Redshift Snapshots</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>"
+                "smithy.api#documentation": "<p>Creates a new cluster from a snapshot. By default, Amazon Redshift creates the resulting\n            cluster with the same configuration as the original cluster from which the snapshot was\n            created, except that the new cluster is created with the default cluster security and\n            parameter groups. After Amazon Redshift creates the cluster, you can use the <a>ModifyCluster</a> API to associate a different security group and different\n            parameter group with the restored cluster. If you are using a DS node type, you can also\n            choose to change to another DS node type of the same size during restore.</p>\n         <p>If you restore a cluster into a VPC, you must provide a cluster subnet group where\n            you want the cluster restored.</p>\n         <p>VPC Block Public Access (BPA) enables you to block resources in VPCs and subnets that\n            you own in a Region from reaching or being reached from the internet through internet\n            gateways and egress-only internet gateways. If a subnet group for a\n            provisioned cluster is in an account with VPC BPA turned on, the following capabilities\n            are blocked:</p>\n         <ul>\n            <li>\n               <p>Creating a public cluster</p>\n            </li>\n            <li>\n               <p>Restoring a public cluster</p>\n            </li>\n            <li>\n               <p>Modifying a private cluster to be public</p>\n            </li>\n            <li>\n               <p>Adding a subnet with VPC BPA turned on to the subnet group when there's at\n                    least one public cluster within the group</p>\n            </li>\n         </ul>\n         <p>For more information about VPC BPA, see <a href=\"https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html\">Block public access to VPCs and\n            subnets</a> in the <i>Amazon VPC User Guide</i>.</p>\n         <p>\nFor more information about working with snapshots, go to \n<a href=\"https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html\">Amazon Redshift Snapshots</a> \nin the <i>Amazon Redshift Cluster Management Guide</i>.</p>"
             }
         },
         "com.amazonaws.redshift#RestoreFromClusterSnapshotMessage": {
@@ -16785,7 +17575,7 @@
                 "Port": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The port number on which the cluster accepts connections.</p>\n         <p>Default: The same port as the original cluster.</p>\n         <p>Valid values: For clusters with DC2 nodes, must be within the range <code>1150</code>-<code>65535</code>. For clusters with ra3 nodes, must be \n            within the ranges <code>5431</code>-<code>5455</code> or <code>8191</code>-<code>8215</code>.</p>"
+                        "smithy.api#documentation": "<p>The port number on which the cluster accepts connections.</p>\n         <p>Default: The same port as the original cluster.</p>\n         <p>Valid values: For clusters with DC2 nodes, must be within the range <code>1150</code>-<code>65535</code>. For clusters with RG or RA3 nodes, must be \n            within the ranges <code>5431</code>-<code>5455</code> or <code>8191</code>-<code>8215</code>.</p>"
                     }
                 },
                 "AvailabilityZone": {
@@ -16809,7 +17599,7 @@
                 "PubliclyAccessible": {
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. </p>"
+                        "smithy.api#documentation": "<p>If <code>true</code>, the cluster can be accessed from a public network. </p>\n         <p>Default: false</p>"
                     }
                 },
                 "OwnerAccount": {
@@ -16863,7 +17653,7 @@
                 "AutomatedSnapshotRetentionPeriod": {
                     "target": "com.amazonaws.redshift#IntegerOptional",
                     "traits": {
-                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>You can't disable automated snapshots for RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: The value selected for the cluster from which the snapshot was\n            taken.</p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
+                        "smithy.api#documentation": "<p>The number of days that automated snapshots are retained. If the value is 0,\n            automated snapshots are disabled. Even if automated snapshots are disabled, you can\n            still create manual snapshots when you want with <a>CreateClusterSnapshot</a>. </p>\n         <p>You can't disable automated snapshots for RG or RA3 node types. Set the automated retention period from 1-35 days.</p>\n         <p>Default: The value selected for the cluster from which the snapshot was\n            taken.</p>\n         <p>Constraints: Must be a value from 0 to 35.</p>"
                     }
                 },
                 "ManualSnapshotRetentionPeriod": {
@@ -16978,6 +17768,18 @@
                     "target": "com.amazonaws.redshift#BooleanOptional",
                     "traits": {
                         "smithy.api#documentation": "<p>If true, the snapshot will be restored to a cluster deployed in two Availability Zones.</p>"
+                    }
+                },
+                "CatalogName": {
+                    "target": "com.amazonaws.redshift#CatalogNameString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The name of the Glue Data Catalog that will be associated with the cluster enabled with Amazon Redshift federated permissions.</p>\n         <p>Constraints:</p>\n         <ul>\n            <li>\n               <p>Must contain at least one lowercase letter.</p>\n            </li>\n            <li>\n               <p>Can only contain lowercase letters (a-z), numbers (0-9), underscores (_), and hyphens (-).</p>\n            </li>\n         </ul>\n         <p>Pattern: <code>^[a-z0-9_-]*[a-z]+[a-z0-9_-]*$</code>\n         </p>\n         <p>Example: <code>my-catalog_01</code>\n         </p>"
+                    }
+                },
+                "RedshiftIdcApplicationArn": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Resource Name (ARN) of the IAM Identity Center application used for enabling Amazon Web Services IAM Identity Center trusted identity propagation on a cluster enabled with Amazon Redshift federated permissions.</p>"
                     }
                 }
             },
@@ -17510,6 +18312,26 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.redshift#S3AccessGrantsScopeUnion": {
+            "type": "union",
+            "members": {
+                "ReadWriteAccess": {
+                    "target": "com.amazonaws.redshift#ReadWriteAccess",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The S3 Access Grants scope.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>A list of scopes set up for S3 Access Grants integration.</p>"
+            }
+        },
+        "com.amazonaws.redshift#S3AccessGrantsServiceIntegrations": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.redshift#S3AccessGrantsScopeUnion"
+            }
+        },
         "com.amazonaws.redshift#S3KeyPrefixValue": {
             "type": "string",
             "traits": {
@@ -17939,6 +18761,30 @@
                 "smithy.api#sensitive": {}
             }
         },
+        "com.amazonaws.redshift#ServerlessIdentifier": {
+            "type": "structure",
+            "members": {
+                "NamespaceIdentifier": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier for the serverless namespace.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "WorkgroupIdentifier": {
+                    "target": "com.amazonaws.redshift#String",
+                    "traits": {
+                        "smithy.api#clientOptional": {},
+                        "smithy.api#documentation": "<p>The unique identifier for the workgroup \n            associated with the serverless namespace.</p>",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "<p>The identifier for a serverless namespace.</p>"
+            }
+        },
         "com.amazonaws.redshift#ServiceAuthorization": {
             "type": "enum",
             "members": {
@@ -17969,6 +18815,18 @@
                     "target": "com.amazonaws.redshift#LakeFormationServiceIntegrations",
                     "traits": {
                         "smithy.api#documentation": "<p>A list of scopes set up for Lake Formation integration.</p>"
+                    }
+                },
+                "S3AccessGrants": {
+                    "target": "com.amazonaws.redshift#S3AccessGrantsServiceIntegrations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of scopes set up for S3 Access Grants integration.</p>"
+                    }
+                },
+                "Redshift": {
+                    "target": "com.amazonaws.redshift#RedshiftServiceIntegrations",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of scopes set up for Amazon Redshift integration.</p>"
                     }
                 }
             },
@@ -19564,6 +20422,12 @@
                     "target": "smithy.api#Unit",
                     "traits": {
                         "smithy.api#enumValue": "cross-region-datasharing"
+                    }
+                },
+                "EXTRA_COMPUTE_FOR_AUTOMATIC_OPTIMIZATION": {
+                    "target": "smithy.api#Unit",
+                    "traits": {
+                        "smithy.api#enumValue": "extra-compute-for-automatic-optimization"
                     }
                 }
             }

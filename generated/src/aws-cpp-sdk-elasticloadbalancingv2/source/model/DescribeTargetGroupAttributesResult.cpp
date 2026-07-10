@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/elasticloadbalancingv2/model/DescribeTargetGroupAttributesResult.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/AmazonWebServiceResult.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/logging/LogMacros.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/elasticloadbalancingv2/model/DescribeTargetGroupAttributesResult.h>
 
 #include <utility>
 
@@ -17,44 +17,40 @@ using namespace Aws::Utils::Logging;
 using namespace Aws::Utils;
 using namespace Aws;
 
-DescribeTargetGroupAttributesResult::DescribeTargetGroupAttributesResult()
-{
-}
-
-DescribeTargetGroupAttributesResult::DescribeTargetGroupAttributesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeTargetGroupAttributesResult::DescribeTargetGroupAttributesResult(const Aws::AmazonWebServiceResult<XmlDocument>& result) {
   *this = result;
 }
 
-DescribeTargetGroupAttributesResult& DescribeTargetGroupAttributesResult::operator =(const Aws::AmazonWebServiceResult<XmlDocument>& result)
-{
+DescribeTargetGroupAttributesResult& DescribeTargetGroupAttributesResult::operator=(
+    const Aws::AmazonWebServiceResult<XmlDocument>& result) {
+  m_HttpResponseCode = result.GetResponseCode();
   const XmlDocument& xmlDocument = result.GetPayload();
   XmlNode rootNode = xmlDocument.GetRootElement();
   XmlNode resultNode = rootNode;
-  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTargetGroupAttributesResult"))
-  {
+  if (!rootNode.IsNull() && (rootNode.GetName() != "DescribeTargetGroupAttributesResult")) {
     resultNode = rootNode.FirstChild("DescribeTargetGroupAttributesResult");
   }
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode attributesNode = resultNode.FirstChild("Attributes");
-    if(!attributesNode.IsNull())
-    {
+    if (!attributesNode.IsNull()) {
       XmlNode attributesMember = attributesNode.FirstChild("member");
-      while(!attributesMember.IsNull())
-      {
+      m_attributesHasBeenSet = !attributesMember.IsNull();
+      while (!attributesMember.IsNull()) {
         m_attributes.push_back(attributesMember);
         attributesMember = attributesMember.NextNode("member");
       }
 
+      m_attributesHasBeenSet = true;
     }
   }
 
   if (!rootNode.IsNull()) {
     XmlNode responseMetadataNode = rootNode.FirstChild("ResponseMetadata");
     m_responseMetadata = responseMetadataNode;
-    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancingv2::Model::DescribeTargetGroupAttributesResult", "x-amzn-request-id: " << m_responseMetadata.GetRequestId() );
+    m_responseMetadataHasBeenSet = true;
+    AWS_LOGSTREAM_DEBUG("Aws::ElasticLoadBalancingv2::Model::DescribeTargetGroupAttributesResult",
+                        "x-amzn-request-id: " << m_responseMetadata.GetRequestId());
   }
   return *this;
 }

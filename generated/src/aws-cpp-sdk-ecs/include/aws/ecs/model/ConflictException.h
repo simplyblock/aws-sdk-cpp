@@ -4,68 +4,85 @@
  */
 
 #pragma once
-#include <aws/ecs/ECS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ecs/ECS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace ECS
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace ECS {
+namespace Model {
 
+/**
+ * <p>The request could not be processed because of conflict in the current state
+ * of the resource. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ConflictException">AWS
+ * API Reference</a></p>
+ */
+class ConflictException {
+ public:
+  AWS_ECS_API ConflictException() = default;
+  AWS_ECS_API ConflictException(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ECS_API ConflictException& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_ECS_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>The <code>RunTask</code> request could not be processed due to conflicts. The
-   * provided <code>clientToken</code> is already in use with a different
-   * <code>RunTask</code> request. The <code>resourceIds</code> are the existing task
-   * ARNs which are already associated with the <code>clientToken</code>. </p> <p>To
-   * fix this issue:</p> <ul> <li> <p>Run <code>RunTask</code> with a unique
-   * <code>clientToken</code>.</p> </li> <li> <p>Run <code>RunTask</code> with the
-   * <code>clientToken</code> and the original set of parameters</p> </li>
-   * </ul><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/ConflictException">AWS
-   * API Reference</a></p>
+   * <p>The existing task ARNs which are already associated with the
+   * <code>clientToken</code>.</p>
    */
-  class ConflictException
-  {
-  public:
-    AWS_ECS_API ConflictException();
-    AWS_ECS_API ConflictException(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ECS_API ConflictException& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_ECS_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::Vector<Aws::String>& GetResourceIds() const { return m_resourceIds; }
+  inline bool ResourceIdsHasBeenSet() const { return m_resourceIdsHasBeenSet; }
+  template <typename ResourceIdsT = Aws::Vector<Aws::String>>
+  void SetResourceIds(ResourceIdsT&& value) {
+    m_resourceIdsHasBeenSet = true;
+    m_resourceIds = std::forward<ResourceIdsT>(value);
+  }
+  template <typename ResourceIdsT = Aws::Vector<Aws::String>>
+  ConflictException& WithResourceIds(ResourceIdsT&& value) {
+    SetResourceIds(std::forward<ResourceIdsT>(value));
+    return *this;
+  }
+  template <typename ResourceIdsT = Aws::String>
+  ConflictException& AddResourceIds(ResourceIdsT&& value) {
+    m_resourceIdsHasBeenSet = true;
+    m_resourceIds.emplace_back(std::forward<ResourceIdsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> Message that describes the cause of the exception.</p>
+   */
+  inline const Aws::String& GetMessage() const { return m_message; }
+  inline bool MessageHasBeenSet() const { return m_messageHasBeenSet; }
+  template <typename MessageT = Aws::String>
+  void SetMessage(MessageT&& value) {
+    m_messageHasBeenSet = true;
+    m_message = std::forward<MessageT>(value);
+  }
+  template <typename MessageT = Aws::String>
+  ConflictException& WithMessage(MessageT&& value) {
+    SetMessage(std::forward<MessageT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<Aws::String> m_resourceIds;
 
-    ///@{
-    /**
-     * <p>The existing task ARNs which are already associated with the
-     * <code>clientToken</code>.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetResourceIds() const{ return m_resourceIds; }
-    inline bool ResourceIdsHasBeenSet() const { return m_resourceIdsHasBeenSet; }
-    inline void SetResourceIds(const Aws::Vector<Aws::String>& value) { m_resourceIdsHasBeenSet = true; m_resourceIds = value; }
-    inline void SetResourceIds(Aws::Vector<Aws::String>&& value) { m_resourceIdsHasBeenSet = true; m_resourceIds = std::move(value); }
-    inline ConflictException& WithResourceIds(const Aws::Vector<Aws::String>& value) { SetResourceIds(value); return *this;}
-    inline ConflictException& WithResourceIds(Aws::Vector<Aws::String>&& value) { SetResourceIds(std::move(value)); return *this;}
-    inline ConflictException& AddResourceIds(const Aws::String& value) { m_resourceIdsHasBeenSet = true; m_resourceIds.push_back(value); return *this; }
-    inline ConflictException& AddResourceIds(Aws::String&& value) { m_resourceIdsHasBeenSet = true; m_resourceIds.push_back(std::move(value)); return *this; }
-    inline ConflictException& AddResourceIds(const char* value) { m_resourceIdsHasBeenSet = true; m_resourceIds.push_back(value); return *this; }
-    ///@}
-  private:
+  Aws::String m_message;
+  bool m_resourceIdsHasBeenSet = false;
+  bool m_messageHasBeenSet = false;
+};
 
-    Aws::Vector<Aws::String> m_resourceIds;
-    bool m_resourceIdsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ECS
-} // namespace Aws
+}  // namespace Model
+}  // namespace ECS
+}  // namespace Aws

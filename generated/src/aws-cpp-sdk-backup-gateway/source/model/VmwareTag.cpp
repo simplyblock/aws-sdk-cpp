@@ -11,77 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BackupGateway
-{
-namespace Model
-{
+namespace Aws {
+namespace BackupGateway {
+namespace Model {
 
-VmwareTag::VmwareTag() : 
-    m_vmwareCategoryHasBeenSet(false),
-    m_vmwareTagDescriptionHasBeenSet(false),
-    m_vmwareTagNameHasBeenSet(false)
-{
-}
+VmwareTag::VmwareTag(JsonView jsonValue) { *this = jsonValue; }
 
-VmwareTag::VmwareTag(JsonView jsonValue)
-  : VmwareTag()
-{
-  *this = jsonValue;
-}
-
-VmwareTag& VmwareTag::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("VmwareCategory"))
-  {
+VmwareTag& VmwareTag::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("VmwareCategory")) {
     m_vmwareCategory = jsonValue.GetString("VmwareCategory");
-
     m_vmwareCategoryHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("VmwareTagDescription"))
-  {
-    m_vmwareTagDescription = jsonValue.GetString("VmwareTagDescription");
-
-    m_vmwareTagDescriptionHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("VmwareTagName"))
-  {
+  if (jsonValue.ValueExists("VmwareTagName")) {
     m_vmwareTagName = jsonValue.GetString("VmwareTagName");
-
     m_vmwareTagNameHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("VmwareTagDescription")) {
+    m_vmwareTagDescription = jsonValue.GetString("VmwareTagDescription");
+    m_vmwareTagDescriptionHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue VmwareTag::Jsonize() const
-{
+JsonValue VmwareTag::Jsonize() const {
   JsonValue payload;
 
-  if(m_vmwareCategoryHasBeenSet)
-  {
-   payload.WithString("VmwareCategory", m_vmwareCategory);
-
+  if (m_vmwareCategoryHasBeenSet) {
+    payload.WithString("VmwareCategory", m_vmwareCategory);
   }
 
-  if(m_vmwareTagDescriptionHasBeenSet)
-  {
-   payload.WithString("VmwareTagDescription", m_vmwareTagDescription);
-
+  if (m_vmwareTagNameHasBeenSet) {
+    payload.WithString("VmwareTagName", m_vmwareTagName);
   }
 
-  if(m_vmwareTagNameHasBeenSet)
-  {
-   payload.WithString("VmwareTagName", m_vmwareTagName);
-
+  if (m_vmwareTagDescriptionHasBeenSet) {
+    payload.WithString("VmwareTagDescription", m_vmwareTagDescription);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BackupGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace BackupGateway
+}  // namespace Aws

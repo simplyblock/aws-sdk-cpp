@@ -4,59 +4,57 @@
  */
 
 #pragma once
-#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/chime-sdk-identity/ChimeSDKIdentityRequest.h>
+#include <aws/chime-sdk-identity/ChimeSDKIdentity_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace ChimeSDKIdentity
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace ChimeSDKIdentity {
+namespace Model {
 
+/**
+ */
+class ListTagsForResourceRequest : public ChimeSDKIdentityRequest {
+ public:
+  AWS_CHIMESDKIDENTITY_API ListTagsForResourceRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListTagsForResource"; }
+
+  AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
+
+  AWS_CHIMESDKIDENTITY_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The ARN of the resource.</p>
    */
-  class ListTagsForResourceRequest : public ChimeSDKIdentityRequest
-  {
-  public:
-    AWS_CHIMESDKIDENTITY_API ListTagsForResourceRequest();
+  inline const Aws::String& GetResourceARN() const { return m_resourceARN; }
+  inline bool ResourceARNHasBeenSet() const { return m_resourceARNHasBeenSet; }
+  template <typename ResourceARNT = Aws::String>
+  void SetResourceARN(ResourceARNT&& value) {
+    m_resourceARNHasBeenSet = true;
+    m_resourceARN = std::forward<ResourceARNT>(value);
+  }
+  template <typename ResourceARNT = Aws::String>
+  ListTagsForResourceRequest& WithResourceARN(ResourceARNT&& value) {
+    SetResourceARN(std::forward<ResourceARNT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_resourceARN;
+  bool m_resourceARNHasBeenSet = false;
+};
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListTagsForResource"; }
-
-    AWS_CHIMESDKIDENTITY_API Aws::String SerializePayload() const override;
-
-    AWS_CHIMESDKIDENTITY_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
-
-
-    ///@{
-    /**
-     * <p>The ARN of the resource.</p>
-     */
-    inline const Aws::String& GetResourceARN() const{ return m_resourceARN; }
-    inline bool ResourceARNHasBeenSet() const { return m_resourceARNHasBeenSet; }
-    inline void SetResourceARN(const Aws::String& value) { m_resourceARNHasBeenSet = true; m_resourceARN = value; }
-    inline void SetResourceARN(Aws::String&& value) { m_resourceARNHasBeenSet = true; m_resourceARN = std::move(value); }
-    inline void SetResourceARN(const char* value) { m_resourceARNHasBeenSet = true; m_resourceARN.assign(value); }
-    inline ListTagsForResourceRequest& WithResourceARN(const Aws::String& value) { SetResourceARN(value); return *this;}
-    inline ListTagsForResourceRequest& WithResourceARN(Aws::String&& value) { SetResourceARN(std::move(value)); return *this;}
-    inline ListTagsForResourceRequest& WithResourceARN(const char* value) { SetResourceARN(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_resourceARN;
-    bool m_resourceARNHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace ChimeSDKIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace ChimeSDKIdentity
+}  // namespace Aws

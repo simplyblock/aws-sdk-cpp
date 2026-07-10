@@ -4,101 +4,120 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/gamelift/GameLiftRequest.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/gamelift/GameLiftRequest.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace GameLift
-{
-namespace Model
-{
+namespace Aws {
+namespace GameLift {
+namespace Model {
 
+/**
+ */
+class CreatePlayerSessionsRequest : public GameLiftRequest {
+ public:
+  AWS_GAMELIFT_API CreatePlayerSessionsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreatePlayerSessions"; }
+
+  AWS_GAMELIFT_API Aws::String SerializePayload() const override;
+
+  AWS_GAMELIFT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>An identifier for the game session that is unique across all regions to add
+   * players to. The value is always a full ARN in the following format: For Home
+   * Region game session -
+   * <code>arn:aws:gamelift:&lt;home_region&gt;::gamesession/&lt;fleet ID&gt;/&lt;ID
+   * string&gt;</code>. For Remote Location game session -
+   * <code>arn:aws:gamelift:&lt;home_region&gt;::gamesession/&lt;fleet
+   * ID&gt;/&lt;location&gt;/&lt;ID string&gt;</code>.</p>
    */
-  class CreatePlayerSessionsRequest : public GameLiftRequest
-  {
-  public:
-    AWS_GAMELIFT_API CreatePlayerSessionsRequest();
+  inline const Aws::String& GetGameSessionId() const { return m_gameSessionId; }
+  inline bool GameSessionIdHasBeenSet() const { return m_gameSessionIdHasBeenSet; }
+  template <typename GameSessionIdT = Aws::String>
+  void SetGameSessionId(GameSessionIdT&& value) {
+    m_gameSessionIdHasBeenSet = true;
+    m_gameSessionId = std::forward<GameSessionIdT>(value);
+  }
+  template <typename GameSessionIdT = Aws::String>
+  CreatePlayerSessionsRequest& WithGameSessionId(GameSessionIdT&& value) {
+    SetGameSessionId(std::forward<GameSessionIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreatePlayerSessions"; }
+  ///@{
+  /**
+   * <p>List of unique identifiers for the players to be added.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetPlayerIds() const { return m_playerIds; }
+  inline bool PlayerIdsHasBeenSet() const { return m_playerIdsHasBeenSet; }
+  template <typename PlayerIdsT = Aws::Vector<Aws::String>>
+  void SetPlayerIds(PlayerIdsT&& value) {
+    m_playerIdsHasBeenSet = true;
+    m_playerIds = std::forward<PlayerIdsT>(value);
+  }
+  template <typename PlayerIdsT = Aws::Vector<Aws::String>>
+  CreatePlayerSessionsRequest& WithPlayerIds(PlayerIdsT&& value) {
+    SetPlayerIds(std::forward<PlayerIdsT>(value));
+    return *this;
+  }
+  template <typename PlayerIdsT = Aws::String>
+  CreatePlayerSessionsRequest& AddPlayerIds(PlayerIdsT&& value) {
+    m_playerIdsHasBeenSet = true;
+    m_playerIds.emplace_back(std::forward<PlayerIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_GAMELIFT_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Map of string pairs, each specifying a player ID and a set of
+   * developer-defined information related to the player. Amazon GameLift Servers
+   * does not use this data, so it can be formatted as needed for use in the game.
+   * Any player data strings for player IDs that are not included in the
+   * <code>PlayerIds</code> parameter are ignored. </p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetPlayerDataMap() const { return m_playerDataMap; }
+  inline bool PlayerDataMapHasBeenSet() const { return m_playerDataMapHasBeenSet; }
+  template <typename PlayerDataMapT = Aws::Map<Aws::String, Aws::String>>
+  void SetPlayerDataMap(PlayerDataMapT&& value) {
+    m_playerDataMapHasBeenSet = true;
+    m_playerDataMap = std::forward<PlayerDataMapT>(value);
+  }
+  template <typename PlayerDataMapT = Aws::Map<Aws::String, Aws::String>>
+  CreatePlayerSessionsRequest& WithPlayerDataMap(PlayerDataMapT&& value) {
+    SetPlayerDataMap(std::forward<PlayerDataMapT>(value));
+    return *this;
+  }
+  template <typename PlayerDataMapKeyT = Aws::String, typename PlayerDataMapValueT = Aws::String>
+  CreatePlayerSessionsRequest& AddPlayerDataMap(PlayerDataMapKeyT&& key, PlayerDataMapValueT&& value) {
+    m_playerDataMapHasBeenSet = true;
+    m_playerDataMap.emplace(std::forward<PlayerDataMapKeyT>(key), std::forward<PlayerDataMapValueT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_gameSessionId;
 
-    AWS_GAMELIFT_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  Aws::Vector<Aws::String> m_playerIds;
 
+  Aws::Map<Aws::String, Aws::String> m_playerDataMap;
+  bool m_gameSessionIdHasBeenSet = false;
+  bool m_playerIdsHasBeenSet = false;
+  bool m_playerDataMapHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>A unique identifier for the game session to add players to.</p>
-     */
-    inline const Aws::String& GetGameSessionId() const{ return m_gameSessionId; }
-    inline bool GameSessionIdHasBeenSet() const { return m_gameSessionIdHasBeenSet; }
-    inline void SetGameSessionId(const Aws::String& value) { m_gameSessionIdHasBeenSet = true; m_gameSessionId = value; }
-    inline void SetGameSessionId(Aws::String&& value) { m_gameSessionIdHasBeenSet = true; m_gameSessionId = std::move(value); }
-    inline void SetGameSessionId(const char* value) { m_gameSessionIdHasBeenSet = true; m_gameSessionId.assign(value); }
-    inline CreatePlayerSessionsRequest& WithGameSessionId(const Aws::String& value) { SetGameSessionId(value); return *this;}
-    inline CreatePlayerSessionsRequest& WithGameSessionId(Aws::String&& value) { SetGameSessionId(std::move(value)); return *this;}
-    inline CreatePlayerSessionsRequest& WithGameSessionId(const char* value) { SetGameSessionId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>List of unique identifiers for the players to be added.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetPlayerIds() const{ return m_playerIds; }
-    inline bool PlayerIdsHasBeenSet() const { return m_playerIdsHasBeenSet; }
-    inline void SetPlayerIds(const Aws::Vector<Aws::String>& value) { m_playerIdsHasBeenSet = true; m_playerIds = value; }
-    inline void SetPlayerIds(Aws::Vector<Aws::String>&& value) { m_playerIdsHasBeenSet = true; m_playerIds = std::move(value); }
-    inline CreatePlayerSessionsRequest& WithPlayerIds(const Aws::Vector<Aws::String>& value) { SetPlayerIds(value); return *this;}
-    inline CreatePlayerSessionsRequest& WithPlayerIds(Aws::Vector<Aws::String>&& value) { SetPlayerIds(std::move(value)); return *this;}
-    inline CreatePlayerSessionsRequest& AddPlayerIds(const Aws::String& value) { m_playerIdsHasBeenSet = true; m_playerIds.push_back(value); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerIds(Aws::String&& value) { m_playerIdsHasBeenSet = true; m_playerIds.push_back(std::move(value)); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerIds(const char* value) { m_playerIdsHasBeenSet = true; m_playerIds.push_back(value); return *this; }
-    ///@}
-
-    ///@{
-    /**
-     * <p>Map of string pairs, each specifying a player ID and a set of
-     * developer-defined information related to the player. Amazon GameLift does not
-     * use this data, so it can be formatted as needed for use in the game. Any player
-     * data strings for player IDs that are not included in the <code>PlayerIds</code>
-     * parameter are ignored. </p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetPlayerDataMap() const{ return m_playerDataMap; }
-    inline bool PlayerDataMapHasBeenSet() const { return m_playerDataMapHasBeenSet; }
-    inline void SetPlayerDataMap(const Aws::Map<Aws::String, Aws::String>& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap = value; }
-    inline void SetPlayerDataMap(Aws::Map<Aws::String, Aws::String>&& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap = std::move(value); }
-    inline CreatePlayerSessionsRequest& WithPlayerDataMap(const Aws::Map<Aws::String, Aws::String>& value) { SetPlayerDataMap(value); return *this;}
-    inline CreatePlayerSessionsRequest& WithPlayerDataMap(Aws::Map<Aws::String, Aws::String>&& value) { SetPlayerDataMap(std::move(value)); return *this;}
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(const Aws::String& key, const Aws::String& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(key, value); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(Aws::String&& key, const Aws::String& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(std::move(key), value); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(const Aws::String& key, Aws::String&& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(key, std::move(value)); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(Aws::String&& key, Aws::String&& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(std::move(key), std::move(value)); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(const char* key, Aws::String&& value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(key, std::move(value)); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(Aws::String&& key, const char* value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(std::move(key), value); return *this; }
-    inline CreatePlayerSessionsRequest& AddPlayerDataMap(const char* key, const char* value) { m_playerDataMapHasBeenSet = true; m_playerDataMap.emplace(key, value); return *this; }
-    ///@}
-  private:
-
-    Aws::String m_gameSessionId;
-    bool m_gameSessionIdHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_playerIds;
-    bool m_playerIdsHasBeenSet = false;
-
-    Aws::Map<Aws::String, Aws::String> m_playerDataMap;
-    bool m_playerDataMapHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

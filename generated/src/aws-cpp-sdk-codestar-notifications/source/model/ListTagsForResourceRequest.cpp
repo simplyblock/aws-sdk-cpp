@@ -12,24 +12,12 @@ using namespace Aws::CodeStarNotifications::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-ListTagsForResourceRequest::ListTagsForResourceRequest() : 
-    m_arnHasBeenSet(false)
-{
-}
-
-Aws::String ListTagsForResourceRequest::SerializePayload() const
-{
+Aws::String ListTagsForResourceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("Arn", m_arn);
-
+  if (m_arnHasBeenSet) {
+    payload.WithString("Arn", m_arn);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

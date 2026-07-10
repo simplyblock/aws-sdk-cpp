@@ -11,78 +11,46 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
-EventRiskType::EventRiskType() : 
-    m_riskDecision(RiskDecisionType::NOT_SET),
-    m_riskDecisionHasBeenSet(false),
-    m_riskLevel(RiskLevelType::NOT_SET),
-    m_riskLevelHasBeenSet(false),
-    m_compromisedCredentialsDetected(false),
-    m_compromisedCredentialsDetectedHasBeenSet(false)
-{
-}
+EventRiskType::EventRiskType(JsonView jsonValue) { *this = jsonValue; }
 
-EventRiskType::EventRiskType(JsonView jsonValue)
-  : EventRiskType()
-{
-  *this = jsonValue;
-}
-
-EventRiskType& EventRiskType::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("RiskDecision"))
-  {
+EventRiskType& EventRiskType::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("RiskDecision")) {
     m_riskDecision = RiskDecisionTypeMapper::GetRiskDecisionTypeForName(jsonValue.GetString("RiskDecision"));
-
     m_riskDecisionHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("RiskLevel"))
-  {
+  if (jsonValue.ValueExists("RiskLevel")) {
     m_riskLevel = RiskLevelTypeMapper::GetRiskLevelTypeForName(jsonValue.GetString("RiskLevel"));
-
     m_riskLevelHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("CompromisedCredentialsDetected"))
-  {
+  if (jsonValue.ValueExists("CompromisedCredentialsDetected")) {
     m_compromisedCredentialsDetected = jsonValue.GetBool("CompromisedCredentialsDetected");
-
     m_compromisedCredentialsDetectedHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue EventRiskType::Jsonize() const
-{
+JsonValue EventRiskType::Jsonize() const {
   JsonValue payload;
 
-  if(m_riskDecisionHasBeenSet)
-  {
-   payload.WithString("RiskDecision", RiskDecisionTypeMapper::GetNameForRiskDecisionType(m_riskDecision));
+  if (m_riskDecisionHasBeenSet) {
+    payload.WithString("RiskDecision", RiskDecisionTypeMapper::GetNameForRiskDecisionType(m_riskDecision));
   }
 
-  if(m_riskLevelHasBeenSet)
-  {
-   payload.WithString("RiskLevel", RiskLevelTypeMapper::GetNameForRiskLevelType(m_riskLevel));
+  if (m_riskLevelHasBeenSet) {
+    payload.WithString("RiskLevel", RiskLevelTypeMapper::GetNameForRiskLevelType(m_riskLevel));
   }
 
-  if(m_compromisedCredentialsDetectedHasBeenSet)
-  {
-   payload.WithBool("CompromisedCredentialsDetected", m_compromisedCredentialsDetected);
-
+  if (m_compromisedCredentialsDetectedHasBeenSet) {
+    payload.WithBool("CompromisedCredentialsDetected", m_compromisedCredentialsDetected);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

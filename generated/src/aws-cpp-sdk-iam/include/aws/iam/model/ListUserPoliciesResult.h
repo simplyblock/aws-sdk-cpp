@@ -4,105 +4,132 @@
  */
 
 #pragma once
-#include <aws/iam/IAM_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/iam/IAM_EXPORTS.h>
 #include <aws/iam/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace IAM
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace IAM {
+namespace Model {
+/**
+ * <p>Contains the response to a successful <a
+ * href="https://docs.aws.amazon.com/IAM/latest/APIReference/API_ListUserPolicies.html">ListUserPolicies</a>
+ * request. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/ListUserPoliciesResponse">AWS
+ * API Reference</a></p>
+ */
+class ListUserPoliciesResult {
+ public:
+  AWS_IAM_API ListUserPoliciesResult() = default;
+  AWS_IAM_API ListUserPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_IAM_API ListUserPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Contains the response to a successful <a>ListUserPolicies</a> request.
-   * </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/iam-2010-05-08/ListUserPoliciesResponse">AWS
-   * API Reference</a></p>
+   * <p>A list of policy names.</p>
    */
-  class ListUserPoliciesResult
-  {
-  public:
-    AWS_IAM_API ListUserPoliciesResult();
-    AWS_IAM_API ListUserPoliciesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_IAM_API ListUserPoliciesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::Vector<Aws::String>& GetPolicyNames() const { return m_policyNames; }
+  template <typename PolicyNamesT = Aws::Vector<Aws::String>>
+  void SetPolicyNames(PolicyNamesT&& value) {
+    m_policyNamesHasBeenSet = true;
+    m_policyNames = std::forward<PolicyNamesT>(value);
+  }
+  template <typename PolicyNamesT = Aws::Vector<Aws::String>>
+  ListUserPoliciesResult& WithPolicyNames(PolicyNamesT&& value) {
+    SetPolicyNames(std::forward<PolicyNamesT>(value));
+    return *this;
+  }
+  template <typename PolicyNamesT = Aws::String>
+  ListUserPoliciesResult& AddPolicyNames(PolicyNamesT&& value) {
+    m_policyNamesHasBeenSet = true;
+    m_policyNames.emplace_back(std::forward<PolicyNamesT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A flag that indicates whether there are more items to return. If your results
+   * were truncated, you can make a subsequent pagination request using the
+   * <code>Marker</code> request parameter to retrieve more items. Note that IAM
+   * might return fewer than the <code>MaxItems</code> number of results even when
+   * there are more results available. We recommend that you check
+   * <code>IsTruncated</code> after every call to ensure that you receive all your
+   * results.</p>
+   */
+  inline bool GetIsTruncated() const { return m_isTruncated; }
+  inline void SetIsTruncated(bool value) {
+    m_isTruncatedHasBeenSet = true;
+    m_isTruncated = value;
+  }
+  inline ListUserPoliciesResult& WithIsTruncated(bool value) {
+    SetIsTruncated(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of policy names.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetPolicyNames() const{ return m_policyNames; }
-    inline void SetPolicyNames(const Aws::Vector<Aws::String>& value) { m_policyNames = value; }
-    inline void SetPolicyNames(Aws::Vector<Aws::String>&& value) { m_policyNames = std::move(value); }
-    inline ListUserPoliciesResult& WithPolicyNames(const Aws::Vector<Aws::String>& value) { SetPolicyNames(value); return *this;}
-    inline ListUserPoliciesResult& WithPolicyNames(Aws::Vector<Aws::String>&& value) { SetPolicyNames(std::move(value)); return *this;}
-    inline ListUserPoliciesResult& AddPolicyNames(const Aws::String& value) { m_policyNames.push_back(value); return *this; }
-    inline ListUserPoliciesResult& AddPolicyNames(Aws::String&& value) { m_policyNames.push_back(std::move(value)); return *this; }
-    inline ListUserPoliciesResult& AddPolicyNames(const char* value) { m_policyNames.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>When <code>IsTruncated</code> is <code>true</code>, this element is present
+   * and contains the value to use for the <code>Marker</code> parameter in a
+   * subsequent pagination request.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  ListUserPoliciesResult& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A flag that indicates whether there are more items to return. If your results
-     * were truncated, you can make a subsequent pagination request using the
-     * <code>Marker</code> request parameter to retrieve more items. Note that IAM
-     * might return fewer than the <code>MaxItems</code> number of results even when
-     * there are more results available. We recommend that you check
-     * <code>IsTruncated</code> after every call to ensure that you receive all your
-     * results.</p>
-     */
-    inline bool GetIsTruncated() const{ return m_isTruncated; }
-    inline void SetIsTruncated(bool value) { m_isTruncated = value; }
-    inline ListUserPoliciesResult& WithIsTruncated(bool value) { SetIsTruncated(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>When <code>IsTruncated</code> is <code>true</code>, this element is present
-     * and contains the value to use for the <code>Marker</code> parameter in a
-     * subsequent pagination request.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline void SetMarker(const Aws::String& value) { m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_marker.assign(value); }
-    inline ListUserPoliciesResult& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline ListUserPoliciesResult& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline ListUserPoliciesResult& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListUserPoliciesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListUserPoliciesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListUserPoliciesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::Vector<Aws::String> m_policyNames;
 
-    Aws::Vector<Aws::String> m_policyNames;
+  bool m_isTruncated{false};
 
-    bool m_isTruncated;
+  Aws::String m_marker;
 
-    Aws::String m_marker;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_policyNamesHasBeenSet = false;
+  bool m_isTruncatedHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace IAM
-} // namespace Aws
+}  // namespace Model
+}  // namespace IAM
+}  // namespace Aws

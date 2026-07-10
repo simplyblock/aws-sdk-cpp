@@ -12,16 +12,4 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteTrafficDistributionGroupRequest::DeleteTrafficDistributionGroupRequest() : 
-    m_trafficDistributionGroupIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteTrafficDistributionGroupRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteTrafficDistributionGroupRequest::SerializePayload() const { return {}; }

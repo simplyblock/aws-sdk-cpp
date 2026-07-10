@@ -37,6 +37,7 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
     private static Set<String> opsThatDoNotSupportVirtualAddressing = new HashSet<>();
     private static Set<String> opsThatDoNotSupportArnEndpoint = new HashSet<>();
     private static Set<String> s3CrtEnabledOps = new HashSet<>(); // All other ops are in fact regular SDK calls
+    private static Set<String> emptyValueQueryMarkerOps = new HashSet<>(); // Bare query markers that must emit "?marker="
     private static Set<String> bucketLocationConstraints = new HashSet<>();
     private Set<String> functionsWithEmbeddedErrors = ImmutableSet.of(
 
@@ -141,19 +142,21 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
             "WriteGetObjectResponse"
     );
 
-    private static final Set<String> OPS_TO_SKIP_CHECKSUMS = ImmutableSet.of(
-            "UploadPart"
-    );
-
     private static final Set<String> REQUESTS_TO_OVERRIDE_STREAMING = ImmutableSet.of(
-            "PutBucketPolicyRequest"
+            "PutBucketPolicyRequest",
+            "PutObjectAnnotationRequest"
     );
 
     private static final Map<String, String> CHECKSUM_MEMBERS_ENUMS = ImmutableMap.of(
             "ChecksumCRC32", "CRC32",
             "ChecksumCRC32C", "CRC32C",
             "ChecksumSHA1", "SHA1",
-            "ChecksumSHA256", "SHA256"
+            "ChecksumSHA256", "SHA256",
+            "ChecksumSHA512", "SHA512",
+            "ChecksumXXHASH64", "XXHASH64",
+            "ChecksumXXHASH3", "XXHASH3",
+            "ChecksumXXHASH128", "XXHASH128",
+            "ChecksumMD5", "MD5"
     );
 
     static {
@@ -199,6 +202,11 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
 
     @Override
     public SdkFileEntry[] generateSourceFiles(ServiceModel serviceModel) throws Exception {
+        if(serviceModel.isUseSmithyClient())
+        {
+            updateAuthSchemesFromEndpointRules(serviceModel, serviceModel.getRawEndpointRules());
+            serviceModel.setAuthSchemes(getUpdatedAuthSchemesFromOperations(serviceModel));
+        }
 
         // Add ID2 and RequestId to GetObjectResult
         hackGetObjectOutputResponse(serviceModel);
@@ -237,6 +245,9 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
             serviceModel.getOperations().values().stream()
                     .filter(operationEntry -> s3CrtEnabledOps.contains(operationEntry.getName()))
                     .forEach(operationEntry -> operationEntry.setS3CrtEnabled(true));
+            serviceModel.getOperations().values().stream()
+                    .filter(operationEntry -> emptyValueQueryMarkerOps.contains(operationEntry.getName()))
+                    .forEach(operationEntry -> operationEntry.setEmitEmptyValueQueryMarker(true));
         }
 
         Shape locationConstraints = serviceModel.getShapes().get("BucketLocationConstraint");
@@ -280,10 +291,6 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
         serviceModel.getOperations().entrySet().stream()
                 .filter(entry -> !opsThatDoNotSupportBucketArguments.contains(entry.getValue().getName()))
                 .forEach(entry -> entry.getValue().setShouldUsePropertyBag(true));
-
-        serviceModel.getOperations().entrySet().stream()
-                .filter(entry -> OPS_TO_SKIP_CHECKSUMS.contains(entry.getValue().getName()))
-                .forEach(entry -> entry.getValue().setShouldSkipChecksum(true));
 
         serviceModel.getShapes().values().stream()
                 .filter(shape -> REQUESTS_TO_OVERRIDE_STREAMING.contains(shape.getName()))
@@ -446,10 +453,21 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
 
     @Override
     protected SdkFileEntry generateClientHeaderFile(final ServiceModel serviceModel) throws Exception {
-        Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/S3ClientHeader.vm");
 
+        Template template;
+        if (serviceModel.isUseSmithyClient())
+        {
+            template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/SmithyS3ClientHeader.vm");
+        }
+        else
+        {
+            template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/S3ClientHeader.vm");
+        }
         VelocityContext context = createContext(serviceModel);
         context.put("CppViewHelper", CppViewHelper.class);
+        context.put("AuthSchemeResolver", "SigV4MultiAuthSchemeResolver");
+        context.put("AuthSchemeVariants", serviceModel.getAuthSchemes().stream().map(this::mapAuthSchemes).collect(Collectors.joining(",")));
+
 
         String fileName = String.format("include/aws/%s/%sClient.h", serviceModel.getMetadata().getProjectName(),
                 serviceModel.getMetadata().getClassNamePrefix());
@@ -461,16 +479,35 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
     protected List<SdkFileEntry> generateClientSourceFile(final List<ServiceModel> serviceModels) throws Exception {
         List<SdkFileEntry> sourceFiles = new ArrayList<>();
         for (int i = 0; i < serviceModels.size(); i++) {
-            Template template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/S3ClientSource.vm");
-
+            Template template;
+            if (serviceModels.get(i).isUseSmithyClient())
+            {
+                template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/SmithyS3ClientSource.vm");
+            }
+            else
+            {
+                template = velocityEngine.getTemplate("/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/S3ClientSource.vm");
+            }
             Map<String, String> templateOverride = new HashMap<>();
             if ("S3-CRT".equalsIgnoreCase(serviceModels.get(i).getMetadata().getProjectName())) {
-                templateOverride.put("ServiceClientSourceInit_template",
-                        "/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/s3-crt/S3CrtServiceClientSourceInit.vm");
+                if (serviceModels.get(i).isUseSmithyClient())
+                {
+                    templateOverride.put("ServiceClientSourceInit_template",
+                            "/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/s3-crt/SmithyS3CrtServiceClientSourceInit.vm");
+                }
+                else
+                {
+                    templateOverride.put("ServiceClientSourceInit_template",
+                            "/com/amazonaws/util/awsclientgenerator/velocity/cpp/s3/s3-crt/S3CrtServiceClientSourceInit.vm");
+                }
             }
             VelocityContext context = createContext(serviceModels.get(i));
             context.put("CppViewHelper", CppViewHelper.class);
             context.put("TemplateOverride", templateOverride);
+            context.put("AuthSchemeResolver", "S3ExpressAuthSchemeResolver");
+            context.put("AuthSchemeMapEntries", createAuthSchemeMapEntries(serviceModels.get(i)));
+            context.put("AuthSchemes", getSupportedAuthSchemes(serviceModels.get(i)));
+            context.put("AuthSchemeVariants", serviceModels.get(i).getAuthSchemes().stream().map(this::mapAuthSchemes).collect(Collectors.joining(",")));
 
             final String fileName;
             if (i == 0) {
@@ -502,6 +539,29 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
                         Pair.of("source/S3CrtIdentityProviderAdapter.cpp", String.format(vmFilePrefixFormat, "S3CrtIdentityProviderAdapterSource.vm"))))
                 .orElse(Stream.of());
 
+        if (serviceModel.isUseSmithyClient())
+        {
+            return Stream.concat(
+                Stream.of(
+                        Pair.of(includePath + "S3ExpressIdentity.h", String.format(vmFilePrefixFormat, "S3ExpressIdentityHeader.vm")),
+                        Pair.of(includePath + "S3ExpressIdentityProvider.h", String.format(vmFilePrefixFormat, "SmithyS3ExpressIdentityProviderHeader.vm")),
+                        Pair.of(includePath + "S3ExpressSigner.h", String.format(vmFilePrefixFormat, "SmithyS3ExpressSignerHeader.vm")),
+                        Pair.of(includePath + "S3ExpressSignerProvider.h", String.format(vmFilePrefixFormat, "S3ExpressSignerProviderHeader.vm")),
+                        Pair.of(includePath + "S3ExpressSigV4AuthScheme.h", String.format(vmFilePrefixFormat, "SmithyS3ExpressSigV4AuthSchemeHeader.vm")),
+                        Pair.of(includePath + "S3ExpressSigV4AuthSchemeOption.h", String.format(vmFilePrefixFormat, "SmithyS3ExpressSigV4AuthSchemeOptionHeader.vm")),
+                        Pair.of(includePath + "S3ExpressAuthSchemeResolver.h", String.format(vmFilePrefixFormat, "SmithyS3ExpressAuthSchemeResolverHeader.vm")),
+                        Pair.of("source/S3ExpressSigV4AuthSchemeOption.cpp", String.format(vmFilePrefixFormat, "SmithyS3ExpressSigV4AuthSchemeOptionSource.vm")),
+                        Pair.of("source/S3ExpressIdentityProvider.cpp", String.format(vmFilePrefixFormat, "SmithyS3ExpressIdentityProviderSource.vm")),
+                        Pair.of("source/S3ExpressSigner.cpp", String.format(vmFilePrefixFormat, "SmithyS3ExpressSignerSource.vm")),
+                        Pair.of("source/S3ExpressSignerProvider.cpp", String.format(vmFilePrefixFormat, "SmithyS3ExpressSignerProviderSource.vm"))),
+                crtAdapters)
+        .map(codeGenPair -> makeFile(velocityEngine.getTemplate(codeGenPair.getValue()),
+                context,
+                codeGenPair.getKey(),
+                true))
+        .collect(Collectors.toList());
+        }
+
         return Stream.concat(
                         Stream.of(Pair.of(includePath + "S3ExpressIdentity.h", String.format(vmFilePrefixFormat, "S3ExpressIdentityHeader.vm")),
                                 Pair.of(includePath + "S3ExpressIdentityProvider.h", String.format(vmFilePrefixFormat, "S3ExpressIdentityProviderHeader.vm")),
@@ -519,7 +579,7 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
     }
 
     @Override
-    protected SdkFileEntry generateModelSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry) {
+    protected SdkFileEntry generateModelSourceFile(ServiceModel serviceModel, Map.Entry<String, Shape> shapeEntry, final Map<String, CppShapeInformation> shapeInformationCache) {
         Template template = null;
         String fileName = "";
 
@@ -535,7 +595,7 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
                 break;
             }
             default:
-                return super.generateModelSourceFile(serviceModel, shapeEntry);
+                return super.generateModelSourceFile(serviceModel, shapeEntry, shapeInformationCache);
         }
 
         Shape shape = shapeEntry.getValue();
@@ -639,22 +699,6 @@ public class S3RestXmlCppClientGenerator extends RestXmlCppClientGenerator {
 
     @Override
     protected void addRequestIdToResults(final ServiceModel serviceModel) {
-        serviceModel.getShapes().values().stream()
-                .filter(Shape::isResult)
-                .filter(shape -> !shape.getMembers().containsKey("requestId"))
-                .forEach(shape -> {
-                    Shape requestId = new Shape();
-                    requestId.setName("RequestId");
-                    requestId.setType("string");
-                    requestId.hasHeaderMembers();
-                    requestId.setMembers(ImmutableMap.of());
-
-                    ShapeMember requestIdMember = new ShapeMember();
-                    requestIdMember.setShape(requestId);
-                    requestIdMember.setLocation("header");
-                    //S3 uses a different header location than other services.
-                    requestIdMember.setLocationName("x-amz-request-id");
-                    shape.getMembers().put("RequestId", requestIdMember);
-                });
+        addToAllResultsShape(serviceModel, "requestId", "RequestId", "x-amz-request-id", "");
     }
 }

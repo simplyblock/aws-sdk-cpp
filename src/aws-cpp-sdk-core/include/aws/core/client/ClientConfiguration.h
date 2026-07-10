@@ -6,14 +6,16 @@
 #pragma once
 
 #include <aws/core/Core_EXPORTS.h>
+#include <aws/core/Region.h>
+#include <aws/core/http/HttpTypes.h>
 #include <aws/core/http/Scheme.h>
 #include <aws/core/http/Version.h>
-#include <aws/core/Region.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/core/http/HttpTypes.h>
 #include <aws/core/utils/Array.h>
+#include <aws/core/utils/StringUtils.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/crt/Optional.h>
 #include <smithy/tracing/TelemetryProvider.h>
+
 #include <memory>
 
 namespace Aws
@@ -54,6 +56,36 @@ namespace Aws
         {
           DISABLE,
           ENABLE,
+        };
+
+        /**
+         * Setting on whether to calculate a checksum for a payload only when it is required.
+         * i.e. when setting WHEN_REQUIRED the SDK will NOT calculate a checksum for an endpoint
+         * where it is supported but is NOT required.
+         */
+        enum class RequestChecksumCalculation {
+          WHEN_SUPPORTED,
+          WHEN_REQUIRED,
+        };
+
+        /**
+         * Setting on whether to client side response validate a content body that had a checksum
+         * associated with it. Response validation right now cannot be modeled as required but rely
+         * on an associated model configuration.
+         */
+        enum class ResponseChecksumValidation {
+          WHEN_SUPPORTED,
+          WHEN_REQUIRED,
+        };
+
+        /**
+         * Control HTTP client chunking implementation mode.
+         * DEFAULT: Use SDK's ChunkingInterceptor for aws-chunked encoding
+         * CLIENT_IMPLEMENTATION: Rely on HTTP client's native chunking (default for custom clients)
+         */
+        enum class HttpClientChunkedMode {
+          DEFAULT,
+          CLIENT_IMPLEMENTATION,
         };
 
         struct RequestCompressionConfig {
@@ -405,27 +437,223 @@ namespace Aws
              */
             Aws::String appId;
 
+            struct {
+              /**
+               * Setting on whether to calculate a checksum for a payload only when it is required.
+               * i.e. when setting WHEN_REQUIRED the SDK will NOT calculate a checksum for an endpoint
+               * where it is supported but is NOT required.
+               */
+              RequestChecksumCalculation requestChecksumCalculation = RequestChecksumCalculation::WHEN_SUPPORTED;
+
+              /**
+               * Setting on whether to client side response validate a content body that had a checksum
+               * associated with it. Response validation right now cannot be modeled as required but rely
+               * on an associated model configuration.
+               */
+              ResponseChecksumValidation responseChecksumValidation = ResponseChecksumValidation::WHEN_SUPPORTED;
+            } checksumConfig;
+
             /**
              * A helper function to read config value from env variable or aws profile config
              */
-            static Aws::String LoadConfigFromEnvOrProfile(const Aws::String& envKey,
-                                                          const Aws::String& profile,
-                                                          const Aws::String& profileProperty,
-                                                          const Aws::Vector<Aws::String>& allowedValues,
+            static Aws::String LoadConfigFromEnvOrProfile(const Aws::String& envKey, const Aws::String& profile,
+                                                          const Aws::String& profileProperty, const Aws::Vector<Aws::String>& allowedValues,
                                                           const Aws::String& defaultValue);
+            /**
+             * A helper function to read config value from env variable or aws profile config. Addresses a problem in
+             * LoadConfigFromEnvOrProfile where env variables values are always mapped to their lower case equivalent.
+             * This fails for cases where ENV vars need to be case sensitive in instances like AWS_ROLE_ARN can have
+             * camel case values.
+             */
+            static Aws::String LoadConfigFromEnvOrProfileCaseSensitive(
+                const Aws::String& envKey, const Aws::String& profile, const Aws::String& profileProperty,
+                const Aws::Vector<Aws::String>& allowedValues, const Aws::String& defaultValue,
+                const std::function<Aws::String(const char*)>& envValueMapping = Utils::StringUtils::ToLower);
 
             /**
              * A wrapper for interfacing with telemetry functionality. Defaults to Noop provider.
              * Provide TelemetryProvider here or via a factory method.
              */
             std::shared_ptr<smithy::components::tracing::TelemetryProvider> telemetryProvider;
+
+            /**
+             * Configuration that is specifically used for the windows http client
+             */
+            struct WinHTTPOptions {
+              /**
+               * Sets the windows http client to use WINHTTP_NO_CLIENT_CERT_CONTEXT when connecting
+               * to a service, specifically only useful when disabling ssl verification and using
+               * a different type of authentication.
+               */
+              bool useAnonymousAuth = false;
+            } winHTTPOptions;
+
+            /**
+             * Configuration that is specifically used for the curl http client
+             */
+            struct CurlOptions {
+              /**
+               * If set to true, SSL connections will use best-effort revocation checking,
+               * proceeding even when CRL servers are unreachable. Off by default.
+               */
+              bool revokeBestEffort = false;
+            } curlOptions;
+
+          /**
+            * The AWS account ID. Used for account-based endpoint routing. An AWS account ID has a format like 111122223333.
+            * Account-based endpoint routing provides better request performance for some services.
+            *
+            * https://docs.aws.amazon.com/sdkref/latest/guide/feature-account-endpoints.html
+            */
+          Aws::String accountId;
+
+          /**
+           * This setting is used to turn off account-based endpoint routing if necessary, and bypass account-based rules.
+           * Can be the case sensitive string values "required", "disabled", or "preferred". Defaults to "preferred".
+           *
+           * https://docs.aws.amazon.com/sdkref/latest/guide/feature-account-endpoints.html
+           */
+          Aws::String accountIdEndpointMode = "preferred";
+
+          /**
+           * Control HTTP client chunking implementation mode.
+           * Default is set automatically: CLIENT_IMPLEMENTATION for custom clients, DEFAULT for AWS clients.
+           */
+          HttpClientChunkedMode httpClientChunkedMode = HttpClientChunkedMode::CLIENT_IMPLEMENTATION;
+          /**
+          * Configuration structure for credential providers in the AWS SDK.
+          * This structure allows passing configuration options to credential providers
+          * such as profile name and client configuration for HTTP requests made by
+          * credential providers that need to make network calls (e.g., InstanceProfileCredentialsProvider).
+          */
+          struct CredentialProviderConfiguration {
+            /**
+            * AWS profile name to use for credentials.
+            */
+            Aws::String profile;
+
+            /**
+             * Region to use for calls
+             */
+            Aws::String region;
+
+            /**
+             * Allow CRT-based credential providers to honor HTTP_PROXY / HTTPS_PROXY / NO_PROXY environment
+             * variables when fetching credentials. Off by default to mirror ClientConfiguration::allowSystemProxy
+             * and avoid silently routing credential traffic through an unintended proxy.
+             */
+            bool allowSystemProxy = false;
+
+            /**
+             * IMDS configuration settings
+             */
+            struct {
+              /**
+               * Number of total attempts to make when retrieving data from IMDS. Default 1.
+               */
+              long metadataServiceNumAttempts = 1;
+              
+              /**
+               * Timeout in seconds when retrieving data from IMDS. Default 1.
+               */
+              long metadataServiceTimeout = 1;
+
+              /**
+               * Retry Strategy for IMDS
+               */
+              std::shared_ptr<RetryStrategy> imdsRetryStrategy;
+              bool disableImdsV1;
+              bool disableImds;
+            } imdsConfig;
+
+            /**
+             * Configuration for the STSCredentials provider
+             */
+            struct STSCredentialsCredentialProviderConfiguration {
+              STSCredentialsCredentialProviderConfiguration() = default;
+              STSCredentialsCredentialProviderConfiguration(const Aws::String& role, const Aws::String& session, const String& tokenFile)
+                  : roleArn(role), sessionName(session), tokenFilePath(tokenFile) {};
+              /**
+               * Arn of the role to assume by fetching credentials for
+               */
+              Aws::String roleArn;
+              /**
+               * Assumed role session identifier to be associated with the sourced credentials
+               */
+              Aws::String sessionName;
+              /**
+               * The OAuth 2.0 access token or OpenID Connect ID token
+               */
+              Aws::String tokenFilePath;
+
+              /**
+               * Time out for the credentials future call.
+               */
+              std::chrono::milliseconds retrieveCredentialsFutureTimeout = std::chrono::seconds(10);
+
+              /**
+               * How long a cached credential set will be used for
+               */
+              std::chrono::milliseconds credentialCacheCacheTTL = std::chrono::minutes(50);
+            } stsCredentialsProviderConfig;
+            struct LoginProviderConfig {
+              /**
+               * ARN for AWS login session.
+               */
+              Aws::String loginSession{};
+
+              /**
+               * Overrides the login cache directory. by default the cache directory
+               * is located at `~/.aws/login/cache`.
+               */
+              Aws::String loginCacheOverride{};
+
+              /**
+               * Time out for the credentials future call.
+               */
+              std::chrono::milliseconds retrieveCredentialsFutureTimeout = std::chrono::seconds(10);
+            } loginCredentialProviderConfig;
+          } credentialProviderConfig;
+
+          /**
+           * Returns a copy of credentialProviderConfig with parent fields (such as allowSystemProxy) re-synced
+           * from their current values on this ClientConfiguration. Use this at the point of constructing a
+           * credentials provider so post-construction assignments to parent fields are picked up; reading
+           * credentialProviderConfig directly captures values from ClientConfiguration construction time only.
+           */
+          CredentialProviderConfiguration ResolveCredentialProviderConfig() const;
+
+          /**
+           * Authentication scheme preferences in order of preference.
+           * First available auth scheme will be used for each operation.
+           */
+          Aws::Vector<Aws::String> authPreferences;
+
+          /**
+           * List of AWS regions for SigV4a multi-region signing.
+           */
+          Aws::Vector<Aws::String> sigV4aSigningRegionSet;
+
+          /**
+           * Buffer size in bytes that will be used to content encode
+           * bodies using aws-chunked. Changing this is useful when you
+           * want to minimize memory use while uploading to S3. Size MUST
+           * be greater than 8KB otherwise S3 will reject the request.
+           *
+           * Defaults to 64KiB.
+           *
+           * https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-streaming.html
+           */
+          size_t awsChunkedBufferSize = 64UL * 1024;
         };
 
         /**
          * A helper function to initialize a retry strategy.
          * Default is DefaultRetryStrategy (i.e. exponential backoff)
          */
-        std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode = "");
+        AWS_CORE_API std::shared_ptr<RetryStrategy> InitRetryStrategy(Aws::String retryMode = "");
+        AWS_CORE_API std::shared_ptr<RetryStrategy> InitRetryStrategy(int maxRetries, Aws::String retryMode = "");
+        AWS_CORE_API std::shared_ptr<RetryStrategy> InitRetryStrategy(int maxRetries, Aws::String retryMode, double transientBackoffBaseSec);
 
         /**
          * A helper function to compute a user agent
@@ -434,6 +662,5 @@ namespace Aws
         AWS_CORE_API Aws::String ComputeUserAgentString(ClientConfiguration const * const pConfig = nullptr);
 
         AWS_CORE_API Aws::String FilterUserAgentToken(char const * const token);
-
     } // namespace Client
 } // namespace Aws

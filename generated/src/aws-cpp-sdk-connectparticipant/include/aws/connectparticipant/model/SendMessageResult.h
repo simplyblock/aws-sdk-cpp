@@ -5,79 +5,112 @@
 
 #pragma once
 #include <aws/connectparticipant/ConnectParticipant_EXPORTS.h>
+#include <aws/connectparticipant/model/MessageProcessingMetadata.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectParticipant
-{
-namespace Model
-{
-  class SendMessageResult
-  {
-  public:
-    AWS_CONNECTPARTICIPANT_API SendMessageResult();
-    AWS_CONNECTPARTICIPANT_API SendMessageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTPARTICIPANT_API SendMessageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectParticipant {
+namespace Model {
+class SendMessageResult {
+ public:
+  AWS_CONNECTPARTICIPANT_API SendMessageResult() = default;
+  AWS_CONNECTPARTICIPANT_API SendMessageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTPARTICIPANT_API SendMessageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of the message.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  SendMessageResult& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the message.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline void SetId(const Aws::String& value) { m_id = value; }
-    inline void SetId(Aws::String&& value) { m_id = std::move(value); }
-    inline void SetId(const char* value) { m_id.assign(value); }
-    inline SendMessageResult& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline SendMessageResult& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline SendMessageResult& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the message was sent.</p> <p>It's specified in ISO 8601 format:
+   * yyyy-MM-ddThh:mm:ss.SSSZ. For example, 2019-11-08T02:41:28.172Z.</p>
+   */
+  inline const Aws::String& GetAbsoluteTime() const { return m_absoluteTime; }
+  template <typename AbsoluteTimeT = Aws::String>
+  void SetAbsoluteTime(AbsoluteTimeT&& value) {
+    m_absoluteTimeHasBeenSet = true;
+    m_absoluteTime = std::forward<AbsoluteTimeT>(value);
+  }
+  template <typename AbsoluteTimeT = Aws::String>
+  SendMessageResult& WithAbsoluteTime(AbsoluteTimeT&& value) {
+    SetAbsoluteTime(std::forward<AbsoluteTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the message was sent.</p> <p>It's specified in ISO 8601 format:
-     * yyyy-MM-ddThh:mm:ss.SSSZ. For example, 2019-11-08T02:41:28.172Z.</p>
-     */
-    inline const Aws::String& GetAbsoluteTime() const{ return m_absoluteTime; }
-    inline void SetAbsoluteTime(const Aws::String& value) { m_absoluteTime = value; }
-    inline void SetAbsoluteTime(Aws::String&& value) { m_absoluteTime = std::move(value); }
-    inline void SetAbsoluteTime(const char* value) { m_absoluteTime.assign(value); }
-    inline SendMessageResult& WithAbsoluteTime(const Aws::String& value) { SetAbsoluteTime(value); return *this;}
-    inline SendMessageResult& WithAbsoluteTime(Aws::String&& value) { SetAbsoluteTime(std::move(value)); return *this;}
-    inline SendMessageResult& WithAbsoluteTime(const char* value) { SetAbsoluteTime(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains metadata for the message.</p>
+   */
+  inline const MessageProcessingMetadata& GetMessageMetadata() const { return m_messageMetadata; }
+  template <typename MessageMetadataT = MessageProcessingMetadata>
+  void SetMessageMetadata(MessageMetadataT&& value) {
+    m_messageMetadataHasBeenSet = true;
+    m_messageMetadata = std::forward<MessageMetadataT>(value);
+  }
+  template <typename MessageMetadataT = MessageProcessingMetadata>
+  SendMessageResult& WithMessageMetadata(MessageMetadataT&& value) {
+    SetMessageMetadata(std::forward<MessageMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SendMessageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SendMessageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SendMessageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    Aws::String m_id;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SendMessageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_absoluteTime;
+ private:
+  Aws::String m_id;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_absoluteTime;
 
-} // namespace Model
-} // namespace ConnectParticipant
-} // namespace Aws
+  MessageProcessingMetadata m_messageMetadata;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_idHasBeenSet = false;
+  bool m_absoluteTimeHasBeenSet = false;
+  bool m_messageMetadataHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace ConnectParticipant
+}  // namespace Aws

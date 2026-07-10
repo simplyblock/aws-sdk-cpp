@@ -5,81 +5,100 @@
 
 #pragma once
 #include <aws/appintegrations/AppIntegrationsService_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/appintegrations/model/DataIntegrationSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppIntegrationsService
-{
-namespace Model
-{
-  class ListDataIntegrationsResult
-  {
-  public:
-    AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult();
-    AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppIntegrationsService {
+namespace Model {
+class ListDataIntegrationsResult {
+ public:
+  AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult() = default;
+  AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPINTEGRATIONSSERVICE_API ListDataIntegrationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The DataIntegrations associated with this account.</p>
+   */
+  inline const Aws::Vector<DataIntegrationSummary>& GetDataIntegrations() const { return m_dataIntegrations; }
+  template <typename DataIntegrationsT = Aws::Vector<DataIntegrationSummary>>
+  void SetDataIntegrations(DataIntegrationsT&& value) {
+    m_dataIntegrationsHasBeenSet = true;
+    m_dataIntegrations = std::forward<DataIntegrationsT>(value);
+  }
+  template <typename DataIntegrationsT = Aws::Vector<DataIntegrationSummary>>
+  ListDataIntegrationsResult& WithDataIntegrations(DataIntegrationsT&& value) {
+    SetDataIntegrations(std::forward<DataIntegrationsT>(value));
+    return *this;
+  }
+  template <typename DataIntegrationsT = DataIntegrationSummary>
+  ListDataIntegrationsResult& AddDataIntegrations(DataIntegrationsT&& value) {
+    m_dataIntegrationsHasBeenSet = true;
+    m_dataIntegrations.emplace_back(std::forward<DataIntegrationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The DataIntegrations associated with this account.</p>
-     */
-    inline const Aws::Vector<DataIntegrationSummary>& GetDataIntegrations() const{ return m_dataIntegrations; }
-    inline void SetDataIntegrations(const Aws::Vector<DataIntegrationSummary>& value) { m_dataIntegrations = value; }
-    inline void SetDataIntegrations(Aws::Vector<DataIntegrationSummary>&& value) { m_dataIntegrations = std::move(value); }
-    inline ListDataIntegrationsResult& WithDataIntegrations(const Aws::Vector<DataIntegrationSummary>& value) { SetDataIntegrations(value); return *this;}
-    inline ListDataIntegrationsResult& WithDataIntegrations(Aws::Vector<DataIntegrationSummary>&& value) { SetDataIntegrations(std::move(value)); return *this;}
-    inline ListDataIntegrationsResult& AddDataIntegrations(const DataIntegrationSummary& value) { m_dataIntegrations.push_back(value); return *this; }
-    inline ListDataIntegrationsResult& AddDataIntegrations(DataIntegrationSummary&& value) { m_dataIntegrations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If there are additional results, this is the token for the next set of
+   * results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDataIntegrationsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If there are additional results, this is the token for the next set of
-     * results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDataIntegrationsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDataIntegrationsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDataIntegrationsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDataIntegrationsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDataIntegrationsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDataIntegrationsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDataIntegrationsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DataIntegrationSummary> m_dataIntegrations;
+ private:
+  Aws::Vector<DataIntegrationSummary> m_dataIntegrations;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_dataIntegrationsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppIntegrationsService
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppIntegrationsService
+}  // namespace Aws

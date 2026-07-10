@@ -4,339 +4,449 @@
  */
 
 #pragma once
-#include <aws/elasticfilesystem/EFS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/elasticfilesystem/model/LifeCycleState.h>
-#include <aws/elasticfilesystem/model/FileSystemSize.h>
-#include <aws/elasticfilesystem/model/PerformanceMode.h>
-#include <aws/elasticfilesystem/model/ThroughputMode.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticfilesystem/EFS_EXPORTS.h>
 #include <aws/elasticfilesystem/model/FileSystemProtectionDescription.h>
+#include <aws/elasticfilesystem/model/FileSystemSize.h>
+#include <aws/elasticfilesystem/model/LifeCycleState.h>
+#include <aws/elasticfilesystem/model/PerformanceMode.h>
 #include <aws/elasticfilesystem/model/Tag.h>
+#include <aws/elasticfilesystem/model/ThroughputMode.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EFS
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EFS {
+namespace Model {
+/**
+ * <p>A description of the file system.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/elasticfilesystem-2015-02-01/FileSystemDescription">AWS
+ * API Reference</a></p>
+ */
+class CreateFileSystemResult {
+ public:
+  AWS_EFS_API CreateFileSystemResult() = default;
+  AWS_EFS_API CreateFileSystemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EFS_API CreateFileSystemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>A description of the file system.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/elasticfilesystem-2015-02-01/FileSystemDescription">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Web Services account that created the file system.</p>
    */
-  class CreateFileSystemResult
-  {
-  public:
-    AWS_EFS_API CreateFileSystemResult();
-    AWS_EFS_API CreateFileSystemResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EFS_API CreateFileSystemResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetOwnerId() const { return m_ownerId; }
+  template <typename OwnerIdT = Aws::String>
+  void SetOwnerId(OwnerIdT&& value) {
+    m_ownerIdHasBeenSet = true;
+    m_ownerId = std::forward<OwnerIdT>(value);
+  }
+  template <typename OwnerIdT = Aws::String>
+  CreateFileSystemResult& WithOwnerId(OwnerIdT&& value) {
+    SetOwnerId(std::forward<OwnerIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The opaque string specified in the request.</p>
+   */
+  inline const Aws::String& GetCreationToken() const { return m_creationToken; }
+  template <typename CreationTokenT = Aws::String>
+  void SetCreationToken(CreationTokenT&& value) {
+    m_creationTokenHasBeenSet = true;
+    m_creationToken = std::forward<CreationTokenT>(value);
+  }
+  template <typename CreationTokenT = Aws::String>
+  CreateFileSystemResult& WithCreationToken(CreationTokenT&& value) {
+    SetCreationToken(std::forward<CreationTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Web Services account that created the file system.</p>
-     */
-    inline const Aws::String& GetOwnerId() const{ return m_ownerId; }
-    inline void SetOwnerId(const Aws::String& value) { m_ownerId = value; }
-    inline void SetOwnerId(Aws::String&& value) { m_ownerId = std::move(value); }
-    inline void SetOwnerId(const char* value) { m_ownerId.assign(value); }
-    inline CreateFileSystemResult& WithOwnerId(const Aws::String& value) { SetOwnerId(value); return *this;}
-    inline CreateFileSystemResult& WithOwnerId(Aws::String&& value) { SetOwnerId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithOwnerId(const char* value) { SetOwnerId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the file system, assigned by Amazon EFS.</p>
+   */
+  inline const Aws::String& GetFileSystemId() const { return m_fileSystemId; }
+  template <typename FileSystemIdT = Aws::String>
+  void SetFileSystemId(FileSystemIdT&& value) {
+    m_fileSystemIdHasBeenSet = true;
+    m_fileSystemId = std::forward<FileSystemIdT>(value);
+  }
+  template <typename FileSystemIdT = Aws::String>
+  CreateFileSystemResult& WithFileSystemId(FileSystemIdT&& value) {
+    SetFileSystemId(std::forward<FileSystemIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The opaque string specified in the request.</p>
-     */
-    inline const Aws::String& GetCreationToken() const{ return m_creationToken; }
-    inline void SetCreationToken(const Aws::String& value) { m_creationToken = value; }
-    inline void SetCreationToken(Aws::String&& value) { m_creationToken = std::move(value); }
-    inline void SetCreationToken(const char* value) { m_creationToken.assign(value); }
-    inline CreateFileSystemResult& WithCreationToken(const Aws::String& value) { SetCreationToken(value); return *this;}
-    inline CreateFileSystemResult& WithCreationToken(Aws::String&& value) { SetCreationToken(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithCreationToken(const char* value) { SetCreationToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the EFS file system, in the format
+   * <code>arn:aws:elasticfilesystem:<i>region</i>:<i>account-id</i>:file-system/<i>file-system-id</i>
+   * </code>. Example with sample data:
+   * <code>arn:aws:elasticfilesystem:us-west-2:1111333322228888:file-system/fs-01234567</code>
+   * </p>
+   */
+  inline const Aws::String& GetFileSystemArn() const { return m_fileSystemArn; }
+  template <typename FileSystemArnT = Aws::String>
+  void SetFileSystemArn(FileSystemArnT&& value) {
+    m_fileSystemArnHasBeenSet = true;
+    m_fileSystemArn = std::forward<FileSystemArnT>(value);
+  }
+  template <typename FileSystemArnT = Aws::String>
+  CreateFileSystemResult& WithFileSystemArn(FileSystemArnT&& value) {
+    SetFileSystemArn(std::forward<FileSystemArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the file system, assigned by Amazon EFS.</p>
-     */
-    inline const Aws::String& GetFileSystemId() const{ return m_fileSystemId; }
-    inline void SetFileSystemId(const Aws::String& value) { m_fileSystemId = value; }
-    inline void SetFileSystemId(Aws::String&& value) { m_fileSystemId = std::move(value); }
-    inline void SetFileSystemId(const char* value) { m_fileSystemId.assign(value); }
-    inline CreateFileSystemResult& WithFileSystemId(const Aws::String& value) { SetFileSystemId(value); return *this;}
-    inline CreateFileSystemResult& WithFileSystemId(Aws::String&& value) { SetFileSystemId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithFileSystemId(const char* value) { SetFileSystemId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time that the file system was created, in seconds (since
+   * 1970-01-01T00:00:00Z).</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  CreateFileSystemResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the EFS file system, in the format
-     * <code>arn:aws:elasticfilesystem:<i>region</i>:<i>account-id</i>:file-system/<i>file-system-id</i>
-     * </code>. Example with sample data:
-     * <code>arn:aws:elasticfilesystem:us-west-2:1111333322228888:file-system/fs-01234567</code>
-     * </p>
-     */
-    inline const Aws::String& GetFileSystemArn() const{ return m_fileSystemArn; }
-    inline void SetFileSystemArn(const Aws::String& value) { m_fileSystemArn = value; }
-    inline void SetFileSystemArn(Aws::String&& value) { m_fileSystemArn = std::move(value); }
-    inline void SetFileSystemArn(const char* value) { m_fileSystemArn.assign(value); }
-    inline CreateFileSystemResult& WithFileSystemArn(const Aws::String& value) { SetFileSystemArn(value); return *this;}
-    inline CreateFileSystemResult& WithFileSystemArn(Aws::String&& value) { SetFileSystemArn(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithFileSystemArn(const char* value) { SetFileSystemArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The lifecycle phase of the file system.</p>
+   */
+  inline LifeCycleState GetLifeCycleState() const { return m_lifeCycleState; }
+  inline void SetLifeCycleState(LifeCycleState value) {
+    m_lifeCycleStateHasBeenSet = true;
+    m_lifeCycleState = value;
+  }
+  inline CreateFileSystemResult& WithLifeCycleState(LifeCycleState value) {
+    SetLifeCycleState(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time that the file system was created, in seconds (since
-     * 1970-01-01T00:00:00Z).</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline CreateFileSystemResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline CreateFileSystemResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>You can add tags to a file system, including a <code>Name</code> tag. For
+   * more information, see <a>CreateFileSystem</a>. If the file system has a
+   * <code>Name</code> tag, Amazon EFS returns the value in this field. </p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  CreateFileSystemResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The lifecycle phase of the file system.</p>
-     */
-    inline const LifeCycleState& GetLifeCycleState() const{ return m_lifeCycleState; }
-    inline void SetLifeCycleState(const LifeCycleState& value) { m_lifeCycleState = value; }
-    inline void SetLifeCycleState(LifeCycleState&& value) { m_lifeCycleState = std::move(value); }
-    inline CreateFileSystemResult& WithLifeCycleState(const LifeCycleState& value) { SetLifeCycleState(value); return *this;}
-    inline CreateFileSystemResult& WithLifeCycleState(LifeCycleState&& value) { SetLifeCycleState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current number of mount targets that the file system has. For more
+   * information, see <a>CreateMountTarget</a>.</p>
+   */
+  inline int GetNumberOfMountTargets() const { return m_numberOfMountTargets; }
+  inline void SetNumberOfMountTargets(int value) {
+    m_numberOfMountTargetsHasBeenSet = true;
+    m_numberOfMountTargets = value;
+  }
+  inline CreateFileSystemResult& WithNumberOfMountTargets(int value) {
+    SetNumberOfMountTargets(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>You can add tags to a file system, including a <code>Name</code> tag. For
-     * more information, see <a>CreateFileSystem</a>. If the file system has a
-     * <code>Name</code> tag, Amazon EFS returns the value in this field. </p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline CreateFileSystemResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline CreateFileSystemResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The latest known metered size (in bytes) of data stored in the file system,
+   * in its <code>Value</code> field, and the time at which that size was determined
+   * in its <code>Timestamp</code> field. The <code>Timestamp</code> value is the
+   * integer number of seconds since 1970-01-01T00:00:00Z. The
+   * <code>SizeInBytes</code> value doesn't represent the size of a consistent
+   * snapshot of the file system, but it is eventually consistent when there are no
+   * writes to the file system. That is, <code>SizeInBytes</code> represents actual
+   * size only if the file system is not modified for a period longer than a couple
+   * of hours. Otherwise, the value is not the exact size that the file system was at
+   * any point in time. </p>
+   */
+  inline const FileSystemSize& GetSizeInBytes() const { return m_sizeInBytes; }
+  template <typename SizeInBytesT = FileSystemSize>
+  void SetSizeInBytes(SizeInBytesT&& value) {
+    m_sizeInBytesHasBeenSet = true;
+    m_sizeInBytes = std::forward<SizeInBytesT>(value);
+  }
+  template <typename SizeInBytesT = FileSystemSize>
+  CreateFileSystemResult& WithSizeInBytes(SizeInBytesT&& value) {
+    SetSizeInBytes(std::forward<SizeInBytesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current number of mount targets that the file system has. For more
-     * information, see <a>CreateMountTarget</a>.</p>
-     */
-    inline int GetNumberOfMountTargets() const{ return m_numberOfMountTargets; }
-    inline void SetNumberOfMountTargets(int value) { m_numberOfMountTargets = value; }
-    inline CreateFileSystemResult& WithNumberOfMountTargets(int value) { SetNumberOfMountTargets(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The performance mode of the file system.</p>
+   */
+  inline PerformanceMode GetPerformanceMode() const { return m_performanceMode; }
+  inline void SetPerformanceMode(PerformanceMode value) {
+    m_performanceModeHasBeenSet = true;
+    m_performanceMode = value;
+  }
+  inline CreateFileSystemResult& WithPerformanceMode(PerformanceMode value) {
+    SetPerformanceMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The latest known metered size (in bytes) of data stored in the file system,
-     * in its <code>Value</code> field, and the time at which that size was determined
-     * in its <code>Timestamp</code> field. The <code>Timestamp</code> value is the
-     * integer number of seconds since 1970-01-01T00:00:00Z. The
-     * <code>SizeInBytes</code> value doesn't represent the size of a consistent
-     * snapshot of the file system, but it is eventually consistent when there are no
-     * writes to the file system. That is, <code>SizeInBytes</code> represents actual
-     * size only if the file system is not modified for a period longer than a couple
-     * of hours. Otherwise, the value is not the exact size that the file system was at
-     * any point in time. </p>
-     */
-    inline const FileSystemSize& GetSizeInBytes() const{ return m_sizeInBytes; }
-    inline void SetSizeInBytes(const FileSystemSize& value) { m_sizeInBytes = value; }
-    inline void SetSizeInBytes(FileSystemSize&& value) { m_sizeInBytes = std::move(value); }
-    inline CreateFileSystemResult& WithSizeInBytes(const FileSystemSize& value) { SetSizeInBytes(value); return *this;}
-    inline CreateFileSystemResult& WithSizeInBytes(FileSystemSize&& value) { SetSizeInBytes(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A Boolean value that, if true, indicates that the file system is
+   * encrypted.</p>
+   */
+  inline bool GetEncrypted() const { return m_encrypted; }
+  inline void SetEncrypted(bool value) {
+    m_encryptedHasBeenSet = true;
+    m_encrypted = value;
+  }
+  inline CreateFileSystemResult& WithEncrypted(bool value) {
+    SetEncrypted(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Performance mode of the file system.</p>
-     */
-    inline const PerformanceMode& GetPerformanceMode() const{ return m_performanceMode; }
-    inline void SetPerformanceMode(const PerformanceMode& value) { m_performanceMode = value; }
-    inline void SetPerformanceMode(PerformanceMode&& value) { m_performanceMode = std::move(value); }
-    inline CreateFileSystemResult& WithPerformanceMode(const PerformanceMode& value) { SetPerformanceMode(value); return *this;}
-    inline CreateFileSystemResult& WithPerformanceMode(PerformanceMode&& value) { SetPerformanceMode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of an KMS key used to protect the encrypted file system.</p>
+   */
+  inline const Aws::String& GetKmsKeyId() const { return m_kmsKeyId; }
+  template <typename KmsKeyIdT = Aws::String>
+  void SetKmsKeyId(KmsKeyIdT&& value) {
+    m_kmsKeyIdHasBeenSet = true;
+    m_kmsKeyId = std::forward<KmsKeyIdT>(value);
+  }
+  template <typename KmsKeyIdT = Aws::String>
+  CreateFileSystemResult& WithKmsKeyId(KmsKeyIdT&& value) {
+    SetKmsKeyId(std::forward<KmsKeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A Boolean value that, if true, indicates that the file system is
-     * encrypted.</p>
-     */
-    inline bool GetEncrypted() const{ return m_encrypted; }
-    inline void SetEncrypted(bool value) { m_encrypted = value; }
-    inline CreateFileSystemResult& WithEncrypted(bool value) { SetEncrypted(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Displays the file system's throughput mode. For more information, see <a
+   * href="https://docs.aws.amazon.com/efs/latest/ug/performance.html#throughput-modes">Throughput
+   * modes</a> in the <i>Amazon EFS User Guide</i>. </p>
+   */
+  inline ThroughputMode GetThroughputMode() const { return m_throughputMode; }
+  inline void SetThroughputMode(ThroughputMode value) {
+    m_throughputModeHasBeenSet = true;
+    m_throughputMode = value;
+  }
+  inline CreateFileSystemResult& WithThroughputMode(ThroughputMode value) {
+    SetThroughputMode(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of an KMS key used to protect the encrypted file system.</p>
-     */
-    inline const Aws::String& GetKmsKeyId() const{ return m_kmsKeyId; }
-    inline void SetKmsKeyId(const Aws::String& value) { m_kmsKeyId = value; }
-    inline void SetKmsKeyId(Aws::String&& value) { m_kmsKeyId = std::move(value); }
-    inline void SetKmsKeyId(const char* value) { m_kmsKeyId.assign(value); }
-    inline CreateFileSystemResult& WithKmsKeyId(const Aws::String& value) { SetKmsKeyId(value); return *this;}
-    inline CreateFileSystemResult& WithKmsKeyId(Aws::String&& value) { SetKmsKeyId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithKmsKeyId(const char* value) { SetKmsKeyId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The amount of provisioned throughput, measured in MiBps, for the file system.
+   * Valid for file systems using <code>ThroughputMode</code> set to
+   * <code>provisioned</code>.</p>
+   */
+  inline double GetProvisionedThroughputInMibps() const { return m_provisionedThroughputInMibps; }
+  inline void SetProvisionedThroughputInMibps(double value) {
+    m_provisionedThroughputInMibpsHasBeenSet = true;
+    m_provisionedThroughputInMibps = value;
+  }
+  inline CreateFileSystemResult& WithProvisionedThroughputInMibps(double value) {
+    SetProvisionedThroughputInMibps(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Displays the file system's throughput mode. For more information, see <a
-     * href="https://docs.aws.amazon.com/efs/latest/ug/performance.html#throughput-modes">Throughput
-     * modes</a> in the <i>Amazon EFS User Guide</i>. </p>
-     */
-    inline const ThroughputMode& GetThroughputMode() const{ return m_throughputMode; }
-    inline void SetThroughputMode(const ThroughputMode& value) { m_throughputMode = value; }
-    inline void SetThroughputMode(ThroughputMode&& value) { m_throughputMode = std::move(value); }
-    inline CreateFileSystemResult& WithThroughputMode(const ThroughputMode& value) { SetThroughputMode(value); return *this;}
-    inline CreateFileSystemResult& WithThroughputMode(ThroughputMode&& value) { SetThroughputMode(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the Amazon Web Services Availability Zone in which the file system
+   * is located, and is valid only for One Zone file systems. For more information,
+   * see <a
+   * href="https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html">Using EFS
+   * storage classes</a> in the <i>Amazon EFS User Guide</i>.</p>
+   */
+  inline const Aws::String& GetAvailabilityZoneName() const { return m_availabilityZoneName; }
+  template <typename AvailabilityZoneNameT = Aws::String>
+  void SetAvailabilityZoneName(AvailabilityZoneNameT&& value) {
+    m_availabilityZoneNameHasBeenSet = true;
+    m_availabilityZoneName = std::forward<AvailabilityZoneNameT>(value);
+  }
+  template <typename AvailabilityZoneNameT = Aws::String>
+  CreateFileSystemResult& WithAvailabilityZoneName(AvailabilityZoneNameT&& value) {
+    SetAvailabilityZoneName(std::forward<AvailabilityZoneNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The amount of provisioned throughput, measured in MiBps, for the file system.
-     * Valid for file systems using <code>ThroughputMode</code> set to
-     * <code>provisioned</code>.</p>
-     */
-    inline double GetProvisionedThroughputInMibps() const{ return m_provisionedThroughputInMibps; }
-    inline void SetProvisionedThroughputInMibps(double value) { m_provisionedThroughputInMibps = value; }
-    inline CreateFileSystemResult& WithProvisionedThroughputInMibps(double value) { SetProvisionedThroughputInMibps(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique and consistent identifier of the Availability Zone in which the
+   * file system is located, and is valid only for One Zone file systems. For
+   * example, <code>use1-az1</code> is an Availability Zone ID for the us-east-1
+   * Amazon Web Services Region, and it has the same location in every Amazon Web
+   * Services account.</p>
+   */
+  inline const Aws::String& GetAvailabilityZoneId() const { return m_availabilityZoneId; }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  void SetAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    m_availabilityZoneIdHasBeenSet = true;
+    m_availabilityZoneId = std::forward<AvailabilityZoneIdT>(value);
+  }
+  template <typename AvailabilityZoneIdT = Aws::String>
+  CreateFileSystemResult& WithAvailabilityZoneId(AvailabilityZoneIdT&& value) {
+    SetAvailabilityZoneId(std::forward<AvailabilityZoneIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Describes the Amazon Web Services Availability Zone in which the file system
-     * is located, and is valid only for One Zone file systems. For more information,
-     * see <a
-     * href="https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html">Using EFS
-     * storage classes</a> in the <i>Amazon EFS User Guide</i>.</p>
-     */
-    inline const Aws::String& GetAvailabilityZoneName() const{ return m_availabilityZoneName; }
-    inline void SetAvailabilityZoneName(const Aws::String& value) { m_availabilityZoneName = value; }
-    inline void SetAvailabilityZoneName(Aws::String&& value) { m_availabilityZoneName = std::move(value); }
-    inline void SetAvailabilityZoneName(const char* value) { m_availabilityZoneName.assign(value); }
-    inline CreateFileSystemResult& WithAvailabilityZoneName(const Aws::String& value) { SetAvailabilityZoneName(value); return *this;}
-    inline CreateFileSystemResult& WithAvailabilityZoneName(Aws::String&& value) { SetAvailabilityZoneName(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithAvailabilityZoneName(const char* value) { SetAvailabilityZoneName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags associated with the file system, presented as an array of
+   * <code>Tag</code> objects.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  CreateFileSystemResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  CreateFileSystemResult& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique and consistent identifier of the Availability Zone in which the
-     * file system is located, and is valid only for One Zone file systems. For
-     * example, <code>use1-az1</code> is an Availability Zone ID for the us-east-1
-     * Amazon Web Services Region, and it has the same location in every Amazon Web
-     * Services account.</p>
-     */
-    inline const Aws::String& GetAvailabilityZoneId() const{ return m_availabilityZoneId; }
-    inline void SetAvailabilityZoneId(const Aws::String& value) { m_availabilityZoneId = value; }
-    inline void SetAvailabilityZoneId(Aws::String&& value) { m_availabilityZoneId = std::move(value); }
-    inline void SetAvailabilityZoneId(const char* value) { m_availabilityZoneId.assign(value); }
-    inline CreateFileSystemResult& WithAvailabilityZoneId(const Aws::String& value) { SetAvailabilityZoneId(value); return *this;}
-    inline CreateFileSystemResult& WithAvailabilityZoneId(Aws::String&& value) { SetAvailabilityZoneId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithAvailabilityZoneId(const char* value) { SetAvailabilityZoneId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Describes the protection on the file system. </p>
+   */
+  inline const FileSystemProtectionDescription& GetFileSystemProtection() const { return m_fileSystemProtection; }
+  template <typename FileSystemProtectionT = FileSystemProtectionDescription>
+  void SetFileSystemProtection(FileSystemProtectionT&& value) {
+    m_fileSystemProtectionHasBeenSet = true;
+    m_fileSystemProtection = std::forward<FileSystemProtectionT>(value);
+  }
+  template <typename FileSystemProtectionT = FileSystemProtectionDescription>
+  CreateFileSystemResult& WithFileSystemProtection(FileSystemProtectionT&& value) {
+    SetFileSystemProtection(std::forward<FileSystemProtectionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags associated with the file system, presented as an array of
-     * <code>Tag</code> objects.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tags = std::move(value); }
-    inline CreateFileSystemResult& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline CreateFileSystemResult& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline CreateFileSystemResult& AddTags(const Tag& value) { m_tags.push_back(value); return *this; }
-    inline CreateFileSystemResult& AddTags(Tag&& value) { m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Describes the protection on the file system. </p>
-     */
-    inline const FileSystemProtectionDescription& GetFileSystemProtection() const{ return m_fileSystemProtection; }
-    inline void SetFileSystemProtection(const FileSystemProtectionDescription& value) { m_fileSystemProtection = value; }
-    inline void SetFileSystemProtection(FileSystemProtectionDescription&& value) { m_fileSystemProtection = std::move(value); }
-    inline CreateFileSystemResult& WithFileSystemProtection(const FileSystemProtectionDescription& value) { SetFileSystemProtection(value); return *this;}
-    inline CreateFileSystemResult& WithFileSystemProtection(FileSystemProtectionDescription&& value) { SetFileSystemProtection(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateFileSystemResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateFileSystemResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateFileSystemResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateFileSystemResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_ownerId;
 
-    Aws::String m_ownerId;
+  Aws::String m_creationToken;
 
-    Aws::String m_creationToken;
+  Aws::String m_fileSystemId;
 
-    Aws::String m_fileSystemId;
+  Aws::String m_fileSystemArn;
 
-    Aws::String m_fileSystemArn;
+  Aws::Utils::DateTime m_creationTime{};
 
-    Aws::Utils::DateTime m_creationTime;
+  LifeCycleState m_lifeCycleState{LifeCycleState::NOT_SET};
 
-    LifeCycleState m_lifeCycleState;
+  Aws::String m_name;
 
-    Aws::String m_name;
+  int m_numberOfMountTargets{0};
 
-    int m_numberOfMountTargets;
+  FileSystemSize m_sizeInBytes;
 
-    FileSystemSize m_sizeInBytes;
+  PerformanceMode m_performanceMode{PerformanceMode::NOT_SET};
 
-    PerformanceMode m_performanceMode;
+  bool m_encrypted{false};
 
-    bool m_encrypted;
+  Aws::String m_kmsKeyId;
 
-    Aws::String m_kmsKeyId;
+  ThroughputMode m_throughputMode{ThroughputMode::NOT_SET};
 
-    ThroughputMode m_throughputMode;
+  double m_provisionedThroughputInMibps{0.0};
 
-    double m_provisionedThroughputInMibps;
+  Aws::String m_availabilityZoneName;
 
-    Aws::String m_availabilityZoneName;
+  Aws::String m_availabilityZoneId;
 
-    Aws::String m_availabilityZoneId;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::Vector<Tag> m_tags;
+  FileSystemProtectionDescription m_fileSystemProtection;
 
-    FileSystemProtectionDescription m_fileSystemProtection;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_ownerIdHasBeenSet = false;
+  bool m_creationTokenHasBeenSet = false;
+  bool m_fileSystemIdHasBeenSet = false;
+  bool m_fileSystemArnHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_lifeCycleStateHasBeenSet = false;
+  bool m_nameHasBeenSet = false;
+  bool m_numberOfMountTargetsHasBeenSet = false;
+  bool m_sizeInBytesHasBeenSet = false;
+  bool m_performanceModeHasBeenSet = false;
+  bool m_encryptedHasBeenSet = false;
+  bool m_kmsKeyIdHasBeenSet = false;
+  bool m_throughputModeHasBeenSet = false;
+  bool m_provisionedThroughputInMibpsHasBeenSet = false;
+  bool m_availabilityZoneNameHasBeenSet = false;
+  bool m_availabilityZoneIdHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_fileSystemProtectionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace EFS
-} // namespace Aws
+}  // namespace Model
+}  // namespace EFS
+}  // namespace Aws

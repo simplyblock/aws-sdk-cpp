@@ -4,77 +4,80 @@
  */
 
 #pragma once
-#include <aws/batch/Batch_EXPORTS.h>
 #include <aws/batch/BatchRequest.h>
+#include <aws/batch/Batch_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Batch
-{
-namespace Model
-{
+namespace Aws {
+namespace Batch {
+namespace Model {
 
+/**
+ * <p>Contains the parameters for <code>CancelJob</code>.</p><p><h3>See Also:</h3>
+ * <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CancelJobRequest">AWS
+ * API Reference</a></p>
+ */
+class CancelJobRequest : public BatchRequest {
+ public:
+  AWS_BATCH_API CancelJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CancelJob"; }
+
+  AWS_BATCH_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
-   * <p>Contains the parameters for <code>CancelJob</code>.</p><p><h3>See Also:</h3> 
-   * <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/batch-2016-08-10/CancelJobRequest">AWS
-   * API Reference</a></p>
+   * <p>The Batch job ID of the job to cancel.</p>
    */
-  class CancelJobRequest : public BatchRequest
-  {
-  public:
-    AWS_BATCH_API CancelJobRequest();
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  CancelJobRequest& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CancelJob"; }
+  ///@{
+  /**
+   * <p>A message to attach to the job that explains the reason for canceling it.
+   * This message is returned by future <a>DescribeJobs</a> operations on the job. It
+   * is also recorded in the Batch activity logs.</p> <p>This parameter has as limit
+   * of 1024 characters.</p>
+   */
+  inline const Aws::String& GetReason() const { return m_reason; }
+  inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
+  template <typename ReasonT = Aws::String>
+  void SetReason(ReasonT&& value) {
+    m_reasonHasBeenSet = true;
+    m_reason = std::forward<ReasonT>(value);
+  }
+  template <typename ReasonT = Aws::String>
+  CancelJobRequest& WithReason(ReasonT&& value) {
+    SetReason(std::forward<ReasonT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_jobId;
 
-    AWS_BATCH_API Aws::String SerializePayload() const override;
+  Aws::String m_reason;
+  bool m_jobIdHasBeenSet = false;
+  bool m_reasonHasBeenSet = false;
+};
 
-
-    ///@{
-    /**
-     * <p>The Batch job ID of the job to cancel.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
-    inline void SetJobId(const Aws::String& value) { m_jobIdHasBeenSet = true; m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobIdHasBeenSet = true; m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobIdHasBeenSet = true; m_jobId.assign(value); }
-    inline CancelJobRequest& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline CancelJobRequest& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline CancelJobRequest& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>A message to attach to the job that explains the reason for canceling it.
-     * This message is returned by future <a>DescribeJobs</a> operations on the job. It
-     * is also recorded in the Batch activity logs.</p> <p>This parameter has as limit
-     * of 1024 characters.</p>
-     */
-    inline const Aws::String& GetReason() const{ return m_reason; }
-    inline bool ReasonHasBeenSet() const { return m_reasonHasBeenSet; }
-    inline void SetReason(const Aws::String& value) { m_reasonHasBeenSet = true; m_reason = value; }
-    inline void SetReason(Aws::String&& value) { m_reasonHasBeenSet = true; m_reason = std::move(value); }
-    inline void SetReason(const char* value) { m_reasonHasBeenSet = true; m_reason.assign(value); }
-    inline CancelJobRequest& WithReason(const Aws::String& value) { SetReason(value); return *this;}
-    inline CancelJobRequest& WithReason(Aws::String&& value) { SetReason(std::move(value)); return *this;}
-    inline CancelJobRequest& WithReason(const char* value) { SetReason(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_jobId;
-    bool m_jobIdHasBeenSet = false;
-
-    Aws::String m_reason;
-    bool m_reasonHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Batch
-} // namespace Aws
+}  // namespace Model
+}  // namespace Batch
+}  // namespace Aws

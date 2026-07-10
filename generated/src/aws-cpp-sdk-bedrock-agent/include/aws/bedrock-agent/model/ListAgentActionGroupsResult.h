@@ -5,83 +5,101 @@
 
 #pragma once
 #include <aws/bedrock-agent/BedrockAgent_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/bedrock-agent/model/ActionGroupSummary.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace BedrockAgent
-{
-namespace Model
-{
-  class ListAgentActionGroupsResult
-  {
-  public:
-    AWS_BEDROCKAGENT_API ListAgentActionGroupsResult();
-    AWS_BEDROCKAGENT_API ListAgentActionGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCKAGENT_API ListAgentActionGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace BedrockAgent {
+namespace Model {
+class ListAgentActionGroupsResult {
+ public:
+  AWS_BEDROCKAGENT_API ListAgentActionGroupsResult() = default;
+  AWS_BEDROCKAGENT_API ListAgentActionGroupsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCKAGENT_API ListAgentActionGroupsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of objects, each of which contains information about an action
+   * group.</p>
+   */
+  inline const Aws::Vector<ActionGroupSummary>& GetActionGroupSummaries() const { return m_actionGroupSummaries; }
+  template <typename ActionGroupSummariesT = Aws::Vector<ActionGroupSummary>>
+  void SetActionGroupSummaries(ActionGroupSummariesT&& value) {
+    m_actionGroupSummariesHasBeenSet = true;
+    m_actionGroupSummaries = std::forward<ActionGroupSummariesT>(value);
+  }
+  template <typename ActionGroupSummariesT = Aws::Vector<ActionGroupSummary>>
+  ListAgentActionGroupsResult& WithActionGroupSummaries(ActionGroupSummariesT&& value) {
+    SetActionGroupSummaries(std::forward<ActionGroupSummariesT>(value));
+    return *this;
+  }
+  template <typename ActionGroupSummariesT = ActionGroupSummary>
+  ListAgentActionGroupsResult& AddActionGroupSummaries(ActionGroupSummariesT&& value) {
+    m_actionGroupSummariesHasBeenSet = true;
+    m_actionGroupSummaries.emplace_back(std::forward<ActionGroupSummariesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of objects, each of which contains information about an action
-     * group.</p>
-     */
-    inline const Aws::Vector<ActionGroupSummary>& GetActionGroupSummaries() const{ return m_actionGroupSummaries; }
-    inline void SetActionGroupSummaries(const Aws::Vector<ActionGroupSummary>& value) { m_actionGroupSummaries = value; }
-    inline void SetActionGroupSummaries(Aws::Vector<ActionGroupSummary>&& value) { m_actionGroupSummaries = std::move(value); }
-    inline ListAgentActionGroupsResult& WithActionGroupSummaries(const Aws::Vector<ActionGroupSummary>& value) { SetActionGroupSummaries(value); return *this;}
-    inline ListAgentActionGroupsResult& WithActionGroupSummaries(Aws::Vector<ActionGroupSummary>&& value) { SetActionGroupSummaries(std::move(value)); return *this;}
-    inline ListAgentActionGroupsResult& AddActionGroupSummaries(const ActionGroupSummary& value) { m_actionGroupSummaries.push_back(value); return *this; }
-    inline ListAgentActionGroupsResult& AddActionGroupSummaries(ActionGroupSummary&& value) { m_actionGroupSummaries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>If the total number of results is greater than the <code>maxResults</code>
+   * value provided in the request, use this token when making another request in the
+   * <code>nextToken</code> field to return the next batch of results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListAgentActionGroupsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the total number of results is greater than the <code>maxResults</code>
-     * value provided in the request, use this token when making another request in the
-     * <code>nextToken</code> field to return the next batch of results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListAgentActionGroupsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListAgentActionGroupsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListAgentActionGroupsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListAgentActionGroupsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListAgentActionGroupsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListAgentActionGroupsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListAgentActionGroupsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<ActionGroupSummary> m_actionGroupSummaries;
+ private:
+  Aws::Vector<ActionGroupSummary> m_actionGroupSummaries;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_actionGroupSummariesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace BedrockAgent
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgent
+}  // namespace Aws

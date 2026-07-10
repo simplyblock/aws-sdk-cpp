@@ -6,75 +6,76 @@
 #pragma once
 #include <aws/bedrock/Bedrock_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Bedrock
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Bedrock {
+namespace Model {
 
+/**
+ * <p>Contains <code>SageMakerFlowDefinition</code> object. The object is used to
+ * specify the prompt dataset, task type, rating method and metric
+ * names.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/HumanWorkflowConfig">AWS
+ * API Reference</a></p>
+ */
+class HumanWorkflowConfig {
+ public:
+  AWS_BEDROCK_API HumanWorkflowConfig() = default;
+  AWS_BEDROCK_API HumanWorkflowConfig(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCK_API HumanWorkflowConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BEDROCK_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains <code>SageMakerFlowDefinition</code> object. The object is used to
-   * specify the prompt dataset, task type, rating method and metric
-   * names.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/HumanWorkflowConfig">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Number (ARN) for the flow definition</p>
    */
-  class HumanWorkflowConfig
-  {
-  public:
-    AWS_BEDROCK_API HumanWorkflowConfig();
-    AWS_BEDROCK_API HumanWorkflowConfig(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCK_API HumanWorkflowConfig& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BEDROCK_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetFlowDefinitionArn() const { return m_flowDefinitionArn; }
+  inline bool FlowDefinitionArnHasBeenSet() const { return m_flowDefinitionArnHasBeenSet; }
+  template <typename FlowDefinitionArnT = Aws::String>
+  void SetFlowDefinitionArn(FlowDefinitionArnT&& value) {
+    m_flowDefinitionArnHasBeenSet = true;
+    m_flowDefinitionArn = std::forward<FlowDefinitionArnT>(value);
+  }
+  template <typename FlowDefinitionArnT = Aws::String>
+  HumanWorkflowConfig& WithFlowDefinitionArn(FlowDefinitionArnT&& value) {
+    SetFlowDefinitionArn(std::forward<FlowDefinitionArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Instructions for the flow definition</p>
+   */
+  inline const Aws::String& GetInstructions() const { return m_instructions; }
+  inline bool InstructionsHasBeenSet() const { return m_instructionsHasBeenSet; }
+  template <typename InstructionsT = Aws::String>
+  void SetInstructions(InstructionsT&& value) {
+    m_instructionsHasBeenSet = true;
+    m_instructions = std::forward<InstructionsT>(value);
+  }
+  template <typename InstructionsT = Aws::String>
+  HumanWorkflowConfig& WithInstructions(InstructionsT&& value) {
+    SetInstructions(std::forward<InstructionsT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_flowDefinitionArn;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Number (ARN) for the flow definition</p>
-     */
-    inline const Aws::String& GetFlowDefinitionArn() const{ return m_flowDefinitionArn; }
-    inline bool FlowDefinitionArnHasBeenSet() const { return m_flowDefinitionArnHasBeenSet; }
-    inline void SetFlowDefinitionArn(const Aws::String& value) { m_flowDefinitionArnHasBeenSet = true; m_flowDefinitionArn = value; }
-    inline void SetFlowDefinitionArn(Aws::String&& value) { m_flowDefinitionArnHasBeenSet = true; m_flowDefinitionArn = std::move(value); }
-    inline void SetFlowDefinitionArn(const char* value) { m_flowDefinitionArnHasBeenSet = true; m_flowDefinitionArn.assign(value); }
-    inline HumanWorkflowConfig& WithFlowDefinitionArn(const Aws::String& value) { SetFlowDefinitionArn(value); return *this;}
-    inline HumanWorkflowConfig& WithFlowDefinitionArn(Aws::String&& value) { SetFlowDefinitionArn(std::move(value)); return *this;}
-    inline HumanWorkflowConfig& WithFlowDefinitionArn(const char* value) { SetFlowDefinitionArn(value); return *this;}
-    ///@}
+  Aws::String m_instructions;
+  bool m_flowDefinitionArnHasBeenSet = false;
+  bool m_instructionsHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Instructions for the flow definition</p>
-     */
-    inline const Aws::String& GetInstructions() const{ return m_instructions; }
-    inline bool InstructionsHasBeenSet() const { return m_instructionsHasBeenSet; }
-    inline void SetInstructions(const Aws::String& value) { m_instructionsHasBeenSet = true; m_instructions = value; }
-    inline void SetInstructions(Aws::String&& value) { m_instructionsHasBeenSet = true; m_instructions = std::move(value); }
-    inline void SetInstructions(const char* value) { m_instructionsHasBeenSet = true; m_instructions.assign(value); }
-    inline HumanWorkflowConfig& WithInstructions(const Aws::String& value) { SetInstructions(value); return *this;}
-    inline HumanWorkflowConfig& WithInstructions(Aws::String&& value) { SetInstructions(std::move(value)); return *this;}
-    inline HumanWorkflowConfig& WithInstructions(const char* value) { SetInstructions(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_flowDefinitionArn;
-    bool m_flowDefinitionArnHasBeenSet = false;
-
-    Aws::String m_instructions;
-    bool m_instructionsHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

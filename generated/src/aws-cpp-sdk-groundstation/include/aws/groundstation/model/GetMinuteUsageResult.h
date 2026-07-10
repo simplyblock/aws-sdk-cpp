@@ -4,114 +4,152 @@
  */
 
 #pragma once
-#include <aws/groundstation/GroundStation_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/groundstation/GroundStation_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GroundStation
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GroundStation {
+namespace Model {
+/**
+ * <p>Output for the <code>GetMinuteUsage</code> operation.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/GetMinuteUsageResponse">AWS
+ * API Reference</a></p>
+ */
+class GetMinuteUsageResult {
+ public:
+  AWS_GROUNDSTATION_API GetMinuteUsageResult() = default;
+  AWS_GROUNDSTATION_API GetMinuteUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GROUNDSTATION_API GetMinuteUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/groundstation-2019-05-23/GetMinuteUsageResponse">AWS
-   * API Reference</a></p>
+   * <p>Returns whether or not an account has signed up for the reserved minutes
+   * pricing plan, specific to the month being requested.</p>
    */
-  class GetMinuteUsageResult
-  {
-  public:
-    AWS_GROUNDSTATION_API GetMinuteUsageResult();
-    AWS_GROUNDSTATION_API GetMinuteUsageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GROUNDSTATION_API GetMinuteUsageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline bool GetIsReservedMinutesCustomer() const { return m_isReservedMinutesCustomer; }
+  inline void SetIsReservedMinutesCustomer(bool value) {
+    m_isReservedMinutesCustomerHasBeenSet = true;
+    m_isReservedMinutesCustomer = value;
+  }
+  inline GetMinuteUsageResult& WithIsReservedMinutesCustomer(bool value) {
+    SetIsReservedMinutesCustomer(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Total number of reserved minutes allocated, specific to the month being
+   * requested.</p>
+   */
+  inline int GetTotalReservedMinuteAllocation() const { return m_totalReservedMinuteAllocation; }
+  inline void SetTotalReservedMinuteAllocation(int value) {
+    m_totalReservedMinuteAllocationHasBeenSet = true;
+    m_totalReservedMinuteAllocation = value;
+  }
+  inline GetMinuteUsageResult& WithTotalReservedMinuteAllocation(int value) {
+    SetTotalReservedMinuteAllocation(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Estimated number of minutes remaining for an account, specific to the month
-     * being requested.</p>
-     */
-    inline int GetEstimatedMinutesRemaining() const{ return m_estimatedMinutesRemaining; }
-    inline void SetEstimatedMinutesRemaining(int value) { m_estimatedMinutesRemaining = value; }
-    inline GetMinuteUsageResult& WithEstimatedMinutesRemaining(int value) { SetEstimatedMinutesRemaining(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Upcoming minutes scheduled for an account, specific to the month being
+   * requested.</p>
+   */
+  inline int GetUpcomingMinutesScheduled() const { return m_upcomingMinutesScheduled; }
+  inline void SetUpcomingMinutesScheduled(int value) {
+    m_upcomingMinutesScheduledHasBeenSet = true;
+    m_upcomingMinutesScheduled = value;
+  }
+  inline GetMinuteUsageResult& WithUpcomingMinutesScheduled(int value) {
+    SetUpcomingMinutesScheduled(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns whether or not an account has signed up for the reserved minutes
-     * pricing plan, specific to the month being requested.</p>
-     */
-    inline bool GetIsReservedMinutesCustomer() const{ return m_isReservedMinutesCustomer; }
-    inline void SetIsReservedMinutesCustomer(bool value) { m_isReservedMinutesCustomer = value; }
-    inline GetMinuteUsageResult& WithIsReservedMinutesCustomer(bool value) { SetIsReservedMinutesCustomer(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Total scheduled minutes for an account, specific to the month being
+   * requested.</p>
+   */
+  inline int GetTotalScheduledMinutes() const { return m_totalScheduledMinutes; }
+  inline void SetTotalScheduledMinutes(int value) {
+    m_totalScheduledMinutesHasBeenSet = true;
+    m_totalScheduledMinutes = value;
+  }
+  inline GetMinuteUsageResult& WithTotalScheduledMinutes(int value) {
+    SetTotalScheduledMinutes(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Total number of reserved minutes allocated, specific to the month being
-     * requested.</p>
-     */
-    inline int GetTotalReservedMinuteAllocation() const{ return m_totalReservedMinuteAllocation; }
-    inline void SetTotalReservedMinuteAllocation(int value) { m_totalReservedMinuteAllocation = value; }
-    inline GetMinuteUsageResult& WithTotalReservedMinuteAllocation(int value) { SetTotalReservedMinuteAllocation(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Estimated number of minutes remaining for an account, specific to the month
+   * being requested.</p>
+   */
+  inline int GetEstimatedMinutesRemaining() const { return m_estimatedMinutesRemaining; }
+  inline void SetEstimatedMinutesRemaining(int value) {
+    m_estimatedMinutesRemainingHasBeenSet = true;
+    m_estimatedMinutesRemaining = value;
+  }
+  inline GetMinuteUsageResult& WithEstimatedMinutesRemaining(int value) {
+    SetEstimatedMinutesRemaining(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Total scheduled minutes for an account, specific to the month being
-     * requested.</p>
-     */
-    inline int GetTotalScheduledMinutes() const{ return m_totalScheduledMinutes; }
-    inline void SetTotalScheduledMinutes(int value) { m_totalScheduledMinutes = value; }
-    inline GetMinuteUsageResult& WithTotalScheduledMinutes(int value) { SetTotalScheduledMinutes(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Upcoming minutes scheduled for an account, specific to the month being
-     * requested.</p>
-     */
-    inline int GetUpcomingMinutesScheduled() const{ return m_upcomingMinutesScheduled; }
-    inline void SetUpcomingMinutesScheduled(int value) { m_upcomingMinutesScheduled = value; }
-    inline GetMinuteUsageResult& WithUpcomingMinutesScheduled(int value) { SetUpcomingMinutesScheduled(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetMinuteUsageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetMinuteUsageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetMinuteUsageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetMinuteUsageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  bool m_isReservedMinutesCustomer{false};
 
-    int m_estimatedMinutesRemaining;
+  int m_totalReservedMinuteAllocation{0};
 
-    bool m_isReservedMinutesCustomer;
+  int m_upcomingMinutesScheduled{0};
 
-    int m_totalReservedMinuteAllocation;
+  int m_totalScheduledMinutes{0};
 
-    int m_totalScheduledMinutes;
+  int m_estimatedMinutesRemaining{0};
 
-    int m_upcomingMinutesScheduled;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_isReservedMinutesCustomerHasBeenSet = false;
+  bool m_totalReservedMinuteAllocationHasBeenSet = false;
+  bool m_upcomingMinutesScheduledHasBeenSet = false;
+  bool m_totalScheduledMinutesHasBeenSet = false;
+  bool m_estimatedMinutesRemainingHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

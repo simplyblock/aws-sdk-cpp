@@ -4,206 +4,251 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
-#include <aws/sagemaker/SageMakerRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sagemaker/model/StudioLifecycleConfigAppType.h>
 #include <aws/core/utils/DateTime.h>
-#include <aws/sagemaker/model/StudioLifecycleConfigSortKey.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMakerRequest.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
 #include <aws/sagemaker/model/SortOrder.h>
+#include <aws/sagemaker/model/StudioLifecycleConfigAppType.h>
+#include <aws/sagemaker/model/StudioLifecycleConfigSortKey.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SageMaker
-{
-namespace Model
-{
+namespace Aws {
+namespace SageMaker {
+namespace Model {
 
+/**
+ */
+class ListStudioLifecycleConfigsRequest : public SageMakerRequest {
+ public:
+  AWS_SAGEMAKER_API ListStudioLifecycleConfigsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListStudioLifecycleConfigs"; }
+
+  AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+
+  AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The total number of items to return in the response. If the total number of
+   * items available is more than the value specified, a <code>NextToken</code> is
+   * provided in the response. To resume pagination, provide the
+   * <code>NextToken</code> value in the as part of a subsequent call. The default
+   * value is 10.</p>
    */
-  class ListStudioLifecycleConfigsRequest : public SageMakerRequest
-  {
-  public:
-    AWS_SAGEMAKER_API ListStudioLifecycleConfigsRequest();
+  inline int GetMaxResults() const { return m_maxResults; }
+  inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
+  inline void SetMaxResults(int value) {
+    m_maxResultsHasBeenSet = true;
+    m_maxResults = value;
+  }
+  inline ListStudioLifecycleConfigsRequest& WithMaxResults(int value) {
+    SetMaxResults(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListStudioLifecycleConfigs"; }
+  ///@{
+  /**
+   * <p>If the previous call to ListStudioLifecycleConfigs didn't return the full set
+   * of Lifecycle Configurations, the call returns a token for getting the next set
+   * of Lifecycle Configurations.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListStudioLifecycleConfigsRequest& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>A string in the Lifecycle Configuration name. This filter returns only
+   * Lifecycle Configurations whose name contains the specified string.</p>
+   */
+  inline const Aws::String& GetNameContains() const { return m_nameContains; }
+  inline bool NameContainsHasBeenSet() const { return m_nameContainsHasBeenSet; }
+  template <typename NameContainsT = Aws::String>
+  void SetNameContains(NameContainsT&& value) {
+    m_nameContainsHasBeenSet = true;
+    m_nameContains = std::forward<NameContainsT>(value);
+  }
+  template <typename NameContainsT = Aws::String>
+  ListStudioLifecycleConfigsRequest& WithNameContains(NameContainsT&& value) {
+    SetNameContains(std::forward<NameContainsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SAGEMAKER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>A parameter to search for the App Type to which the Lifecycle Configuration
+   * is attached.</p>
+   */
+  inline StudioLifecycleConfigAppType GetAppTypeEquals() const { return m_appTypeEquals; }
+  inline bool AppTypeEqualsHasBeenSet() const { return m_appTypeEqualsHasBeenSet; }
+  inline void SetAppTypeEquals(StudioLifecycleConfigAppType value) {
+    m_appTypeEqualsHasBeenSet = true;
+    m_appTypeEquals = value;
+  }
+  inline ListStudioLifecycleConfigsRequest& WithAppTypeEquals(StudioLifecycleConfigAppType value) {
+    SetAppTypeEquals(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A filter that returns only Lifecycle Configurations created on or before the
+   * specified time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTimeBefore() const { return m_creationTimeBefore; }
+  inline bool CreationTimeBeforeHasBeenSet() const { return m_creationTimeBeforeHasBeenSet; }
+  template <typename CreationTimeBeforeT = Aws::Utils::DateTime>
+  void SetCreationTimeBefore(CreationTimeBeforeT&& value) {
+    m_creationTimeBeforeHasBeenSet = true;
+    m_creationTimeBefore = std::forward<CreationTimeBeforeT>(value);
+  }
+  template <typename CreationTimeBeforeT = Aws::Utils::DateTime>
+  ListStudioLifecycleConfigsRequest& WithCreationTimeBefore(CreationTimeBeforeT&& value) {
+    SetCreationTimeBefore(std::forward<CreationTimeBeforeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The total number of items to return in the response. If the total number of
-     * items available is more than the value specified, a <code>NextToken</code> is
-     * provided in the response. To resume pagination, provide the
-     * <code>NextToken</code> value in the as part of a subsequent call. The default
-     * value is 10.</p>
-     */
-    inline int GetMaxResults() const{ return m_maxResults; }
-    inline bool MaxResultsHasBeenSet() const { return m_maxResultsHasBeenSet; }
-    inline void SetMaxResults(int value) { m_maxResultsHasBeenSet = true; m_maxResults = value; }
-    inline ListStudioLifecycleConfigsRequest& WithMaxResults(int value) { SetMaxResults(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A filter that returns only Lifecycle Configurations created on or after the
+   * specified time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTimeAfter() const { return m_creationTimeAfter; }
+  inline bool CreationTimeAfterHasBeenSet() const { return m_creationTimeAfterHasBeenSet; }
+  template <typename CreationTimeAfterT = Aws::Utils::DateTime>
+  void SetCreationTimeAfter(CreationTimeAfterT&& value) {
+    m_creationTimeAfterHasBeenSet = true;
+    m_creationTimeAfter = std::forward<CreationTimeAfterT>(value);
+  }
+  template <typename CreationTimeAfterT = Aws::Utils::DateTime>
+  ListStudioLifecycleConfigsRequest& WithCreationTimeAfter(CreationTimeAfterT&& value) {
+    SetCreationTimeAfter(std::forward<CreationTimeAfterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the previous call to ListStudioLifecycleConfigs didn't return the full set
-     * of Lifecycle Configurations, the call returns a token for getting the next set
-     * of Lifecycle Configurations.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline bool NextTokenHasBeenSet() const { return m_nextTokenHasBeenSet; }
-    inline void SetNextToken(const Aws::String& value) { m_nextTokenHasBeenSet = true; m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextTokenHasBeenSet = true; m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextTokenHasBeenSet = true; m_nextToken.assign(value); }
-    inline ListStudioLifecycleConfigsRequest& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A filter that returns only Lifecycle Configurations modified before the
+   * specified time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetModifiedTimeBefore() const { return m_modifiedTimeBefore; }
+  inline bool ModifiedTimeBeforeHasBeenSet() const { return m_modifiedTimeBeforeHasBeenSet; }
+  template <typename ModifiedTimeBeforeT = Aws::Utils::DateTime>
+  void SetModifiedTimeBefore(ModifiedTimeBeforeT&& value) {
+    m_modifiedTimeBeforeHasBeenSet = true;
+    m_modifiedTimeBefore = std::forward<ModifiedTimeBeforeT>(value);
+  }
+  template <typename ModifiedTimeBeforeT = Aws::Utils::DateTime>
+  ListStudioLifecycleConfigsRequest& WithModifiedTimeBefore(ModifiedTimeBeforeT&& value) {
+    SetModifiedTimeBefore(std::forward<ModifiedTimeBeforeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A string in the Lifecycle Configuration name. This filter returns only
-     * Lifecycle Configurations whose name contains the specified string.</p>
-     */
-    inline const Aws::String& GetNameContains() const{ return m_nameContains; }
-    inline bool NameContainsHasBeenSet() const { return m_nameContainsHasBeenSet; }
-    inline void SetNameContains(const Aws::String& value) { m_nameContainsHasBeenSet = true; m_nameContains = value; }
-    inline void SetNameContains(Aws::String&& value) { m_nameContainsHasBeenSet = true; m_nameContains = std::move(value); }
-    inline void SetNameContains(const char* value) { m_nameContainsHasBeenSet = true; m_nameContains.assign(value); }
-    inline ListStudioLifecycleConfigsRequest& WithNameContains(const Aws::String& value) { SetNameContains(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithNameContains(Aws::String&& value) { SetNameContains(std::move(value)); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithNameContains(const char* value) { SetNameContains(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A filter that returns only Lifecycle Configurations modified after the
+   * specified time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetModifiedTimeAfter() const { return m_modifiedTimeAfter; }
+  inline bool ModifiedTimeAfterHasBeenSet() const { return m_modifiedTimeAfterHasBeenSet; }
+  template <typename ModifiedTimeAfterT = Aws::Utils::DateTime>
+  void SetModifiedTimeAfter(ModifiedTimeAfterT&& value) {
+    m_modifiedTimeAfterHasBeenSet = true;
+    m_modifiedTimeAfter = std::forward<ModifiedTimeAfterT>(value);
+  }
+  template <typename ModifiedTimeAfterT = Aws::Utils::DateTime>
+  ListStudioLifecycleConfigsRequest& WithModifiedTimeAfter(ModifiedTimeAfterT&& value) {
+    SetModifiedTimeAfter(std::forward<ModifiedTimeAfterT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A parameter to search for the App Type to which the Lifecycle Configuration
-     * is attached.</p>
-     */
-    inline const StudioLifecycleConfigAppType& GetAppTypeEquals() const{ return m_appTypeEquals; }
-    inline bool AppTypeEqualsHasBeenSet() const { return m_appTypeEqualsHasBeenSet; }
-    inline void SetAppTypeEquals(const StudioLifecycleConfigAppType& value) { m_appTypeEqualsHasBeenSet = true; m_appTypeEquals = value; }
-    inline void SetAppTypeEquals(StudioLifecycleConfigAppType&& value) { m_appTypeEqualsHasBeenSet = true; m_appTypeEquals = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithAppTypeEquals(const StudioLifecycleConfigAppType& value) { SetAppTypeEquals(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithAppTypeEquals(StudioLifecycleConfigAppType&& value) { SetAppTypeEquals(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The property used to sort results. The default value is CreationTime.</p>
+   */
+  inline StudioLifecycleConfigSortKey GetSortBy() const { return m_sortBy; }
+  inline bool SortByHasBeenSet() const { return m_sortByHasBeenSet; }
+  inline void SetSortBy(StudioLifecycleConfigSortKey value) {
+    m_sortByHasBeenSet = true;
+    m_sortBy = value;
+  }
+  inline ListStudioLifecycleConfigsRequest& WithSortBy(StudioLifecycleConfigSortKey value) {
+    SetSortBy(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A filter that returns only Lifecycle Configurations created on or before the
-     * specified time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTimeBefore() const{ return m_creationTimeBefore; }
-    inline bool CreationTimeBeforeHasBeenSet() const { return m_creationTimeBeforeHasBeenSet; }
-    inline void SetCreationTimeBefore(const Aws::Utils::DateTime& value) { m_creationTimeBeforeHasBeenSet = true; m_creationTimeBefore = value; }
-    inline void SetCreationTimeBefore(Aws::Utils::DateTime&& value) { m_creationTimeBeforeHasBeenSet = true; m_creationTimeBefore = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithCreationTimeBefore(const Aws::Utils::DateTime& value) { SetCreationTimeBefore(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithCreationTimeBefore(Aws::Utils::DateTime&& value) { SetCreationTimeBefore(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The sort order. The default value is Descending.</p>
+   */
+  inline SortOrder GetSortOrder() const { return m_sortOrder; }
+  inline bool SortOrderHasBeenSet() const { return m_sortOrderHasBeenSet; }
+  inline void SetSortOrder(SortOrder value) {
+    m_sortOrderHasBeenSet = true;
+    m_sortOrder = value;
+  }
+  inline ListStudioLifecycleConfigsRequest& WithSortOrder(SortOrder value) {
+    SetSortOrder(value);
+    return *this;
+  }
+  ///@}
+ private:
+  int m_maxResults{0};
 
-    ///@{
-    /**
-     * <p>A filter that returns only Lifecycle Configurations created on or after the
-     * specified time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTimeAfter() const{ return m_creationTimeAfter; }
-    inline bool CreationTimeAfterHasBeenSet() const { return m_creationTimeAfterHasBeenSet; }
-    inline void SetCreationTimeAfter(const Aws::Utils::DateTime& value) { m_creationTimeAfterHasBeenSet = true; m_creationTimeAfter = value; }
-    inline void SetCreationTimeAfter(Aws::Utils::DateTime&& value) { m_creationTimeAfterHasBeenSet = true; m_creationTimeAfter = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithCreationTimeAfter(const Aws::Utils::DateTime& value) { SetCreationTimeAfter(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithCreationTimeAfter(Aws::Utils::DateTime&& value) { SetCreationTimeAfter(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_nextToken;
 
-    ///@{
-    /**
-     * <p>A filter that returns only Lifecycle Configurations modified before the
-     * specified time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetModifiedTimeBefore() const{ return m_modifiedTimeBefore; }
-    inline bool ModifiedTimeBeforeHasBeenSet() const { return m_modifiedTimeBeforeHasBeenSet; }
-    inline void SetModifiedTimeBefore(const Aws::Utils::DateTime& value) { m_modifiedTimeBeforeHasBeenSet = true; m_modifiedTimeBefore = value; }
-    inline void SetModifiedTimeBefore(Aws::Utils::DateTime&& value) { m_modifiedTimeBeforeHasBeenSet = true; m_modifiedTimeBefore = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithModifiedTimeBefore(const Aws::Utils::DateTime& value) { SetModifiedTimeBefore(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithModifiedTimeBefore(Aws::Utils::DateTime&& value) { SetModifiedTimeBefore(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_nameContains;
 
-    ///@{
-    /**
-     * <p>A filter that returns only Lifecycle Configurations modified after the
-     * specified time.</p>
-     */
-    inline const Aws::Utils::DateTime& GetModifiedTimeAfter() const{ return m_modifiedTimeAfter; }
-    inline bool ModifiedTimeAfterHasBeenSet() const { return m_modifiedTimeAfterHasBeenSet; }
-    inline void SetModifiedTimeAfter(const Aws::Utils::DateTime& value) { m_modifiedTimeAfterHasBeenSet = true; m_modifiedTimeAfter = value; }
-    inline void SetModifiedTimeAfter(Aws::Utils::DateTime&& value) { m_modifiedTimeAfterHasBeenSet = true; m_modifiedTimeAfter = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithModifiedTimeAfter(const Aws::Utils::DateTime& value) { SetModifiedTimeAfter(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithModifiedTimeAfter(Aws::Utils::DateTime&& value) { SetModifiedTimeAfter(std::move(value)); return *this;}
-    ///@}
+  StudioLifecycleConfigAppType m_appTypeEquals{StudioLifecycleConfigAppType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The property used to sort results. The default value is CreationTime.</p>
-     */
-    inline const StudioLifecycleConfigSortKey& GetSortBy() const{ return m_sortBy; }
-    inline bool SortByHasBeenSet() const { return m_sortByHasBeenSet; }
-    inline void SetSortBy(const StudioLifecycleConfigSortKey& value) { m_sortByHasBeenSet = true; m_sortBy = value; }
-    inline void SetSortBy(StudioLifecycleConfigSortKey&& value) { m_sortByHasBeenSet = true; m_sortBy = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithSortBy(const StudioLifecycleConfigSortKey& value) { SetSortBy(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithSortBy(StudioLifecycleConfigSortKey&& value) { SetSortBy(std::move(value)); return *this;}
-    ///@}
+  Aws::Utils::DateTime m_creationTimeBefore{};
 
-    ///@{
-    /**
-     * <p>The sort order. The default value is Descending.</p>
-     */
-    inline const SortOrder& GetSortOrder() const{ return m_sortOrder; }
-    inline bool SortOrderHasBeenSet() const { return m_sortOrderHasBeenSet; }
-    inline void SetSortOrder(const SortOrder& value) { m_sortOrderHasBeenSet = true; m_sortOrder = value; }
-    inline void SetSortOrder(SortOrder&& value) { m_sortOrderHasBeenSet = true; m_sortOrder = std::move(value); }
-    inline ListStudioLifecycleConfigsRequest& WithSortOrder(const SortOrder& value) { SetSortOrder(value); return *this;}
-    inline ListStudioLifecycleConfigsRequest& WithSortOrder(SortOrder&& value) { SetSortOrder(std::move(value)); return *this;}
-    ///@}
-  private:
+  Aws::Utils::DateTime m_creationTimeAfter{};
 
-    int m_maxResults;
-    bool m_maxResultsHasBeenSet = false;
+  Aws::Utils::DateTime m_modifiedTimeBefore{};
 
-    Aws::String m_nextToken;
-    bool m_nextTokenHasBeenSet = false;
+  Aws::Utils::DateTime m_modifiedTimeAfter{};
 
-    Aws::String m_nameContains;
-    bool m_nameContainsHasBeenSet = false;
+  StudioLifecycleConfigSortKey m_sortBy{StudioLifecycleConfigSortKey::NOT_SET};
 
-    StudioLifecycleConfigAppType m_appTypeEquals;
-    bool m_appTypeEqualsHasBeenSet = false;
+  SortOrder m_sortOrder{SortOrder::NOT_SET};
+  bool m_maxResultsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_nameContainsHasBeenSet = false;
+  bool m_appTypeEqualsHasBeenSet = false;
+  bool m_creationTimeBeforeHasBeenSet = false;
+  bool m_creationTimeAfterHasBeenSet = false;
+  bool m_modifiedTimeBeforeHasBeenSet = false;
+  bool m_modifiedTimeAfterHasBeenSet = false;
+  bool m_sortByHasBeenSet = false;
+  bool m_sortOrderHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_creationTimeBefore;
-    bool m_creationTimeBeforeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_creationTimeAfter;
-    bool m_creationTimeAfterHasBeenSet = false;
-
-    Aws::Utils::DateTime m_modifiedTimeBefore;
-    bool m_modifiedTimeBeforeHasBeenSet = false;
-
-    Aws::Utils::DateTime m_modifiedTimeAfter;
-    bool m_modifiedTimeAfterHasBeenSet = false;
-
-    StudioLifecycleConfigSortKey m_sortBy;
-    bool m_sortByHasBeenSet = false;
-
-    SortOrder m_sortOrder;
-    bool m_sortOrderHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

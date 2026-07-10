@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/workspaces-web/WorkSpacesWeb_EXPORTS.h>
 #include <aws/workspaces-web/model/TrustStore.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpacesWeb
-{
-namespace Model
-{
-  class GetTrustStoreResult
-  {
-  public:
-    AWS_WORKSPACESWEB_API GetTrustStoreResult();
-    AWS_WORKSPACESWEB_API GetTrustStoreResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACESWEB_API GetTrustStoreResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpacesWeb {
+namespace Model {
+class GetTrustStoreResult {
+ public:
+  AWS_WORKSPACESWEB_API GetTrustStoreResult() = default;
+  AWS_WORKSPACESWEB_API GetTrustStoreResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACESWEB_API GetTrustStoreResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The trust store.</p>
+   */
+  inline const TrustStore& GetTrustStore() const { return m_trustStore; }
+  template <typename TrustStoreT = TrustStore>
+  void SetTrustStore(TrustStoreT&& value) {
+    m_trustStoreHasBeenSet = true;
+    m_trustStore = std::forward<TrustStoreT>(value);
+  }
+  template <typename TrustStoreT = TrustStore>
+  GetTrustStoreResult& WithTrustStore(TrustStoreT&& value) {
+    SetTrustStore(std::forward<TrustStoreT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The trust store.</p>
-     */
-    inline const TrustStore& GetTrustStore() const{ return m_trustStore; }
-    inline void SetTrustStore(const TrustStore& value) { m_trustStore = value; }
-    inline void SetTrustStore(TrustStore&& value) { m_trustStore = std::move(value); }
-    inline GetTrustStoreResult& WithTrustStore(const TrustStore& value) { SetTrustStore(value); return *this;}
-    inline GetTrustStoreResult& WithTrustStore(TrustStore&& value) { SetTrustStore(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetTrustStoreResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetTrustStoreResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetTrustStoreResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetTrustStoreResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    TrustStore m_trustStore;
+ private:
+  TrustStore m_trustStore;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trustStoreHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpacesWeb
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpacesWeb
+}  // namespace Aws

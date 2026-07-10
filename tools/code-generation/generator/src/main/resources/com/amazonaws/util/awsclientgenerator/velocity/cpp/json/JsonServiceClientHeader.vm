@@ -11,6 +11,10 @@
 \#include <aws/core/client/AWSClientAsyncCRTP.h>
 \#include <aws/core/utils/json/JsonSerializer.h>
 \#include <aws/$metadata.projectName/${metadata.classNamePrefix}ServiceClientModel.h>
+#if(!$serviceModel.disableSmithyGeneration)
+\#include <aws/$metadata.projectName/${metadata.classNamePrefix}PaginationBase.h>
+\#include <aws/$metadata.projectName/${metadata.classNamePrefix}Waiter.h>
+#end
 
 namespace ${rootNamespace}
 {
@@ -25,7 +29,11 @@ namespace ${serviceNamespace}
 #if($serviceModel.enableVirtualOperations)
 #set($finalClass = "")
 #end
+#if(!$serviceModel.disableSmithyGeneration)
+  class ${CppViewHelper.computeExportValue($metadata.classNamePrefix)} ${className}${finalClass} : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<${className}>, public ${metadata.classNamePrefix}PaginationBase<${className}>, public ${metadata.classNamePrefix}Waiter<${className}>
+#else
   class ${CppViewHelper.computeExportValue($metadata.classNamePrefix)} ${className}${finalClass} : public Aws::Client::AWSJsonClient, public Aws::Client::ClientWithAsyncTemplateMethods<${className}>
+#end
   {
     public:
       typedef Aws::Client::AWSJsonClient BASECLASS;
@@ -35,10 +43,17 @@ namespace ${serviceNamespace}
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientHeaderConfigTypeDeclarations.vm")
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientHeaderConstructors.vm")
 #parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/ServiceClientHeaderOperations.vm")
+#foreach($presigner in $serviceModel.presigners)
+        Aws::Utils::Outcome<String, ${metadata.classNamePrefix}Error> ${presigner.functionName}(const Aws::String& ${presigner.hostNameVarName}, const Aws::String& ${presigner.regionVarName},#foreach($arg in $presigner.queryParams)#if(${arg.variableName}) ${arg.type} ${arg.variableName},#end#end long long expiresIn = 900);
+#end
+#set($json_virtual = "")
+#if($serviceModel.enableVirtualOperations)
+#set($json_virtual = "virtual ")
+#end
 
-      void OverrideEndpoint(const Aws::String& endpoint);
+    ${json_virtual}void OverrideEndpoint(const Aws::String& endpoint);
 #if($serviceModel.endpointRules)
-      std::shared_ptr<${metadata.classNamePrefix}EndpointProviderBase>& accessEndpointProvider();
+    ${json_virtual}std::shared_ptr<${metadata.classNamePrefix}EndpointProviderBase>& accessEndpointProvider();
 #end
     private:
       friend class Aws::Client::ClientWithAsyncTemplateMethods<${className}>;
@@ -50,6 +65,8 @@ namespace ${serviceNamespace}
 #if($metadata.hasEndpointDiscoveryTrait && !$serviceModel.endpointRules)
       void Load${metadata.classNamePrefix}SpecificConfig(const Aws::Client::ClientConfiguration& clientConfiguration);
 #end
+
+#parse("com/amazonaws/util/awsclientgenerator/velocity/cpp/common/ServiceInvokeOperationHeader.vm")
 
 #if(!$serviceModel.endpointRules)
 #if($metadata.hasEndpointTrait)

@@ -4,110 +4,120 @@
  */
 
 #pragma once
-#include <aws/schemas/Schemas_EXPORTS.h>
-#include <aws/schemas/SchemasRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/schemas/SchemasRequest.h>
+#include <aws/schemas/Schemas_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Http
-{
-    class URI;
-} //namespace Http
-namespace Schemas
-{
-namespace Model
-{
+namespace Aws {
+namespace Http {
+class URI;
+}  // namespace Http
+namespace Schemas {
+namespace Model {
 
+/**
+ */
+class PutCodeBindingRequest : public SchemasRequest {
+ public:
+  AWS_SCHEMAS_API PutCodeBindingRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutCodeBinding"; }
+
+  AWS_SCHEMAS_API Aws::String SerializePayload() const override;
+
+  AWS_SCHEMAS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+
+  ///@{
   /**
+   * <p>The language of the code binding.</p>
    */
-  class PutCodeBindingRequest : public SchemasRequest
-  {
-  public:
-    AWS_SCHEMAS_API PutCodeBindingRequest();
+  inline const Aws::String& GetLanguage() const { return m_language; }
+  inline bool LanguageHasBeenSet() const { return m_languageHasBeenSet; }
+  template <typename LanguageT = Aws::String>
+  void SetLanguage(LanguageT&& value) {
+    m_languageHasBeenSet = true;
+    m_language = std::forward<LanguageT>(value);
+  }
+  template <typename LanguageT = Aws::String>
+  PutCodeBindingRequest& WithLanguage(LanguageT&& value) {
+    SetLanguage(std::forward<LanguageT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutCodeBinding"; }
+  ///@{
+  /**
+   * <p>The name of the registry.</p>
+   */
+  inline const Aws::String& GetRegistryName() const { return m_registryName; }
+  inline bool RegistryNameHasBeenSet() const { return m_registryNameHasBeenSet; }
+  template <typename RegistryNameT = Aws::String>
+  void SetRegistryName(RegistryNameT&& value) {
+    m_registryNameHasBeenSet = true;
+    m_registryName = std::forward<RegistryNameT>(value);
+  }
+  template <typename RegistryNameT = Aws::String>
+  PutCodeBindingRequest& WithRegistryName(RegistryNameT&& value) {
+    SetRegistryName(std::forward<RegistryNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SCHEMAS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name of the schema.</p>
+   */
+  inline const Aws::String& GetSchemaName() const { return m_schemaName; }
+  inline bool SchemaNameHasBeenSet() const { return m_schemaNameHasBeenSet; }
+  template <typename SchemaNameT = Aws::String>
+  void SetSchemaName(SchemaNameT&& value) {
+    m_schemaNameHasBeenSet = true;
+    m_schemaName = std::forward<SchemaNameT>(value);
+  }
+  template <typename SchemaNameT = Aws::String>
+  PutCodeBindingRequest& WithSchemaName(SchemaNameT&& value) {
+    SetSchemaName(std::forward<SchemaNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SCHEMAS_API void AddQueryStringParameters(Aws::Http::URI& uri) const override;
+  ///@{
+  /**
+   * <p>Specifying this limits the results to only this schema version.</p>
+   */
+  inline const Aws::String& GetSchemaVersion() const { return m_schemaVersion; }
+  inline bool SchemaVersionHasBeenSet() const { return m_schemaVersionHasBeenSet; }
+  template <typename SchemaVersionT = Aws::String>
+  void SetSchemaVersion(SchemaVersionT&& value) {
+    m_schemaVersionHasBeenSet = true;
+    m_schemaVersion = std::forward<SchemaVersionT>(value);
+  }
+  template <typename SchemaVersionT = Aws::String>
+  PutCodeBindingRequest& WithSchemaVersion(SchemaVersionT&& value) {
+    SetSchemaVersion(std::forward<SchemaVersionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_language;
 
+  Aws::String m_registryName;
 
-    ///@{
-    /**
-     * <p>The language of the code binding.</p>
-     */
-    inline const Aws::String& GetLanguage() const{ return m_language; }
-    inline bool LanguageHasBeenSet() const { return m_languageHasBeenSet; }
-    inline void SetLanguage(const Aws::String& value) { m_languageHasBeenSet = true; m_language = value; }
-    inline void SetLanguage(Aws::String&& value) { m_languageHasBeenSet = true; m_language = std::move(value); }
-    inline void SetLanguage(const char* value) { m_languageHasBeenSet = true; m_language.assign(value); }
-    inline PutCodeBindingRequest& WithLanguage(const Aws::String& value) { SetLanguage(value); return *this;}
-    inline PutCodeBindingRequest& WithLanguage(Aws::String&& value) { SetLanguage(std::move(value)); return *this;}
-    inline PutCodeBindingRequest& WithLanguage(const char* value) { SetLanguage(value); return *this;}
-    ///@}
+  Aws::String m_schemaName;
 
-    ///@{
-    /**
-     * <p>The name of the registry.</p>
-     */
-    inline const Aws::String& GetRegistryName() const{ return m_registryName; }
-    inline bool RegistryNameHasBeenSet() const { return m_registryNameHasBeenSet; }
-    inline void SetRegistryName(const Aws::String& value) { m_registryNameHasBeenSet = true; m_registryName = value; }
-    inline void SetRegistryName(Aws::String&& value) { m_registryNameHasBeenSet = true; m_registryName = std::move(value); }
-    inline void SetRegistryName(const char* value) { m_registryNameHasBeenSet = true; m_registryName.assign(value); }
-    inline PutCodeBindingRequest& WithRegistryName(const Aws::String& value) { SetRegistryName(value); return *this;}
-    inline PutCodeBindingRequest& WithRegistryName(Aws::String&& value) { SetRegistryName(std::move(value)); return *this;}
-    inline PutCodeBindingRequest& WithRegistryName(const char* value) { SetRegistryName(value); return *this;}
-    ///@}
+  Aws::String m_schemaVersion;
+  bool m_languageHasBeenSet = false;
+  bool m_registryNameHasBeenSet = false;
+  bool m_schemaNameHasBeenSet = false;
+  bool m_schemaVersionHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The name of the schema.</p>
-     */
-    inline const Aws::String& GetSchemaName() const{ return m_schemaName; }
-    inline bool SchemaNameHasBeenSet() const { return m_schemaNameHasBeenSet; }
-    inline void SetSchemaName(const Aws::String& value) { m_schemaNameHasBeenSet = true; m_schemaName = value; }
-    inline void SetSchemaName(Aws::String&& value) { m_schemaNameHasBeenSet = true; m_schemaName = std::move(value); }
-    inline void SetSchemaName(const char* value) { m_schemaNameHasBeenSet = true; m_schemaName.assign(value); }
-    inline PutCodeBindingRequest& WithSchemaName(const Aws::String& value) { SetSchemaName(value); return *this;}
-    inline PutCodeBindingRequest& WithSchemaName(Aws::String&& value) { SetSchemaName(std::move(value)); return *this;}
-    inline PutCodeBindingRequest& WithSchemaName(const char* value) { SetSchemaName(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Specifying this limits the results to only this schema version.</p>
-     */
-    inline const Aws::String& GetSchemaVersion() const{ return m_schemaVersion; }
-    inline bool SchemaVersionHasBeenSet() const { return m_schemaVersionHasBeenSet; }
-    inline void SetSchemaVersion(const Aws::String& value) { m_schemaVersionHasBeenSet = true; m_schemaVersion = value; }
-    inline void SetSchemaVersion(Aws::String&& value) { m_schemaVersionHasBeenSet = true; m_schemaVersion = std::move(value); }
-    inline void SetSchemaVersion(const char* value) { m_schemaVersionHasBeenSet = true; m_schemaVersion.assign(value); }
-    inline PutCodeBindingRequest& WithSchemaVersion(const Aws::String& value) { SetSchemaVersion(value); return *this;}
-    inline PutCodeBindingRequest& WithSchemaVersion(Aws::String&& value) { SetSchemaVersion(std::move(value)); return *this;}
-    inline PutCodeBindingRequest& WithSchemaVersion(const char* value) { SetSchemaVersion(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_language;
-    bool m_languageHasBeenSet = false;
-
-    Aws::String m_registryName;
-    bool m_registryNameHasBeenSet = false;
-
-    Aws::String m_schemaName;
-    bool m_schemaNameHasBeenSet = false;
-
-    Aws::String m_schemaVersion;
-    bool m_schemaVersionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Schemas
-} // namespace Aws
+}  // namespace Model
+}  // namespace Schemas
+}  // namespace Aws

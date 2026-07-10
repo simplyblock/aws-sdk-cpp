@@ -3,51 +3,33 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/StartActivityStreamRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/StartActivityStreamRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-StartActivityStreamRequest::StartActivityStreamRequest() : 
-    m_resourceArnHasBeenSet(false),
-    m_mode(ActivityStreamMode::NOT_SET),
-    m_modeHasBeenSet(false),
-    m_kmsKeyIdHasBeenSet(false),
-    m_applyImmediately(false),
-    m_applyImmediatelyHasBeenSet(false),
-    m_engineNativeAuditFieldsIncluded(false),
-    m_engineNativeAuditFieldsIncludedHasBeenSet(false)
-{
-}
-
-Aws::String StartActivityStreamRequest::SerializePayload() const
-{
+Aws::String StartActivityStreamRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=StartActivityStream&";
-  if(m_resourceArnHasBeenSet)
-  {
+  if (m_resourceArnHasBeenSet) {
     ss << "ResourceArn=" << StringUtils::URLEncode(m_resourceArn.c_str()) << "&";
   }
 
-  if(m_modeHasBeenSet)
-  {
-    ss << "Mode=" << ActivityStreamModeMapper::GetNameForActivityStreamMode(m_mode) << "&";
+  if (m_modeHasBeenSet) {
+    ss << "Mode=" << StringUtils::URLEncode(ActivityStreamModeMapper::GetNameForActivityStreamMode(m_mode)) << "&";
   }
 
-  if(m_kmsKeyIdHasBeenSet)
-  {
+  if (m_kmsKeyIdHasBeenSet) {
     ss << "KmsKeyId=" << StringUtils::URLEncode(m_kmsKeyId.c_str()) << "&";
   }
 
-  if(m_applyImmediatelyHasBeenSet)
-  {
+  if (m_applyImmediatelyHasBeenSet) {
     ss << "ApplyImmediately=" << std::boolalpha << m_applyImmediately << "&";
   }
 
-  if(m_engineNativeAuditFieldsIncludedHasBeenSet)
-  {
+  if (m_engineNativeAuditFieldsIncludedHasBeenSet) {
     ss << "EngineNativeAuditFieldsIncluded=" << std::boolalpha << m_engineNativeAuditFieldsIncluded << "&";
   }
 
@@ -55,8 +37,4 @@ Aws::String StartActivityStreamRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  StartActivityStreamRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void StartActivityStreamRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

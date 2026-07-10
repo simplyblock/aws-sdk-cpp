@@ -3,101 +3,100 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/UpdateGameSessionQueueRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-UpdateGameSessionQueueRequest::UpdateGameSessionQueueRequest() : 
-    m_nameHasBeenSet(false),
-    m_timeoutInSeconds(0),
-    m_timeoutInSecondsHasBeenSet(false),
-    m_playerLatencyPoliciesHasBeenSet(false),
-    m_destinationsHasBeenSet(false),
-    m_filterConfigurationHasBeenSet(false),
-    m_priorityConfigurationHasBeenSet(false),
-    m_customEventDataHasBeenSet(false),
-    m_notificationTargetHasBeenSet(false)
-{
+Aws::String UpdateGameSessionQueueRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_timeoutInSecondsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_playerLatencyPoliciesHasBeenSet) {
+    mapSize++;
+  }
+  if (m_destinationsHasBeenSet) {
+    mapSize++;
+  }
+  if (m_filterConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_priorityConfigurationHasBeenSet) {
+    mapSize++;
+  }
+  if (m_customEventDataHasBeenSet) {
+    mapSize++;
+  }
+  if (m_notificationTargetHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_timeoutInSecondsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("TimeoutInSeconds"));
+    (m_timeoutInSeconds >= 0) ? encoder.WriteUInt(m_timeoutInSeconds) : encoder.WriteNegInt(m_timeoutInSeconds);
+  }
+
+  if (m_playerLatencyPoliciesHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PlayerLatencyPolicies"));
+    encoder.WriteArrayStart(m_playerLatencyPolicies.size());
+    for (const auto& item_0 : m_playerLatencyPolicies) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_destinationsHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Destinations"));
+    encoder.WriteArrayStart(m_destinations.size());
+    for (const auto& item_0 : m_destinations) {
+      item_0.CborEncode(encoder);
+    }
+  }
+
+  if (m_filterConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("FilterConfiguration"));
+    m_filterConfiguration.CborEncode(encoder);
+  }
+
+  if (m_priorityConfigurationHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("PriorityConfiguration"));
+    m_priorityConfiguration.CborEncode(encoder);
+  }
+
+  if (m_customEventDataHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("CustomEventData"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_customEventData.c_str()));
+  }
+
+  if (m_notificationTargetHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NotificationTarget"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_notificationTarget.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String UpdateGameSessionQueueRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_timeoutInSecondsHasBeenSet)
-  {
-   payload.WithInteger("TimeoutInSeconds", m_timeoutInSeconds);
-
-  }
-
-  if(m_playerLatencyPoliciesHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> playerLatencyPoliciesJsonList(m_playerLatencyPolicies.size());
-   for(unsigned playerLatencyPoliciesIndex = 0; playerLatencyPoliciesIndex < playerLatencyPoliciesJsonList.GetLength(); ++playerLatencyPoliciesIndex)
-   {
-     playerLatencyPoliciesJsonList[playerLatencyPoliciesIndex].AsObject(m_playerLatencyPolicies[playerLatencyPoliciesIndex].Jsonize());
-   }
-   payload.WithArray("PlayerLatencyPolicies", std::move(playerLatencyPoliciesJsonList));
-
-  }
-
-  if(m_destinationsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> destinationsJsonList(m_destinations.size());
-   for(unsigned destinationsIndex = 0; destinationsIndex < destinationsJsonList.GetLength(); ++destinationsIndex)
-   {
-     destinationsJsonList[destinationsIndex].AsObject(m_destinations[destinationsIndex].Jsonize());
-   }
-   payload.WithArray("Destinations", std::move(destinationsJsonList));
-
-  }
-
-  if(m_filterConfigurationHasBeenSet)
-  {
-   payload.WithObject("FilterConfiguration", m_filterConfiguration.Jsonize());
-
-  }
-
-  if(m_priorityConfigurationHasBeenSet)
-  {
-   payload.WithObject("PriorityConfiguration", m_priorityConfiguration.Jsonize());
-
-  }
-
-  if(m_customEventDataHasBeenSet)
-  {
-   payload.WithString("CustomEventData", m_customEventData);
-
-  }
-
-  if(m_notificationTargetHasBeenSet)
-  {
-   payload.WithString("NotificationTarget", m_notificationTarget);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection UpdateGameSessionQueueRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection UpdateGameSessionQueueRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.UpdateGameSessionQueue"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

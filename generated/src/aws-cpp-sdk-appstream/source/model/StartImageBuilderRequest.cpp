@@ -12,39 +12,22 @@ using namespace Aws::AppStream::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartImageBuilderRequest::StartImageBuilderRequest() : 
-    m_nameHasBeenSet(false),
-    m_appstreamAgentVersionHasBeenSet(false)
-{
-}
-
-Aws::String StartImageBuilderRequest::SerializePayload() const
-{
+Aws::String StartImageBuilderRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_appstreamAgentVersionHasBeenSet)
-  {
-   payload.WithString("AppstreamAgentVersion", m_appstreamAgentVersion);
-
+  if (m_appstreamAgentVersionHasBeenSet) {
+    payload.WithString("AppstreamAgentVersion", m_appstreamAgentVersion);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection StartImageBuilderRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection StartImageBuilderRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "PhotonAdminProxyService.StartImageBuilder"));
   return headers;
-
 }
-
-
-
-

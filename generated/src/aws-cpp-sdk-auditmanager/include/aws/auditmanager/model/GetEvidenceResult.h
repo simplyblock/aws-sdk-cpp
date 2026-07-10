@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/auditmanager/AuditManager_EXPORTS.h>
 #include <aws/auditmanager/model/Evidence.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AuditManager
-{
-namespace Model
-{
-  class GetEvidenceResult
-  {
-  public:
-    AWS_AUDITMANAGER_API GetEvidenceResult();
-    AWS_AUDITMANAGER_API GetEvidenceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AUDITMANAGER_API GetEvidenceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AuditManager {
+namespace Model {
+class GetEvidenceResult {
+ public:
+  AWS_AUDITMANAGER_API GetEvidenceResult() = default;
+  AWS_AUDITMANAGER_API GetEvidenceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AUDITMANAGER_API GetEvidenceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p> The evidence that the <code>GetEvidence</code> API returned. </p>
+   */
+  inline const Evidence& GetEvidence() const { return m_evidence; }
+  template <typename EvidenceT = Evidence>
+  void SetEvidence(EvidenceT&& value) {
+    m_evidenceHasBeenSet = true;
+    m_evidence = std::forward<EvidenceT>(value);
+  }
+  template <typename EvidenceT = Evidence>
+  GetEvidenceResult& WithEvidence(EvidenceT&& value) {
+    SetEvidence(std::forward<EvidenceT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> The evidence that the <code>GetEvidence</code> API returned. </p>
-     */
-    inline const Evidence& GetEvidence() const{ return m_evidence; }
-    inline void SetEvidence(const Evidence& value) { m_evidence = value; }
-    inline void SetEvidence(Evidence&& value) { m_evidence = std::move(value); }
-    inline GetEvidenceResult& WithEvidence(const Evidence& value) { SetEvidence(value); return *this;}
-    inline GetEvidenceResult& WithEvidence(Evidence&& value) { SetEvidence(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetEvidenceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetEvidenceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetEvidenceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetEvidenceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Evidence m_evidence;
+ private:
+  Evidence m_evidence;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_evidenceHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AuditManager
-} // namespace Aws
+}  // namespace Model
+}  // namespace AuditManager
+}  // namespace Aws

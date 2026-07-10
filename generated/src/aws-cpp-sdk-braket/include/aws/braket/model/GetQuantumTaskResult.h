@@ -5,260 +5,409 @@
 
 #pragma once
 #include <aws/braket/Braket_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/braket/model/ActionMetadata.h>
+#include <aws/braket/model/Association.h>
+#include <aws/braket/model/ExperimentalCapabilities.h>
 #include <aws/braket/model/QuantumTaskQueueInfo.h>
 #include <aws/braket/model/QuantumTaskStatus.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/braket/model/Association.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Braket
-{
-namespace Model
-{
-  class GetQuantumTaskResult
-  {
-  public:
-    AWS_BRAKET_API GetQuantumTaskResult();
-    AWS_BRAKET_API GetQuantumTaskResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BRAKET_API GetQuantumTaskResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Braket {
+namespace Model {
+class GetQuantumTaskResult {
+ public:
+  AWS_BRAKET_API GetQuantumTaskResult() = default;
+  AWS_BRAKET_API GetQuantumTaskResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BRAKET_API GetQuantumTaskResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the quantum task.</p>
+   */
+  inline const Aws::String& GetQuantumTaskArn() const { return m_quantumTaskArn; }
+  template <typename QuantumTaskArnT = Aws::String>
+  void SetQuantumTaskArn(QuantumTaskArnT&& value) {
+    m_quantumTaskArnHasBeenSet = true;
+    m_quantumTaskArn = std::forward<QuantumTaskArnT>(value);
+  }
+  template <typename QuantumTaskArnT = Aws::String>
+  GetQuantumTaskResult& WithQuantumTaskArn(QuantumTaskArnT&& value) {
+    SetQuantumTaskArn(std::forward<QuantumTaskArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of Amazon Braket resources associated with the quantum task.</p>
-     */
-    inline const Aws::Vector<Association>& GetAssociations() const{ return m_associations; }
-    inline void SetAssociations(const Aws::Vector<Association>& value) { m_associations = value; }
-    inline void SetAssociations(Aws::Vector<Association>&& value) { m_associations = std::move(value); }
-    inline GetQuantumTaskResult& WithAssociations(const Aws::Vector<Association>& value) { SetAssociations(value); return *this;}
-    inline GetQuantumTaskResult& WithAssociations(Aws::Vector<Association>&& value) { SetAssociations(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& AddAssociations(const Association& value) { m_associations.push_back(value); return *this; }
-    inline GetQuantumTaskResult& AddAssociations(Association&& value) { m_associations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the quantum task.</p>
+   */
+  inline QuantumTaskStatus GetStatus() const { return m_status; }
+  inline void SetStatus(QuantumTaskStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline GetQuantumTaskResult& WithStatus(QuantumTaskStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the task was created.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedAt() const{ return m_createdAt; }
-    inline void SetCreatedAt(const Aws::Utils::DateTime& value) { m_createdAt = value; }
-    inline void SetCreatedAt(Aws::Utils::DateTime&& value) { m_createdAt = std::move(value); }
-    inline GetQuantumTaskResult& WithCreatedAt(const Aws::Utils::DateTime& value) { SetCreatedAt(value); return *this;}
-    inline GetQuantumTaskResult& WithCreatedAt(Aws::Utils::DateTime&& value) { SetCreatedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The reason that a quantum task failed.</p>
+   */
+  inline const Aws::String& GetFailureReason() const { return m_failureReason; }
+  template <typename FailureReasonT = Aws::String>
+  void SetFailureReason(FailureReasonT&& value) {
+    m_failureReasonHasBeenSet = true;
+    m_failureReason = std::forward<FailureReasonT>(value);
+  }
+  template <typename FailureReasonT = Aws::String>
+  GetQuantumTaskResult& WithFailureReason(FailureReasonT&& value) {
+    SetFailureReason(std::forward<FailureReasonT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the device the task was run on.</p>
-     */
-    inline const Aws::String& GetDeviceArn() const{ return m_deviceArn; }
-    inline void SetDeviceArn(const Aws::String& value) { m_deviceArn = value; }
-    inline void SetDeviceArn(Aws::String&& value) { m_deviceArn = std::move(value); }
-    inline void SetDeviceArn(const char* value) { m_deviceArn.assign(value); }
-    inline GetQuantumTaskResult& WithDeviceArn(const Aws::String& value) { SetDeviceArn(value); return *this;}
-    inline GetQuantumTaskResult& WithDeviceArn(Aws::String&& value) { SetDeviceArn(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithDeviceArn(const char* value) { SetDeviceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the device the quantum task was run on.</p>
+   */
+  inline const Aws::String& GetDeviceArn() const { return m_deviceArn; }
+  template <typename DeviceArnT = Aws::String>
+  void SetDeviceArn(DeviceArnT&& value) {
+    m_deviceArnHasBeenSet = true;
+    m_deviceArn = std::forward<DeviceArnT>(value);
+  }
+  template <typename DeviceArnT = Aws::String>
+  GetQuantumTaskResult& WithDeviceArn(DeviceArnT&& value) {
+    SetDeviceArn(std::forward<DeviceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The parameters for the device on which the task ran.</p>
-     */
-    inline const Aws::String& GetDeviceParameters() const{ return m_deviceParameters; }
-    inline void SetDeviceParameters(const Aws::String& value) { m_deviceParameters = value; }
-    inline void SetDeviceParameters(Aws::String&& value) { m_deviceParameters = std::move(value); }
-    inline void SetDeviceParameters(const char* value) { m_deviceParameters.assign(value); }
-    inline GetQuantumTaskResult& WithDeviceParameters(const Aws::String& value) { SetDeviceParameters(value); return *this;}
-    inline GetQuantumTaskResult& WithDeviceParameters(Aws::String&& value) { SetDeviceParameters(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithDeviceParameters(const char* value) { SetDeviceParameters(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The parameters for the device on which the quantum task ran.</p>
+   */
+  inline const Aws::String& GetDeviceParameters() const { return m_deviceParameters; }
+  template <typename DeviceParametersT = Aws::String>
+  void SetDeviceParameters(DeviceParametersT&& value) {
+    m_deviceParametersHasBeenSet = true;
+    m_deviceParameters = std::forward<DeviceParametersT>(value);
+  }
+  template <typename DeviceParametersT = Aws::String>
+  GetQuantumTaskResult& WithDeviceParameters(DeviceParametersT&& value) {
+    SetDeviceParameters(std::forward<DeviceParametersT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time at which the task ended.</p>
-     */
-    inline const Aws::Utils::DateTime& GetEndedAt() const{ return m_endedAt; }
-    inline void SetEndedAt(const Aws::Utils::DateTime& value) { m_endedAt = value; }
-    inline void SetEndedAt(Aws::Utils::DateTime&& value) { m_endedAt = std::move(value); }
-    inline GetQuantumTaskResult& WithEndedAt(const Aws::Utils::DateTime& value) { SetEndedAt(value); return *this;}
-    inline GetQuantumTaskResult& WithEndedAt(Aws::Utils::DateTime&& value) { SetEndedAt(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of shots used in the quantum task.</p>
+   */
+  inline long long GetShots() const { return m_shots; }
+  inline void SetShots(long long value) {
+    m_shotsHasBeenSet = true;
+    m_shots = value;
+  }
+  inline GetQuantumTaskResult& WithShots(long long value) {
+    SetShots(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The reason that a task failed.</p>
-     */
-    inline const Aws::String& GetFailureReason() const{ return m_failureReason; }
-    inline void SetFailureReason(const Aws::String& value) { m_failureReason = value; }
-    inline void SetFailureReason(Aws::String&& value) { m_failureReason = std::move(value); }
-    inline void SetFailureReason(const char* value) { m_failureReason.assign(value); }
-    inline GetQuantumTaskResult& WithFailureReason(const Aws::String& value) { SetFailureReason(value); return *this;}
-    inline GetQuantumTaskResult& WithFailureReason(Aws::String&& value) { SetFailureReason(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithFailureReason(const char* value) { SetFailureReason(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The S3 bucket where quantum task results are stored.</p>
+   */
+  inline const Aws::String& GetOutputS3Bucket() const { return m_outputS3Bucket; }
+  template <typename OutputS3BucketT = Aws::String>
+  void SetOutputS3Bucket(OutputS3BucketT&& value) {
+    m_outputS3BucketHasBeenSet = true;
+    m_outputS3Bucket = std::forward<OutputS3BucketT>(value);
+  }
+  template <typename OutputS3BucketT = Aws::String>
+  GetQuantumTaskResult& WithOutputS3Bucket(OutputS3BucketT&& value) {
+    SetOutputS3Bucket(std::forward<OutputS3BucketT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the Amazon Braket job associated with the quantum task.</p>
-     */
-    inline const Aws::String& GetJobArn() const{ return m_jobArn; }
-    inline void SetJobArn(const Aws::String& value) { m_jobArn = value; }
-    inline void SetJobArn(Aws::String&& value) { m_jobArn = std::move(value); }
-    inline void SetJobArn(const char* value) { m_jobArn.assign(value); }
-    inline GetQuantumTaskResult& WithJobArn(const Aws::String& value) { SetJobArn(value); return *this;}
-    inline GetQuantumTaskResult& WithJobArn(Aws::String&& value) { SetJobArn(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithJobArn(const char* value) { SetJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The folder in the S3 bucket where quantum task results are stored.</p>
+   */
+  inline const Aws::String& GetOutputS3Directory() const { return m_outputS3Directory; }
+  template <typename OutputS3DirectoryT = Aws::String>
+  void SetOutputS3Directory(OutputS3DirectoryT&& value) {
+    m_outputS3DirectoryHasBeenSet = true;
+    m_outputS3Directory = std::forward<OutputS3DirectoryT>(value);
+  }
+  template <typename OutputS3DirectoryT = Aws::String>
+  GetQuantumTaskResult& WithOutputS3Directory(OutputS3DirectoryT&& value) {
+    SetOutputS3Directory(std::forward<OutputS3DirectoryT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The S3 bucket where task results are stored.</p>
-     */
-    inline const Aws::String& GetOutputS3Bucket() const{ return m_outputS3Bucket; }
-    inline void SetOutputS3Bucket(const Aws::String& value) { m_outputS3Bucket = value; }
-    inline void SetOutputS3Bucket(Aws::String&& value) { m_outputS3Bucket = std::move(value); }
-    inline void SetOutputS3Bucket(const char* value) { m_outputS3Bucket.assign(value); }
-    inline GetQuantumTaskResult& WithOutputS3Bucket(const Aws::String& value) { SetOutputS3Bucket(value); return *this;}
-    inline GetQuantumTaskResult& WithOutputS3Bucket(Aws::String&& value) { SetOutputS3Bucket(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithOutputS3Bucket(const char* value) { SetOutputS3Bucket(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the quantum task was created.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedAt() const { return m_createdAt; }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  void SetCreatedAt(CreatedAtT&& value) {
+    m_createdAtHasBeenSet = true;
+    m_createdAt = std::forward<CreatedAtT>(value);
+  }
+  template <typename CreatedAtT = Aws::Utils::DateTime>
+  GetQuantumTaskResult& WithCreatedAt(CreatedAtT&& value) {
+    SetCreatedAt(std::forward<CreatedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The folder in the S3 bucket where task results are stored.</p>
-     */
-    inline const Aws::String& GetOutputS3Directory() const{ return m_outputS3Directory; }
-    inline void SetOutputS3Directory(const Aws::String& value) { m_outputS3Directory = value; }
-    inline void SetOutputS3Directory(Aws::String&& value) { m_outputS3Directory = std::move(value); }
-    inline void SetOutputS3Directory(const char* value) { m_outputS3Directory.assign(value); }
-    inline GetQuantumTaskResult& WithOutputS3Directory(const Aws::String& value) { SetOutputS3Directory(value); return *this;}
-    inline GetQuantumTaskResult& WithOutputS3Directory(Aws::String&& value) { SetOutputS3Directory(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithOutputS3Directory(const char* value) { SetOutputS3Directory(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time at which the quantum task ended.</p>
+   */
+  inline const Aws::Utils::DateTime& GetEndedAt() const { return m_endedAt; }
+  template <typename EndedAtT = Aws::Utils::DateTime>
+  void SetEndedAt(EndedAtT&& value) {
+    m_endedAtHasBeenSet = true;
+    m_endedAt = std::forward<EndedAtT>(value);
+  }
+  template <typename EndedAtT = Aws::Utils::DateTime>
+  GetQuantumTaskResult& WithEndedAt(EndedAtT&& value) {
+    SetEndedAt(std::forward<EndedAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the task.</p>
-     */
-    inline const Aws::String& GetQuantumTaskArn() const{ return m_quantumTaskArn; }
-    inline void SetQuantumTaskArn(const Aws::String& value) { m_quantumTaskArn = value; }
-    inline void SetQuantumTaskArn(Aws::String&& value) { m_quantumTaskArn = std::move(value); }
-    inline void SetQuantumTaskArn(const char* value) { m_quantumTaskArn.assign(value); }
-    inline GetQuantumTaskResult& WithQuantumTaskArn(const Aws::String& value) { SetQuantumTaskArn(value); return *this;}
-    inline GetQuantumTaskResult& WithQuantumTaskArn(Aws::String&& value) { SetQuantumTaskArn(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithQuantumTaskArn(const char* value) { SetQuantumTaskArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The tags that belong to this quantum task.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetTags() const { return m_tags; }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Map<Aws::String, Aws::String>>
+  GetQuantumTaskResult& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsKeyT = Aws::String, typename TagsValueT = Aws::String>
+  GetQuantumTaskResult& AddTags(TagsKeyT&& key, TagsValueT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace(std::forward<TagsKeyT>(key), std::forward<TagsValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Queue information for the requested quantum task. Only returned if
-     * <code>QueueInfo</code> is specified in the
-     * <code>additionalAttributeNames"</code> field in the <code>GetQuantumTask</code>
-     * API request.</p>
-     */
-    inline const QuantumTaskQueueInfo& GetQueueInfo() const{ return m_queueInfo; }
-    inline void SetQueueInfo(const QuantumTaskQueueInfo& value) { m_queueInfo = value; }
-    inline void SetQueueInfo(QuantumTaskQueueInfo&& value) { m_queueInfo = std::move(value); }
-    inline GetQuantumTaskResult& WithQueueInfo(const QuantumTaskQueueInfo& value) { SetQueueInfo(value); return *this;}
-    inline GetQuantumTaskResult& WithQueueInfo(QuantumTaskQueueInfo&& value) { SetQueueInfo(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ARN of the Amazon Braket job associated with the quantum task.</p>
+   */
+  inline const Aws::String& GetJobArn() const { return m_jobArn; }
+  template <typename JobArnT = Aws::String>
+  void SetJobArn(JobArnT&& value) {
+    m_jobArnHasBeenSet = true;
+    m_jobArn = std::forward<JobArnT>(value);
+  }
+  template <typename JobArnT = Aws::String>
+  GetQuantumTaskResult& WithJobArn(JobArnT&& value) {
+    SetJobArn(std::forward<JobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of shots used in the task.</p>
-     */
-    inline long long GetShots() const{ return m_shots; }
-    inline void SetShots(long long value) { m_shots = value; }
-    inline GetQuantumTaskResult& WithShots(long long value) { SetShots(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Queue information for the requested quantum task. Only returned if
+   * <code>QueueInfo</code> is specified in the
+   * <code>additionalAttributeNames"</code> field in the <code>GetQuantumTask</code>
+   * API request.</p>
+   */
+  inline const QuantumTaskQueueInfo& GetQueueInfo() const { return m_queueInfo; }
+  template <typename QueueInfoT = QuantumTaskQueueInfo>
+  void SetQueueInfo(QueueInfoT&& value) {
+    m_queueInfoHasBeenSet = true;
+    m_queueInfo = std::forward<QueueInfoT>(value);
+  }
+  template <typename QueueInfoT = QuantumTaskQueueInfo>
+  GetQuantumTaskResult& WithQueueInfo(QueueInfoT&& value) {
+    SetQueueInfo(std::forward<QueueInfoT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the task.</p>
-     */
-    inline const QuantumTaskStatus& GetStatus() const{ return m_status; }
-    inline void SetStatus(const QuantumTaskStatus& value) { m_status = value; }
-    inline void SetStatus(QuantumTaskStatus&& value) { m_status = std::move(value); }
-    inline GetQuantumTaskResult& WithStatus(const QuantumTaskStatus& value) { SetStatus(value); return *this;}
-    inline GetQuantumTaskResult& WithStatus(QuantumTaskStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The list of Amazon Braket resources associated with the quantum task.</p>
+   */
+  inline const Aws::Vector<Association>& GetAssociations() const { return m_associations; }
+  template <typename AssociationsT = Aws::Vector<Association>>
+  void SetAssociations(AssociationsT&& value) {
+    m_associationsHasBeenSet = true;
+    m_associations = std::forward<AssociationsT>(value);
+  }
+  template <typename AssociationsT = Aws::Vector<Association>>
+  GetQuantumTaskResult& WithAssociations(AssociationsT&& value) {
+    SetAssociations(std::forward<AssociationsT>(value));
+    return *this;
+  }
+  template <typename AssociationsT = Association>
+  GetQuantumTaskResult& AddAssociations(AssociationsT&& value) {
+    m_associationsHasBeenSet = true;
+    m_associations.emplace_back(std::forward<AssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The tags that belong to this task.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetTags() const{ return m_tags; }
-    inline void SetTags(const Aws::Map<Aws::String, Aws::String>& value) { m_tags = value; }
-    inline void SetTags(Aws::Map<Aws::String, Aws::String>&& value) { m_tags = std::move(value); }
-    inline GetQuantumTaskResult& WithTags(const Aws::Map<Aws::String, Aws::String>& value) { SetTags(value); return *this;}
-    inline GetQuantumTaskResult& WithTags(Aws::Map<Aws::String, Aws::String>&& value) { SetTags(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& AddTags(const Aws::String& key, const Aws::String& value) { m_tags.emplace(key, value); return *this; }
-    inline GetQuantumTaskResult& AddTags(Aws::String&& key, const Aws::String& value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetQuantumTaskResult& AddTags(const Aws::String& key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetQuantumTaskResult& AddTags(Aws::String&& key, Aws::String&& value) { m_tags.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetQuantumTaskResult& AddTags(const char* key, Aws::String&& value) { m_tags.emplace(key, std::move(value)); return *this; }
-    inline GetQuantumTaskResult& AddTags(Aws::String&& key, const char* value) { m_tags.emplace(std::move(key), value); return *this; }
-    inline GetQuantumTaskResult& AddTags(const char* key, const char* value) { m_tags.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The number of successful shots for the quantum task. This is available after
+   * a successfully completed quantum task.</p>
+   */
+  inline long long GetNumSuccessfulShots() const { return m_numSuccessfulShots; }
+  inline void SetNumSuccessfulShots(long long value) {
+    m_numSuccessfulShotsHasBeenSet = true;
+    m_numSuccessfulShots = value;
+  }
+  inline GetQuantumTaskResult& WithNumSuccessfulShots(long long value) {
+    SetNumSuccessfulShots(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetQuantumTaskResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetQuantumTaskResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetQuantumTaskResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>Metadata about the action performed by the quantum task, including
+   * information about the type of action and program counts.</p>
+   */
+  inline const ActionMetadata& GetActionMetadata() const { return m_actionMetadata; }
+  template <typename ActionMetadataT = ActionMetadata>
+  void SetActionMetadata(ActionMetadataT&& value) {
+    m_actionMetadataHasBeenSet = true;
+    m_actionMetadata = std::forward<ActionMetadataT>(value);
+  }
+  template <typename ActionMetadataT = ActionMetadata>
+  GetQuantumTaskResult& WithActionMetadata(ActionMetadataT&& value) {
+    SetActionMetadata(std::forward<ActionMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Vector<Association> m_associations;
+  ///@{
+  /**
+   * <p>Enabled experimental capabilities for the quantum task, if any.</p>
+   */
+  inline const ExperimentalCapabilities& GetExperimentalCapabilities() const { return m_experimentalCapabilities; }
+  template <typename ExperimentalCapabilitiesT = ExperimentalCapabilities>
+  void SetExperimentalCapabilities(ExperimentalCapabilitiesT&& value) {
+    m_experimentalCapabilitiesHasBeenSet = true;
+    m_experimentalCapabilities = std::forward<ExperimentalCapabilitiesT>(value);
+  }
+  template <typename ExperimentalCapabilitiesT = ExperimentalCapabilities>
+  GetQuantumTaskResult& WithExperimentalCapabilities(ExperimentalCapabilitiesT&& value) {
+    SetExperimentalCapabilities(std::forward<ExperimentalCapabilitiesT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::Utils::DateTime m_createdAt;
+  ///@{
 
-    Aws::String m_deviceArn;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetQuantumTaskResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_deviceParameters;
+ private:
+  Aws::String m_quantumTaskArn;
 
-    Aws::Utils::DateTime m_endedAt;
+  QuantumTaskStatus m_status{QuantumTaskStatus::NOT_SET};
 
-    Aws::String m_failureReason;
+  Aws::String m_failureReason;
 
-    Aws::String m_jobArn;
+  Aws::String m_deviceArn;
 
-    Aws::String m_outputS3Bucket;
+  Aws::String m_deviceParameters;
 
-    Aws::String m_outputS3Directory;
+  long long m_shots{0};
 
-    Aws::String m_quantumTaskArn;
+  Aws::String m_outputS3Bucket;
 
-    QuantumTaskQueueInfo m_queueInfo;
+  Aws::String m_outputS3Directory;
 
-    long long m_shots;
+  Aws::Utils::DateTime m_createdAt{};
 
-    QuantumTaskStatus m_status;
+  Aws::Utils::DateTime m_endedAt{};
 
-    Aws::Map<Aws::String, Aws::String> m_tags;
+  Aws::Map<Aws::String, Aws::String> m_tags;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_jobArn;
 
-} // namespace Model
-} // namespace Braket
-} // namespace Aws
+  QuantumTaskQueueInfo m_queueInfo;
+
+  Aws::Vector<Association> m_associations;
+
+  long long m_numSuccessfulShots{0};
+
+  ActionMetadata m_actionMetadata;
+
+  ExperimentalCapabilities m_experimentalCapabilities;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_quantumTaskArnHasBeenSet = false;
+  bool m_statusHasBeenSet = false;
+  bool m_failureReasonHasBeenSet = false;
+  bool m_deviceArnHasBeenSet = false;
+  bool m_deviceParametersHasBeenSet = false;
+  bool m_shotsHasBeenSet = false;
+  bool m_outputS3BucketHasBeenSet = false;
+  bool m_outputS3DirectoryHasBeenSet = false;
+  bool m_createdAtHasBeenSet = false;
+  bool m_endedAtHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_jobArnHasBeenSet = false;
+  bool m_queueInfoHasBeenSet = false;
+  bool m_associationsHasBeenSet = false;
+  bool m_numSuccessfulShotsHasBeenSet = false;
+  bool m_actionMetadataHasBeenSet = false;
+  bool m_experimentalCapabilitiesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Braket
+}  // namespace Aws

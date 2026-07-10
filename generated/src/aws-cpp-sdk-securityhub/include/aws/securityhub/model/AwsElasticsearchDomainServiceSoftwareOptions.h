@@ -4,160 +4,185 @@
  */
 
 #pragma once
-#include <aws/securityhub/SecurityHub_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/securityhub/SecurityHub_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace SecurityHub
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace SecurityHub {
+namespace Model {
 
+/**
+ * <p>Information about the state of the domain relative to the latest service
+ * software.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsElasticsearchDomainServiceSoftwareOptions">AWS
+ * API Reference</a></p>
+ */
+class AwsElasticsearchDomainServiceSoftwareOptions {
+ public:
+  AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions() = default;
+  AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Information about the state of the domain relative to the latest service
-   * software.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsElasticsearchDomainServiceSoftwareOptions">AWS
-   * API Reference</a></p>
+   * <p>The epoch time when the deployment window closes for required updates. After
+   * this time, Amazon OpenSearch Service schedules the software upgrade
+   * automatically.</p>
    */
-  class AwsElasticsearchDomainServiceSoftwareOptions
-  {
-  public:
-    AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions();
-    AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API AwsElasticsearchDomainServiceSoftwareOptions& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_SECURITYHUB_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetAutomatedUpdateDate() const { return m_automatedUpdateDate; }
+  inline bool AutomatedUpdateDateHasBeenSet() const { return m_automatedUpdateDateHasBeenSet; }
+  template <typename AutomatedUpdateDateT = Aws::String>
+  void SetAutomatedUpdateDate(AutomatedUpdateDateT&& value) {
+    m_automatedUpdateDateHasBeenSet = true;
+    m_automatedUpdateDate = std::forward<AutomatedUpdateDateT>(value);
+  }
+  template <typename AutomatedUpdateDateT = Aws::String>
+  AwsElasticsearchDomainServiceSoftwareOptions& WithAutomatedUpdateDate(AutomatedUpdateDateT&& value) {
+    SetAutomatedUpdateDate(std::forward<AutomatedUpdateDateT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Whether a request to update the domain can be canceled.</p>
+   */
+  inline bool GetCancellable() const { return m_cancellable; }
+  inline bool CancellableHasBeenSet() const { return m_cancellableHasBeenSet; }
+  inline void SetCancellable(bool value) {
+    m_cancellableHasBeenSet = true;
+    m_cancellable = value;
+  }
+  inline AwsElasticsearchDomainServiceSoftwareOptions& WithCancellable(bool value) {
+    SetCancellable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The epoch time when the deployment window closes for required updates. After
-     * this time, Amazon OpenSearch Service schedules the software upgrade
-     * automatically.</p>
-     */
-    inline const Aws::String& GetAutomatedUpdateDate() const{ return m_automatedUpdateDate; }
-    inline bool AutomatedUpdateDateHasBeenSet() const { return m_automatedUpdateDateHasBeenSet; }
-    inline void SetAutomatedUpdateDate(const Aws::String& value) { m_automatedUpdateDateHasBeenSet = true; m_automatedUpdateDate = value; }
-    inline void SetAutomatedUpdateDate(Aws::String&& value) { m_automatedUpdateDateHasBeenSet = true; m_automatedUpdateDate = std::move(value); }
-    inline void SetAutomatedUpdateDate(const char* value) { m_automatedUpdateDateHasBeenSet = true; m_automatedUpdateDate.assign(value); }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithAutomatedUpdateDate(const Aws::String& value) { SetAutomatedUpdateDate(value); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithAutomatedUpdateDate(Aws::String&& value) { SetAutomatedUpdateDate(std::move(value)); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithAutomatedUpdateDate(const char* value) { SetAutomatedUpdateDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The version of the service software that is currently installed on the
+   * domain.</p>
+   */
+  inline const Aws::String& GetCurrentVersion() const { return m_currentVersion; }
+  inline bool CurrentVersionHasBeenSet() const { return m_currentVersionHasBeenSet; }
+  template <typename CurrentVersionT = Aws::String>
+  void SetCurrentVersion(CurrentVersionT&& value) {
+    m_currentVersionHasBeenSet = true;
+    m_currentVersion = std::forward<CurrentVersionT>(value);
+  }
+  template <typename CurrentVersionT = Aws::String>
+  AwsElasticsearchDomainServiceSoftwareOptions& WithCurrentVersion(CurrentVersionT&& value) {
+    SetCurrentVersion(std::forward<CurrentVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Whether a request to update the domain can be canceled.</p>
-     */
-    inline bool GetCancellable() const{ return m_cancellable; }
-    inline bool CancellableHasBeenSet() const { return m_cancellableHasBeenSet; }
-    inline void SetCancellable(bool value) { m_cancellableHasBeenSet = true; m_cancellable = value; }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithCancellable(bool value) { SetCancellable(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A more detailed description of the service software status.</p>
+   */
+  inline const Aws::String& GetDescription() const { return m_description; }
+  inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
+  template <typename DescriptionT = Aws::String>
+  void SetDescription(DescriptionT&& value) {
+    m_descriptionHasBeenSet = true;
+    m_description = std::forward<DescriptionT>(value);
+  }
+  template <typename DescriptionT = Aws::String>
+  AwsElasticsearchDomainServiceSoftwareOptions& WithDescription(DescriptionT&& value) {
+    SetDescription(std::forward<DescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The version of the service software that is currently installed on the
-     * domain.</p>
-     */
-    inline const Aws::String& GetCurrentVersion() const{ return m_currentVersion; }
-    inline bool CurrentVersionHasBeenSet() const { return m_currentVersionHasBeenSet; }
-    inline void SetCurrentVersion(const Aws::String& value) { m_currentVersionHasBeenSet = true; m_currentVersion = value; }
-    inline void SetCurrentVersion(Aws::String&& value) { m_currentVersionHasBeenSet = true; m_currentVersion = std::move(value); }
-    inline void SetCurrentVersion(const char* value) { m_currentVersionHasBeenSet = true; m_currentVersion.assign(value); }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithCurrentVersion(const Aws::String& value) { SetCurrentVersion(value); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithCurrentVersion(Aws::String&& value) { SetCurrentVersion(std::move(value)); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithCurrentVersion(const char* value) { SetCurrentVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The most recent version of the service software.</p>
+   */
+  inline const Aws::String& GetNewVersion() const { return m_newVersion; }
+  inline bool NewVersionHasBeenSet() const { return m_newVersionHasBeenSet; }
+  template <typename NewVersionT = Aws::String>
+  void SetNewVersion(NewVersionT&& value) {
+    m_newVersionHasBeenSet = true;
+    m_newVersion = std::forward<NewVersionT>(value);
+  }
+  template <typename NewVersionT = Aws::String>
+  AwsElasticsearchDomainServiceSoftwareOptions& WithNewVersion(NewVersionT&& value) {
+    SetNewVersion(std::forward<NewVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A more detailed description of the service software status.</p>
-     */
-    inline const Aws::String& GetDescription() const{ return m_description; }
-    inline bool DescriptionHasBeenSet() const { return m_descriptionHasBeenSet; }
-    inline void SetDescription(const Aws::String& value) { m_descriptionHasBeenSet = true; m_description = value; }
-    inline void SetDescription(Aws::String&& value) { m_descriptionHasBeenSet = true; m_description = std::move(value); }
-    inline void SetDescription(const char* value) { m_descriptionHasBeenSet = true; m_description.assign(value); }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithDescription(const Aws::String& value) { SetDescription(value); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithDescription(Aws::String&& value) { SetDescription(std::move(value)); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithDescription(const char* value) { SetDescription(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Whether a service software update is available for the domain.</p>
+   */
+  inline bool GetUpdateAvailable() const { return m_updateAvailable; }
+  inline bool UpdateAvailableHasBeenSet() const { return m_updateAvailableHasBeenSet; }
+  inline void SetUpdateAvailable(bool value) {
+    m_updateAvailableHasBeenSet = true;
+    m_updateAvailable = value;
+  }
+  inline AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateAvailable(bool value) {
+    SetUpdateAvailable(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The most recent version of the service software.</p>
-     */
-    inline const Aws::String& GetNewVersion() const{ return m_newVersion; }
-    inline bool NewVersionHasBeenSet() const { return m_newVersionHasBeenSet; }
-    inline void SetNewVersion(const Aws::String& value) { m_newVersionHasBeenSet = true; m_newVersion = value; }
-    inline void SetNewVersion(Aws::String&& value) { m_newVersionHasBeenSet = true; m_newVersion = std::move(value); }
-    inline void SetNewVersion(const char* value) { m_newVersionHasBeenSet = true; m_newVersion.assign(value); }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithNewVersion(const Aws::String& value) { SetNewVersion(value); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithNewVersion(Aws::String&& value) { SetNewVersion(std::move(value)); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithNewVersion(const char* value) { SetNewVersion(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the service software update. Valid values are as follows:</p>
+   * <ul> <li> <p> <code>COMPLETED</code> </p> </li> <li> <p> <code>ELIGIBLE</code>
+   * </p> </li> <li> <p> <code>IN_PROGRESS</code> </p> </li> <li> <p>
+   * <code>NOT_ELIGIBLE</code> </p> </li> <li> <p> <code>PENDING_UPDATE</code> </p>
+   * </li> </ul>
+   */
+  inline const Aws::String& GetUpdateStatus() const { return m_updateStatus; }
+  inline bool UpdateStatusHasBeenSet() const { return m_updateStatusHasBeenSet; }
+  template <typename UpdateStatusT = Aws::String>
+  void SetUpdateStatus(UpdateStatusT&& value) {
+    m_updateStatusHasBeenSet = true;
+    m_updateStatus = std::forward<UpdateStatusT>(value);
+  }
+  template <typename UpdateStatusT = Aws::String>
+  AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateStatus(UpdateStatusT&& value) {
+    SetUpdateStatus(std::forward<UpdateStatusT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_automatedUpdateDate;
 
-    ///@{
-    /**
-     * <p>Whether a service software update is available for the domain.</p>
-     */
-    inline bool GetUpdateAvailable() const{ return m_updateAvailable; }
-    inline bool UpdateAvailableHasBeenSet() const { return m_updateAvailableHasBeenSet; }
-    inline void SetUpdateAvailable(bool value) { m_updateAvailableHasBeenSet = true; m_updateAvailable = value; }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateAvailable(bool value) { SetUpdateAvailable(value); return *this;}
-    ///@}
+  bool m_cancellable{false};
 
-    ///@{
-    /**
-     * <p>The status of the service software update. Valid values are as follows:</p>
-     * <ul> <li> <p> <code>COMPLETED</code> </p> </li> <li> <p> <code>ELIGIBLE</code>
-     * </p> </li> <li> <p> <code>IN_PROGRESS</code> </p> </li> <li> <p>
-     * <code>NOT_ELIGIBLE</code> </p> </li> <li> <p> <code>PENDING_UPDATE</code> </p>
-     * </li> </ul>
-     */
-    inline const Aws::String& GetUpdateStatus() const{ return m_updateStatus; }
-    inline bool UpdateStatusHasBeenSet() const { return m_updateStatusHasBeenSet; }
-    inline void SetUpdateStatus(const Aws::String& value) { m_updateStatusHasBeenSet = true; m_updateStatus = value; }
-    inline void SetUpdateStatus(Aws::String&& value) { m_updateStatusHasBeenSet = true; m_updateStatus = std::move(value); }
-    inline void SetUpdateStatus(const char* value) { m_updateStatusHasBeenSet = true; m_updateStatus.assign(value); }
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateStatus(const Aws::String& value) { SetUpdateStatus(value); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateStatus(Aws::String&& value) { SetUpdateStatus(std::move(value)); return *this;}
-    inline AwsElasticsearchDomainServiceSoftwareOptions& WithUpdateStatus(const char* value) { SetUpdateStatus(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_currentVersion;
 
-    Aws::String m_automatedUpdateDate;
-    bool m_automatedUpdateDateHasBeenSet = false;
+  Aws::String m_description;
 
-    bool m_cancellable;
-    bool m_cancellableHasBeenSet = false;
+  Aws::String m_newVersion;
 
-    Aws::String m_currentVersion;
-    bool m_currentVersionHasBeenSet = false;
+  bool m_updateAvailable{false};
 
-    Aws::String m_description;
-    bool m_descriptionHasBeenSet = false;
+  Aws::String m_updateStatus;
+  bool m_automatedUpdateDateHasBeenSet = false;
+  bool m_cancellableHasBeenSet = false;
+  bool m_currentVersionHasBeenSet = false;
+  bool m_descriptionHasBeenSet = false;
+  bool m_newVersionHasBeenSet = false;
+  bool m_updateAvailableHasBeenSet = false;
+  bool m_updateStatusHasBeenSet = false;
+};
 
-    Aws::String m_newVersion;
-    bool m_newVersionHasBeenSet = false;
-
-    bool m_updateAvailable;
-    bool m_updateAvailableHasBeenSet = false;
-
-    Aws::String m_updateStatus;
-    bool m_updateStatusHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SecurityHub
-} // namespace Aws
+}  // namespace Model
+}  // namespace SecurityHub
+}  // namespace Aws

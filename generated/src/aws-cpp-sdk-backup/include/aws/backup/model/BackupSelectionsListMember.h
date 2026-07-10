@@ -5,151 +5,170 @@
 
 #pragma once
 #include <aws/backup/Backup_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Backup
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Backup {
+namespace Model {
 
+/**
+ * <p>Contains metadata about a <code>BackupSelection</code> object.</p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupSelectionsListMember">AWS
+ * API Reference</a></p>
+ */
+class BackupSelectionsListMember {
+ public:
+  AWS_BACKUP_API BackupSelectionsListMember() = default;
+  AWS_BACKUP_API BackupSelectionsListMember(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BACKUP_API BackupSelectionsListMember& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_BACKUP_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Contains metadata about a <code>BackupSelection</code> object.</p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/backup-2018-11-15/BackupSelectionsListMember">AWS
-   * API Reference</a></p>
+   * <p>Uniquely identifies a request to assign a set of resources to a backup
+   * plan.</p>
    */
-  class BackupSelectionsListMember
-  {
-  public:
-    AWS_BACKUP_API BackupSelectionsListMember();
-    AWS_BACKUP_API BackupSelectionsListMember(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BACKUP_API BackupSelectionsListMember& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_BACKUP_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetSelectionId() const { return m_selectionId; }
+  inline bool SelectionIdHasBeenSet() const { return m_selectionIdHasBeenSet; }
+  template <typename SelectionIdT = Aws::String>
+  void SetSelectionId(SelectionIdT&& value) {
+    m_selectionIdHasBeenSet = true;
+    m_selectionId = std::forward<SelectionIdT>(value);
+  }
+  template <typename SelectionIdT = Aws::String>
+  BackupSelectionsListMember& WithSelectionId(SelectionIdT&& value) {
+    SetSelectionId(std::forward<SelectionIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The display name of a resource selection document.</p>
+   */
+  inline const Aws::String& GetSelectionName() const { return m_selectionName; }
+  inline bool SelectionNameHasBeenSet() const { return m_selectionNameHasBeenSet; }
+  template <typename SelectionNameT = Aws::String>
+  void SetSelectionName(SelectionNameT&& value) {
+    m_selectionNameHasBeenSet = true;
+    m_selectionName = std::forward<SelectionNameT>(value);
+  }
+  template <typename SelectionNameT = Aws::String>
+  BackupSelectionsListMember& WithSelectionName(SelectionNameT&& value) {
+    SetSelectionName(std::forward<SelectionNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Uniquely identifies a request to assign a set of resources to a backup
-     * plan.</p>
-     */
-    inline const Aws::String& GetSelectionId() const{ return m_selectionId; }
-    inline bool SelectionIdHasBeenSet() const { return m_selectionIdHasBeenSet; }
-    inline void SetSelectionId(const Aws::String& value) { m_selectionIdHasBeenSet = true; m_selectionId = value; }
-    inline void SetSelectionId(Aws::String&& value) { m_selectionIdHasBeenSet = true; m_selectionId = std::move(value); }
-    inline void SetSelectionId(const char* value) { m_selectionIdHasBeenSet = true; m_selectionId.assign(value); }
-    inline BackupSelectionsListMember& WithSelectionId(const Aws::String& value) { SetSelectionId(value); return *this;}
-    inline BackupSelectionsListMember& WithSelectionId(Aws::String&& value) { SetSelectionId(std::move(value)); return *this;}
-    inline BackupSelectionsListMember& WithSelectionId(const char* value) { SetSelectionId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Uniquely identifies a backup plan.</p>
+   */
+  inline const Aws::String& GetBackupPlanId() const { return m_backupPlanId; }
+  inline bool BackupPlanIdHasBeenSet() const { return m_backupPlanIdHasBeenSet; }
+  template <typename BackupPlanIdT = Aws::String>
+  void SetBackupPlanId(BackupPlanIdT&& value) {
+    m_backupPlanIdHasBeenSet = true;
+    m_backupPlanId = std::forward<BackupPlanIdT>(value);
+  }
+  template <typename BackupPlanIdT = Aws::String>
+  BackupSelectionsListMember& WithBackupPlanId(BackupPlanIdT&& value) {
+    SetBackupPlanId(std::forward<BackupPlanIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The display name of a resource selection document.</p>
-     */
-    inline const Aws::String& GetSelectionName() const{ return m_selectionName; }
-    inline bool SelectionNameHasBeenSet() const { return m_selectionNameHasBeenSet; }
-    inline void SetSelectionName(const Aws::String& value) { m_selectionNameHasBeenSet = true; m_selectionName = value; }
-    inline void SetSelectionName(Aws::String&& value) { m_selectionNameHasBeenSet = true; m_selectionName = std::move(value); }
-    inline void SetSelectionName(const char* value) { m_selectionNameHasBeenSet = true; m_selectionName.assign(value); }
-    inline BackupSelectionsListMember& WithSelectionName(const Aws::String& value) { SetSelectionName(value); return *this;}
-    inline BackupSelectionsListMember& WithSelectionName(Aws::String&& value) { SetSelectionName(std::move(value)); return *this;}
-    inline BackupSelectionsListMember& WithSelectionName(const char* value) { SetSelectionName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time a backup plan is created, in Unix format and Coordinated
+   * Universal Time (UTC). The value of <code>CreationDate</code> is accurate to
+   * milliseconds. For example, the value 1516925490.087 represents Friday, January
+   * 26, 2018 12:11:30.087 AM.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDate() const { return m_creationDate; }
+  inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::Utils::DateTime>
+  BackupSelectionsListMember& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Uniquely identifies a backup plan.</p>
-     */
-    inline const Aws::String& GetBackupPlanId() const{ return m_backupPlanId; }
-    inline bool BackupPlanIdHasBeenSet() const { return m_backupPlanIdHasBeenSet; }
-    inline void SetBackupPlanId(const Aws::String& value) { m_backupPlanIdHasBeenSet = true; m_backupPlanId = value; }
-    inline void SetBackupPlanId(Aws::String&& value) { m_backupPlanIdHasBeenSet = true; m_backupPlanId = std::move(value); }
-    inline void SetBackupPlanId(const char* value) { m_backupPlanIdHasBeenSet = true; m_backupPlanId.assign(value); }
-    inline BackupSelectionsListMember& WithBackupPlanId(const Aws::String& value) { SetBackupPlanId(value); return *this;}
-    inline BackupSelectionsListMember& WithBackupPlanId(Aws::String&& value) { SetBackupPlanId(std::move(value)); return *this;}
-    inline BackupSelectionsListMember& WithBackupPlanId(const char* value) { SetBackupPlanId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A unique string that identifies the request and allows failed requests to be
+   * retried without the risk of running the operation twice. This parameter is
+   * optional.</p> <p>If used, this parameter must contain 1 to 50 alphanumeric or
+   * '-_.' characters.</p>
+   */
+  inline const Aws::String& GetCreatorRequestId() const { return m_creatorRequestId; }
+  inline bool CreatorRequestIdHasBeenSet() const { return m_creatorRequestIdHasBeenSet; }
+  template <typename CreatorRequestIdT = Aws::String>
+  void SetCreatorRequestId(CreatorRequestIdT&& value) {
+    m_creatorRequestIdHasBeenSet = true;
+    m_creatorRequestId = std::forward<CreatorRequestIdT>(value);
+  }
+  template <typename CreatorRequestIdT = Aws::String>
+  BackupSelectionsListMember& WithCreatorRequestId(CreatorRequestIdT&& value) {
+    SetCreatorRequestId(std::forward<CreatorRequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time a backup plan is created, in Unix format and Coordinated
-     * Universal Time (UTC). The value of <code>CreationDate</code> is accurate to
-     * milliseconds. For example, the value 1516925490.087 represents Friday, January
-     * 26, 2018 12:11:30.087 AM.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDate() const{ return m_creationDate; }
-    inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
-    inline void SetCreationDate(const Aws::Utils::DateTime& value) { m_creationDateHasBeenSet = true; m_creationDate = value; }
-    inline void SetCreationDate(Aws::Utils::DateTime&& value) { m_creationDateHasBeenSet = true; m_creationDate = std::move(value); }
-    inline BackupSelectionsListMember& WithCreationDate(const Aws::Utils::DateTime& value) { SetCreationDate(value); return *this;}
-    inline BackupSelectionsListMember& WithCreationDate(Aws::Utils::DateTime&& value) { SetCreationDate(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the IAM role Amazon Resource Name (ARN) to create the target
+   * recovery point; for example,
+   * <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>
+   */
+  inline const Aws::String& GetIamRoleArn() const { return m_iamRoleArn; }
+  inline bool IamRoleArnHasBeenSet() const { return m_iamRoleArnHasBeenSet; }
+  template <typename IamRoleArnT = Aws::String>
+  void SetIamRoleArn(IamRoleArnT&& value) {
+    m_iamRoleArnHasBeenSet = true;
+    m_iamRoleArn = std::forward<IamRoleArnT>(value);
+  }
+  template <typename IamRoleArnT = Aws::String>
+  BackupSelectionsListMember& WithIamRoleArn(IamRoleArnT&& value) {
+    SetIamRoleArn(std::forward<IamRoleArnT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_selectionId;
 
-    ///@{
-    /**
-     * <p>A unique string that identifies the request and allows failed requests to be
-     * retried without the risk of running the operation twice. This parameter is
-     * optional.</p> <p>If used, this parameter must contain 1 to 50 alphanumeric or
-     * '-_.' characters.</p>
-     */
-    inline const Aws::String& GetCreatorRequestId() const{ return m_creatorRequestId; }
-    inline bool CreatorRequestIdHasBeenSet() const { return m_creatorRequestIdHasBeenSet; }
-    inline void SetCreatorRequestId(const Aws::String& value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId = value; }
-    inline void SetCreatorRequestId(Aws::String&& value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId = std::move(value); }
-    inline void SetCreatorRequestId(const char* value) { m_creatorRequestIdHasBeenSet = true; m_creatorRequestId.assign(value); }
-    inline BackupSelectionsListMember& WithCreatorRequestId(const Aws::String& value) { SetCreatorRequestId(value); return *this;}
-    inline BackupSelectionsListMember& WithCreatorRequestId(Aws::String&& value) { SetCreatorRequestId(std::move(value)); return *this;}
-    inline BackupSelectionsListMember& WithCreatorRequestId(const char* value) { SetCreatorRequestId(value); return *this;}
-    ///@}
+  Aws::String m_selectionName;
 
-    ///@{
-    /**
-     * <p>Specifies the IAM role Amazon Resource Name (ARN) to create the target
-     * recovery point; for example,
-     * <code>arn:aws:iam::123456789012:role/S3Access</code>.</p>
-     */
-    inline const Aws::String& GetIamRoleArn() const{ return m_iamRoleArn; }
-    inline bool IamRoleArnHasBeenSet() const { return m_iamRoleArnHasBeenSet; }
-    inline void SetIamRoleArn(const Aws::String& value) { m_iamRoleArnHasBeenSet = true; m_iamRoleArn = value; }
-    inline void SetIamRoleArn(Aws::String&& value) { m_iamRoleArnHasBeenSet = true; m_iamRoleArn = std::move(value); }
-    inline void SetIamRoleArn(const char* value) { m_iamRoleArnHasBeenSet = true; m_iamRoleArn.assign(value); }
-    inline BackupSelectionsListMember& WithIamRoleArn(const Aws::String& value) { SetIamRoleArn(value); return *this;}
-    inline BackupSelectionsListMember& WithIamRoleArn(Aws::String&& value) { SetIamRoleArn(std::move(value)); return *this;}
-    inline BackupSelectionsListMember& WithIamRoleArn(const char* value) { SetIamRoleArn(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_backupPlanId;
 
-    Aws::String m_selectionId;
-    bool m_selectionIdHasBeenSet = false;
+  Aws::Utils::DateTime m_creationDate{};
 
-    Aws::String m_selectionName;
-    bool m_selectionNameHasBeenSet = false;
+  Aws::String m_creatorRequestId;
 
-    Aws::String m_backupPlanId;
-    bool m_backupPlanIdHasBeenSet = false;
+  Aws::String m_iamRoleArn;
+  bool m_selectionIdHasBeenSet = false;
+  bool m_selectionNameHasBeenSet = false;
+  bool m_backupPlanIdHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_creatorRequestIdHasBeenSet = false;
+  bool m_iamRoleArnHasBeenSet = false;
+};
 
-    Aws::Utils::DateTime m_creationDate;
-    bool m_creationDateHasBeenSet = false;
-
-    Aws::String m_creatorRequestId;
-    bool m_creatorRequestIdHasBeenSet = false;
-
-    Aws::String m_iamRoleArn;
-    bool m_iamRoleArnHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Backup
-} // namespace Aws
+}  // namespace Model
+}  // namespace Backup
+}  // namespace Aws

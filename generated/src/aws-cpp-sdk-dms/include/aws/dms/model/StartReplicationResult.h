@@ -4,68 +4,78 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dms/DatabaseMigrationService_EXPORTS.h>
 #include <aws/dms/model/Replication.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DatabaseMigrationService
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DatabaseMigrationService {
+namespace Model {
+/**
+ * <p/><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartReplicationResponse">AWS
+ * API Reference</a></p>
+ */
+class StartReplicationResult {
+ public:
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult() = default;
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p/><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartReplicationResponse">AWS
-   * API Reference</a></p>
+   * <p>The replication that DMS started.</p>
    */
-  class StartReplicationResult
-  {
-  public:
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult();
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DATABASEMIGRATIONSERVICE_API StartReplicationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Replication& GetReplication() const { return m_replication; }
+  template <typename ReplicationT = Replication>
+  void SetReplication(ReplicationT&& value) {
+    m_replicationHasBeenSet = true;
+    m_replication = std::forward<ReplicationT>(value);
+  }
+  template <typename ReplicationT = Replication>
+  StartReplicationResult& WithReplication(ReplicationT&& value) {
+    SetReplication(std::forward<ReplicationT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The replication that DMS started.</p>
-     */
-    inline const Replication& GetReplication() const{ return m_replication; }
-    inline void SetReplication(const Replication& value) { m_replication = value; }
-    inline void SetReplication(Replication&& value) { m_replication = std::move(value); }
-    inline StartReplicationResult& WithReplication(const Replication& value) { SetReplication(value); return *this;}
-    inline StartReplicationResult& WithReplication(Replication&& value) { SetReplication(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartReplicationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartReplicationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartReplicationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartReplicationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Replication m_replication;
 
-    Replication m_replication;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_replicationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace DatabaseMigrationService
-} // namespace Aws
+}  // namespace Model
+}  // namespace DatabaseMigrationService
+}  // namespace Aws

@@ -4,73 +4,76 @@
  */
 
 #pragma once
-#include <aws/voice-id/VoiceID_EXPORTS.h>
-#include <aws/voice-id/VoiceIDRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/voice-id/VoiceIDRequest.h>
+#include <aws/voice-id/VoiceID_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace VoiceID
-{
-namespace Model
-{
+namespace Aws {
+namespace VoiceID {
+namespace Model {
 
+/**
+ */
+class DescribeFraudsterRegistrationJobRequest : public VoiceIDRequest {
+ public:
+  AWS_VOICEID_API DescribeFraudsterRegistrationJobRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "DescribeFraudsterRegistrationJob"; }
+
+  AWS_VOICEID_API Aws::String SerializePayload() const override;
+
+  AWS_VOICEID_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The identifier of the domain that contains the fraudster registration
+   * job.</p>
    */
-  class DescribeFraudsterRegistrationJobRequest : public VoiceIDRequest
-  {
-  public:
-    AWS_VOICEID_API DescribeFraudsterRegistrationJobRequest();
+  inline const Aws::String& GetDomainId() const { return m_domainId; }
+  inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
+  template <typename DomainIdT = Aws::String>
+  void SetDomainId(DomainIdT&& value) {
+    m_domainIdHasBeenSet = true;
+    m_domainId = std::forward<DomainIdT>(value);
+  }
+  template <typename DomainIdT = Aws::String>
+  DescribeFraudsterRegistrationJobRequest& WithDomainId(DomainIdT&& value) {
+    SetDomainId(std::forward<DomainIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "DescribeFraudsterRegistrationJob"; }
+  ///@{
+  /**
+   * <p>The identifier of the fraudster registration job you are describing.</p>
+   */
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  DescribeFraudsterRegistrationJobRequest& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domainId;
 
-    AWS_VOICEID_API Aws::String SerializePayload() const override;
+  Aws::String m_jobId;
+  bool m_domainIdHasBeenSet = false;
+  bool m_jobIdHasBeenSet = false;
+};
 
-    AWS_VOICEID_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>The identifier of the domain that contains the fraudster registration
-     * job.</p>
-     */
-    inline const Aws::String& GetDomainId() const{ return m_domainId; }
-    inline bool DomainIdHasBeenSet() const { return m_domainIdHasBeenSet; }
-    inline void SetDomainId(const Aws::String& value) { m_domainIdHasBeenSet = true; m_domainId = value; }
-    inline void SetDomainId(Aws::String&& value) { m_domainIdHasBeenSet = true; m_domainId = std::move(value); }
-    inline void SetDomainId(const char* value) { m_domainIdHasBeenSet = true; m_domainId.assign(value); }
-    inline DescribeFraudsterRegistrationJobRequest& WithDomainId(const Aws::String& value) { SetDomainId(value); return *this;}
-    inline DescribeFraudsterRegistrationJobRequest& WithDomainId(Aws::String&& value) { SetDomainId(std::move(value)); return *this;}
-    inline DescribeFraudsterRegistrationJobRequest& WithDomainId(const char* value) { SetDomainId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>The identifier of the fraudster registration job you are describing.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline bool JobIdHasBeenSet() const { return m_jobIdHasBeenSet; }
-    inline void SetJobId(const Aws::String& value) { m_jobIdHasBeenSet = true; m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobIdHasBeenSet = true; m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobIdHasBeenSet = true; m_jobId.assign(value); }
-    inline DescribeFraudsterRegistrationJobRequest& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline DescribeFraudsterRegistrationJobRequest& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline DescribeFraudsterRegistrationJobRequest& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_domainId;
-    bool m_domainIdHasBeenSet = false;
-
-    Aws::String m_jobId;
-    bool m_jobIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace VoiceID
-} // namespace Aws
+}  // namespace Model
+}  // namespace VoiceID
+}  // namespace Aws

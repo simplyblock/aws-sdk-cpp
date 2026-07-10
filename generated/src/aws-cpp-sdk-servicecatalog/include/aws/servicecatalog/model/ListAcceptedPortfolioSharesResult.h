@@ -4,82 +4,101 @@
  */
 
 #pragma once
-#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/servicecatalog/ServiceCatalog_EXPORTS.h>
 #include <aws/servicecatalog/model/PortfolioDetail.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ServiceCatalog
-{
-namespace Model
-{
-  class ListAcceptedPortfolioSharesResult
-  {
-  public:
-    AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult();
-    AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ServiceCatalog {
+namespace Model {
+class ListAcceptedPortfolioSharesResult {
+ public:
+  AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult() = default;
+  AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SERVICECATALOG_API ListAcceptedPortfolioSharesResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the portfolios.</p>
+   */
+  inline const Aws::Vector<PortfolioDetail>& GetPortfolioDetails() const { return m_portfolioDetails; }
+  template <typename PortfolioDetailsT = Aws::Vector<PortfolioDetail>>
+  void SetPortfolioDetails(PortfolioDetailsT&& value) {
+    m_portfolioDetailsHasBeenSet = true;
+    m_portfolioDetails = std::forward<PortfolioDetailsT>(value);
+  }
+  template <typename PortfolioDetailsT = Aws::Vector<PortfolioDetail>>
+  ListAcceptedPortfolioSharesResult& WithPortfolioDetails(PortfolioDetailsT&& value) {
+    SetPortfolioDetails(std::forward<PortfolioDetailsT>(value));
+    return *this;
+  }
+  template <typename PortfolioDetailsT = PortfolioDetail>
+  ListAcceptedPortfolioSharesResult& AddPortfolioDetails(PortfolioDetailsT&& value) {
+    m_portfolioDetailsHasBeenSet = true;
+    m_portfolioDetails.emplace_back(std::forward<PortfolioDetailsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the portfolios.</p>
-     */
-    inline const Aws::Vector<PortfolioDetail>& GetPortfolioDetails() const{ return m_portfolioDetails; }
-    inline void SetPortfolioDetails(const Aws::Vector<PortfolioDetail>& value) { m_portfolioDetails = value; }
-    inline void SetPortfolioDetails(Aws::Vector<PortfolioDetail>&& value) { m_portfolioDetails = std::move(value); }
-    inline ListAcceptedPortfolioSharesResult& WithPortfolioDetails(const Aws::Vector<PortfolioDetail>& value) { SetPortfolioDetails(value); return *this;}
-    inline ListAcceptedPortfolioSharesResult& WithPortfolioDetails(Aws::Vector<PortfolioDetail>&& value) { SetPortfolioDetails(std::move(value)); return *this;}
-    inline ListAcceptedPortfolioSharesResult& AddPortfolioDetails(const PortfolioDetail& value) { m_portfolioDetails.push_back(value); return *this; }
-    inline ListAcceptedPortfolioSharesResult& AddPortfolioDetails(PortfolioDetail&& value) { m_portfolioDetails.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The page token to use to retrieve the next set of results. If there are no
+   * additional results, this value is null.</p>
+   */
+  inline const Aws::String& GetNextPageToken() const { return m_nextPageToken; }
+  template <typename NextPageTokenT = Aws::String>
+  void SetNextPageToken(NextPageTokenT&& value) {
+    m_nextPageTokenHasBeenSet = true;
+    m_nextPageToken = std::forward<NextPageTokenT>(value);
+  }
+  template <typename NextPageTokenT = Aws::String>
+  ListAcceptedPortfolioSharesResult& WithNextPageToken(NextPageTokenT&& value) {
+    SetNextPageToken(std::forward<NextPageTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The page token to use to retrieve the next set of results. If there are no
-     * additional results, this value is null.</p>
-     */
-    inline const Aws::String& GetNextPageToken() const{ return m_nextPageToken; }
-    inline void SetNextPageToken(const Aws::String& value) { m_nextPageToken = value; }
-    inline void SetNextPageToken(Aws::String&& value) { m_nextPageToken = std::move(value); }
-    inline void SetNextPageToken(const char* value) { m_nextPageToken.assign(value); }
-    inline ListAcceptedPortfolioSharesResult& WithNextPageToken(const Aws::String& value) { SetNextPageToken(value); return *this;}
-    inline ListAcceptedPortfolioSharesResult& WithNextPageToken(Aws::String&& value) { SetNextPageToken(std::move(value)); return *this;}
-    inline ListAcceptedPortfolioSharesResult& WithNextPageToken(const char* value) { SetNextPageToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListAcceptedPortfolioSharesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListAcceptedPortfolioSharesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListAcceptedPortfolioSharesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListAcceptedPortfolioSharesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<PortfolioDetail> m_portfolioDetails;
+ private:
+  Aws::Vector<PortfolioDetail> m_portfolioDetails;
 
-    Aws::String m_nextPageToken;
+  Aws::String m_nextPageToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_portfolioDetailsHasBeenSet = false;
+  bool m_nextPageTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ServiceCatalog
-} // namespace Aws
+}  // namespace Model
+}  // namespace ServiceCatalog
+}  // namespace Aws

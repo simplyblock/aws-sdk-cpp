@@ -293,8 +293,7 @@
                 "EndTime": {
                     "target": "com.amazonaws.pi#ISOTimestamp",
                     "traits": {
-                        "smithy.api#documentation": "<p>The end time defined for the analysis report.</p>",
-                        "smithy.api#required": {}
+                        "smithy.api#documentation": "<p>The end time defined for the analysis report.</p>"
                     }
                 },
                 "Tags": {
@@ -511,7 +510,7 @@
                 "AdditionalMetrics": {
                     "target": "com.amazonaws.pi#AdditionalMetricsList",
                     "traits": {
-                        "smithy.api#documentation": "<p>Additional metrics for the top <code>N</code> dimension keys. If the specified dimension group in the <code>GroupBy</code> parameter is\n                <code>db.sql_tokenized</code>, you can specify per-SQL metrics to get the values for the top <code>N</code> SQL digests. The response\n            syntax is as follows: <code>\"AdditionalMetrics\" : { \"<i>string</i>\" : \"<i>string</i>\" }</code>. </p>"
+                        "smithy.api#documentation": "<p>Additional metrics for the top <code>N</code> dimension keys. If the specified dimension group in the <code>GroupBy</code> parameter is\n                <code>db.sql_tokenized</code>, you can specify per-SQL metrics to get the values for the top <code>N</code> SQL digests. The response\n            syntax is as follows: <code>\"AdditionalMetrics\" : { \"<i>string</i>\" : \"<i>string</i>\" }</code>.</p>\n         <p>The only supported statistic function is <code>.avg</code>.</p>"
                     }
                 },
                 "PartitionBy": {
@@ -658,14 +657,14 @@
                 "Group": {
                     "target": "com.amazonaws.pi#SanitizedString",
                     "traits": {
-                        "smithy.api#documentation": "<p>The name of the dimension group. Valid values are as follows:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db</code> - The name of the database to which the client is connected. The following values are permitted:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Aurora MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MariaDB</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.application</code> - The name of the application that is connected to the database. The following values are\n                    permitted:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.host</code> - The host name of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query</code> - The query that is currently running (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query_tokenized</code> - The digest query (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.session_type</code> - The type of the current session (only Aurora PostgreSQL and RDS PostgreSQL).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql</code> - The text of the SQL statement that is currently running (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized</code> - The SQL digest (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user</code> - The user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event</code> - The event for which the database backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event_type</code> - The type of event for which the database backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_state</code> - The event for which the database backend is waiting (only Amazon DocumentDB).</p>\n            </li>\n         </ul>",
+                        "smithy.api#documentation": "<p>The name of the dimension group. Valid values are as follows:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db</code> - The name of the database to which the client is connected. The following values are permitted:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Aurora MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MariaDB</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.application</code> - The name of the application that is connected to the database. The following values are\n                    permitted:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_sql</code> - The SQL queries blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_session</code> - The sessions blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_object</code> - The object resources acquired by other sessions that are blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.host</code> - The host name of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.plans</code> - The execution plans for the query (only Aurora PostgreSQL).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query</code> - The query that is currently running (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query_tokenized</code> - The digest query (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.session_type</code> - The type of the current session (only Aurora PostgreSQL and RDS PostgreSQL).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql</code> - The text of the SQL statement that is currently running (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized</code> - The SQL digest (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user</code> - The user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event</code> - The event for which the database backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event_type</code> - The type of event for which the database backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_state</code> - The event for which the database backend is waiting (only Amazon DocumentDB).</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
                 "Dimensions": {
                     "target": "com.amazonaws.pi#SanitizedStringList",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of specific dimensions from a dimension group. If this parameter is not present,\n            then it signifies that all of the dimensions in the group were requested, or are present in\n            the response.</p>\n         <p>Valid values for elements in the <code>Dimensions</code> array are:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.application.name</code> - The name of the application that is connected to the database. Valid values are as follows: </p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.host.id</code> - The host ID of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.host.name</code> - The host name of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.name</code> - The name of the database to which the client is connected. Valid values are as follows:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Aurora MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MariaDB</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.id</code> - The query ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.db_id</code> - The query ID generated by the database (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.statement</code> - The text of the query that is being run (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized_id</code>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.id</code> - The query digest ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.db_id</code> - The query digest ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.statement</code> - The text of the query digest (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.session_type.name</code> - The type of the current session (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.id</code> - The hash of the full, non-tokenized SQL statement generated by Performance Insights (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.db_id</code> - Either the SQL ID generated by the database engine, or a value generated by Performance Insights that begins with\n                        <code>pi-</code> (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.statement</code> - The full text of the SQL statement that is running, as in <code>SELECT * FROM employees</code>\n                    (all engines except Amazon DocumentDB)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.tokenized_id</code> - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). The <code>db.sql.tokenized_id</code> dimension \n                    fetches the value of the <code>db.sql_tokenized.id</code> dimension. Amazon RDS returns <code>db.sql.tokenized_id</code> from the <code>db.sql</code> dimension group.\n                </p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.id</code> - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). In the console,\n                        <code>db.sql_tokenized.id</code> is called the Support ID because Amazon Web Services Support can look at this data to help you troubleshoot\n                    database issues.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.db_id</code> - Either the native database ID used to refer to the SQL statement, or a synthetic ID such as\n                        <code>pi-2372568224</code> that Performance Insights generates if the native database ID isn't available (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.statement</code> - The text of the SQL digest, as in <code>SELECT * FROM employees WHERE employee_id =\n                        ?</code> (all engines except Amazon DocumentDB)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user.id</code> - The ID of the user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user.name</code> - The name of the user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event.name</code> - The event for which the backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event.type</code> - The type of event for which the backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event_type.name</code> - The name of the event type for which the backend is waiting (all engines except\n                    Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_state.name</code> - The event for which the backend is waiting (only Amazon DocumentDB).</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>A list of specific dimensions from a dimension group. If this parameter is not present,\n            then it signifies that all of the dimensions in the group were requested, or are present in\n            the response.</p>\n         <p>Valid values for elements in the <code>Dimensions</code> array are:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.application.name</code> - The name of the application that is connected to the database. Valid values are as follows: </p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_sql.id</code> - The ID for each of the SQL queries blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_sql.sql</code> - The SQL text for each of the SQL queries blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_session.id</code> - The ID for each of the sessions blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_object.id</code> - The ID for each of the object resources acquired by other sessions that are blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_object.type</code> - The object type for each of the object resources acquired by other sessions that are blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.blocking_object.value</code> - The value for each of the object resources acquired by other sessions that are blocking the most DB load.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.host.id</code> - The host ID of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.host.name</code> - The host name of the connected client (all engines).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.name</code> - The name of the database to which the client is connected. Valid values are as follows:</p>\n               <ul>\n                  <li>\n                     <p>Aurora PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS PostgreSQL</p>\n                  </li>\n                  <li>\n                     <p>Aurora MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MySQL</p>\n                  </li>\n                  <li>\n                     <p>Amazon RDS MariaDB</p>\n                  </li>\n                  <li>\n                     <p>Amazon DocumentDB</p>\n                  </li>\n               </ul>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.id</code> - The query ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.db_id</code> - The query ID generated by the database (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.statement</code> - The text of the query that is being run (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized_id</code>\n               </p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.id</code> - The query digest ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.db_id</code> - The query digest ID generated by Performance Insights (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.tokenized.statement</code> - The text of the query digest (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.session_type.name</code> - The type of the current session (only Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.id</code> - The hash of the full, non-tokenized SQL statement generated by Performance Insights (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.db_id</code> - Either the SQL ID generated by the database engine, or a value generated by Performance Insights that begins with\n                        <code>pi-</code> (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.statement</code> - The full text of the SQL statement that is running, as in <code>SELECT * FROM employees</code>\n                    (all engines except Amazon DocumentDB)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.tokenized_id</code> - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). The <code>db.sql.tokenized_id</code> dimension \n                    fetches the value of the <code>db.sql_tokenized.id</code> dimension. Amazon RDS returns <code>db.sql.tokenized_id</code> from the <code>db.sql</code> dimension group.\n                </p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.id</code> - The hash of the SQL digest generated by Performance Insights (all engines except Amazon DocumentDB). In the console,\n                        <code>db.sql_tokenized.id</code> is called the Support ID because Amazon Web Services Support can look at this data to help you troubleshoot\n                    database issues.</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.db_id</code> - Either the native database ID used to refer to the SQL statement, or a synthetic ID such as\n                        <code>pi-2372568224</code> that Performance Insights generates if the native database ID isn't available (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql_tokenized.statement</code> - The text of the SQL digest, as in <code>SELECT * FROM employees WHERE employee_id =\n                        ?</code> (all engines except Amazon DocumentDB)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user.id</code> - The ID of the user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.user.name</code> - The name of the user logged in to the database (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event.name</code> - The event for which the backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event.type</code> - The type of event for which the backend is waiting (all engines except Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_event_type.name</code> - The name of the event type for which the backend is waiting (all engines except\n                    Amazon DocumentDB).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.wait_state.name</code> - The event for which the backend is waiting (only Amazon DocumentDB).</p>\n            </li>\n         </ul>"
                     }
                 },
                 "Limit": {
@@ -909,7 +908,7 @@
                 }
             ],
             "traits": {
-                "smithy.api#documentation": "<p>Get the attributes of the specified dimension group for a DB instance or data source. For example, if you specify a SQL ID,\n                <code>GetDimensionKeyDetails</code> retrieves the full text of the dimension <code>db.sql.statement</code> associated with this ID.\n            This operation is useful because <code>GetResourceMetrics</code> and <code>DescribeDimensionKeys</code> don't support retrieval of large\n            SQL statement text.</p>"
+                "smithy.api#documentation": "<p>Get the attributes of the specified dimension group for a DB instance or data source. For example, if you specify a SQL ID,\n                <code>GetDimensionKeyDetails</code> retrieves the full text of the dimension <code>db.sql.statement</code> associated with this ID.\n            This operation is useful because <code>GetResourceMetrics</code> and <code>DescribeDimensionKeys</code> don't support retrieval of large\n          SQL statement text, lock snapshots, and execution plans.</p>"
             }
         },
         "com.amazonaws.pi#GetDimensionKeyDetailsRequest": {
@@ -932,21 +931,21 @@
                 "Group": {
                     "target": "com.amazonaws.pi#RequestString",
                     "traits": {
-                        "smithy.api#documentation": "<p>The name of the dimension group. Performance Insights searches the specified group for the dimension group ID. The following group name values are\n            valid:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.query</code> (Amazon DocumentDB only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql</code> (Amazon RDS and Aurora only)</p>\n            </li>\n         </ul>",
+                        "smithy.api#documentation": "<p>The name of the dimension group. Performance Insights searches the specified group for the dimension group ID. The following group name values are\n            valid:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.execution_plan</code> (Amazon RDS and Aurora only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.lock_snapshot</code> (Aurora only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query</code> (Amazon DocumentDB only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql</code> (Amazon RDS and Aurora only)</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
                 "GroupIdentifier": {
                     "target": "com.amazonaws.pi#RequestString",
                     "traits": {
-                        "smithy.api#documentation": "<p>The ID of the dimension group from which to retrieve dimension details. For dimension group <code>db.sql</code>, the group ID is\n                <code>db.sql.id</code>. The following group ID values are valid:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.sql.id</code> for dimension group <code>db.sql</code> (Aurora and RDS only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.id</code> for dimension group <code>db.query</code> (DocumentDB only)</p>\n            </li>\n         </ul>",
+                        "smithy.api#documentation": "<p>The ID of the dimension group from which to retrieve dimension details. For dimension group <code>db.sql</code>, the group ID is\n                <code>db.sql.id</code>. The following group ID values are valid:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.execution_plan.id</code> for dimension group <code>db.execution_plan</code> (Aurora and RDS only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql.id</code> for dimension group <code>db.sql</code> (Aurora and RDS only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query.id</code> for dimension group <code>db.query</code> (DocumentDB only)</p>\n            </li>\n            <li>\n               <p>For the dimension group <code>db.lock_snapshot</code>, the <code>GroupIdentifier</code> is the epoch timestamp when Performance Insights captured the snapshot, in seconds. \n                    You can retrieve this value with the <code>GetResourceMetrics</code> operation for a 1 second period.</p>\n            </li>\n         </ul>",
                         "smithy.api#required": {}
                     }
                 },
                 "RequestedDimensions": {
                     "target": "com.amazonaws.pi#RequestedDimensionList",
                     "traits": {
-                        "smithy.api#documentation": "<p>A list of dimensions to retrieve the detail data for within the given dimension group. If you don't specify this parameter, Performance Insights returns\n            all dimension data within the specified dimension group. Specify dimension names for the following dimension groups:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.sql</code> - Specify either the full dimension name <code>db.sql.statement</code> or the short dimension name\n                        <code>statement</code> (Aurora and RDS only).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query</code> - Specify either the full dimension name <code>db.query.statement</code> or the short dimension name\n                        <code>statement</code> (DocumentDB only).</p>\n            </li>\n         </ul>"
+                        "smithy.api#documentation": "<p>A list of dimensions to retrieve the detail data for within the given dimension group. If you don't specify this parameter, Performance Insights returns\n            all dimension data within the specified dimension group. Specify dimension names for the following dimension groups:</p>\n         <ul>\n            <li>\n               <p>\n                  <code>db.execution_plan</code> - Specify the dimension name <code>db.execution_plan.raw_plan</code> or the short dimension name <code>raw_plan</code> (Amazon RDS and Aurora only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.lock_snapshot</code> - Specify the dimension name <code>db.lock_snapshot.lock_trees</code> or the short dimension name <code>lock_trees</code>. (Aurora only)</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.sql</code> - Specify either the full dimension name <code>db.sql.statement</code> or the short dimension name\n                        <code>statement</code> (Aurora and RDS only).</p>\n            </li>\n            <li>\n               <p>\n                  <code>db.query</code> - Specify either the full dimension name <code>db.query.statement</code> or the short dimension name\n                        <code>statement</code> (DocumentDB only).</p>\n            </li>\n         </ul>"
                     }
                 }
             },
@@ -1186,7 +1185,7 @@
                 "MaxResults": {
                     "target": "com.amazonaws.pi#MaxResults",
                     "traits": {
-                        "smithy.api#documentation": "<p>The maximum number of items to return in the response. If more items exist than the specified <code>MaxRecords</code> value, a\n            pagination token is included in the response so that the remaining results can be retrieved. </p>"
+                        "smithy.api#documentation": "<p>The maximum number of items to return in the response.</p>"
                     }
                 },
                 "NextToken": {
@@ -1558,6 +1557,102 @@
                 "smithy.api#output": {}
             }
         },
+        "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendations": {
+            "type": "operation",
+            "input": {
+                "target": "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendationsRequest"
+            },
+            "output": {
+                "target": "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendationsResponse"
+            },
+            "errors": [
+                {
+                    "target": "com.amazonaws.pi#InternalServiceError"
+                },
+                {
+                    "target": "com.amazonaws.pi#InvalidArgumentException"
+                },
+                {
+                    "target": "com.amazonaws.pi#NotAuthorizedException"
+                }
+            ],
+            "traits": {
+                "smithy.api#documentation": "<p>Retrieves recommendations for a performance analysis report.</p>",
+                "smithy.api#paginated": {
+                    "inputToken": "NextToken",
+                    "outputToken": "NextToken",
+                    "items": "Recommendations",
+                    "pageSize": "MaxResults"
+                }
+            }
+        },
+        "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendationsRequest": {
+            "type": "structure",
+            "members": {
+                "ServiceType": {
+                    "target": "com.amazonaws.pi#ServiceType",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The Amazon Web Services service for which Performance Insights returns metrics. Valid value is\n            <code>RDS</code>.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "Identifier": {
+                    "target": "com.amazonaws.pi#IdentifierString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An immutable identifier for a data source that is unique for an Amazon Web Services Region. Performance Insights gathers metrics from this data source. In the\n            console, the identifier is shown as <i>ResourceID</i>. When you call <code>DescribeDBInstances</code>, the identifier is\n            returned as <code>DbiResourceId</code>.</p>\n         <p>To use a DB instance as a data source, specify its <code>DbiResourceId</code> value. For example, specify\n            <code>db-ABCDEFGHIJKLMNOPQRSTU1VW2X</code>.</p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "AnalysisReportId": {
+                    "target": "com.amazonaws.pi#AnalysisReportId",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A unique identifier of the created analysis report. For example,\n            <code>report-12345678901234567</code>\n         </p>",
+                        "smithy.api#required": {}
+                    }
+                },
+                "RecommendationIds": {
+                    "target": "com.amazonaws.pi#RecommendationIdList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>A list of recommendation identifiers to filter the results.</p>"
+                    }
+                },
+                "MaxResults": {
+                    "target": "com.amazonaws.pi#MaxResults",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The maximum number of items to return in the response. If more items exist than the specified <code>MaxResults</code> value, a\n            pagination token is included in the response so that the remaining results can be retrieved. </p>"
+                    }
+                },
+                "NextToken": {
+                    "target": "com.amazonaws.pi#NextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An optional pagination token provided by a previous request. \n            If this parameter is specified, the response includes only records beyond\n            the token, up to the value specified by <code>MaxResults</code>.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#input": {}
+            }
+        },
+        "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendationsResponse": {
+            "type": "structure",
+            "members": {
+                "Recommendations": {
+                    "target": "com.amazonaws.pi#RecommendationList",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The list of recommendations for the analysis report.</p>"
+                    }
+                },
+                "NextToken": {
+                    "target": "com.amazonaws.pi#NextToken",
+                    "traits": {
+                        "smithy.api#documentation": "<p>An optional pagination token provided by a previous request. \n            If this parameter is specified, the response includes only records beyond the token, \n            up to the value specified by <code>MaxResults</code>.</p>"
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#output": {}
+            }
+        },
         "com.amazonaws.pi#ListPerformanceAnalysisReports": {
             "type": "operation",
             "input": {
@@ -1880,6 +1975,12 @@
                         "smithy.api#documentation": "<p>A dimension map that contains the dimensions for this partition.</p>"
                     }
                 },
+                "Filter": {
+                    "target": "com.amazonaws.pi#DescriptiveMap",
+                    "traits": {
+                        "smithy.api#documentation": "<p>The filter for the Performance Insights metric.</p>"
+                    }
+                },
                 "Value": {
                     "target": "com.amazonaws.pi#Double",
                     "traits": {
@@ -1923,6 +2024,9 @@
                     "target": "com.amazonaws.pi#ListAvailableResourceMetrics"
                 },
                 {
+                    "target": "com.amazonaws.pi#ListPerformanceAnalysisReportRecommendations"
+                },
+                {
                     "target": "com.amazonaws.pi#ListPerformanceAnalysisReports"
                 },
                 {
@@ -1952,6 +2056,194 @@
                 "smithy.api#xmlNamespace": {
                     "uri": "http://pi.amazonaws.com/doc/2018-02-27/"
                 },
+                "smithy.rules#endpointBdd": {
+                    "version": "1.1",
+                    "parameters": {
+                        "Region": {
+                            "builtIn": "AWS::Region",
+                            "required": false,
+                            "documentation": "The AWS region used to dispatch the request.",
+                            "type": "string"
+                        },
+                        "UseDualStack": {
+                            "builtIn": "AWS::UseDualStack",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
+                            "type": "boolean"
+                        },
+                        "UseFIPS": {
+                            "builtIn": "AWS::UseFIPS",
+                            "required": true,
+                            "default": false,
+                            "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
+                            "type": "boolean"
+                        },
+                        "Endpoint": {
+                            "builtIn": "SDK::Endpoint",
+                            "required": false,
+                            "documentation": "Override the endpoint used to send this request",
+                            "type": "string"
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Endpoint"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "isSet",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ]
+                        },
+                        {
+                            "fn": "aws.partition",
+                            "argv": [
+                                {
+                                    "ref": "Region"
+                                }
+                            ],
+                            "assign": "PartitionResult"
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseFIPS"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "ref": "UseDualStack"
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsDualStack"
+                                    ]
+                                },
+                                true
+                            ]
+                        },
+                        {
+                            "fn": "booleanEquals",
+                            "argv": [
+                                {
+                                    "fn": "getAttr",
+                                    "argv": [
+                                        {
+                                            "ref": "PartitionResult"
+                                        },
+                                        "supportsFIPS"
+                                    ]
+                                },
+                                true
+                            ]
+                        }
+                    ],
+                    "results": [
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: FIPS and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Dualstack and custom endpoint are not supported",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": {
+                                    "ref": "Endpoint"
+                                },
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://pi-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS and DualStack are enabled, but this partition does not support one or both",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://pi-fips.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "FIPS is enabled but this partition does not support FIPS",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://pi.{Region}.{PartitionResult#dualStackDnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "DualStack is enabled but this partition does not support DualStack",
+                            "type": "error"
+                        },
+                        {
+                            "conditions": [],
+                            "endpoint": {
+                                "url": "https://pi.{Region}.{PartitionResult#dnsSuffix}",
+                                "properties": {},
+                                "headers": {}
+                            },
+                            "type": "endpoint"
+                        },
+                        {
+                            "conditions": [],
+                            "error": "Invalid Configuration: Missing Region",
+                            "type": "error"
+                        }
+                    ],
+                    "root": 2,
+                    "nodeCount": 13,
+                    "nodes": "/////wAAAAH/////AAAAAAAAAAwAAAADAAAAAQAAAAQF9eELAAAAAgAAAAUF9eELAAAAAwAAAAgAAAAGAAAABAAAAAcF9eEKAAAABQX14QgF9eEJAAAABAAAAAoAAAAJAAAABgX14QYF9eEHAAAABQAAAAsF9eEFAAAABgX14QQF9eEFAAAAAwX14QEAAAANAAAABAX14QIF9eED"
+                },
                 "smithy.rules#endpointRuleSet": {
                     "version": "1.0",
                     "parameters": {
@@ -1959,27 +2251,27 @@
                             "builtIn": "AWS::Region",
                             "required": false,
                             "documentation": "The AWS region used to dispatch the request.",
-                            "type": "String"
+                            "type": "string"
                         },
                         "UseDualStack": {
                             "builtIn": "AWS::UseDualStack",
                             "required": true,
                             "default": false,
                             "documentation": "When true, use the dual-stack endpoint. If the configured endpoint does not support dual-stack, dispatching the request MAY return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "UseFIPS": {
                             "builtIn": "AWS::UseFIPS",
                             "required": true,
                             "default": false,
                             "documentation": "When true, send this request to the FIPS-compliant regional endpoint. If the configured endpoint does not have a FIPS compliant endpoint, dispatching the request will return an error.",
-                            "type": "Boolean"
+                            "type": "boolean"
                         },
                         "Endpoint": {
                             "builtIn": "SDK::Endpoint",
                             "required": false,
                             "documentation": "Override the endpoint used to send this request",
-                            "type": "String"
+                            "type": "string"
                         }
                     },
                     "rules": [
@@ -2698,17 +2990,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-iso-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -2719,17 +3000,6 @@
                                 "Region": "us-iso-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-iso-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-iso-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -2746,17 +3016,6 @@
                             }
                         },
                         {
-                            "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack enabled",
-                            "expect": {
-                                "error": "FIPS and DualStack are enabled, but this partition does not support one or both"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": true,
-                                "UseDualStack": true
-                            }
-                        },
-                        {
                             "documentation": "For region us-isob-east-1 with FIPS enabled and DualStack disabled",
                             "expect": {
                                 "endpoint": {
@@ -2767,17 +3026,6 @@
                                 "Region": "us-isob-east-1",
                                 "UseFIPS": true,
                                 "UseDualStack": false
-                            }
-                        },
-                        {
-                            "documentation": "For region us-isob-east-1 with FIPS disabled and DualStack enabled",
-                            "expect": {
-                                "error": "DualStack is enabled but this partition does not support DualStack"
-                            },
-                            "params": {
-                                "Region": "us-isob-east-1",
-                                "UseFIPS": false,
-                                "UseDualStack": true
                             }
                         },
                         {
@@ -2886,10 +3134,22 @@
                     "traits": {
                         "smithy.api#documentation": "<p>The recommendation details to help resolve the performance issue. For example, \n            <code>Investigate the following SQLs that contributed to 100% of the total DBLoad during that time period: sql-id</code>\n         </p>"
                     }
+                },
+                "RecommendationDetails": {
+                    "target": "com.amazonaws.pi#MarkdownString",
+                    "traits": {
+                        "smithy.api#documentation": "<p>Detailed information about the recommendation, including steps to resolve the performance issue.</p>"
+                    }
                 }
             },
             "traits": {
                 "smithy.api#documentation": "<p>The list of recommendations for the insight.</p>"
+            }
+        },
+        "com.amazonaws.pi#RecommendationIdList": {
+            "type": "list",
+            "member": {
+                "target": "com.amazonaws.pi#String"
             }
         },
         "com.amazonaws.pi#RecommendationList": {

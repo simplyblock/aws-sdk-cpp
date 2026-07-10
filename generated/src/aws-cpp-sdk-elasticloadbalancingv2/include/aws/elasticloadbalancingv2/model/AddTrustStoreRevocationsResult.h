@@ -4,64 +4,80 @@
  */
 
 #pragma once
-#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/elasticloadbalancingv2/ElasticLoadBalancingv2_EXPORTS.h>
 #include <aws/elasticloadbalancingv2/model/ResponseMetadata.h>
 #include <aws/elasticloadbalancingv2/model/TrustStoreRevocation.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace ElasticLoadBalancingv2
-{
-namespace Model
-{
-  class AddTrustStoreRevocationsResult
-  {
-  public:
-    AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult();
-    AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace ElasticLoadBalancingv2 {
+namespace Model {
+class AddTrustStoreRevocationsResult {
+ public:
+  AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult() = default;
+  AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_ELASTICLOADBALANCINGV2_API AddTrustStoreRevocationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
+  /**
+   * <p>Information about the revocation file added to the trust store.</p>
+   */
+  inline const Aws::Vector<TrustStoreRevocation>& GetTrustStoreRevocations() const { return m_trustStoreRevocations; }
+  template <typename TrustStoreRevocationsT = Aws::Vector<TrustStoreRevocation>>
+  void SetTrustStoreRevocations(TrustStoreRevocationsT&& value) {
+    m_trustStoreRevocationsHasBeenSet = true;
+    m_trustStoreRevocations = std::forward<TrustStoreRevocationsT>(value);
+  }
+  template <typename TrustStoreRevocationsT = Aws::Vector<TrustStoreRevocation>>
+  AddTrustStoreRevocationsResult& WithTrustStoreRevocations(TrustStoreRevocationsT&& value) {
+    SetTrustStoreRevocations(std::forward<TrustStoreRevocationsT>(value));
+    return *this;
+  }
+  template <typename TrustStoreRevocationsT = TrustStoreRevocation>
+  AddTrustStoreRevocationsResult& AddTrustStoreRevocations(TrustStoreRevocationsT&& value) {
+    m_trustStoreRevocationsHasBeenSet = true;
+    m_trustStoreRevocations.emplace_back(std::forward<TrustStoreRevocationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the revocation file added to the trust store.</p>
-     */
-    inline const Aws::Vector<TrustStoreRevocation>& GetTrustStoreRevocations() const{ return m_trustStoreRevocations; }
-    inline void SetTrustStoreRevocations(const Aws::Vector<TrustStoreRevocation>& value) { m_trustStoreRevocations = value; }
-    inline void SetTrustStoreRevocations(Aws::Vector<TrustStoreRevocation>&& value) { m_trustStoreRevocations = std::move(value); }
-    inline AddTrustStoreRevocationsResult& WithTrustStoreRevocations(const Aws::Vector<TrustStoreRevocation>& value) { SetTrustStoreRevocations(value); return *this;}
-    inline AddTrustStoreRevocationsResult& WithTrustStoreRevocations(Aws::Vector<TrustStoreRevocation>&& value) { SetTrustStoreRevocations(std::move(value)); return *this;}
-    inline AddTrustStoreRevocationsResult& AddTrustStoreRevocations(const TrustStoreRevocation& value) { m_trustStoreRevocations.push_back(value); return *this; }
-    inline AddTrustStoreRevocationsResult& AddTrustStoreRevocations(TrustStoreRevocation&& value) { m_trustStoreRevocations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline AddTrustStoreRevocationsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline AddTrustStoreRevocationsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  AddTrustStoreRevocationsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<TrustStoreRevocation> m_trustStoreRevocations;
+ private:
+  Aws::Vector<TrustStoreRevocation> m_trustStoreRevocations;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_trustStoreRevocationsHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ElasticLoadBalancingv2
-} // namespace Aws
+}  // namespace Model
+}  // namespace ElasticLoadBalancingv2
+}  // namespace Aws

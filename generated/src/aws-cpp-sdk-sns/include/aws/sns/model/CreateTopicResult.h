@@ -4,68 +4,77 @@
  */
 
 #pragma once
-#include <aws/sns/SNS_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sns/SNS_EXPORTS.h>
 #include <aws/sns/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace SNS
-{
-namespace Model
-{
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace SNS {
+namespace Model {
+/**
+ * <p>Response from CreateTopic action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/CreateTopicResponse">AWS
+ * API Reference</a></p>
+ */
+class CreateTopicResult {
+ public:
+  AWS_SNS_API CreateTopicResult() = default;
+  AWS_SNS_API CreateTopicResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_SNS_API CreateTopicResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+
+  ///@{
   /**
-   * <p>Response from CreateTopic action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sns-2010-03-31/CreateTopicResponse">AWS
-   * API Reference</a></p>
+   * <p>The Amazon Resource Name (ARN) assigned to the created topic.</p>
    */
-  class CreateTopicResult
-  {
-  public:
-    AWS_SNS_API CreateTopicResult();
-    AWS_SNS_API CreateTopicResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_SNS_API CreateTopicResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  inline const Aws::String& GetTopicArn() const { return m_topicArn; }
+  template <typename TopicArnT = Aws::String>
+  void SetTopicArn(TopicArnT&& value) {
+    m_topicArnHasBeenSet = true;
+    m_topicArn = std::forward<TopicArnT>(value);
+  }
+  template <typename TopicArnT = Aws::String>
+  CreateTopicResult& WithTopicArn(TopicArnT&& value) {
+    SetTopicArn(std::forward<TopicArnT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) assigned to the created topic.</p>
-     */
-    inline const Aws::String& GetTopicArn() const{ return m_topicArn; }
-    inline void SetTopicArn(const Aws::String& value) { m_topicArn = value; }
-    inline void SetTopicArn(Aws::String&& value) { m_topicArn = std::move(value); }
-    inline void SetTopicArn(const char* value) { m_topicArn.assign(value); }
-    inline CreateTopicResult& WithTopicArn(const Aws::String& value) { SetTopicArn(value); return *this;}
-    inline CreateTopicResult& WithTopicArn(Aws::String&& value) { SetTopicArn(std::move(value)); return *this;}
-    inline CreateTopicResult& WithTopicArn(const char* value) { SetTopicArn(value); return *this;}
-    ///@}
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  CreateTopicResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline CreateTopicResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline CreateTopicResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_topicArn;
 
-    Aws::String m_topicArn;
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_topicArnHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-    ResponseMetadata m_responseMetadata;
-  };
-
-} // namespace Model
-} // namespace SNS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SNS
+}  // namespace Aws

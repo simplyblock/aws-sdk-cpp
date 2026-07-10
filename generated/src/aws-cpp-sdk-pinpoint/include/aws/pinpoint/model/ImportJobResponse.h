@@ -4,255 +4,317 @@
  */
 
 #pragma once
-#include <aws/pinpoint/Pinpoint_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/pinpoint/model/ImportJobResource.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/pinpoint/Pinpoint_EXPORTS.h>
+#include <aws/pinpoint/model/ImportJobResource.h>
 #include <aws/pinpoint/model/JobStatus.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Pinpoint
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Pinpoint {
+namespace Model {
 
+/**
+ * <p>Provides information about the status and settings of a job that imports
+ * endpoint definitions from one or more files. The files can be stored in an
+ * Amazon Simple Storage Service (Amazon S3) bucket or uploaded directly from a
+ * computer by using the Amazon Pinpoint console.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/ImportJobResponse">AWS
+ * API Reference</a></p>
+ */
+class ImportJobResponse {
+ public:
+  AWS_PINPOINT_API ImportJobResponse() = default;
+  AWS_PINPOINT_API ImportJobResponse(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API ImportJobResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>Provides information about the status and settings of a job that imports
-   * endpoint definitions from one or more files. The files can be stored in an
-   * Amazon Simple Storage Service (Amazon S3) bucket or uploaded directly from a
-   * computer by using the Amazon Pinpoint console.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/pinpoint-2016-12-01/ImportJobResponse">AWS
-   * API Reference</a></p>
+   * <p>The unique identifier for the application that's associated with the import
+   * job.</p>
    */
-  class ImportJobResponse
-  {
-  public:
-    AWS_PINPOINT_API ImportJobResponse();
-    AWS_PINPOINT_API ImportJobResponse(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API ImportJobResponse& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_PINPOINT_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline const Aws::String& GetApplicationId() const { return m_applicationId; }
+  inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
+  template <typename ApplicationIdT = Aws::String>
+  void SetApplicationId(ApplicationIdT&& value) {
+    m_applicationIdHasBeenSet = true;
+    m_applicationId = std::forward<ApplicationIdT>(value);
+  }
+  template <typename ApplicationIdT = Aws::String>
+  ImportJobResponse& WithApplicationId(ApplicationIdT&& value) {
+    SetApplicationId(std::forward<ApplicationIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The number of pieces that were processed successfully (completed) by the
+   * import job, as of the time of the request.</p>
+   */
+  inline int GetCompletedPieces() const { return m_completedPieces; }
+  inline bool CompletedPiecesHasBeenSet() const { return m_completedPiecesHasBeenSet; }
+  inline void SetCompletedPieces(int value) {
+    m_completedPiecesHasBeenSet = true;
+    m_completedPieces = value;
+  }
+  inline ImportJobResponse& WithCompletedPieces(int value) {
+    SetCompletedPieces(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the application that's associated with the import
-     * job.</p>
-     */
-    inline const Aws::String& GetApplicationId() const{ return m_applicationId; }
-    inline bool ApplicationIdHasBeenSet() const { return m_applicationIdHasBeenSet; }
-    inline void SetApplicationId(const Aws::String& value) { m_applicationIdHasBeenSet = true; m_applicationId = value; }
-    inline void SetApplicationId(Aws::String&& value) { m_applicationIdHasBeenSet = true; m_applicationId = std::move(value); }
-    inline void SetApplicationId(const char* value) { m_applicationIdHasBeenSet = true; m_applicationId.assign(value); }
-    inline ImportJobResponse& WithApplicationId(const Aws::String& value) { SetApplicationId(value); return *this;}
-    inline ImportJobResponse& WithApplicationId(Aws::String&& value) { SetApplicationId(std::move(value)); return *this;}
-    inline ImportJobResponse& WithApplicationId(const char* value) { SetApplicationId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date, in ISO 8601 format, when the import job was completed.</p>
+   */
+  inline const Aws::String& GetCompletionDate() const { return m_completionDate; }
+  inline bool CompletionDateHasBeenSet() const { return m_completionDateHasBeenSet; }
+  template <typename CompletionDateT = Aws::String>
+  void SetCompletionDate(CompletionDateT&& value) {
+    m_completionDateHasBeenSet = true;
+    m_completionDate = std::forward<CompletionDateT>(value);
+  }
+  template <typename CompletionDateT = Aws::String>
+  ImportJobResponse& WithCompletionDate(CompletionDateT&& value) {
+    SetCompletionDate(std::forward<CompletionDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of pieces that were processed successfully (completed) by the
-     * import job, as of the time of the request.</p>
-     */
-    inline int GetCompletedPieces() const{ return m_completedPieces; }
-    inline bool CompletedPiecesHasBeenSet() const { return m_completedPiecesHasBeenSet; }
-    inline void SetCompletedPieces(int value) { m_completedPiecesHasBeenSet = true; m_completedPieces = value; }
-    inline ImportJobResponse& WithCompletedPieces(int value) { SetCompletedPieces(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date, in ISO 8601 format, when the import job was created.</p>
+   */
+  inline const Aws::String& GetCreationDate() const { return m_creationDate; }
+  inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
+  template <typename CreationDateT = Aws::String>
+  void SetCreationDate(CreationDateT&& value) {
+    m_creationDateHasBeenSet = true;
+    m_creationDate = std::forward<CreationDateT>(value);
+  }
+  template <typename CreationDateT = Aws::String>
+  ImportJobResponse& WithCreationDate(CreationDateT&& value) {
+    SetCreationDate(std::forward<CreationDateT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date, in ISO 8601 format, when the import job was completed.</p>
-     */
-    inline const Aws::String& GetCompletionDate() const{ return m_completionDate; }
-    inline bool CompletionDateHasBeenSet() const { return m_completionDateHasBeenSet; }
-    inline void SetCompletionDate(const Aws::String& value) { m_completionDateHasBeenSet = true; m_completionDate = value; }
-    inline void SetCompletionDate(Aws::String&& value) { m_completionDateHasBeenSet = true; m_completionDate = std::move(value); }
-    inline void SetCompletionDate(const char* value) { m_completionDateHasBeenSet = true; m_completionDate.assign(value); }
-    inline ImportJobResponse& WithCompletionDate(const Aws::String& value) { SetCompletionDate(value); return *this;}
-    inline ImportJobResponse& WithCompletionDate(Aws::String&& value) { SetCompletionDate(std::move(value)); return *this;}
-    inline ImportJobResponse& WithCompletionDate(const char* value) { SetCompletionDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The resource settings that apply to the import job.</p>
+   */
+  inline const ImportJobResource& GetDefinition() const { return m_definition; }
+  inline bool DefinitionHasBeenSet() const { return m_definitionHasBeenSet; }
+  template <typename DefinitionT = ImportJobResource>
+  void SetDefinition(DefinitionT&& value) {
+    m_definitionHasBeenSet = true;
+    m_definition = std::forward<DefinitionT>(value);
+  }
+  template <typename DefinitionT = ImportJobResource>
+  ImportJobResponse& WithDefinition(DefinitionT&& value) {
+    SetDefinition(std::forward<DefinitionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date, in ISO 8601 format, when the import job was created.</p>
-     */
-    inline const Aws::String& GetCreationDate() const{ return m_creationDate; }
-    inline bool CreationDateHasBeenSet() const { return m_creationDateHasBeenSet; }
-    inline void SetCreationDate(const Aws::String& value) { m_creationDateHasBeenSet = true; m_creationDate = value; }
-    inline void SetCreationDate(Aws::String&& value) { m_creationDateHasBeenSet = true; m_creationDate = std::move(value); }
-    inline void SetCreationDate(const char* value) { m_creationDateHasBeenSet = true; m_creationDate.assign(value); }
-    inline ImportJobResponse& WithCreationDate(const Aws::String& value) { SetCreationDate(value); return *this;}
-    inline ImportJobResponse& WithCreationDate(Aws::String&& value) { SetCreationDate(std::move(value)); return *this;}
-    inline ImportJobResponse& WithCreationDate(const char* value) { SetCreationDate(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The number of pieces that weren't processed successfully (failed) by the
+   * import job, as of the time of the request.</p>
+   */
+  inline int GetFailedPieces() const { return m_failedPieces; }
+  inline bool FailedPiecesHasBeenSet() const { return m_failedPiecesHasBeenSet; }
+  inline void SetFailedPieces(int value) {
+    m_failedPiecesHasBeenSet = true;
+    m_failedPieces = value;
+  }
+  inline ImportJobResponse& WithFailedPieces(int value) {
+    SetFailedPieces(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The resource settings that apply to the import job.</p>
-     */
-    inline const ImportJobResource& GetDefinition() const{ return m_definition; }
-    inline bool DefinitionHasBeenSet() const { return m_definitionHasBeenSet; }
-    inline void SetDefinition(const ImportJobResource& value) { m_definitionHasBeenSet = true; m_definition = value; }
-    inline void SetDefinition(ImportJobResource&& value) { m_definitionHasBeenSet = true; m_definition = std::move(value); }
-    inline ImportJobResponse& WithDefinition(const ImportJobResource& value) { SetDefinition(value); return *this;}
-    inline ImportJobResponse& WithDefinition(ImportJobResource&& value) { SetDefinition(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>An array of entries, one for each of the first 100 entries that weren't
+   * processed successfully (failed) by the import job, if any.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetFailures() const { return m_failures; }
+  inline bool FailuresHasBeenSet() const { return m_failuresHasBeenSet; }
+  template <typename FailuresT = Aws::Vector<Aws::String>>
+  void SetFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures = std::forward<FailuresT>(value);
+  }
+  template <typename FailuresT = Aws::Vector<Aws::String>>
+  ImportJobResponse& WithFailures(FailuresT&& value) {
+    SetFailures(std::forward<FailuresT>(value));
+    return *this;
+  }
+  template <typename FailuresT = Aws::String>
+  ImportJobResponse& AddFailures(FailuresT&& value) {
+    m_failuresHasBeenSet = true;
+    m_failures.emplace_back(std::forward<FailuresT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The number of pieces that weren't processed successfully (failed) by the
-     * import job, as of the time of the request.</p>
-     */
-    inline int GetFailedPieces() const{ return m_failedPieces; }
-    inline bool FailedPiecesHasBeenSet() const { return m_failedPiecesHasBeenSet; }
-    inline void SetFailedPieces(int value) { m_failedPiecesHasBeenSet = true; m_failedPieces = value; }
-    inline ImportJobResponse& WithFailedPieces(int value) { SetFailedPieces(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the import job.</p>
+   */
+  inline const Aws::String& GetId() const { return m_id; }
+  inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
+  template <typename IdT = Aws::String>
+  void SetId(IdT&& value) {
+    m_idHasBeenSet = true;
+    m_id = std::forward<IdT>(value);
+  }
+  template <typename IdT = Aws::String>
+  ImportJobResponse& WithId(IdT&& value) {
+    SetId(std::forward<IdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>An array of entries, one for each of the first 100 entries that weren't
-     * processed successfully (failed) by the import job, if any.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetFailures() const{ return m_failures; }
-    inline bool FailuresHasBeenSet() const { return m_failuresHasBeenSet; }
-    inline void SetFailures(const Aws::Vector<Aws::String>& value) { m_failuresHasBeenSet = true; m_failures = value; }
-    inline void SetFailures(Aws::Vector<Aws::String>&& value) { m_failuresHasBeenSet = true; m_failures = std::move(value); }
-    inline ImportJobResponse& WithFailures(const Aws::Vector<Aws::String>& value) { SetFailures(value); return *this;}
-    inline ImportJobResponse& WithFailures(Aws::Vector<Aws::String>&& value) { SetFailures(std::move(value)); return *this;}
-    inline ImportJobResponse& AddFailures(const Aws::String& value) { m_failuresHasBeenSet = true; m_failures.push_back(value); return *this; }
-    inline ImportJobResponse& AddFailures(Aws::String&& value) { m_failuresHasBeenSet = true; m_failures.push_back(std::move(value)); return *this; }
-    inline ImportJobResponse& AddFailures(const char* value) { m_failuresHasBeenSet = true; m_failures.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the import job. The job status is FAILED if Amazon Pinpoint
+   * wasn't able to process one or more pieces in the job.</p>
+   */
+  inline JobStatus GetJobStatus() const { return m_jobStatus; }
+  inline bool JobStatusHasBeenSet() const { return m_jobStatusHasBeenSet; }
+  inline void SetJobStatus(JobStatus value) {
+    m_jobStatusHasBeenSet = true;
+    m_jobStatus = value;
+  }
+  inline ImportJobResponse& WithJobStatus(JobStatus value) {
+    SetJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the import job.</p>
-     */
-    inline const Aws::String& GetId() const{ return m_id; }
-    inline bool IdHasBeenSet() const { return m_idHasBeenSet; }
-    inline void SetId(const Aws::String& value) { m_idHasBeenSet = true; m_id = value; }
-    inline void SetId(Aws::String&& value) { m_idHasBeenSet = true; m_id = std::move(value); }
-    inline void SetId(const char* value) { m_idHasBeenSet = true; m_id.assign(value); }
-    inline ImportJobResponse& WithId(const Aws::String& value) { SetId(value); return *this;}
-    inline ImportJobResponse& WithId(Aws::String&& value) { SetId(std::move(value)); return *this;}
-    inline ImportJobResponse& WithId(const char* value) { SetId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The total number of endpoint definitions that weren't processed successfully
+   * (failed) by the import job, typically because an error, such as a syntax error,
+   * occurred.</p>
+   */
+  inline int GetTotalFailures() const { return m_totalFailures; }
+  inline bool TotalFailuresHasBeenSet() const { return m_totalFailuresHasBeenSet; }
+  inline void SetTotalFailures(int value) {
+    m_totalFailuresHasBeenSet = true;
+    m_totalFailures = value;
+  }
+  inline ImportJobResponse& WithTotalFailures(int value) {
+    SetTotalFailures(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the import job. The job status is FAILED if Amazon Pinpoint
-     * wasn't able to process one or more pieces in the job.</p>
-     */
-    inline const JobStatus& GetJobStatus() const{ return m_jobStatus; }
-    inline bool JobStatusHasBeenSet() const { return m_jobStatusHasBeenSet; }
-    inline void SetJobStatus(const JobStatus& value) { m_jobStatusHasBeenSet = true; m_jobStatus = value; }
-    inline void SetJobStatus(JobStatus&& value) { m_jobStatusHasBeenSet = true; m_jobStatus = std::move(value); }
-    inline ImportJobResponse& WithJobStatus(const JobStatus& value) { SetJobStatus(value); return *this;}
-    inline ImportJobResponse& WithJobStatus(JobStatus&& value) { SetJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The total number of pieces that must be processed to complete the import job.
+   * Each piece consists of an approximately equal portion of the endpoint
+   * definitions that are part of the import job.</p>
+   */
+  inline int GetTotalPieces() const { return m_totalPieces; }
+  inline bool TotalPiecesHasBeenSet() const { return m_totalPiecesHasBeenSet; }
+  inline void SetTotalPieces(int value) {
+    m_totalPiecesHasBeenSet = true;
+    m_totalPieces = value;
+  }
+  inline ImportJobResponse& WithTotalPieces(int value) {
+    SetTotalPieces(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The total number of endpoint definitions that weren't processed successfully
-     * (failed) by the import job, typically because an error, such as a syntax error,
-     * occurred.</p>
-     */
-    inline int GetTotalFailures() const{ return m_totalFailures; }
-    inline bool TotalFailuresHasBeenSet() const { return m_totalFailuresHasBeenSet; }
-    inline void SetTotalFailures(int value) { m_totalFailuresHasBeenSet = true; m_totalFailures = value; }
-    inline ImportJobResponse& WithTotalFailures(int value) { SetTotalFailures(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The total number of endpoint definitions that were processed by the import
+   * job.</p>
+   */
+  inline int GetTotalProcessed() const { return m_totalProcessed; }
+  inline bool TotalProcessedHasBeenSet() const { return m_totalProcessedHasBeenSet; }
+  inline void SetTotalProcessed(int value) {
+    m_totalProcessedHasBeenSet = true;
+    m_totalProcessed = value;
+  }
+  inline ImportJobResponse& WithTotalProcessed(int value) {
+    SetTotalProcessed(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The total number of pieces that must be processed to complete the import job.
-     * Each piece consists of an approximately equal portion of the endpoint
-     * definitions that are part of the import job.</p>
-     */
-    inline int GetTotalPieces() const{ return m_totalPieces; }
-    inline bool TotalPiecesHasBeenSet() const { return m_totalPiecesHasBeenSet; }
-    inline void SetTotalPieces(int value) { m_totalPiecesHasBeenSet = true; m_totalPieces = value; }
-    inline ImportJobResponse& WithTotalPieces(int value) { SetTotalPieces(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The job type. This value is IMPORT for import jobs.</p>
+   */
+  inline const Aws::String& GetType() const { return m_type; }
+  inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
+  template <typename TypeT = Aws::String>
+  void SetType(TypeT&& value) {
+    m_typeHasBeenSet = true;
+    m_type = std::forward<TypeT>(value);
+  }
+  template <typename TypeT = Aws::String>
+  ImportJobResponse& WithType(TypeT&& value) {
+    SetType(std::forward<TypeT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_applicationId;
 
-    ///@{
-    /**
-     * <p>The total number of endpoint definitions that were processed by the import
-     * job.</p>
-     */
-    inline int GetTotalProcessed() const{ return m_totalProcessed; }
-    inline bool TotalProcessedHasBeenSet() const { return m_totalProcessedHasBeenSet; }
-    inline void SetTotalProcessed(int value) { m_totalProcessedHasBeenSet = true; m_totalProcessed = value; }
-    inline ImportJobResponse& WithTotalProcessed(int value) { SetTotalProcessed(value); return *this;}
-    ///@}
+  int m_completedPieces{0};
 
-    ///@{
-    /**
-     * <p>The job type. This value is IMPORT for import jobs.</p>
-     */
-    inline const Aws::String& GetType() const{ return m_type; }
-    inline bool TypeHasBeenSet() const { return m_typeHasBeenSet; }
-    inline void SetType(const Aws::String& value) { m_typeHasBeenSet = true; m_type = value; }
-    inline void SetType(Aws::String&& value) { m_typeHasBeenSet = true; m_type = std::move(value); }
-    inline void SetType(const char* value) { m_typeHasBeenSet = true; m_type.assign(value); }
-    inline ImportJobResponse& WithType(const Aws::String& value) { SetType(value); return *this;}
-    inline ImportJobResponse& WithType(Aws::String&& value) { SetType(std::move(value)); return *this;}
-    inline ImportJobResponse& WithType(const char* value) { SetType(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_completionDate;
 
-    Aws::String m_applicationId;
-    bool m_applicationIdHasBeenSet = false;
+  Aws::String m_creationDate;
 
-    int m_completedPieces;
-    bool m_completedPiecesHasBeenSet = false;
+  ImportJobResource m_definition;
 
-    Aws::String m_completionDate;
-    bool m_completionDateHasBeenSet = false;
+  int m_failedPieces{0};
 
-    Aws::String m_creationDate;
-    bool m_creationDateHasBeenSet = false;
+  Aws::Vector<Aws::String> m_failures;
 
-    ImportJobResource m_definition;
-    bool m_definitionHasBeenSet = false;
+  Aws::String m_id;
 
-    int m_failedPieces;
-    bool m_failedPiecesHasBeenSet = false;
+  JobStatus m_jobStatus{JobStatus::NOT_SET};
 
-    Aws::Vector<Aws::String> m_failures;
-    bool m_failuresHasBeenSet = false;
+  int m_totalFailures{0};
 
-    Aws::String m_id;
-    bool m_idHasBeenSet = false;
+  int m_totalPieces{0};
 
-    JobStatus m_jobStatus;
-    bool m_jobStatusHasBeenSet = false;
+  int m_totalProcessed{0};
 
-    int m_totalFailures;
-    bool m_totalFailuresHasBeenSet = false;
+  Aws::String m_type;
+  bool m_applicationIdHasBeenSet = false;
+  bool m_completedPiecesHasBeenSet = false;
+  bool m_completionDateHasBeenSet = false;
+  bool m_creationDateHasBeenSet = false;
+  bool m_definitionHasBeenSet = false;
+  bool m_failedPiecesHasBeenSet = false;
+  bool m_failuresHasBeenSet = false;
+  bool m_idHasBeenSet = false;
+  bool m_jobStatusHasBeenSet = false;
+  bool m_totalFailuresHasBeenSet = false;
+  bool m_totalPiecesHasBeenSet = false;
+  bool m_totalProcessedHasBeenSet = false;
+  bool m_typeHasBeenSet = false;
+};
 
-    int m_totalPieces;
-    bool m_totalPiecesHasBeenSet = false;
-
-    int m_totalProcessed;
-    bool m_totalProcessedHasBeenSet = false;
-
-    Aws::String m_type;
-    bool m_typeHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Pinpoint
-} // namespace Aws
+}  // namespace Model
+}  // namespace Pinpoint
+}  // namespace Aws

@@ -12,26 +12,12 @@ using namespace Aws::AmplifyBackend::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetBackendAPIModelsRequest::GetBackendAPIModelsRequest() : 
-    m_appIdHasBeenSet(false),
-    m_backendEnvironmentNameHasBeenSet(false),
-    m_resourceNameHasBeenSet(false)
-{
-}
-
-Aws::String GetBackendAPIModelsRequest::SerializePayload() const
-{
+Aws::String GetBackendAPIModelsRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_resourceNameHasBeenSet)
-  {
-   payload.WithString("resourceName", m_resourceName);
-
+  if (m_resourceNameHasBeenSet) {
+    payload.WithString("resourceName", m_resourceName);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

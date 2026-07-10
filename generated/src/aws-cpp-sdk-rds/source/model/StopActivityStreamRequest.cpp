@@ -3,31 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/rds/model/StopActivityStreamRequest.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/rds/model/StopActivityStreamRequest.h>
 
 using namespace Aws::RDS::Model;
 using namespace Aws::Utils;
 
-StopActivityStreamRequest::StopActivityStreamRequest() : 
-    m_resourceArnHasBeenSet(false),
-    m_applyImmediately(false),
-    m_applyImmediatelyHasBeenSet(false)
-{
-}
-
-Aws::String StopActivityStreamRequest::SerializePayload() const
-{
+Aws::String StopActivityStreamRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=StopActivityStream&";
-  if(m_resourceArnHasBeenSet)
-  {
+  if (m_resourceArnHasBeenSet) {
     ss << "ResourceArn=" << StringUtils::URLEncode(m_resourceArn.c_str()) << "&";
   }
 
-  if(m_applyImmediatelyHasBeenSet)
-  {
+  if (m_applyImmediatelyHasBeenSet) {
     ss << "ApplyImmediately=" << std::boolalpha << m_applyImmediately << "&";
   }
 
@@ -35,8 +25,4 @@ Aws::String StopActivityStreamRequest::SerializePayload() const
   return ss.str();
 }
 
-
-void  StopActivityStreamRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void StopActivityStreamRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

@@ -6,61 +6,70 @@
 #pragma once
 #include <aws/appsync/AppSync_EXPORTS.h>
 #include <aws/appsync/model/ApiAssociation.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace AppSync
-{
-namespace Model
-{
-  class AssociateApiResult
-  {
-  public:
-    AWS_APPSYNC_API AssociateApiResult();
-    AWS_APPSYNC_API AssociateApiResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_APPSYNC_API AssociateApiResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace AppSync {
+namespace Model {
+class AssociateApiResult {
+ public:
+  AWS_APPSYNC_API AssociateApiResult() = default;
+  AWS_APPSYNC_API AssociateApiResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_APPSYNC_API AssociateApiResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The <code>ApiAssociation</code> object.</p>
+   */
+  inline const ApiAssociation& GetApiAssociation() const { return m_apiAssociation; }
+  template <typename ApiAssociationT = ApiAssociation>
+  void SetApiAssociation(ApiAssociationT&& value) {
+    m_apiAssociationHasBeenSet = true;
+    m_apiAssociation = std::forward<ApiAssociationT>(value);
+  }
+  template <typename ApiAssociationT = ApiAssociation>
+  AssociateApiResult& WithApiAssociation(ApiAssociationT&& value) {
+    SetApiAssociation(std::forward<ApiAssociationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The <code>ApiAssociation</code> object.</p>
-     */
-    inline const ApiAssociation& GetApiAssociation() const{ return m_apiAssociation; }
-    inline void SetApiAssociation(const ApiAssociation& value) { m_apiAssociation = value; }
-    inline void SetApiAssociation(ApiAssociation&& value) { m_apiAssociation = std::move(value); }
-    inline AssociateApiResult& WithApiAssociation(const ApiAssociation& value) { SetApiAssociation(value); return *this;}
-    inline AssociateApiResult& WithApiAssociation(ApiAssociation&& value) { SetApiAssociation(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline AssociateApiResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline AssociateApiResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline AssociateApiResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  AssociateApiResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ApiAssociation m_apiAssociation;
+ private:
+  ApiAssociation m_apiAssociation;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_apiAssociationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace AppSync
-} // namespace Aws
+}  // namespace Model
+}  // namespace AppSync
+}  // namespace Aws

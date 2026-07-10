@@ -12,16 +12,4 @@ using namespace Aws::CleanRooms::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteConfiguredTableRequest::DeleteConfiguredTableRequest() : 
-    m_configuredTableIdentifierHasBeenSet(false)
-{
-}
-
-Aws::String DeleteConfiguredTableRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteConfiguredTableRequest::SerializePayload() const { return {}; }

@@ -4,83 +4,101 @@
  */
 
 #pragma once
-#include <aws/gamelift/GameLift_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/crt/cbor/Cbor.h>
+#include <aws/gamelift/GameLift_EXPORTS.h>
 #include <aws/gamelift/model/Script.h>
-#include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+#include <utility>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GameLift
-{
-namespace Model
-{
-  class ListScriptsResult
-  {
-  public:
-    AWS_GAMELIFT_API ListScriptsResult();
-    AWS_GAMELIFT_API ListScriptsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GAMELIFT_API ListScriptsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Cbor {
+class CborValue;
+}  // namespace Cbor
+}  // namespace Utils
+namespace GameLift {
+namespace Model {
+class ListScriptsResult {
+ public:
+  AWS_GAMELIFT_API ListScriptsResult() = default;
+  AWS_GAMELIFT_API ListScriptsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
+  AWS_GAMELIFT_API ListScriptsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Cbor::CborValue>& result);
 
+  ///@{
+  /**
+   * <p>A set of properties describing the requested script.</p>
+   */
+  inline const Aws::Vector<Script>& GetScripts() const { return m_scripts; }
+  template <typename ScriptsT = Aws::Vector<Script>>
+  void SetScripts(ScriptsT&& value) {
+    m_scriptsHasBeenSet = true;
+    m_scripts = std::forward<ScriptsT>(value);
+  }
+  template <typename ScriptsT = Aws::Vector<Script>>
+  ListScriptsResult& WithScripts(ScriptsT&& value) {
+    SetScripts(std::forward<ScriptsT>(value));
+    return *this;
+  }
+  template <typename ScriptsT = Script>
+  ListScriptsResult& AddScripts(ScriptsT&& value) {
+    m_scriptsHasBeenSet = true;
+    m_scripts.emplace_back(std::forward<ScriptsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A set of properties describing the requested script.</p>
-     */
-    inline const Aws::Vector<Script>& GetScripts() const{ return m_scripts; }
-    inline void SetScripts(const Aws::Vector<Script>& value) { m_scripts = value; }
-    inline void SetScripts(Aws::Vector<Script>&& value) { m_scripts = std::move(value); }
-    inline ListScriptsResult& WithScripts(const Aws::Vector<Script>& value) { SetScripts(value); return *this;}
-    inline ListScriptsResult& WithScripts(Aws::Vector<Script>&& value) { SetScripts(std::move(value)); return *this;}
-    inline ListScriptsResult& AddScripts(const Script& value) { m_scripts.push_back(value); return *this; }
-    inline ListScriptsResult& AddScripts(Script&& value) { m_scripts.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A token that indicates where to resume retrieving results on the next call to
+   * this operation. If no token is returned, these results represent the end of the
+   * list.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListScriptsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A token that indicates where to resume retrieving results on the next call to
-     * this operation. If no token is returned, these results represent the end of the
-     * list.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListScriptsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListScriptsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListScriptsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListScriptsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListScriptsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListScriptsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListScriptsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Script> m_scripts;
+ private:
+  Aws::Vector<Script> m_scripts;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_scriptsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GameLift
-} // namespace Aws
+}  // namespace Model
+}  // namespace GameLift
+}  // namespace Aws

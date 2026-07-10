@@ -6,67 +6,76 @@
 #pragma once
 #include <aws/amplify/Amplify_EXPORTS.h>
 #include <aws/amplify/model/Webhook.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Amplify
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Amplify {
+namespace Model {
+/**
+ * <p>The result structure for the create webhook request. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateWebhookResult">AWS
+ * API Reference</a></p>
+ */
+class CreateWebhookResult {
+ public:
+  AWS_AMPLIFY_API CreateWebhookResult() = default;
+  AWS_AMPLIFY_API CreateWebhookResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_AMPLIFY_API CreateWebhookResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>The result structure for the create webhook request. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/amplify-2017-07-25/CreateWebhookResult">AWS
-   * API Reference</a></p>
+   * <p>Describes a webhook that connects repository events to an Amplify app. </p>
    */
-  class CreateWebhookResult
-  {
-  public:
-    AWS_AMPLIFY_API CreateWebhookResult();
-    AWS_AMPLIFY_API CreateWebhookResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_AMPLIFY_API CreateWebhookResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Webhook& GetWebhook() const { return m_webhook; }
+  template <typename WebhookT = Webhook>
+  void SetWebhook(WebhookT&& value) {
+    m_webhookHasBeenSet = true;
+    m_webhook = std::forward<WebhookT>(value);
+  }
+  template <typename WebhookT = Webhook>
+  CreateWebhookResult& WithWebhook(WebhookT&& value) {
+    SetWebhook(std::forward<WebhookT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>Describes a webhook that connects repository events to an Amplify app. </p>
-     */
-    inline const Webhook& GetWebhook() const{ return m_webhook; }
-    inline void SetWebhook(const Webhook& value) { m_webhook = value; }
-    inline void SetWebhook(Webhook&& value) { m_webhook = std::move(value); }
-    inline CreateWebhookResult& WithWebhook(const Webhook& value) { SetWebhook(value); return *this;}
-    inline CreateWebhookResult& WithWebhook(Webhook&& value) { SetWebhook(std::move(value)); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateWebhookResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateWebhookResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateWebhookResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateWebhookResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Webhook m_webhook;
 
-    Webhook m_webhook;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_webhookHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace Amplify
-} // namespace Aws
+}  // namespace Model
+}  // namespace Amplify
+}  // namespace Aws

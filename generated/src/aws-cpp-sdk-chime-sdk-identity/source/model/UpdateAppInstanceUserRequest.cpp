@@ -12,32 +12,16 @@ using namespace Aws::ChimeSDKIdentity::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAppInstanceUserRequest::UpdateAppInstanceUserRequest() : 
-    m_appInstanceUserArnHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_metadataHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAppInstanceUserRequest::SerializePayload() const
-{
+Aws::String UpdateAppInstanceUserRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_metadataHasBeenSet)
-  {
-   payload.WithString("Metadata", m_metadata);
-
+  if (m_metadataHasBeenSet) {
+    payload.WithString("Metadata", m_metadata);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

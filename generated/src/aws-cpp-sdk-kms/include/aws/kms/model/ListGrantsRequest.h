@@ -4,134 +4,177 @@
  */
 
 #pragma once
-#include <aws/kms/KMS_EXPORTS.h>
-#include <aws/kms/KMSRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/kms/KMSRequest.h>
+#include <aws/kms/KMS_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace KMS
-{
-namespace Model
-{
+namespace Aws {
+namespace KMS {
+namespace Model {
 
+/**
+ */
+class ListGrantsRequest : public KMSRequest {
+ public:
+  AWS_KMS_API ListGrantsRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "ListGrants"; }
+
+  AWS_KMS_API Aws::String SerializePayload() const override;
+
+  AWS_KMS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Use this parameter to specify the maximum number of items to return. When
+   * this value is present, KMS does not return more than the specified number of
+   * items, but it might return fewer.</p> <p>This value is optional. If you include
+   * a value, it must be between 1 and 100, inclusive. If you do not include a value,
+   * it defaults to 50.</p>
    */
-  class ListGrantsRequest : public KMSRequest
-  {
-  public:
-    AWS_KMS_API ListGrantsRequest();
+  inline int GetLimit() const { return m_limit; }
+  inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
+  inline void SetLimit(int value) {
+    m_limitHasBeenSet = true;
+    m_limit = value;
+  }
+  inline ListGrantsRequest& WithLimit(int value) {
+    SetLimit(value);
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "ListGrants"; }
+  ///@{
+  /**
+   * <p>Use this parameter in a subsequent request after you receive a response with
+   * truncated results. Set it to the value of <code>NextMarker</code> from the
+   * truncated response you just received.</p>
+   */
+  inline const Aws::String& GetMarker() const { return m_marker; }
+  inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
+  template <typename MarkerT = Aws::String>
+  void SetMarker(MarkerT&& value) {
+    m_markerHasBeenSet = true;
+    m_marker = std::forward<MarkerT>(value);
+  }
+  template <typename MarkerT = Aws::String>
+  ListGrantsRequest& WithMarker(MarkerT&& value) {
+    SetMarker(std::forward<MarkerT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KMS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>Returns only grants for the specified KMS key. This parameter is
+   * required.</p> <p>Specify the key ID or key ARN of the KMS key. To specify a KMS
+   * key in a different Amazon Web Services account, you must use the key ARN.</p>
+   * <p>For example:</p> <ul> <li> <p>Key ID:
+   * <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN:
+   * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
+   * </p> </li> </ul> <p>To get the key ID and key ARN for a KMS key, use
+   * <a>ListKeys</a> or <a>DescribeKey</a>.</p>
+   */
+  inline const Aws::String& GetKeyId() const { return m_keyId; }
+  inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
+  template <typename KeyIdT = Aws::String>
+  void SetKeyId(KeyIdT&& value) {
+    m_keyIdHasBeenSet = true;
+    m_keyId = std::forward<KeyIdT>(value);
+  }
+  template <typename KeyIdT = Aws::String>
+  ListGrantsRequest& WithKeyId(KeyIdT&& value) {
+    SetKeyId(std::forward<KeyIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_KMS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>Returns only the grant with the specified grant ID. The grant ID uniquely
+   * identifies the grant. </p>
+   */
+  inline const Aws::String& GetGrantId() const { return m_grantId; }
+  inline bool GrantIdHasBeenSet() const { return m_grantIdHasBeenSet; }
+  template <typename GrantIdT = Aws::String>
+  void SetGrantId(GrantIdT&& value) {
+    m_grantIdHasBeenSet = true;
+    m_grantId = std::forward<GrantIdT>(value);
+  }
+  template <typename GrantIdT = Aws::String>
+  ListGrantsRequest& WithGrantId(GrantIdT&& value) {
+    SetGrantId(std::forward<GrantIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Returns only grants where the specified principal is the grantee principal
+   * for the grant.</p> <p>You can specify either <code>GranteePrincipal</code> or
+   * <code>GranteeServicePrincipal</code>, but not both.</p>
+   */
+  inline const Aws::String& GetGranteePrincipal() const { return m_granteePrincipal; }
+  inline bool GranteePrincipalHasBeenSet() const { return m_granteePrincipalHasBeenSet; }
+  template <typename GranteePrincipalT = Aws::String>
+  void SetGranteePrincipal(GranteePrincipalT&& value) {
+    m_granteePrincipalHasBeenSet = true;
+    m_granteePrincipal = std::forward<GranteePrincipalT>(value);
+  }
+  template <typename GranteePrincipalT = Aws::String>
+  ListGrantsRequest& WithGranteePrincipal(GranteePrincipalT&& value) {
+    SetGranteePrincipal(std::forward<GranteePrincipalT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Use this parameter to specify the maximum number of items to return. When
-     * this value is present, KMS does not return more than the specified number of
-     * items, but it might return fewer.</p> <p>This value is optional. If you include
-     * a value, it must be between 1 and 100, inclusive. If you do not include a value,
-     * it defaults to 50.</p>
-     */
-    inline int GetLimit() const{ return m_limit; }
-    inline bool LimitHasBeenSet() const { return m_limitHasBeenSet; }
-    inline void SetLimit(int value) { m_limitHasBeenSet = true; m_limit = value; }
-    inline ListGrantsRequest& WithLimit(int value) { SetLimit(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Returns only grants where the specified Amazon Web Services service principal
+   * is the grantee service principal for the grant. This filter is only usable by
+   * callers in a service principal.</p> <p>You can specify either
+   * <code>GranteePrincipal</code> or <code>GranteeServicePrincipal</code>, but not
+   * both.</p>
+   */
+  inline const Aws::String& GetGranteeServicePrincipal() const { return m_granteeServicePrincipal; }
+  inline bool GranteeServicePrincipalHasBeenSet() const { return m_granteeServicePrincipalHasBeenSet; }
+  template <typename GranteeServicePrincipalT = Aws::String>
+  void SetGranteeServicePrincipal(GranteeServicePrincipalT&& value) {
+    m_granteeServicePrincipalHasBeenSet = true;
+    m_granteeServicePrincipal = std::forward<GranteeServicePrincipalT>(value);
+  }
+  template <typename GranteeServicePrincipalT = Aws::String>
+  ListGrantsRequest& WithGranteeServicePrincipal(GranteeServicePrincipalT&& value) {
+    SetGranteeServicePrincipal(std::forward<GranteeServicePrincipalT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  int m_limit{0};
 
-    ///@{
-    /**
-     * <p>Use this parameter in a subsequent request after you receive a response with
-     * truncated results. Set it to the value of <code>NextMarker</code> from the
-     * truncated response you just received.</p>
-     */
-    inline const Aws::String& GetMarker() const{ return m_marker; }
-    inline bool MarkerHasBeenSet() const { return m_markerHasBeenSet; }
-    inline void SetMarker(const Aws::String& value) { m_markerHasBeenSet = true; m_marker = value; }
-    inline void SetMarker(Aws::String&& value) { m_markerHasBeenSet = true; m_marker = std::move(value); }
-    inline void SetMarker(const char* value) { m_markerHasBeenSet = true; m_marker.assign(value); }
-    inline ListGrantsRequest& WithMarker(const Aws::String& value) { SetMarker(value); return *this;}
-    inline ListGrantsRequest& WithMarker(Aws::String&& value) { SetMarker(std::move(value)); return *this;}
-    inline ListGrantsRequest& WithMarker(const char* value) { SetMarker(value); return *this;}
-    ///@}
+  Aws::String m_marker;
 
-    ///@{
-    /**
-     * <p>Returns only grants for the specified KMS key. This parameter is
-     * required.</p> <p>Specify the key ID or key ARN of the KMS key. To specify a KMS
-     * key in a different Amazon Web Services account, you must use the key ARN.</p>
-     * <p>For example:</p> <ul> <li> <p>Key ID:
-     * <code>1234abcd-12ab-34cd-56ef-1234567890ab</code> </p> </li> <li> <p>Key ARN:
-     * <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code>
-     * </p> </li> </ul> <p>To get the key ID and key ARN for a KMS key, use
-     * <a>ListKeys</a> or <a>DescribeKey</a>.</p>
-     */
-    inline const Aws::String& GetKeyId() const{ return m_keyId; }
-    inline bool KeyIdHasBeenSet() const { return m_keyIdHasBeenSet; }
-    inline void SetKeyId(const Aws::String& value) { m_keyIdHasBeenSet = true; m_keyId = value; }
-    inline void SetKeyId(Aws::String&& value) { m_keyIdHasBeenSet = true; m_keyId = std::move(value); }
-    inline void SetKeyId(const char* value) { m_keyIdHasBeenSet = true; m_keyId.assign(value); }
-    inline ListGrantsRequest& WithKeyId(const Aws::String& value) { SetKeyId(value); return *this;}
-    inline ListGrantsRequest& WithKeyId(Aws::String&& value) { SetKeyId(std::move(value)); return *this;}
-    inline ListGrantsRequest& WithKeyId(const char* value) { SetKeyId(value); return *this;}
-    ///@}
+  Aws::String m_keyId;
 
-    ///@{
-    /**
-     * <p>Returns only the grant with the specified grant ID. The grant ID uniquely
-     * identifies the grant. </p>
-     */
-    inline const Aws::String& GetGrantId() const{ return m_grantId; }
-    inline bool GrantIdHasBeenSet() const { return m_grantIdHasBeenSet; }
-    inline void SetGrantId(const Aws::String& value) { m_grantIdHasBeenSet = true; m_grantId = value; }
-    inline void SetGrantId(Aws::String&& value) { m_grantIdHasBeenSet = true; m_grantId = std::move(value); }
-    inline void SetGrantId(const char* value) { m_grantIdHasBeenSet = true; m_grantId.assign(value); }
-    inline ListGrantsRequest& WithGrantId(const Aws::String& value) { SetGrantId(value); return *this;}
-    inline ListGrantsRequest& WithGrantId(Aws::String&& value) { SetGrantId(std::move(value)); return *this;}
-    inline ListGrantsRequest& WithGrantId(const char* value) { SetGrantId(value); return *this;}
-    ///@}
+  Aws::String m_grantId;
 
-    ///@{
-    /**
-     * <p>Returns only grants where the specified principal is the grantee principal
-     * for the grant.</p>
-     */
-    inline const Aws::String& GetGranteePrincipal() const{ return m_granteePrincipal; }
-    inline bool GranteePrincipalHasBeenSet() const { return m_granteePrincipalHasBeenSet; }
-    inline void SetGranteePrincipal(const Aws::String& value) { m_granteePrincipalHasBeenSet = true; m_granteePrincipal = value; }
-    inline void SetGranteePrincipal(Aws::String&& value) { m_granteePrincipalHasBeenSet = true; m_granteePrincipal = std::move(value); }
-    inline void SetGranteePrincipal(const char* value) { m_granteePrincipalHasBeenSet = true; m_granteePrincipal.assign(value); }
-    inline ListGrantsRequest& WithGranteePrincipal(const Aws::String& value) { SetGranteePrincipal(value); return *this;}
-    inline ListGrantsRequest& WithGranteePrincipal(Aws::String&& value) { SetGranteePrincipal(std::move(value)); return *this;}
-    inline ListGrantsRequest& WithGranteePrincipal(const char* value) { SetGranteePrincipal(value); return *this;}
-    ///@}
-  private:
+  Aws::String m_granteePrincipal;
 
-    int m_limit;
-    bool m_limitHasBeenSet = false;
+  Aws::String m_granteeServicePrincipal;
+  bool m_limitHasBeenSet = false;
+  bool m_markerHasBeenSet = false;
+  bool m_keyIdHasBeenSet = false;
+  bool m_grantIdHasBeenSet = false;
+  bool m_granteePrincipalHasBeenSet = false;
+  bool m_granteeServicePrincipalHasBeenSet = false;
+};
 
-    Aws::String m_marker;
-    bool m_markerHasBeenSet = false;
-
-    Aws::String m_keyId;
-    bool m_keyIdHasBeenSet = false;
-
-    Aws::String m_grantId;
-    bool m_grantIdHasBeenSet = false;
-
-    Aws::String m_granteePrincipal;
-    bool m_granteePrincipalHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace KMS
-} // namespace Aws
+}  // namespace Model
+}  // namespace KMS
+}  // namespace Aws

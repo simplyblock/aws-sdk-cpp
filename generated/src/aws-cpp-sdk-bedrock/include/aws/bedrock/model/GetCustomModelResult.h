@@ -5,263 +5,421 @@
 
 #pragma once
 #include <aws/bedrock/Bedrock_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/bedrock/model/CustomizationConfig.h>
 #include <aws/bedrock/model/CustomizationType.h>
-#include <aws/core/utils/memory/stl/AWSMap.h>
-#include <aws/bedrock/model/TrainingDataConfig.h>
-#include <aws/bedrock/model/ValidationDataConfig.h>
+#include <aws/bedrock/model/ModelStatus.h>
 #include <aws/bedrock/model/OutputDataConfig.h>
+#include <aws/bedrock/model/TrainingDataConfig.h>
 #include <aws/bedrock/model/TrainingMetrics.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/bedrock/model/ValidationDataConfig.h>
 #include <aws/bedrock/model/ValidatorMetric.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSMap.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Bedrock
-{
-namespace Model
-{
-  class GetCustomModelResult
-  {
-  public:
-    AWS_BEDROCK_API GetCustomModelResult();
-    AWS_BEDROCK_API GetCustomModelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_BEDROCK_API GetCustomModelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Bedrock {
+namespace Model {
+class GetCustomModelResult {
+ public:
+  AWS_BEDROCK_API GetCustomModelResult() = default;
+  AWS_BEDROCK_API GetCustomModelResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_BEDROCK_API GetCustomModelResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) associated with this model.</p>
+   */
+  inline const Aws::String& GetModelArn() const { return m_modelArn; }
+  template <typename ModelArnT = Aws::String>
+  void SetModelArn(ModelArnT&& value) {
+    m_modelArnHasBeenSet = true;
+    m_modelArn = std::forward<ModelArnT>(value);
+  }
+  template <typename ModelArnT = Aws::String>
+  GetCustomModelResult& WithModelArn(ModelArnT&& value) {
+    SetModelArn(std::forward<ModelArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) associated with this model.</p>
-     */
-    inline const Aws::String& GetModelArn() const{ return m_modelArn; }
-    inline void SetModelArn(const Aws::String& value) { m_modelArn = value; }
-    inline void SetModelArn(Aws::String&& value) { m_modelArn = std::move(value); }
-    inline void SetModelArn(const char* value) { m_modelArn.assign(value); }
-    inline GetCustomModelResult& WithModelArn(const Aws::String& value) { SetModelArn(value); return *this;}
-    inline GetCustomModelResult& WithModelArn(Aws::String&& value) { SetModelArn(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithModelArn(const char* value) { SetModelArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Model name associated with this model.</p>
+   */
+  inline const Aws::String& GetModelName() const { return m_modelName; }
+  template <typename ModelNameT = Aws::String>
+  void SetModelName(ModelNameT&& value) {
+    m_modelNameHasBeenSet = true;
+    m_modelName = std::forward<ModelNameT>(value);
+  }
+  template <typename ModelNameT = Aws::String>
+  GetCustomModelResult& WithModelName(ModelNameT&& value) {
+    SetModelName(std::forward<ModelNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Model name associated with this model.</p>
-     */
-    inline const Aws::String& GetModelName() const{ return m_modelName; }
-    inline void SetModelName(const Aws::String& value) { m_modelName = value; }
-    inline void SetModelName(Aws::String&& value) { m_modelName = std::move(value); }
-    inline void SetModelName(const char* value) { m_modelName.assign(value); }
-    inline GetCustomModelResult& WithModelName(const Aws::String& value) { SetModelName(value); return *this;}
-    inline GetCustomModelResult& WithModelName(Aws::String&& value) { SetModelName(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithModelName(const char* value) { SetModelName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Job name associated with this model.</p>
+   */
+  inline const Aws::String& GetJobName() const { return m_jobName; }
+  template <typename JobNameT = Aws::String>
+  void SetJobName(JobNameT&& value) {
+    m_jobNameHasBeenSet = true;
+    m_jobName = std::forward<JobNameT>(value);
+  }
+  template <typename JobNameT = Aws::String>
+  GetCustomModelResult& WithJobName(JobNameT&& value) {
+    SetJobName(std::forward<JobNameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Job name associated with this model.</p>
-     */
-    inline const Aws::String& GetJobName() const{ return m_jobName; }
-    inline void SetJobName(const Aws::String& value) { m_jobName = value; }
-    inline void SetJobName(Aws::String&& value) { m_jobName = std::move(value); }
-    inline void SetJobName(const char* value) { m_jobName.assign(value); }
-    inline GetCustomModelResult& WithJobName(const Aws::String& value) { SetJobName(value); return *this;}
-    inline GetCustomModelResult& WithJobName(Aws::String&& value) { SetJobName(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithJobName(const char* value) { SetJobName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Job Amazon Resource Name (ARN) associated with this model. For models that
+   * you create with the <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateCustomModel.html">CreateCustomModel</a>
+   * API operation, this is <code>NULL</code>.</p>
+   */
+  inline const Aws::String& GetJobArn() const { return m_jobArn; }
+  template <typename JobArnT = Aws::String>
+  void SetJobArn(JobArnT&& value) {
+    m_jobArnHasBeenSet = true;
+    m_jobArn = std::forward<JobArnT>(value);
+  }
+  template <typename JobArnT = Aws::String>
+  GetCustomModelResult& WithJobArn(JobArnT&& value) {
+    SetJobArn(std::forward<JobArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Job Amazon Resource Name (ARN) associated with this model.</p>
-     */
-    inline const Aws::String& GetJobArn() const{ return m_jobArn; }
-    inline void SetJobArn(const Aws::String& value) { m_jobArn = value; }
-    inline void SetJobArn(Aws::String&& value) { m_jobArn = std::move(value); }
-    inline void SetJobArn(const char* value) { m_jobArn.assign(value); }
-    inline GetCustomModelResult& WithJobArn(const Aws::String& value) { SetJobArn(value); return *this;}
-    inline GetCustomModelResult& WithJobArn(Aws::String&& value) { SetJobArn(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithJobArn(const char* value) { SetJobArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Amazon Resource Name (ARN) of the base model.</p>
+   */
+  inline const Aws::String& GetBaseModelArn() const { return m_baseModelArn; }
+  template <typename BaseModelArnT = Aws::String>
+  void SetBaseModelArn(BaseModelArnT&& value) {
+    m_baseModelArnHasBeenSet = true;
+    m_baseModelArn = std::forward<BaseModelArnT>(value);
+  }
+  template <typename BaseModelArnT = Aws::String>
+  GetCustomModelResult& WithBaseModelArn(BaseModelArnT&& value) {
+    SetBaseModelArn(std::forward<BaseModelArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Amazon Resource Name (ARN) of the base model.</p>
-     */
-    inline const Aws::String& GetBaseModelArn() const{ return m_baseModelArn; }
-    inline void SetBaseModelArn(const Aws::String& value) { m_baseModelArn = value; }
-    inline void SetBaseModelArn(Aws::String&& value) { m_baseModelArn = std::move(value); }
-    inline void SetBaseModelArn(const char* value) { m_baseModelArn.assign(value); }
-    inline GetCustomModelResult& WithBaseModelArn(const Aws::String& value) { SetBaseModelArn(value); return *this;}
-    inline GetCustomModelResult& WithBaseModelArn(Aws::String&& value) { SetBaseModelArn(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithBaseModelArn(const char* value) { SetBaseModelArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The type of model customization.</p>
+   */
+  inline CustomizationType GetCustomizationType() const { return m_customizationType; }
+  inline void SetCustomizationType(CustomizationType value) {
+    m_customizationTypeHasBeenSet = true;
+    m_customizationType = value;
+  }
+  inline GetCustomModelResult& WithCustomizationType(CustomizationType value) {
+    SetCustomizationType(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The type of model customization.</p>
-     */
-    inline const CustomizationType& GetCustomizationType() const{ return m_customizationType; }
-    inline void SetCustomizationType(const CustomizationType& value) { m_customizationType = value; }
-    inline void SetCustomizationType(CustomizationType&& value) { m_customizationType = std::move(value); }
-    inline GetCustomModelResult& WithCustomizationType(const CustomizationType& value) { SetCustomizationType(value); return *this;}
-    inline GetCustomModelResult& WithCustomizationType(CustomizationType&& value) { SetCustomizationType(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The custom model is encrypted at rest using this key.</p>
+   */
+  inline const Aws::String& GetModelKmsKeyArn() const { return m_modelKmsKeyArn; }
+  template <typename ModelKmsKeyArnT = Aws::String>
+  void SetModelKmsKeyArn(ModelKmsKeyArnT&& value) {
+    m_modelKmsKeyArnHasBeenSet = true;
+    m_modelKmsKeyArn = std::forward<ModelKmsKeyArnT>(value);
+  }
+  template <typename ModelKmsKeyArnT = Aws::String>
+  GetCustomModelResult& WithModelKmsKeyArn(ModelKmsKeyArnT&& value) {
+    SetModelKmsKeyArn(std::forward<ModelKmsKeyArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The custom model is encrypted at rest using this key.</p>
-     */
-    inline const Aws::String& GetModelKmsKeyArn() const{ return m_modelKmsKeyArn; }
-    inline void SetModelKmsKeyArn(const Aws::String& value) { m_modelKmsKeyArn = value; }
-    inline void SetModelKmsKeyArn(Aws::String&& value) { m_modelKmsKeyArn = std::move(value); }
-    inline void SetModelKmsKeyArn(const char* value) { m_modelKmsKeyArn.assign(value); }
-    inline GetCustomModelResult& WithModelKmsKeyArn(const Aws::String& value) { SetModelKmsKeyArn(value); return *this;}
-    inline GetCustomModelResult& WithModelKmsKeyArn(Aws::String&& value) { SetModelKmsKeyArn(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithModelKmsKeyArn(const char* value) { SetModelKmsKeyArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Hyperparameter values associated with this model. For details on the format
+   * for different models, see <a
+   * href="https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models-hp.html">Custom
+   * model hyperparameters</a>.</p>
+   */
+  inline const Aws::Map<Aws::String, Aws::String>& GetHyperParameters() const { return m_hyperParameters; }
+  template <typename HyperParametersT = Aws::Map<Aws::String, Aws::String>>
+  void SetHyperParameters(HyperParametersT&& value) {
+    m_hyperParametersHasBeenSet = true;
+    m_hyperParameters = std::forward<HyperParametersT>(value);
+  }
+  template <typename HyperParametersT = Aws::Map<Aws::String, Aws::String>>
+  GetCustomModelResult& WithHyperParameters(HyperParametersT&& value) {
+    SetHyperParameters(std::forward<HyperParametersT>(value));
+    return *this;
+  }
+  template <typename HyperParametersKeyT = Aws::String, typename HyperParametersValueT = Aws::String>
+  GetCustomModelResult& AddHyperParameters(HyperParametersKeyT&& key, HyperParametersValueT&& value) {
+    m_hyperParametersHasBeenSet = true;
+    m_hyperParameters.emplace(std::forward<HyperParametersKeyT>(key), std::forward<HyperParametersValueT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Hyperparameter values associated with this model. For details on the format
-     * for different models, see <a
-     * href="https://docs.aws.amazon.com/bedrock/latest/userguide/custom-models-hp.html">Custom
-     * model hyperparameters</a>.</p>
-     */
-    inline const Aws::Map<Aws::String, Aws::String>& GetHyperParameters() const{ return m_hyperParameters; }
-    inline void SetHyperParameters(const Aws::Map<Aws::String, Aws::String>& value) { m_hyperParameters = value; }
-    inline void SetHyperParameters(Aws::Map<Aws::String, Aws::String>&& value) { m_hyperParameters = std::move(value); }
-    inline GetCustomModelResult& WithHyperParameters(const Aws::Map<Aws::String, Aws::String>& value) { SetHyperParameters(value); return *this;}
-    inline GetCustomModelResult& WithHyperParameters(Aws::Map<Aws::String, Aws::String>&& value) { SetHyperParameters(std::move(value)); return *this;}
-    inline GetCustomModelResult& AddHyperParameters(const Aws::String& key, const Aws::String& value) { m_hyperParameters.emplace(key, value); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(Aws::String&& key, const Aws::String& value) { m_hyperParameters.emplace(std::move(key), value); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(const Aws::String& key, Aws::String&& value) { m_hyperParameters.emplace(key, std::move(value)); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(Aws::String&& key, Aws::String&& value) { m_hyperParameters.emplace(std::move(key), std::move(value)); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(const char* key, Aws::String&& value) { m_hyperParameters.emplace(key, std::move(value)); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(Aws::String&& key, const char* value) { m_hyperParameters.emplace(std::move(key), value); return *this; }
-    inline GetCustomModelResult& AddHyperParameters(const char* key, const char* value) { m_hyperParameters.emplace(key, value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Contains information about the training dataset.</p>
+   */
+  inline const TrainingDataConfig& GetTrainingDataConfig() const { return m_trainingDataConfig; }
+  template <typename TrainingDataConfigT = TrainingDataConfig>
+  void SetTrainingDataConfig(TrainingDataConfigT&& value) {
+    m_trainingDataConfigHasBeenSet = true;
+    m_trainingDataConfig = std::forward<TrainingDataConfigT>(value);
+  }
+  template <typename TrainingDataConfigT = TrainingDataConfig>
+  GetCustomModelResult& WithTrainingDataConfig(TrainingDataConfigT&& value) {
+    SetTrainingDataConfig(std::forward<TrainingDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains information about the training dataset.</p>
-     */
-    inline const TrainingDataConfig& GetTrainingDataConfig() const{ return m_trainingDataConfig; }
-    inline void SetTrainingDataConfig(const TrainingDataConfig& value) { m_trainingDataConfig = value; }
-    inline void SetTrainingDataConfig(TrainingDataConfig&& value) { m_trainingDataConfig = std::move(value); }
-    inline GetCustomModelResult& WithTrainingDataConfig(const TrainingDataConfig& value) { SetTrainingDataConfig(value); return *this;}
-    inline GetCustomModelResult& WithTrainingDataConfig(TrainingDataConfig&& value) { SetTrainingDataConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains information about the validation dataset.</p>
+   */
+  inline const ValidationDataConfig& GetValidationDataConfig() const { return m_validationDataConfig; }
+  template <typename ValidationDataConfigT = ValidationDataConfig>
+  void SetValidationDataConfig(ValidationDataConfigT&& value) {
+    m_validationDataConfigHasBeenSet = true;
+    m_validationDataConfig = std::forward<ValidationDataConfigT>(value);
+  }
+  template <typename ValidationDataConfigT = ValidationDataConfig>
+  GetCustomModelResult& WithValidationDataConfig(ValidationDataConfigT&& value) {
+    SetValidationDataConfig(std::forward<ValidationDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains information about the validation dataset.</p>
-     */
-    inline const ValidationDataConfig& GetValidationDataConfig() const{ return m_validationDataConfig; }
-    inline void SetValidationDataConfig(const ValidationDataConfig& value) { m_validationDataConfig = value; }
-    inline void SetValidationDataConfig(ValidationDataConfig&& value) { m_validationDataConfig = std::move(value); }
-    inline GetCustomModelResult& WithValidationDataConfig(const ValidationDataConfig& value) { SetValidationDataConfig(value); return *this;}
-    inline GetCustomModelResult& WithValidationDataConfig(ValidationDataConfig&& value) { SetValidationDataConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Output data configuration associated with this custom model.</p>
+   */
+  inline const OutputDataConfig& GetOutputDataConfig() const { return m_outputDataConfig; }
+  template <typename OutputDataConfigT = OutputDataConfig>
+  void SetOutputDataConfig(OutputDataConfigT&& value) {
+    m_outputDataConfigHasBeenSet = true;
+    m_outputDataConfig = std::forward<OutputDataConfigT>(value);
+  }
+  template <typename OutputDataConfigT = OutputDataConfig>
+  GetCustomModelResult& WithOutputDataConfig(OutputDataConfigT&& value) {
+    SetOutputDataConfig(std::forward<OutputDataConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Output data configuration associated with this custom model.</p>
-     */
-    inline const OutputDataConfig& GetOutputDataConfig() const{ return m_outputDataConfig; }
-    inline void SetOutputDataConfig(const OutputDataConfig& value) { m_outputDataConfig = value; }
-    inline void SetOutputDataConfig(OutputDataConfig&& value) { m_outputDataConfig = std::move(value); }
-    inline GetCustomModelResult& WithOutputDataConfig(const OutputDataConfig& value) { SetOutputDataConfig(value); return *this;}
-    inline GetCustomModelResult& WithOutputDataConfig(OutputDataConfig&& value) { SetOutputDataConfig(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Contains training metrics from the job creation.</p>
+   */
+  inline const TrainingMetrics& GetTrainingMetrics() const { return m_trainingMetrics; }
+  template <typename TrainingMetricsT = TrainingMetrics>
+  void SetTrainingMetrics(TrainingMetricsT&& value) {
+    m_trainingMetricsHasBeenSet = true;
+    m_trainingMetrics = std::forward<TrainingMetricsT>(value);
+  }
+  template <typename TrainingMetricsT = TrainingMetrics>
+  GetCustomModelResult& WithTrainingMetrics(TrainingMetricsT&& value) {
+    SetTrainingMetrics(std::forward<TrainingMetricsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains training metrics from the job creation.</p>
-     */
-    inline const TrainingMetrics& GetTrainingMetrics() const{ return m_trainingMetrics; }
-    inline void SetTrainingMetrics(const TrainingMetrics& value) { m_trainingMetrics = value; }
-    inline void SetTrainingMetrics(TrainingMetrics&& value) { m_trainingMetrics = std::move(value); }
-    inline GetCustomModelResult& WithTrainingMetrics(const TrainingMetrics& value) { SetTrainingMetrics(value); return *this;}
-    inline GetCustomModelResult& WithTrainingMetrics(TrainingMetrics&& value) { SetTrainingMetrics(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The validation metrics from the job creation.</p>
+   */
+  inline const Aws::Vector<ValidatorMetric>& GetValidationMetrics() const { return m_validationMetrics; }
+  template <typename ValidationMetricsT = Aws::Vector<ValidatorMetric>>
+  void SetValidationMetrics(ValidationMetricsT&& value) {
+    m_validationMetricsHasBeenSet = true;
+    m_validationMetrics = std::forward<ValidationMetricsT>(value);
+  }
+  template <typename ValidationMetricsT = Aws::Vector<ValidatorMetric>>
+  GetCustomModelResult& WithValidationMetrics(ValidationMetricsT&& value) {
+    SetValidationMetrics(std::forward<ValidationMetricsT>(value));
+    return *this;
+  }
+  template <typename ValidationMetricsT = ValidatorMetric>
+  GetCustomModelResult& AddValidationMetrics(ValidationMetricsT&& value) {
+    m_validationMetricsHasBeenSet = true;
+    m_validationMetrics.emplace_back(std::forward<ValidationMetricsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The validation metrics from the job creation.</p>
-     */
-    inline const Aws::Vector<ValidatorMetric>& GetValidationMetrics() const{ return m_validationMetrics; }
-    inline void SetValidationMetrics(const Aws::Vector<ValidatorMetric>& value) { m_validationMetrics = value; }
-    inline void SetValidationMetrics(Aws::Vector<ValidatorMetric>&& value) { m_validationMetrics = std::move(value); }
-    inline GetCustomModelResult& WithValidationMetrics(const Aws::Vector<ValidatorMetric>& value) { SetValidationMetrics(value); return *this;}
-    inline GetCustomModelResult& WithValidationMetrics(Aws::Vector<ValidatorMetric>&& value) { SetValidationMetrics(std::move(value)); return *this;}
-    inline GetCustomModelResult& AddValidationMetrics(const ValidatorMetric& value) { m_validationMetrics.push_back(value); return *this; }
-    inline GetCustomModelResult& AddValidationMetrics(ValidatorMetric&& value) { m_validationMetrics.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Creation time of the model.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationTime() const { return m_creationTime; }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  void SetCreationTime(CreationTimeT&& value) {
+    m_creationTimeHasBeenSet = true;
+    m_creationTime = std::forward<CreationTimeT>(value);
+  }
+  template <typename CreationTimeT = Aws::Utils::DateTime>
+  GetCustomModelResult& WithCreationTime(CreationTimeT&& value) {
+    SetCreationTime(std::forward<CreationTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Creation time of the model.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationTime() const{ return m_creationTime; }
-    inline void SetCreationTime(const Aws::Utils::DateTime& value) { m_creationTime = value; }
-    inline void SetCreationTime(Aws::Utils::DateTime&& value) { m_creationTime = std::move(value); }
-    inline GetCustomModelResult& WithCreationTime(const Aws::Utils::DateTime& value) { SetCreationTime(value); return *this;}
-    inline GetCustomModelResult& WithCreationTime(Aws::Utils::DateTime&& value) { SetCreationTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The customization configuration for the custom model.</p>
+   */
+  inline const CustomizationConfig& GetCustomizationConfig() const { return m_customizationConfig; }
+  template <typename CustomizationConfigT = CustomizationConfig>
+  void SetCustomizationConfig(CustomizationConfigT&& value) {
+    m_customizationConfigHasBeenSet = true;
+    m_customizationConfig = std::forward<CustomizationConfigT>(value);
+  }
+  template <typename CustomizationConfigT = CustomizationConfig>
+  GetCustomModelResult& WithCustomizationConfig(CustomizationConfigT&& value) {
+    SetCustomizationConfig(std::forward<CustomizationConfigT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetCustomModelResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetCustomModelResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetCustomModelResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
+  /**
+   * <p>The current status of the custom model. Possible values include:</p> <ul>
+   * <li> <p> <code>Creating</code> - The model is being created and validated.</p>
+   * </li> <li> <p> <code>Active</code> - The model has been successfully created and
+   * is ready for use.</p> </li> <li> <p> <code>Failed</code> - The model creation
+   * process failed. Check the <code>failureMessage</code> field for details.</p>
+   * </li> </ul>
+   */
+  inline ModelStatus GetModelStatus() const { return m_modelStatus; }
+  inline void SetModelStatus(ModelStatus value) {
+    m_modelStatusHasBeenSet = true;
+    m_modelStatus = value;
+  }
+  inline GetCustomModelResult& WithModelStatus(ModelStatus value) {
+    SetModelStatus(value);
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_modelArn;
+  ///@{
+  /**
+   * <p>A failure message for any issues that occurred when creating the custom
+   * model. This is included for only a failed CreateCustomModel operation.</p>
+   */
+  inline const Aws::String& GetFailureMessage() const { return m_failureMessage; }
+  template <typename FailureMessageT = Aws::String>
+  void SetFailureMessage(FailureMessageT&& value) {
+    m_failureMessageHasBeenSet = true;
+    m_failureMessage = std::forward<FailureMessageT>(value);
+  }
+  template <typename FailureMessageT = Aws::String>
+  GetCustomModelResult& WithFailureMessage(FailureMessageT&& value) {
+    SetFailureMessage(std::forward<FailureMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    Aws::String m_modelName;
+  ///@{
 
-    Aws::String m_jobName;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetCustomModelResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_jobArn;
+ private:
+  Aws::String m_modelArn;
 
-    Aws::String m_baseModelArn;
+  Aws::String m_modelName;
 
-    CustomizationType m_customizationType;
+  Aws::String m_jobName;
 
-    Aws::String m_modelKmsKeyArn;
+  Aws::String m_jobArn;
 
-    Aws::Map<Aws::String, Aws::String> m_hyperParameters;
+  Aws::String m_baseModelArn;
 
-    TrainingDataConfig m_trainingDataConfig;
+  CustomizationType m_customizationType{CustomizationType::NOT_SET};
 
-    ValidationDataConfig m_validationDataConfig;
+  Aws::String m_modelKmsKeyArn;
 
-    OutputDataConfig m_outputDataConfig;
+  Aws::Map<Aws::String, Aws::String> m_hyperParameters;
 
-    TrainingMetrics m_trainingMetrics;
+  TrainingDataConfig m_trainingDataConfig;
 
-    Aws::Vector<ValidatorMetric> m_validationMetrics;
+  ValidationDataConfig m_validationDataConfig;
 
-    Aws::Utils::DateTime m_creationTime;
+  OutputDataConfig m_outputDataConfig;
 
-    Aws::String m_requestId;
-  };
+  TrainingMetrics m_trainingMetrics;
 
-} // namespace Model
-} // namespace Bedrock
-} // namespace Aws
+  Aws::Vector<ValidatorMetric> m_validationMetrics;
+
+  Aws::Utils::DateTime m_creationTime{};
+
+  CustomizationConfig m_customizationConfig;
+
+  ModelStatus m_modelStatus{ModelStatus::NOT_SET};
+
+  Aws::String m_failureMessage;
+
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_modelArnHasBeenSet = false;
+  bool m_modelNameHasBeenSet = false;
+  bool m_jobNameHasBeenSet = false;
+  bool m_jobArnHasBeenSet = false;
+  bool m_baseModelArnHasBeenSet = false;
+  bool m_customizationTypeHasBeenSet = false;
+  bool m_modelKmsKeyArnHasBeenSet = false;
+  bool m_hyperParametersHasBeenSet = false;
+  bool m_trainingDataConfigHasBeenSet = false;
+  bool m_validationDataConfigHasBeenSet = false;
+  bool m_outputDataConfigHasBeenSet = false;
+  bool m_trainingMetricsHasBeenSet = false;
+  bool m_validationMetricsHasBeenSet = false;
+  bool m_creationTimeHasBeenSet = false;
+  bool m_customizationConfigHasBeenSet = false;
+  bool m_modelStatusHasBeenSet = false;
+  bool m_failureMessageHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Bedrock
+}  // namespace Aws

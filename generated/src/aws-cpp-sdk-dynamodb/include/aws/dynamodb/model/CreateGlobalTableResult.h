@@ -4,63 +4,72 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/dynamodb/DynamoDB_EXPORTS.h>
 #include <aws/dynamodb/model/GlobalTableDescription.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DynamoDB
-{
-namespace Model
-{
-  class CreateGlobalTableResult
-  {
-  public:
-    AWS_DYNAMODB_API CreateGlobalTableResult();
-    AWS_DYNAMODB_API CreateGlobalTableResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DYNAMODB_API CreateGlobalTableResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DynamoDB {
+namespace Model {
+class CreateGlobalTableResult {
+ public:
+  AWS_DYNAMODB_API CreateGlobalTableResult() = default;
+  AWS_DYNAMODB_API CreateGlobalTableResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DYNAMODB_API CreateGlobalTableResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Contains the details of the global table.</p>
+   */
+  inline const GlobalTableDescription& GetGlobalTableDescription() const { return m_globalTableDescription; }
+  template <typename GlobalTableDescriptionT = GlobalTableDescription>
+  void SetGlobalTableDescription(GlobalTableDescriptionT&& value) {
+    m_globalTableDescriptionHasBeenSet = true;
+    m_globalTableDescription = std::forward<GlobalTableDescriptionT>(value);
+  }
+  template <typename GlobalTableDescriptionT = GlobalTableDescription>
+  CreateGlobalTableResult& WithGlobalTableDescription(GlobalTableDescriptionT&& value) {
+    SetGlobalTableDescription(std::forward<GlobalTableDescriptionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Contains the details of the global table.</p>
-     */
-    inline const GlobalTableDescription& GetGlobalTableDescription() const{ return m_globalTableDescription; }
-    inline void SetGlobalTableDescription(const GlobalTableDescription& value) { m_globalTableDescription = value; }
-    inline void SetGlobalTableDescription(GlobalTableDescription&& value) { m_globalTableDescription = std::move(value); }
-    inline CreateGlobalTableResult& WithGlobalTableDescription(const GlobalTableDescription& value) { SetGlobalTableDescription(value); return *this;}
-    inline CreateGlobalTableResult& WithGlobalTableDescription(GlobalTableDescription&& value) { SetGlobalTableDescription(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateGlobalTableResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateGlobalTableResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateGlobalTableResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateGlobalTableResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    GlobalTableDescription m_globalTableDescription;
+ private:
+  GlobalTableDescription m_globalTableDescription;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_globalTableDescriptionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace DynamoDB
-} // namespace Aws
+}  // namespace Model
+}  // namespace DynamoDB
+}  // namespace Aws

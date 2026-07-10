@@ -6,70 +6,73 @@
 #pragma once
 #include <aws/appflow/Appflow_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Appflow {
+namespace Model {
 
+/**
+ * <p> Provides details in the event of a failed flow, including the failure count
+ * and the related error messages. </p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/ErrorInfo">AWS
+ * API Reference</a></p>
+ */
+class ErrorInfo {
+ public:
+  AWS_APPFLOW_API ErrorInfo() = default;
+  AWS_APPFLOW_API ErrorInfo(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API ErrorInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> Provides details in the event of a failed flow, including the failure count
-   * and the related error messages. </p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/ErrorInfo">AWS
-   * API Reference</a></p>
+   * <p> Specifies the failure count for the attempted flow. </p>
    */
-  class ErrorInfo
-  {
-  public:
-    AWS_APPFLOW_API ErrorInfo();
-    AWS_APPFLOW_API ErrorInfo(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API ErrorInfo& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline long long GetPutFailuresCount() const { return m_putFailuresCount; }
+  inline bool PutFailuresCountHasBeenSet() const { return m_putFailuresCountHasBeenSet; }
+  inline void SetPutFailuresCount(long long value) {
+    m_putFailuresCountHasBeenSet = true;
+    m_putFailuresCount = value;
+  }
+  inline ErrorInfo& WithPutFailuresCount(long long value) {
+    SetPutFailuresCount(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> Specifies the error message that appears if a flow fails. </p>
+   */
+  inline const Aws::String& GetExecutionMessage() const { return m_executionMessage; }
+  inline bool ExecutionMessageHasBeenSet() const { return m_executionMessageHasBeenSet; }
+  template <typename ExecutionMessageT = Aws::String>
+  void SetExecutionMessage(ExecutionMessageT&& value) {
+    m_executionMessageHasBeenSet = true;
+    m_executionMessage = std::forward<ExecutionMessageT>(value);
+  }
+  template <typename ExecutionMessageT = Aws::String>
+  ErrorInfo& WithExecutionMessage(ExecutionMessageT&& value) {
+    SetExecutionMessage(std::forward<ExecutionMessageT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  long long m_putFailuresCount{0};
 
-    ///@{
-    /**
-     * <p> Specifies the failure count for the attempted flow. </p>
-     */
-    inline long long GetPutFailuresCount() const{ return m_putFailuresCount; }
-    inline bool PutFailuresCountHasBeenSet() const { return m_putFailuresCountHasBeenSet; }
-    inline void SetPutFailuresCount(long long value) { m_putFailuresCountHasBeenSet = true; m_putFailuresCount = value; }
-    inline ErrorInfo& WithPutFailuresCount(long long value) { SetPutFailuresCount(value); return *this;}
-    ///@}
+  Aws::String m_executionMessage;
+  bool m_putFailuresCountHasBeenSet = false;
+  bool m_executionMessageHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p> Specifies the error message that appears if a flow fails. </p>
-     */
-    inline const Aws::String& GetExecutionMessage() const{ return m_executionMessage; }
-    inline bool ExecutionMessageHasBeenSet() const { return m_executionMessageHasBeenSet; }
-    inline void SetExecutionMessage(const Aws::String& value) { m_executionMessageHasBeenSet = true; m_executionMessage = value; }
-    inline void SetExecutionMessage(Aws::String&& value) { m_executionMessageHasBeenSet = true; m_executionMessage = std::move(value); }
-    inline void SetExecutionMessage(const char* value) { m_executionMessageHasBeenSet = true; m_executionMessage.assign(value); }
-    inline ErrorInfo& WithExecutionMessage(const Aws::String& value) { SetExecutionMessage(value); return *this;}
-    inline ErrorInfo& WithExecutionMessage(Aws::String&& value) { SetExecutionMessage(std::move(value)); return *this;}
-    inline ErrorInfo& WithExecutionMessage(const char* value) { SetExecutionMessage(value); return *this;}
-    ///@}
-  private:
-
-    long long m_putFailuresCount;
-    bool m_putFailuresCountHasBeenSet = false;
-
-    Aws::String m_executionMessage;
-    bool m_executionMessageHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

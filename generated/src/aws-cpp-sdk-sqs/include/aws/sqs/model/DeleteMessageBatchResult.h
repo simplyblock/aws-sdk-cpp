@@ -4,102 +4,133 @@
  */
 
 #pragma once
-#include <aws/sqs/SQS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/sqs/model/ResponseMetadata.h>
-#include <aws/sqs/model/DeleteMessageBatchResultEntry.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/sqs/model/BatchResultErrorEntry.h>
+#include <aws/sqs/model/DeleteMessageBatchResultEntry.h>
+#include <aws/sqs/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SQS
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SQS {
+namespace Model {
+/**
+ * <p>For each message in the batch, the response contains a <code>
+ * <a>DeleteMessageBatchResultEntry</a> </code> tag if the message is deleted or a
+ * <code> <a>BatchResultErrorEntry</a> </code> tag if the message can't be
+ * deleted.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sqs-2012-11-05/DeleteMessageBatchResult">AWS
+ * API Reference</a></p>
+ */
+class DeleteMessageBatchResult {
+ public:
+  AWS_SQS_API DeleteMessageBatchResult() = default;
+  AWS_SQS_API DeleteMessageBatchResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SQS_API DeleteMessageBatchResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>For each message in the batch, the response contains a <code>
-   * <a>DeleteMessageBatchResultEntry</a> </code> tag if the message is deleted or a
-   * <code> <a>BatchResultErrorEntry</a> </code> tag if the message can't be
-   * deleted.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sqs-2012-11-05/DeleteMessageBatchResult">AWS
-   * API Reference</a></p>
+   * <p>A list of <code> <a>DeleteMessageBatchResultEntry</a> </code> items.</p>
    */
-  class DeleteMessageBatchResult
-  {
-  public:
-    AWS_SQS_API DeleteMessageBatchResult();
-    AWS_SQS_API DeleteMessageBatchResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SQS_API DeleteMessageBatchResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<DeleteMessageBatchResultEntry>& GetSuccessful() const { return m_successful; }
+  template <typename SuccessfulT = Aws::Vector<DeleteMessageBatchResultEntry>>
+  void SetSuccessful(SuccessfulT&& value) {
+    m_successfulHasBeenSet = true;
+    m_successful = std::forward<SuccessfulT>(value);
+  }
+  template <typename SuccessfulT = Aws::Vector<DeleteMessageBatchResultEntry>>
+  DeleteMessageBatchResult& WithSuccessful(SuccessfulT&& value) {
+    SetSuccessful(std::forward<SuccessfulT>(value));
+    return *this;
+  }
+  template <typename SuccessfulT = DeleteMessageBatchResultEntry>
+  DeleteMessageBatchResult& AddSuccessful(SuccessfulT&& value) {
+    m_successfulHasBeenSet = true;
+    m_successful.emplace_back(std::forward<SuccessfulT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>A list of <code> <a>BatchResultErrorEntry</a> </code> items.</p>
+   */
+  inline const Aws::Vector<BatchResultErrorEntry>& GetFailed() const { return m_failed; }
+  template <typename FailedT = Aws::Vector<BatchResultErrorEntry>>
+  void SetFailed(FailedT&& value) {
+    m_failedHasBeenSet = true;
+    m_failed = std::forward<FailedT>(value);
+  }
+  template <typename FailedT = Aws::Vector<BatchResultErrorEntry>>
+  DeleteMessageBatchResult& WithFailed(FailedT&& value) {
+    SetFailed(std::forward<FailedT>(value));
+    return *this;
+  }
+  template <typename FailedT = BatchResultErrorEntry>
+  DeleteMessageBatchResult& AddFailed(FailedT&& value) {
+    m_failedHasBeenSet = true;
+    m_failed.emplace_back(std::forward<FailedT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of <code> <a>DeleteMessageBatchResultEntry</a> </code> items.</p>
-     */
-    inline const Aws::Vector<DeleteMessageBatchResultEntry>& GetSuccessful() const{ return m_successful; }
-    inline void SetSuccessful(const Aws::Vector<DeleteMessageBatchResultEntry>& value) { m_successful = value; }
-    inline void SetSuccessful(Aws::Vector<DeleteMessageBatchResultEntry>&& value) { m_successful = std::move(value); }
-    inline DeleteMessageBatchResult& WithSuccessful(const Aws::Vector<DeleteMessageBatchResultEntry>& value) { SetSuccessful(value); return *this;}
-    inline DeleteMessageBatchResult& WithSuccessful(Aws::Vector<DeleteMessageBatchResultEntry>&& value) { SetSuccessful(std::move(value)); return *this;}
-    inline DeleteMessageBatchResult& AddSuccessful(const DeleteMessageBatchResultEntry& value) { m_successful.push_back(value); return *this; }
-    inline DeleteMessageBatchResult& AddSuccessful(DeleteMessageBatchResultEntry&& value) { m_successful.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>A list of <code> <a>BatchResultErrorEntry</a> </code> items.</p>
-     */
-    inline const Aws::Vector<BatchResultErrorEntry>& GetFailed() const{ return m_failed; }
-    inline void SetFailed(const Aws::Vector<BatchResultErrorEntry>& value) { m_failed = value; }
-    inline void SetFailed(Aws::Vector<BatchResultErrorEntry>&& value) { m_failed = std::move(value); }
-    inline DeleteMessageBatchResult& WithFailed(const Aws::Vector<BatchResultErrorEntry>& value) { SetFailed(value); return *this;}
-    inline DeleteMessageBatchResult& WithFailed(Aws::Vector<BatchResultErrorEntry>&& value) { SetFailed(std::move(value)); return *this;}
-    inline DeleteMessageBatchResult& AddFailed(const BatchResultErrorEntry& value) { m_failed.push_back(value); return *this; }
-    inline DeleteMessageBatchResult& AddFailed(BatchResultErrorEntry&& value) { m_failed.push_back(std::move(value)); return *this; }
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteMessageBatchResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteMessageBatchResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteMessageBatchResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteMessageBatchResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DeleteMessageBatchResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DeleteMessageBatchResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DeleteMessageBatchResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DeleteMessageBatchResultEntry> m_successful;
+ private:
+  Aws::Vector<DeleteMessageBatchResultEntry> m_successful;
 
-    Aws::Vector<BatchResultErrorEntry> m_failed;
+  Aws::Vector<BatchResultErrorEntry> m_failed;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_successfulHasBeenSet = false;
+  bool m_failedHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SQS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SQS
+}  // namespace Aws

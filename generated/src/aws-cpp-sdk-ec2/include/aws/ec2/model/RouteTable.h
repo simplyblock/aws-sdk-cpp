@@ -4,167 +4,212 @@
  */
 
 #pragma once
-#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/core/utils/memory/stl/AWSStreamFwd.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/ec2/model/RouteTableAssociation.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/ec2/EC2_EXPORTS.h>
 #include <aws/ec2/model/PropagatingVgw.h>
 #include <aws/ec2/model/Route.h>
+#include <aws/ec2/model/RouteTableAssociation.h>
 #include <aws/ec2/model/Tag.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Xml
-{
-  class XmlNode;
-} // namespace Xml
-} // namespace Utils
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Xml {
+class XmlNode;
+}  // namespace Xml
+}  // namespace Utils
+namespace EC2 {
+namespace Model {
 
+/**
+ * <p>Describes a route table.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteTable">AWS API
+ * Reference</a></p>
+ */
+class RouteTable {
+ public:
+  AWS_EC2_API RouteTable() = default;
+  AWS_EC2_API RouteTable(const Aws::Utils::Xml::XmlNode& xmlNode);
+  AWS_EC2_API RouteTable& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+
+  AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
+  AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+
+  ///@{
   /**
-   * <p>Describes a route table.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RouteTable">AWS API
-   * Reference</a></p>
+   * <p>The associations between the route table and your subnets or gateways.</p>
    */
-  class RouteTable
-  {
-  public:
-    AWS_EC2_API RouteTable();
-    AWS_EC2_API RouteTable(const Aws::Utils::Xml::XmlNode& xmlNode);
-    AWS_EC2_API RouteTable& operator=(const Aws::Utils::Xml::XmlNode& xmlNode);
+  inline const Aws::Vector<RouteTableAssociation>& GetAssociations() const { return m_associations; }
+  inline bool AssociationsHasBeenSet() const { return m_associationsHasBeenSet; }
+  template <typename AssociationsT = Aws::Vector<RouteTableAssociation>>
+  void SetAssociations(AssociationsT&& value) {
+    m_associationsHasBeenSet = true;
+    m_associations = std::forward<AssociationsT>(value);
+  }
+  template <typename AssociationsT = Aws::Vector<RouteTableAssociation>>
+  RouteTable& WithAssociations(AssociationsT&& value) {
+    SetAssociations(std::forward<AssociationsT>(value));
+    return *this;
+  }
+  template <typename AssociationsT = RouteTableAssociation>
+  RouteTable& AddAssociations(AssociationsT&& value) {
+    m_associationsHasBeenSet = true;
+    m_associations.emplace_back(std::forward<AssociationsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_EC2_API void OutputToStream(Aws::OStream& ostream, const char* location, unsigned index, const char* locationValue) const;
-    AWS_EC2_API void OutputToStream(Aws::OStream& oStream, const char* location) const;
+  ///@{
+  /**
+   * <p>Any virtual private gateway (VGW) propagating routes.</p>
+   */
+  inline const Aws::Vector<PropagatingVgw>& GetPropagatingVgws() const { return m_propagatingVgws; }
+  inline bool PropagatingVgwsHasBeenSet() const { return m_propagatingVgwsHasBeenSet; }
+  template <typename PropagatingVgwsT = Aws::Vector<PropagatingVgw>>
+  void SetPropagatingVgws(PropagatingVgwsT&& value) {
+    m_propagatingVgwsHasBeenSet = true;
+    m_propagatingVgws = std::forward<PropagatingVgwsT>(value);
+  }
+  template <typename PropagatingVgwsT = Aws::Vector<PropagatingVgw>>
+  RouteTable& WithPropagatingVgws(PropagatingVgwsT&& value) {
+    SetPropagatingVgws(std::forward<PropagatingVgwsT>(value));
+    return *this;
+  }
+  template <typename PropagatingVgwsT = PropagatingVgw>
+  RouteTable& AddPropagatingVgws(PropagatingVgwsT&& value) {
+    m_propagatingVgwsHasBeenSet = true;
+    m_propagatingVgws.emplace_back(std::forward<PropagatingVgwsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The ID of the route table.</p>
+   */
+  inline const Aws::String& GetRouteTableId() const { return m_routeTableId; }
+  inline bool RouteTableIdHasBeenSet() const { return m_routeTableIdHasBeenSet; }
+  template <typename RouteTableIdT = Aws::String>
+  void SetRouteTableId(RouteTableIdT&& value) {
+    m_routeTableIdHasBeenSet = true;
+    m_routeTableId = std::forward<RouteTableIdT>(value);
+  }
+  template <typename RouteTableIdT = Aws::String>
+  RouteTable& WithRouteTableId(RouteTableIdT&& value) {
+    SetRouteTableId(std::forward<RouteTableIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The associations between the route table and your subnets or gateways.</p>
-     */
-    inline const Aws::Vector<RouteTableAssociation>& GetAssociations() const{ return m_associations; }
-    inline bool AssociationsHasBeenSet() const { return m_associationsHasBeenSet; }
-    inline void SetAssociations(const Aws::Vector<RouteTableAssociation>& value) { m_associationsHasBeenSet = true; m_associations = value; }
-    inline void SetAssociations(Aws::Vector<RouteTableAssociation>&& value) { m_associationsHasBeenSet = true; m_associations = std::move(value); }
-    inline RouteTable& WithAssociations(const Aws::Vector<RouteTableAssociation>& value) { SetAssociations(value); return *this;}
-    inline RouteTable& WithAssociations(Aws::Vector<RouteTableAssociation>&& value) { SetAssociations(std::move(value)); return *this;}
-    inline RouteTable& AddAssociations(const RouteTableAssociation& value) { m_associationsHasBeenSet = true; m_associations.push_back(value); return *this; }
-    inline RouteTable& AddAssociations(RouteTableAssociation&& value) { m_associationsHasBeenSet = true; m_associations.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The routes in the route table.</p>
+   */
+  inline const Aws::Vector<Route>& GetRoutes() const { return m_routes; }
+  inline bool RoutesHasBeenSet() const { return m_routesHasBeenSet; }
+  template <typename RoutesT = Aws::Vector<Route>>
+  void SetRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes = std::forward<RoutesT>(value);
+  }
+  template <typename RoutesT = Aws::Vector<Route>>
+  RouteTable& WithRoutes(RoutesT&& value) {
+    SetRoutes(std::forward<RoutesT>(value));
+    return *this;
+  }
+  template <typename RoutesT = Route>
+  RouteTable& AddRoutes(RoutesT&& value) {
+    m_routesHasBeenSet = true;
+    m_routes.emplace_back(std::forward<RoutesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Any virtual private gateway (VGW) propagating routes.</p>
-     */
-    inline const Aws::Vector<PropagatingVgw>& GetPropagatingVgws() const{ return m_propagatingVgws; }
-    inline bool PropagatingVgwsHasBeenSet() const { return m_propagatingVgwsHasBeenSet; }
-    inline void SetPropagatingVgws(const Aws::Vector<PropagatingVgw>& value) { m_propagatingVgwsHasBeenSet = true; m_propagatingVgws = value; }
-    inline void SetPropagatingVgws(Aws::Vector<PropagatingVgw>&& value) { m_propagatingVgwsHasBeenSet = true; m_propagatingVgws = std::move(value); }
-    inline RouteTable& WithPropagatingVgws(const Aws::Vector<PropagatingVgw>& value) { SetPropagatingVgws(value); return *this;}
-    inline RouteTable& WithPropagatingVgws(Aws::Vector<PropagatingVgw>&& value) { SetPropagatingVgws(std::move(value)); return *this;}
-    inline RouteTable& AddPropagatingVgws(const PropagatingVgw& value) { m_propagatingVgwsHasBeenSet = true; m_propagatingVgws.push_back(value); return *this; }
-    inline RouteTable& AddPropagatingVgws(PropagatingVgw&& value) { m_propagatingVgwsHasBeenSet = true; m_propagatingVgws.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Any tags assigned to the route table.</p>
+   */
+  inline const Aws::Vector<Tag>& GetTags() const { return m_tags; }
+  inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
+  template <typename TagsT = Aws::Vector<Tag>>
+  void SetTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags = std::forward<TagsT>(value);
+  }
+  template <typename TagsT = Aws::Vector<Tag>>
+  RouteTable& WithTags(TagsT&& value) {
+    SetTags(std::forward<TagsT>(value));
+    return *this;
+  }
+  template <typename TagsT = Tag>
+  RouteTable& AddTags(TagsT&& value) {
+    m_tagsHasBeenSet = true;
+    m_tags.emplace_back(std::forward<TagsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of the route table.</p>
-     */
-    inline const Aws::String& GetRouteTableId() const{ return m_routeTableId; }
-    inline bool RouteTableIdHasBeenSet() const { return m_routeTableIdHasBeenSet; }
-    inline void SetRouteTableId(const Aws::String& value) { m_routeTableIdHasBeenSet = true; m_routeTableId = value; }
-    inline void SetRouteTableId(Aws::String&& value) { m_routeTableIdHasBeenSet = true; m_routeTableId = std::move(value); }
-    inline void SetRouteTableId(const char* value) { m_routeTableIdHasBeenSet = true; m_routeTableId.assign(value); }
-    inline RouteTable& WithRouteTableId(const Aws::String& value) { SetRouteTableId(value); return *this;}
-    inline RouteTable& WithRouteTableId(Aws::String&& value) { SetRouteTableId(std::move(value)); return *this;}
-    inline RouteTable& WithRouteTableId(const char* value) { SetRouteTableId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the VPC.</p>
+   */
+  inline const Aws::String& GetVpcId() const { return m_vpcId; }
+  inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
+  template <typename VpcIdT = Aws::String>
+  void SetVpcId(VpcIdT&& value) {
+    m_vpcIdHasBeenSet = true;
+    m_vpcId = std::forward<VpcIdT>(value);
+  }
+  template <typename VpcIdT = Aws::String>
+  RouteTable& WithVpcId(VpcIdT&& value) {
+    SetVpcId(std::forward<VpcIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The routes in the route table.</p>
-     */
-    inline const Aws::Vector<Route>& GetRoutes() const{ return m_routes; }
-    inline bool RoutesHasBeenSet() const { return m_routesHasBeenSet; }
-    inline void SetRoutes(const Aws::Vector<Route>& value) { m_routesHasBeenSet = true; m_routes = value; }
-    inline void SetRoutes(Aws::Vector<Route>&& value) { m_routesHasBeenSet = true; m_routes = std::move(value); }
-    inline RouteTable& WithRoutes(const Aws::Vector<Route>& value) { SetRoutes(value); return *this;}
-    inline RouteTable& WithRoutes(Aws::Vector<Route>&& value) { SetRoutes(std::move(value)); return *this;}
-    inline RouteTable& AddRoutes(const Route& value) { m_routesHasBeenSet = true; m_routes.push_back(value); return *this; }
-    inline RouteTable& AddRoutes(Route&& value) { m_routesHasBeenSet = true; m_routes.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The ID of the Amazon Web Services account that owns the route table.</p>
+   */
+  inline const Aws::String& GetOwnerId() const { return m_ownerId; }
+  inline bool OwnerIdHasBeenSet() const { return m_ownerIdHasBeenSet; }
+  template <typename OwnerIdT = Aws::String>
+  void SetOwnerId(OwnerIdT&& value) {
+    m_ownerIdHasBeenSet = true;
+    m_ownerId = std::forward<OwnerIdT>(value);
+  }
+  template <typename OwnerIdT = Aws::String>
+  RouteTable& WithOwnerId(OwnerIdT&& value) {
+    SetOwnerId(std::forward<OwnerIdT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::Vector<RouteTableAssociation> m_associations;
 
-    ///@{
-    /**
-     * <p>Any tags assigned to the route table.</p>
-     */
-    inline const Aws::Vector<Tag>& GetTags() const{ return m_tags; }
-    inline bool TagsHasBeenSet() const { return m_tagsHasBeenSet; }
-    inline void SetTags(const Aws::Vector<Tag>& value) { m_tagsHasBeenSet = true; m_tags = value; }
-    inline void SetTags(Aws::Vector<Tag>&& value) { m_tagsHasBeenSet = true; m_tags = std::move(value); }
-    inline RouteTable& WithTags(const Aws::Vector<Tag>& value) { SetTags(value); return *this;}
-    inline RouteTable& WithTags(Aws::Vector<Tag>&& value) { SetTags(std::move(value)); return *this;}
-    inline RouteTable& AddTags(const Tag& value) { m_tagsHasBeenSet = true; m_tags.push_back(value); return *this; }
-    inline RouteTable& AddTags(Tag&& value) { m_tagsHasBeenSet = true; m_tags.push_back(std::move(value)); return *this; }
-    ///@}
+  Aws::Vector<PropagatingVgw> m_propagatingVgws;
 
-    ///@{
-    /**
-     * <p>The ID of the VPC.</p>
-     */
-    inline const Aws::String& GetVpcId() const{ return m_vpcId; }
-    inline bool VpcIdHasBeenSet() const { return m_vpcIdHasBeenSet; }
-    inline void SetVpcId(const Aws::String& value) { m_vpcIdHasBeenSet = true; m_vpcId = value; }
-    inline void SetVpcId(Aws::String&& value) { m_vpcIdHasBeenSet = true; m_vpcId = std::move(value); }
-    inline void SetVpcId(const char* value) { m_vpcIdHasBeenSet = true; m_vpcId.assign(value); }
-    inline RouteTable& WithVpcId(const Aws::String& value) { SetVpcId(value); return *this;}
-    inline RouteTable& WithVpcId(Aws::String&& value) { SetVpcId(std::move(value)); return *this;}
-    inline RouteTable& WithVpcId(const char* value) { SetVpcId(value); return *this;}
-    ///@}
+  Aws::String m_routeTableId;
 
-    ///@{
-    /**
-     * <p>The ID of the Amazon Web Services account that owns the route table.</p>
-     */
-    inline const Aws::String& GetOwnerId() const{ return m_ownerId; }
-    inline bool OwnerIdHasBeenSet() const { return m_ownerIdHasBeenSet; }
-    inline void SetOwnerId(const Aws::String& value) { m_ownerIdHasBeenSet = true; m_ownerId = value; }
-    inline void SetOwnerId(Aws::String&& value) { m_ownerIdHasBeenSet = true; m_ownerId = std::move(value); }
-    inline void SetOwnerId(const char* value) { m_ownerIdHasBeenSet = true; m_ownerId.assign(value); }
-    inline RouteTable& WithOwnerId(const Aws::String& value) { SetOwnerId(value); return *this;}
-    inline RouteTable& WithOwnerId(Aws::String&& value) { SetOwnerId(std::move(value)); return *this;}
-    inline RouteTable& WithOwnerId(const char* value) { SetOwnerId(value); return *this;}
-    ///@}
-  private:
+  Aws::Vector<Route> m_routes;
 
-    Aws::Vector<RouteTableAssociation> m_associations;
-    bool m_associationsHasBeenSet = false;
+  Aws::Vector<Tag> m_tags;
 
-    Aws::Vector<PropagatingVgw> m_propagatingVgws;
-    bool m_propagatingVgwsHasBeenSet = false;
+  Aws::String m_vpcId;
 
-    Aws::String m_routeTableId;
-    bool m_routeTableIdHasBeenSet = false;
+  Aws::String m_ownerId;
+  bool m_associationsHasBeenSet = false;
+  bool m_propagatingVgwsHasBeenSet = false;
+  bool m_routeTableIdHasBeenSet = false;
+  bool m_routesHasBeenSet = false;
+  bool m_tagsHasBeenSet = false;
+  bool m_vpcIdHasBeenSet = false;
+  bool m_ownerIdHasBeenSet = false;
+};
 
-    Aws::Vector<Route> m_routes;
-    bool m_routesHasBeenSet = false;
-
-    Aws::Vector<Tag> m_tags;
-    bool m_tagsHasBeenSet = false;
-
-    Aws::String m_vpcId;
-    bool m_vpcIdHasBeenSet = false;
-
-    Aws::String m_ownerId;
-    bool m_ownerIdHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

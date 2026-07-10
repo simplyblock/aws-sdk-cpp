@@ -3,63 +3,63 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
+#include <aws/crt/cbor/Cbor.h>
 #include <aws/gamelift/model/ListAliasesRequest.h>
-#include <aws/core/utils/json/JsonSerializer.h>
 
 #include <utility>
 
 using namespace Aws::GameLift::Model;
-using namespace Aws::Utils::Json;
+using namespace Aws::Crt::Cbor;
 using namespace Aws::Utils;
 
-ListAliasesRequest::ListAliasesRequest() : 
-    m_routingStrategyType(RoutingStrategyType::NOT_SET),
-    m_routingStrategyTypeHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_limit(0),
-    m_limitHasBeenSet(false),
-    m_nextTokenHasBeenSet(false)
-{
+Aws::String ListAliasesRequest::SerializePayload() const {
+  Aws::Crt::Cbor::CborEncoder encoder;
+
+  // Calculate map size
+  size_t mapSize = 0;
+  if (m_routingStrategyTypeHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nameHasBeenSet) {
+    mapSize++;
+  }
+  if (m_limitHasBeenSet) {
+    mapSize++;
+  }
+  if (m_nextTokenHasBeenSet) {
+    mapSize++;
+  }
+
+  encoder.WriteMapStart(mapSize);
+
+  if (m_routingStrategyTypeHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("RoutingStrategyType"));
+    encoder.WriteText(
+        Aws::Crt::ByteCursorFromCString(RoutingStrategyTypeMapper::GetNameForRoutingStrategyType(m_routingStrategyType).c_str()));
+  }
+
+  if (m_nameHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Name"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_name.c_str()));
+  }
+
+  if (m_limitHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("Limit"));
+    (m_limit >= 0) ? encoder.WriteUInt(m_limit) : encoder.WriteNegInt(m_limit);
+  }
+
+  if (m_nextTokenHasBeenSet) {
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString("NextToken"));
+    encoder.WriteText(Aws::Crt::ByteCursorFromCString(m_nextToken.c_str()));
+  }
+  const auto str = Aws::String(reinterpret_cast<char*>(encoder.GetEncodedData().ptr), encoder.GetEncodedData().len);
+  return str;
 }
 
-Aws::String ListAliasesRequest::SerializePayload() const
-{
-  JsonValue payload;
-
-  if(m_routingStrategyTypeHasBeenSet)
-  {
-   payload.WithString("RoutingStrategyType", RoutingStrategyTypeMapper::GetNameForRoutingStrategyType(m_routingStrategyType));
-  }
-
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
-  }
-
-  if(m_limitHasBeenSet)
-  {
-   payload.WithInteger("Limit", m_limit);
-
-  }
-
-  if(m_nextTokenHasBeenSet)
-  {
-   payload.WithString("NextToken", m_nextToken);
-
-  }
-
-  return payload.View().WriteReadable();
-}
-
-Aws::Http::HeaderValueCollection ListAliasesRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection ListAliasesRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
-  headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "GameLift.ListAliases"));
+  headers.emplace(Aws::Http::CONTENT_TYPE_HEADER, Aws::CBOR_CONTENT_TYPE);
+  headers.emplace(Aws::Http::SMITHY_PROTOCOL_HEADER, Aws::RPC_V2_CBOR);
+  headers.emplace(Aws::Http::ACCEPT_HEADER, Aws::CBOR_CONTENT_TYPE);
   return headers;
-
 }
-
-
-
-

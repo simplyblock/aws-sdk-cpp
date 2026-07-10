@@ -12,32 +12,18 @@ using namespace Aws::Athena::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteNotebookRequest::DeleteNotebookRequest() : 
-    m_notebookIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteNotebookRequest::SerializePayload() const
-{
+Aws::String DeleteNotebookRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_notebookIdHasBeenSet)
-  {
-   payload.WithString("NotebookId", m_notebookId);
-
+  if (m_notebookIdHasBeenSet) {
+    payload.WithString("NotebookId", m_notebookId);
   }
 
   return payload.View().WriteReadable();
 }
 
-Aws::Http::HeaderValueCollection DeleteNotebookRequest::GetRequestSpecificHeaders() const
-{
+Aws::Http::HeaderValueCollection DeleteNotebookRequest::GetRequestSpecificHeaders() const {
   Aws::Http::HeaderValueCollection headers;
   headers.insert(Aws::Http::HeaderValuePair("X-Amz-Target", "AmazonAthena.DeleteNotebook"));
   return headers;
-
 }
-
-
-
-

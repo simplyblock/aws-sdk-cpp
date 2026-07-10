@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/sagemaker/SageMaker_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sagemaker/SageMaker_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SageMaker
-{
-namespace Model
-{
-  class UpdateImageResult
-  {
-  public:
-    AWS_SAGEMAKER_API UpdateImageResult();
-    AWS_SAGEMAKER_API UpdateImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SAGEMAKER_API UpdateImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SageMaker {
+namespace Model {
+class UpdateImageResult {
+ public:
+  AWS_SAGEMAKER_API UpdateImageResult() = default;
+  AWS_SAGEMAKER_API UpdateImageResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SAGEMAKER_API UpdateImageResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the image.</p>
+   */
+  inline const Aws::String& GetImageArn() const { return m_imageArn; }
+  template <typename ImageArnT = Aws::String>
+  void SetImageArn(ImageArnT&& value) {
+    m_imageArnHasBeenSet = true;
+    m_imageArn = std::forward<ImageArnT>(value);
+  }
+  template <typename ImageArnT = Aws::String>
+  UpdateImageResult& WithImageArn(ImageArnT&& value) {
+    SetImageArn(std::forward<ImageArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the image.</p>
-     */
-    inline const Aws::String& GetImageArn() const{ return m_imageArn; }
-    inline void SetImageArn(const Aws::String& value) { m_imageArn = value; }
-    inline void SetImageArn(Aws::String&& value) { m_imageArn = std::move(value); }
-    inline void SetImageArn(const char* value) { m_imageArn.assign(value); }
-    inline UpdateImageResult& WithImageArn(const Aws::String& value) { SetImageArn(value); return *this;}
-    inline UpdateImageResult& WithImageArn(Aws::String&& value) { SetImageArn(std::move(value)); return *this;}
-    inline UpdateImageResult& WithImageArn(const char* value) { SetImageArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline UpdateImageResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline UpdateImageResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline UpdateImageResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  UpdateImageResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_imageArn;
+ private:
+  Aws::String m_imageArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_imageArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SageMaker
-} // namespace Aws
+}  // namespace Model
+}  // namespace SageMaker
+}  // namespace Aws

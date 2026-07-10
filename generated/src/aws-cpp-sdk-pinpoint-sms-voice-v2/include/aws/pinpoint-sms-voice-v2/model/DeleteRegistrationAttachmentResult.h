@@ -4,126 +4,156 @@
  */
 
 #pragma once
-#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pinpoint-sms-voice-v2/PinpointSMSVoiceV2_EXPORTS.h>
 #include <aws/pinpoint-sms-voice-v2/model/AttachmentStatus.h>
 #include <aws/pinpoint-sms-voice-v2/model/AttachmentUploadErrorReason.h>
-#include <aws/core/utils/DateTime.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PinpointSMSVoiceV2
-{
-namespace Model
-{
-  class DeleteRegistrationAttachmentResult
-  {
-  public:
-    AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult();
-    AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PinpointSMSVoiceV2 {
+namespace Model {
+class DeleteRegistrationAttachmentResult {
+ public:
+  AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult() = default;
+  AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PINPOINTSMSVOICEV2_API DeleteRegistrationAttachmentResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The Amazon Resource Name (ARN) for the registration attachment.</p>
+   */
+  inline const Aws::String& GetRegistrationAttachmentArn() const { return m_registrationAttachmentArn; }
+  template <typename RegistrationAttachmentArnT = Aws::String>
+  void SetRegistrationAttachmentArn(RegistrationAttachmentArnT&& value) {
+    m_registrationAttachmentArnHasBeenSet = true;
+    m_registrationAttachmentArn = std::forward<RegistrationAttachmentArnT>(value);
+  }
+  template <typename RegistrationAttachmentArnT = Aws::String>
+  DeleteRegistrationAttachmentResult& WithRegistrationAttachmentArn(RegistrationAttachmentArnT&& value) {
+    SetRegistrationAttachmentArn(std::forward<RegistrationAttachmentArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) for the registration attachment.</p>
-     */
-    inline const Aws::String& GetRegistrationAttachmentArn() const{ return m_registrationAttachmentArn; }
-    inline void SetRegistrationAttachmentArn(const Aws::String& value) { m_registrationAttachmentArn = value; }
-    inline void SetRegistrationAttachmentArn(Aws::String&& value) { m_registrationAttachmentArn = std::move(value); }
-    inline void SetRegistrationAttachmentArn(const char* value) { m_registrationAttachmentArn.assign(value); }
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentArn(const Aws::String& value) { SetRegistrationAttachmentArn(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentArn(Aws::String&& value) { SetRegistrationAttachmentArn(std::move(value)); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentArn(const char* value) { SetRegistrationAttachmentArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The unique identifier for the registration attachment.</p>
+   */
+  inline const Aws::String& GetRegistrationAttachmentId() const { return m_registrationAttachmentId; }
+  template <typename RegistrationAttachmentIdT = Aws::String>
+  void SetRegistrationAttachmentId(RegistrationAttachmentIdT&& value) {
+    m_registrationAttachmentIdHasBeenSet = true;
+    m_registrationAttachmentId = std::forward<RegistrationAttachmentIdT>(value);
+  }
+  template <typename RegistrationAttachmentIdT = Aws::String>
+  DeleteRegistrationAttachmentResult& WithRegistrationAttachmentId(RegistrationAttachmentIdT&& value) {
+    SetRegistrationAttachmentId(std::forward<RegistrationAttachmentIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The unique identifier for the registration attachment.</p>
-     */
-    inline const Aws::String& GetRegistrationAttachmentId() const{ return m_registrationAttachmentId; }
-    inline void SetRegistrationAttachmentId(const Aws::String& value) { m_registrationAttachmentId = value; }
-    inline void SetRegistrationAttachmentId(Aws::String&& value) { m_registrationAttachmentId = std::move(value); }
-    inline void SetRegistrationAttachmentId(const char* value) { m_registrationAttachmentId.assign(value); }
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentId(const Aws::String& value) { SetRegistrationAttachmentId(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentId(Aws::String&& value) { SetRegistrationAttachmentId(std::move(value)); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRegistrationAttachmentId(const char* value) { SetRegistrationAttachmentId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The status of the registration attachment. </p> <ul> <li> <p>
+   * <code>UPLOAD_IN_PROGRESS</code> The attachment is being uploaded.</p> </li> <li>
+   * <p> <code>UPLOAD_COMPLETE</code> The attachment has been uploaded.</p> </li>
+   * <li> <p> <code>UPLOAD_FAILED</code> The attachment failed to uploaded.</p> </li>
+   * <li> <p> <code>DELETED</code> The attachment has been deleted..</p> </li> </ul>
+   */
+  inline AttachmentStatus GetAttachmentStatus() const { return m_attachmentStatus; }
+  inline void SetAttachmentStatus(AttachmentStatus value) {
+    m_attachmentStatusHasBeenSet = true;
+    m_attachmentStatus = value;
+  }
+  inline DeleteRegistrationAttachmentResult& WithAttachmentStatus(AttachmentStatus value) {
+    SetAttachmentStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The status of the registration attachment. </p> <ul> <li> <p>
-     * <code>UPLOAD_IN_PROGRESS</code> The attachment is being uploaded.</p> </li> <li>
-     * <p> <code>UPLOAD_COMPLETE</code> The attachment has been uploaded.</p> </li>
-     * <li> <p> <code>UPLOAD_FAILED</code> The attachment failed to uploaded.</p> </li>
-     * <li> <p> <code>DELETED</code> The attachment has been deleted..</p> </li> </ul>
-     */
-    inline const AttachmentStatus& GetAttachmentStatus() const{ return m_attachmentStatus; }
-    inline void SetAttachmentStatus(const AttachmentStatus& value) { m_attachmentStatus = value; }
-    inline void SetAttachmentStatus(AttachmentStatus&& value) { m_attachmentStatus = std::move(value); }
-    inline DeleteRegistrationAttachmentResult& WithAttachmentStatus(const AttachmentStatus& value) { SetAttachmentStatus(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithAttachmentStatus(AttachmentStatus&& value) { SetAttachmentStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The error message if the upload failed.</p>
+   */
+  inline AttachmentUploadErrorReason GetAttachmentUploadErrorReason() const { return m_attachmentUploadErrorReason; }
+  inline void SetAttachmentUploadErrorReason(AttachmentUploadErrorReason value) {
+    m_attachmentUploadErrorReasonHasBeenSet = true;
+    m_attachmentUploadErrorReason = value;
+  }
+  inline DeleteRegistrationAttachmentResult& WithAttachmentUploadErrorReason(AttachmentUploadErrorReason value) {
+    SetAttachmentUploadErrorReason(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The error message if the upload failed.</p>
-     */
-    inline const AttachmentUploadErrorReason& GetAttachmentUploadErrorReason() const{ return m_attachmentUploadErrorReason; }
-    inline void SetAttachmentUploadErrorReason(const AttachmentUploadErrorReason& value) { m_attachmentUploadErrorReason = value; }
-    inline void SetAttachmentUploadErrorReason(AttachmentUploadErrorReason&& value) { m_attachmentUploadErrorReason = std::move(value); }
-    inline DeleteRegistrationAttachmentResult& WithAttachmentUploadErrorReason(const AttachmentUploadErrorReason& value) { SetAttachmentUploadErrorReason(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithAttachmentUploadErrorReason(AttachmentUploadErrorReason&& value) { SetAttachmentUploadErrorReason(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The time when the registration attachment was created, in <a
+   * href="https://www.epochconverter.com/">UNIX epoch time</a> format.</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreatedTimestamp() const { return m_createdTimestamp; }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  void SetCreatedTimestamp(CreatedTimestampT&& value) {
+    m_createdTimestampHasBeenSet = true;
+    m_createdTimestamp = std::forward<CreatedTimestampT>(value);
+  }
+  template <typename CreatedTimestampT = Aws::Utils::DateTime>
+  DeleteRegistrationAttachmentResult& WithCreatedTimestamp(CreatedTimestampT&& value) {
+    SetCreatedTimestamp(std::forward<CreatedTimestampT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The time when the registration attachment was created, in <a
-     * href="https://www.epochconverter.com/">UNIX epoch time</a> format.</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreatedTimestamp() const{ return m_createdTimestamp; }
-    inline void SetCreatedTimestamp(const Aws::Utils::DateTime& value) { m_createdTimestamp = value; }
-    inline void SetCreatedTimestamp(Aws::Utils::DateTime&& value) { m_createdTimestamp = std::move(value); }
-    inline DeleteRegistrationAttachmentResult& WithCreatedTimestamp(const Aws::Utils::DateTime& value) { SetCreatedTimestamp(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithCreatedTimestamp(Aws::Utils::DateTime&& value) { SetCreatedTimestamp(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DeleteRegistrationAttachmentResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DeleteRegistrationAttachmentResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DeleteRegistrationAttachmentResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_registrationAttachmentArn;
+ private:
+  Aws::String m_registrationAttachmentArn;
 
-    Aws::String m_registrationAttachmentId;
+  Aws::String m_registrationAttachmentId;
 
-    AttachmentStatus m_attachmentStatus;
+  AttachmentStatus m_attachmentStatus{AttachmentStatus::NOT_SET};
 
-    AttachmentUploadErrorReason m_attachmentUploadErrorReason;
+  AttachmentUploadErrorReason m_attachmentUploadErrorReason{AttachmentUploadErrorReason::NOT_SET};
 
-    Aws::Utils::DateTime m_createdTimestamp;
+  Aws::Utils::DateTime m_createdTimestamp{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_registrationAttachmentArnHasBeenSet = false;
+  bool m_registrationAttachmentIdHasBeenSet = false;
+  bool m_attachmentStatusHasBeenSet = false;
+  bool m_attachmentUploadErrorReasonHasBeenSet = false;
+  bool m_createdTimestampHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PinpointSMSVoiceV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace PinpointSMSVoiceV2
+}  // namespace Aws

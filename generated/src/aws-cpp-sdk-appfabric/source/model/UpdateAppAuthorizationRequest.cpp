@@ -12,33 +12,16 @@ using namespace Aws::AppFabric::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateAppAuthorizationRequest::UpdateAppAuthorizationRequest() : 
-    m_appBundleIdentifierHasBeenSet(false),
-    m_appAuthorizationIdentifierHasBeenSet(false),
-    m_credentialHasBeenSet(false),
-    m_tenantHasBeenSet(false)
-{
-}
-
-Aws::String UpdateAppAuthorizationRequest::SerializePayload() const
-{
+Aws::String UpdateAppAuthorizationRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_credentialHasBeenSet)
-  {
-   payload.WithObject("credential", m_credential.Jsonize());
-
+  if (m_credentialHasBeenSet) {
+    payload.WithObject("credential", m_credential.Jsonize());
   }
 
-  if(m_tenantHasBeenSet)
-  {
-   payload.WithObject("tenant", m_tenant.Jsonize());
-
+  if (m_tenantHasBeenSet) {
+    payload.WithObject("tenant", m_tenant.Jsonize());
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

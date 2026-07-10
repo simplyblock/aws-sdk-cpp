@@ -12,16 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteDomainNameRequest::DeleteDomainNameRequest() : 
-    m_domainNameHasBeenSet(false)
-{
-}
-
-Aws::String DeleteDomainNameRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteDomainNameRequest::SerializePayload() const { return {}; }

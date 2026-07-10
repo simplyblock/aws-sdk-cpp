@@ -4,59 +4,73 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
 #include <aws/neptune/Neptune_EXPORTS.h>
-#include <aws/neptune/model/ValidDBInstanceModificationsMessage.h>
 #include <aws/neptune/model/ResponseMetadata.h>
+#include <aws/neptune/model/ValidDBInstanceModificationsMessage.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Xml
-{
-  class XmlDocument;
-} // namespace Xml
-} // namespace Utils
-namespace Neptune
-{
-namespace Model
-{
-  class DescribeValidDBInstanceModificationsResult
-  {
-  public:
-    AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult();
-    AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
-    AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+namespace Utils {
+namespace Xml {
+class XmlDocument;
+}  // namespace Xml
+}  // namespace Utils
+namespace Neptune {
+namespace Model {
+class DescribeValidDBInstanceModificationsResult {
+ public:
+  AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult() = default;
+  AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
+  AWS_NEPTUNE_API DescribeValidDBInstanceModificationsResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Xml::XmlDocument>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const ValidDBInstanceModificationsMessage& GetValidDBInstanceModificationsMessage() const{ return m_validDBInstanceModificationsMessage; }
-    inline void SetValidDBInstanceModificationsMessage(const ValidDBInstanceModificationsMessage& value) { m_validDBInstanceModificationsMessage = value; }
-    inline void SetValidDBInstanceModificationsMessage(ValidDBInstanceModificationsMessage&& value) { m_validDBInstanceModificationsMessage = std::move(value); }
-    inline DescribeValidDBInstanceModificationsResult& WithValidDBInstanceModificationsMessage(const ValidDBInstanceModificationsMessage& value) { SetValidDBInstanceModificationsMessage(value); return *this;}
-    inline DescribeValidDBInstanceModificationsResult& WithValidDBInstanceModificationsMessage(ValidDBInstanceModificationsMessage&& value) { SetValidDBInstanceModificationsMessage(std::move(value)); return *this;}
-    ///@}
+  inline const ValidDBInstanceModificationsMessage& GetValidDBInstanceModificationsMessage() const {
+    return m_validDBInstanceModificationsMessage;
+  }
+  template <typename ValidDBInstanceModificationsMessageT = ValidDBInstanceModificationsMessage>
+  void SetValidDBInstanceModificationsMessage(ValidDBInstanceModificationsMessageT&& value) {
+    m_validDBInstanceModificationsMessageHasBeenSet = true;
+    m_validDBInstanceModificationsMessage = std::forward<ValidDBInstanceModificationsMessageT>(value);
+  }
+  template <typename ValidDBInstanceModificationsMessageT = ValidDBInstanceModificationsMessage>
+  DescribeValidDBInstanceModificationsResult& WithValidDBInstanceModificationsMessage(ValidDBInstanceModificationsMessageT&& value) {
+    SetValidDBInstanceModificationsMessage(std::forward<ValidDBInstanceModificationsMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline DescribeValidDBInstanceModificationsResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline DescribeValidDBInstanceModificationsResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    ValidDBInstanceModificationsMessage m_validDBInstanceModificationsMessage;
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  DescribeValidDBInstanceModificationsResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ResponseMetadata m_responseMetadata;
-  };
+ private:
+  ValidDBInstanceModificationsMessage m_validDBInstanceModificationsMessage;
 
-} // namespace Model
-} // namespace Neptune
-} // namespace Aws
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_validDBInstanceModificationsMessageHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace Neptune
+}  // namespace Aws

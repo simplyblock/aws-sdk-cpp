@@ -12,26 +12,12 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-UpdateRoomRequest::UpdateRoomRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_roomIdHasBeenSet(false),
-    m_nameHasBeenSet(false)
-{
-}
-
-Aws::String UpdateRoomRequest::SerializePayload() const
-{
+Aws::String UpdateRoomRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

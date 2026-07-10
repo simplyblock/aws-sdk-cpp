@@ -11,65 +11,38 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace BedrockAgentRuntime
-{
-namespace Model
-{
+namespace Aws {
+namespace BedrockAgentRuntime {
+namespace Model {
 
-Span::Span() : 
-    m_end(0),
-    m_endHasBeenSet(false),
-    m_start(0),
-    m_startHasBeenSet(false)
-{
-}
+Span::Span(JsonView jsonValue) { *this = jsonValue; }
 
-Span::Span(JsonView jsonValue)
-  : Span()
-{
-  *this = jsonValue;
-}
-
-Span& Span::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("end"))
-  {
+Span& Span::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("end")) {
     m_end = jsonValue.GetInteger("end");
-
     m_endHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("start"))
-  {
+  if (jsonValue.ValueExists("start")) {
     m_start = jsonValue.GetInteger("start");
-
     m_startHasBeenSet = true;
   }
-
   return *this;
 }
 
-JsonValue Span::Jsonize() const
-{
+JsonValue Span::Jsonize() const {
   JsonValue payload;
 
-  if(m_endHasBeenSet)
-  {
-   payload.WithInteger("end", m_end);
-
+  if (m_endHasBeenSet) {
+    payload.WithInteger("end", m_end);
   }
 
-  if(m_startHasBeenSet)
-  {
-   payload.WithInteger("start", m_start);
-
+  if (m_startHasBeenSet) {
+    payload.WithInteger("start", m_start);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace BedrockAgentRuntime
-} // namespace Aws
+}  // namespace Model
+}  // namespace BedrockAgentRuntime
+}  // namespace Aws

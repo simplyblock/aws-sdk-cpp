@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/pca-connector-ad/PcaConnectorAd_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace PcaConnectorAd
-{
-namespace Model
-{
-  class CreateTemplateResult
-  {
-  public:
-    AWS_PCACONNECTORAD_API CreateTemplateResult();
-    AWS_PCACONNECTORAD_API CreateTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_PCACONNECTORAD_API CreateTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace PcaConnectorAd {
+namespace Model {
+class CreateTemplateResult {
+ public:
+  AWS_PCACONNECTORAD_API CreateTemplateResult() = default;
+  AWS_PCACONNECTORAD_API CreateTemplateResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_PCACONNECTORAD_API CreateTemplateResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>If successful, the Amazon Resource Name (ARN) of the template.</p>
+   */
+  inline const Aws::String& GetTemplateArn() const { return m_templateArn; }
+  template <typename TemplateArnT = Aws::String>
+  void SetTemplateArn(TemplateArnT&& value) {
+    m_templateArnHasBeenSet = true;
+    m_templateArn = std::forward<TemplateArnT>(value);
+  }
+  template <typename TemplateArnT = Aws::String>
+  CreateTemplateResult& WithTemplateArn(TemplateArnT&& value) {
+    SetTemplateArn(std::forward<TemplateArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If successful, the Amazon Resource Name (ARN) of the template.</p>
-     */
-    inline const Aws::String& GetTemplateArn() const{ return m_templateArn; }
-    inline void SetTemplateArn(const Aws::String& value) { m_templateArn = value; }
-    inline void SetTemplateArn(Aws::String&& value) { m_templateArn = std::move(value); }
-    inline void SetTemplateArn(const char* value) { m_templateArn.assign(value); }
-    inline CreateTemplateResult& WithTemplateArn(const Aws::String& value) { SetTemplateArn(value); return *this;}
-    inline CreateTemplateResult& WithTemplateArn(Aws::String&& value) { SetTemplateArn(std::move(value)); return *this;}
-    inline CreateTemplateResult& WithTemplateArn(const char* value) { SetTemplateArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateTemplateResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateTemplateResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateTemplateResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateTemplateResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_templateArn;
+ private:
+  Aws::String m_templateArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_templateArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace PcaConnectorAd
-} // namespace Aws
+}  // namespace Model
+}  // namespace PcaConnectorAd
+}  // namespace Aws

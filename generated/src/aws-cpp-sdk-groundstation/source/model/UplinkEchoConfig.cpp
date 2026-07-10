@@ -3,72 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/groundstation/model/UplinkEchoConfig.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/groundstation/model/UplinkEchoConfig.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace GroundStation
-{
-namespace Model
-{
+namespace Aws {
+namespace GroundStation {
+namespace Model {
 
-UplinkEchoConfig::UplinkEchoConfig() : 
-    m_antennaUplinkConfigArnHasBeenSet(false),
-    m_enabled(false),
-    m_enabledHasBeenSet(false)
-{
-}
+UplinkEchoConfig::UplinkEchoConfig(JsonView jsonValue) { *this = jsonValue; }
 
-UplinkEchoConfig::UplinkEchoConfig(JsonView jsonValue)
-  : UplinkEchoConfig()
-{
-  *this = jsonValue;
-}
-
-UplinkEchoConfig& UplinkEchoConfig::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("antennaUplinkConfigArn"))
-  {
-    m_antennaUplinkConfigArn = jsonValue.GetString("antennaUplinkConfigArn");
-
-    m_antennaUplinkConfigArnHasBeenSet = true;
-  }
-
-  if(jsonValue.ValueExists("enabled"))
-  {
+UplinkEchoConfig& UplinkEchoConfig::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("enabled")) {
     m_enabled = jsonValue.GetBool("enabled");
-
     m_enabledHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("antennaUplinkConfigArn")) {
+    m_antennaUplinkConfigArn = jsonValue.GetString("antennaUplinkConfigArn");
+    m_antennaUplinkConfigArnHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue UplinkEchoConfig::Jsonize() const
-{
+JsonValue UplinkEchoConfig::Jsonize() const {
   JsonValue payload;
 
-  if(m_antennaUplinkConfigArnHasBeenSet)
-  {
-   payload.WithString("antennaUplinkConfigArn", m_antennaUplinkConfigArn);
-
+  if (m_enabledHasBeenSet) {
+    payload.WithBool("enabled", m_enabled);
   }
 
-  if(m_enabledHasBeenSet)
-  {
-   payload.WithBool("enabled", m_enabled);
-
+  if (m_antennaUplinkConfigArnHasBeenSet) {
+    payload.WithString("antennaUplinkConfigArn", m_antennaUplinkConfigArn);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace GroundStation
-} // namespace Aws
+}  // namespace Model
+}  // namespace GroundStation
+}  // namespace Aws

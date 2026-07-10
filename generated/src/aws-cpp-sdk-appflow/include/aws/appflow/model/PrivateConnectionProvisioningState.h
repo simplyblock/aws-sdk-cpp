@@ -5,90 +5,95 @@
 
 #pragma once
 #include <aws/appflow/Appflow_EXPORTS.h>
+#include <aws/appflow/model/PrivateConnectionProvisioningFailureCause.h>
 #include <aws/appflow/model/PrivateConnectionProvisioningStatus.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/appflow/model/PrivateConnectionProvisioningFailureCause.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace Appflow
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace Appflow {
+namespace Model {
 
+/**
+ * <p> Specifies the private connection provisioning state. </p><p><h3>See
+ * Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/PrivateConnectionProvisioningState">AWS
+ * API Reference</a></p>
+ */
+class PrivateConnectionProvisioningState {
+ public:
+  AWS_APPFLOW_API PrivateConnectionProvisioningState() = default;
+  AWS_APPFLOW_API PrivateConnectionProvisioningState(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API PrivateConnectionProvisioningState& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p> Specifies the private connection provisioning state. </p><p><h3>See
-   * Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/appflow-2020-08-23/PrivateConnectionProvisioningState">AWS
-   * API Reference</a></p>
+   * <p> Specifies the private connection provisioning status. </p>
    */
-  class PrivateConnectionProvisioningState
-  {
-  public:
-    AWS_APPFLOW_API PrivateConnectionProvisioningState();
-    AWS_APPFLOW_API PrivateConnectionProvisioningState(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API PrivateConnectionProvisioningState& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_APPFLOW_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline PrivateConnectionProvisioningStatus GetStatus() const { return m_status; }
+  inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
+  inline void SetStatus(PrivateConnectionProvisioningStatus value) {
+    m_statusHasBeenSet = true;
+    m_status = value;
+  }
+  inline PrivateConnectionProvisioningState& WithStatus(PrivateConnectionProvisioningStatus value) {
+    SetStatus(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p> Specifies the private connection provisioning failure reason. </p>
+   */
+  inline const Aws::String& GetFailureMessage() const { return m_failureMessage; }
+  inline bool FailureMessageHasBeenSet() const { return m_failureMessageHasBeenSet; }
+  template <typename FailureMessageT = Aws::String>
+  void SetFailureMessage(FailureMessageT&& value) {
+    m_failureMessageHasBeenSet = true;
+    m_failureMessage = std::forward<FailureMessageT>(value);
+  }
+  template <typename FailureMessageT = Aws::String>
+  PrivateConnectionProvisioningState& WithFailureMessage(FailureMessageT&& value) {
+    SetFailureMessage(std::forward<FailureMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p> Specifies the private connection provisioning status. </p>
-     */
-    inline const PrivateConnectionProvisioningStatus& GetStatus() const{ return m_status; }
-    inline bool StatusHasBeenSet() const { return m_statusHasBeenSet; }
-    inline void SetStatus(const PrivateConnectionProvisioningStatus& value) { m_statusHasBeenSet = true; m_status = value; }
-    inline void SetStatus(PrivateConnectionProvisioningStatus&& value) { m_statusHasBeenSet = true; m_status = std::move(value); }
-    inline PrivateConnectionProvisioningState& WithStatus(const PrivateConnectionProvisioningStatus& value) { SetStatus(value); return *this;}
-    inline PrivateConnectionProvisioningState& WithStatus(PrivateConnectionProvisioningStatus&& value) { SetStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p> Specifies the private connection provisioning failure cause. </p>
+   */
+  inline PrivateConnectionProvisioningFailureCause GetFailureCause() const { return m_failureCause; }
+  inline bool FailureCauseHasBeenSet() const { return m_failureCauseHasBeenSet; }
+  inline void SetFailureCause(PrivateConnectionProvisioningFailureCause value) {
+    m_failureCauseHasBeenSet = true;
+    m_failureCause = value;
+  }
+  inline PrivateConnectionProvisioningState& WithFailureCause(PrivateConnectionProvisioningFailureCause value) {
+    SetFailureCause(value);
+    return *this;
+  }
+  ///@}
+ private:
+  PrivateConnectionProvisioningStatus m_status{PrivateConnectionProvisioningStatus::NOT_SET};
 
-    ///@{
-    /**
-     * <p> Specifies the private connection provisioning failure reason. </p>
-     */
-    inline const Aws::String& GetFailureMessage() const{ return m_failureMessage; }
-    inline bool FailureMessageHasBeenSet() const { return m_failureMessageHasBeenSet; }
-    inline void SetFailureMessage(const Aws::String& value) { m_failureMessageHasBeenSet = true; m_failureMessage = value; }
-    inline void SetFailureMessage(Aws::String&& value) { m_failureMessageHasBeenSet = true; m_failureMessage = std::move(value); }
-    inline void SetFailureMessage(const char* value) { m_failureMessageHasBeenSet = true; m_failureMessage.assign(value); }
-    inline PrivateConnectionProvisioningState& WithFailureMessage(const Aws::String& value) { SetFailureMessage(value); return *this;}
-    inline PrivateConnectionProvisioningState& WithFailureMessage(Aws::String&& value) { SetFailureMessage(std::move(value)); return *this;}
-    inline PrivateConnectionProvisioningState& WithFailureMessage(const char* value) { SetFailureMessage(value); return *this;}
-    ///@}
+  Aws::String m_failureMessage;
 
-    ///@{
-    /**
-     * <p> Specifies the private connection provisioning failure cause. </p>
-     */
-    inline const PrivateConnectionProvisioningFailureCause& GetFailureCause() const{ return m_failureCause; }
-    inline bool FailureCauseHasBeenSet() const { return m_failureCauseHasBeenSet; }
-    inline void SetFailureCause(const PrivateConnectionProvisioningFailureCause& value) { m_failureCauseHasBeenSet = true; m_failureCause = value; }
-    inline void SetFailureCause(PrivateConnectionProvisioningFailureCause&& value) { m_failureCauseHasBeenSet = true; m_failureCause = std::move(value); }
-    inline PrivateConnectionProvisioningState& WithFailureCause(const PrivateConnectionProvisioningFailureCause& value) { SetFailureCause(value); return *this;}
-    inline PrivateConnectionProvisioningState& WithFailureCause(PrivateConnectionProvisioningFailureCause&& value) { SetFailureCause(std::move(value)); return *this;}
-    ///@}
-  private:
+  PrivateConnectionProvisioningFailureCause m_failureCause{PrivateConnectionProvisioningFailureCause::NOT_SET};
+  bool m_statusHasBeenSet = false;
+  bool m_failureMessageHasBeenSet = false;
+  bool m_failureCauseHasBeenSet = false;
+};
 
-    PrivateConnectionProvisioningStatus m_status;
-    bool m_statusHasBeenSet = false;
-
-    Aws::String m_failureMessage;
-    bool m_failureMessageHasBeenSet = false;
-
-    PrivateConnectionProvisioningFailureCause m_failureCause;
-    bool m_failureCauseHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace Appflow
-} // namespace Aws
+}  // namespace Model
+}  // namespace Appflow
+}  // namespace Aws

@@ -11,71 +11,55 @@
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace Connect
-{
-namespace Model
-{
+namespace Aws {
+namespace Connect {
+namespace Model {
 
-Application::Application() : 
-    m_namespaceHasBeenSet(false),
-    m_applicationPermissionsHasBeenSet(false)
-{
-}
+Application::Application(JsonView jsonValue) { *this = jsonValue; }
 
-Application::Application(JsonView jsonValue)
-  : Application()
-{
-  *this = jsonValue;
-}
-
-Application& Application::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Namespace"))
-  {
+Application& Application::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Namespace")) {
     m_namespace = jsonValue.GetString("Namespace");
-
     m_namespaceHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("ApplicationPermissions"))
-  {
+  if (jsonValue.ValueExists("ApplicationPermissions")) {
     Aws::Utils::Array<JsonView> applicationPermissionsJsonList = jsonValue.GetArray("ApplicationPermissions");
-    for(unsigned applicationPermissionsIndex = 0; applicationPermissionsIndex < applicationPermissionsJsonList.GetLength(); ++applicationPermissionsIndex)
-    {
+    for (unsigned applicationPermissionsIndex = 0; applicationPermissionsIndex < applicationPermissionsJsonList.GetLength();
+         ++applicationPermissionsIndex) {
       m_applicationPermissions.push_back(applicationPermissionsJsonList[applicationPermissionsIndex].AsString());
     }
     m_applicationPermissionsHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("Type")) {
+    m_type = ApplicationTypeMapper::GetApplicationTypeForName(jsonValue.GetString("Type"));
+    m_typeHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue Application::Jsonize() const
-{
+JsonValue Application::Jsonize() const {
   JsonValue payload;
 
-  if(m_namespaceHasBeenSet)
-  {
-   payload.WithString("Namespace", m_namespace);
-
+  if (m_namespaceHasBeenSet) {
+    payload.WithString("Namespace", m_namespace);
   }
 
-  if(m_applicationPermissionsHasBeenSet)
-  {
-   Aws::Utils::Array<JsonValue> applicationPermissionsJsonList(m_applicationPermissions.size());
-   for(unsigned applicationPermissionsIndex = 0; applicationPermissionsIndex < applicationPermissionsJsonList.GetLength(); ++applicationPermissionsIndex)
-   {
-     applicationPermissionsJsonList[applicationPermissionsIndex].AsString(m_applicationPermissions[applicationPermissionsIndex]);
-   }
-   payload.WithArray("ApplicationPermissions", std::move(applicationPermissionsJsonList));
+  if (m_applicationPermissionsHasBeenSet) {
+    Aws::Utils::Array<JsonValue> applicationPermissionsJsonList(m_applicationPermissions.size());
+    for (unsigned applicationPermissionsIndex = 0; applicationPermissionsIndex < applicationPermissionsJsonList.GetLength();
+         ++applicationPermissionsIndex) {
+      applicationPermissionsJsonList[applicationPermissionsIndex].AsString(m_applicationPermissions[applicationPermissionsIndex]);
+    }
+    payload.WithArray("ApplicationPermissions", std::move(applicationPermissionsJsonList));
+  }
 
+  if (m_typeHasBeenSet) {
+    payload.WithString("Type", ApplicationTypeMapper::GetNameForApplicationType(m_type));
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace Connect
-} // namespace Aws
+}  // namespace Model
+}  // namespace Connect
+}  // namespace Aws

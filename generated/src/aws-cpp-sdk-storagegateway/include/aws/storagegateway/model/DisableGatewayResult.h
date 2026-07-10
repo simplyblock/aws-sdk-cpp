@@ -4,69 +4,76 @@
  */
 
 #pragma once
-#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/storagegateway/StorageGateway_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace StorageGateway
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace StorageGateway {
+namespace Model {
+/**
+ * <p>DisableGatewayOutput</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DisableGatewayOutput">AWS
+ * API Reference</a></p>
+ */
+class DisableGatewayResult {
+ public:
+  AWS_STORAGEGATEWAY_API DisableGatewayResult() = default;
+  AWS_STORAGEGATEWAY_API DisableGatewayResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_STORAGEGATEWAY_API DisableGatewayResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>DisableGatewayOutput</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/storagegateway-2013-06-30/DisableGatewayOutput">AWS
-   * API Reference</a></p>
+   * <p>The unique Amazon Resource Name (ARN) of the disabled gateway.</p>
    */
-  class DisableGatewayResult
-  {
-  public:
-    AWS_STORAGEGATEWAY_API DisableGatewayResult();
-    AWS_STORAGEGATEWAY_API DisableGatewayResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_STORAGEGATEWAY_API DisableGatewayResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetGatewayARN() const { return m_gatewayARN; }
+  template <typename GatewayARNT = Aws::String>
+  void SetGatewayARN(GatewayARNT&& value) {
+    m_gatewayARNHasBeenSet = true;
+    m_gatewayARN = std::forward<GatewayARNT>(value);
+  }
+  template <typename GatewayARNT = Aws::String>
+  DisableGatewayResult& WithGatewayARN(GatewayARNT&& value) {
+    SetGatewayARN(std::forward<GatewayARNT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>The unique Amazon Resource Name (ARN) of the disabled gateway.</p>
-     */
-    inline const Aws::String& GetGatewayARN() const{ return m_gatewayARN; }
-    inline void SetGatewayARN(const Aws::String& value) { m_gatewayARN = value; }
-    inline void SetGatewayARN(Aws::String&& value) { m_gatewayARN = std::move(value); }
-    inline void SetGatewayARN(const char* value) { m_gatewayARN.assign(value); }
-    inline DisableGatewayResult& WithGatewayARN(const Aws::String& value) { SetGatewayARN(value); return *this;}
-    inline DisableGatewayResult& WithGatewayARN(Aws::String&& value) { SetGatewayARN(std::move(value)); return *this;}
-    inline DisableGatewayResult& WithGatewayARN(const char* value) { SetGatewayARN(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DisableGatewayResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DisableGatewayResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DisableGatewayResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DisableGatewayResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_gatewayARN;
 
-    Aws::String m_gatewayARN;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_gatewayARNHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace StorageGateway
-} // namespace Aws
+}  // namespace Model
+}  // namespace StorageGateway
+}  // namespace Aws

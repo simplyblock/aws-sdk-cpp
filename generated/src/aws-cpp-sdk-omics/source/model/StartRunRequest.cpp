@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/omics/model/StartRunRequest.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/omics/model/StartRunRequest.h>
 
 #include <utility>
 
@@ -12,139 +12,108 @@ using namespace Aws::Omics::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-StartRunRequest::StartRunRequest() : 
-    m_workflowIdHasBeenSet(false),
-    m_workflowType(WorkflowType::NOT_SET),
-    m_workflowTypeHasBeenSet(false),
-    m_runIdHasBeenSet(false),
-    m_roleArnHasBeenSet(false),
-    m_nameHasBeenSet(false),
-    m_runGroupIdHasBeenSet(false),
-    m_priority(0),
-    m_priorityHasBeenSet(false),
-    m_parametersHasBeenSet(false),
-    m_storageCapacity(0),
-    m_storageCapacityHasBeenSet(false),
-    m_outputUriHasBeenSet(false),
-    m_logLevel(RunLogLevel::NOT_SET),
-    m_logLevelHasBeenSet(false),
-    m_tagsHasBeenSet(false),
-    m_requestId(Aws::Utils::UUID::PseudoRandomUUID()),
-    m_requestIdHasBeenSet(true),
-    m_retentionMode(RunRetentionMode::NOT_SET),
-    m_retentionModeHasBeenSet(false),
-    m_storageType(StorageType::NOT_SET),
-    m_storageTypeHasBeenSet(false),
-    m_workflowOwnerIdHasBeenSet(false)
-{
-}
-
-Aws::String StartRunRequest::SerializePayload() const
-{
+Aws::String StartRunRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_workflowIdHasBeenSet)
-  {
-   payload.WithString("workflowId", m_workflowId);
-
+  if (m_workflowIdHasBeenSet) {
+    payload.WithString("workflowId", m_workflowId);
   }
 
-  if(m_workflowTypeHasBeenSet)
-  {
-   payload.WithString("workflowType", WorkflowTypeMapper::GetNameForWorkflowType(m_workflowType));
+  if (m_workflowTypeHasBeenSet) {
+    payload.WithString("workflowType", WorkflowTypeMapper::GetNameForWorkflowType(m_workflowType));
   }
 
-  if(m_runIdHasBeenSet)
-  {
-   payload.WithString("runId", m_runId);
-
+  if (m_runIdHasBeenSet) {
+    payload.WithString("runId", m_runId);
   }
 
-  if(m_roleArnHasBeenSet)
-  {
-   payload.WithString("roleArn", m_roleArn);
-
+  if (m_roleArnHasBeenSet) {
+    payload.WithString("roleArn", m_roleArn);
   }
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("name", m_name);
   }
 
-  if(m_runGroupIdHasBeenSet)
-  {
-   payload.WithString("runGroupId", m_runGroupId);
-
+  if (m_cacheIdHasBeenSet) {
+    payload.WithString("cacheId", m_cacheId);
   }
 
-  if(m_priorityHasBeenSet)
-  {
-   payload.WithInteger("priority", m_priority);
-
+  if (m_cacheBehaviorHasBeenSet) {
+    payload.WithString("cacheBehavior", CacheBehaviorMapper::GetNameForCacheBehavior(m_cacheBehavior));
   }
 
-  if(m_parametersHasBeenSet)
-  {
-    if(!m_parameters.View().IsNull())
-    {
-       payload.WithObject("parameters", JsonValue(m_parameters.View()));
+  if (m_runGroupIdHasBeenSet) {
+    payload.WithString("runGroupId", m_runGroupId);
+  }
+
+  if (m_priorityHasBeenSet) {
+    payload.WithInteger("priority", m_priority);
+  }
+
+  if (m_parametersHasBeenSet) {
+    if (!m_parameters.View().IsNull()) {
+      payload.WithObject("parameters", JsonValue(m_parameters.View()));
     }
   }
 
-  if(m_storageCapacityHasBeenSet)
-  {
-   payload.WithInteger("storageCapacity", m_storageCapacity);
-
+  if (m_storageCapacityHasBeenSet) {
+    payload.WithInteger("storageCapacity", m_storageCapacity);
   }
 
-  if(m_outputUriHasBeenSet)
-  {
-   payload.WithString("outputUri", m_outputUri);
-
+  if (m_outputUriHasBeenSet) {
+    payload.WithString("outputUri", m_outputUri);
   }
 
-  if(m_logLevelHasBeenSet)
-  {
-   payload.WithString("logLevel", RunLogLevelMapper::GetNameForRunLogLevel(m_logLevel));
+  if (m_logLevelHasBeenSet) {
+    payload.WithString("logLevel", RunLogLevelMapper::GetNameForRunLogLevel(m_logLevel));
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("tags", std::move(tagsJsonMap));
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("tags", std::move(tagsJsonMap));
   }
 
-  if(m_requestIdHasBeenSet)
-  {
-   payload.WithString("requestId", m_requestId);
-
+  if (m_requestIdHasBeenSet) {
+    payload.WithString("requestId", m_requestId);
   }
 
-  if(m_retentionModeHasBeenSet)
-  {
-   payload.WithString("retentionMode", RunRetentionModeMapper::GetNameForRunRetentionMode(m_retentionMode));
+  if (m_retentionModeHasBeenSet) {
+    payload.WithString("retentionMode", RunRetentionModeMapper::GetNameForRunRetentionMode(m_retentionMode));
   }
 
-  if(m_storageTypeHasBeenSet)
-  {
-   payload.WithString("storageType", StorageTypeMapper::GetNameForStorageType(m_storageType));
+  if (m_storageTypeHasBeenSet) {
+    payload.WithString("storageType", StorageTypeMapper::GetNameForStorageType(m_storageType));
   }
 
-  if(m_workflowOwnerIdHasBeenSet)
-  {
-   payload.WithString("workflowOwnerId", m_workflowOwnerId);
+  if (m_workflowOwnerIdHasBeenSet) {
+    payload.WithString("workflowOwnerId", m_workflowOwnerId);
+  }
 
+  if (m_workflowVersionNameHasBeenSet) {
+    payload.WithString("workflowVersionName", m_workflowVersionName);
+  }
+
+  if (m_networkingModeHasBeenSet) {
+    payload.WithString("networkingMode", NetworkingModeMapper::GetNameForNetworkingMode(m_networkingMode));
+  }
+
+  if (m_scratchStorageModeHasBeenSet) {
+    payload.WithString("scratchStorageMode", ScratchStorageModeMapper::GetNameForScratchStorageMode(m_scratchStorageMode));
+  }
+
+  if (m_configurationNameHasBeenSet) {
+    payload.WithString("configurationName", m_configurationName);
+  }
+
+  if (m_engineSettingsHasBeenSet) {
+    if (!m_engineSettings.View().IsNull()) {
+      payload.WithObject("engineSettings", JsonValue(m_engineSettings.View()));
+    }
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

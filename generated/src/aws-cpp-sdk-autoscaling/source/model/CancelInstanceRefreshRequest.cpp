@@ -10,26 +10,19 @@
 using namespace Aws::AutoScaling::Model;
 using namespace Aws::Utils;
 
-CancelInstanceRefreshRequest::CancelInstanceRefreshRequest() : 
-    m_autoScalingGroupNameHasBeenSet(false)
-{
-}
-
-Aws::String CancelInstanceRefreshRequest::SerializePayload() const
-{
+Aws::String CancelInstanceRefreshRequest::SerializePayload() const {
   Aws::StringStream ss;
   ss << "Action=CancelInstanceRefresh&";
-  if(m_autoScalingGroupNameHasBeenSet)
-  {
+  if (m_autoScalingGroupNameHasBeenSet) {
     ss << "AutoScalingGroupName=" << StringUtils::URLEncode(m_autoScalingGroupName.c_str()) << "&";
+  }
+
+  if (m_waitForTransitioningInstancesHasBeenSet) {
+    ss << "WaitForTransitioningInstances=" << std::boolalpha << m_waitForTransitioningInstances << "&";
   }
 
   ss << "Version=2011-01-01";
   return ss.str();
 }
 
-
-void  CancelInstanceRefreshRequest::DumpBodyToUrl(Aws::Http::URI& uri ) const
-{
-  uri.SetQueryString(SerializePayload());
-}
+void CancelInstanceRefreshRequest::DumpBodyToUrl(Aws::Http::URI& uri) const { uri.SetQueryString(SerializePayload()); }

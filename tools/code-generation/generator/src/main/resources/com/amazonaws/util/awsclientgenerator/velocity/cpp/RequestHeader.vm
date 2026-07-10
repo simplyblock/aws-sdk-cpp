@@ -46,20 +46,8 @@ namespace Model
   class ${typeInfo.className} : public ${typeInfo.baseClass}
   {
   public:
-    ${exportMacro} ${typeInfo.className}();
+    ${exportMacro} ${typeInfo.className}() = default;
 
-#if(false) ## TODO: revisit later
-    /**
-     * Virtual Copy Constructor idiom;
-     * Override in an inherited class to have overridden functions (such as GetRequestSpecificHeaders) be called by the SDK.
-     * (If you are creating a child of this: don't forget to keep the original return type or (better) just use the 'override' keyword)
-    */
-    virtual Aws::UniquePtr<${typeInfo.className}> Clone() const
-    {
-      return Aws::MakeUnique<${typeInfo.className}>(GetServiceRequestName(), *this);
-    }
-
-#end
     // Service request name is the Operation name which will send this request out,
     // each operation should has unique request name, so that we can get operation's name from this request.
     // Note: this is not true for response, multiple operations may have the same response name,
@@ -68,6 +56,12 @@ namespace Model
 
 #if($shape.hasEventStreamMembers())
     inline virtual bool IsEventStreamRequest() const override { return true; }
+#end
+#if($operation.longPolling)
+    inline virtual bool IsLongPollingOperation() const override { return true; }
+#end
+#if($hasEventStreamResponse)
+    inline virtual bool HasEventStreamResponse() const override { return true; }
 #end
 #if(!$shape.hasStreamMembers() && !$shape.hasEventStreamMembers())
     ${exportMacro} Aws::String SerializePayload() const override;
@@ -86,15 +80,21 @@ namespace Model
     ${exportMacro} Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
 
 #end
+#if($serviceModel.useSmithyClient && $operation.auth)
+    ${exportMacro} Aws::Vector<smithy::AuthSchemeOption> GetRequestSpecificSupportedAuth() const override;
+#end
 #if($shape.hasEmbeddedErrors())
     ${exportMacro} bool HasEmbeddedError(IOStream &body, const Http::HeaderValueCollection &header) const override;
 #end
 #if($operation.requestAlgorithmMember)
     ${exportMacro} Aws::String GetChecksumAlgorithmName() const override;
-
 #end
 #if($operation.requestValidationModeMember)
     ${exportMacro} bool ShouldValidateResponseChecksum() const override;
+
+#end
+#if($operation.requestChecksumRequired)
+    inline bool RequestChecksumRequired() const override { return true; };
 
 #end
 #if($operation.responseAlgorithms)
@@ -131,7 +131,7 @@ namespace Model
     /**
      * Underlying Event Stream Handler which is used to define callback functions.
      */
-    inline const ${operation.name}Handler& GetEventStreamHandler() const { return m_handler; }
+    inline ${operation.name}Handler& GetEventStreamHandler() { return m_handler; }
 
     /**
      * Underlying Event Stream Handler which is used to define callback functions.

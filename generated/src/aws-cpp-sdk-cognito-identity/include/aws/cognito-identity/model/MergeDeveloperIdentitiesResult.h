@@ -5,69 +5,76 @@
 
 #pragma once
 #include <aws/cognito-identity/CognitoIdentity_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentity
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentity {
+namespace Model {
+/**
+ * <p>Returned in response to a successful <code>MergeDeveloperIdentities</code>
+ * action.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-identity-2014-06-30/MergeDeveloperIdentitiesResponse">AWS
+ * API Reference</a></p>
+ */
+class MergeDeveloperIdentitiesResult {
+ public:
+  AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult() = default;
+  AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>Returned in response to a successful <code>MergeDeveloperIdentities</code>
-   * action.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/cognito-identity-2014-06-30/MergeDeveloperIdentitiesResponse">AWS
-   * API Reference</a></p>
+   * <p>A unique identifier in the format REGION:GUID.</p>
    */
-  class MergeDeveloperIdentitiesResult
-  {
-  public:
-    AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult();
-    AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOIDENTITY_API MergeDeveloperIdentitiesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::String& GetIdentityId() const { return m_identityId; }
+  template <typename IdentityIdT = Aws::String>
+  void SetIdentityId(IdentityIdT&& value) {
+    m_identityIdHasBeenSet = true;
+    m_identityId = std::forward<IdentityIdT>(value);
+  }
+  template <typename IdentityIdT = Aws::String>
+  MergeDeveloperIdentitiesResult& WithIdentityId(IdentityIdT&& value) {
+    SetIdentityId(std::forward<IdentityIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
 
-    ///@{
-    /**
-     * <p>A unique identifier in the format REGION:GUID.</p>
-     */
-    inline const Aws::String& GetIdentityId() const{ return m_identityId; }
-    inline void SetIdentityId(const Aws::String& value) { m_identityId = value; }
-    inline void SetIdentityId(Aws::String&& value) { m_identityId = std::move(value); }
-    inline void SetIdentityId(const char* value) { m_identityId.assign(value); }
-    inline MergeDeveloperIdentitiesResult& WithIdentityId(const Aws::String& value) { SetIdentityId(value); return *this;}
-    inline MergeDeveloperIdentitiesResult& WithIdentityId(Aws::String&& value) { SetIdentityId(std::move(value)); return *this;}
-    inline MergeDeveloperIdentitiesResult& WithIdentityId(const char* value) { SetIdentityId(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  MergeDeveloperIdentitiesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline MergeDeveloperIdentitiesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline MergeDeveloperIdentitiesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline MergeDeveloperIdentitiesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+ private:
+  Aws::String m_identityId;
 
-    Aws::String m_identityId;
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_identityIdHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-    Aws::String m_requestId;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentity
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentity
+}  // namespace Aws

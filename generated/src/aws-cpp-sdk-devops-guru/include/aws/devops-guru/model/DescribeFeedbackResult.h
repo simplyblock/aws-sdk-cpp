@@ -4,61 +4,70 @@
  */
 
 #pragma once
+#include <aws/core/http/HttpResponse.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/devops-guru/DevOpsGuru_EXPORTS.h>
 #include <aws/devops-guru/model/InsightFeedback.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace DevOpsGuru
-{
-namespace Model
-{
-  class DescribeFeedbackResult
-  {
-  public:
-    AWS_DEVOPSGURU_API DescribeFeedbackResult();
-    AWS_DEVOPSGURU_API DescribeFeedbackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_DEVOPSGURU_API DescribeFeedbackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace DevOpsGuru {
+namespace Model {
+class DescribeFeedbackResult {
+ public:
+  AWS_DEVOPSGURU_API DescribeFeedbackResult() = default;
+  AWS_DEVOPSGURU_API DescribeFeedbackResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_DEVOPSGURU_API DescribeFeedbackResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
 
-    ///@{
-    
-    inline const InsightFeedback& GetInsightFeedback() const{ return m_insightFeedback; }
-    inline void SetInsightFeedback(const InsightFeedback& value) { m_insightFeedback = value; }
-    inline void SetInsightFeedback(InsightFeedback&& value) { m_insightFeedback = std::move(value); }
-    inline DescribeFeedbackResult& WithInsightFeedback(const InsightFeedback& value) { SetInsightFeedback(value); return *this;}
-    inline DescribeFeedbackResult& WithInsightFeedback(InsightFeedback&& value) { SetInsightFeedback(std::move(value)); return *this;}
-    ///@}
+  inline const InsightFeedback& GetInsightFeedback() const { return m_insightFeedback; }
+  template <typename InsightFeedbackT = InsightFeedback>
+  void SetInsightFeedback(InsightFeedbackT&& value) {
+    m_insightFeedbackHasBeenSet = true;
+    m_insightFeedback = std::forward<InsightFeedbackT>(value);
+  }
+  template <typename InsightFeedbackT = InsightFeedback>
+  DescribeFeedbackResult& WithInsightFeedback(InsightFeedbackT&& value) {
+    SetInsightFeedback(std::forward<InsightFeedbackT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeFeedbackResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeFeedbackResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeFeedbackResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  ///@{
 
-    InsightFeedback m_insightFeedback;
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeFeedbackResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_requestId;
-  };
+ private:
+  InsightFeedback m_insightFeedback;
 
-} // namespace Model
-} // namespace DevOpsGuru
-} // namespace Aws
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_insightFeedbackHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
+
+}  // namespace Model
+}  // namespace DevOpsGuru
+}  // namespace Aws

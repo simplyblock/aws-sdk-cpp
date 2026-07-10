@@ -3,57 +3,49 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/ec2/model/Region.h>
-#include <aws/core/utils/xml/XmlSerializer.h>
 #include <aws/core/utils/StringUtils.h>
 #include <aws/core/utils/memory/stl/AWSStringStream.h>
+#include <aws/core/utils/xml/XmlSerializer.h>
+#include <aws/ec2/model/Region.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Xml;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace EC2
-{
-namespace Model
-{
+namespace Aws {
+namespace EC2 {
+namespace Model {
 
-Region::Region() : 
-    m_optInStatusHasBeenSet(false),
-    m_regionNameHasBeenSet(false),
-    m_endpointHasBeenSet(false)
-{
-}
+Region::Region(const XmlNode& xmlNode) { *this = xmlNode; }
 
-Region::Region(const XmlNode& xmlNode)
-  : Region()
-{
-  *this = xmlNode;
-}
-
-Region& Region::operator =(const XmlNode& xmlNode)
-{
+Region& Region::operator=(const XmlNode& xmlNode) {
   XmlNode resultNode = xmlNode;
 
-  if(!resultNode.IsNull())
-  {
+  if (!resultNode.IsNull()) {
     XmlNode optInStatusNode = resultNode.FirstChild("optInStatus");
-    if(!optInStatusNode.IsNull())
-    {
+    if (!optInStatusNode.IsNull()) {
       m_optInStatus = Aws::Utils::Xml::DecodeEscapedXmlText(optInStatusNode.GetText());
       m_optInStatusHasBeenSet = true;
     }
+    XmlNode geographyNode = resultNode.FirstChild("geographySet");
+    if (!geographyNode.IsNull()) {
+      XmlNode geographyMember = geographyNode.FirstChild("item");
+      m_geographyHasBeenSet = !geographyMember.IsNull();
+      while (!geographyMember.IsNull()) {
+        m_geography.push_back(geographyMember);
+        geographyMember = geographyMember.NextNode("item");
+      }
+
+      m_geographyHasBeenSet = true;
+    }
     XmlNode regionNameNode = resultNode.FirstChild("regionName");
-    if(!regionNameNode.IsNull())
-    {
+    if (!regionNameNode.IsNull()) {
       m_regionName = Aws::Utils::Xml::DecodeEscapedXmlText(regionNameNode.GetText());
       m_regionNameHasBeenSet = true;
     }
     XmlNode endpointNode = resultNode.FirstChild("regionEndpoint");
-    if(!endpointNode.IsNull())
-    {
+    if (!endpointNode.IsNull()) {
       m_endpoint = Aws::Utils::Xml::DecodeEscapedXmlText(endpointNode.GetText());
       m_endpointHasBeenSet = true;
     }
@@ -62,41 +54,49 @@ Region& Region::operator =(const XmlNode& xmlNode)
   return *this;
 }
 
-void Region::OutputToStream(Aws::OStream& oStream, const char* location, unsigned index, const char* locationValue) const
-{
-  if(m_optInStatusHasBeenSet)
-  {
-      oStream << location << index << locationValue << ".OptInStatus=" << StringUtils::URLEncode(m_optInStatus.c_str()) << "&";
+void Region::OutputToStream(Aws::OStream& oStream, const char* location, unsigned index, const char* locationValue) const {
+  if (m_optInStatusHasBeenSet) {
+    oStream << location << index << locationValue << ".OptInStatus=" << StringUtils::URLEncode(m_optInStatus.c_str()) << "&";
   }
 
-  if(m_regionNameHasBeenSet)
-  {
-      oStream << location << index << locationValue << ".RegionName=" << StringUtils::URLEncode(m_regionName.c_str()) << "&";
+  if (m_geographyHasBeenSet) {
+    unsigned geographyIdx = 1;
+    for (auto& item : m_geography) {
+      Aws::StringStream geographySs;
+      geographySs << location << index << locationValue << ".GeographySet." << geographyIdx++;
+      item.OutputToStream(oStream, geographySs.str().c_str());
+    }
   }
 
-  if(m_endpointHasBeenSet)
-  {
-      oStream << location << index << locationValue << ".Endpoint=" << StringUtils::URLEncode(m_endpoint.c_str()) << "&";
+  if (m_regionNameHasBeenSet) {
+    oStream << location << index << locationValue << ".RegionName=" << StringUtils::URLEncode(m_regionName.c_str()) << "&";
   }
 
-}
-
-void Region::OutputToStream(Aws::OStream& oStream, const char* location) const
-{
-  if(m_optInStatusHasBeenSet)
-  {
-      oStream << location << ".OptInStatus=" << StringUtils::URLEncode(m_optInStatus.c_str()) << "&";
-  }
-  if(m_regionNameHasBeenSet)
-  {
-      oStream << location << ".RegionName=" << StringUtils::URLEncode(m_regionName.c_str()) << "&";
-  }
-  if(m_endpointHasBeenSet)
-  {
-      oStream << location << ".Endpoint=" << StringUtils::URLEncode(m_endpoint.c_str()) << "&";
+  if (m_endpointHasBeenSet) {
+    oStream << location << index << locationValue << ".Endpoint=" << StringUtils::URLEncode(m_endpoint.c_str()) << "&";
   }
 }
 
-} // namespace Model
-} // namespace EC2
-} // namespace Aws
+void Region::OutputToStream(Aws::OStream& oStream, const char* location) const {
+  if (m_optInStatusHasBeenSet) {
+    oStream << location << ".OptInStatus=" << StringUtils::URLEncode(m_optInStatus.c_str()) << "&";
+  }
+  if (m_geographyHasBeenSet) {
+    unsigned geographyIdx = 1;
+    for (auto& item : m_geography) {
+      Aws::StringStream geographySs;
+      geographySs << location << ".GeographySet." << geographyIdx++;
+      item.OutputToStream(oStream, geographySs.str().c_str());
+    }
+  }
+  if (m_regionNameHasBeenSet) {
+    oStream << location << ".RegionName=" << StringUtils::URLEncode(m_regionName.c_str()) << "&";
+  }
+  if (m_endpointHasBeenSet) {
+    oStream << location << ".Endpoint=" << StringUtils::URLEncode(m_endpoint.c_str()) << "&";
+  }
+}
+
+}  // namespace Model
+}  // namespace EC2
+}  // namespace Aws

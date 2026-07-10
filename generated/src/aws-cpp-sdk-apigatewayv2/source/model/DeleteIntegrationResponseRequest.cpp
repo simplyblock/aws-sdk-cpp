@@ -12,18 +12,4 @@ using namespace Aws::ApiGatewayV2::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteIntegrationResponseRequest::DeleteIntegrationResponseRequest() : 
-    m_apiIdHasBeenSet(false),
-    m_integrationIdHasBeenSet(false),
-    m_integrationResponseIdHasBeenSet(false)
-{
-}
-
-Aws::String DeleteIntegrationResponseRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteIntegrationResponseRequest::SerializePayload() const { return {}; }

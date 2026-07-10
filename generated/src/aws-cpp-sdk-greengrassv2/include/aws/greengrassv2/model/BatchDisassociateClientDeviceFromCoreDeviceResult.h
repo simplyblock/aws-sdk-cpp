@@ -4,67 +4,82 @@
  */
 
 #pragma once
-#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/greengrassv2/GreengrassV2_EXPORTS.h>
 #include <aws/greengrassv2/model/DisassociateClientDeviceFromCoreDeviceErrorEntry.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GreengrassV2
-{
-namespace Model
-{
-  class BatchDisassociateClientDeviceFromCoreDeviceResult
-  {
-  public:
-    AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult();
-    AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GreengrassV2 {
+namespace Model {
+class BatchDisassociateClientDeviceFromCoreDeviceResult {
+ public:
+  AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult() = default;
+  AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GREENGRASSV2_API BatchDisassociateClientDeviceFromCoreDeviceResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The list of any errors for the entries in the request. Each error entry
+   * contains the name of the IoT thing that failed to disassociate.</p>
+   */
+  inline const Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>& GetErrorEntries() const { return m_errorEntries; }
+  template <typename ErrorEntriesT = Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>>
+  void SetErrorEntries(ErrorEntriesT&& value) {
+    m_errorEntriesHasBeenSet = true;
+    m_errorEntries = std::forward<ErrorEntriesT>(value);
+  }
+  template <typename ErrorEntriesT = Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>>
+  BatchDisassociateClientDeviceFromCoreDeviceResult& WithErrorEntries(ErrorEntriesT&& value) {
+    SetErrorEntries(std::forward<ErrorEntriesT>(value));
+    return *this;
+  }
+  template <typename ErrorEntriesT = DisassociateClientDeviceFromCoreDeviceErrorEntry>
+  BatchDisassociateClientDeviceFromCoreDeviceResult& AddErrorEntries(ErrorEntriesT&& value) {
+    m_errorEntriesHasBeenSet = true;
+    m_errorEntries.emplace_back(std::forward<ErrorEntriesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The list of any errors for the entries in the request. Each error entry
-     * contains the name of the IoT thing that failed to disassociate.</p>
-     */
-    inline const Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>& GetErrorEntries() const{ return m_errorEntries; }
-    inline void SetErrorEntries(const Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>& value) { m_errorEntries = value; }
-    inline void SetErrorEntries(Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>&& value) { m_errorEntries = std::move(value); }
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& WithErrorEntries(const Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>& value) { SetErrorEntries(value); return *this;}
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& WithErrorEntries(Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry>&& value) { SetErrorEntries(std::move(value)); return *this;}
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& AddErrorEntries(const DisassociateClientDeviceFromCoreDeviceErrorEntry& value) { m_errorEntries.push_back(value); return *this; }
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& AddErrorEntries(DisassociateClientDeviceFromCoreDeviceErrorEntry&& value) { m_errorEntries.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline BatchDisassociateClientDeviceFromCoreDeviceResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  BatchDisassociateClientDeviceFromCoreDeviceResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry> m_errorEntries;
+ private:
+  Aws::Vector<DisassociateClientDeviceFromCoreDeviceErrorEntry> m_errorEntries;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_errorEntriesHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GreengrassV2
-} // namespace Aws
+}  // namespace Model
+}  // namespace GreengrassV2
+}  // namespace Aws

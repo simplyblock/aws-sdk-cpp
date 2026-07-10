@@ -12,73 +12,40 @@ using namespace Aws::Connect::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-CreateInstanceRequest::CreateInstanceRequest() : 
-    m_clientTokenHasBeenSet(false),
-    m_identityManagementType(DirectoryType::NOT_SET),
-    m_identityManagementTypeHasBeenSet(false),
-    m_instanceAliasHasBeenSet(false),
-    m_directoryIdHasBeenSet(false),
-    m_inboundCallsEnabled(false),
-    m_inboundCallsEnabledHasBeenSet(false),
-    m_outboundCallsEnabled(false),
-    m_outboundCallsEnabledHasBeenSet(false),
-    m_tagsHasBeenSet(false)
-{
-}
-
-Aws::String CreateInstanceRequest::SerializePayload() const
-{
+Aws::String CreateInstanceRequest::SerializePayload() const {
   JsonValue payload;
 
-  if(m_clientTokenHasBeenSet)
-  {
-   payload.WithString("ClientToken", m_clientToken);
-
+  if (m_clientTokenHasBeenSet) {
+    payload.WithString("ClientToken", m_clientToken);
   }
 
-  if(m_identityManagementTypeHasBeenSet)
-  {
-   payload.WithString("IdentityManagementType", DirectoryTypeMapper::GetNameForDirectoryType(m_identityManagementType));
+  if (m_identityManagementTypeHasBeenSet) {
+    payload.WithString("IdentityManagementType", DirectoryTypeMapper::GetNameForDirectoryType(m_identityManagementType));
   }
 
-  if(m_instanceAliasHasBeenSet)
-  {
-   payload.WithString("InstanceAlias", m_instanceAlias);
-
+  if (m_instanceAliasHasBeenSet) {
+    payload.WithString("InstanceAlias", m_instanceAlias);
   }
 
-  if(m_directoryIdHasBeenSet)
-  {
-   payload.WithString("DirectoryId", m_directoryId);
-
+  if (m_directoryIdHasBeenSet) {
+    payload.WithString("DirectoryId", m_directoryId);
   }
 
-  if(m_inboundCallsEnabledHasBeenSet)
-  {
-   payload.WithBool("InboundCallsEnabled", m_inboundCallsEnabled);
-
+  if (m_inboundCallsEnabledHasBeenSet) {
+    payload.WithBool("InboundCallsEnabled", m_inboundCallsEnabled);
   }
 
-  if(m_outboundCallsEnabledHasBeenSet)
-  {
-   payload.WithBool("OutboundCallsEnabled", m_outboundCallsEnabled);
-
+  if (m_outboundCallsEnabledHasBeenSet) {
+    payload.WithBool("OutboundCallsEnabled", m_outboundCallsEnabled);
   }
 
-  if(m_tagsHasBeenSet)
-  {
-   JsonValue tagsJsonMap;
-   for(auto& tagsItem : m_tags)
-   {
-     tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
-   }
-   payload.WithObject("Tags", std::move(tagsJsonMap));
-
+  if (m_tagsHasBeenSet) {
+    JsonValue tagsJsonMap;
+    for (auto& tagsItem : m_tags) {
+      tagsJsonMap.WithString(tagsItem.first, tagsItem.second);
+    }
+    payload.WithObject("Tags", std::move(tagsJsonMap));
   }
 
   return payload.View().WriteReadable();
 }
-
-
-
-

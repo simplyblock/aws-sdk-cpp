@@ -4,82 +4,100 @@
  */
 
 #pragma once
-#include <aws/workspaces/WorkSpaces_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/workspaces/WorkSpaces_EXPORTS.h>
 #include <aws/workspaces/model/WorkspaceImage.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace WorkSpaces
-{
-namespace Model
-{
-  class DescribeWorkspaceImagesResult
-  {
-  public:
-    AWS_WORKSPACES_API DescribeWorkspaceImagesResult();
-    AWS_WORKSPACES_API DescribeWorkspaceImagesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_WORKSPACES_API DescribeWorkspaceImagesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace WorkSpaces {
+namespace Model {
+class DescribeWorkspaceImagesResult {
+ public:
+  AWS_WORKSPACES_API DescribeWorkspaceImagesResult() = default;
+  AWS_WORKSPACES_API DescribeWorkspaceImagesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_WORKSPACES_API DescribeWorkspaceImagesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the images.</p>
+   */
+  inline const Aws::Vector<WorkspaceImage>& GetImages() const { return m_images; }
+  template <typename ImagesT = Aws::Vector<WorkspaceImage>>
+  void SetImages(ImagesT&& value) {
+    m_imagesHasBeenSet = true;
+    m_images = std::forward<ImagesT>(value);
+  }
+  template <typename ImagesT = Aws::Vector<WorkspaceImage>>
+  DescribeWorkspaceImagesResult& WithImages(ImagesT&& value) {
+    SetImages(std::forward<ImagesT>(value));
+    return *this;
+  }
+  template <typename ImagesT = WorkspaceImage>
+  DescribeWorkspaceImagesResult& AddImages(ImagesT&& value) {
+    m_imagesHasBeenSet = true;
+    m_images.emplace_back(std::forward<ImagesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about the images.</p>
-     */
-    inline const Aws::Vector<WorkspaceImage>& GetImages() const{ return m_images; }
-    inline void SetImages(const Aws::Vector<WorkspaceImage>& value) { m_images = value; }
-    inline void SetImages(Aws::Vector<WorkspaceImage>&& value) { m_images = std::move(value); }
-    inline DescribeWorkspaceImagesResult& WithImages(const Aws::Vector<WorkspaceImage>& value) { SetImages(value); return *this;}
-    inline DescribeWorkspaceImagesResult& WithImages(Aws::Vector<WorkspaceImage>&& value) { SetImages(std::move(value)); return *this;}
-    inline DescribeWorkspaceImagesResult& AddImages(const WorkspaceImage& value) { m_images.push_back(value); return *this; }
-    inline DescribeWorkspaceImagesResult& AddImages(WorkspaceImage&& value) { m_images.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The token to use to retrieve the next page of results. This value is null
+   * when there are no more results to return. </p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  DescribeWorkspaceImagesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token to use to retrieve the next page of results. This value is null
-     * when there are no more results to return. </p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline DescribeWorkspaceImagesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline DescribeWorkspaceImagesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline DescribeWorkspaceImagesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeWorkspaceImagesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeWorkspaceImagesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeWorkspaceImagesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeWorkspaceImagesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<WorkspaceImage> m_images;
+ private:
+  Aws::Vector<WorkspaceImage> m_images;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_imagesHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace WorkSpaces
-} // namespace Aws
+}  // namespace Model
+}  // namespace WorkSpaces
+}  // namespace Aws

@@ -4,82 +4,99 @@
  */
 
 #pragma once
-#include <aws/guardduty/GuardDuty_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/guardduty/GuardDuty_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace GuardDuty
-{
-namespace Model
-{
-  class ListDetectorsResult
-  {
-  public:
-    AWS_GUARDDUTY_API ListDetectorsResult();
-    AWS_GUARDDUTY_API ListDetectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_GUARDDUTY_API ListDetectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace GuardDuty {
+namespace Model {
+class ListDetectorsResult {
+ public:
+  AWS_GUARDDUTY_API ListDetectorsResult() = default;
+  AWS_GUARDDUTY_API ListDetectorsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_GUARDDUTY_API ListDetectorsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>A list of detector IDs.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetDetectorIds() const { return m_detectorIds; }
+  template <typename DetectorIdsT = Aws::Vector<Aws::String>>
+  void SetDetectorIds(DetectorIdsT&& value) {
+    m_detectorIdsHasBeenSet = true;
+    m_detectorIds = std::forward<DetectorIdsT>(value);
+  }
+  template <typename DetectorIdsT = Aws::Vector<Aws::String>>
+  ListDetectorsResult& WithDetectorIds(DetectorIdsT&& value) {
+    SetDetectorIds(std::forward<DetectorIdsT>(value));
+    return *this;
+  }
+  template <typename DetectorIdsT = Aws::String>
+  ListDetectorsResult& AddDetectorIds(DetectorIdsT&& value) {
+    m_detectorIdsHasBeenSet = true;
+    m_detectorIds.emplace_back(std::forward<DetectorIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of detector IDs.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetDetectorIds() const{ return m_detectorIds; }
-    inline void SetDetectorIds(const Aws::Vector<Aws::String>& value) { m_detectorIds = value; }
-    inline void SetDetectorIds(Aws::Vector<Aws::String>&& value) { m_detectorIds = std::move(value); }
-    inline ListDetectorsResult& WithDetectorIds(const Aws::Vector<Aws::String>& value) { SetDetectorIds(value); return *this;}
-    inline ListDetectorsResult& WithDetectorIds(Aws::Vector<Aws::String>&& value) { SetDetectorIds(std::move(value)); return *this;}
-    inline ListDetectorsResult& AddDetectorIds(const Aws::String& value) { m_detectorIds.push_back(value); return *this; }
-    inline ListDetectorsResult& AddDetectorIds(Aws::String&& value) { m_detectorIds.push_back(std::move(value)); return *this; }
-    inline ListDetectorsResult& AddDetectorIds(const char* value) { m_detectorIds.push_back(value); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>The pagination parameter to be used on the next list operation to retrieve
+   * more items.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDetectorsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The pagination parameter to be used on the next list operation to retrieve
-     * more items.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDetectorsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDetectorsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDetectorsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDetectorsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDetectorsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDetectorsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDetectorsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_detectorIds;
+ private:
+  Aws::Vector<Aws::String> m_detectorIds;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_detectorIdsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace GuardDuty
-} // namespace Aws
+}  // namespace Model
+}  // namespace GuardDuty
+}  // namespace Aws

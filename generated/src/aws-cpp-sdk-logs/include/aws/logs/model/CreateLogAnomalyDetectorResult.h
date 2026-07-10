@@ -4,64 +4,71 @@
  */
 
 #pragma once
-#include <aws/logs/CloudWatchLogs_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/logs/CloudWatchLogs_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CloudWatchLogs
-{
-namespace Model
-{
-  class CreateLogAnomalyDetectorResult
-  {
-  public:
-    AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult();
-    AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CloudWatchLogs {
+namespace Model {
+class CreateLogAnomalyDetectorResult {
+ public:
+  AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult() = default;
+  AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CLOUDWATCHLOGS_API CreateLogAnomalyDetectorResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ARN of the log anomaly detector that you just created.</p>
+   */
+  inline const Aws::String& GetAnomalyDetectorArn() const { return m_anomalyDetectorArn; }
+  template <typename AnomalyDetectorArnT = Aws::String>
+  void SetAnomalyDetectorArn(AnomalyDetectorArnT&& value) {
+    m_anomalyDetectorArnHasBeenSet = true;
+    m_anomalyDetectorArn = std::forward<AnomalyDetectorArnT>(value);
+  }
+  template <typename AnomalyDetectorArnT = Aws::String>
+  CreateLogAnomalyDetectorResult& WithAnomalyDetectorArn(AnomalyDetectorArnT&& value) {
+    SetAnomalyDetectorArn(std::forward<AnomalyDetectorArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the log anomaly detector that you just created.</p>
-     */
-    inline const Aws::String& GetAnomalyDetectorArn() const{ return m_anomalyDetectorArn; }
-    inline void SetAnomalyDetectorArn(const Aws::String& value) { m_anomalyDetectorArn = value; }
-    inline void SetAnomalyDetectorArn(Aws::String&& value) { m_anomalyDetectorArn = std::move(value); }
-    inline void SetAnomalyDetectorArn(const char* value) { m_anomalyDetectorArn.assign(value); }
-    inline CreateLogAnomalyDetectorResult& WithAnomalyDetectorArn(const Aws::String& value) { SetAnomalyDetectorArn(value); return *this;}
-    inline CreateLogAnomalyDetectorResult& WithAnomalyDetectorArn(Aws::String&& value) { SetAnomalyDetectorArn(std::move(value)); return *this;}
-    inline CreateLogAnomalyDetectorResult& WithAnomalyDetectorArn(const char* value) { SetAnomalyDetectorArn(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline CreateLogAnomalyDetectorResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline CreateLogAnomalyDetectorResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline CreateLogAnomalyDetectorResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  CreateLogAnomalyDetectorResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_anomalyDetectorArn;
+ private:
+  Aws::String m_anomalyDetectorArn;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_anomalyDetectorArnHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CloudWatchLogs
-} // namespace Aws
+}  // namespace Model
+}  // namespace CloudWatchLogs
+}  // namespace Aws

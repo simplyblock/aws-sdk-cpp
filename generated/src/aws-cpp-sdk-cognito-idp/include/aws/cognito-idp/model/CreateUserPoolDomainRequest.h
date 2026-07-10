@@ -4,96 +4,161 @@
  */
 
 #pragma once
-#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/CognitoIdentityProviderRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/CustomDomainConfigType.h>
+#include <aws/cognito-idp/model/RoutingType.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
+namespace Aws {
+namespace CognitoIdentityProvider {
+namespace Model {
 
+/**
+ */
+class CreateUserPoolDomainRequest : public CognitoIdentityProviderRequest {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API CreateUserPoolDomainRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "CreateUserPoolDomain"; }
+
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::String SerializePayload() const override;
+
+  AWS_COGNITOIDENTITYPROVIDER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The domain string. For custom domains, this is the fully-qualified domain
+   * name, such as <code>auth.example.com</code>. For prefix domains, this is the
+   * prefix alone, such as <code>myprefix</code>. A prefix value of
+   * <code>myprefix</code> for a user pool in the <code>us-east-1</code> Region
+   * results in a domain of
+   * <code>myprefix.auth.us-east-1.amazoncognito.com</code>.</p>
    */
-  class CreateUserPoolDomainRequest : public CognitoIdentityProviderRequest
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API CreateUserPoolDomainRequest();
+  inline const Aws::String& GetDomain() const { return m_domain; }
+  inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
+  template <typename DomainT = Aws::String>
+  void SetDomain(DomainT&& value) {
+    m_domainHasBeenSet = true;
+    m_domain = std::forward<DomainT>(value);
+  }
+  template <typename DomainT = Aws::String>
+  CreateUserPoolDomainRequest& WithDomain(DomainT&& value) {
+    SetDomain(std::forward<DomainT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "CreateUserPoolDomain"; }
+  ///@{
+  /**
+   * <p>The ID of the user pool where you want to add a domain.</p>
+   */
+  inline const Aws::String& GetUserPoolId() const { return m_userPoolId; }
+  inline bool UserPoolIdHasBeenSet() const { return m_userPoolIdHasBeenSet; }
+  template <typename UserPoolIdT = Aws::String>
+  void SetUserPoolId(UserPoolIdT&& value) {
+    m_userPoolIdHasBeenSet = true;
+    m_userPoolId = std::forward<UserPoolIdT>(value);
+  }
+  template <typename UserPoolIdT = Aws::String>
+  CreateUserPoolDomainRequest& WithUserPoolId(UserPoolIdT&& value) {
+    SetUserPoolId(std::forward<UserPoolIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The version of managed login branding that you want to apply to your domain.
+   * A value of <code>1</code> indicates hosted UI (classic) and a version of
+   * <code>2</code> indicates managed login.</p> <p>Managed login requires that your
+   * user pool be configured for any <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html">feature
+   * plan</a> other than <code>Lite</code>.</p>
+   */
+  inline int GetManagedLoginVersion() const { return m_managedLoginVersion; }
+  inline bool ManagedLoginVersionHasBeenSet() const { return m_managedLoginVersionHasBeenSet; }
+  inline void SetManagedLoginVersion(int value) {
+    m_managedLoginVersionHasBeenSet = true;
+    m_managedLoginVersion = value;
+  }
+  inline CreateUserPoolDomainRequest& WithManagedLoginVersion(int value) {
+    SetManagedLoginVersion(value);
+    return *this;
+  }
+  ///@}
 
-    AWS_COGNITOIDENTITYPROVIDER_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The configuration for a custom domain. Configures your domain with an
+   * Certificate Manager certificate in the <code>us-east-1</code> Region.</p>
+   * <p>Provide this parameter only if you want to use a <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html">custom
+   * domain</a> for your user pool. Otherwise, you can omit this parameter and use a
+   * <a
+   * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain-prefix.html">prefix
+   * domain</a> instead.</p> <p>When you create a custom domain, the passkey RP ID
+   * defaults to the custom domain. If you had a prefix domain active, this will
+   * cause passkey integration for your prefix domain to stop working due to a
+   * mismatch in RP ID. To keep the prefix domain passkey integration working, you
+   * can explicitly set RP ID to the prefix domain.</p>
+   */
+  inline const CustomDomainConfigType& GetCustomDomainConfig() const { return m_customDomainConfig; }
+  inline bool CustomDomainConfigHasBeenSet() const { return m_customDomainConfigHasBeenSet; }
+  template <typename CustomDomainConfigT = CustomDomainConfigType>
+  void SetCustomDomainConfig(CustomDomainConfigT&& value) {
+    m_customDomainConfigHasBeenSet = true;
+    m_customDomainConfig = std::forward<CustomDomainConfigT>(value);
+  }
+  template <typename CustomDomainConfigT = CustomDomainConfigType>
+  CreateUserPoolDomainRequest& WithCustomDomainConfig(CustomDomainConfigT&& value) {
+    SetCustomDomainConfig(std::forward<CustomDomainConfigT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The configuration of routing for requests to the domain for replicas of a
+   * replicated user pool. The routing configuration is currently only supported for
+   * custom domains.</p>
+   */
+  inline const RoutingType& GetRouting() const { return m_routing; }
+  inline bool RoutingHasBeenSet() const { return m_routingHasBeenSet; }
+  template <typename RoutingT = RoutingType>
+  void SetRouting(RoutingT&& value) {
+    m_routingHasBeenSet = true;
+    m_routing = std::forward<RoutingT>(value);
+  }
+  template <typename RoutingT = RoutingType>
+  CreateUserPoolDomainRequest& WithRouting(RoutingT&& value) {
+    SetRouting(std::forward<RoutingT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_domain;
 
-    ///@{
-    /**
-     * <p>The domain string. For custom domains, this is the fully-qualified domain
-     * name, such as <code>auth.example.com</code>. For Amazon Cognito prefix domains,
-     * this is the prefix alone, such as <code>auth</code>.</p>
-     */
-    inline const Aws::String& GetDomain() const{ return m_domain; }
-    inline bool DomainHasBeenSet() const { return m_domainHasBeenSet; }
-    inline void SetDomain(const Aws::String& value) { m_domainHasBeenSet = true; m_domain = value; }
-    inline void SetDomain(Aws::String&& value) { m_domainHasBeenSet = true; m_domain = std::move(value); }
-    inline void SetDomain(const char* value) { m_domainHasBeenSet = true; m_domain.assign(value); }
-    inline CreateUserPoolDomainRequest& WithDomain(const Aws::String& value) { SetDomain(value); return *this;}
-    inline CreateUserPoolDomainRequest& WithDomain(Aws::String&& value) { SetDomain(std::move(value)); return *this;}
-    inline CreateUserPoolDomainRequest& WithDomain(const char* value) { SetDomain(value); return *this;}
-    ///@}
+  Aws::String m_userPoolId;
 
-    ///@{
-    /**
-     * <p>The user pool ID.</p>
-     */
-    inline const Aws::String& GetUserPoolId() const{ return m_userPoolId; }
-    inline bool UserPoolIdHasBeenSet() const { return m_userPoolIdHasBeenSet; }
-    inline void SetUserPoolId(const Aws::String& value) { m_userPoolIdHasBeenSet = true; m_userPoolId = value; }
-    inline void SetUserPoolId(Aws::String&& value) { m_userPoolIdHasBeenSet = true; m_userPoolId = std::move(value); }
-    inline void SetUserPoolId(const char* value) { m_userPoolIdHasBeenSet = true; m_userPoolId.assign(value); }
-    inline CreateUserPoolDomainRequest& WithUserPoolId(const Aws::String& value) { SetUserPoolId(value); return *this;}
-    inline CreateUserPoolDomainRequest& WithUserPoolId(Aws::String&& value) { SetUserPoolId(std::move(value)); return *this;}
-    inline CreateUserPoolDomainRequest& WithUserPoolId(const char* value) { SetUserPoolId(value); return *this;}
-    ///@}
+  int m_managedLoginVersion{0};
 
-    ///@{
-    /**
-     * <p>The configuration for a custom domain that hosts the sign-up and sign-in
-     * webpages for your application.</p> <p>Provide this parameter only if you want to
-     * use a custom domain for your user pool. Otherwise, you can exclude this
-     * parameter and use the Amazon Cognito hosted domain instead.</p> <p>For more
-     * information about the hosted domain and custom domains, see <a
-     * href="https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html">Configuring
-     * a User Pool Domain</a>.</p>
-     */
-    inline const CustomDomainConfigType& GetCustomDomainConfig() const{ return m_customDomainConfig; }
-    inline bool CustomDomainConfigHasBeenSet() const { return m_customDomainConfigHasBeenSet; }
-    inline void SetCustomDomainConfig(const CustomDomainConfigType& value) { m_customDomainConfigHasBeenSet = true; m_customDomainConfig = value; }
-    inline void SetCustomDomainConfig(CustomDomainConfigType&& value) { m_customDomainConfigHasBeenSet = true; m_customDomainConfig = std::move(value); }
-    inline CreateUserPoolDomainRequest& WithCustomDomainConfig(const CustomDomainConfigType& value) { SetCustomDomainConfig(value); return *this;}
-    inline CreateUserPoolDomainRequest& WithCustomDomainConfig(CustomDomainConfigType&& value) { SetCustomDomainConfig(std::move(value)); return *this;}
-    ///@}
-  private:
+  CustomDomainConfigType m_customDomainConfig;
 
-    Aws::String m_domain;
-    bool m_domainHasBeenSet = false;
+  RoutingType m_routing;
+  bool m_domainHasBeenSet = false;
+  bool m_userPoolIdHasBeenSet = false;
+  bool m_managedLoginVersionHasBeenSet = false;
+  bool m_customDomainConfigHasBeenSet = false;
+  bool m_routingHasBeenSet = false;
+};
 
-    Aws::String m_userPoolId;
-    bool m_userPoolIdHasBeenSet = false;
-
-    CustomDomainConfigType m_customDomainConfig;
-    bool m_customDomainConfigHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

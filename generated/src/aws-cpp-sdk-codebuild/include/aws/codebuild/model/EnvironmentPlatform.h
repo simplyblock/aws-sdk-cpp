@@ -5,76 +5,83 @@
 
 #pragma once
 #include <aws/codebuild/CodeBuild_EXPORTS.h>
+#include <aws/codebuild/model/EnvironmentLanguage.h>
 #include <aws/codebuild/model/PlatformType.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/codebuild/model/EnvironmentLanguage.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-  class JsonView;
-} // namespace Json
-} // namespace Utils
-namespace CodeBuild
-{
-namespace Model
-{
+namespace Aws {
+namespace Utils {
+namespace Json {
+class JsonValue;
+class JsonView;
+}  // namespace Json
+}  // namespace Utils
+namespace CodeBuild {
+namespace Model {
 
+/**
+ * <p>A set of Docker images that are related by platform and are managed by
+ * CodeBuild.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/EnvironmentPlatform">AWS
+ * API Reference</a></p>
+ */
+class EnvironmentPlatform {
+ public:
+  AWS_CODEBUILD_API EnvironmentPlatform() = default;
+  AWS_CODEBUILD_API EnvironmentPlatform(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEBUILD_API EnvironmentPlatform& operator=(Aws::Utils::Json::JsonView jsonValue);
+  AWS_CODEBUILD_API Aws::Utils::Json::JsonValue Jsonize() const;
+
+  ///@{
   /**
-   * <p>A set of Docker images that are related by platform and are managed by
-   * CodeBuild.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/EnvironmentPlatform">AWS
-   * API Reference</a></p>
+   * <p>The platform's name.</p>
    */
-  class EnvironmentPlatform
-  {
-  public:
-    AWS_CODEBUILD_API EnvironmentPlatform();
-    AWS_CODEBUILD_API EnvironmentPlatform(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEBUILD_API EnvironmentPlatform& operator=(Aws::Utils::Json::JsonView jsonValue);
-    AWS_CODEBUILD_API Aws::Utils::Json::JsonValue Jsonize() const;
+  inline PlatformType GetPlatform() const { return m_platform; }
+  inline bool PlatformHasBeenSet() const { return m_platformHasBeenSet; }
+  inline void SetPlatform(PlatformType value) {
+    m_platformHasBeenSet = true;
+    m_platform = value;
+  }
+  inline EnvironmentPlatform& WithPlatform(PlatformType value) {
+    SetPlatform(value);
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>The list of programming languages that are available for the specified
+   * platform.</p>
+   */
+  inline const Aws::Vector<EnvironmentLanguage>& GetLanguages() const { return m_languages; }
+  inline bool LanguagesHasBeenSet() const { return m_languagesHasBeenSet; }
+  template <typename LanguagesT = Aws::Vector<EnvironmentLanguage>>
+  void SetLanguages(LanguagesT&& value) {
+    m_languagesHasBeenSet = true;
+    m_languages = std::forward<LanguagesT>(value);
+  }
+  template <typename LanguagesT = Aws::Vector<EnvironmentLanguage>>
+  EnvironmentPlatform& WithLanguages(LanguagesT&& value) {
+    SetLanguages(std::forward<LanguagesT>(value));
+    return *this;
+  }
+  template <typename LanguagesT = EnvironmentLanguage>
+  EnvironmentPlatform& AddLanguages(LanguagesT&& value) {
+    m_languagesHasBeenSet = true;
+    m_languages.emplace_back(std::forward<LanguagesT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  PlatformType m_platform{PlatformType::NOT_SET};
 
-    ///@{
-    /**
-     * <p>The platform's name.</p>
-     */
-    inline const PlatformType& GetPlatform() const{ return m_platform; }
-    inline bool PlatformHasBeenSet() const { return m_platformHasBeenSet; }
-    inline void SetPlatform(const PlatformType& value) { m_platformHasBeenSet = true; m_platform = value; }
-    inline void SetPlatform(PlatformType&& value) { m_platformHasBeenSet = true; m_platform = std::move(value); }
-    inline EnvironmentPlatform& WithPlatform(const PlatformType& value) { SetPlatform(value); return *this;}
-    inline EnvironmentPlatform& WithPlatform(PlatformType&& value) { SetPlatform(std::move(value)); return *this;}
-    ///@}
+  Aws::Vector<EnvironmentLanguage> m_languages;
+  bool m_platformHasBeenSet = false;
+  bool m_languagesHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>The list of programming languages that are available for the specified
-     * platform.</p>
-     */
-    inline const Aws::Vector<EnvironmentLanguage>& GetLanguages() const{ return m_languages; }
-    inline bool LanguagesHasBeenSet() const { return m_languagesHasBeenSet; }
-    inline void SetLanguages(const Aws::Vector<EnvironmentLanguage>& value) { m_languagesHasBeenSet = true; m_languages = value; }
-    inline void SetLanguages(Aws::Vector<EnvironmentLanguage>&& value) { m_languagesHasBeenSet = true; m_languages = std::move(value); }
-    inline EnvironmentPlatform& WithLanguages(const Aws::Vector<EnvironmentLanguage>& value) { SetLanguages(value); return *this;}
-    inline EnvironmentPlatform& WithLanguages(Aws::Vector<EnvironmentLanguage>&& value) { SetLanguages(std::move(value)); return *this;}
-    inline EnvironmentPlatform& AddLanguages(const EnvironmentLanguage& value) { m_languagesHasBeenSet = true; m_languages.push_back(value); return *this; }
-    inline EnvironmentPlatform& AddLanguages(EnvironmentLanguage&& value) { m_languagesHasBeenSet = true; m_languages.push_back(std::move(value)); return *this; }
-    ///@}
-  private:
-
-    PlatformType m_platform;
-    bool m_platformHasBeenSet = false;
-
-    Aws::Vector<EnvironmentLanguage> m_languages;
-    bool m_languagesHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace CodeBuild
-} // namespace Aws
+}  // namespace Model
+}  // namespace CodeBuild
+}  // namespace Aws

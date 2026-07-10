@@ -5,81 +5,105 @@
 
 #pragma once
 #include <aws/connectcases/ConnectCases_EXPORTS.h>
+#include <aws/connectcases/model/SearchRelatedItemsResponseItem.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/connectcases/model/SearchRelatedItemsResponseItem.h>
+#include <aws/crt/Optional.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace ConnectCases
-{
-namespace Model
-{
-  class SearchRelatedItemsResult
-  {
-  public:
-    AWS_CONNECTCASES_API SearchRelatedItemsResult();
-    AWS_CONNECTCASES_API SearchRelatedItemsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_CONNECTCASES_API SearchRelatedItemsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace ConnectCases {
+namespace Model {
+class SearchRelatedItemsResult {
+ public:
+  AWS_CONNECTCASES_API SearchRelatedItemsResult() = default;
+  AWS_CONNECTCASES_API SearchRelatedItemsResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_CONNECTCASES_API SearchRelatedItemsResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The token for the next set of results. This is null if there are no more
+   * results to return.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  SearchRelatedItemsResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The token for the next set of results. This is null if there are no more
-     * results to return.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline SearchRelatedItemsResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline SearchRelatedItemsResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline SearchRelatedItemsResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>A list of items related to a case. </p>
+   */
+  inline const Aws::Vector<Aws::Crt::Optional<SearchRelatedItemsResponseItem>>& GetRelatedItems() const { return m_relatedItems; }
+  template <typename RelatedItemsT = Aws::Vector<Aws::Crt::Optional<SearchRelatedItemsResponseItem>>>
+  void SetRelatedItems(RelatedItemsT&& value) {
+    m_relatedItemsHasBeenSet = true;
+    m_relatedItems = std::forward<RelatedItemsT>(value);
+  }
+  template <typename RelatedItemsT = Aws::Vector<Aws::Crt::Optional<SearchRelatedItemsResponseItem>>>
+  SearchRelatedItemsResult& WithRelatedItems(RelatedItemsT&& value) {
+    SetRelatedItems(std::forward<RelatedItemsT>(value));
+    return *this;
+  }
+  template <typename RelatedItemsT = SearchRelatedItemsResponseItem>
+  SearchRelatedItemsResult& AddRelatedItems(RelatedItemsT&& value) {
+    m_relatedItemsHasBeenSet = true;
+    m_relatedItems.emplace_back(std::forward<RelatedItemsT>(value));
+    return *this;
+  }
+  inline SearchRelatedItemsResult& AddRelatedItems(Aws::Crt::Optional<SearchRelatedItemsResponseItem> value) {
+    m_relatedItemsHasBeenSet = true;
+    m_relatedItems.push_back(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of items related to a case. </p>
-     */
-    inline const Aws::Vector<SearchRelatedItemsResponseItem>& GetRelatedItems() const{ return m_relatedItems; }
-    inline void SetRelatedItems(const Aws::Vector<SearchRelatedItemsResponseItem>& value) { m_relatedItems = value; }
-    inline void SetRelatedItems(Aws::Vector<SearchRelatedItemsResponseItem>&& value) { m_relatedItems = std::move(value); }
-    inline SearchRelatedItemsResult& WithRelatedItems(const Aws::Vector<SearchRelatedItemsResponseItem>& value) { SetRelatedItems(value); return *this;}
-    inline SearchRelatedItemsResult& WithRelatedItems(Aws::Vector<SearchRelatedItemsResponseItem>&& value) { SetRelatedItems(std::move(value)); return *this;}
-    inline SearchRelatedItemsResult& AddRelatedItems(const SearchRelatedItemsResponseItem& value) { m_relatedItems.push_back(value); return *this; }
-    inline SearchRelatedItemsResult& AddRelatedItems(SearchRelatedItemsResponseItem&& value) { m_relatedItems.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SearchRelatedItemsResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SearchRelatedItemsResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SearchRelatedItemsResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SearchRelatedItemsResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_nextToken;
+ private:
+  Aws::String m_nextToken;
 
-    Aws::Vector<SearchRelatedItemsResponseItem> m_relatedItems;
+  Aws::Vector<Aws::Crt::Optional<SearchRelatedItemsResponseItem>> m_relatedItems;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_relatedItemsHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace ConnectCases
-} // namespace Aws
+}  // namespace Model
+}  // namespace ConnectCases
+}  // namespace Aws

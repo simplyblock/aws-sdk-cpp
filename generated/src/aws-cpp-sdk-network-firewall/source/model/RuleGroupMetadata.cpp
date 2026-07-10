@@ -3,71 +3,54 @@
  * SPDX-License-Identifier: Apache-2.0.
  */
 
-#include <aws/network-firewall/model/RuleGroupMetadata.h>
 #include <aws/core/utils/json/JsonSerializer.h>
+#include <aws/network-firewall/model/RuleGroupMetadata.h>
 
 #include <utility>
 
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-namespace Aws
-{
-namespace NetworkFirewall
-{
-namespace Model
-{
+namespace Aws {
+namespace NetworkFirewall {
+namespace Model {
 
-RuleGroupMetadata::RuleGroupMetadata() : 
-    m_nameHasBeenSet(false),
-    m_arnHasBeenSet(false)
-{
-}
+RuleGroupMetadata::RuleGroupMetadata(JsonView jsonValue) { *this = jsonValue; }
 
-RuleGroupMetadata::RuleGroupMetadata(JsonView jsonValue)
-  : RuleGroupMetadata()
-{
-  *this = jsonValue;
-}
-
-RuleGroupMetadata& RuleGroupMetadata::operator =(JsonView jsonValue)
-{
-  if(jsonValue.ValueExists("Name"))
-  {
+RuleGroupMetadata& RuleGroupMetadata::operator=(JsonView jsonValue) {
+  if (jsonValue.ValueExists("Name")) {
     m_name = jsonValue.GetString("Name");
-
     m_nameHasBeenSet = true;
   }
-
-  if(jsonValue.ValueExists("Arn"))
-  {
+  if (jsonValue.ValueExists("Arn")) {
     m_arn = jsonValue.GetString("Arn");
-
     m_arnHasBeenSet = true;
   }
-
+  if (jsonValue.ValueExists("VendorName")) {
+    m_vendorName = jsonValue.GetString("VendorName");
+    m_vendorNameHasBeenSet = true;
+  }
   return *this;
 }
 
-JsonValue RuleGroupMetadata::Jsonize() const
-{
+JsonValue RuleGroupMetadata::Jsonize() const {
   JsonValue payload;
 
-  if(m_nameHasBeenSet)
-  {
-   payload.WithString("Name", m_name);
-
+  if (m_nameHasBeenSet) {
+    payload.WithString("Name", m_name);
   }
 
-  if(m_arnHasBeenSet)
-  {
-   payload.WithString("Arn", m_arn);
+  if (m_arnHasBeenSet) {
+    payload.WithString("Arn", m_arn);
+  }
 
+  if (m_vendorNameHasBeenSet) {
+    payload.WithString("VendorName", m_vendorName);
   }
 
   return payload;
 }
 
-} // namespace Model
-} // namespace NetworkFirewall
-} // namespace Aws
+}  // namespace Model
+}  // namespace NetworkFirewall
+}  // namespace Aws

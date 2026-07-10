@@ -4,132 +4,159 @@
  */
 
 #pragma once
-#include <aws/ssm-contacts/SSMContacts_EXPORTS.h>
-#include <aws/ssm-contacts/SSMContactsRequest.h>
+#include <aws/core/utils/DateTime.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/core/utils/DateTime.h>
+#include <aws/ssm-contacts/SSMContactsRequest.h>
+#include <aws/ssm-contacts/SSMContacts_EXPORTS.h>
 #include <aws/ssm-contacts/model/RecurrenceSettings.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace SSMContacts
-{
-namespace Model
-{
+namespace Aws {
+namespace SSMContacts {
+namespace Model {
 
+/**
+ */
+class UpdateRotationRequest : public SSMContactsRequest {
+ public:
+  AWS_SSMCONTACTS_API UpdateRotationRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "UpdateRotation"; }
+
+  AWS_SSMCONTACTS_API Aws::String SerializePayload() const override;
+
+  AWS_SSMCONTACTS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) of the rotation to update.</p>
    */
-  class UpdateRotationRequest : public SSMContactsRequest
-  {
-  public:
-    AWS_SSMCONTACTS_API UpdateRotationRequest();
+  inline const Aws::String& GetRotationId() const { return m_rotationId; }
+  inline bool RotationIdHasBeenSet() const { return m_rotationIdHasBeenSet; }
+  template <typename RotationIdT = Aws::String>
+  void SetRotationId(RotationIdT&& value) {
+    m_rotationIdHasBeenSet = true;
+    m_rotationId = std::forward<RotationIdT>(value);
+  }
+  template <typename RotationIdT = Aws::String>
+  UpdateRotationRequest& WithRotationId(RotationIdT&& value) {
+    SetRotationId(std::forward<RotationIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "UpdateRotation"; }
+  ///@{
+  /**
+   * <p>The Amazon Resource Names (ARNs) of the contacts to include in the updated
+   * rotation. </p>  <p>Only the <code>PERSONAL</code> contact type is
+   * supported. The contact types <code>ESCALATION</code> and
+   * <code>ONCALL_SCHEDULE</code> are not supported for this operation. </p>
+   * <p>The order in which you list the contacts is their shift order in the rotation
+   * schedule.</p>
+   */
+  inline const Aws::Vector<Aws::String>& GetContactIds() const { return m_contactIds; }
+  inline bool ContactIdsHasBeenSet() const { return m_contactIdsHasBeenSet; }
+  template <typename ContactIdsT = Aws::Vector<Aws::String>>
+  void SetContactIds(ContactIdsT&& value) {
+    m_contactIdsHasBeenSet = true;
+    m_contactIds = std::forward<ContactIdsT>(value);
+  }
+  template <typename ContactIdsT = Aws::Vector<Aws::String>>
+  UpdateRotationRequest& WithContactIds(ContactIdsT&& value) {
+    SetContactIds(std::forward<ContactIdsT>(value));
+    return *this;
+  }
+  template <typename ContactIdsT = Aws::String>
+  UpdateRotationRequest& AddContactIds(ContactIdsT&& value) {
+    m_contactIdsHasBeenSet = true;
+    m_contactIds.emplace_back(std::forward<ContactIdsT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SSMCONTACTS_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The date and time the rotation goes into effect.</p>
+   */
+  inline const Aws::Utils::DateTime& GetStartTime() const { return m_startTime; }
+  inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  void SetStartTime(StartTimeT&& value) {
+    m_startTimeHasBeenSet = true;
+    m_startTime = std::forward<StartTimeT>(value);
+  }
+  template <typename StartTimeT = Aws::Utils::DateTime>
+  UpdateRotationRequest& WithStartTime(StartTimeT&& value) {
+    SetStartTime(std::forward<StartTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_SSMCONTACTS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+  ///@{
+  /**
+   * <p>The time zone to base the updated rotation’s activity on, in Internet
+   * Assigned Numbers Authority (IANA) format. For example: "America/Los_Angeles",
+   * "UTC", or "Asia/Seoul". For more information, see the <a
+   * href="https://www.iana.org/time-zones">Time Zone Database</a> on the IANA
+   * website.</p>  <p>Designators for time zones that don’t support Daylight
+   * Savings Time Rules, such as Pacific Standard Time (PST), aren't supported.</p>
+   *
+   */
+  inline const Aws::String& GetTimeZoneId() const { return m_timeZoneId; }
+  inline bool TimeZoneIdHasBeenSet() const { return m_timeZoneIdHasBeenSet; }
+  template <typename TimeZoneIdT = Aws::String>
+  void SetTimeZoneId(TimeZoneIdT&& value) {
+    m_timeZoneIdHasBeenSet = true;
+    m_timeZoneId = std::forward<TimeZoneIdT>(value);
+  }
+  template <typename TimeZoneIdT = Aws::String>
+  UpdateRotationRequest& WithTimeZoneId(TimeZoneIdT&& value) {
+    SetTimeZoneId(std::forward<TimeZoneIdT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Information about how long the updated rotation lasts before restarting at
+   * the beginning of the shift order.</p>
+   */
+  inline const RecurrenceSettings& GetRecurrence() const { return m_recurrence; }
+  inline bool RecurrenceHasBeenSet() const { return m_recurrenceHasBeenSet; }
+  template <typename RecurrenceT = RecurrenceSettings>
+  void SetRecurrence(RecurrenceT&& value) {
+    m_recurrenceHasBeenSet = true;
+    m_recurrence = std::forward<RecurrenceT>(value);
+  }
+  template <typename RecurrenceT = RecurrenceSettings>
+  UpdateRotationRequest& WithRecurrence(RecurrenceT&& value) {
+    SetRecurrence(std::forward<RecurrenceT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_rotationId;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Name (ARN) of the rotation to update.</p>
-     */
-    inline const Aws::String& GetRotationId() const{ return m_rotationId; }
-    inline bool RotationIdHasBeenSet() const { return m_rotationIdHasBeenSet; }
-    inline void SetRotationId(const Aws::String& value) { m_rotationIdHasBeenSet = true; m_rotationId = value; }
-    inline void SetRotationId(Aws::String&& value) { m_rotationIdHasBeenSet = true; m_rotationId = std::move(value); }
-    inline void SetRotationId(const char* value) { m_rotationIdHasBeenSet = true; m_rotationId.assign(value); }
-    inline UpdateRotationRequest& WithRotationId(const Aws::String& value) { SetRotationId(value); return *this;}
-    inline UpdateRotationRequest& WithRotationId(Aws::String&& value) { SetRotationId(std::move(value)); return *this;}
-    inline UpdateRotationRequest& WithRotationId(const char* value) { SetRotationId(value); return *this;}
-    ///@}
+  Aws::Vector<Aws::String> m_contactIds;
 
-    ///@{
-    /**
-     * <p>The Amazon Resource Names (ARNs) of the contacts to include in the updated
-     * rotation. </p> <p>The order in which you list the contacts is their shift order
-     * in the rotation schedule.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetContactIds() const{ return m_contactIds; }
-    inline bool ContactIdsHasBeenSet() const { return m_contactIdsHasBeenSet; }
-    inline void SetContactIds(const Aws::Vector<Aws::String>& value) { m_contactIdsHasBeenSet = true; m_contactIds = value; }
-    inline void SetContactIds(Aws::Vector<Aws::String>&& value) { m_contactIdsHasBeenSet = true; m_contactIds = std::move(value); }
-    inline UpdateRotationRequest& WithContactIds(const Aws::Vector<Aws::String>& value) { SetContactIds(value); return *this;}
-    inline UpdateRotationRequest& WithContactIds(Aws::Vector<Aws::String>&& value) { SetContactIds(std::move(value)); return *this;}
-    inline UpdateRotationRequest& AddContactIds(const Aws::String& value) { m_contactIdsHasBeenSet = true; m_contactIds.push_back(value); return *this; }
-    inline UpdateRotationRequest& AddContactIds(Aws::String&& value) { m_contactIdsHasBeenSet = true; m_contactIds.push_back(std::move(value)); return *this; }
-    inline UpdateRotationRequest& AddContactIds(const char* value) { m_contactIdsHasBeenSet = true; m_contactIds.push_back(value); return *this; }
-    ///@}
+  Aws::Utils::DateTime m_startTime{};
 
-    ///@{
-    /**
-     * <p>The date and time the rotation goes into effect.</p>
-     */
-    inline const Aws::Utils::DateTime& GetStartTime() const{ return m_startTime; }
-    inline bool StartTimeHasBeenSet() const { return m_startTimeHasBeenSet; }
-    inline void SetStartTime(const Aws::Utils::DateTime& value) { m_startTimeHasBeenSet = true; m_startTime = value; }
-    inline void SetStartTime(Aws::Utils::DateTime&& value) { m_startTimeHasBeenSet = true; m_startTime = std::move(value); }
-    inline UpdateRotationRequest& WithStartTime(const Aws::Utils::DateTime& value) { SetStartTime(value); return *this;}
-    inline UpdateRotationRequest& WithStartTime(Aws::Utils::DateTime&& value) { SetStartTime(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_timeZoneId;
 
-    ///@{
-    /**
-     * <p>The time zone to base the updated rotation’s activity on, in Internet
-     * Assigned Numbers Authority (IANA) format. For example: "America/Los_Angeles",
-     * "UTC", or "Asia/Seoul". For more information, see the <a
-     * href="https://www.iana.org/time-zones">Time Zone Database</a> on the IANA
-     * website.</p>  <p>Designators for time zones that don’t support Daylight
-     * Savings Time Rules, such as Pacific Standard Time (PST) and Pacific Daylight
-     * Time (PDT), aren't supported.</p> 
-     */
-    inline const Aws::String& GetTimeZoneId() const{ return m_timeZoneId; }
-    inline bool TimeZoneIdHasBeenSet() const { return m_timeZoneIdHasBeenSet; }
-    inline void SetTimeZoneId(const Aws::String& value) { m_timeZoneIdHasBeenSet = true; m_timeZoneId = value; }
-    inline void SetTimeZoneId(Aws::String&& value) { m_timeZoneIdHasBeenSet = true; m_timeZoneId = std::move(value); }
-    inline void SetTimeZoneId(const char* value) { m_timeZoneIdHasBeenSet = true; m_timeZoneId.assign(value); }
-    inline UpdateRotationRequest& WithTimeZoneId(const Aws::String& value) { SetTimeZoneId(value); return *this;}
-    inline UpdateRotationRequest& WithTimeZoneId(Aws::String&& value) { SetTimeZoneId(std::move(value)); return *this;}
-    inline UpdateRotationRequest& WithTimeZoneId(const char* value) { SetTimeZoneId(value); return *this;}
-    ///@}
+  RecurrenceSettings m_recurrence;
+  bool m_rotationIdHasBeenSet = false;
+  bool m_contactIdsHasBeenSet = false;
+  bool m_startTimeHasBeenSet = false;
+  bool m_timeZoneIdHasBeenSet = false;
+  bool m_recurrenceHasBeenSet = false;
+};
 
-    ///@{
-    /**
-     * <p>Information about how long the updated rotation lasts before restarting at
-     * the beginning of the shift order.</p>
-     */
-    inline const RecurrenceSettings& GetRecurrence() const{ return m_recurrence; }
-    inline bool RecurrenceHasBeenSet() const { return m_recurrenceHasBeenSet; }
-    inline void SetRecurrence(const RecurrenceSettings& value) { m_recurrenceHasBeenSet = true; m_recurrence = value; }
-    inline void SetRecurrence(RecurrenceSettings&& value) { m_recurrenceHasBeenSet = true; m_recurrence = std::move(value); }
-    inline UpdateRotationRequest& WithRecurrence(const RecurrenceSettings& value) { SetRecurrence(value); return *this;}
-    inline UpdateRotationRequest& WithRecurrence(RecurrenceSettings&& value) { SetRecurrence(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_rotationId;
-    bool m_rotationIdHasBeenSet = false;
-
-    Aws::Vector<Aws::String> m_contactIds;
-    bool m_contactIdsHasBeenSet = false;
-
-    Aws::Utils::DateTime m_startTime;
-    bool m_startTimeHasBeenSet = false;
-
-    Aws::String m_timeZoneId;
-    bool m_timeZoneIdHasBeenSet = false;
-
-    RecurrenceSettings m_recurrence;
-    bool m_recurrenceHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace SSMContacts
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSMContacts
+}  // namespace Aws

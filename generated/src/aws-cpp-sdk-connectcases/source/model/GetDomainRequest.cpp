@@ -12,16 +12,4 @@ using namespace Aws::ConnectCases::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-GetDomainRequest::GetDomainRequest() : 
-    m_domainIdHasBeenSet(false)
-{
-}
-
-Aws::String GetDomainRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String GetDomainRequest::SerializePayload() const { return {}; }

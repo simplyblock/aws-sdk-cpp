@@ -12,18 +12,4 @@ using namespace Aws::Chime::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-RedactRoomMessageRequest::RedactRoomMessageRequest() : 
-    m_accountIdHasBeenSet(false),
-    m_roomIdHasBeenSet(false),
-    m_messageIdHasBeenSet(false)
-{
-}
-
-Aws::String RedactRoomMessageRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String RedactRoomMessageRequest::SerializePayload() const { return {}; }

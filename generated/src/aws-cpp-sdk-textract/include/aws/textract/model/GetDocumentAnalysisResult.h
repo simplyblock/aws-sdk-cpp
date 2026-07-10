@@ -4,160 +4,211 @@
  */
 
 #pragma once
-#include <aws/textract/Textract_EXPORTS.h>
-#include <aws/textract/model/DocumentMetadata.h>
-#include <aws/textract/model/JobStatus.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
 #include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/textract/Textract_EXPORTS.h>
 #include <aws/textract/model/Block.h>
+#include <aws/textract/model/DocumentMetadata.h>
+#include <aws/textract/model/JobStatus.h>
 #include <aws/textract/model/Warning.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace Textract
-{
-namespace Model
-{
-  class GetDocumentAnalysisResult
-  {
-  public:
-    AWS_TEXTRACT_API GetDocumentAnalysisResult();
-    AWS_TEXTRACT_API GetDocumentAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_TEXTRACT_API GetDocumentAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace Textract {
+namespace Model {
+class GetDocumentAnalysisResult {
+ public:
+  AWS_TEXTRACT_API GetDocumentAnalysisResult() = default;
+  AWS_TEXTRACT_API GetDocumentAnalysisResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_TEXTRACT_API GetDocumentAnalysisResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about a document that Amazon Textract processed.
+   * <code>DocumentMetadata</code> is returned in every page of paginated responses
+   * from an Amazon Textract video operation.</p>
+   */
+  inline const DocumentMetadata& GetDocumentMetadata() const { return m_documentMetadata; }
+  template <typename DocumentMetadataT = DocumentMetadata>
+  void SetDocumentMetadata(DocumentMetadataT&& value) {
+    m_documentMetadataHasBeenSet = true;
+    m_documentMetadata = std::forward<DocumentMetadataT>(value);
+  }
+  template <typename DocumentMetadataT = DocumentMetadata>
+  GetDocumentAnalysisResult& WithDocumentMetadata(DocumentMetadataT&& value) {
+    SetDocumentMetadata(std::forward<DocumentMetadataT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Information about a document that Amazon Textract processed.
-     * <code>DocumentMetadata</code> is returned in every page of paginated responses
-     * from an Amazon Textract video operation.</p>
-     */
-    inline const DocumentMetadata& GetDocumentMetadata() const{ return m_documentMetadata; }
-    inline void SetDocumentMetadata(const DocumentMetadata& value) { m_documentMetadata = value; }
-    inline void SetDocumentMetadata(DocumentMetadata&& value) { m_documentMetadata = std::move(value); }
-    inline GetDocumentAnalysisResult& WithDocumentMetadata(const DocumentMetadata& value) { SetDocumentMetadata(value); return *this;}
-    inline GetDocumentAnalysisResult& WithDocumentMetadata(DocumentMetadata&& value) { SetDocumentMetadata(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The current status of the text detection job.</p>
+   */
+  inline JobStatus GetJobStatus() const { return m_jobStatus; }
+  inline void SetJobStatus(JobStatus value) {
+    m_jobStatusHasBeenSet = true;
+    m_jobStatus = value;
+  }
+  inline GetDocumentAnalysisResult& WithJobStatus(JobStatus value) {
+    SetJobStatus(value);
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The current status of the text detection job.</p>
-     */
-    inline const JobStatus& GetJobStatus() const{ return m_jobStatus; }
-    inline void SetJobStatus(const JobStatus& value) { m_jobStatus = value; }
-    inline void SetJobStatus(JobStatus&& value) { m_jobStatus = std::move(value); }
-    inline GetDocumentAnalysisResult& WithJobStatus(const JobStatus& value) { SetJobStatus(value); return *this;}
-    inline GetDocumentAnalysisResult& WithJobStatus(JobStatus&& value) { SetJobStatus(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>If the response is truncated, Amazon Textract returns this token. You can use
+   * this token in the subsequent request to retrieve the next set of text detection
+   * results.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  GetDocumentAnalysisResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>If the response is truncated, Amazon Textract returns this token. You can use
-     * this token in the subsequent request to retrieve the next set of text detection
-     * results.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline GetDocumentAnalysisResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline GetDocumentAnalysisResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The results of the text-analysis operation.</p>
+   */
+  inline const Aws::Vector<Block>& GetBlocks() const { return m_blocks; }
+  template <typename BlocksT = Aws::Vector<Block>>
+  void SetBlocks(BlocksT&& value) {
+    m_blocksHasBeenSet = true;
+    m_blocks = std::forward<BlocksT>(value);
+  }
+  template <typename BlocksT = Aws::Vector<Block>>
+  GetDocumentAnalysisResult& WithBlocks(BlocksT&& value) {
+    SetBlocks(std::forward<BlocksT>(value));
+    return *this;
+  }
+  template <typename BlocksT = Block>
+  GetDocumentAnalysisResult& AddBlocks(BlocksT&& value) {
+    m_blocksHasBeenSet = true;
+    m_blocks.emplace_back(std::forward<BlocksT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The results of the text-analysis operation.</p>
-     */
-    inline const Aws::Vector<Block>& GetBlocks() const{ return m_blocks; }
-    inline void SetBlocks(const Aws::Vector<Block>& value) { m_blocks = value; }
-    inline void SetBlocks(Aws::Vector<Block>&& value) { m_blocks = std::move(value); }
-    inline GetDocumentAnalysisResult& WithBlocks(const Aws::Vector<Block>& value) { SetBlocks(value); return *this;}
-    inline GetDocumentAnalysisResult& WithBlocks(Aws::Vector<Block>&& value) { SetBlocks(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& AddBlocks(const Block& value) { m_blocks.push_back(value); return *this; }
-    inline GetDocumentAnalysisResult& AddBlocks(Block&& value) { m_blocks.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>A list of warnings that occurred during the document-analysis operation.</p>
+   */
+  inline const Aws::Vector<Warning>& GetWarnings() const { return m_warnings; }
+  template <typename WarningsT = Aws::Vector<Warning>>
+  void SetWarnings(WarningsT&& value) {
+    m_warningsHasBeenSet = true;
+    m_warnings = std::forward<WarningsT>(value);
+  }
+  template <typename WarningsT = Aws::Vector<Warning>>
+  GetDocumentAnalysisResult& WithWarnings(WarningsT&& value) {
+    SetWarnings(std::forward<WarningsT>(value));
+    return *this;
+  }
+  template <typename WarningsT = Warning>
+  GetDocumentAnalysisResult& AddWarnings(WarningsT&& value) {
+    m_warningsHasBeenSet = true;
+    m_warnings.emplace_back(std::forward<WarningsT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of warnings that occurred during the document-analysis operation.</p>
-     */
-    inline const Aws::Vector<Warning>& GetWarnings() const{ return m_warnings; }
-    inline void SetWarnings(const Aws::Vector<Warning>& value) { m_warnings = value; }
-    inline void SetWarnings(Aws::Vector<Warning>&& value) { m_warnings = std::move(value); }
-    inline GetDocumentAnalysisResult& WithWarnings(const Aws::Vector<Warning>& value) { SetWarnings(value); return *this;}
-    inline GetDocumentAnalysisResult& WithWarnings(Aws::Vector<Warning>&& value) { SetWarnings(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& AddWarnings(const Warning& value) { m_warnings.push_back(value); return *this; }
-    inline GetDocumentAnalysisResult& AddWarnings(Warning&& value) { m_warnings.push_back(std::move(value)); return *this; }
-    ///@}
+  ///@{
+  /**
+   * <p>Returns if the detection job could not be completed. Contains explanation for
+   * what error occured.</p>
+   */
+  inline const Aws::String& GetStatusMessage() const { return m_statusMessage; }
+  template <typename StatusMessageT = Aws::String>
+  void SetStatusMessage(StatusMessageT&& value) {
+    m_statusMessageHasBeenSet = true;
+    m_statusMessage = std::forward<StatusMessageT>(value);
+  }
+  template <typename StatusMessageT = Aws::String>
+  GetDocumentAnalysisResult& WithStatusMessage(StatusMessageT&& value) {
+    SetStatusMessage(std::forward<StatusMessageT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Returns if the detection job could not be completed. Contains explanation for
-     * what error occured.</p>
-     */
-    inline const Aws::String& GetStatusMessage() const{ return m_statusMessage; }
-    inline void SetStatusMessage(const Aws::String& value) { m_statusMessage = value; }
-    inline void SetStatusMessage(Aws::String&& value) { m_statusMessage = std::move(value); }
-    inline void SetStatusMessage(const char* value) { m_statusMessage.assign(value); }
-    inline GetDocumentAnalysisResult& WithStatusMessage(const Aws::String& value) { SetStatusMessage(value); return *this;}
-    inline GetDocumentAnalysisResult& WithStatusMessage(Aws::String&& value) { SetStatusMessage(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& WithStatusMessage(const char* value) { SetStatusMessage(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p/>
+   */
+  inline const Aws::String& GetAnalyzeDocumentModelVersion() const { return m_analyzeDocumentModelVersion; }
+  template <typename AnalyzeDocumentModelVersionT = Aws::String>
+  void SetAnalyzeDocumentModelVersion(AnalyzeDocumentModelVersionT&& value) {
+    m_analyzeDocumentModelVersionHasBeenSet = true;
+    m_analyzeDocumentModelVersion = std::forward<AnalyzeDocumentModelVersionT>(value);
+  }
+  template <typename AnalyzeDocumentModelVersionT = Aws::String>
+  GetDocumentAnalysisResult& WithAnalyzeDocumentModelVersion(AnalyzeDocumentModelVersionT&& value) {
+    SetAnalyzeDocumentModelVersion(std::forward<AnalyzeDocumentModelVersionT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p/>
-     */
-    inline const Aws::String& GetAnalyzeDocumentModelVersion() const{ return m_analyzeDocumentModelVersion; }
-    inline void SetAnalyzeDocumentModelVersion(const Aws::String& value) { m_analyzeDocumentModelVersion = value; }
-    inline void SetAnalyzeDocumentModelVersion(Aws::String&& value) { m_analyzeDocumentModelVersion = std::move(value); }
-    inline void SetAnalyzeDocumentModelVersion(const char* value) { m_analyzeDocumentModelVersion.assign(value); }
-    inline GetDocumentAnalysisResult& WithAnalyzeDocumentModelVersion(const Aws::String& value) { SetAnalyzeDocumentModelVersion(value); return *this;}
-    inline GetDocumentAnalysisResult& WithAnalyzeDocumentModelVersion(Aws::String&& value) { SetAnalyzeDocumentModelVersion(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& WithAnalyzeDocumentModelVersion(const char* value) { SetAnalyzeDocumentModelVersion(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetDocumentAnalysisResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetDocumentAnalysisResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetDocumentAnalysisResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetDocumentAnalysisResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    DocumentMetadata m_documentMetadata;
+ private:
+  DocumentMetadata m_documentMetadata;
 
-    JobStatus m_jobStatus;
+  JobStatus m_jobStatus{JobStatus::NOT_SET};
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::Vector<Block> m_blocks;
+  Aws::Vector<Block> m_blocks;
 
-    Aws::Vector<Warning> m_warnings;
+  Aws::Vector<Warning> m_warnings;
 
-    Aws::String m_statusMessage;
+  Aws::String m_statusMessage;
 
-    Aws::String m_analyzeDocumentModelVersion;
+  Aws::String m_analyzeDocumentModelVersion;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_documentMetadataHasBeenSet = false;
+  bool m_jobStatusHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_blocksHasBeenSet = false;
+  bool m_warningsHasBeenSet = false;
+  bool m_statusMessageHasBeenSet = false;
+  bool m_analyzeDocumentModelVersionHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace Textract
-} // namespace Aws
+}  // namespace Model
+}  // namespace Textract
+}  // namespace Aws

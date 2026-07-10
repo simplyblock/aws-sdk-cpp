@@ -4,79 +4,91 @@
  */
 
 #pragma once
-#include <aws/signer/Signer_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/signer/Signer_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace signer
-{
-namespace Model
-{
-  class StartSigningJobResult
-  {
-  public:
-    AWS_SIGNER_API StartSigningJobResult();
-    AWS_SIGNER_API StartSigningJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SIGNER_API StartSigningJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace signer {
+namespace Model {
+class StartSigningJobResult {
+ public:
+  AWS_SIGNER_API StartSigningJobResult() = default;
+  AWS_SIGNER_API StartSigningJobResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SIGNER_API StartSigningJobResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The ID of your signing job.</p>
+   */
+  inline const Aws::String& GetJobId() const { return m_jobId; }
+  template <typename JobIdT = Aws::String>
+  void SetJobId(JobIdT&& value) {
+    m_jobIdHasBeenSet = true;
+    m_jobId = std::forward<JobIdT>(value);
+  }
+  template <typename JobIdT = Aws::String>
+  StartSigningJobResult& WithJobId(JobIdT&& value) {
+    SetJobId(std::forward<JobIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ID of your signing job.</p>
-     */
-    inline const Aws::String& GetJobId() const{ return m_jobId; }
-    inline void SetJobId(const Aws::String& value) { m_jobId = value; }
-    inline void SetJobId(Aws::String&& value) { m_jobId = std::move(value); }
-    inline void SetJobId(const char* value) { m_jobId.assign(value); }
-    inline StartSigningJobResult& WithJobId(const Aws::String& value) { SetJobId(value); return *this;}
-    inline StartSigningJobResult& WithJobId(Aws::String&& value) { SetJobId(std::move(value)); return *this;}
-    inline StartSigningJobResult& WithJobId(const char* value) { SetJobId(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The AWS account ID of the signing job owner.</p>
+   */
+  inline const Aws::String& GetJobOwner() const { return m_jobOwner; }
+  template <typename JobOwnerT = Aws::String>
+  void SetJobOwner(JobOwnerT&& value) {
+    m_jobOwnerHasBeenSet = true;
+    m_jobOwner = std::forward<JobOwnerT>(value);
+  }
+  template <typename JobOwnerT = Aws::String>
+  StartSigningJobResult& WithJobOwner(JobOwnerT&& value) {
+    SetJobOwner(std::forward<JobOwnerT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The AWS account ID of the signing job owner.</p>
-     */
-    inline const Aws::String& GetJobOwner() const{ return m_jobOwner; }
-    inline void SetJobOwner(const Aws::String& value) { m_jobOwner = value; }
-    inline void SetJobOwner(Aws::String&& value) { m_jobOwner = std::move(value); }
-    inline void SetJobOwner(const char* value) { m_jobOwner.assign(value); }
-    inline StartSigningJobResult& WithJobOwner(const Aws::String& value) { SetJobOwner(value); return *this;}
-    inline StartSigningJobResult& WithJobOwner(Aws::String&& value) { SetJobOwner(std::move(value)); return *this;}
-    inline StartSigningJobResult& WithJobOwner(const char* value) { SetJobOwner(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline StartSigningJobResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline StartSigningJobResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline StartSigningJobResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  StartSigningJobResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_jobId;
+ private:
+  Aws::String m_jobId;
 
-    Aws::String m_jobOwner;
+  Aws::String m_jobOwner;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_jobIdHasBeenSet = false;
+  bool m_jobOwnerHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace signer
-} // namespace Aws
+}  // namespace Model
+}  // namespace signer
+}  // namespace Aws

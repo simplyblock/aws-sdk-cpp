@@ -4,66 +4,73 @@
  */
 
 #pragma once
-#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/sso-admin/SSOAdmin_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SSOAdmin
-{
-namespace Model
-{
-  class GetInlinePolicyForPermissionSetResult
-  {
-  public:
-    AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult();
-    AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SSOAdmin {
+namespace Model {
+class GetInlinePolicyForPermissionSetResult {
+ public:
+  AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult() = default;
+  AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SSOADMIN_API GetInlinePolicyForPermissionSetResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The inline policy that is attached to the permission set.</p>  <p>For
+   * <code>Length Constraints</code>, if a valid ARN is provided for a permission
+   * set, it is possible for an empty inline policy to be returned.</p>
+   */
+  inline const Aws::String& GetInlinePolicy() const { return m_inlinePolicy; }
+  template <typename InlinePolicyT = Aws::String>
+  void SetInlinePolicy(InlinePolicyT&& value) {
+    m_inlinePolicyHasBeenSet = true;
+    m_inlinePolicy = std::forward<InlinePolicyT>(value);
+  }
+  template <typename InlinePolicyT = Aws::String>
+  GetInlinePolicyForPermissionSetResult& WithInlinePolicy(InlinePolicyT&& value) {
+    SetInlinePolicy(std::forward<InlinePolicyT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The inline policy that is attached to the permission set.</p>  <p>For
-     * <code>Length Constraints</code>, if a valid ARN is provided for a permission
-     * set, it is possible for an empty inline policy to be returned.</p> 
-     */
-    inline const Aws::String& GetInlinePolicy() const{ return m_inlinePolicy; }
-    inline void SetInlinePolicy(const Aws::String& value) { m_inlinePolicy = value; }
-    inline void SetInlinePolicy(Aws::String&& value) { m_inlinePolicy = std::move(value); }
-    inline void SetInlinePolicy(const char* value) { m_inlinePolicy.assign(value); }
-    inline GetInlinePolicyForPermissionSetResult& WithInlinePolicy(const Aws::String& value) { SetInlinePolicy(value); return *this;}
-    inline GetInlinePolicyForPermissionSetResult& WithInlinePolicy(Aws::String&& value) { SetInlinePolicy(std::move(value)); return *this;}
-    inline GetInlinePolicyForPermissionSetResult& WithInlinePolicy(const char* value) { SetInlinePolicy(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline GetInlinePolicyForPermissionSetResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline GetInlinePolicyForPermissionSetResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline GetInlinePolicyForPermissionSetResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  GetInlinePolicyForPermissionSetResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_inlinePolicy;
+ private:
+  Aws::String m_inlinePolicy;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_inlinePolicyHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SSOAdmin
-} // namespace Aws
+}  // namespace Model
+}  // namespace SSOAdmin
+}  // namespace Aws

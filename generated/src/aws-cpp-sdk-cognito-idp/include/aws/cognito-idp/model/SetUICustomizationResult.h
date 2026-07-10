@@ -6,61 +6,71 @@
 #pragma once
 #include <aws/cognito-idp/CognitoIdentityProvider_EXPORTS.h>
 #include <aws/cognito-idp/model/UICustomizationType.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace CognitoIdentityProvider
-{
-namespace Model
-{
-  class SetUICustomizationResult
-  {
-  public:
-    AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult();
-    AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace CognitoIdentityProvider {
+namespace Model {
+class SetUICustomizationResult {
+ public:
+  AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult() = default;
+  AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_COGNITOIDENTITYPROVIDER_API SetUICustomizationResult& operator=(
+      const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>Information about the hosted UI branding that you applied.</p>
+   */
+  inline const UICustomizationType& GetUICustomization() const { return m_uICustomization; }
+  template <typename UICustomizationT = UICustomizationType>
+  void SetUICustomization(UICustomizationT&& value) {
+    m_uICustomizationHasBeenSet = true;
+    m_uICustomization = std::forward<UICustomizationT>(value);
+  }
+  template <typename UICustomizationT = UICustomizationType>
+  SetUICustomizationResult& WithUICustomization(UICustomizationT&& value) {
+    SetUICustomization(std::forward<UICustomizationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The UI customization information.</p>
-     */
-    inline const UICustomizationType& GetUICustomization() const{ return m_uICustomization; }
-    inline void SetUICustomization(const UICustomizationType& value) { m_uICustomization = value; }
-    inline void SetUICustomization(UICustomizationType&& value) { m_uICustomization = std::move(value); }
-    inline SetUICustomizationResult& WithUICustomization(const UICustomizationType& value) { SetUICustomization(value); return *this;}
-    inline SetUICustomizationResult& WithUICustomization(UICustomizationType&& value) { SetUICustomization(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline SetUICustomizationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline SetUICustomizationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline SetUICustomizationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  SetUICustomizationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    UICustomizationType m_uICustomization;
+ private:
+  UICustomizationType m_uICustomization;
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_uICustomizationHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace CognitoIdentityProvider
-} // namespace Aws
+}  // namespace Model
+}  // namespace CognitoIdentityProvider
+}  // namespace Aws

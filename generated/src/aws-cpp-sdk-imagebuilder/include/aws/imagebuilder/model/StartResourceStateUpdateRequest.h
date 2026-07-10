@@ -4,159 +4,204 @@
  */
 
 #pragma once
-#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
-#include <aws/imagebuilder/ImagebuilderRequest.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
-#include <aws/imagebuilder/model/ResourceState.h>
-#include <aws/imagebuilder/model/ResourceStateUpdateIncludeResources.h>
-#include <aws/imagebuilder/model/ResourceStateUpdateExclusionRules.h>
 #include <aws/core/utils/DateTime.h>
-#include <utility>
 #include <aws/core/utils/UUID.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/imagebuilder/ImagebuilderRequest.h>
+#include <aws/imagebuilder/Imagebuilder_EXPORTS.h>
+#include <aws/imagebuilder/model/ResourceState.h>
+#include <aws/imagebuilder/model/ResourceStateUpdateExclusionRules.h>
+#include <aws/imagebuilder/model/ResourceStateUpdateIncludeResources.h>
 
-namespace Aws
-{
-namespace imagebuilder
-{
-namespace Model
-{
+#include <utility>
 
+namespace Aws {
+namespace imagebuilder {
+namespace Model {
+
+/**
+ */
+class StartResourceStateUpdateRequest : public ImagebuilderRequest {
+ public:
+  AWS_IMAGEBUILDER_API StartResourceStateUpdateRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "StartResourceStateUpdate"; }
+
+  AWS_IMAGEBUILDER_API Aws::String SerializePayload() const override;
+
+  ///@{
   /**
+   * <p>The Amazon Resource Name (ARN) of the image build version to update. The
+   * image must be in one of these terminal states: <code>AVAILABLE</code>,
+   * <code>DEPRECATED</code>, <code>DISABLED</code>, <code>FAILED</code>, or
+   * <code>CANCELLED</code>. Images with <code>FAILED</code> or
+   * <code>CANCELLED</code> status can transition only to <code>DELETED</code>.</p>
    */
-  class StartResourceStateUpdateRequest : public ImagebuilderRequest
-  {
-  public:
-    AWS_IMAGEBUILDER_API StartResourceStateUpdateRequest();
+  inline const Aws::String& GetResourceArn() const { return m_resourceArn; }
+  inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
+  template <typename ResourceArnT = Aws::String>
+  void SetResourceArn(ResourceArnT&& value) {
+    m_resourceArnHasBeenSet = true;
+    m_resourceArn = std::forward<ResourceArnT>(value);
+  }
+  template <typename ResourceArnT = Aws::String>
+  StartResourceStateUpdateRequest& WithResourceArn(ResourceArnT&& value) {
+    SetResourceArn(std::forward<ResourceArnT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "StartResourceStateUpdate"; }
+  ///@{
+  /**
+   * <p>Specifies the lifecycle action to take for this request. For AMI-based
+   * images, valid values are <code>AVAILABLE</code>, <code>DEPRECATED</code>,
+   * <code>DISABLED</code>, and <code>DELETED</code>. For container-based images,
+   * only <code>DELETED</code> is supported.</p>
+   */
+  inline const ResourceState& GetState() const { return m_state; }
+  inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
+  template <typename StateT = ResourceState>
+  void SetState(StateT&& value) {
+    m_stateHasBeenSet = true;
+    m_state = std::forward<StateT>(value);
+  }
+  template <typename StateT = ResourceState>
+  StartResourceStateUpdateRequest& WithState(StateT&& value) {
+    SetState(std::forward<StateT>(value));
+    return *this;
+  }
+  ///@}
 
-    AWS_IMAGEBUILDER_API Aws::String SerializePayload() const override;
+  ///@{
+  /**
+   * <p>The name or Amazon Resource Name (ARN) of the IAM role that’s used to update
+   * image state.</p>
+   */
+  inline const Aws::String& GetExecutionRole() const { return m_executionRole; }
+  inline bool ExecutionRoleHasBeenSet() const { return m_executionRoleHasBeenSet; }
+  template <typename ExecutionRoleT = Aws::String>
+  void SetExecutionRole(ExecutionRoleT&& value) {
+    m_executionRoleHasBeenSet = true;
+    m_executionRole = std::forward<ExecutionRoleT>(value);
+  }
+  template <typename ExecutionRoleT = Aws::String>
+  StartResourceStateUpdateRequest& WithExecutionRole(ExecutionRoleT&& value) {
+    SetExecutionRole(std::forward<ExecutionRoleT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Specifies which image resources to include in the state update. When
+   * specified, the lifecycle action applies to underlying resources. These resources
+   * include AMIs, snapshots, and containers in addition to the Image Builder image
+   * resource. Requires <code>executionRole</code> to also be specified. To delete an
+   * image and its underlying resources, you must specify
+   * <code>includeResources</code>. To delete only the Image Builder image record
+   * without affecting underlying resources, use the <code>DeleteImage</code> API
+   * instead.</p>
+   */
+  inline const ResourceStateUpdateIncludeResources& GetIncludeResources() const { return m_includeResources; }
+  inline bool IncludeResourcesHasBeenSet() const { return m_includeResourcesHasBeenSet; }
+  template <typename IncludeResourcesT = ResourceStateUpdateIncludeResources>
+  void SetIncludeResources(IncludeResourcesT&& value) {
+    m_includeResourcesHasBeenSet = true;
+    m_includeResources = std::forward<IncludeResourcesT>(value);
+  }
+  template <typename IncludeResourcesT = ResourceStateUpdateIncludeResources>
+  StartResourceStateUpdateRequest& WithIncludeResources(IncludeResourcesT&& value) {
+    SetIncludeResources(std::forward<IncludeResourcesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The ARN of the Image Builder resource that is updated. The state update might
-     * also impact associated resources.</p>
-     */
-    inline const Aws::String& GetResourceArn() const{ return m_resourceArn; }
-    inline bool ResourceArnHasBeenSet() const { return m_resourceArnHasBeenSet; }
-    inline void SetResourceArn(const Aws::String& value) { m_resourceArnHasBeenSet = true; m_resourceArn = value; }
-    inline void SetResourceArn(Aws::String&& value) { m_resourceArnHasBeenSet = true; m_resourceArn = std::move(value); }
-    inline void SetResourceArn(const char* value) { m_resourceArnHasBeenSet = true; m_resourceArn.assign(value); }
-    inline StartResourceStateUpdateRequest& WithResourceArn(const Aws::String& value) { SetResourceArn(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithResourceArn(Aws::String&& value) { SetResourceArn(std::move(value)); return *this;}
-    inline StartResourceStateUpdateRequest& WithResourceArn(const char* value) { SetResourceArn(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Skip action on the image resource and associated resources if specified
+   * exclusion rules are met.</p>
+   */
+  inline const ResourceStateUpdateExclusionRules& GetExclusionRules() const { return m_exclusionRules; }
+  inline bool ExclusionRulesHasBeenSet() const { return m_exclusionRulesHasBeenSet; }
+  template <typename ExclusionRulesT = ResourceStateUpdateExclusionRules>
+  void SetExclusionRules(ExclusionRulesT&& value) {
+    m_exclusionRulesHasBeenSet = true;
+    m_exclusionRules = std::forward<ExclusionRulesT>(value);
+  }
+  template <typename ExclusionRulesT = ResourceStateUpdateExclusionRules>
+  StartResourceStateUpdateRequest& WithExclusionRules(ExclusionRulesT&& value) {
+    SetExclusionRules(std::forward<ExclusionRulesT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>Indicates the lifecycle action to take for this request.</p>
-     */
-    inline const ResourceState& GetState() const{ return m_state; }
-    inline bool StateHasBeenSet() const { return m_stateHasBeenSet; }
-    inline void SetState(const ResourceState& value) { m_stateHasBeenSet = true; m_state = value; }
-    inline void SetState(ResourceState&& value) { m_stateHasBeenSet = true; m_state = std::move(value); }
-    inline StartResourceStateUpdateRequest& WithState(const ResourceState& value) { SetState(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithState(ResourceState&& value) { SetState(std::move(value)); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Specifies the timestamp when the state transition takes effect. Use this
+   * parameter only when the target status is <code>DEPRECATED</code>. The value must
+   * be a future time.</p>
+   */
+  inline const Aws::Utils::DateTime& GetUpdateAt() const { return m_updateAt; }
+  inline bool UpdateAtHasBeenSet() const { return m_updateAtHasBeenSet; }
+  template <typename UpdateAtT = Aws::Utils::DateTime>
+  void SetUpdateAt(UpdateAtT&& value) {
+    m_updateAtHasBeenSet = true;
+    m_updateAt = std::forward<UpdateAtT>(value);
+  }
+  template <typename UpdateAtT = Aws::Utils::DateTime>
+  StartResourceStateUpdateRequest& WithUpdateAt(UpdateAtT&& value) {
+    SetUpdateAt(std::forward<UpdateAtT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name or Amazon Resource Name (ARN) of the IAM role that’s used to update
-     * image state.</p>
-     */
-    inline const Aws::String& GetExecutionRole() const{ return m_executionRole; }
-    inline bool ExecutionRoleHasBeenSet() const { return m_executionRoleHasBeenSet; }
-    inline void SetExecutionRole(const Aws::String& value) { m_executionRoleHasBeenSet = true; m_executionRole = value; }
-    inline void SetExecutionRole(Aws::String&& value) { m_executionRoleHasBeenSet = true; m_executionRole = std::move(value); }
-    inline void SetExecutionRole(const char* value) { m_executionRoleHasBeenSet = true; m_executionRole.assign(value); }
-    inline StartResourceStateUpdateRequest& WithExecutionRole(const Aws::String& value) { SetExecutionRole(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithExecutionRole(Aws::String&& value) { SetExecutionRole(std::move(value)); return *this;}
-    inline StartResourceStateUpdateRequest& WithExecutionRole(const char* value) { SetExecutionRole(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
+   * request. For more information, see <a
+   * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
+   * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
+   */
+  inline const Aws::String& GetClientToken() const { return m_clientToken; }
+  inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
+  template <typename ClientTokenT = Aws::String>
+  void SetClientToken(ClientTokenT&& value) {
+    m_clientTokenHasBeenSet = true;
+    m_clientToken = std::forward<ClientTokenT>(value);
+  }
+  template <typename ClientTokenT = Aws::String>
+  StartResourceStateUpdateRequest& WithClientToken(ClientTokenT&& value) {
+    SetClientToken(std::forward<ClientTokenT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_resourceArn;
 
-    ///@{
-    /**
-     * <p>A list of image resources to update state for.</p>
-     */
-    inline const ResourceStateUpdateIncludeResources& GetIncludeResources() const{ return m_includeResources; }
-    inline bool IncludeResourcesHasBeenSet() const { return m_includeResourcesHasBeenSet; }
-    inline void SetIncludeResources(const ResourceStateUpdateIncludeResources& value) { m_includeResourcesHasBeenSet = true; m_includeResources = value; }
-    inline void SetIncludeResources(ResourceStateUpdateIncludeResources&& value) { m_includeResourcesHasBeenSet = true; m_includeResources = std::move(value); }
-    inline StartResourceStateUpdateRequest& WithIncludeResources(const ResourceStateUpdateIncludeResources& value) { SetIncludeResources(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithIncludeResources(ResourceStateUpdateIncludeResources&& value) { SetIncludeResources(std::move(value)); return *this;}
-    ///@}
+  ResourceState m_state;
 
-    ///@{
-    /**
-     * <p>Skip action on the image resource and associated resources if specified
-     * exclusion rules are met.</p>
-     */
-    inline const ResourceStateUpdateExclusionRules& GetExclusionRules() const{ return m_exclusionRules; }
-    inline bool ExclusionRulesHasBeenSet() const { return m_exclusionRulesHasBeenSet; }
-    inline void SetExclusionRules(const ResourceStateUpdateExclusionRules& value) { m_exclusionRulesHasBeenSet = true; m_exclusionRules = value; }
-    inline void SetExclusionRules(ResourceStateUpdateExclusionRules&& value) { m_exclusionRulesHasBeenSet = true; m_exclusionRules = std::move(value); }
-    inline StartResourceStateUpdateRequest& WithExclusionRules(const ResourceStateUpdateExclusionRules& value) { SetExclusionRules(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithExclusionRules(ResourceStateUpdateExclusionRules&& value) { SetExclusionRules(std::move(value)); return *this;}
-    ///@}
+  Aws::String m_executionRole;
 
-    ///@{
-    /**
-     * <p>The timestamp that indicates when resources are updated by a lifecycle
-     * action.</p>
-     */
-    inline const Aws::Utils::DateTime& GetUpdateAt() const{ return m_updateAt; }
-    inline bool UpdateAtHasBeenSet() const { return m_updateAtHasBeenSet; }
-    inline void SetUpdateAt(const Aws::Utils::DateTime& value) { m_updateAtHasBeenSet = true; m_updateAt = value; }
-    inline void SetUpdateAt(Aws::Utils::DateTime&& value) { m_updateAtHasBeenSet = true; m_updateAt = std::move(value); }
-    inline StartResourceStateUpdateRequest& WithUpdateAt(const Aws::Utils::DateTime& value) { SetUpdateAt(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithUpdateAt(Aws::Utils::DateTime&& value) { SetUpdateAt(std::move(value)); return *this;}
-    ///@}
+  ResourceStateUpdateIncludeResources m_includeResources;
 
-    ///@{
-    /**
-     * <p>Unique, case-sensitive identifier you provide to ensure idempotency of the
-     * request. For more information, see <a
-     * href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html">Ensuring
-     * idempotency</a> in the <i>Amazon EC2 API Reference</i>.</p>
-     */
-    inline const Aws::String& GetClientToken() const{ return m_clientToken; }
-    inline bool ClientTokenHasBeenSet() const { return m_clientTokenHasBeenSet; }
-    inline void SetClientToken(const Aws::String& value) { m_clientTokenHasBeenSet = true; m_clientToken = value; }
-    inline void SetClientToken(Aws::String&& value) { m_clientTokenHasBeenSet = true; m_clientToken = std::move(value); }
-    inline void SetClientToken(const char* value) { m_clientTokenHasBeenSet = true; m_clientToken.assign(value); }
-    inline StartResourceStateUpdateRequest& WithClientToken(const Aws::String& value) { SetClientToken(value); return *this;}
-    inline StartResourceStateUpdateRequest& WithClientToken(Aws::String&& value) { SetClientToken(std::move(value)); return *this;}
-    inline StartResourceStateUpdateRequest& WithClientToken(const char* value) { SetClientToken(value); return *this;}
-    ///@}
-  private:
+  ResourceStateUpdateExclusionRules m_exclusionRules;
 
-    Aws::String m_resourceArn;
-    bool m_resourceArnHasBeenSet = false;
+  Aws::Utils::DateTime m_updateAt{};
 
-    ResourceState m_state;
-    bool m_stateHasBeenSet = false;
+  Aws::String m_clientToken{Aws::Utils::UUID::PseudoRandomUUID()};
+  bool m_resourceArnHasBeenSet = false;
+  bool m_stateHasBeenSet = false;
+  bool m_executionRoleHasBeenSet = false;
+  bool m_includeResourcesHasBeenSet = false;
+  bool m_exclusionRulesHasBeenSet = false;
+  bool m_updateAtHasBeenSet = false;
+  bool m_clientTokenHasBeenSet = true;
+};
 
-    Aws::String m_executionRole;
-    bool m_executionRoleHasBeenSet = false;
-
-    ResourceStateUpdateIncludeResources m_includeResources;
-    bool m_includeResourcesHasBeenSet = false;
-
-    ResourceStateUpdateExclusionRules m_exclusionRules;
-    bool m_exclusionRulesHasBeenSet = false;
-
-    Aws::Utils::DateTime m_updateAt;
-    bool m_updateAtHasBeenSet = false;
-
-    Aws::String m_clientToken;
-    bool m_clientTokenHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace imagebuilder
-} // namespace Aws
+}  // namespace Model
+}  // namespace imagebuilder
+}  // namespace Aws

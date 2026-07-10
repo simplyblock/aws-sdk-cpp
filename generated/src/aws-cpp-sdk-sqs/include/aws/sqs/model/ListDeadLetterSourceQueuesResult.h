@@ -4,101 +4,125 @@
  */
 
 #pragma once
-#include <aws/sqs/SQS_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/utils/memory/stl/AWSVector.h>
+#include <aws/sqs/SQS_EXPORTS.h>
 #include <aws/sqs/model/ResponseMetadata.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace SQS
-{
-namespace Model
-{
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace SQS {
+namespace Model {
+/**
+ * <p>A list of your dead letter source queues.</p><p><h3>See Also:</h3>   <a
+ * href="http://docs.aws.amazon.com/goto/WebAPI/sqs-2012-11-05/ListDeadLetterSourceQueuesResult">AWS
+ * API Reference</a></p>
+ */
+class ListDeadLetterSourceQueuesResult {
+ public:
+  AWS_SQS_API ListDeadLetterSourceQueuesResult() = default;
+  AWS_SQS_API ListDeadLetterSourceQueuesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_SQS_API ListDeadLetterSourceQueuesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+
+  ///@{
   /**
-   * <p>A list of your dead letter source queues.</p><p><h3>See Also:</h3>   <a
-   * href="http://docs.aws.amazon.com/goto/WebAPI/sqs-2012-11-05/ListDeadLetterSourceQueuesResult">AWS
-   * API Reference</a></p>
+   * <p>A list of source queue URLs that have the <code>RedrivePolicy</code> queue
+   * attribute configured with a dead-letter queue.</p>
    */
-  class ListDeadLetterSourceQueuesResult
-  {
-  public:
-    AWS_SQS_API ListDeadLetterSourceQueuesResult();
-    AWS_SQS_API ListDeadLetterSourceQueuesResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_SQS_API ListDeadLetterSourceQueuesResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  inline const Aws::Vector<Aws::String>& GetQueueUrls() const { return m_queueUrls; }
+  template <typename QueueUrlsT = Aws::Vector<Aws::String>>
+  void SetQueueUrls(QueueUrlsT&& value) {
+    m_queueUrlsHasBeenSet = true;
+    m_queueUrls = std::forward<QueueUrlsT>(value);
+  }
+  template <typename QueueUrlsT = Aws::Vector<Aws::String>>
+  ListDeadLetterSourceQueuesResult& WithQueueUrls(QueueUrlsT&& value) {
+    SetQueueUrls(std::forward<QueueUrlsT>(value));
+    return *this;
+  }
+  template <typename QueueUrlsT = Aws::String>
+  ListDeadLetterSourceQueuesResult& AddQueueUrls(QueueUrlsT&& value) {
+    m_queueUrlsHasBeenSet = true;
+    m_queueUrls.emplace_back(std::forward<QueueUrlsT>(value));
+    return *this;
+  }
+  ///@}
 
+  ///@{
+  /**
+   * <p>Pagination token to include in the next request. Token value is
+   * <code>null</code> if there are no additional results to request, or if you did
+   * not set <code>MaxResults</code> in the request.</p>
+   */
+  inline const Aws::String& GetNextToken() const { return m_nextToken; }
+  template <typename NextTokenT = Aws::String>
+  void SetNextToken(NextTokenT&& value) {
+    m_nextTokenHasBeenSet = true;
+    m_nextToken = std::forward<NextTokenT>(value);
+  }
+  template <typename NextTokenT = Aws::String>
+  ListDeadLetterSourceQueuesResult& WithNextToken(NextTokenT&& value) {
+    SetNextToken(std::forward<NextTokenT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>A list of source queue URLs that have the <code>RedrivePolicy</code> queue
-     * attribute configured with a dead-letter queue.</p>
-     */
-    inline const Aws::Vector<Aws::String>& GetQueueUrls() const{ return m_queueUrls; }
-    inline void SetQueueUrls(const Aws::Vector<Aws::String>& value) { m_queueUrls = value; }
-    inline void SetQueueUrls(Aws::Vector<Aws::String>&& value) { m_queueUrls = std::move(value); }
-    inline ListDeadLetterSourceQueuesResult& WithQueueUrls(const Aws::Vector<Aws::String>& value) { SetQueueUrls(value); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithQueueUrls(Aws::Vector<Aws::String>&& value) { SetQueueUrls(std::move(value)); return *this;}
-    inline ListDeadLetterSourceQueuesResult& AddQueueUrls(const Aws::String& value) { m_queueUrls.push_back(value); return *this; }
-    inline ListDeadLetterSourceQueuesResult& AddQueueUrls(Aws::String&& value) { m_queueUrls.push_back(std::move(value)); return *this; }
-    inline ListDeadLetterSourceQueuesResult& AddQueueUrls(const char* value) { m_queueUrls.push_back(value); return *this; }
-    ///@}
+  ///@{
 
-    ///@{
-    /**
-     * <p>Pagination token to include in the next request. Token value is
-     * <code>null</code> if there are no additional results to request, or if you did
-     * not set <code>MaxResults</code> in the request.</p>
-     */
-    inline const Aws::String& GetNextToken() const{ return m_nextToken; }
-    inline void SetNextToken(const Aws::String& value) { m_nextToken = value; }
-    inline void SetNextToken(Aws::String&& value) { m_nextToken = std::move(value); }
-    inline void SetNextToken(const char* value) { m_nextToken.assign(value); }
-    inline ListDeadLetterSourceQueuesResult& WithNextToken(const Aws::String& value) { SetNextToken(value); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithNextToken(Aws::String&& value) { SetNextToken(std::move(value)); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithNextToken(const char* value) { SetNextToken(value); return *this;}
-    ///@}
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  ListDeadLetterSourceQueuesResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline ListDeadLetterSourceQueuesResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const ResponseMetadata& GetResponseMetadata() const{ return m_responseMetadata; }
-    inline void SetResponseMetadata(const ResponseMetadata& value) { m_responseMetadata = value; }
-    inline void SetResponseMetadata(ResponseMetadata&& value) { m_responseMetadata = std::move(value); }
-    inline ListDeadLetterSourceQueuesResult& WithResponseMetadata(const ResponseMetadata& value) { SetResponseMetadata(value); return *this;}
-    inline ListDeadLetterSourceQueuesResult& WithResponseMetadata(ResponseMetadata&& value) { SetResponseMetadata(std::move(value)); return *this;}
-    ///@}
-  private:
+  inline const ResponseMetadata& GetResponseMetadata() const { return m_responseMetadata; }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  void SetResponseMetadata(ResponseMetadataT&& value) {
+    m_responseMetadataHasBeenSet = true;
+    m_responseMetadata = std::forward<ResponseMetadataT>(value);
+  }
+  template <typename ResponseMetadataT = ResponseMetadata>
+  ListDeadLetterSourceQueuesResult& WithResponseMetadata(ResponseMetadataT&& value) {
+    SetResponseMetadata(std::forward<ResponseMetadataT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::Vector<Aws::String> m_queueUrls;
+ private:
+  Aws::Vector<Aws::String> m_queueUrls;
 
-    Aws::String m_nextToken;
+  Aws::String m_nextToken;
 
-    Aws::String m_requestId;
+  Aws::String m_requestId;
 
-    ResponseMetadata m_responseMetadata;
-  };
+  ResponseMetadata m_responseMetadata;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_queueUrlsHasBeenSet = false;
+  bool m_nextTokenHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+  bool m_responseMetadataHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace SQS
-} // namespace Aws
+}  // namespace Model
+}  // namespace SQS
+}  // namespace Aws

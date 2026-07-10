@@ -12,16 +12,4 @@ using namespace Aws::AppIntegrationsService::Model;
 using namespace Aws::Utils::Json;
 using namespace Aws::Utils;
 
-DeleteApplicationRequest::DeleteApplicationRequest() : 
-    m_arnHasBeenSet(false)
-{
-}
-
-Aws::String DeleteApplicationRequest::SerializePayload() const
-{
-  return {};
-}
-
-
-
-
+Aws::String DeleteApplicationRequest::SerializePayload() const { return {}; }

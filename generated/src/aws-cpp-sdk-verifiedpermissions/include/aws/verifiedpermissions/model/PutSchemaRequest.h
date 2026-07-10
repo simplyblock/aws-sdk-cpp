@@ -4,72 +4,83 @@
  */
 
 #pragma once
-#include <aws/verifiedpermissions/VerifiedPermissions_EXPORTS.h>
-#include <aws/verifiedpermissions/VerifiedPermissionsRequest.h>
 #include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/verifiedpermissions/VerifiedPermissionsRequest.h>
+#include <aws/verifiedpermissions/VerifiedPermissions_EXPORTS.h>
 #include <aws/verifiedpermissions/model/SchemaDefinition.h>
+
 #include <utility>
 
-namespace Aws
-{
-namespace VerifiedPermissions
-{
-namespace Model
-{
+namespace Aws {
+namespace VerifiedPermissions {
+namespace Model {
 
+/**
+ */
+class PutSchemaRequest : public VerifiedPermissionsRequest {
+ public:
+  AWS_VERIFIEDPERMISSIONS_API PutSchemaRequest() = default;
+
+  // Service request name is the Operation name which will send this request out,
+  // each operation should has unique request name, so that we can get operation's name from this request.
+  // Note: this is not true for response, multiple operations may have the same response name,
+  // so we can not get operation's name from response.
+  inline virtual const char* GetServiceRequestName() const override { return "PutSchema"; }
+
+  AWS_VERIFIEDPERMISSIONS_API Aws::String SerializePayload() const override;
+
+  AWS_VERIFIEDPERMISSIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
+
+  ///@{
   /**
+   * <p>Specifies the ID of the policy store in which to place the schema.</p> <p>To
+   * specify a policy store, use its ID or alias name. When using an alias name,
+   * prefix it with <code>policy-store-alias/</code>. For example:</p> <ul> <li>
+   * <p>ID: <code>PSEXAMPLEabcdefg111111</code> </p> </li> <li> <p>Alias name:
+   * <code>policy-store-alias/example-policy-store</code> </p> </li> </ul> <p>To view
+   * aliases, use <a
+   * href="https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_ListPolicyStoreAliases.html">ListPolicyStoreAliases</a>.</p>
    */
-  class PutSchemaRequest : public VerifiedPermissionsRequest
-  {
-  public:
-    AWS_VERIFIEDPERMISSIONS_API PutSchemaRequest();
+  inline const Aws::String& GetPolicyStoreId() const { return m_policyStoreId; }
+  inline bool PolicyStoreIdHasBeenSet() const { return m_policyStoreIdHasBeenSet; }
+  template <typename PolicyStoreIdT = Aws::String>
+  void SetPolicyStoreId(PolicyStoreIdT&& value) {
+    m_policyStoreIdHasBeenSet = true;
+    m_policyStoreId = std::forward<PolicyStoreIdT>(value);
+  }
+  template <typename PolicyStoreIdT = Aws::String>
+  PutSchemaRequest& WithPolicyStoreId(PolicyStoreIdT&& value) {
+    SetPolicyStoreId(std::forward<PolicyStoreIdT>(value));
+    return *this;
+  }
+  ///@}
 
-    // Service request name is the Operation name which will send this request out,
-    // each operation should has unique request name, so that we can get operation's name from this request.
-    // Note: this is not true for response, multiple operations may have the same response name,
-    // so we can not get operation's name from response.
-    inline virtual const char* GetServiceRequestName() const override { return "PutSchema"; }
+  ///@{
+  /**
+   * <p>Specifies the definition of the schema to be stored. The schema definition
+   * must be written in Cedar schema JSON.</p>
+   */
+  inline const SchemaDefinition& GetDefinition() const { return m_definition; }
+  inline bool DefinitionHasBeenSet() const { return m_definitionHasBeenSet; }
+  template <typename DefinitionT = SchemaDefinition>
+  void SetDefinition(DefinitionT&& value) {
+    m_definitionHasBeenSet = true;
+    m_definition = std::forward<DefinitionT>(value);
+  }
+  template <typename DefinitionT = SchemaDefinition>
+  PutSchemaRequest& WithDefinition(DefinitionT&& value) {
+    SetDefinition(std::forward<DefinitionT>(value));
+    return *this;
+  }
+  ///@}
+ private:
+  Aws::String m_policyStoreId;
 
-    AWS_VERIFIEDPERMISSIONS_API Aws::String SerializePayload() const override;
+  SchemaDefinition m_definition;
+  bool m_policyStoreIdHasBeenSet = false;
+  bool m_definitionHasBeenSet = false;
+};
 
-    AWS_VERIFIEDPERMISSIONS_API Aws::Http::HeaderValueCollection GetRequestSpecificHeaders() const override;
-
-
-    ///@{
-    /**
-     * <p>Specifies the ID of the policy store in which to place the schema.</p>
-     */
-    inline const Aws::String& GetPolicyStoreId() const{ return m_policyStoreId; }
-    inline bool PolicyStoreIdHasBeenSet() const { return m_policyStoreIdHasBeenSet; }
-    inline void SetPolicyStoreId(const Aws::String& value) { m_policyStoreIdHasBeenSet = true; m_policyStoreId = value; }
-    inline void SetPolicyStoreId(Aws::String&& value) { m_policyStoreIdHasBeenSet = true; m_policyStoreId = std::move(value); }
-    inline void SetPolicyStoreId(const char* value) { m_policyStoreIdHasBeenSet = true; m_policyStoreId.assign(value); }
-    inline PutSchemaRequest& WithPolicyStoreId(const Aws::String& value) { SetPolicyStoreId(value); return *this;}
-    inline PutSchemaRequest& WithPolicyStoreId(Aws::String&& value) { SetPolicyStoreId(std::move(value)); return *this;}
-    inline PutSchemaRequest& WithPolicyStoreId(const char* value) { SetPolicyStoreId(value); return *this;}
-    ///@}
-
-    ///@{
-    /**
-     * <p>Specifies the definition of the schema to be stored. The schema definition
-     * must be written in Cedar schema JSON.</p>
-     */
-    inline const SchemaDefinition& GetDefinition() const{ return m_definition; }
-    inline bool DefinitionHasBeenSet() const { return m_definitionHasBeenSet; }
-    inline void SetDefinition(const SchemaDefinition& value) { m_definitionHasBeenSet = true; m_definition = value; }
-    inline void SetDefinition(SchemaDefinition&& value) { m_definitionHasBeenSet = true; m_definition = std::move(value); }
-    inline PutSchemaRequest& WithDefinition(const SchemaDefinition& value) { SetDefinition(value); return *this;}
-    inline PutSchemaRequest& WithDefinition(SchemaDefinition&& value) { SetDefinition(std::move(value)); return *this;}
-    ///@}
-  private:
-
-    Aws::String m_policyStoreId;
-    bool m_policyStoreIdHasBeenSet = false;
-
-    SchemaDefinition m_definition;
-    bool m_definitionHasBeenSet = false;
-  };
-
-} // namespace Model
-} // namespace VerifiedPermissions
-} // namespace Aws
+}  // namespace Model
+}  // namespace VerifiedPermissions
+}  // namespace Aws

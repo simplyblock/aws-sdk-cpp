@@ -4,93 +4,112 @@
  */
 
 #pragma once
-#include <aws/elasticmapreduce/EMR_EXPORTS.h>
-#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/core/http/HttpResponse.h>
 #include <aws/core/utils/DateTime.h>
+#include <aws/core/utils/memory/stl/AWSString.h>
+#include <aws/elasticmapreduce/EMR_EXPORTS.h>
+
 #include <utility>
 
-namespace Aws
-{
-template<typename RESULT_TYPE>
+namespace Aws {
+template <typename RESULT_TYPE>
 class AmazonWebServiceResult;
 
-namespace Utils
-{
-namespace Json
-{
-  class JsonValue;
-} // namespace Json
-} // namespace Utils
-namespace EMR
-{
-namespace Model
-{
-  class DescribeSecurityConfigurationResult
-  {
-  public:
-    AWS_EMR_API DescribeSecurityConfigurationResult();
-    AWS_EMR_API DescribeSecurityConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
-    AWS_EMR_API DescribeSecurityConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+namespace Utils {
+namespace Json {
+class JsonValue;
+}  // namespace Json
+}  // namespace Utils
+namespace EMR {
+namespace Model {
+class DescribeSecurityConfigurationResult {
+ public:
+  AWS_EMR_API DescribeSecurityConfigurationResult() = default;
+  AWS_EMR_API DescribeSecurityConfigurationResult(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
+  AWS_EMR_API DescribeSecurityConfigurationResult& operator=(const Aws::AmazonWebServiceResult<Aws::Utils::Json::JsonValue>& result);
 
+  ///@{
+  /**
+   * <p>The name of the security configuration.</p>
+   */
+  inline const Aws::String& GetName() const { return m_name; }
+  template <typename NameT = Aws::String>
+  void SetName(NameT&& value) {
+    m_nameHasBeenSet = true;
+    m_name = std::forward<NameT>(value);
+  }
+  template <typename NameT = Aws::String>
+  DescribeSecurityConfigurationResult& WithName(NameT&& value) {
+    SetName(std::forward<NameT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The name of the security configuration.</p>
-     */
-    inline const Aws::String& GetName() const{ return m_name; }
-    inline void SetName(const Aws::String& value) { m_name = value; }
-    inline void SetName(Aws::String&& value) { m_name = std::move(value); }
-    inline void SetName(const char* value) { m_name.assign(value); }
-    inline DescribeSecurityConfigurationResult& WithName(const Aws::String& value) { SetName(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithName(Aws::String&& value) { SetName(std::move(value)); return *this;}
-    inline DescribeSecurityConfigurationResult& WithName(const char* value) { SetName(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The security configuration details in JSON format.</p>
+   */
+  inline const Aws::String& GetSecurityConfiguration() const { return m_securityConfiguration; }
+  template <typename SecurityConfigurationT = Aws::String>
+  void SetSecurityConfiguration(SecurityConfigurationT&& value) {
+    m_securityConfigurationHasBeenSet = true;
+    m_securityConfiguration = std::forward<SecurityConfigurationT>(value);
+  }
+  template <typename SecurityConfigurationT = Aws::String>
+  DescribeSecurityConfigurationResult& WithSecurityConfiguration(SecurityConfigurationT&& value) {
+    SetSecurityConfiguration(std::forward<SecurityConfigurationT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The security configuration details in JSON format.</p>
-     */
-    inline const Aws::String& GetSecurityConfiguration() const{ return m_securityConfiguration; }
-    inline void SetSecurityConfiguration(const Aws::String& value) { m_securityConfiguration = value; }
-    inline void SetSecurityConfiguration(Aws::String&& value) { m_securityConfiguration = std::move(value); }
-    inline void SetSecurityConfiguration(const char* value) { m_securityConfiguration.assign(value); }
-    inline DescribeSecurityConfigurationResult& WithSecurityConfiguration(const Aws::String& value) { SetSecurityConfiguration(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithSecurityConfiguration(Aws::String&& value) { SetSecurityConfiguration(std::move(value)); return *this;}
-    inline DescribeSecurityConfigurationResult& WithSecurityConfiguration(const char* value) { SetSecurityConfiguration(value); return *this;}
-    ///@}
+  ///@{
+  /**
+   * <p>The date and time the security configuration was created</p>
+   */
+  inline const Aws::Utils::DateTime& GetCreationDateTime() const { return m_creationDateTime; }
+  template <typename CreationDateTimeT = Aws::Utils::DateTime>
+  void SetCreationDateTime(CreationDateTimeT&& value) {
+    m_creationDateTimeHasBeenSet = true;
+    m_creationDateTime = std::forward<CreationDateTimeT>(value);
+  }
+  template <typename CreationDateTimeT = Aws::Utils::DateTime>
+  DescribeSecurityConfigurationResult& WithCreationDateTime(CreationDateTimeT&& value) {
+    SetCreationDateTime(std::forward<CreationDateTimeT>(value));
+    return *this;
+  }
+  ///@}
 
-    ///@{
-    /**
-     * <p>The date and time the security configuration was created</p>
-     */
-    inline const Aws::Utils::DateTime& GetCreationDateTime() const{ return m_creationDateTime; }
-    inline void SetCreationDateTime(const Aws::Utils::DateTime& value) { m_creationDateTime = value; }
-    inline void SetCreationDateTime(Aws::Utils::DateTime&& value) { m_creationDateTime = std::move(value); }
-    inline DescribeSecurityConfigurationResult& WithCreationDateTime(const Aws::Utils::DateTime& value) { SetCreationDateTime(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithCreationDateTime(Aws::Utils::DateTime&& value) { SetCreationDateTime(std::move(value)); return *this;}
-    ///@}
+  ///@{
 
-    ///@{
-    
-    inline const Aws::String& GetRequestId() const{ return m_requestId; }
-    inline void SetRequestId(const Aws::String& value) { m_requestId = value; }
-    inline void SetRequestId(Aws::String&& value) { m_requestId = std::move(value); }
-    inline void SetRequestId(const char* value) { m_requestId.assign(value); }
-    inline DescribeSecurityConfigurationResult& WithRequestId(const Aws::String& value) { SetRequestId(value); return *this;}
-    inline DescribeSecurityConfigurationResult& WithRequestId(Aws::String&& value) { SetRequestId(std::move(value)); return *this;}
-    inline DescribeSecurityConfigurationResult& WithRequestId(const char* value) { SetRequestId(value); return *this;}
-    ///@}
-  private:
+  inline const Aws::String& GetRequestId() const { return m_requestId; }
+  template <typename RequestIdT = Aws::String>
+  void SetRequestId(RequestIdT&& value) {
+    m_requestIdHasBeenSet = true;
+    m_requestId = std::forward<RequestIdT>(value);
+  }
+  template <typename RequestIdT = Aws::String>
+  DescribeSecurityConfigurationResult& WithRequestId(RequestIdT&& value) {
+    SetRequestId(std::forward<RequestIdT>(value));
+    return *this;
+  }
+  ///@}
+  inline Aws::Http::HttpResponseCode GetHttpResponseCode() const { return m_HttpResponseCode; }
 
-    Aws::String m_name;
+ private:
+  Aws::String m_name;
 
-    Aws::String m_securityConfiguration;
+  Aws::String m_securityConfiguration;
 
-    Aws::Utils::DateTime m_creationDateTime;
+  Aws::Utils::DateTime m_creationDateTime{};
 
-    Aws::String m_requestId;
-  };
+  Aws::String m_requestId;
+  Aws::Http::HttpResponseCode m_HttpResponseCode;
+  bool m_nameHasBeenSet = false;
+  bool m_securityConfigurationHasBeenSet = false;
+  bool m_creationDateTimeHasBeenSet = false;
+  bool m_requestIdHasBeenSet = false;
+};
 
-} // namespace Model
-} // namespace EMR
-} // namespace Aws
+}  // namespace Model
+}  // namespace EMR
+}  // namespace Aws
