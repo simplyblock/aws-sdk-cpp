@@ -8721,7 +8721,7 @@ class AWS_S3CRT_API S3CrtClient : public Aws::Client::AWSXMLClient,
     PutObjectResponseReceivedHandler putResponseHandler;
     CopyObjectResponseReceivedHandler copyResponseHandler;
     std::shared_ptr<const Aws::Client::AsyncCallerContext> asyncCallerContext;
-    const Aws::AmazonWebServiceRequest* originalRequest;
+    std::shared_ptr<const Aws::AmazonWebServiceRequest> ownedRequest;
     std::shared_ptr<Aws::Http::HttpRequest> request;
     std::shared_ptr<Aws::Http::HttpResponse> response;
     std::shared_ptr<Aws::Crt::Http::HttpRequest> crtHttpRequest;

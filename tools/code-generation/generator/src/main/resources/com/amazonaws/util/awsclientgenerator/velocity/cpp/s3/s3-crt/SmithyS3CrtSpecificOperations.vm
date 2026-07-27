@@ -21,7 +21,7 @@ int S3CrtClient::S3CrtRequestHeadersCallback(struct aws_s3_meta_request *meta_re
 {
   AWS_UNREFERENCED_PARAM(meta_request);
   auto *userData = static_cast<S3CrtClient::CrtRequestCallbackUserData*>(user_data);
-  if (!userData || !userData->response || !userData->originalRequest || !headers) {
+  if (!userData || !userData->response || !userData->ownedRequest || !headers) {
     return AWS_OP_ERR;
   }
 
@@ -33,7 +33,7 @@ int S3CrtClient::S3CrtRequestHeadersCallback(struct aws_s3_meta_request *meta_re
   }
   userData->response->SetResponseCode(static_cast<HttpResponseCode>(response_status));
 
-  auto& shouldContinueFn = userData->originalRequest->GetContinueRequestHandler();
+  auto& shouldContinueFn = userData->ownedRequest->GetContinueRequestHandler();
   const HttpRequest* httpRequest = userData->request ? userData->request.get() : nullptr;
   if (shouldContinueFn && !shouldContinueFn(httpRequest)) {
     userData->s3CrtClient->CancelCrtRequest(meta_request);
@@ -73,7 +73,7 @@ int S3CrtClient::S3CrtRequestGetBodyCallback(struct aws_s3_meta_request *meta_re
       receivedHandler(userData->request.get(), userData->response.get(), static_cast<long long>(body->len));
   }
   AWS_LOGSTREAM_TRACE(ALLOCATION_TAG, body->len << " bytes written to response.");
-  auto& shouldContinueFn = userData->originalRequest->GetContinueRequestHandler();
+  auto& shouldContinueFn = userData->ownedRequest->GetContinueRequestHandler();
   const HttpRequest* httpRequest = userData->request ? userData->request.get() : nullptr;
   if (shouldContinueFn && !shouldContinueFn(httpRequest)) {
     userData->s3CrtClient->CancelCrtRequest(meta_request);
@@ -94,8 +94,8 @@ void S3CrtClient::S3CrtRequestProgressCallback(struct aws_s3_meta_request *meta_
     progressHandler(userData->request.get(), static_cast<long long>(progress->bytes_transferred));
   }
   AWS_LOGSTREAM_TRACE(ALLOCATION_TAG, progress->bytes_transferred << " bytes transferred.");
-  AWS_CHECK_PTR(SERVICE_NAME, userData->originalRequest);
-  auto& shouldContinueFn = userData->originalRequest->GetContinueRequestHandler();
+  AWS_CHECK_PTR(SERVICE_NAME, userData->ownedRequest);
+  auto& shouldContinueFn = userData->ownedRequest->GetContinueRequestHandler();
   const HttpRequest* httpRequest = userData->request ? userData->request.get() : nullptr;
   if (shouldContinueFn && !shouldContinueFn(httpRequest)) {
     userData->s3CrtClient->CancelCrtRequest(meta_request);
@@ -295,7 +295,6 @@ void S3CrtClient::InitCommonCrtRequestOption(CrtRequestCallbackUserData *userDat
   std::shared_ptr<HttpResponse> httpResponse = Aws::MakeShared<Aws::Http::Standard::StandardHttpResponse>(ALLOCATION_TAG, httpRequest);
 
   userData->s3CrtClient = this;
-  userData->originalRequest = request;
   userData->request = httpRequest;
   userData->response = httpResponse;
 
@@ -518,11 +517,11 @@ static void ${operation.name}RequestShutdownCallback(void *user_data)
   }
 #if($operation.request)
 #if($operation.name == "PutObject")
-  userData->putResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->originalRequest)), std::move(outcome), userData->asyncCallerContext);
+  userData->putResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->ownedRequest.get())), std::move(outcome), userData->asyncCallerContext);
 #elseif($operation.name == "GetObject")
-  userData->getResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->originalRequest)), std::move(outcome), userData->asyncCallerContext);
+  userData->getResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->ownedRequest.get())), std::move(outcome), userData->asyncCallerContext);
 #elseif($operation.name == "CopyObject")
-  userData->copyResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->originalRequest)), std::move(outcome), userData->asyncCallerContext);
+  userData->copyResponseHandler(userData->s3CrtClient, *(reinterpret_cast<const ${operation.request.shape.name}*>(userData->ownedRequest.get())), std::move(outcome), userData->asyncCallerContext);
 #end
 #else
   (*handler)(userData->s3CrtClient, outcome, userData->userCallbackContext);
@@ -617,8 +616,9 @@ void ${className}::${operation.name}Async(${constText}${operation.request.shape.
   {
     userData->asyncCallerContext = handlerContext;
   }
+  userData->ownedRequest = Aws::MakeShared<${operation.request.shape.name}>(ALLOCATION_TAG, request);
 #if($serviceModel.endpointRules)
-  InitCommonCrtRequestOption(userData, &options, &request, endpointResolutionOutcome.GetResult().GetURI(), Aws::Http::HttpMethod::HTTP_${operation.http.method});
+  InitCommonCrtRequestOption(userData, &options, userData->ownedRequest.get(), endpointResolutionOutcome.GetResult().GetURI(), Aws::Http::HttpMethod::HTTP_${operation.http.method});
   if (userData != nullptr &&
     userData->request != nullptr &&
     userData->request->GetContentBody() != nullptr &&
@@ -633,7 +633,7 @@ void ${className}::${operation.name}Async(${constText}${operation.request.shape.
 #end
   }
 #else
-  InitCommonCrtRequestOption(userData, &options, &request, uri, Aws::Http::HttpMethod::HTTP_${operation.http.method});
+  InitCommonCrtRequestOption(userData, &options, userData->ownedRequest.get(), uri, Aws::Http::HttpMethod::HTTP_${operation.http.method});
 #end
 #if($operation.name == "CopyObject")
   {
